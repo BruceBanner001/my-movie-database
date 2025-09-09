@@ -5,7 +5,7 @@
 # ====================================================
 #
 # This GitHub Actions workflow:
-# - Runs weekly (Monday 09:00 UTC) OR manually via Actions tab
+# - Runs weekly (Sunday 12:00 AM IST) OR manually via Actions tab
 # - Installs Python + dependencies (requirements.txt)
 # - Writes Google Drive service account credentials from secret
 # - Runs create_update_backup_delete.py:
@@ -77,7 +77,13 @@ jobs:
         with:
           path: .
 
-      # Deploy to GitHub Pages
+  deploy:
+    needs: update-json
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
