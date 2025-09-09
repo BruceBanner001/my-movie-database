@@ -14,3 +14,9 @@ ddgs==9.5.5           # DuckDuckGo Search (images + text search fallback)
 # === Synopsis Extraction ===
 beautifulsoup4>=4.12.2  # Parse HTML pages (AsianWiki, MyDramaList, etc.)
 lxml>=4.9.3             # Fast parser for BeautifulSoup (recommended)
+
+# === Google Drive API (for private Excel fetch) ===
+google-api-python-client>=2.100.0
+google-auth>=2.23.0
+google-auth-httplib2>=0.1.0
+google-auth-oauthlib>=1.1.0
