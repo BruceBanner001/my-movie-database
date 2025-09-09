@@ -22,13 +22,20 @@
 name: Weekly Excel → JSON Update
 
 on:
+  workflow_dispatch:   # manual run
   schedule:
-    - cron: "0 9 * * 1"   # Every Monday 09:00 UTC
-  workflow_dispatch:
+    # Every Saturday 18:30 UTC = Sunday 12:00 AM IST
+    - cron: "30 18 * * 6"
+  push:
+    paths:
+      - "create_update_backup_delete.py"
+      - "requirements.txt"
+      - ".github/workflows/update.yml"
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -36,23 +43,73 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
-
-      - name: Write service account file
-        run: echo "${{ secrets.GDRIVE_SERVICE_ACCOUNT }}" > GDRIVE_SERVICE_ACCOUNT.json
-
-      - name: Run Excel → JSON update
-        env:
-          SERVICE_ACCOUNT_FILE: GDRIVE_SERVICE_ACCOUNT.json
-        run: python create_update_backup_delete.py
-
-      - name: Commit and push if changes
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add seriesData.json images/ backups/
-          git commit -m "Auto-update JSON, images, backups [skip ci]" || echo "No changes to commit"
-          git push
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Create Google Drive service account file
+        run: |
+          echo '${{ secrets.GDRIVE_SERVICE_ACCOUNT }}' > GDRIVE_SERVICE_ACCOUNT.json
+
+      - name: Run Excel → JSON update script
+        run: |
+          python create_update_backup_delete.py
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add seriesData.json backups/ images/
+          git commit -m "🔄 Auto update from Excel (Drive)" || echo "No changes to commit"
+          git push || echo "No changes to push"
+
+      - name: Post job summary
+        if: always()
+        run: |
+          echo "## ✅ Weekly Excel → JSON Update" >> $GITHUB_STEP_SUMMARY
+          echo "- Repository: $GITHUB_REPOSITORY" >> $GITHUB_STEP_SUMMARY
+          echo "- Run ID: $GITHUB_RUN_ID" >> $GITHUB_STEP_SUMMARY
+          echo "- Trigger: $GITHUB_EVENT_NAME" >> $GITHUB_STEP_SUMMARY
+          echo "- Completed at: $(date -u)" >> $GITHUB_STEP_SUMMARY
+
+      # --- Email Notifications ---
+      - name: Send failure email
+        if: failure()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.SMTP_USERNAME }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          subject: "❌ Excel → JSON Update FAILED"
+          to: ${{ secrets.NOTIFY_EMAIL }}
+          from: "GitHub Actions <${{ secrets.SMTP_USERNAME }}>"
+          body: |
+            GitHub Actions run failed for **${{ github.repository }}**
+            - Workflow: ${{ github.workflow }}
+            - Run ID: ${{ github.run_id }}
+            - Trigger: ${{ github.event_name }}
+            - Completed at: $(date -u)
+            Check logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+      - name: Send success email (weekly only)
+        if: success() && github.event_name == 'schedule'
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.SMTP_USERNAME }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          subject: "✅ Weekly Excel → JSON Update SUCCESS"
+          to: ${{ secrets.NOTIFY_EMAIL }}
+          from: "GitHub Actions <${{ secrets.SMTP_USERNAME }}>"
+          body: |
+            Weekly update completed successfully 🎉
+            - Repository: ${{ github.repository }}
+            - Workflow: ${{ github.workflow }}
+            - Run ID: ${{ github.run_id }}
+            - Completed at: $(date -u)
+            Check details: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
