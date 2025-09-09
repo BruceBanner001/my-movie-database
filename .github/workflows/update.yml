@@ -49,6 +49,11 @@ jobs:
       # ✅ Write Google Drive service account credentials
       - name: Write Google Drive credentials
         run: echo '${{ secrets.GDRIVE_SERVICE_ACCOUNT }}' > GDRIVE_SERVICE_ACCOUNT.json
+      
+      # Write Excel File ID
+      - name: Write Excel File ID
+        run: echo "${{ secrets.EXCEL_FILE_ID }}" > EXCEL_FILE_ID.txt
+
 
       # Run update script
       - name: Run update script
