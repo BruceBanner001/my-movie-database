@@ -18,6 +18,8 @@
 # - Publishes via GitHub Pages
 #
 # ====================================================
+
+
 name: Weekly Excel -> JSON Update
 
 on:
@@ -44,11 +46,11 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      # Write Google Drive service account credentials
+      # ✅ Write Google Drive service account credentials
       - name: Write Google Drive credentials
-        run: echo "${{ secrets.GDRIVE_SERVICE_ACCOUNT }}" > service_account.json
+        run: echo '${{ secrets.GDRIVE_SERVICE_ACCOUNT }}' > GDRIVE_SERVICE_ACCOUNT.json
 
-      # Run update script (fetch Excel from Drive, generate JSON, images, backups)
+      # Run update script
       - name: Run update script
         run: python create_update_backup_delete.py
 
