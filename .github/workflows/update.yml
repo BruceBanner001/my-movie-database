@@ -1,14 +1,34 @@
+# ====================================================
+# Workflow: update.yml
+# Repo:     my-movie-database
+# Author:   BruceBanner001
+# ====================================================
+#
+# This GitHub Actions workflow:
+# - Runs weekly (Monday 09:00 UTC) OR manually via Actions tab
+# - Installs Python + dependencies (requirements.txt)
+# - Writes Google Drive service account credentials from secret
+# - Runs create_update_backup_delete.py:
+#     • Reads Excel from Drive (private)
+#     • Generates seriesData.json
+#     • Downloads & resizes cover images (600x900, absolute URLs)
+#     • Scrapes high-quality synopsis & duration
+#     • Creates backups of changed/removed objects
+# - Commits and pushes updated seriesData.json, images/, and backups/
+# - Publishes via GitHub Pages
+#
+# ====================================================
+
 name: Weekly Excel → JSON Update
 
 on:
   schedule:
     - cron: "0 9 * * 1"   # Every Monday 09:00 UTC
-  workflow_dispatch:      # Allow manual trigger
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -21,64 +41,18 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-
-      # Write service account secret to a file
       - name: Write service account file
         run: echo "${{ secrets.GDRIVE_SERVICE_ACCOUNT }}" > GDRIVE_SERVICE_ACCOUNT.json
 
-      # Step 1: Download latest Excel
-      - name: Download Excel from Google Drive
-        env:
-          SERVICE_ACCOUNT_FILE: GDRIVE_SERVICE_ACCOUNT.json
-        run: python -c "from create_update_backup_delete import fetch_excel_from_drive, EXCEL_FILE_ID, LOCAL_EXCEL_FILE; fetch_excel_from_drive(EXCEL_FILE_ID, LOCAL_EXCEL_FILE)"
-
-      # Step 2: Check if Excel file changed
-      - name: Detect Excel changes
-        id: excel_changed
-        run: |
-          if [ -f local-data.xlsx ]; then
-            sha256sum local-data.xlsx > new.sha
-          else
-            echo "No Excel file found, skipping hash" > new.sha
-          fi
-
-          if [ -f .excel.sha ]; then
-            if cmp -s .excel.sha new.sha; then
-              echo "excel_changed=false" >> $GITHUB_OUTPUT
-              exit 0
-            fi
-          fi
-
-          mv new.sha .excel.sha
-          echo "excel_changed=true" >> $GITHUB_OUTPUT
-
-      # Step 3: Run Python update if Excel changed
       - name: Run Excel → JSON update
-        if: steps.excel_changed.outputs.excel_changed == 'true'
         env:
           SERVICE_ACCOUNT_FILE: GDRIVE_SERVICE_ACCOUNT.json
         run: python create_update_backup_delete.py
 
       - name: Commit and push if changes
-        if: steps.excel_changed.outputs.excel_changed == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add seriesData.json backups images local-data.xlsx .excel.sha || true
-          if ! git diff --cached --quiet; then
-            git commit -m "Auto-update JSON & backups [skip ci]"
-            git push
-          else
-            echo "No changes to commit"
-          fi
-
-      - name: Upload artifacts
-        if: steps.excel_changed.outputs.excel_changed == 'true'
-        uses: actions/upload-artifact@v3
-        with:
-          name: output-data
-          path: |
-            seriesData.json
-            backups/
-            images/
-            local-data.xlsx
+          git add seriesData.json images/ backups/
+          git commit -m "Auto-update JSON, images, backups [skip ci]" || echo "No changes to commit"
+          git push
