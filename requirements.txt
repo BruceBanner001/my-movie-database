@@ -9,7 +9,7 @@ requests==2.31.0      # Download images, fetch web pages (synopsis scraping)
 pillow==10.2.0        # Resize and save cover images
 
 # === Search Engines ===
-ddgs>=9.0.0           # DuckDuckGo Search (images + text search fallback)
+ddgs==9.5.5          # DuckDuckGo Search (images + text search fallback)
 
 # === Synopsis Extraction ===
 beautifulsoup4==4.12.2  # Parse HTML pages (AsianWiki, MyDramaList, etc.)
