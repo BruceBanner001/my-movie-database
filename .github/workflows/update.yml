@@ -27,6 +27,9 @@ on:
     - cron: "30 18 * * 0"  # Every Sunday 12:00 AM IST (18:30 UTC Saturday)
   workflow_dispatch:
 
+permissions:
+  contents: write   # ✅ Allow push/commit to repo
+
 jobs:
   update-json:
     runs-on: ubuntu-latest
@@ -68,7 +71,7 @@ jobs:
           if [ -d "images" ]; then git add images/; fi
           if [ -d "backups" ]; then git add backups/; fi
           git commit -m "Auto-update JSON and images" || echo "No changes to commit"
-          git push
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:master
 
 
       # Deploy to GitHub Pages
