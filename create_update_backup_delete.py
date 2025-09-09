@@ -64,7 +64,7 @@ COVER_WIDTH, COVER_HEIGHT = 600, 900
 FORCE_REFRESH_IMAGES = False  # set True to re-download images always
 
 # Sheets to process (you can edit this list any time)
-SHEETS = ["Sheet1", "Sheet2", "Mini Drama"]  # include any that exist
+SHEETS = ["Sheet1"]  # include any that exist
 
 
 # ============================================================
