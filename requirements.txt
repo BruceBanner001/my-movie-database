@@ -1,6 +1,16 @@
-pandas==2.2.2
-openpyxl==3.1.2
-pydrive2==1.19.0
-requests==2.31.0
-pillow==10.2.0
-ddgs==1.0.6
+# === Core Excel & JSON processing ===
+pandas==2.2.2         # Read Excel files and handle tabular data
+openpyxl==3.1.2       # Required by pandas to read .xlsx files
+
+# === Networking & Requests ===
+requests==2.31.0      # Download images, fetch web pages (synopsis scraping)
+
+# === Image Processing ===
+pillow==10.2.0        # Resize and save cover images
+
+# === Search Engines ===
+ddgs==1.0.6           # DuckDuckGo Search (images + text search fallback)
+
+# === Synopsis Extraction ===
+beautifulsoup4==4.12.2  # Parse HTML pages (AsianWiki, MyDramaList, etc.)
+lxml==4.9.3             # Fast parser for BeautifulSoup (recommended)
