@@ -37,9 +37,14 @@ from google.oauth2 import service_account
 # -----------------------------
 # Config — change as needed
 # -----------------------------
+
 # Google Drive
-EXCEL_FILE_ID = "YOUR_GOOGLE_DRIVE_FILE_ID"      # <-- REPLACE
-SERVICE_ACCOUNT_FILE = "GDRIVE_SERVICE_ACCOUNT.json"  # <-- REPLACE
+
+# Read Excel File ID from a file written by GitHub Actions
+with open("EXCEL_FILE_ID.txt", "r") as f:
+    EXCEL_FILE_ID = f.read().strip()
+
+SERVICE_ACCOUNT_FILE = "GDRIVE_SERVICE_ACCOUNT.json" # Stored as Secret Key in GitHub Actions.
 
 # Local temp Excel
 LOCAL_EXCEL_FILE = "local-data.xlsx"
