@@ -64,9 +64,12 @@ jobs:
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-          git add seriesData.json images/ backups/
-          git commit -m "Auto-update JSON and images"
+          git add seriesData.json || true
+          if [ -d "images" ]; then git add images/; fi
+          if [ -d "backups" ]; then git add backups/; fi
+          git commit -m "Auto-update JSON and images" || echo "No changes to commit"
           git push
+
 
       # Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
