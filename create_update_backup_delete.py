@@ -901,7 +901,33 @@ if __name__ == "__main__":
     except Exception as e:
         print(f"⚠️ Google Drive fetch failed: {e}")
         if not os.path.exists(LOCAL_EXCEL_FILE):
-            raise FileNotFoundError("❌ No Excel file available locally or from Drive!")
+            import json
+            # === DEBUG: Print which secrets are being used ===
+            try:
+                with open("EXCEL_FILE_ID.txt", "r") as f:
+                    excel_file_id = f.read().strip()
+                print(f"🔎 Using EXCEL_FILE_ID: {excel_file_id}")
+            except Exception as e:
+                print(f"❌ Could not read EXCEL_FILE_ID.txt: {e}")
+                excel_file_id = None
+
+            try:
+                with open("GDRIVE_SERVICE_ACCOUNT.json", "r") as f:
+                    sa_data = json.load(f)
+                    client_email = sa_data.get("client_email", "UNKNOWN")
+                print(f"🔎 Using Service Account: {client_email}")
+            except Exception as e:
+                print(f"❌ Could not read GDRIVE_SERVICE_ACCOUNT.json: {e}")
+                client_email = None
+
+            # === Existing failure raise ===
+            raise FileNotFoundError(
+                f"❌ No Excel file available locally or from Drive!\n"
+                f"   - Excel File ID: {excel_file_id}\n"
+                f"   - Service Account: {client_email}\n"
+                f"👉 Make sure the Excel file is shared with the Service Account above."
+            )
+
 
     # 2) Apply manual updates first (if any)
     apply_manual_updates(LOCAL_EXCEL_FILE, JSON_FILE)
