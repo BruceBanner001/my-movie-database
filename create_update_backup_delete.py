@@ -62,7 +62,8 @@ COVER_WIDTH, COVER_HEIGHT = 600, 900
 FORCE_REFRESH_IMAGES = False  # set True to re-download images always (unless overridden)
 
 # Sheets to process (you can edit this list any time)
-SHEETS = ["Feb 7 2023 Onwards"]  # include any that exist
+SHEETS = ["Sheet1"]  # include any that exist
+# SHEETS = ["Feb 7 2023 Onwards"]  # include any that exist
 
 # Maximum number of shows to process per run (set to desired value in workflow env or here)
 # Example: set MAX_PER_RUN = 100 to process only 100 shows in a single workflow run.
