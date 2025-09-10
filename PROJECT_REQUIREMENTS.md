@@ -1,173 +1,106 @@
-# 📑 Requirements Report – Excel → JSON Automation
+# 📑 Requirements Report – Excel → JSON Automation (UPDATED)
 
-## 1. **Excel → JSON Conversion Rules**
-- **Keys & Naming**
-  - `no` → `showID` (prefix based on sheet: `1000+` for *Sheet1*, `2000+` for *Sheet2*, `3000+` for *Sheet3*).
-  - `Series Title` → `showName` (trim spaces).
-  - Add `"showImage"` → cover image URL (fetched from search engines, resized).
-  - `Started Date` → `watchStartedOn` (format: `DD-MM-YYYY`).
-  - `Finished Date` → `watchEndedOn`.
-  - `Year` → `releasedYear`.
-  - `Total Episodes` → `totalEpisodes`.
-  - Add `"showType"` → `"Drama"` (default), `"Mini Drama"` if from *Mini Drama* sheet.
-  - `Original Language` → `nativeLanguage` (trimmed, capitalized).
-  - `Language` → `watchedLanguage` (trimmed, capitalized).
-  - Add `"country"` → derived:
-    - `"Korean"` → `"South Korea"`.
-    - `"Chinese"` → `"China"`.
-    - else → `null`.
-  - `Comments` → `comments` (cleaned, capitalized each word, add `.` at end).
-  - `Ratings` → `ratings`.
-  - `Catagory`/`Category` → `genres` (array, split by comma, each capitalized).
-  - `Original Network` → `network` (array, split by comma).
-  - `Again Watched Date` → `againWatchedDates` (array of dates, format: `DD-MM-YYYY`).
-  - Add `"updatedOn"` → current IST date (format: `dd MONTH YYYY`).
-  - Add `"updatedDetails"`:
-    - `"First time Uploaded"` for new objects.
-    - Short description (≤30 chars) if key fields change:  
-      (`showName`, `showImage`, `releasedYear`, `totalEpisodes`, `comments`, `ratings`, `genres`, `duration`, `synopsis`).
-  - Add `"synopsis"` → auto-fetched from MDL, AsianWiki, Wikipedia, etc. (prefer 300–400 chars).
-  - Add `"Duration"` → parsed into minutes (if available, otherwise `null`).
-  - Add `"topRatings"` → `(ratings × againWatchedDates count × 100)`.
+## Purpose
+Automate conversion of a private Excel (Google Drive) into `seriesData.json` for the frontend,
+with images, synopsis, duration, update tracking and backups. Includes:
+- caching (skip re-fetch when already present),
+- chunked runs (limit items per workflow),
+- scheduled weekly "betterment" attempts,
+- manual updates via an Excel sheet,
+- mobile-friendly run reports and old-image retention.
 
 ---
 
-## 2. **Images**
-- Cover images are fetched automatically using queries like:
-  - `<showName> <year> drama cover`
-  - `<showName> <year> official poster`
-  - `<showName> network poster`
-- Sources: DuckDuckGo (ddgs), Bing, Google, fallback to drama sites (*Netflix, Viki, Prime, AsianWiki, MyDramaList*).
-- Images resized to **600×900 px**, high quality JPEG.
-- Saved inside `images/`.
-- JSON stores **absolute URLs** (via `GITHUB_PAGES_URL`) → e.g.:
-  ```
-  "showImage": "https://brucebanner001.github.io/my-movie-database/images/Crash_Landing_on_You_2019.jpg"
-  ```
+## Inputs & Outputs
+- Input: Private Excel uploaded to Google Drive (file id written to `EXCEL_FILE_ID.txt`).
+- Output: `seriesData.json` (main dataset).
+- Supporting artifacts:
+  - `images/` (current images)
+  - `old-images/` (previous images kept for `KEEP_OLD_IMAGES_DAYS`)
+  - `backups/` (changed/deleted objects per run)
+  - `reports/` (plain-text run reports: `report_DDMMYYYY_HHMM.txt`)
 
 ---
 
-## 3. **Backups**
-- When objects change (or are deleted), the old JSON object is saved into a backup file:
-  - Location: `/backups/`
-  - Name format: `DDMMYYYY_HHMM.json` (timestamp at update run).
-- Ensures historical tracking of changes.
+## Key Files & Environment
+- `EXCEL_FILE_ID.txt` — contains Google Drive file id (workflow writes this).
+- `GDRIVE_SERVICE_ACCOUNT.json` — service account JSON secret (workflow writes this).
+- `create_update_backup_delete_improved.py` — main script (the updated version).
+- `seriesData.json` — output JSON.
+- Env vars (set in GitHub Actions `env:`):
+  - `MAX_PER_RUN` (integer) — 0 or unset = process all; otherwise process only this many shows per run (easy throttle).
+  - `SCHEDULED_RUN` (`true`/`false`) — set to `true` for scheduled weekly runs **only**. When `true` the script will attempt to find *better* images/synopses even if values already exist in the JSON.
+  - `KEEP_OLD_IMAGES_DAYS` (integer, default 7) — how long to keep old images in `old-images/` before auto-delete.
+- Secret names (used by workflow):
+  - `GDRIVE_SERVICE_ACCOUNT` (write to `GDRIVE_SERVICE_ACCOUNT.json`)
+  - SMTP secrets for notifications if used: `SMTP_USERNAME`, `SMTP_PASSWORD`, `NOTIFY_EMAIL`
 
 ---
 
-## 4. **Google Drive Integration**
-- Source Excel file is private in Google Drive.
-- Accessed via **service account**:
-  - Service account JSON stored in GitHub secret → `GDRIVE_SERVICE_ACCOUNT`.
-  - File ID set via `EXCEL_FILE_ID`.
-- Downloaded as `local-data.xlsx` before processing.
+## Excel → JSON Mapping (fields)
+The script maps Excel columns (case-insensitive trimmed column names) to the following JSON schema:
+
+- `no` → `showID` (plus sheet offset: e.g. 1000/2000/3000)
+- `series title` → `showName`
+- `started date` → `watchStartedOn` (DD-MM-YYYY)
+- `finished date` → `watchEndedOn` (DD-MM-YYYY)
+- `year` → `releasedYear` (int)
+- `total episodes` → `totalEpisodes` (int)
+- `original language` → `nativeLanguage` (Capitalized)
+- `language` → `watchedLanguage` (Capitalized)
+- `comments` → `comments` (cleaned; words capitalized; ends with a dot)
+- `ratings` → `ratings` (int, default 0)
+- `catagory`/`category` → `genres` (array; split by comma; capitalized)
+- `original network` → `network` (array; split by comma)
+- `Again Watched Date` columns (all columns after the recognized date column) → `againWatchedDates` (array, DD-MM-YYYY)
+- Derived & added fields in JSON:
+  - `showImage` — absolute URL to `images/<file>.jpg` (via `GITHUB_PAGES_URL`)
+  - `showType` — `"Drama"` (default) or `"Mini Drama"` (sheet-specific)
+  - `country` — derived from `nativeLanguage` (e.g., Korean → South Korea, Chinese → China)
+  - `updatedOn` — IST date (format `dd MONTH YYYY`) when record last changed
+  - `updatedDetails` — short message (≤ 30 chars). For manual updates: `"Updated <Field> Mannually By Owner"`
+  - `synopsis` — auto-fetched (cleaned ~300–400 chars where possible)
+  - `Duration` — parsed runtime in minutes (int) or `null`
+  - `topRatings` — formula: `ratings × len(againWatchedDates) × 100`
 
 ---
 
-## 5. **Automation via GitHub Actions**
-- Workflow file: `.github/workflows/update.yml`
-- Triggers:
-  - **Weekly:** Every **Sunday 12:00 AM IST** (`cron: "30 18 * * 6"`).
-  - **Manual:** Can be run anytime from Actions tab.
-  - **On Push:** Runs if you update:
-    - `create_update_backup_delete.py`
-    - `requirements.txt`
-    - `.github/workflows/update.yml`
-- Steps:
-  1. Checkout repo.
-  2. Setup Python (3.11).
-  3. Install dependencies from `requirements.txt`.
-  4. Write service account JSON.
-  5. Download Excel file from Google Drive.
-  6. Run conversion script → update JSON + images + backups.
-  7. Commit & push changes back to repo.
+## New Behaviors (caching, chunking, scheduled improvements)
+1. **Caching**:
+   - If an object in `seriesData.json` already has `showImage` and/or `synopsis`, the script will **skip** re-downloading or re-scraping for that field **unless** `SCHEDULED_RUN=true`.
+   - This drastically reduces runtime for incremental runs.
+
+2. **Chunking / MAX_PER_RUN**:
+   - Set `MAX_PER_RUN` env var to limit how many shows from a sheet are processed in one run (e.g., `100`).  
+   - If `MAX_PER_RUN` is `0` or unset run will process all shows in the sheet.
+   - This lets you break a huge dataset into many safe runs (so you won't hit GitHub Actions 6-hour limit).
+
+3. **Scheduled Weekly Betterment**:
+   - When `SCHEDULED_RUN=true` (use only in scheduled workflow), the script will attempt to **find better images & synopsis** even when fields exist.
+   - For non-scheduled/manual runs it will avoid unnecessary network work.
 
 ---
 
-## 6. **Notifications**
-- **GitHub Summary** → Markdown summary with run details.
-- **Email Notifications**:
-  - **Failure:** immediate email with ❌ subject.
-  - **Success:** only for **weekly scheduled runs** (✅ subject).
-- Configurable via Secrets:
-  - `SMTP_USERNAME` (e.g. Gmail address).
-  - `SMTP_PASSWORD` (App Password).
-  - `NOTIFY_EMAIL` (recipient).
+## Image fetching & improvements
+- Image queries are reduced and the search stops at the **first valid** image downloaded.
+- Images are resized to **600×900 JPEG** and saved to `images/`.
+- When a new image replaces an old one:
+  - the old image file (local) is moved to `old-images/`.
+  - old files in `old-images/` are removed after `KEEP_OLD_IMAGES_DAYS`.
+  - report is updated with `Image Updated` entries showing Old && New (report provides links/paths).
+- `GITHUB_PAGES_URL` is used to build absolute image URLs stored in `showImage`.
 
 ---
 
-## 7. **Repo Setup**
-- Must contain:
-  - `create_update_backup_delete.py` (final script).
-  - `requirements.txt` (with Google API + pandas + pillow + ddgs + bs4 + lxml).
-  - `.github/workflows/update.yml` (workflow).
-- Folders:
-  - `images/` (with `.gitkeep` if empty).
-  - `backups/` (with `.gitkeep` if empty).
-- Generated files:
-  - `seriesData.json` (main dataset).
-  - Backup JSONs (inside `/backups`).
-
----
-
-## 8. **Example JSON Output**
-
-### First-time Upload
-```json
-{
-  "showID": 1001,
-  "showName": "Crash Landing on You",
-  "showImage": "https://brucebanner001.github.io/my-movie-database/images/Crash_Landing_on_You_2019.jpg",
-  "watchStartedOn": "07-02-2023",
-  "watchEndedOn": "28-03-2023",
-  "releasedYear": 2019,
-  "totalEpisodes": 16,
-  "showType": "Drama",
-  "nativeLanguage": "Korean",
-  "watchedLanguage": "English",
-  "country": "South Korea",
-  "comments": "Excellent drama with amazing chemistry.",
-  "ratings": 5,
-  "genres": ["Romance", "Comedy"],
-  "network": ["Netflix", "tvN"],
-  "againWatchedDates": ["21-12-2023", "07-05-2024"],
-  "updatedOn": "08 September 2025",
-  "updatedDetails": "First time Uploaded",
-  "synopsis": "A South Korean heiress crash lands in North Korea after a paragliding accident, where she meets an army officer. Their story unfolds amidst political tension and heartfelt romance, blending suspense, comedy, and cultural contrast.",
-  "Duration": 60,
-  "topRatings": 1000
+## Preferred site order (by language) — easy to extend
+- The code uses a `PREFERRED_SITE_ORDER` map to try particular sites first depending on `nativeLanguage`.
+  - Current mapping:
+    - `Korean` → [`asianwiki`, `mydramalist`]
+    - `Chinese` → [`mydramalist`, `asianwiki`]
+- If you want to add other languages or change order, edit the `PREFERRED_SITE_ORDER` dictionary in the script:
+```py
+PREFERRED_SITE_ORDER = {
+  "Korean": ["asianwiki","mydramalist"],
+  "Chinese": ["mydramalist","asianwiki"],
+  # Add more: "Japanese": ["asianwiki","mydramalist"]
 }
-```
-
-### After an Update (e.g., Image & Comments Changed)
-```json
-{
-  "showID": 1001,
-  "showName": "Crash Landing on You",
-  "showImage": "https://brucebanner001.github.io/my-movie-database/images/Crash_Landing_on_You_2019_v2.jpg",
-  "watchStartedOn": "07-02-2023",
-  "watchEndedOn": "28-03-2023",
-  "releasedYear": 2019,
-  "totalEpisodes": 16,
-  "showType": "Drama",
-  "nativeLanguage": "Korean",
-  "watchedLanguage": "English",
-  "country": "South Korea",
-  "comments": "Updated comment: Still one of my favorite dramas.",
-  "ratings": 5,
-  "genres": ["Romance", "Comedy"],
-  "network": ["Netflix", "tvN"],
-  "againWatchedDates": ["21-12-2023", "07-05-2024"],
-  "updatedOn": "15 September 2025",
-  "updatedDetails": "New Image has updated.",
-  "synopsis": "A South Korean heiress crash lands in North Korea after a paragliding accident, where she meets an army officer. Their story unfolds amidst political tension and heartfelt romance, blending suspense, comedy, and cultural contrast.",
-  "Duration": 60,
-  "topRatings": 1000
-}
-```
-
-⚡ Difference:
-- `showImage` changed to new version.
-- `comments` updated.
-- `updatedOn` refreshed.
-- `updatedDetails` changed from `"First time Uploaded"` to `"New Image has updated."`
