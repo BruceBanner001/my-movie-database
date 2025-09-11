@@ -96,6 +96,8 @@ jobs:
   deploy:
     needs: update-dataset
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages       # REQUIRED for Pages deployment
     steps:
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4
