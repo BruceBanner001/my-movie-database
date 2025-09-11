@@ -18,176 +18,100 @@
 # - Publishes via GitHub Pages
 #
 # ====================================================
-name: Excel → JSON Automation
+name: Weekly Excel -> JSON Update
 
 on:
-  # === Scheduled Run ===
-  # Runs every Sunday at 12:00 AM IST
-  # (IST = UTC +5:30 → 12:00 AM IST = 18:30 UTC Saturday)
   schedule:
-    - cron: "30 18 * * 6"
-
-  # === Manual Run ===
-  # Can be triggered manually from GitHub Actions UI
+    - cron: "30 18 * * 0"  # Every Sunday 12:00 AM IST (18:30 UTC Saturday)
   workflow_dispatch:
 
-  # === On Push Run ===
-  # Runs when any of these files change
-  push:
-    paths:
-      - create_update_backup_delete.py
-      - requirements.txt
-      - .github/workflows/update.yml
+permissions:
+  contents: write   # allow pushing JSON/images/backups
+  pages: write      # allow GitHub Pages deployment
+  id-token: write   # required for deploy-pages
 
 jobs:
-  update-dataset:
+  update-json:
     runs-on: ubuntu-latest
-
-    # Safety: Cancel run before GitHub's hard 6h limit
-    timeout-minutes: 355   # 5h 55m
-
-    env:
-      # === Customizable Settings ===
-      MAX_PER_RUN: 100              # Process only this many shows per run (set 0 for ALL)
-      KEEP_OLD_IMAGES_DAYS: 7       # Retain old images for this many days before deletion
-      GITHUB_PAGES_URL: "https://<your-username>.github.io/<your-repo>"  # 👈 CHANGE THIS
-      TZ: "Asia/Kolkata"            # Ensure timestamps are IST
-
     steps:
-      # === Step 1: Checkout repo ===
+      # Checkout repo
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      # === Step 2: Setup Python 3.11 ===
-      - name: Set Python 3.11
+      # Set up Python
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: 3.11
+          python-version: "3.11"
 
-      # === Step 3: Install dependencies ===
+      # Install dependencies
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      # === Step 4: Write service account JSON ===
-      # REQUIRED SECRET: GDRIVE_SERVICE_ACCOUNT
-      # - Value: contents of your Google Service Account JSON file
-      # - Example value (JSON):
-      #   {
-      #     "type": "service_account",
-      #     "project_id": "my-project-id",
-      #     "private_key_id": "xxxx",
-      #     "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEv...",
-      #     "client_email": "my-service-account@myproject.iam.gserviceaccount.com",
-      #     ...
-      #   }
-      # IMPORTANT: In Google Drive, share your Excel file with the `client_email` above
-      # (give Viewer access).
-      - name: Write service account JSON
-        run: echo "${{ secrets.GDRIVE_SERVICE_ACCOUNT }}" > GDRIVE_SERVICE_ACCOUNT.json
+      # Write Google Drive credentials
+      - name: Write Google Drive credentials
+        run: echo '${{ secrets.GDRIVE_SERVICE_ACCOUNT }}' > GDRIVE_SERVICE_ACCOUNT.json
 
-      # === Step 5: Write Excel file ID ===
-      # REQUIRED SECRET: EXCEL_FILE_ID
-      # - Value: Just the File ID from Google Drive (not the whole URL).
-      # - Example:
-      #   Drive link: https://drive.google.com/file/d/1AbCdEfGhIjKlMnOpQRsTuVWxyz/view?usp=sharing
-      #   File ID   : 1AbCdEfGhIjKlMnOpQRsTuVWxyz
-      - name: Write Excel file ID
+      # Write Excel File ID
+      - name: Write Excel File ID
         run: echo "${{ secrets.EXCEL_FILE_ID }}" > EXCEL_FILE_ID.txt
 
-      # === Step 6: Debug check for secrets ===
-      # This step confirms that EXCEL_FILE_ID.txt and GDRIVE_SERVICE_ACCOUNT.json exist.
-      # Helps diagnose issues if the script later says "❌ No Excel file available".
-      - name: Debug check for files
-        run: |
-          echo "🔎 Checking if secrets were written correctly..."
-          ls -l
-          echo "--- EXCEL_FILE_ID.txt ---"
-          cat EXCEL_FILE_ID.txt || echo "❌ Missing EXCEL_FILE_ID.txt"
-          echo "--- First 5 lines of GDRIVE_SERVICE_ACCOUNT.json ---"
-          head -n 5 GDRIVE_SERVICE_ACCOUNT.json || echo "❌ Missing GDRIVE_SERVICE_ACCOUNT.json"
-
-      # === Step 7: Run the Python update script ===
-      # Behavior:
-      # - If this run is triggered by schedule → SCHEDULED_RUN=true
-      #   → Script tries to fetch better images/synopsis even if already present.
-      # - Otherwise (push/manual) → SCHEDULED_RUN=false
-      #   → Script skips re-fetching if data already exists.
+      # Run update script
       - name: Run update script
-        run: |
-          if [[ "${{ github.event_name }}" == "schedule" ]]; then
-            export SCHEDULED_RUN=true
-          else
-            export SCHEDULED_RUN=false
-          fi
-          python create_update_backup_delete.py
+        run: python create_update_backup_delete.py
 
-      # === Step 8: Upload run report ===
-      # Each run creates reports/report_DDMMYYYY_HHMM.txt
-      # This artifact can be downloaded from Actions UI
-      - name: Upload run report
-        uses: actions/upload-artifact@v4
+      # Commit and push changes
+      - name: Commit and push changes
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add seriesData.json || true
+          if [ -d "images" ]; then git add images/; fi
+          if [ -d "backups" ]; then git add backups/; fi
+          git commit -m "Auto-update JSON and images" || echo "No changes to commit"
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:master
+
+      # Upload artifact for Pages
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          name: run-report
-          path: reports/*.txt
+          path: .
 
-      # === Step 9: Commit & Push changes ===
-      # Commits updated JSON, images, backups, old-images, and reports back to repo.
-      - name: Commit & Push changes
+  deploy:
+    needs: update-json
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      # ✅ Success email
+      - name: Send success email
         if: success()
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add seriesData.json images/ backups/ old-images/ reports/
-          git commit -m "Auto update: $(date +'%d-%B-%Y %H:%M IST')" || echo "No changes to commit"
-          git push
-
-      # === Step 10: Send Email Notification ===
-      # REQUIRED SECRETS (for Gmail example):
-      #   SMTP_SERVER   = smtp.gmail.com
-      #   SMTP_PORT     = 465
-      #   SMTP_USERNAME = subramanianthayuman@gmail.com
-      #   SMTP_PASSWORD = App Password (from Google App Passwords, NOT your normal password)
-      #   NOTIFY_EMAIL  = subramanianthayuman@gmail.com (or another recipient)
-      # Email Behavior:
-      # - Manual Run (workflow_dispatch) → Always send (success + failure)
-      # - Scheduled Run (schedule) → Send success + failure
-      # - Push Run → Send only on failure
-      - name: Send email with run report
-        if: |
-          github.event_name == 'workflow_dispatch' ||
-          github.event_name == 'schedule' ||
-          (github.event_name == 'push' && failure())
         uses: dawidd6/action-send-mail@v3
         with:
-          server_address: ${{ secrets.SMTP_SERVER }}
-          server_port: ${{ secrets.SMTP_PORT }}
+          server_address: smtp.gmail.com
+          server_port: 465
           username: ${{ secrets.SMTP_USERNAME }}
           password: ${{ secrets.SMTP_PASSWORD }}
-          to: ${{ secrets.NOTIFY_EMAIL }}
-          from: GitHub Actions <${{ secrets.SMTP_USERNAME }}>
-          secure: true
-          subject: >
-            ${{ 
-              github.event_name == 'workflow_dispatch' && job.status == 'success' && '[SUCCESS][Manual] Excel→JSON Workflow' ||
-              github.event_name == 'workflow_dispatch' && job.status == 'failure' && '[FAILED][Manual] Excel→JSON Workflow'  ||
-              github.event_name == 'schedule' && job.status == 'success' && '[SUCCESS][Weekly] Excel→JSON Workflow' ||
-              github.event_name == 'schedule' && job.status == 'failure' && '[FAILED][Weekly] Excel→JSON Workflow' ||
-              github.event_name == 'push' && job.status == 'failure' && '[FAILED][Push] Excel→JSON Workflow' ||
-              '[INFO] Excel→JSON Workflow'
-            }}
-          body: |
-            Hello,
+          subject: "✅ Weekly Excel → JSON Update Succeeded!"
+          to: "subramanianthayuman@gmail.com"
+          from: "GitHub Actions <subramanianthayuman@gmail.com>"
+          body: "The workflow succeeded and your JSON, images, and backups were updated + published."
 
-            Workflow Name : Excel → JSON Automation
-            Repository    : ${{ github.repository }}
-            Triggered By  : ${{ github.event_name }}
-            Status        : **${{ job.status }}**
-
-            Attached report contains:
-              - Data Created
-              - Data Updated
-              - Image Updated (Old && New)
-
-            Regards,
-            GitHub Actions Bot
-          attachments: reports/*.txt
+      # ❌ Failure email
+      - name: Send failure email
+        if: failure()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.SMTP_USERNAME }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          subject: "🚨 Weekly Excel → JSON Update FAILED!"
+          to: "subramanianthayuman@gmail.com"
+          from: "GitHub Actions <subramanianthayuman@gmail.com>"
+          body: "The workflow failed while updating your drama collection. Please check logs in GitHub Actions."
