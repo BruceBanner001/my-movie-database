@@ -99,7 +99,7 @@ _sheets_env = os.environ.get("SHEETS", "").strip()
 if _sheets_env:
     SHEETS = [s.strip() for s in _sheets_env.split(";") if s.strip()]
 else:
-    SHEETS = ["Sheet1"]
+    SHEETS = ["Sheet1;Feb 7 2023 Onwards"]
   # include any that exist
 # SHEETS = ["Feb 7 2023 Onwards"]  # include any that exist
 
@@ -596,10 +596,10 @@ CHANGE_TRACK_FIELDS = [
 # -----------------------------------------------------------------
 def sheet_base_offset(sheet_name: str) -> int:
     if sheet_name == "Sheet1":
+        return 100
+    if sheet_name == "Feb 7 2023 Onwards":
         return 1000
     if sheet_name == "Sheet2":
-        return 2000
-    if sheet_name == "Sheet3":
         return 3000
     return 0
 
