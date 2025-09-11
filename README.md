@@ -46,6 +46,13 @@ When updated via Excel manually, JSON includes:
 "updatedDetails": "Updated Ratings, ShowImage Mannually By Owner"
 ```
 
+## otherNames
+
+Every object has an `otherNames` property right after `showName`.  
+- Defaults to `[]` if no names are found.  
+- Parsed from Excel if provided (English first, others later).  
+- Extras beyond limit go into recommendations (only scheduled runs).  
+
 ## TODO Stubs
 
 - `fetch_other_names(show_name)`  

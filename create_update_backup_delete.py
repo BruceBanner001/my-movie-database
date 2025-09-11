@@ -99,13 +99,13 @@ _sheets_env = os.environ.get("SHEETS", "").strip()
 if _sheets_env:
     SHEETS = [s.strip() for s in _sheets_env.split(";") if s.strip()]
 else:
-    SHEETS = ["Feb 7 2023 Onwards"]
+    SHEETS = ["Sheet1"]
   # include any that exist
 # SHEETS = ["Feb 7 2023 Onwards"]  # include any that exist
 
 # Maximum number of shows to process per run (set to desired value in workflow env or here)
 # Example: set MAX_PER_RUN = 100 to process only 100 shows in a single workflow run.
-MAX_PER_RUN = int(os.environ.get("MAX_PER_RUN", "0"))  # 0 means no limit (process all)
+MAX_PER_RUN = int(os.environ.get("MAX_PER_RUN", "50"))  # 0 means no limit (process all)
 
 # If this run was triggered by schedule (weekly automatic workflow), set env var SCHEDULED_RUN=true
 # Workflow should set SCHEDULED_RUN=true for scheduled runs. For manual runs leave it unset or false.
@@ -700,11 +700,7 @@ def excel_to_objects(excel_file: str, sheet_name: str, existing_by_id: dict, rep
         obj["updatedDetails"] = "First time Uploaded"
 
         r = int(obj.get("ratings") or 0)
-        # Ensure topRatings never becomes zero:
-        # - if againWatchedDates is empty, treat its length as 1
-        dates = obj.get("againWatchedDates", [])
-        count = len(dates) if len(dates) > 0 else 1
-        obj["topRatings"] = r * count * 100
+        obj["topRatings"] = r * len(dates) * 100
 
         obj["Duration"] = None
 
@@ -772,6 +768,7 @@ def excel_to_objects(excel_file: str, sheet_name: str, existing_by_id: dict, rep
         ordered = {
             "showID": obj.get("showID"),
             "showName": obj.get("showName"),
+            "otherNames": obj.get("otherNames", []),
             "showImage": obj.get("showImage"),
             "watchStartedOn": obj.get("watchStartedOn"),
             "watchEndedOn": obj.get("watchEndedOn"),
