@@ -99,7 +99,7 @@ _sheets_env = os.environ.get("SHEETS", "").strip()
 if _sheets_env:
     SHEETS = [s.strip() for s in _sheets_env.split(";") if s.strip()]
 else:
-    SHEETS = ["Sheet1"]
+    SHEETS = ["Feb 7 2023 Onwards"]
   # include any that exist
 # SHEETS = ["Feb 7 2023 Onwards"]  # include any that exist
 
@@ -700,7 +700,11 @@ def excel_to_objects(excel_file: str, sheet_name: str, existing_by_id: dict, rep
         obj["updatedDetails"] = "First time Uploaded"
 
         r = int(obj.get("ratings") or 0)
-        obj["topRatings"] = r * len(dates) * 100
+        # Ensure topRatings never becomes zero:
+        # - if againWatchedDates is empty, treat its length as 1
+        dates = obj.get("againWatchedDates", [])
+        count = len(dates) if len(dates) > 0 else 1
+        obj["topRatings"] = r * count * 100
 
         obj["Duration"] = None
 
