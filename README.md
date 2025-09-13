@@ -60,3 +60,29 @@ Every object has an `otherNames` property right after `showName`.
 - `fetch_ratings(show_name)`  
 
 Implement enrichment logic using PREFERRED_SITE_ORDER.
+
+
+## Report Sections Explained
+
+Each workflow run produces `reports/report_YYYYMMDD_HHMM.txt` and `.html`.  
+Below are the sections you will see:
+
+### Added / Updated Records
+Lists all new or updated JSON objects processed in this run.
+
+### Deleted Records
+Shows IDs that were removed based on the `Deleting Records` sheet.  
+Each deleted object is also stored in `deleted-data/DELETED_DD_Month_YYYY_HHMM_<id>.json` for 30 days.
+
+### Exceed Max Length
+Lists objects whose synopsis exceeded the configured max length (default: 1000).  
+The report shows ID, name, site, and a clickable `Link` to the source.
+
+### Image Cleanup
+Summarizes how many images were moved from `images/` to `old-images/`  
+and how many were permanently deleted based on the `KEEP_OLD_IMAGES_DAYS` setting.
+
+### Workflow Status
+At the end of the report, you will see:
+- **WORKFLOW CONTINUED...** if the process hit the time limit and will resume in the next run.
+- **WORKFLOW COMPLETED FOR THE SHEET: <name>** when all rows for a sheet are done.
