@@ -434,7 +434,7 @@ def apply_manual_updates(excel_file: str, json_file: str):
         return
 
     if not os.path.exists(json_file):
-        print(\"No JSON file to update\")
+        print("No JSON file to update")
         return
 
     # load current JSON
@@ -486,14 +486,14 @@ def apply_manual_updates(excel_file: str, json_file: str):
             obj[k] = v
         obj['updatedOn'] = now_ist().strftime('%d %B %Y')
         # Use the explicit phrasing requested by the owner (note spelling)
-        obj['updatedDetails'] = f\"Updated {', '.join([words_capitalize(k) for k in upd.keys()])} Mannually By Owner\"
+        obj['updatedDetails'] = f"Updated {', '.join([words_capitalize(k) for k in upd.keys()])} Mannually By Owner"
         updated_objs.append(obj)
 
     if updated_objs:
         merged = sorted(by_id.values(), key=lambda x: x.get('showID', 0))
         with open(json_file, 'w', encoding='utf-8') as f:
             json.dump(merged, f, indent=4, ensure_ascii=False)
-        print(f\"✅ Applied {len(updated_objs)} manual updates\")
+        print(f"✅ Applied {len(updated_objs)} manual updates")
 
 
 
@@ -621,7 +621,8 @@ def update_json_from_excel(excel_file, json_file, sheet_names, max_per_run=0, ma
     process_deletions(excel_file, json_file, report_changes_by_sheet.setdefault('Deleting Records', {}))
     # reload after deletions
     if os.path.exists(json_file):
-        try: with open(json_file,'r',encoding='utf-8') as f: old_objects = json.load(f)
+        try: 
+            with open(json_file,'r',encoding='utf-8') as f: old_objects = json.load(f)
         except: old_objects = []
     old_by_id = {o['showID']: o for o in old_objects if 'showID' in o}
     merged_by_id = dict(old_by_id)
@@ -693,10 +694,13 @@ if __name__ == '__main__':
     # Try to download excel if possible
     try:
         if os.path.exists(EXCEL_FILE_ID_TXT):
-            with open(EXCEL_FILE_ID_TXT,'r') as f: excel_id = f.read().strip()
-        else: excel_id = None
+            with open(EXCEL_FILE_ID_TXT, 'r') as f:
+                excel_id = f.read().strip()
+        else:
+            excel_id = None
     except Exception:
         excel_id = None
+
     try:
         if excel_id and os.path.exists(SERVICE_ACCOUNT_FILE):
             download_from_gdrive(excel_id, LOCAL_EXCEL_FILE, SERVICE_ACCOUNT_FILE)
@@ -705,14 +709,23 @@ if __name__ == '__main__':
                 print("⚠️ Excel not available locally; continuing if a local file exists.")
     except Exception as e:
         print(f"⚠️ Google Drive fetch failed: {e}")
-    # apply manual updates if function exists
+
+    # Apply manual updates if function exists
     try:
         if 'apply_manual_updates' in globals():
             apply_manual_updates = globals()['apply_manual_updates']
             apply_manual_updates(LOCAL_EXCEL_FILE, JSON_FILE)
     except Exception as e:
         logd(f"apply_manual_updates error: {e}")
-    # run update
-    update_json_from_excel(LOCAL_EXCEL_FILE, JSON_FILE, SHEETS, max_per_run=MAX_PER_RUN, max_run_time_minutes=MAX_RUN_TIME_MINUTES)
+
+    # Run update
+    moved, removed = update_json_from_excel(
+        LOCAL_EXCEL_FILE,
+        JSON_FILE,
+        SHEETS,
+        max_per_run=MAX_PER_RUN,
+        max_run_time_minutes=MAX_RUN_TIME_MINUTES
+    )
+
     print("All done.")
-    return moved, removed
+    print(f"Moved: {moved}, Removed: {removed}")
