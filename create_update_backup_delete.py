@@ -58,6 +58,18 @@ from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseDownload
 from google.oauth2 import service_account
 
+def normalize_list_from_csv(cell_value):
+    """
+    Convert a comma-separated cell value into a clean list of strings.
+    Example: "Action, Drama, Thriller" -> ["Action", "Drama", "Thriller"]
+    """
+    if not cell_value:
+        return []
+    if isinstance(cell_value, list):
+        return [str(x).strip() for x in cell_value if str(x).strip()]
+    return [x.strip() for x in str(cell_value).split(",") if x.strip()]
+
+
 # ---------------------- Timezone & timestamps ----------------------
 IST = timezone(timedelta(hours=5, minutes=30))
 
@@ -608,6 +620,8 @@ def write_report(report_changes_by_sheet, report_path):
 
 # ---------------------- Main updater ----------------------
 def update_json_from_excel(excel_file, json_file, sheet_names, max_per_run=0, max_run_time_minutes=0):
+    moved = 0
+    removed = 0
     if os.path.exists(json_file):
         try:
             with open(json_file, 'r', encoding='utf-8') as f: old_objects = json.load(f)
