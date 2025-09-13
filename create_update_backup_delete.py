@@ -678,6 +678,7 @@ def update_json_from_excel(excel_file, json_file, sheet_names, max_per_run=0, ma
     print(f"✅ Status written → {STATUS_JSON}")
 
 # ---------------------- Entrypoint helpers ----------------------
+    return moved, removed
 def download_from_gdrive(file_id, destination, service_account_file):
     creds = service_account.Credentials.from_service_account_file(service_account_file, scopes=["https://www.googleapis.com/auth/drive.readonly"])
     service = build("drive","v3", credentials=creds)
