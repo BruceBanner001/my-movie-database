@@ -4,109 +4,134 @@
 name: Excel → JSON Automation
 
 on:
+  schedule:
+    - cron: "30 18 * * 6"  # Sunday 00:00 AM IST (Saturday 18:30 UTC)
   workflow_dispatch:
     inputs:
-      max_run_time_minutes:
+      MAX_RUN_MINUTES:
         description: 'Max run time in minutes for this run (0 = no time limit)'
         required: false
-        default: ''
-  schedule:
-    - cron: '0 2 * * 0'  # weekly at 02:00 UTC (adjust as needed)
+        default: '0'
 
 permissions:
-  contents: read
-  actions: write
-  checks: write
+  contents: write
+  pages: write
+  id-token: write
 
 jobs:
-  update:
+  update-dataset:
+    name: Excel → JSON Conversion Job
     runs-on: ubuntu-latest
+    timeout-minutes: 355
+
     env:
-      GDRIVE_SERVICE_ACCOUNT: ${{ secrets.GDRIVE_SERVICE_ACCOUNT }}
-      EXCEL_FILE_ID: ${{ secrets.EXCEL_FILE_ID }}
-      SCHEDULED_RUN: ${{ github.event_name == 'schedule' && 'true' || 'false' }}
-      MAX_RUN_TIME_MINUTES: ${{ github.event.inputs.max_run_time_minutes || '0' }}
-      MAX_PER_RUN: ${{ env.MAX_PER_RUN || '0' }}
-      DEBUG_FETCH: 'false'
+      MAX_PER_RUN: 100
+      KEEP_OLD_IMAGES_DAYS: 7
+      GITHUB_PAGES_URL: "https://BruceBanner001.github.io/my-movie-database"
+      TZ: "Asia/Kolkata"
+
     steps:
-      - name: Checkout
+      - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: 3.11
 
-      - name: Install requirements
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Write Google Drive credentials
         run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          echo "$GDRIVE_SERVICE_ACCOUNT" > GDRIVE_SERVICE_ACCOUNT.json
+        env:
+          GDRIVE_SERVICE_ACCOUNT: ${{ secrets.GDRIVE_SERVICE_ACCOUNT }}
 
-      - name: Run gitleaks scan (detect potential secrets)
-        uses: zricethezav/gitleaks-action@v2
-        with:
-          args: --report-format json --report-path gitleaks-report.json || true
+      - name: Write Excel File ID
+        run: |
+          echo "$EXCEL_FILE_ID" > EXCEL_FILE_ID.txt
+        env:
+          EXCEL_FILE_ID: ${{ secrets.EXCEL_FILE_ID }}
+
+      - name: Debug check for secrets
+        run: |
+          echo "🔎 Files in workspace:"
+          ls -la
+          echo ""
+          echo "=== EXCEL_FILE_ID.txt ==="
+          cat EXCEL_FILE_ID.txt || echo "❌ Missing EXCEL_FILE_ID.txt"
+          echo ""
+          echo "=== GDRIVE_SERVICE_ACCOUNT.json (first 5 lines) ==="
+          head -n 5 GDRIVE_SERVICE_ACCOUNT.json || echo "❌ Missing GDRIVE_SERVICE_ACCOUNT.json"
 
       - name: Run update script
-        id: run_update
         run: |
+          if [[ "${{ github.event_name }}" == "schedule" ]]; then
+            export SCHEDULED_RUN=true
+          else
+            export SCHEDULED_RUN=false
+          fi
+          export MAX_PER_RUN="${{ env.MAX_PER_RUN }}"
+          export KEEP_OLD_IMAGES_DAYS="${{ env.KEEP_OLD_IMAGES_DAYS }}"
+          export GITHUB_PAGES_URL="${{ env.GITHUB_PAGES_URL }}"
+          export MAX_RUN_MINUTES="${{ github.event.inputs.MAX_RUN_MINUTES || '0' }}"
+          # Optionally set SHEETS via env if you need custom sheets:
+          # export SHEETS="Sheet1;Feb 7 2023 Onwards"
           python create_update_backup_delete.py
 
-      - name: Prepare report and secrets status for email
-        id: prepare_report
-        run: |
-          set -e
-          latest_txt=$(ls reports/report_*.txt 2>/dev/null | sort | tail -n1 || true)
-          latest_html="${latest_txt%.txt}.html"
-          report_html=""
-          if [ -f "$latest_html" ]; then
-            report_html=$(cat "$latest_html")
-          elif [ -f "$latest_txt" ]; then
-            ts="$(date -u +"%d %B %Y_%H.%M")"
-            report_html="<html><body><h1>$ts</h1><pre>$(cat "$latest_txt")</pre></body></html>"
-          else
-            report_html="<html><body><h1>No Report</h1></body></html>"
-          fi
-          secrets_found="false"
-          secrets_details=""
-          if [ -f gitleaks-report.json ]; then
-            count=$(jq '. | length' gitleaks-report.json || echo 0)
-            if [ "$count" -gt 0 ]; then
-              secrets_found="true"
-              secrets_details="$(jq -r '.[] | "File: \(.file) | Rule: \(.rule) | Description: \(.description)"' gitleaks-report.json | sed ':a;N;$!ba;s/\n/<br\/>' )"
-            fi
-          fi
-          if [ "$secrets_found" == "false" ]; then
-            final_html="<html><body><h2 style='color:green'>NO SECRETS EXPOSED..</h2>$(echo "$report_html" )</body></html>"
-          else
-            final_html="<html><body><h2 style='color:red'>⚠️ SECRETS EXPOSED!</h2><div>$secrets_details</div><hr/>$(echo "$report_html" )</body></html>"
-          fi
-          echo "::set-output name=report_html::$(echo "$final_html" | sed 's/%/%25/g' | sed 's/\n/%0A/g' | sed 's/\r/%0D/g')"
-          if [ -f reports/status.json ]; then
-            cont=$(jq -r .continued reports/status.json || echo false)
-          else
-            cont="false"
-          fi
-          echo "::set-output name=continued::${cont}"
+      - name: Upload run report
+        uses: actions/upload-artifact@v4
+        with:
+          name: run-report
+          path: reports/*.txt
 
-      - name: Send email with report (HTML body)
+      - name: Commit & Push changes
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add seriesData.json images/ backups/ old-images/ reports/ || true
+          git commit -m "Auto update: $(date +'%d-%B-%Y %H:%M IST')" || echo "No changes to commit"
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:master
+
+      - name: Upload artifact for Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+  deploy:
+    name: Deploy & Notify Job
+    needs: update-dataset
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages       # REQUIRED for Pages deployment
+    steps:
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
+
+      - name: Send success email
+        if: success()
         uses: dawidd6/action-send-mail@v3
         with:
-          server_address: smtp.example.com
-          server_port: 587
+          server_address: smtp.gmail.com
+          server_port: 465
           username: ${{ secrets.SMTP_USERNAME }}
           password: ${{ secrets.SMTP_PASSWORD }}
-          subject: "JSON Update Report - ${{ steps.prepare_report.outputs.continued == 'true' && '[CONTINUED]' || '[FINAL]' }} $(date -u +' %d %B %Y_%H.%M')"
-          from: 'noreply@example.com'
+          subject: "✅ Excel → JSON Update Succeeded!"
           to: ${{ secrets.NOTIFY_EMAIL }}
-          body: ${{ steps.prepare_report.outputs.report_html }}
-          is_html: true
+          from: "GitHub Actions <${{ secrets.NOTIFY_EMAIL }}>"
+          attachments: reports/*.txt
 
-      - name: Re-dispatch workflow if continuation required
-        if: ${{ steps.prepare_report.outputs.continued == 'true' }}
-        run: |
-          echo "Continuation requested — re-dispatching workflow for next cycle."
-          owner_repo="${{ github.repository }}"
-          workflow_file="update.yml"
-          ref="main"
-          curl -s -X POST             -H "Accept: application/vnd.github+json"             -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}"             https://api.github.com/repos/$owner_repo/actions/workflows/$workflow_file/dispatches             -d "{"ref":"$ref"}"
+      - name: Send failure email
+        if: failure()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.SMTP_USERNAME }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          subject: "🚨 Excel → JSON Update FAILED!"
+          to: ${{ secrets.NOTIFY_EMAIL }}
+          from: "GitHub Actions <${{ secrets.NOTIFY_EMAIL }}>"
+          attachments: reports/*.txt
