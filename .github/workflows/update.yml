@@ -11,7 +11,7 @@ on:
       MAX_RUN_MINUTES:
         description: 'Max run time in minutes for this run (0 = no time limit)'
         required: false
-        default: '0'
+        default: '5'
 
 permissions:
   contents: write
