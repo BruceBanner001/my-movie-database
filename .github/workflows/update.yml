@@ -1,4 +1,7 @@
-name: Update JSON
+# File: .github/workflows/update.yml
+# Fully-documented workflow that runs the edited Python script directly.
+# Includes email attachments per PROJECT_REQUIREMENTS.md (reports/*.txt).
+name: Excel → JSON Automation
 
 on:
   workflow_dispatch:
