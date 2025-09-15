@@ -1,10 +1,7 @@
 # ============================================================================
 # Workflow: Excel → JSON Automation
-# Purpose : Automate weekly + manual Excel → JSON updates, backups, images,
-#           and reports for "my-movie-database".
-# Triggers:
-#   - Manual: workflow_dispatch (user presses "Run workflow")
-#   - Automatic: schedule → every Sunday at 12:00 UTC
+# Purpose : Automate weekly + manual Excel → JSON updates, deletions, backups,
+#           and run reports (TXT only) for "my-movie-database".
 # ============================================================================
 name: Excel → JSON Automation
 
@@ -14,9 +11,14 @@ on:
       MAX_RUN_MINUTES:
         description: 'Max run time in minutes for this run (0 = no time limit)'
         required: false
-        default: '120'
+        default: '180'
   schedule:
-    - cron: '0 12 * * 0'  # Sunday 12:00 UTC
+    - cron: '0 12 * * 0'   # Sunday 12:00 UTC
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
 
 jobs:
   update:
@@ -31,7 +33,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
@@ -40,15 +42,13 @@ jobs:
 
       - name: Write GDrive service account (if provided)
         if: ${{ secrets.GDRIVE_SERVICE_ACCOUNT != '' }}
-        run: |
-          echo "${{ secrets.GDRIVE_SERVICE_ACCOUNT }}" > GDRIVE_SERVICE_ACCOUNT.json
+        run: echo "${{ secrets.GDRIVE_SERVICE_ACCOUNT }}" > GDRIVE_SERVICE_ACCOUNT.json
 
-      - name: Write EXCEL_FILE_ID (if provided)
+      - name: Write Excel File ID (if provided)
         if: ${{ secrets.EXCEL_FILE_ID != '' }}
-        run: |
-          echo "${{ secrets.EXCEL_FILE_ID }}" > EXCEL_FILE_ID.txt
+        run: echo "${{ secrets.EXCEL_FILE_ID }}" > EXCEL_FILE_ID.txt
 
-      - name: Set MAX_RUN_TIME_MINUTES based on trigger
+      - name: Set MAX_RUN_TIME_MINUTES
         run: |
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
             echo "MAX_RUN_TIME_MINUTES=${{ github.event.inputs.MAX_RUN_MINUTES }}" >> $GITHUB_ENV
@@ -57,32 +57,40 @@ jobs:
           fi
 
       - name: Run update script
-        id: run_update
         run: |
           if [[ "${{ github.event_name }}" == "schedule" ]]; then
             export SCHEDULED_RUN=true
           else
             export SCHEDULED_RUN=false
           fi
-          python create_update_backup_delete.py || exit 2
+          python create_update_backup_delete.py
 
-      - name: Upload reports (TXT only)
+      - name: Upload TXT reports
         uses: actions/upload-artifact@v4
         with:
           name: reports
           path: reports/*.txt
 
-      - name: Check for accidental secret leakage
+      - name: Check for secret exposure
         run: |
           mkdir -p reports
           exposed=false
-          if [ -n "${{ secrets.EXCEL_FILE_ID }}" ] && grep -R --binary-files=without-match -F "${{ secrets.EXCEL_FILE_ID }}" . >/dev/null 2>&1; then
+          if [ -n "${{ secrets.EXCEL_FILE_ID }}" ] && grep -R -F "${{ secrets.EXCEL_FILE_ID }}" .; then
             exposed=true
           fi
-          if [ -n "${{ secrets.GDRIVE_SERVICE_ACCOUNT }}" ] && grep -R --binary-files=without-match -F "${{ secrets.GDRIVE_SERVICE_ACCOUNT }}" . >/dev/null 2>&1; then
+          if [ -n "${{ secrets.GDRIVE_SERVICE_ACCOUNT }}" ] && grep -R -F "${{ secrets.GDRIVE_SERVICE_ACCOUNT }}" .; then
             exposed=true
           fi
           echo "SecretsExposed:${exposed}" > reports/secrets_status.txt
+
+      - name: Commit & Push changes
+        if: success()
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add seriesData.json reports/ images/ backups/ deleted-data/ || true
+          git commit -m "Auto update: $(date -u +'%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
+          git push || echo "git push failed"
 
       - name: Send success email
         if: success()
@@ -101,6 +109,7 @@ jobs:
             Run type: ${{ github.event_name }}
             Outcome: SUCCESS
             Run timestamp: $(date -u)
+
             See attached run report.
           attachments: reports/*.txt
 
@@ -121,18 +130,9 @@ jobs:
             Run type: ${{ github.event_name }}
             Outcome: FAILURE
             Run timestamp: $(date -u)
+
             See attached run report.
           attachments: reports/*.txt
 
-      - name: Commit and push changes
-        if: success()
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add seriesData.json reports/ images/ backups/ deleted-data/ || true
-          git commit -m "Automated update: $(date -u +'%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
-          git push || echo "git push failed"
-
       - name: Clean up
-        run: |
-          rm -f EXCEL_FILE_ID.txt GDRIVE_SERVICE_ACCOUNT.json
+        run: rm -f EXCEL_FILE_ID.txt GDRIVE_SERVICE_ACCOUNT.json
