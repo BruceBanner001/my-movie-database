@@ -1,38 +1,18 @@
-# ==========================================
-# Excel → JSON Automation - Python Dependencies
-# ==========================================
-# NOTE:
-# Email notifications are NOT handled in Python.
-# They are sent using the GitHub Action:
-#   dawidd6/action-send-mail
-# So no SMTP/email libraries are required here.
-# Only include packages that the Python script uses.
-# ==========================================
-
-# === Core Excel & JSON processing ===
-pandas==2.2.2            # Read Excel files and handle tabular data
-openpyxl>=3.1.2          # Engine for pandas to read .xlsx files
-
-# === Networking & Requests ===
-requests>=2.31.0         # HTTP requests for downloading images and fetching web pages
-
-# === Image Processing ===
-Pillow>=10.2.0           # Resize and save cover images (Pillow is the modern PIL fork)
-
-# === Search Engines ===
-ddgs==9.5.5              # DuckDuckGo Search (image + text search fallback used in script)
-
-# === Synopsis Extraction (HTML parsing) ===
-beautifulsoup4>=4.12.2   # Parse HTML pages (AsianWiki, MyDramaList, etc.)
-lxml>=4.9.3              # Fast parser for BeautifulSoup
-
-# === Google Drive API (private Excel fetch) ===
+# ============================================================================
+# requirements.txt
+# Purpose: Python dependencies for the Excel → JSON automation script.
+#
+# Keep this file minimal: only packages the script actually uses.
+# When upgrading packages, prefer pinning major versions to avoid surprises.
+# ============================================================================
+pandas==2.2.2
+openpyxl>=3.1.2
+requests>=2.31.0
+Pillow>=10.2.0
+ddgs==9.5.5
+beautifulsoup4>=4.12.2
+lxml>=4.9.3
 google-api-python-client>=2.100.0
 google-auth>=2.23.0
 google-auth-httplib2>=0.1.0
 google-auth-oauthlib>=1.1.0
-
-# === Optional / Future (uncomment if needed) ===
-# httpx>=0.24.0          # Async HTTP client - for future concurrency optimizations
-# aiohttp>=3.8.4         # Async HTTP used with asyncio (alternative)
-# requests-futures>=1.0  # Simple futures wrapper for requests (lightweight concurrency)
