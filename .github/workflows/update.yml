@@ -54,35 +54,8 @@ jobs:
 
       - name: Download Excel from Google Drive
         run: |
-          if [ -f EXCEL_FILE_ID.txt ] && [ -f GDRIVE_SERVICE_ACCOUNT.json ]; then
-            echo "⬇️ Downloading Excel from Google Drive..."
-            pip install gdown google-auth google-auth-oauthlib google-api-python-client
-            cat > download_excel.py <<'PYCODE'
-import os, io
-from googleapiclient.discovery import build
-from googleapiclient.http import MediaIoBaseDownload
-from google.oauth2.service_account import Credentials
-
-file_id = open("EXCEL_FILE_ID.txt").read().strip()
-creds = Credentials.from_service_account_file(
-    "GDRIVE_SERVICE_ACCOUNT.json",
-    scopes=["https://www.googleapis.com/auth/drive.readonly"]
-)
-service = build("drive", "v3", credentials=creds)
-request = service.files().get_media(fileId=file_id)
-fh = io.FileIO("local-data.xlsx", "wb")
-downloader = MediaIoBaseDownload(fh, request)
-done = False
-while not done:
-    status, done = downloader.next_chunk()
-    if status:
-        print(f"Download {int(status.progress()*100)}%.")
-print("✅ Download complete → local-data.xlsx")
-PYCODE
-            python download_excel.py
-          else
-            echo "⚠️ Missing EXCEL_FILE_ID.txt or GDRIVE_SERVICE_ACCOUNT.json, skipping download"
-          fi
+          pip install gdown google-auth google-auth-oauthlib google-api-python-client
+          python scripts/download_excel.py
 
       - name: Set MAX_RUN_TIME_MINUTES
         run: |
@@ -171,4 +144,4 @@ PYCODE
           attachments: reports/*.txt
 
       - name: Clean up
-        run: rm -f EXCEL_FILE_ID.txt GDRIVE_SERVICE_ACCOUNT.json download_excel.py
+        run: rm -f EXCEL_FILE_ID.txt GDRIVE_SERVICE_ACCOUNT.json local-data.xlsx
