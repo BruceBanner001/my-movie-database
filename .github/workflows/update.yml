@@ -41,12 +41,16 @@ jobs:
         run: python -m pip install --upgrade pip && pip install -r requirements.txt
 
       - name: Write GDrive service account (if provided)
-        if: ${{ secrets.GDRIVE_SERVICE_ACCOUNT != '' }}
-        run: echo "${{ secrets.GDRIVE_SERVICE_ACCOUNT }}" > GDRIVE_SERVICE_ACCOUNT.json
+        run: |
+          if [ -n "${{ secrets.GDRIVE_SERVICE_ACCOUNT }}" ]; then
+            echo "${{ secrets.GDRIVE_SERVICE_ACCOUNT }}" > GDRIVE_SERVICE_ACCOUNT.json
+          fi
 
       - name: Write Excel File ID (if provided)
-        if: ${{ secrets.EXCEL_FILE_ID != '' }}
-        run: echo "${{ secrets.EXCEL_FILE_ID }}" > EXCEL_FILE_ID.txt
+        run: |
+          if [ -n "${{ secrets.EXCEL_FILE_ID }}" ]; then
+            echo "${{ secrets.EXCEL_FILE_ID }}" > EXCEL_FILE_ID.txt
+          fi
 
       - name: Set MAX_RUN_TIME_MINUTES
         run: |
