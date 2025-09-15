@@ -728,7 +728,8 @@ if __name__ == '__main__':
     if _sheets_env:
         SHEETS = [s.strip() for s in _sheets_env.split(";") if s.strip()]
     else:
-        SHEETS = ["Sheet1", "Feb 7 2023 Onwards"]
+        # SHEETS = ["Sheet1", "Feb 7 2023 Onwards"]
+        SHEETS = ["Sheet1"]
     # Apply manual updates first
     try:
         apply_manual_updates(LOCAL_EXCEL_FILE, JSON_FILE)
