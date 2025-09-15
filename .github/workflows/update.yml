@@ -83,11 +83,63 @@ jobs:
           git commit -m "Automated update: $(date -u '+%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
           git push
 
+<<<<<<< HEAD
       # ------------------------------------------------------
       # 7. Upload reports as GitHub Action artifacts
       # ------------------------------------------------------
       - name: Upload reports
         if: always()
+=======
+      - name: Download Excel from Google Drive
+        run: |
+          if [ -f EXCEL_FILE_ID.txt ] && [ -f GDRIVE_SERVICE_ACCOUNT.json ]; then
+            echo "⬇️ Downloading Excel from Google Drive..."
+            pip install gdown google-auth google-auth-oauthlib google-api-python-client
+            python - <<'EOF'
+import os, io
+from googleapiclient.discovery import build
+from googleapiclient.http import MediaIoBaseDownload
+from google.oauth2.service_account import Credentials
+
+file_id = open("EXCEL_FILE_ID.txt").read().strip()
+creds = Credentials.from_service_account_file(
+    "GDRIVE_SERVICE_ACCOUNT.json",
+    scopes=["https://www.googleapis.com/auth/drive.readonly"]
+)
+service = build("drive", "v3", credentials=creds)
+request = service.files().get_media(fileId=file_id)
+fh = io.FileIO("local-data.xlsx", "wb")
+downloader = MediaIoBaseDownload(fh, request)
+done = False
+while not done:
+    status, done = downloader.next_chunk()
+    if status:
+        print(f"Download {int(status.progress()*100)}%.")
+print("✅ Download complete → local-data.xlsx")
+EOF
+          else
+            echo "⚠️ Missing EXCEL_FILE_ID.txt or GDRIVE_SERVICE_ACCOUNT.json, skipping download"
+          fi
+
+      - name: Set MAX_RUN_TIME_MINUTES
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "MAX_RUN_TIME_MINUTES=${{ github.event.inputs.MAX_RUN_MINUTES }}" >> $GITHUB_ENV
+          else
+            echo "MAX_RUN_TIME_MINUTES=240" >> $GITHUB_ENV
+          fi
+
+      - name: Run update script
+        run: |
+          if [[ "${{ github.event_name }}" == "schedule" ]]; then
+            export SCHEDULED_RUN=true
+          else
+            export SCHEDULED_RUN=false
+          fi
+          python create_update_backup_delete.py
+
+      - name: Upload TXT reports
+>>>>>>> 0ec4480 (Fixed Bugs)
         uses: actions/upload-artifact@v4
         with:
           name: run-reports
