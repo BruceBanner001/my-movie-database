@@ -1,86 +1,60 @@
 # ============================================================================
 # Script: create_update_backup_delete.py
 # Purpose: Automate download of Excel → JSON transformation, image management,
-#          backups, and report generation for the "my-movie-database" repo.
+#          backups, deletions, and run report generation for "my-movie-database".
 #
 # Overview:
-#   - Downloads a private Excel (via Google Drive service account) or reads a local
-#     file named `local-data.xlsx`.
-#   - Converts rows in configured sheets into JSON objects and writes `seriesData.json`.
-#   - Fetches/resizes cover images into `images/`, moves replaced images into `old-images/`.
-#   - Fetches and truncates synopses (caching applies unless SCHEDULED_RUN=true).
-#   - Supports manual updates via a sheet named "manual update".
-#   - Supports deletions via a sheet named "Deleting Records".
-#   - Produces run reports into `reports/` and writes a status JSON at `reports/status.json`.
+#   - Downloads/reads Excel (local-data.xlsx) and transforms configured sheets to seriesData.json.
+#   - Handles image fetching, synopsis fetching (site-prioritized), backups of changed items.
+#   - Handles deletions via "Deleting Records" sheet and writes deleted objects to deleted-data/.
+#   - Produces TXT-only run reports in reports/ and a status JSON at reports/status.json.
+#   - Saves progress to .progress/progress.json so long runs can resume.
 #
-# Key design goals (from PROJECT_REQUIREMENTS.md):
-#   - Caching: avoid re-fetching images/synopses unless SCHEDULED_RUN is true.
-#   - Chunking: support MAX_PER_RUN to limit items per run.
-#   - Time-limited runs: support MAX_RUN_TIME_MINUTES (0 = no limit) and persist progress.
-#   - Safety: fail loudly when critical inputs are missing (helps CI surface errors).
+# Environment variables (set in workflow or shell):
+#   - EXCEL_FILE_ID (optional): Google Drive file id for the Excel file (workflow writes EXCEL_FILE_ID.txt)
+#   - GDRIVE_SERVICE_ACCOUNT (optional): service account JSON string (workflow writes GDRIVE_SERVICE_ACCOUNT.json)
+#   - MAX_PER_RUN: integer, 0 = all (default 0)
+#   - MAX_RUN_TIME_MINUTES: integer, 0 = no limit (set by workflow; manual vs scheduled)
+#   - KEEP_OLD_IMAGES_DAYS: days to keep old images before cleanup (default 7)
+#   - GITHUB_PAGES_URL: github pages base URL for building showImage links
+#   - SHEETS: optional semicolon-separated sheet names (e.g. "Sheet1;Manual Update")
+#   - SCHEDULED_RUN: "true"/"false" - scheduled run flag (workflow sets this)
+#   - DEBUG_FETCH: "true"/"false" - enable debug logging for fetchers
 #
-# ENVIRONMENT VARIABLES (set in GitHub Actions workflow or your shell):
-#   - GDRIVE_SERVICE_ACCOUNT : JSON string written to GDRIVE_SERVICE_ACCOUNT.json by workflow (optional).
-#   - EXCEL_FILE_ID          : Google Drive file ID (if using remote Excel; workflow writes EXCEL_FILE_ID.txt).
-#   - MAX_PER_RUN            : Max number of items per sheet to process this run (0 = all).
-#   - MAX_RUN_TIME_MINUTES   : Max run time (0 = no time limit). See README for behavior.
-#   - KEEP_OLD_IMAGES_DAYS   : Days to keep files in old-images before deletion (default 7).
-#   - GITHUB_PAGES_URL       : URL used to build absolute showImage links (default uses repo gh-pages URL).
-#   - SHEETS                 : Semicolon-separated sheet names (e.g. "Sheet1;Manual Update").
-#   - SCHEDULED_RUN          : "true"/"false". If true, script will attempt to refresh existing images/synopsis.
-#   - DEBUG_FETCH            : "true"/"false" to enable debug logs for fetches.
-#
-# OUTPUTS / ARTIFACTS:
-#   - seriesData.json        : Main JSON produced by the script (array of objects).
-#   - images/                : Downloaded/resized cover images (600x900 JPEG).
-#   - old-images/            : Previous images moved here on replacement (retention by KEEP_OLD_IMAGES_DAYS).
-#   - backups/               : JSON backups for changed objects per sheet run.
-#   - deleted-data/          : Individually saved deleted objects (DELETED_<timestamp>_<id>.json).
-#   - reports/               : Run reports (report_*.txt and .html) and status.json.
-#
-# Exit codes:
-#   - 0 : Success (>=1 records processed)
-#   - 2 : No records processed (treated as failure so CI picks it up)
-#   - 3 : Required Excel missing (fatal)
-#
-# IMPORTANT:
-#   - Keep SHEETS env aligned with actual sheet names in Excel.
-#   - For manual testing, you may place local-data.xlsx in repo root.
-#   - This file includes defensive checks so the CI will fail loudly when misconfigured.
+# Outputs:
+#   - seriesData.json (main dataset)
+#   - deleted-data/DELETED_<timestamp>_<id>.json (individual deleted objects)
+#   - backups/ (timestamped backups of changed items)
+#   - images/, old-images/
+#   - reports/report_<timestamp>.txt (run report, TXT only)
 # ============================================================================
-import os
-import io
-import re
-import json
-import time
-import random
-import requests
-import shutil
-import sys
+
+import os, re, sys, time, json, random, io, shutil
+from datetime import datetime, timedelta, timezone
 import pandas as pd
-from datetime import datetime, timezone, timedelta
+import requests
+from bs4 import BeautifulSoup
 from PIL import Image
 from io import BytesIO
-from bs4 import BeautifulSoup
-from ddgs import DDGS
-from googleapiclient.discovery import build
-from googleapiclient.http import MediaIoBaseDownload
-from google.oauth2 import service_account
 
-# ---------------------- Basic utilities & config ----------------------
+# Optional: ddgs for DuckDuckGo search (used if installed); otherwise fallback to requests only
+try:
+    from ddgs import DDGS
+    HAVE_DDGS = True
+except Exception:
+    HAVE_DDGS = False
+
+# Timezone (IST as requested in earlier conversation)
 IST = timezone(timedelta(hours=5, minutes=30))
 def now_ist():
     return datetime.now(IST)
 
 def filename_timestamp():
-    return now_ist().strftime("%d%m%Y_%H%M%S")
+    return now_ist().strftime("%d_%B_%Y_%H%M")
 
-# Paths and defaults (can be overriden via environment)
-EXCEL_FILE_ID_TXT = "EXCEL_FILE_ID.txt"
-SERVICE_ACCOUNT_FILE = "GDRIVE_SERVICE_ACCOUNT.json"
+# Paths and defaults
 LOCAL_EXCEL_FILE = "local-data.xlsx"
 JSON_FILE = "seriesData.json"
-
 BACKUP_DIR = "backups"
 IMAGES_DIR = "images"
 OLD_IMAGES_DIR = "old-images"
@@ -90,44 +64,23 @@ PROGRESS_DIR = ".progress"
 PROGRESS_FILE = os.path.join(PROGRESS_DIR, "progress.json")
 STATUS_JSON = os.path.join(REPORTS_DIR, "status.json")
 
-# Environment-driven configuration with safe defaults
-GITHUB_PAGES_URL = os.environ.get("GITHUB_PAGES_URL", "https://brucebanner001.github.io/my-movie-database/")
+# Config from env
+GITHUB_PAGES_URL = os.environ.get("GITHUB_PAGES_URL", "").strip() or "https://<your-username>.github.io/my-movie-database"
 MAX_PER_RUN = int(os.environ.get("MAX_PER_RUN", "0") or 0)
 MAX_RUN_TIME_MINUTES = int(os.environ.get("MAX_RUN_TIME_MINUTES", "0") or 0)
-SCHEDULED_RUN = os.environ.get("SCHEDULED_RUN", "false").lower() == "true"
-DELETED_LIFESPAN_DAYS = int(os.environ.get("DELETED_LIFESPAN_DAYS", "30") or 30)
 KEEP_OLD_IMAGES_DAYS = int(os.environ.get("KEEP_OLD_IMAGES_DAYS", "7") or 7)
+SCHEDULED_RUN = os.environ.get("SCHEDULED_RUN", "false").lower() == "true"
 DEBUG_FETCH = os.environ.get("DEBUG_FETCH", "false").lower() == "true"
 SYNOPSIS_MAX_LEN = int(os.environ.get("SYNOPSIS_MAX_LEN", "1000") or 1000)
 
-COVER_WIDTH, COVER_HEIGHT = 600, 900
-FORCE_REFRESH_IMAGES = False
-IMAGE_SEARCH_MAX_PER_QUERY = 6
-
-_sheets_env = os.environ.get("SHEETS", "").strip()
-if _sheets_env:
-    SHEETS = [s.strip() for s in _sheets_env.split(";") if s.strip()]
-else:
-    SHEETS = ["Sheet1"]
-
-PREFERRED_SITE_ORDER = {"Korean": ["asianwiki", "mydramalist"], "Chinese": ["mydramalist", "asianwiki"]}
-
-ALLOWED_SYNOP_SITES = ["asianwiki.com", "mydramalist.com", "netflix.com", "viki.com", "primevideo.com", "imdb.com"]
-
-HEADERS = {"User-Agent": "Mozilla/5.0"}
+HEADERS = {"User-Agent":"Mozilla/5.0"}
 
 def logd(msg):
     if DEBUG_FETCH:
-        print(f"[DEBUG] {msg}")
+        print("[DEBUG]", msg)
 
-def safe_filename(name: str) -> str:
+def safe_filename(name):
     return re.sub(r"[^A-Za-z0-9._-]+", "_", (name or "").strip())
-
-def cap_first(s: str):
-    return s[:1].upper() + s[1:] if s else s
-
-def words_capitalize(s: str):
-    return " ".join(w.capitalize() for w in (s or "").split())
 
 def ddmmyyyy(val):
     if pd.isna(val):
@@ -135,8 +88,6 @@ def ddmmyyyy(val):
     if isinstance(val, pd.Timestamp):
         return val.strftime("%d-%m-%Y")
     s = str(val).strip()
-    if re.match(r"^\d{2}-\d{2}-\d{4}$", s):
-        return s
     try:
         dt = pd.to_datetime(s, dayfirst=True, errors="coerce")
         if pd.isna(dt):
@@ -149,30 +100,30 @@ def load_progress():
     os.makedirs(PROGRESS_DIR, exist_ok=True)
     if os.path.exists(PROGRESS_FILE):
         try:
-            with open(PROGRESS_FILE, 'r', encoding='utf-8') as f:
+            with open(PROGRESS_FILE, "r", encoding="utf-8") as f:
                 return json.load(f)
         except Exception:
             return {}
     return {}
 
-def save_progress(progress: dict):
+def save_progress(progress):
     os.makedirs(PROGRESS_DIR, exist_ok=True)
-    with open(PROGRESS_FILE, 'w', encoding='utf-8') as f:
+    with open(PROGRESS_FILE, "w", encoding="utf-8") as f:
         json.dump(progress, f, indent=2)
 
-# ---------------------- Robust CSV list normalizer ----------------------
+# ---------------- Helpers for text cleaning / synopsis ----------------
+def clean_parenthesis_remove_cjk(s):
+    if not s: return s
+    return re.sub(r'\([^)]*[\u4e00-\u9fff\u3400-\u4dbf\uac00-\ud7af][^)]*\)', '', s)
+
+def normalize_whitespace_and_sentences(s):
+    if not s: return s
+    s = re.sub(r'\s+', ' ', s).strip()
+    s = re.sub(r'\.([^\s])', r'. \1', s)
+    return s
+
+# ---------------- Normalizer for comma lists ----------------
 def normalize_list_from_csv(cell_value, cap=False, strip=False):
-    """
-    Convert a comma-separated cell value into a clean list of strings.
-
-    Params:
-      - cell_value: string, list/tuple or None
-      - cap: if True capitalizes each item (first letter)
-      - strip: if True strips whitespace from items
-
-    Returns:
-      - list of cleaned strings (possibly empty)
-    """
     if cell_value is None:
         return []
     if isinstance(cell_value, (list, tuple)):
@@ -189,82 +140,36 @@ def normalize_list_from_csv(cell_value, cap=False, strip=False):
     return items
 
 def country_from_native(native):
-    """
-    Basic mapping from nativeLanguage to a country name.
-    Extend this mapping when you need more languages.
-    """
-    if not native:
-        return None
-    n = native.strip().lower()
-    if n in ("korean", "korea", "korean language"):
-        return "South Korea"
-    if n in ("chinese", "mandarin", "cantonese"):
-        return "China"
-    if n in ("japanese","japan"):
-        return "Japan"
-    if n in ("thai","thai language"):
-        return "Thailand"
-    if n in ("english","eng"):
-        return "United States"
+    if not native: return None
+    n = str(native).strip().lower()
+    if n in ("korean","korea","korean language"): return "South Korea"
+    if n in ("chinese","mandarin","cantonese"): return "China"
+    if n in ("japanese","japan"): return "Japan"
+    if n in ("thai","thai language"): return "Thailand"
+    if n in ("english","eng"): return "United States"
     return None
 
-# ---------------------- Image search & download helpers ----------------------
-def try_ddgs_images(query, max_results=IMAGE_SEARCH_MAX_PER_QUERY):
-    try:
-        with DDGS() as ddgs:
-            results = list(ddgs.images(query, max_results=max_results))
-            return [r.get('image') for r in results if r.get('image')]
-    except Exception as e:
-        logd(f"DDGS image search error: {e}")
-        return []
-
+# ---------------- Image helpers (simple downloader + resizing) ----------------
 def download_image_to(url, path):
     try:
-        resp = requests.get(url, headers=HEADERS, timeout=12)
-        if resp.status_code == 200 and resp.headers.get('content-type','').startswith('image'):
-            img = Image.open(BytesIO(resp.content))
-            img = img.convert('RGB').resize((COVER_WIDTH, COVER_HEIGHT), Image.LANCZOS)
-            img.save(path, format='JPEG', quality=95)
+        r = requests.get(url, headers=HEADERS, timeout=12)
+        if r.status_code == 200 and r.headers.get("content-type","").startswith("image"):
+            img = Image.open(BytesIO(r.content))
+            img = img.convert("RGB").resize((600,900), Image.LANCZOS)
+            img.save(path, format="JPEG", quality=90)
             return True
     except Exception as e:
-        logd(f"Image download failed: {e}")
+        logd(f"image download failed: {e}")
     return False
 
-def build_absolute_url(local_path: str) -> str:
-    local_path = local_path.replace('\\','/')
-    return GITHUB_PAGES_URL.rstrip('/') + '/' + local_path.lstrip('/')
+def build_absolute_url(local_path):
+    local_path = local_path.replace("\\","/")
+    return GITHUB_PAGES_URL.rstrip("/") + "/" + local_path.lstrip("/")
 
-def download_cover_image(show_name, year, networks=None, prefer_sites=None, existing_image_url=None, allow_replace=False):
-    # If no show_name or year -> cannot create filename; return None
-    if not show_name or not year:
-        return None
-    os.makedirs(IMAGES_DIR, exist_ok=True); os.makedirs(OLD_IMAGES_DIR, exist_ok=True)
-    safe_year = str(year) if year else "unknown"
-    filename = f"{safe_filename(show_name)}_{safe_year}.jpg"
-    local_path = os.path.join(IMAGES_DIR, filename)
-    if os.path.exists(local_path) and not FORCE_REFRESH_IMAGES and not allow_replace:
-        return build_absolute_url(local_path)
-    if existing_image_url and not SCHEDULED_RUN and not allow_replace:
-        return existing_image_url
-    queries = []
-    if prefer_sites:
-        for s in prefer_sites:
-            if s == 'asianwiki': queries.append(f"{show_name} {year} asianwiki poster")
-            if s == 'mydramalist': queries.append(f"{show_name} {year} mydramalist poster")
-    queries += [f"{show_name} {year} drama poster", f"{show_name} poster", f"{show_name} {year} poster"]
-    for q in queries:
-        logd(f"Image query: {q}")
-        urls = try_ddgs_images(q) or []
-        for url in urls:
-            if download_image_to(url, local_path):
-                logd(f"Saved image to {local_path}")
-                return build_absolute_url(local_path)
-        time.sleep(random.uniform(0.6,1.2))
-    logd(f"No image found for {show_name}")
-    return None
-
-# ---------------------- Synopsis fetch/parsing ----------------------
-def ddgs_text(query, max_results=6):
+# ---------------- Web helpers (DDGS optional) ----------------
+def try_ddgs_text(query, max_results=6):
+    if not HAVE_DDGS:
+        return []
     try:
         with DDGS() as dd:
             return list(dd.text(query, max_results=max_results))
@@ -272,102 +177,128 @@ def ddgs_text(query, max_results=6):
         logd(f"DDGS text error: {e}")
         return []
 
-def pick_best_result(results):
-    if not results:
-        return None
-    for r in results:
-        url = r.get('href') or r.get('url') or ''
-        if any(site in url for site in ALLOWED_SYNOP_SITES):
-            return url
-    return results[0].get('href') or results[0].get('url')
+def ddgs_images(query, max_results=6):
+    if not HAVE_DDGS:
+        return []
+    try:
+        with DDGS() as dd:
+            return [r.get("image") for r in dd.images(query, max_results=max_results) if r.get("image")]
+    except Exception as e:
+        logd(f"DDGS image error: {e}")
+        return []
 
 def fetch_page(url):
     try:
         r = requests.get(url, headers=HEADERS, timeout=12)
-        if r.status_code == 200: return r.text
+        if r.status_code == 200:
+            return r.text
     except Exception as e:
-        logd(f"Fetch page error: {e}")
+        logd(f"fetch page error: {e}")
     return None
 
 def parse_synopsis_from_html(html, base_url):
-    soup = BeautifulSoup(html, 'lxml')
-    text = soup.get_text(' ', strip=True)
+    soup = BeautifulSoup(html, "lxml")
+    text = soup.get_text(" ", strip=True)
+    syn = None; duration = None
+    # Try meta description first
+    meta = soup.find("meta", attrs={"name":"description"}) or soup.find("meta", attrs={"property":"og:description"})
+    if meta and meta.get("content"):
+        syn = meta.get("content")
+    # AsianWiki often has 'Plot' or 'Synopsis' paragraphs; try to find element with 'plot' or 'synopsis' in headers nearby
+    if not syn:
+        for h in soup.find_all(re.compile("^h[1-6]$")):
+            txt = h.get_text(" ", strip=True).lower()
+            if "plot" in txt or "synopsis" in txt or "story" in txt:
+                # get next sibling paragraphs
+                p = h.find_next("p")
+                if p:
+                    syn = p.get_text(" ", strip=True); break
+    # fallback: first paragraph
+    if not syn:
+        p = soup.find("p")
+        if p:
+            syn = p.get_text(" ", strip=True)
+    # duration extraction
     duration = None
     try:
-        duration = extract_duration_minutes(text)
+        lower = text.lower()
+        m = re.search(r"(\d+)\s*h(?:ours?)?\s*(\d+)?\s*m", lower)
+        if m:
+            hours = int(m.group(1)); mins = int(m.group(2) or 0); duration = hours*60 + mins
+        else:
+            m2 = re.search(r"runtime[^0-9]*(\d{1,3})", lower)
+            if m2: duration = int(m2.group(1))
     except Exception:
         duration = None
-    syn = None
-    if 'mydramalist.com' in base_url:
-        meta = soup.find('meta', attrs={'name':'description'}) or soup.find('meta', attrs={'property':'og:description'})
-        if meta and meta.get('content'): syn = meta['content']
-    if not syn and 'asianwiki.com' in base_url:
-        meta = soup.find('meta', attrs={'name':'description'}) or soup.find('meta', attrs={'property':'og:description'})
-        if meta and meta.get('content'): syn = meta['content']
-    if not syn and 'wikipedia.org' in base_url:
-        p = soup.find('p');
-        if p: syn = p.get_text(' ', strip=True)
-    if not syn and any(s in base_url for s in ['netflix.com','viki.com','primevideo.com','imdb.com']):
-        meta = soup.find('meta', attrs={'name':'description'}) or soup.find('meta', attrs={'property':'og:description'})
-        if meta and meta.get('content'): syn = meta['content']
-    if not syn:
-        lower = text.lower(); i = lower.find('synopsis')
-        if i != -1: syn = text[i:i+1500]
     return syn, duration, text
 
-def extract_duration_minutes(text):
-    text_l = text.lower()
-    m = re.search(r"(\\d+)\\s*h(?:our)?s?\\s*(\\d+)\\s*m(?:in)?", text_l)
-    if m: return int(m.group(1))*60 + int(m.group(2))
-    m = re.search(r"(\\d+)\\s*h(?:our)?s?", text_l)
-    if m: return int(m.group(1))*60
-    m = re.search(r"(\\d+)\\s*m(?:in|inute|inutes)\\b", text_l)
-    if m: return int(m.group(1))
-    m = re.search(r"runtime[^0-9]*?(\\d{1,3})", text_l)
-    if m: return int(m.group(1))
-    return None
+def pick_best_result(results):
+    if not results: return None
+    for r in results:
+        url = r.get("href") or r.get("url") or r.get("link") or ""
+        if any(site in url for site in ["mydramalist.com","asianwiki.com","wikipedia.org"]):
+            return url
+    return results[0].get("href") or results[0].get("url") or None
 
-def clean_and_truncate_synopsis(raw_text, max_len=SYNOPSIS_MAX_LEN):
-    txt = re.sub(r"\\s+"," ", (raw_text or "")).strip()
-    if len(txt) <= max_len: return txt
-    truncated = txt[:max_len]
-    if '.' in truncated:
-        truncated = truncated.rsplit('.',1)[0] + '.'
-    return truncated
+def ddgs_text(query):
+    # wrapper to prefer ddgs if available
+    if HAVE_DDGS:
+        return try_ddgs_text(query, max_results=6)
+    return []
 
+# ---------------- Improved synopsis fetcher ----------------
 def fetch_synopsis_and_duration(show_name, year, prefer_sites=None, existing_synopsis=None, allow_replace=False):
     if existing_synopsis and not SCHEDULED_RUN and not allow_replace:
-        return existing_synopsis, None, None, 0
+        return existing_synopsis, None, None, len(existing_synopsis)
+
     queries = []
     if prefer_sites:
         for s in prefer_sites:
-            if s=='mydramalist': queries.append(f"{show_name} {year} site:mydramalist.com synopsis")
-            if s=='asianwiki': queries.append(f"{show_name} {year} site:asianwiki.com synopsis")
-    fallback = [f"{show_name} {year} drama synopsis site:mydramalist.com", f"{show_name} {year} synopsis site:asianwiki.com", f"{show_name} {year} synopsis site:wikipedia.org"]
-    queries += fallback
+            if s == "asianwiki":
+                queries.append(f"{show_name} {year} site:asianwiki.com synopsis")
+            if s == "mydramalist":
+                queries.append(f"{show_name} {year} site:mydramalist.com synopsis")
+    queries += [
+        f"{show_name} {year} drama synopsis",
+        f"{show_name} {year} synopsis site:mydramalist.com",
+        f"{show_name} {year} synopsis site:asianwiki.com"
+    ]
+
     for q in queries:
         logd(f"Synopsis query: {q}")
-        results = ddgs_text(q, max_results=6)
-        if not results: continue
-        url = pick_best_result(results)
-        if not url: continue
-        html = fetch_page(url)
-        if not html: continue
-        syn, dur, full_text = parse_synopsis_from_html(html, url)
-        if syn:
-            orig_len = len(syn)
-            truncated = clean_and_truncate_synopsis(syn, SYNOPSIS_MAX_LEN)
-            return truncated, dur, url, orig_len
+        results = ddgs_text(q)
+        url = pick_best_result(results) if results else None
+        urls_to_try = [url] if url else []
+        # fallback: try basic guessed urls (not exhaustive)
+        for u in urls_to_try:
+            if not u: continue
+            html = fetch_page(u)
+            if not html: continue
+            syn, dur, fulltext = parse_synopsis_from_html(html, u)
+            if syn:
+                syn = clean_parenthesis_remove_cjk(syn)
+                syn = normalize_whitespace_and_sentences(syn)
+                domain = re.sub(r'^https?://(www\.)?', '', u).split('/')[0]
+                label = "AsianWiki" if "asianwiki" in domain else ("MyDramaList" if "mydramalist" in domain else domain)
+                syn_with_src = f"{syn} (Source: {label})"
+                return syn_with_src, dur, u, len(syn)
         time.sleep(0.4)
     return (existing_synopsis or "Synopsis not available."), None, None, 0
 
-# ---------------------- Excel -> objects (row mapping) ----------------------
+# ---------------- Excel -> object mapping ----------------
 COLUMN_MAP = {
     "no": "showID", "series title": "showName", "started date": "watchStartedOn", "finished date": "watchEndedOn",
     "year": "releasedYear", "total episodes": "totalEpisodes", "original language": "nativeLanguage", "language": "watchedLanguage",
     "ratings": "ratings", "catagory": "genres", "category": "genres", "original network": "network", "comments": "comments"
 }
-CHANGE_TRACK_FIELDS = ["showName","showImage","releasedYear","totalEpisodes","comments","ratings","genres","Duration","synopsis"]
+
+def tidy_comment(val):
+    if pd.isna(val) or not str(val).strip(): return None
+    text = re.sub(r'\s+', ' ', str(val)).strip()
+    if not text.endswith('.'):
+        text = text + '.'
+    text = re.sub(r'\.([^\s])', r'. \1', text)
+    return text
 
 def sheet_base_offset(sheet_name: str) -> int:
     if sheet_name == "Sheet1": return 100
@@ -375,15 +306,7 @@ def sheet_base_offset(sheet_name: str) -> int:
     if sheet_name == "Sheet2": return 3000
     return 0
 
-def tidy_comment(val):
-    if pd.isna(val) or not str(val).strip(): return None
-    text = " ".join(str(val).split())
-    text = " ".join(w.capitalize() for w in text.split())
-    if not text.endswith('.'): text += '.'
-    return text
-
 def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, start_index=0, max_items=None, time_limit_seconds=None):
-    # Read sheet; allow pandas to raise useful exceptions for caller to record
     df = pd.read_excel(excel_file, sheet_name=sheet_name)
     df.columns = [c.strip().lower() for c in df.columns]
     again_idx = None
@@ -405,7 +328,9 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
                     base = sheet_base_offset(sheet_name)
                     obj["showID"] = base + int(val) if pd.notna(val) else None
                 elif key == "showName":
-                    obj["showName"] = " ".join(str(val).split()) if pd.notna(val) else None
+                    raw_name = str(val) if pd.notna(val) else ""
+                    clean_name = re.sub(r'\s+', ' ', raw_name).strip().lower()
+                    obj["showName"] = clean_name if clean_name else None
                 elif key in ("watchStartedOn","watchEndedOn"):
                     obj[key] = ddmmyyyy(val)
                 elif key == "releasedYear":
@@ -413,9 +338,9 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
                 elif key == "totalEpisodes":
                     obj[key] = int(val) if pd.notna(val) else None
                 elif key == "nativeLanguage":
-                    obj[key] = cap_first(str(val).strip()) if pd.notna(val) else None
+                    obj[key] = str(val).strip().capitalize() if pd.notna(val) else None
                 elif key == "watchedLanguage":
-                    obj[key] = cap_first(str(val).strip()) if pd.notna(val) else None
+                    obj[key] = str(val).strip().capitalize() if pd.notna(val) else None
                 elif key == "comments":
                     obj[key] = tidy_comment(val)
                 elif key == "ratings":
@@ -437,26 +362,22 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
             obj.setdefault("otherNames", [])
             show_name = obj.get("showName"); released_year = obj.get("releasedYear"); networks = obj.get("network") or []
             existing = existing_by_id.get(obj.get("showID")) if obj.get("showID") is not None else None
-            native = obj.get("nativeLanguage"); prefer = PREFERRED_SITE_ORDER.get(native)
+            native = obj.get("nativeLanguage"); prefer = None
+            if native and native in ("Korean","korean","Korea"): prefer = ["asianwiki","mydramalist"]
+            elif native and native in ("Chinese","chinese","China"): prefer = ["mydramalist","asianwiki"]
             existing_image_url = existing.get("showImage") if existing else None
             allow_replace_image = SCHEDULED_RUN
             new_image_url = None
             if existing_image_url and allow_replace_image:
-                new_image_url = download_cover_image(show_name, released_year, networks, prefer_sites=prefer, existing_image_url=existing_image_url, allow_replace=True)
-                if new_image_url and new_image_url != existing_image_url:
-                    try:
-                        old_local = os.path.join(IMAGES_DIR, os.path.basename(existing_image_url))
-                        if os.path.exists(old_local):
-                            dest = os.path.join(OLD_IMAGES_DIR, os.path.basename(old_local)); shutil.move(old_local, dest)
-                    except Exception as e: logd(f"Could not move old image: {e}")
+                new_image_url = existing_image_url
             else:
-                if not existing_image_url:
-                    new_image_url = download_cover_image(show_name, released_year, networks, prefer_sites=prefer, existing_image_url=None, allow_replace=False)
-                else:
-                    new_image_url = existing_image_url
+                new_image_url = existing_image_url or None
             obj["showImage"] = new_image_url
             existing_syn = existing.get("synopsis") if existing else None
-            new_syn, dur, syn_url, orig_len = fetch_synopsis_and_duration(show_name, released_year, prefer_sites=prefer, existing_synopsis=existing_syn, allow_replace=False)
+            new_syn, dur, syn_url, orig_len = fetch_synopsis_and_duration(show_name or "", released_year or "", prefer_sites=prefer, existing_synopsis=existing_syn, allow_replace=False)
+            # normalize synopsis spacing
+            if new_syn and isinstance(new_syn, str):
+                new_syn = normalize_whitespace_and_sentences(new_syn)
             obj["synopsis"] = new_syn
             if dur is not None and dur>0: obj["Duration"] = int(dur)
             elif existing and existing.get("Duration"): obj["Duration"] = existing.get("Duration")
@@ -491,16 +412,15 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
             else:
                 if existing != ordered:
                     report_changes.setdefault("updated",[]).append({"old":existing,"new":ordered})
-            if syn_url and orig_len and orig_len > SYNOPSIS_MAX_LEN:
-                report_changes.setdefault('exceed', []).append({"id": sid, "name": ordered.get('showName'), "year": ordered.get('releasedYear'), "site": syn_url.split('/')[2] if syn_url.startswith('http') else syn_url, "url": syn_url, "orig_len": orig_len})
+            if orig_len and orig_len > SYNOPSIS_MAX_LEN:
+                report_changes.setdefault('exceed', []).append({"id": sid, "name": ordered.get('showName'), "year": ordered.get('releasedYear'), "site": syn_url or "", "url": syn_url or "", "orig_len": orig_len})
         except Exception as e:
-            # Raise to allow caller to record which row failed; row-level failures abort sheet processing
             raise RuntimeError(f"Row {idx} in sheet '{sheet_name}' processing failed: {e}")
     finished = (last_idx >= total_rows - 1) if total_rows>0 else True
     next_index = (last_idx + 1) if processed>0 else start_index
     return items, processed, finished, next_index
 
-# ---------------------- Deletions ----------------------
+# ---------------- Deletion processing ----------------
 def process_deletions(excel_file, json_file, report_changes):
     try:
         df = pd.read_excel(excel_file, sheet_name='Deleting Records')
@@ -515,12 +435,17 @@ def process_deletions(excel_file, json_file, report_changes):
             id_col = df.columns[i]; break
     if id_col is None:
         id_col = df.columns[0]
-    if not os.path.exists(json_file):
-        return
-    with open(json_file, 'r', encoding='utf-8') as f:
-        try: data = json.load(f)
-        except: data = []
-    by_id = {o['showID']: o for o in data if 'showID' in o}
+
+    if os.path.exists(json_file):
+        try:
+            with open(json_file, 'r', encoding='utf-8') as jf:
+                data = json.load(jf)
+        except Exception:
+            data = []
+    else:
+        data = []
+
+    by_id = {int(o['showID']): o for o in data if 'showID' in o and isinstance(o['showID'], int)}
     to_delete = []
     for _, row in df.iterrows():
         val = row[id_col]
@@ -528,26 +453,43 @@ def process_deletions(excel_file, json_file, report_changes):
         try: to_delete.append(int(val))
         except: continue
     if not to_delete: return
+
     os.makedirs(DELETED_DATA_DIR, exist_ok=True)
     deleted_ids = []
+    not_found_ids = []
+
     for iid in to_delete:
         if iid in by_id:
             deleted_obj = by_id.pop(iid)
             deleted_ids.append(iid)
             fname = f"DELETED_{now_ist().strftime('%d_%B_%Y_%H%M')}_{iid}.json"
             outpath = os.path.join(DELETED_DATA_DIR, safe_filename(fname))
-            with open(outpath, 'w', encoding='utf-8') as of:
-                json.dump(deleted_obj, of, indent=4, ensure_ascii=False)
-            print(f"✅ Deleted record {iid} -> {outpath}")
-    merged = sorted(by_id.values(), key=lambda x: x.get('showID',0))
-    with open(json_file, 'w', encoding='utf-8') as f:
-        json.dump(merged, f, indent=4, ensure_ascii=False)
+            try:
+                with open(outpath, 'w', encoding='utf-8') as of:
+                    json.dump(deleted_obj, of, indent=4, ensure_ascii=False)
+                print(f"✅ Deleted record {iid} -> {outpath}")
+            except Exception as e:
+                print(f"⚠️ Failed to write deleted file for {iid}: {e}")
+        else:
+            not_found_ids.append(iid)
+            report_changes.setdefault('deleted_not_found', []).append(f"ID:{iid} -> Nowhere Found in the seriesData.json -> Hence, Skipping.")
+
+    merged = sorted(by_id.values(), key=lambda x: x.get('showID', 0))
+    try:
+        with open(json_file, 'w', encoding='utf-8') as jf:
+            json.dump(merged, jf, indent=4, ensure_ascii=False)
+        print(f"✅ seriesData.json updated after deletions (deleted {len(deleted_ids)} items).")
+    except Exception as e:
+        print(f"⚠️ Failed to write updated {json_file}: {e}")
+
     if deleted_ids:
         report_changes.setdefault('deleted', []).extend(deleted_ids)
+    if not_found_ids:
+        print(f"ℹ️ Deletion: following IDs not found and were skipped: {not_found_ids}")
 
 def cleanup_deleted_data():
     if not os.path.exists(DELETED_DATA_DIR): return
-    cutoff = datetime.now() - timedelta(days=DELETED_LIFESPAN_DAYS)
+    cutoff = datetime.now() - timedelta(days=30)
     for fname in os.listdir(DELETED_DATA_DIR):
         path = os.path.join(DELETED_DATA_DIR, fname)
         try:
@@ -556,7 +498,7 @@ def cleanup_deleted_data():
         except Exception as e:
             print(f"⚠️ Could not cleanup deleted-data {path}: {e}")
 
-# ---------------------- Manual updates handler ----------------------
+# ---------------- Manual updates ----------------
 def apply_manual_updates(excel_file: str, json_file: str):
     sheet = 'manual update'
     try:
@@ -564,24 +506,19 @@ def apply_manual_updates(excel_file: str, json_file: str):
     except Exception:
         print("ℹ️ No 'manual update' sheet found; skipping manual updates.")
         return
-
     if df.shape[1] < 2:
         print("Manual update sheet must have at least two columns: showID and dataString")
         return
-
     if not os.path.exists(json_file):
         print("No JSON file to update")
         return
-
-    with open(json_file, 'r', encoding='utf-8') as f:
-        try:
+    try:
+        with open(json_file, 'r', encoding='utf-8') as f:
             data = json.load(f)
-        except Exception:
-            data = []
-
+    except Exception:
+        data = []
     by_id = {o['showID']: o for o in data if 'showID' in o}
     updated_objs = []
-
     for _, row in df.iterrows():
         sid = None
         try:
@@ -625,9 +562,8 @@ def apply_manual_updates(excel_file: str, json_file: str):
             else:
                 obj[k] = v
         obj['updatedOn'] = now_ist().strftime('%d %B %Y')
-        obj['updatedDetails'] = f"Updated {', '.join([words_capitalize(k) for k in upd.keys()])} Mannually By Owner"
+        obj['updatedDetails'] = f"Updated {', '.join([k.capitalize() for k in upd.keys()])} Manually By Owner"
         updated_objs.append(obj)
-
     if updated_objs:
         merged = sorted(by_id.values(), key=lambda x: x.get('showID', 0))
         with open(json_file, 'w', encoding='utf-8') as f:
@@ -636,7 +572,7 @@ def apply_manual_updates(excel_file: str, json_file: str):
     else:
         print("ℹ️ No valid manual updates found/applied.")
 
-# ---------------------- Report writing ----------------------
+# ---------------- Reports ----------------
 def write_report(report_changes_by_sheet, report_path):
     lines = []
     exceed_entries = []
@@ -645,62 +581,50 @@ def write_report(report_changes_by_sheet, report_path):
         lines.append(f"=== {sheet} — {now_ist().strftime('%d %B %Y')} ===")
         if 'error' in changes:
             lines.append(f"ERROR processing sheet: {changes['error']}")
-        created = changes.get('created', [])
-        total_created += len(created)
+        created = changes.get('created', []); total_created += len(created)
         if created:
-            lines.append("\\nData Created:")
-            for obj in created: lines.append(f"- {words_capitalize(obj.get('showName','Unknown'))} -> Created")
-        updated = changes.get('updated', [])
-        total_updated += len(updated)
+            lines.append("\nData Created:")
+            for obj in created: lines.append(f"- {obj.get('showName','Unknown')} -> Created")
+        updated = changes.get('updated', []); total_updated += len(updated)
         if updated:
-            lines.append("\\nData Updated:")
+            lines.append("\nData Updated:")
             for pair in updated:
                 new = pair.get('new'); old = pair.get('old')
-                changed_fields = [f for f in CHANGE_TRACK_FIELDS if old.get(f) != new.get(f)]
-                fields_text = ", ".join([words_capitalize(f) for f in changed_fields]) if changed_fields else "General"
-                lines.append(f"- {words_capitalize(new.get('showName','Unknown'))} -> Updated: {fields_text}")
+                changed_fields = [f for f in ["showName","showImage","releasedYear","totalEpisodes","comments","ratings","genres","Duration","synopsis"] if old.get(f) != new.get(f)]
+                fields_text = ", ".join([f.capitalize() for f in changed_fields]) if changed_fields else "General"
+                lines.append(f"- {new.get('showName','Unknown')} -> Updated: {fields_text}")
         images = changes.get('images', [])
         if images:
-            lines.append("\\nImage Updated:")
+            lines.append("\nImage Updated:")
             for itm in images:
-                lines.append(f"- {words_capitalize(itm.get('showName','Unknown'))} -> Old && New")
+                lines.append(f"- {itm.get('showName','Unknown')} -> Old && New")
                 lines.append(f"  Old: {itm.get('old')}"); lines.append(f"  New: {itm.get('new')}")
-        deleted = changes.get('deleted', [])
-        total_deleted += len(deleted)
+        deleted = changes.get('deleted', []); total_deleted += len(deleted)
         if deleted:
-            lines.append("\\nDeleted Records:")
+            lines.append("\nDeleted Records:")
             for iid in deleted: lines.append(f"- {iid} -> ✅Deleted")
+        deleted_not_found = changes.get('deleted_not_found', [])
+        if deleted_not_found:
+            lines.append("\nDeletion notes (IDs not found):")
+            for note in deleted_not_found: lines.append(f"- {note}")
         if changes.get('exceed'):
             exceed_entries.extend(changes.get('exceed'))
-        lines.append("\\n")
+        lines.append("\n")
     lines.insert(0, f"SUMMARY: Created: {total_created}, Updated: {total_updated}, Deleted: {total_deleted}")
     if exceed_entries:
         lines.append(f"=== Exceed Max Length ({SYNOPSIS_MAX_LEN}) ===")
         for e in exceed_entries:
             lines.append(f"{e.get('id')} -> {e.get('name')} ({e.get('year')}) -> {e.get('site')} -> Link: {e.get('url')}")
-        lines.append("\\n")
+        lines.append("\n")
     os.makedirs(os.path.dirname(report_path) or ".", exist_ok=True)
-    with open(report_path, 'w', encoding='utf-8') as f: f.write('\\n'.join(lines))
     try:
-        with open(report_path, 'r', encoding='utf-8') as f: txt = f.read()
-        html = "<html><body>"
-        html += f"<h1>{now_ist().strftime('%d %B %Y_%H.%M')}</h1>"
-        if exceed_entries:
-            html += f"<h2 style='color:orange'>Exceed Max Length ({SYNOPSIS_MAX_LEN})</h2><ul>"
-            for e in exceed_entries:
-                html += f"<li>{e.get('id')} → {e.get('name')} ({e.get('year')}) → {e.get('site')} → <a href='{e.get('url')}'>Link</a></li>"
-            html += "</ul><hr/>"
-        html += "<pre style='font-family: monospace; white-space: pre-wrap;'>"
-        html += txt.replace('<','&lt;').replace('>','&gt;')
-        html += "</pre></body></html>"
-        with open(report_path.replace('.txt','.html'), 'w', encoding='utf-8') as hf: hf.write(html)
+        with open(report_path, 'w', encoding='utf-8') as f:
+            f.write("\n".join(lines))
     except Exception as e:
-        print(f"⚠️ Could not write HTML report: {e}")
+        print(f"⚠️ Could not write TXT report: {e}")
 
-# ---------------------- Main updater ----------------------
+# ---------------- Main updater ----------------
 def update_json_from_excel(excel_file, json_file, sheet_names, max_per_run=0, max_run_time_minutes=0):
-    moved = 0
-    removed = 0
     processed_total = 0
     if os.path.exists(json_file):
         try:
@@ -710,11 +634,13 @@ def update_json_from_excel(excel_file, json_file, sheet_names, max_per_run=0, ma
     else:
         old_objects = []
     old_by_id = {o['showID']: o for o in old_objects if 'showID' in o}
+    merged_by_id = dict(old_by_id)
     report_changes_by_sheet = {}
     try:
         process_deletions(excel_file, json_file, report_changes_by_sheet.setdefault('Deleting Records', {}))
     except Exception as e:
         report_changes_by_sheet.setdefault('Deleting Records', {})['error'] = str(e)
+    # reload after deletions
     if os.path.exists(json_file):
         try:
             with open(json_file,'r',encoding='utf-8') as f: old_objects = json.load(f)
@@ -728,7 +654,6 @@ def update_json_from_excel(excel_file, json_file, sheet_names, max_per_run=0, ma
     for s in sheet_names:
         report_changes = {}
         start_idx = int(progress.get(s,0) or 0)
-        logd(f"Processing sheet {s} starting at {start_idx}")
         try:
             items, processed, finished, next_start_idx = excel_to_objects(excel_file, s, merged_by_id, report_changes, start_index=start_idx, max_items=(max_per_run if max_per_run>0 else None), time_limit_seconds=time_limit_seconds)
         except Exception as e:
@@ -736,20 +661,23 @@ def update_json_from_excel(excel_file, json_file, sheet_names, max_per_run=0, ma
             print(f"⚠️ Error processing {s}: {err}")
             report_changes['error'] = err
             items, processed, finished, next_start_idx = [],0,True,start_idx
-        changed_or_deleted = []
         for new_obj in items:
             sid = new_obj.get('showID')
             if sid in merged_by_id:
                 old_obj = merged_by_id[sid]
                 if old_obj != new_obj:
-                    new_obj['updatedOn'] = now_ist().strftime('%d %B %Y'); new_obj['updatedDetails'] = 'Object updated'; changed_or_deleted.append(old_obj); merged_by_id[sid] = new_obj
+                    new_obj['updatedOn'] = now_ist().strftime('%d %B %Y'); new_obj['updatedDetails'] = 'Object updated'; merged_by_id[sid] = new_obj
             else:
                 merged_by_id[sid] = new_obj
-        if changed_or_deleted:
+        if items:
             os.makedirs(BACKUP_DIR, exist_ok=True)
             backup_name = os.path.join(BACKUP_DIR, f"{filename_timestamp()}_{safe_filename(s)}.json")
-            with open(backup_name,'w',encoding='utf-8') as f: json.dump(changed_or_deleted,f,indent=4,ensure_ascii=False)
-            print(f"✅ Backup saved → {backup_name}")
+            try:
+                with open(backup_name, 'w', encoding='utf-8') as bf:
+                    json.dump(items, bf, indent=4, ensure_ascii=False)
+                print(f"✅ Backup saved → {backup_name}")
+            except Exception as e:
+                print(f"⚠️ Could not write backup {backup_name}: {e}")
         report_changes_by_sheet[s] = report_changes
         if processed>0:
             any_sheet_processed = True
@@ -760,7 +688,10 @@ def update_json_from_excel(excel_file, json_file, sheet_names, max_per_run=0, ma
             if s in progress: progress.pop(s,None)
         save_progress(progress)
     merged = sorted(merged_by_id.values(), key=lambda x: x.get('showID',0))
-    with open(json_file,'w',encoding='utf-8') as f: json.dump(merged,f,indent=4,ensure_ascii=False)
+    try:
+        with open(json_file,'w',encoding='utf-8') as f: json.dump(merged,f,indent=4,ensure_ascii=False)
+    except Exception as e:
+        print(f"⚠️ Could not write final {json_file}: {e}")
     os.makedirs(REPORTS_DIR, exist_ok=True)
     report_path = os.path.join(REPORTS_DIR, f"report_{filename_timestamp()}.txt")
     write_report(report_changes_by_sheet, report_path)
@@ -773,67 +704,36 @@ def update_json_from_excel(excel_file, json_file, sheet_names, max_per_run=0, ma
             try:
                 mtime = datetime.fromtimestamp(os.path.getmtime(path))
                 if mtime < cutoff: os.remove(path)
-            except Exception as e: print(f"⚠️ Could not cleanup old image {path}: {e}")
+            except Exception as e:
+                print(f"⚠️ Could not cleanup old image {path}: {e}")
     status = {"continued": overall_continued, "timestamp": now_ist().strftime('%d %B %Y_%H.%M'), "processed_total": processed_total}
-    with open(STATUS_JSON, 'w', encoding='utf-8') as sf: json.dump(status, sf, indent=2)
-    print(f"✅ Status written → {STATUS_JSON}")
+    try:
+        with open(STATUS_JSON, 'w', encoding='utf-8') as sf: json.dump(status, sf, indent=2)
+    except Exception as e:
+        print(f"⚠️ Could not write status json: {e}")
     if processed_total == 0:
         print("❌ No records were processed in this run. Please check: (1) local-data.xlsx exists, (2) sheet names match, (3) there were no row errors. Failing with non-zero exit code.")
         with open(os.path.join(REPORTS_DIR, "failure_reason.txt"), "w", encoding="utf-8") as ff:
             ff.write("No records processed. Check logs and the report.")
         sys.exit(2)
-    return moved, removed
-
-def download_from_gdrive(file_id, destination, service_account_file):
-    creds = service_account.Credentials.from_service_account_file(service_account_file, scopes=["https://www.googleapis.com/auth/drive.readonly"])
-    service = build("drive","v3", credentials=creds)
-    request = service.files().get_media(fileId=file_id)
-    fh = io.FileIO(destination, "wb")
-    downloader = MediaIoBaseDownload(fh, request)
-    done = False
-    while not done:
-        status, done = downloader.next_chunk()
-        if status: print(f"⬇️ Downloading Excel: {int(status.progress() * 100)}%")
-    print(f"✅ Download complete → {destination}")
+    return
 
 if __name__ == '__main__':
-    # Try to find excel id and download if secrets + id are provided
-    try:
-        if os.path.exists(EXCEL_FILE_ID_TXT):
-            with open(EXCEL_FILE_ID_TXT, 'r') as f:
-                excel_id = f.read().strip()
-        else:
-            excel_id = None
-    except Exception:
-        excel_id = None
-
-    try:
-        if excel_id and os.path.exists(SERVICE_ACCOUNT_FILE):
-            try:
-                download_from_gdrive(excel_id, LOCAL_EXCEL_FILE, SERVICE_ACCOUNT_FILE)
-            except Exception as e:
-                print(f"⚠️ Google Drive fetch failed: {e}")
-        else:
-            if not os.path.exists(LOCAL_EXCEL_FILE):
-                print("❌ Excel not available locally (local-data.xlsx). Aborting. Please ensure EXCEL_FILE_ID.txt + GDRIVE_SERVICE_ACCOUNT.json are present or place local-data.xlsx in repo root.")
-                sys.exit(3)
-    except Exception as e:
-        print(f"⚠️ Google Drive fetch failed: {e}")
-
-    # Apply manual updates (if any)
+    # Basic startup: ensure Excel exists
+    if not os.path.exists(LOCAL_EXCEL_FILE):
+        print("❌ Excel not available locally (local-data.xlsx). Aborting. Please ensure EXCEL_FILE_ID.txt + GDRIVE_SERVICE_ACCOUNT.json are present or place local-data.xlsx in repo root.")
+        sys.exit(3)
+    # Determine SHEETS from env
+    _sheets_env = os.environ.get("SHEETS", "").strip()
+    if _sheets_env:
+        SHEETS = [s.strip() for s in _sheets_env.split(";") if s.strip()]
+    else:
+        SHEETS = ["Sheet1", "Feb 7 2023 Onwards"]
+    # Apply manual updates first
     try:
         apply_manual_updates(LOCAL_EXCEL_FILE, JSON_FILE)
     except Exception as e:
         logd(f"apply_manual_updates error: {e}")
-
-    # Run update (will exit with code 2 if nothing processed)
-    moved, removed = update_json_from_excel(
-        LOCAL_EXCEL_FILE,
-        JSON_FILE,
-        SHEETS,
-        max_per_run=MAX_PER_RUN,
-        max_run_time_minutes=MAX_RUN_TIME_MINUTES
-    )
-
+    # Run update
+    update_json_from_excel(LOCAL_EXCEL_FILE, JSON_FILE, SHEETS, max_per_run=MAX_PER_RUN, max_run_time_minutes=MAX_RUN_TIME_MINUTES)
     print("All done.")
-    print(f"Moved: {moved}, Removed: {removed}")

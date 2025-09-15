@@ -1,114 +1,108 @@
-# File: .github/workflows/update.yml
-# Fully-documented workflow that runs the edited Python script directly.
-# Includes email attachments per PROJECT_REQUIREMENTS.md (reports/*.txt).
+# ============================================================================
+# Workflow: Excel → JSON Automation
+# Purpose : Automate weekly + manual Excel → JSON updates, backups, images,
+#           and reports for "my-movie-database".
+# Triggers:
+#   - Manual: workflow_dispatch (user presses "Run workflow")
+#   - Automatic: schedule → every Sunday at 12:00 UTC
+# ============================================================================
 name: Excel → JSON Automation
 
 on:
-  schedule:
-    - cron: "30 18 * * 6"  # Sunday 00:00 AM IST (Saturday 18:30 UTC)
   workflow_dispatch:
     inputs:
       MAX_RUN_MINUTES:
         description: 'Max run time in minutes for this run (0 = no time limit)'
         required: false
-        default: '5'
-
-permissions:
-  contents: write
-  pages: write
-  id-token: write
+        default: '120'
+  schedule:
+    - cron: '0 12 * * 0'  # Sunday 12:00 UTC
 
 jobs:
-  update-dataset:
-    name: Excel → JSON Conversion Job
+  update:
     runs-on: ubuntu-latest
-    timeout-minutes: 355
-
     env:
-      MAX_PER_RUN: 100
+      MAX_PER_RUN: 0
       KEEP_OLD_IMAGES_DAYS: 7
-      GITHUB_PAGES_URL: "https://BruceBanner001.github.io/my-movie-database"
+      GITHUB_PAGES_URL: "https://<your-username>.github.io/my-movie-database"
       TZ: "Asia/Kolkata"
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up Python 3.11
-        uses: actions/setup-python@v5
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
-          python-version: 3.11
+          python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: python -m pip install --upgrade pip && pip install -r requirements.txt
 
-      - name: Write Google Drive credentials
+      - name: Write GDrive service account (if provided)
+        if: ${{ secrets.GDRIVE_SERVICE_ACCOUNT != '' }}
         run: |
-          echo "$GDRIVE_SERVICE_ACCOUNT" > GDRIVE_SERVICE_ACCOUNT.json
-        env:
-          GDRIVE_SERVICE_ACCOUNT: ${{ secrets.GDRIVE_SERVICE_ACCOUNT }}
+          echo "${{ secrets.GDRIVE_SERVICE_ACCOUNT }}" > GDRIVE_SERVICE_ACCOUNT.json
 
-      - name: Write Excel File ID
+      - name: Write EXCEL_FILE_ID (if provided)
+        if: ${{ secrets.EXCEL_FILE_ID != '' }}
         run: |
-          echo "$EXCEL_FILE_ID" > EXCEL_FILE_ID.txt
-        env:
-          EXCEL_FILE_ID: ${{ secrets.EXCEL_FILE_ID }}
+          echo "${{ secrets.EXCEL_FILE_ID }}" > EXCEL_FILE_ID.txt
 
-      - name: Debug check for secrets
+      - name: Set MAX_RUN_TIME_MINUTES based on trigger
         run: |
-          echo "🔎 Files in workspace:"
-          ls -la
-          echo ""
-          echo "=== EXCEL_FILE_ID.txt ==="
-          cat EXCEL_FILE_ID.txt || echo "❌ Missing EXCEL_FILE_ID.txt"
-          echo ""
-          echo "=== GDRIVE_SERVICE_ACCOUNT.json (first 5 lines) ==="
-          head -n 5 GDRIVE_SERVICE_ACCOUNT.json || echo "❌ Missing GDRIVE_SERVICE_ACCOUNT.json"
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "MAX_RUN_TIME_MINUTES=${{ github.event.inputs.MAX_RUN_MINUTES }}" >> $GITHUB_ENV
+          else
+            echo "MAX_RUN_TIME_MINUTES=240" >> $GITHUB_ENV
+          fi
 
       - name: Run update script
+        id: run_update
         run: |
           if [[ "${{ github.event_name }}" == "schedule" ]]; then
             export SCHEDULED_RUN=true
           else
             export SCHEDULED_RUN=false
           fi
-          export MAX_PER_RUN="${{ env.MAX_PER_RUN }}"
-          export KEEP_OLD_IMAGES_DAYS="${{ env.KEEP_OLD_IMAGES_DAYS }}"
-          export GITHUB_PAGES_URL="${{ env.GITHUB_PAGES_URL }}"
-          export MAX_RUN_MINUTES="${{ github.event.inputs.MAX_RUN_MINUTES || '0' }}"
-          # Optionally set SHEETS via env if you need custom sheets:
-          # export SHEETS="Sheet1;Feb 7 2023 Onwards"
-          python create_update_backup_delete.py
+          python create_update_backup_delete.py || exit 2
 
-      - name: Upload run report
+      - name: Upload reports (TXT only)
         uses: actions/upload-artifact@v4
         with:
-          name: run-report
+          name: reports
           path: reports/*.txt
 
-      - name: Commit & Push changes
-        if: success()
+      - name: Check for accidental secret leakage
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add seriesData.json images/ backups/ old-images/ reports/ || true
-          git commit -m "Auto update: $(date +'%d-%B-%Y %H:%M IST')" || echo "No changes to commit"
-          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:master
+          mkdir -p reports
+          exposed=false
+          if [ -n "${{ secrets.EXCEL_FILE_ID }}" ] && grep -R --binary-files=without-match -F "${{ secrets.EXCEL_FILE_ID }}" . >/dev/null 2>&1; then
+            exposed=true
+          fi
+          if [ -n "${{ secrets.GDRIVE_SERVICE_ACCOUNT }}" ] && grep -R --binary-files=without-match -F "${{ secrets.GDRIVE_SERVICE_ACCOUNT }}" . >/dev/null 2>&1; then
+            exposed=true
+          fi
+          echo "SecretsExposed:${exposed}" > reports/secrets_status.txt
 
-      - name: Upload artifact for Pages
-        uses: actions/upload-pages-artifact@v3
+      - name: Send success email
+        if: success()
+        uses: dawidd6/action-send-mail@v3
         with:
-          path: .
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.SMTP_USERNAME }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          subject: "✅ Excel → JSON Update SUCCESS"
+          to: ${{ secrets.NOTIFY_EMAIL }}
+          from: "GitHub Actions <${{ secrets.NOTIFY_EMAIL }}>"
+          body: |
+            $(cat reports/secrets_status.txt)
 
-  deploy:
-    name: Deploy & Notify Job
-    needs: update-dataset
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages       # REQUIRED for Pages deployment
-    steps:
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v4
+            Run type: ${{ github.event_name }}
+            Outcome: SUCCESS
+            Run timestamp: $(date -u)
+            See attached run report.
+          attachments: reports/*.txt
 
       - name: Send failure email
         if: failure()
@@ -121,4 +115,24 @@ jobs:
           subject: "🚨 Excel → JSON Update FAILED!"
           to: ${{ secrets.NOTIFY_EMAIL }}
           from: "GitHub Actions <${{ secrets.NOTIFY_EMAIL }}>"
+          body: |
+            $(cat reports/secrets_status.txt)
+
+            Run type: ${{ github.event_name }}
+            Outcome: FAILURE
+            Run timestamp: $(date -u)
+            See attached run report.
           attachments: reports/*.txt
+
+      - name: Commit and push changes
+        if: success()
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add seriesData.json reports/ images/ backups/ deleted-data/ || true
+          git commit -m "Automated update: $(date -u +'%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
+          git push || echo "git push failed"
+
+      - name: Clean up
+        run: |
+          rm -f EXCEL_FILE_ID.txt GDRIVE_SERVICE_ACCOUNT.json
