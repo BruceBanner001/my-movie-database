@@ -57,7 +57,7 @@ jobs:
           if [ -f EXCEL_FILE_ID.txt ] && [ -f GDRIVE_SERVICE_ACCOUNT.json ]; then
             echo "⬇️ Downloading Excel from Google Drive..."
             pip install gdown google-auth google-auth-oauthlib google-api-python-client
-            python - <<'EOF'
+            cat > download_excel.py <<'PYCODE'
 import os, io
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseDownload
@@ -78,7 +78,8 @@ while not done:
     if status:
         print(f"Download {int(status.progress()*100)}%.")
 print("✅ Download complete → local-data.xlsx")
-EOF
+PYCODE
+            python download_excel.py
           else
             echo "⚠️ Missing EXCEL_FILE_ID.txt or GDRIVE_SERVICE_ACCOUNT.json, skipping download"
           fi
@@ -170,4 +171,4 @@ EOF
           attachments: reports/*.txt
 
       - name: Clean up
-        run: rm -f EXCEL_FILE_ID.txt GDRIVE_SERVICE_ACCOUNT.json
+        run: rm -f EXCEL_FILE_ID.txt GDRIVE_SERVICE_ACCOUNT.json download_excel.py
