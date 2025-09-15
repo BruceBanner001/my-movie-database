@@ -3,104 +3,98 @@
 # Purpose : Automate weekly + manual Excel → JSON updates, deletions, backups,
 #           and run reports (TXT only) for "my-movie-database".
 # ============================================================================
-name: Excel → JSON Automation
 
+name: Excel → JSON Update
+
+# ------------------------------------------------------
+# Triggers
+# ------------------------------------------------------
 on:
-  workflow_dispatch:
-    inputs:
-      MAX_RUN_MINUTES:
-        description: 'Max run time in minutes for this run (0 = no time limit)'
-        required: false
-        default: '180'
+  workflow_dispatch:       # Manual trigger via GitHub Actions UI
   schedule:
-    - cron: '0 12 * * 0'   # Sunday 12:00 UTC
-
-permissions:
-  contents: write
-  pages: write
-  id-token: write
+    - cron: "0 0 * * 0"    # Scheduled: Every Sunday at 00:00 UTC
 
 jobs:
-  update:
+  update-json:
     runs-on: ubuntu-latest
-    env:
-      MAX_PER_RUN: 0
-      KEEP_OLD_IMAGES_DAYS: 7
-      GITHUB_PAGES_URL: "https://<your-username>.github.io/my-movie-database"
-      TZ: "Asia/Kolkata"
 
     steps:
-      - uses: actions/checkout@v4
+      # ------------------------------------------------------
+      # 1. Checkout the repo
+      # ------------------------------------------------------
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
+      # ------------------------------------------------------
+      # 2. Set up Python (v3.11)
+      # ------------------------------------------------------
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
+      # ------------------------------------------------------
+      # 3. Install dependencies from requirements.txt
+      # ------------------------------------------------------
       - name: Install dependencies
-        run: python -m pip install --upgrade pip && pip install -r requirements.txt
-
-      - name: Write GDrive service account (if provided)
         run: |
-          if [ -n "${{ secrets.GDRIVE_SERVICE_ACCOUNT }}" ]; then
-            echo "${{ secrets.GDRIVE_SERVICE_ACCOUNT }}" > GDRIVE_SERVICE_ACCOUNT.json
-          fi
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
-      - name: Write Excel File ID (if provided)
+      # ------------------------------------------------------
+      # 4. Write secrets to files
+      # ------------------------------------------------------
+      - name: Write Excel file ID
+        run: echo "${{ secrets.EXCEL_FILE_ID }}" > EXCEL_FILE_ID.txt
+
+      - name: Write Google Drive service account
+        run: echo '${{ secrets.GDRIVE_SERVICE_ACCOUNT }}' > GDRIVE_SERVICE_ACCOUNT.json
+
+      # ------------------------------------------------------
+      # 5. Run main script (create_update_backup_delete.py)
+      # ------------------------------------------------------
+      - name: Run Excel → JSON script
+        env:
+          GITHUB_PAGES_URL: https://brucebanner001.github.io/my-movie-database
+          MAX_PER_RUN: 0
+          MAX_RUN_TIME_MINUTES: 300
+          KEEP_OLD_IMAGES_DAYS: 7
+          SCHEDULED_RUN: ${{ github.event_name == 'schedule' && 'true' || 'false' }}
+        run: python create_update_backup_delete.py
+
+      # ------------------------------------------------------
+      # 6. Commit and push changes back to repo
+      # ------------------------------------------------------
+      - name: Commit & push changes
         run: |
-          if [ -n "${{ secrets.EXCEL_FILE_ID }}" ]; then
-            echo "${{ secrets.EXCEL_FILE_ID }}" > EXCEL_FILE_ID.txt
-          fi
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add seriesData.json images/ backups/ reports/ deleted-data/
+          git commit -m "Automated update: $(date -u '+%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
+          git push
 
-      - name: Download Excel from Google Drive
-        run: |
-          pip install gdown google-auth google-auth-oauthlib google-api-python-client
-          python scripts/download_excel.py
-
-      - name: Set MAX_RUN_TIME_MINUTES
-        run: |
-          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-            echo "MAX_RUN_TIME_MINUTES=${{ github.event.inputs.MAX_RUN_MINUTES }}" >> $GITHUB_ENV
-          else
-            echo "MAX_RUN_TIME_MINUTES=240" >> $GITHUB_ENV
-          fi
-
-      - name: Run update script
-        run: |
-          if [[ "${{ github.event_name }}" == "schedule" ]]; then
-            export SCHEDULED_RUN=true
-          else
-            export SCHEDULED_RUN=false
-          fi
-          python create_update_backup_delete.py
-
-      - name: Upload TXT reports
+      # ------------------------------------------------------
+      # 7. Upload reports as GitHub Action artifacts
+      # ------------------------------------------------------
+      - name: Upload reports
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: reports
-          path: reports/*.txt
+          name: run-reports
+          path: reports/
 
-      - name: Check for secret exposure
-        run: |
-          mkdir -p reports
-          exposed=false
-          if [ -n "${{ secrets.EXCEL_FILE_ID }}" ] && grep -R -F "${{ secrets.EXCEL_FILE_ID }}" .; then
-            exposed=true
-          fi
-          if [ -n "${{ secrets.GDRIVE_SERVICE_ACCOUNT }}" ] && grep -R -F "${{ secrets.GDRIVE_SERVICE_ACCOUNT }}" .; then
-            exposed=true
-          fi
-          echo "SecretsExposed:${exposed}" > reports/secrets_status.txt
+      # ------------------------------------------------------
+      # 8. Run gitleaks to check for secret exposure
+      # ------------------------------------------------------
+      - name: Scan for secrets
+        if: always()
+        uses: gitleaks/gitleaks-action@v2
+        with:
+          args: detect --source=. --report-path=reports/secrets_report.txt --no-banner --redact
 
-      - name: Commit & Push changes
-        if: success()
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add seriesData.json reports/ images/ backups/ deleted-data/ || true
-          git commit -m "Auto update: $(date -u +'%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
-          git push || echo "git push failed"
-
+      # ------------------------------------------------------
+      # 9. Send success email
+      # ------------------------------------------------------
       - name: Send success email
         if: success()
         uses: dawidd6/action-send-mail@v3
@@ -109,19 +103,18 @@ jobs:
           server_port: 465
           username: ${{ secrets.SMTP_USERNAME }}
           password: ${{ secrets.SMTP_PASSWORD }}
-          subject: "✅ Excel → JSON Update SUCCESS"
+          subject: ${{ github.event_name == 'schedule' && '[Automatic] JSON Update Successful' || '[Manual] JSON Update Successful' }}
           to: ${{ secrets.NOTIFY_EMAIL }}
-          from: "GitHub Actions <${{ secrets.NOTIFY_EMAIL }}>"
+          from: GitHub Actions <${{ secrets.SMTP_USERNAME }}>
           body: |
-            $(cat reports/secrets_status.txt)
+            ✅ JSON update completed successfully.
+            Repo: ${{ github.repository }}
+            Run: ${{ github.run_id }}
+            Time: $(date -u '+%Y-%m-%d %H:%M:%S UTC')
 
-            Run type: ${{ github.event_name }}
-            Outcome: SUCCESS
-            Run timestamp: $(date -u)
-
-            See attached run report.
-          attachments: reports/*.txt
-
+      # ------------------------------------------------------
+      # 10. Send failure email
+      # ------------------------------------------------------
       - name: Send failure email
         if: failure()
         uses: dawidd6/action-send-mail@v3
@@ -130,18 +123,30 @@ jobs:
           server_port: 465
           username: ${{ secrets.SMTP_USERNAME }}
           password: ${{ secrets.SMTP_PASSWORD }}
-          subject: "🚨 Excel → JSON Update FAILED!"
+          subject: ${{ github.event_name == 'schedule' && '[Automatic] JSON Update Failed' || '[Manual] JSON Update Failed' }}
           to: ${{ secrets.NOTIFY_EMAIL }}
-          from: "GitHub Actions <${{ secrets.NOTIFY_EMAIL }}>"
+          from: GitHub Actions <${{ secrets.SMTP_USERNAME }}>
           body: |
-            $(cat reports/secrets_status.txt)
+            ❌ JSON update failed.
+            Repo: ${{ github.repository }}
+            Run: ${{ github.run_id }}
+            Time: $(date -u '+%Y-%m-%d %H:%M:%S UTC')
 
-            Run type: ${{ github.event_name }}
-            Outcome: FAILURE
-            Run timestamp: $(date -u)
-
-            See attached run report.
-          attachments: reports/*.txt
-
-      - name: Clean up
-        run: rm -f EXCEL_FILE_ID.txt GDRIVE_SERVICE_ACCOUNT.json local-data.xlsx
+      # ------------------------------------------------------
+      # 11. Send secrets exposure email (if gitleaks found issues)
+      # ------------------------------------------------------
+      - name: Send secrets alert email
+        if: always()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.SMTP_USERNAME }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          subject: "[ALERT] Secrets detected in repo update!"
+          to: ${{ secrets.NOTIFY_EMAIL }}
+          from: GitHub Actions <${{ secrets.SMTP_USERNAME }}>
+          body: |
+            ⚠️ Potential secrets detected in the repo during the update run.
+            See attached report for details.
+          attachments: reports/secrets_report.txt
