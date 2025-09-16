@@ -26,6 +26,8 @@ on:
 jobs:
   update-json:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write   # allow workflow to push back to the repo
 
     steps:
       # ------------------------------------------------------
@@ -77,8 +79,8 @@ jobs:
       # ------------------------------------------------------
       - name: Commit & push changes
         run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add seriesData.json images/ backups/ reports/ deleted-data/
           git commit -m "Automated update: $(date -u '+%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
           git push
