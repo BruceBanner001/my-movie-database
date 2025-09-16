@@ -1135,12 +1135,11 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
         print(f"⚠️ Could not write status json: {e}")
 
     if processed_total == 0:
-        print("❌ No records were processed in this run. Please check: (1) Google Drive Excel exists and is accessible, (2) sheet names match, (3) there were no row errors.")
+        print("⚠️ No records were processed in this run. Please check your Excel file and sheet names.")
         with open(os.path.join(REPORTS_DIR, "failure_reason.txt"), "w", encoding="utf-8") as ff:
             ff.write("No records processed. Check logs and the report.\n")
-        # Return non-zero in CI context to indicate "no work done" (but user earlier wanted graceful failure).
-        # Keep behavior: exit with 2 to preserve previous semantics.
-        sys.exit(2)
+        # Exit gracefully instead of failing the workflow
+        return
     return
 
 
