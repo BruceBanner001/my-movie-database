@@ -21,7 +21,7 @@ on:
         default: '0'
         required: false
   schedule:
-    - cron: "55 8 * * 2"   # Scheduled: Every Tuesday 02:25 PM IST (Tuesday 08:55 UTC)
+    - cron: "*/5 * * * *"   # Every 5 minutes (for testing)
 
 jobs:
   update-json:
