@@ -20,14 +20,6 @@ import requests
 from bs4 import BeautifulSoup
 from PIL import Image
 from io import BytesIO
-<<<<<<< HEAD
-=======
-from googleapiclient.discovery import build
-from googleapiclient.http import MediaIoBaseDownload
-from google.oauth2 import service_account
-
-# Optional: ddgs for DuckDuckGo search (used if installed); otherwise fallback to requests only
->>>>>>> 458bc47 (Files were updated for local-data.xlsx' not found error)
 try:
     from ddgs import DDGS
     HAVE_DDGS = True
@@ -42,11 +34,7 @@ def now_ist():
 def filename_timestamp():
     return now_ist().strftime("%d_%B_%Y_%H%M")
 
-<<<<<<< HEAD
 # ---------------------------- Paths & Config --------------------------------
-=======
-# Paths and defaults
->>>>>>> 458bc47 (Files were updated for local-data.xlsx' not found error)
 LOCAL_EXCEL_FILE = "downloaded-data.xlsx"
 JSON_FILE = "seriesData.json"
 BACKUP_DIR = "backups"
@@ -58,17 +46,9 @@ PROGRESS_DIR = ".progress"
 PROGRESS_FILE = os.path.join(PROGRESS_DIR, "progress.json")
 STATUS_JSON = os.path.join(REPORTS_DIR, "status.json")
 
-<<<<<<< HEAD
 EXCEL_FILE_ID_TXT = "EXCEL_FILE_ID.txt"
 SERVICE_ACCOUNT_FILE = "GDRIVE_SERVICE_ACCOUNT.json"
 
-=======
-# GDrive helper file names
-EXCEL_FILE_ID_TXT = "EXCEL_FILE_ID.txt"
-SERVICE_ACCOUNT_FILE = "GDRIVE_SERVICE_ACCOUNT.json"
-
-# Config from env
->>>>>>> 458bc47 (Files were updated for local-data.xlsx' not found error)
 GITHUB_PAGES_URL = os.environ.get("GITHUB_PAGES_URL", "").strip() or "https://<your-username>.github.io/my-movie-database"
 MAX_PER_RUN = int(os.environ.get("MAX_PER_RUN", "0") or 0)
 MAX_RUN_TIME_MINUTES = int(os.environ.get("MAX_RUN_TIME_MINUTES", "0") or 0)
@@ -1035,73 +1015,32 @@ def update_json_from_excel(excel_file, json_file, sheet_names, max_per_run=0, ma
 
 # ---------------------------- Entrypoint -----------------------------------
 if __name__ == '__main__':
-<<<<<<< HEAD
     # Environment: script expects the CI workflow to write two files from secrets:
     #  - EXCEL_FILE_ID.txt and GDRIVE_SERVICE_ACCOUNT.json present at runtime.
     if not (os.path.exists(EXCEL_FILE_ID_TXT) and os.path.exists(SERVICE_ACCOUNT_FILE)):
         print("❌ Missing GDrive credentials. Please set EXCEL_FILE_ID.txt and GDRIVE_SERVICE_ACCOUNT.json via GitHub secrets.")
         sys.exit(3)
     # Read Excel file id (used by workflow to download -- not used here directly)
-=======
-    # Always use Google Drive — do not accept local fallback.
-    if not (os.path.exists(EXCEL_FILE_ID_TXT) and os.path.exists(SERVICE_ACCOUNT_FILE)):
-        print("❌ Missing GDrive credentials. Please set EXCEL_FILE_ID.txt and GDRIVE_SERVICE_ACCOUNT.json via GitHub secrets.")
-        sys.exit(3)
-
-    # Read Excel file ID
->>>>>>> 458bc47 (Files were updated for local-data.xlsx' not found error)
     try:
         with open(EXCEL_FILE_ID_TXT, 'r', encoding='utf-8') as f:
             excel_id = f.read().strip()
     except Exception:
         excel_id = None
-<<<<<<< HEAD
     if not excel_id:
         print("❌ EXCEL_FILE_ID.txt is empty or missing. Aborting.")
         sys.exit(3)
     # The workflow is responsible for downloading the Excel to LOCAL_EXCEL_FILE before calling this script.
-=======
-
-    if not excel_id:
-        print("❌ EXCEL_FILE_ID.txt is empty or missing. Aborting.")
-        sys.exit(3)
-
-    # Download from Google Drive to LOCAL_EXCEL_FILE
-    try:
-        creds = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=["https://www.googleapis.com/auth/drive.readonly"])
-        service = build("drive", "v3", credentials=creds)
-        request = service.files().get_media(fileId=excel_id)
-        os.makedirs(os.path.dirname(LOCAL_EXCEL_FILE) or '.', exist_ok=True)
-        fh = io.FileIO(LOCAL_EXCEL_FILE, 'wb')
-        downloader = MediaIoBaseDownload(fh, request)
-        done = False
-        while not done:
-            status, done = downloader.next_chunk()
-            if status:
-                print(f"⬇️ Downloading Excel: {int(status.progress() * 100)}%")
-        fh.close()
-        print(f"✅ Download complete → {LOCAL_EXCEL_FILE}")
-    except Exception as e:
-        print(f"❌ Failed to download Excel from Google Drive: {e}")
-        sys.exit(3)
-
->>>>>>> 458bc47 (Files were updated for local-data.xlsx' not found error)
     # Determine SHEETS from env
     _sheets_env = os.environ.get("SHEETS", "").strip()
     if _sheets_env:
         SHEETS = [s.strip() for s in _sheets_env.split(";") if s.strip()]
     else:
         SHEETS = ["Sheet1"]
-<<<<<<< HEAD
-=======
-
->>>>>>> 458bc47 (Files were updated for local-data.xlsx' not found error)
     # Apply manual updates first (if present)
     try:
         apply_manual_updates(LOCAL_EXCEL_FILE, JSON_FILE)
     except Exception as e:
         logd(f"apply_manual_updates error: {e}")
-
     # Run update
     update_json_from_excel(LOCAL_EXCEL_FILE, JSON_FILE, SHEETS, max_per_run=MAX_PER_RUN, max_run_time_minutes=MAX_RUN_TIME_MINUTES)
     print("All done.")
