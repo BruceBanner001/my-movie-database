@@ -11,6 +11,15 @@ name: Excel → JSON Update
 # ------------------------------------------------------
 on:
   workflow_dispatch:       # Manual trigger via GitHub Actions UI
+    inputs:
+      MAX_RUN_TIME_MINUTES:
+        description: 'Max run time in minutes for this run (0 = no time limit)'
+        default: '300'
+        required: false
+      MAX_PER_RUN:
+        description: 'Limit number of shows to process (0 = process all)'
+        default: '0'
+        required: false
   schedule:
     - cron: "0 0 * * 0"    # Scheduled: Every Sunday at 00:00 UTC
 
@@ -56,8 +65,9 @@ jobs:
       - name: Run Excel → JSON script
         env:
           GITHUB_PAGES_URL: https://brucebanner001.github.io/my-movie-database
-          MAX_PER_RUN: 0
-          MAX_RUN_TIME_MINUTES: 300
+          # Use manual inputs if provided, otherwise defaults
+          MAX_PER_RUN: ${{ github.event.inputs.MAX_PER_RUN || 0 }}
+          MAX_RUN_TIME_MINUTES: ${{ github.event.inputs.MAX_RUN_TIME_MINUTES || 300 }}
           KEEP_OLD_IMAGES_DAYS: 7
           SCHEDULED_RUN: ${{ github.event_name == 'schedule' && 'true' || 'false' }}
         run: python create_update_backup_delete.py
