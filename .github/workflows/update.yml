@@ -111,8 +111,8 @@ jobs:
         if: success()
         uses: dawidd6/action-send-mail@v3
         with:
-          server_address: smtp.gmail.com
-          server_port: 465
+          server_address: ${{ secrets.SMTP_SERVER }}
+          server_port: ${{ secrets.SMTP_PORT }}
           username: ${{ secrets.SMTP_USERNAME }}
           password: ${{ secrets.SMTP_PASSWORD }}
           subject: ${{ github.event_name == 'schedule' && '[Automatic] JSON Update Successful' || '[Manual] JSON Update Successful' }}
@@ -131,8 +131,8 @@ jobs:
         if: failure()
         uses: dawidd6/action-send-mail@v3
         with:
-          server_address: smtp.gmail.com
-          server_port: 465
+          server_address: ${{ secrets.SMTP_SERVER }}
+          server_port: ${{ secrets.SMTP_PORT }}
           username: ${{ secrets.SMTP_USERNAME }}
           password: ${{ secrets.SMTP_PASSWORD }}
           subject: ${{ github.event_name == 'schedule' && '[Automatic] JSON Update Failed' || '[Manual] JSON Update Failed' }}
@@ -151,8 +151,8 @@ jobs:
         if: always()
         uses: dawidd6/action-send-mail@v3
         with:
-          server_address: smtp.gmail.com
-          server_port: 465
+          server_address: ${{ secrets.SMTP_SERVER }}
+          server_port: ${{ secrets.SMTP_PORT }}
           username: ${{ secrets.SMTP_USERNAME }}
           password: ${{ secrets.SMTP_PASSWORD }}
           subject: "[ALERT] Secrets detected in repo update!"
@@ -162,3 +162,38 @@ jobs:
             ⚠️ Potential secrets detected in the repo during the update run.
             See attached report for details.
           attachments: reports/secrets_report.txt
+
+
+      # --- Appended by assistant for single-email behavior ---
+
+      # ---- Patched steps to run updater and send a single consolidated email ----
+      # This job snippet assumes it is placed inside a job that has checked out the repo,
+      # installed dependencies, and has Python available.
+      - name: Run seriesData updater and capture email body
+        id: run_updater
+        run: |
+          set -e
+          # Run the Python script; it prints the email body between markers to stdout.
+          python create_update_backup_delete.py | tee updater_output.txt
+          # Extract the email body lines between markers into a file
+          awk '/^===EMAIL_BODY_START===$/{flag=1; next} /^===EMAIL_BODY_END===$/{flag=0} flag{print}' updater_output.txt > email_body.txt || true
+          # Build subject using UTC time (format: 'DD Month YYYY HHMM')
+          subj_date=$(date -u "+%d %B %Y %H%M")
+          echo "email_subject=[Manual] Workflow $subj_date Report" >> $GITHUB_OUTPUT
+          # Set the email body output by writing to GITHUB_OUTPUT (multi-line)
+          echo "email_body<<EOF" >> $GITHUB_OUTPUT
+          sed 's/%/%%/g' email_body.txt >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Send consolidated report email
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.SMTP_SERVER }}
+          server_port: ${{ secrets.SMTP_PORT }}
+          username: ${{ secrets.SMTP_USERNAME }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          subject: ${{ steps.run_updater.outputs.email_subject }}
+          body: ${{ steps.run_updater.outputs.email_body }}
+          to: ${{ secrets.EMAIL_TO }}
+          from: ${{ secrets.EMAIL_FROM }}
+      # ---------------------------------------------------------------------------
