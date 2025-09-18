@@ -1,3 +1,49 @@
+
+# ============================================================================
+# Patched Script: create_update_backup_delete.py
+# Purpose: Excel -> JSON automation (patched for enhanced synopsis/image fetching,
+#          deletion handling, and single-email composing for CI workflows).
+#
+# IMPORTANT NOTES FOR MAINTENANCE / EXTENSION
+# -------------------------------------------------
+# 1) Site Preferences / Language mapping:
+#    - The code uses a simple mapping to decide "preferred sites" for fetching synopsis
+#      and images based on the show's native language (nativeLanguage field).
+#    - To add a new language preference:
+#        a) Locate the function excel_to_objects(...) and find the block that sets `prefer`.
+#        b) Add a new branch for the language name (use lowercased checks, and include
+#           possible variants, e.g. 'korean', 'korea', 'korean language').
+#        c) Update fetch_synopsis_and_duration(...) and fetch_and_save_image_for_show(...)
+#           if you want to treat the new site specially (site-specific parsing).
+#
+# 2) Adding a new preferred site parser:
+#    - If you want more accurate extraction from a particular site (e.g., 'asianwiki' or 'mydramalist'),
+#      add a new branch in parse_synopsis_from_html(...) that checks the domain and applies
+#      site-specific DOM selectors (e.g., look for elements with id/class 'synopsis', 'summary',
+#      or meta property 'og:description'). Keep a generic fallback for robustness.
+#
+# 3) Email behavior for CI (GitHub Actions):
+#    - This script now composes the full email body in-memory via compose_email_body_from_report(report_path).
+#      We purposely **do not** write email_body_*.txt files to disk anymore.
+#    - The workflow should either:
+#        A) read reports/report_*.txt and send email with that content, or
+#        B) run this script and capture the printed email body (stdout) and pass it to the email action.
+#    - The subject format required by the owner: "[Manual] Workflow <DD Month YYYY HHMM> Report"
+#
+# 4) Deletion behavior:
+#    - When a showID is deleted via the "Deleting Records" sheet:
+#        * the deleted object is saved to deleted-data/DELETED_<timestamp>_<id>.json
+#        * the associated image file (if present under images/) is moved to old-images/
+#        * a report entry is generated for moved images: 'deleted_images_moved'
+#
+# 5) Synopsis length:
+#    - Controlled by SYNOPSIS_MAX_LEN environment variable (default 1500). Soft truncation attempts to cut at sentence end.
+#
+# 6) Debugging:
+#    - Set DEBUG_FETCH=true in env to print useful debug messages.
+#
+# ============================================================================
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # ============================================================================
@@ -279,6 +325,14 @@ def pick_best_result(results):
 
 # ---------------------------- Parsing synopsis & metadata ------------------
 def parse_synopsis_from_html(html, base_url):
+
+    # Detailed parsing behaviour for this function:
+    # - Try site-specific extraction first by checking the base_url domain.
+    # - For AsianWiki: synopsis often lives under elements labelled 'synopsis' or in paragraphs after a 'Synopsis' header.
+    # - For MyDramaList: synopsis is sometimes in meta description or inside a div with class containing 'synopsis' or 'summary'.
+    # - Generic fallback: use meta description (og:description) or the first long paragraph (>80 chars).
+    # - Always strip extraneous whitespace and remove parenthetical CJK text (these often duplicate otherNames).
+    # - The function returns (synopsis_with_source, duration_in_minutes_or_None, full_page_text, metadata_dict).
     """Parse synopsis, duration, and metadata like otherNames and releaseDate."""
     soup = BeautifulSoup(html, "lxml")
     full_text = soup.get_text("\n", strip=True)
@@ -367,6 +421,11 @@ def ddgs_text(query):
 
 
 def fetch_synopsis_and_duration(show_name, year, prefer_sites=None, existing_synopsis=None, allow_replace=False):
+
+    # This function orchestrates searching (via DuckDuckGo text API) and parsing for synopsis.
+    # - prefer_sites: a list in order of priority (e.g., ['asianwiki', 'mydramalist']).
+    # - existing_synopsis: if present and allow_replace=False (and not a scheduled run), the function returns it to avoid overwriting.
+    # - To add a new search provider/site, add corresponding query templates below and consider adding a site-specific parser in parse_synopsis_from_html.
     """Search for synopsis and structured metadata. Uses preferred sites order."""
     if existing_synopsis and not SCHEDULED_RUN and not allow_replace:
         return existing_synopsis, None, None, len(existing_synopsis), {}
@@ -395,9 +454,23 @@ def fetch_synopsis_and_duration(show_name, year, prefer_sites=None, existing_syn
                 continue
             syn, dur, fulltext, metadata = parse_synopsis_from_html(html, u)
             if syn:
+                # Normalize and ensure source appended
+                syn = syn.strip()
+                if '(source:' not in syn.lower():
+                    domain = re.sub(r'^https?://(www\\.)?', '', u).split('/')[0] if u else ''
+                    label = 'AsianWiki' if 'asianwiki' in domain else ('MyDramaList' if 'mydramalist' in domain else domain)
+                    syn = syn + ' (Source: ' + (label or domain) + ')'
+                # Soft truncate to SYNOPSIS_MAX_LEN preserving sentence end if possible
+                if len(syn) > SYNOPSIS_MAX_LEN:
+                    cut = syn[:SYNOPSIS_MAX_LEN]
+                    last_period = cut.rfind('.')
+                    if last_period > int(SYNOPSIS_MAX_LEN*0.6):
+                        syn = cut[:last_period+1]
+                    else:
+                        syn = cut
                 orig_len = len(syn)
                 return syn, dur, u, orig_len, metadata
-        time.sleep(0.4)
+            time.sleep(0.4)
     return (existing_synopsis or "Synopsis not available."), None, None, len(existing_synopsis or ""), {}
 
 
@@ -617,6 +690,14 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
 
 # ---------------------------- Deletion processing ---------------------------
 def process_deletions(excel_file, json_file, report_changes):
+
+    # Deletion processing notes:
+    # - Reads sheet 'Deleting Records' and expects at least one column containing IDs to delete.
+    # - For each ID found in seriesData.json:
+    #     * The object is removed from the in-memory dataset.
+    #     * An archive JSON is written to deleted-data/ for audit.
+    #     * If the object had a local showImage stored under images/, that file is moved to old-images/.
+    # - If an ID is not present in the JSON, it is recorded under deleted_not_found and still reported.
     """Read the 'Deleting Records' sheet and remove any showIDs present in seriesData.json."""
     try:
         df = pd.read_excel(excel_file, sheet_name='Deleting Records')
@@ -782,6 +863,13 @@ def apply_manual_updates(excel_file: str, json_file: str):
 
 # ---------------------------- Image searcher (site-priority) ----------------
 def fetch_and_save_image_for_show(show_name, prefer_sites, show_id):
+
+    # Image fetching strategy:
+    # - prefer_sites order is used to form targeted queries like '<show_name> <year> site:asianwiki.com'.
+    # - Primary extraction: use meta property 'og:image' or first prominent <img> (poster) in the page.
+    # - If direct page extraction fails, fall back to DuckDuckGo images (ddgs_images) results.
+    # - Saved image naming: prefer '<show_id>.jpg' if show_id present; otherwise a sanitized version of show_name.
+    # - If you add new preferred sites, include them in both the query candidates and consider per-site extraction logic.
     """Search for a show image using preferred sites (order matters)."""
     if not show_name:
         return None, None
@@ -931,22 +1019,22 @@ def scan_for_possible_secrets():
     return findings
 
 
+
 def compose_email_body_from_report(report_path):
+    """Compose a single inline email body containing a secrets check followed by the full report text.
+    This string is intended to be used by the workflow runner to send a single email per run.
+    We purposely do NOT write an `email_body_*.txt` file to disk anymore; the report file `report_*.txt`
+    is kept in the repo while the composed email body is used by the runner to send the message.
+    """
     body_lines = []
-    body_lines.append(f"Run Report — {now_ist().strftime('%d %B %Y %H:%M')}")
-    body_lines.append("\n--- REPORT CONTENT (pasted below) ---\n")
-    try:
-        with open(report_path, 'r', encoding='utf-8') as f:
-            body_lines.append(f.read())
-    except Exception as e:
-        body_lines.append(f"⚠️ Could not read report file for email body: {e}")
-    body_lines.append("\n--- SECRETS CHECK ---\n")
+    # First section: secrets check (so recipients immediately see any exposed credentials)
+    body_lines.append("SECRETS CHECK:")
     findings = scan_for_possible_secrets()
     if not findings:
-        body_lines.append("No obvious secret files detected in the workspace.")
+        body_lines.append("- No obvious secret files detected in the workspace.")
     else:
         for f in findings:
-            line = f"File: {f.get('file')} — note: {f.get('note')}."
+            line = f"- File: {f.get('file')} — note: {f.get('note')}."
             if f.get('client_email'):
                 line += f" client_email: {f.get('client_email')}."
             if f.get('has_private_key'):
@@ -954,11 +1042,16 @@ def compose_email_body_from_report(report_path):
             if f.get('length') is not None:
                 line += f" length: {f.get('length')} characters (value not shown)."
             body_lines.append(line)
-        body_lines.append("\nIf any of the above files were accidentally committed to your repository, immediately: (1) rotate/disable keys, (2) remove the files from the repo (git filter-repo / bfg), (3) re-issue new credentials.")
+        body_lines.append("\nIf any of the above files were accidentally committed to your repository: (1) rotate/disable keys, (2) remove the files from the repo (git filter-repo / bfg), (3) re-issue new credentials.")
+    body_lines.append("\n--- REPORT CONTENT (pasted below) ---\n")
+    body_lines.append(f"Run Report — {now_ist().strftime('%d %B %Y %H:%M')}")
+    try:
+        with open(report_path, 'r', encoding='utf-8') as f:
+            body_lines.append(f.read())
+    except Exception as e:
+        body_lines.append(f"⚠️ Could not read report file for email body: {e}")
     return "\n".join(body_lines)
 
-
-# ---------------------------- Google Drive Excel fetcher --------------------
 def fetch_excel_from_gdrive_bytes(excel_file_id, service_account_path):
     """
     Attempt to fetch the file bytes for the given file id using Drive API and service account.
@@ -1105,14 +1198,18 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
     write_report(report_changes_by_sheet, report_path, final_not_found_deletions=sorted(list(still_not_found)))
     print(f"✅ Report written → {report_path}")
 
+    
+    # Compose the email body in-memory; do NOT persist email_body_*.txt to disk (reports only).
     email_body = compose_email_body_from_report(report_path)
-    email_path = os.path.join(REPORTS_DIR, f"email_body_{filename_timestamp()}.txt")
+    # Print to stdout between markers so CI (GitHub Actions) can capture the email body as a step output.
     try:
-        with open(email_path, 'w', encoding='utf-8') as ef:
-            ef.write(email_body)
-        print(f"✅ Email body written → {email_path}")
+        print('\n===EMAIL_BODY_START===')
+        print(email_body)
+        print('===EMAIL_BODY_END===\n')
     except Exception as e:
-        print(f"⚠️ Could not write email body file: {e}")
+        print('⚠️ Failed printing email body to stdout:', e)
+
+    # The workflow runner should use `email_body` to send the message; it is intentionally not written to a file.
 
     if SCHEDULED_RUN:
         cleanup_deleted_data()
