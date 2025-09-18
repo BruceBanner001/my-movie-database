@@ -467,7 +467,7 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
                     obj["showID"] = base + int(val) if pd.notna(val) else None
                 elif key == "showName":
                     raw_name = str(val) if pd.notna(val) else ""
-                    clean_name = re.sub(r'\s+', ' ', raw_name).strip().lower()
+                    clean_name = re.sub(r'\s+', ' ', raw_name).strip()
                     obj["showName"] = clean_name if clean_name else None
                 elif key in ("watchStartedOn", "watchEndedOn"):
                     obj[key] = ddmmyyyy(val)
