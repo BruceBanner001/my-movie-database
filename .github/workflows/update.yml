@@ -172,7 +172,7 @@ jobs:
           password: ${{ secrets.SMTP_PASSWORD }}
           subject: ${{ steps.run_updater.outputs.email_subject }}
           body: ${{ steps.run_updater.outputs.email_body }}
-          is_base64: true
+          is_base64: 'true'         # <-- string fixes Base64 rendering
           content_type: text/html
           to: ${{ secrets.NOTIFY_EMAIL }}
           from: GitHub Actions <${{ secrets.SMTP_USERNAME }}>
