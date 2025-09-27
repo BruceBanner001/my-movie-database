@@ -84,15 +84,16 @@ jobs:
       # 6.1 Prepare email body (robust)
       # ------------------------------------------------------
       - name: Prepare email body
+        id: prepare_email
         run: |
           if [ -f updater_output.txt ] && [ -s updater_output.txt ]; then
-            # Convert output to HTML-friendly format
             sed 's/$/<br>/' updater_output.txt > email_body.html
           else
             echo "<p>No output from script.</p>" > email_body.html
           fi
           subj_date=$(date -u "+%d %B %Y %H%M")
           echo "email_subject=[${{ github.event_name == 'schedule' && 'Automatic' || 'Manual' }}] Workflow $subj_date Report" >> $GITHUB_OUTPUT
+        shell: bash
 
       # ------------------------------------------------------
       # 6.2 Cleanup old backups & deleted-data
@@ -165,15 +166,15 @@ jobs:
       # 12. Send consolidated HTML report email
       # ------------------------------------------------------
       - name: Send consolidated report email
-        if: steps.run_updater.outputs.email_subject != ''
+        if: steps.prepare_email.outputs.email_subject != ''
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: ${{ secrets.SMTP_SERVER }}
           server_port: ${{ secrets.SMTP_PORT }}
           username: ${{ secrets.SMTP_USERNAME }}
           password: ${{ secrets.SMTP_PASSWORD }}
-          subject: ${{ steps.run_updater.outputs.email_subject }}
-          body_path: email_body.html      # <-- robust method
+          subject: ${{ steps.prepare_email.outputs.email_subject }}
+          body_path: email_body.html
           content_type: text/html
           to: ${{ secrets.NOTIFY_EMAIL }}
           from: GitHub Actions <${{ secrets.SMTP_USERNAME }}>
