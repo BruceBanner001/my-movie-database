@@ -84,10 +84,8 @@ jobs:
           awk '/^===EMAIL_BODY_START===$/{flag=1;next}/^===EMAIL_BODY_END===$/{flag=0}flag' updater_output.txt > email_body.html || true
 
           if [ -s email_body.html ]; then
-            encoded_body=$(base64 -w 0 email_body.html)
             subj_date=$(date -u "+%d %B %Y %H%M")
             echo "email_subject=[${{ github.event_name == 'schedule' && 'Automatic' || 'Manual' }}] Workflow $subj_date Report" >> $GITHUB_OUTPUT
-            echo "email_body=$encoded_body" >> $GITHUB_OUTPUT
           fi
 
       # ------------------------------------------------------
@@ -99,12 +97,10 @@ jobs:
         run: |
           echo "Deleting files older than $KEEP_OLD_IMAGES_DAYS days in backups/ and deleted-data/"
 
-          # Delete old files in backups/
           if [ -d backups ]; then
             find backups/ -type f -mtime +$KEEP_OLD_IMAGES_DAYS -exec rm -f {} \;
           fi
 
-          # Delete old files in deleted-data/
           if [ -d deleted-data ]; then
             find deleted-data/ -type f -mtime +$KEEP_OLD_IMAGES_DAYS -exec rm -f {} \;
           fi
@@ -160,10 +156,10 @@ jobs:
           args: detect --source=. --report-path=reports/secrets_report.txt --no-banner --redact
 
       # ------------------------------------------------------
-      # 12. Send consolidated HTML report email
+      # 12. Send consolidated HTML report email (reliable)
       # ------------------------------------------------------
       - name: Send consolidated report email
-        if: steps.run_updater.outputs.email_body != ''
+        if: steps.run_updater.outputs.email_subject != ''
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: ${{ secrets.SMTP_SERVER }}
@@ -171,8 +167,7 @@ jobs:
           username: ${{ secrets.SMTP_USERNAME }}
           password: ${{ secrets.SMTP_PASSWORD }}
           subject: ${{ steps.run_updater.outputs.email_subject }}
-          body: ${{ steps.run_updater.outputs.email_body }}
-          is_base64: 'true'         # <-- string fixes Base64 rendering
+          body_path: email_body.html        # <-- pass HTML file directly
           content_type: text/html
           to: ${{ secrets.NOTIFY_EMAIL }}
           from: GitHub Actions <${{ secrets.SMTP_USERNAME }}>
