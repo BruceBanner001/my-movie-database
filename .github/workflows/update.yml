@@ -6,9 +6,6 @@
 
 name: Excel → JSON Update
 
-# ------------------------------------------------------
-# Triggers
-# ------------------------------------------------------
 on:
   workflow_dispatch:       # Manual trigger via GitHub Actions UI
     inputs:
@@ -45,7 +42,7 @@ jobs:
           python-version: "3.11"
 
       # ------------------------------------------------------
-      # 3. Install dependencies from requirements.txt
+      # 3. Install dependencies
       # ------------------------------------------------------
       - name: Install dependencies
         run: |
@@ -53,7 +50,7 @@ jobs:
           pip install -r requirements.txt
 
       # ------------------------------------------------------
-      # 4. Write secrets to files
+      # 4. Write secrets to runtime files
       # ------------------------------------------------------
       - name: Write Excel file ID
         run: echo "${{ secrets.EXCEL_FILE_ID }}" > EXCEL_FILE_ID.txt
@@ -86,7 +83,7 @@ jobs:
           fi
 
       # ------------------------------------------------------
-      # 6. Commit and push changes back to repo
+      # 6. Commit & push changes
       # ------------------------------------------------------
       - name: Commit & push changes
         run: |
@@ -97,29 +94,42 @@ jobs:
           git push
 
       # ------------------------------------------------------
-      # 7. Upload reports as GitHub Action artifacts
+      # 7. Upload reports as artifacts
       # ------------------------------------------------------
       - name: Upload reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: run-reports
-          path: reports/
+          path: reports/report_*.txt
 
       # ------------------------------------------------------
-      # 8. Run gitleaks to check for secret exposure
+      # 8. Cleanup runtime secret files
+      # ------------------------------------------------------
+      - name: Cleanup secret files
+        if: always()
+        run: |
+          rm -f EXCEL_FILE_ID.txt GDRIVE_SERVICE_ACCOUNT.json || true
+
+      # ------------------------------------------------------
+      # 9. Run gitleaks to check for secret exposure
       # ------------------------------------------------------
       - name: Scan for secrets
         if: always()
         uses: gitleaks/gitleaks-action@v2
         with:
-          args: detect --source=. --report-path=reports/secrets_report.txt --no-banner --redact
+          args: detect \
+                --source=. \
+                --report-path=reports/secrets_report.txt \
+                --no-banner \
+                --redact \
+                --exclude-files "EXCEL_FILE_ID.txt,GDRIVE_SERVICE_ACCOUNT.json"
 
       # ------------------------------------------------------
-      # 9. Send consolidated report email (HTML)
+      # 10. Send consolidated report email
       # ------------------------------------------------------
       - name: Send consolidated report email
-        if: steps.run_updater.outputs.email_body != ''
+        if: ${{ steps.run_updater.outputs.email_body && steps.run_updater.outputs.email_body != '' }}
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: ${{ secrets.SMTP_SERVER }}
