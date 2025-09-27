@@ -18,7 +18,7 @@ on:
         default: '0'
         required: false
   schedule:
-    - cron: "30 18 * * 6"  # Scheduled: Every Sunday 00:00 AM IST (Saturday 18:30 UTC)
+    - cron: "30 18 * * 6"  # Every Sunday 00:00 AM IST (Saturday 18:30 UTC)
 
 jobs:
   update-json:
@@ -27,56 +27,80 @@ jobs:
       contents: write
 
     steps:
+      # ------------------------------------------------------
+      # 1. Checkout repo
+      # ------------------------------------------------------
       - name: Checkout repo
         uses: actions/checkout@v4
 
+      # ------------------------------------------------------
+      # 2. Set up Python
+      # ------------------------------------------------------
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
+      # ------------------------------------------------------
+      # 3. Install dependencies
+      # ------------------------------------------------------
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      # ------------------------------------------------------
+      # 4. Ensure required folders exist
+      # ------------------------------------------------------
+      - name: Ensure required folders exist
+        run: |
+          mkdir -p backups deleted-data reports images
+
+      # ------------------------------------------------------
+      # 5. Write secrets to files
+      # ------------------------------------------------------
       - name: Write Excel file ID
         run: echo "${{ secrets.EXCEL_FILE_ID }}" > EXCEL_FILE_ID.txt
 
       - name: Write Google Drive service account
         run: echo '${{ secrets.GDRIVE_SERVICE_ACCOUNT }}' > GDRIVE_SERVICE_ACCOUNT.json
 
-      # ------------------ Run the updater once ------------------
-      - name: Run seriesData updater and capture report path
+      # ------------------------------------------------------
+      # 6. Run main script (Excel → JSON)
+      # ------------------------------------------------------
+      - name: Run Excel → JSON script
         id: run_updater
         env:
-          EVENT_NAME: ${{ github.event_name }}
           GITHUB_PAGES_URL: https://brucebanner001.github.io/my-movie-database
           MAX_PER_RUN: ${{ github.event.inputs.MAX_PER_RUN || 0 }}
           MAX_RUN_TIME_MINUTES: ${{ github.event.inputs.MAX_RUN_TIME_MINUTES || 300 }}
           KEEP_OLD_IMAGES_DAYS: 7
           SCHEDULED_RUN: ${{ github.event_name == 'schedule' && 'true' || 'false' }}
         run: |
-          set -euo pipefail
-          output=$(python create_update_backup_delete.py 2>&1 || true)
-          printf '%s\n' "$output"
-          report_path=$(printf '%s\n' "$output" | awk -F'→' '/Report written/ {gsub(/^[ \t]+|[ \t]+$/, "", $2); print $2; exit}')
-          if [ -z "$report_path" ] || [ ! -f "$report_path" ]; then
-            report_path=$(ls -t reports/report_*.txt 2>/dev/null | head -n1 || true)
-          fi
-          if [ -z "$report_path" ]; then
-            echo "report_path=" >> $GITHUB_OUTPUT
-          else
-            echo "report_path=$report_path" >> $GITHUB_OUTPUT
-          fi
-          if [ "${EVENT_NAME:-}" = "schedule" ]; then
-            prefix="[Automatic]"
-          else
-            prefix="[Manual]"
-          fi
-          subj_date=$(date -u "+%d %B %Y %H%M")
-          echo "email_subject=$prefix Workflow $subj_date Report" >> $GITHUB_OUTPUT
+          set -e
+          python create_update_backup_delete.py | tee updater_output.txt
 
+          # Extract email body if present
+          awk '/^===EMAIL_BODY_START===$/{flag=1;next}/^===EMAIL_BODY_END===$/{flag=0}flag' updater_output.txt > email_body.html || true
+
+          if [ -s email_body.html ]; then
+            encoded_body=$(base64 -w 0 email_body.html)
+            subj_date=$(date -u "+%d %B %Y %H%M")
+            echo "email_subject=[${{ github.event_name == 'schedule' && 'Automatic' || 'Manual' }}] Workflow $subj_date Report" >> $GITHUB_OUTPUT
+            echo "email_body=$encoded_body" >> $GITHUB_OUTPUT
+          fi
+
+      # ------------------------------------------------------
+      # 6.1 Cleanup old backups & deleted-data
+      # ------------------------------------------------------
+      - name: Cleanup old backups and deleted-data
+        run: |
+          find backups/ -type f -mtime +${{ env.KEEP_OLD_IMAGES_DAYS }} -exec rm -f {} \;
+          find deleted-data/ -type f -mtime +${{ env.KEEP_OLD_IMAGES_DAYS }} -exec rm -f {} \;
+
+      # ------------------------------------------------------
+      # 7. Commit and push changes
+      # ------------------------------------------------------
       - name: Commit & push changes
         run: |
           git config --global user.name "github-actions[bot]"
@@ -85,46 +109,50 @@ jobs:
           git commit -m "Automated update: $(date -u '+%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
           git push
 
-      - name: Upload reports
+      # ------------------------------------------------------
+      # 8. Upload report TXT files
+      # ------------------------------------------------------
+      - name: Upload report TXT files
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: run-reports
-          path: reports/
+          name: reports
+          path: reports/*.txt
 
+      # ------------------------------------------------------
+      # 9. Upload backups folder separately
+      # ------------------------------------------------------
+      - name: Upload backups folder
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: backups
+          path: backups/
+
+      # ------------------------------------------------------
+      # 10. Upload deleted-data folder separately
+      # ------------------------------------------------------
+      - name: Upload deleted-data folder
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: deleted-data
+          path: deleted-data/
+
+      # ------------------------------------------------------
+      # 11. Scan for secrets
+      # ------------------------------------------------------
       - name: Scan for secrets
         if: always()
         uses: gitleaks/gitleaks-action@v2
         with:
           args: detect --source=. --report-path=reports/secrets_report.txt --no-banner --redact
 
-      # ------------------ Compose consolidated email ------------------
-      - name: Compose consolidated email body
-        id: compose_email
-        run: |
-          set -euo pipefail
-          report="${{ steps.run_updater.outputs.report_path }}"
-          if [ -z "$report" ] || [ ! -f "$report" ]; then
-            report=$(ls -t reports/report_*.txt 2>/dev/null | head -n1 || true)
-          fi
-          echo "email_body<<EOF" >> $GITHUB_OUTPUT
-          echo "SECRETS CHECK:" >> $GITHUB_OUTPUT
-          if [ -s reports/secrets_report.txt ]; then
-            echo "- Gitleaks detected potential secrets. (Details below)" >> $GITHUB_OUTPUT
-            sed 's/%/%%/g' reports/secrets_report.txt >> $GITHUB_OUTPUT
-          else
-            echo "- No obvious secrets detected." >> $GITHUB_OUTPUT
-          fi
-          echo "" >> $GITHUB_OUTPUT
-          echo "--- REPORT CONTENT (pasted below) ---" >> $GITHUB_OUTPUT
-          if [ -n "$report" ] && [ -f "$report" ]; then
-            sed 's/%/%%/g' "$report" >> $GITHUB_OUTPUT
-          else
-            echo "⚠️ Report file not found." >> $GITHUB_OUTPUT
-          fi
-          echo "EOF" >> $GITHUB_OUTPUT
-
+      # ------------------------------------------------------
+      # 12. Send consolidated HTML report email
+      # ------------------------------------------------------
       - name: Send consolidated report email
+        if: steps.run_updater.outputs.email_body != ''
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: ${{ secrets.SMTP_SERVER }}
@@ -132,6 +160,8 @@ jobs:
           username: ${{ secrets.SMTP_USERNAME }}
           password: ${{ secrets.SMTP_PASSWORD }}
           subject: ${{ steps.run_updater.outputs.email_subject }}
+          body: ${{ steps.run_updater.outputs.email_body }}
+          is_base64: true
+          content_type: text/html
           to: ${{ secrets.NOTIFY_EMAIL }}
           from: GitHub Actions <${{ secrets.SMTP_USERNAME }}>
-          body: ${{ steps.compose_email.outputs.email_body }}
