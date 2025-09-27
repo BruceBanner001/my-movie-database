@@ -94,9 +94,20 @@ jobs:
       # 6.1 Cleanup old backups & deleted-data
       # ------------------------------------------------------
       - name: Cleanup old backups and deleted-data
+        env:
+          KEEP_OLD_IMAGES_DAYS: 7
         run: |
-          find backups/ -type f -mtime +${{ env.KEEP_OLD_IMAGES_DAYS }} -exec rm -f {} \;
-          find deleted-data/ -type f -mtime +${{ env.KEEP_OLD_IMAGES_DAYS }} -exec rm -f {} \;
+          echo "Deleting files older than $KEEP_OLD_IMAGES_DAYS days in backups/ and deleted-data/"
+
+          # Delete old files in backups/
+          if [ -d backups ]; then
+            find backups/ -type f -mtime +$KEEP_OLD_IMAGES_DAYS -exec rm -f {} \;
+          fi
+
+          # Delete old files in deleted-data/
+          if [ -d deleted-data ]; then
+            find deleted-data/ -type f -mtime +$KEEP_OLD_IMAGES_DAYS -exec rm -f {} \;
+          fi
 
       # ------------------------------------------------------
       # 7. Commit and push changes
