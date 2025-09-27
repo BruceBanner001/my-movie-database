@@ -72,7 +72,19 @@ jobs:
         run: |
           set -e
           python create_update_backup_delete.py | tee updater_output.txt
-          awk '/^===EMAIL_BODY_START===$/{flag=1;next}/^===EMAIL_BODY_END===$/{flag=0}flag' updater_output.txt > email_body.html || true
+
+      # ------------------------------------------------------
+      # 6. Extract email body without SECRETS CHECK
+      # ------------------------------------------------------
+      - name: Extract email body without secrets check
+        run: |
+          awk '/^===EMAIL_BODY_START===$/{flag=1;next}/^===EMAIL_BODY_END===$/{flag=0}flag' updater_output.txt \
+            | grep -v -E 'SECRETS CHECK|GDRIVE_SERVICE_ACCOUNT.json|EXCEL_FILE_ID.txt' \
+            > email_body.html || true
+
+      - name: Set email outputs
+        if: ${{ always() }}
+        run: |
           if [ -s email_body.html ]; then
             subj_date=$(date -u "+%d %B %Y %H%M")
             echo "email_subject=[${{ github.event_name == 'schedule' && 'Automatic' || 'Manual' }}] Workflow $subj_date Report" >> $GITHUB_OUTPUT
@@ -82,7 +94,7 @@ jobs:
           fi
 
       # ------------------------------------------------------
-      # 6. Commit & push changes
+      # 7. Commit & push changes
       # ------------------------------------------------------
       - name: Commit & push changes
         run: |
@@ -93,7 +105,7 @@ jobs:
           git push
 
       # ------------------------------------------------------
-      # 7. Upload reports
+      # 8. Upload reports
       # ------------------------------------------------------
       - name: Upload reports
         if: always()
@@ -103,7 +115,7 @@ jobs:
           path: reports/report_*.txt
 
       # ------------------------------------------------------
-      # 8. Cleanup runtime secret files
+      # 9. Cleanup runtime secret files
       # ------------------------------------------------------
       - name: Cleanup secret files
         if: always()
@@ -111,7 +123,7 @@ jobs:
           rm -f EXCEL_FILE_ID.txt GDRIVE_SERVICE_ACCOUNT.json || true
 
       # ------------------------------------------------------
-      # 9. Send consolidated report email
+      # 10. Send consolidated report email
       # ------------------------------------------------------
       - name: Send consolidated report email
         if: ${{ steps.run_updater.outputs.email_body && steps.run_updater.outputs.email_body != '' }}
