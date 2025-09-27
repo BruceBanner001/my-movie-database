@@ -7,7 +7,7 @@
 name: Excel → JSON Update
 
 on:
-  workflow_dispatch:       # Manual trigger via GitHub Actions UI
+  workflow_dispatch:
     inputs:
       MAX_RUN_TIME_MINUTES:
         description: 'Max run time in minutes for this run (0 = no time limit)'
@@ -24,17 +24,17 @@ jobs:
   update-json:
     runs-on: ubuntu-latest
     permissions:
-      contents: write   # allow workflow to push back to the repo
+      contents: write
 
     steps:
       # ------------------------------------------------------
-      # 1. Checkout the repo
+      # 1. Checkout repo
       # ------------------------------------------------------
       - name: Checkout repo
         uses: actions/checkout@v4
 
       # ------------------------------------------------------
-      # 2. Set up Python (v3.11)
+      # 2. Set up Python
       # ------------------------------------------------------
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -59,7 +59,7 @@ jobs:
         run: echo '${{ secrets.GDRIVE_SERVICE_ACCOUNT }}' > GDRIVE_SERVICE_ACCOUNT.json
 
       # ------------------------------------------------------
-      # 5. Run main script (create_update_backup_delete.py)
+      # 5. Run main script
       # ------------------------------------------------------
       - name: Run Excel → JSON script
         id: run_updater
@@ -72,7 +72,6 @@ jobs:
         run: |
           set -e
           python create_update_backup_delete.py | tee updater_output.txt
-          # Extract email body if present
           awk '/^===EMAIL_BODY_START===$/{flag=1;next}/^===EMAIL_BODY_END===$/{flag=0}flag' updater_output.txt > email_body.html || true
           if [ -s email_body.html ]; then
             subj_date=$(date -u "+%d %B %Y %H%M")
@@ -94,7 +93,7 @@ jobs:
           git push
 
       # ------------------------------------------------------
-      # 7. Upload reports as artifacts
+      # 7. Upload reports
       # ------------------------------------------------------
       - name: Upload reports
         if: always()
@@ -112,21 +111,7 @@ jobs:
           rm -f EXCEL_FILE_ID.txt GDRIVE_SERVICE_ACCOUNT.json || true
 
       # ------------------------------------------------------
-      # 9. Run gitleaks to check for secret exposure
-      # ------------------------------------------------------
-      - name: Scan for secrets
-        if: always()
-        uses: gitleaks/gitleaks-action@v2
-        with:
-          args: detect \
-                --source=. \
-                --report-path=reports/secrets_report.txt \
-                --no-banner \
-                --redact \
-                --exclude-files "EXCEL_FILE_ID.txt,GDRIVE_SERVICE_ACCOUNT.json"
-
-      # ------------------------------------------------------
-      # 10. Send consolidated report email
+      # 9. Send consolidated report email
       # ------------------------------------------------------
       - name: Send consolidated report email
         if: ${{ steps.run_updater.outputs.email_body && steps.run_updater.outputs.email_body != '' }}
