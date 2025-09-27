@@ -80,16 +80,22 @@ jobs:
           set -e
           python create_update_backup_delete.py | tee updater_output.txt
 
-          # Extract email body if present
-          awk '/^===EMAIL_BODY_START===$/{flag=1;next}/^===EMAIL_BODY_END===$/{flag=0}flag' updater_output.txt > email_body.html || true
-
-          if [ -s email_body.html ]; then
-            subj_date=$(date -u "+%d %B %Y %H%M")
-            echo "email_subject=[${{ github.event_name == 'schedule' && 'Automatic' || 'Manual' }}] Workflow $subj_date Report" >> $GITHUB_OUTPUT
+      # ------------------------------------------------------
+      # 6.1 Prepare email body (robust)
+      # ------------------------------------------------------
+      - name: Prepare email body
+        run: |
+          if [ -f updater_output.txt ] && [ -s updater_output.txt ]; then
+            # Convert output to HTML-friendly format
+            sed 's/$/<br>/' updater_output.txt > email_body.html
+          else
+            echo "<p>No output from script.</p>" > email_body.html
           fi
+          subj_date=$(date -u "+%d %B %Y %H%M")
+          echo "email_subject=[${{ github.event_name == 'schedule' && 'Automatic' || 'Manual' }}] Workflow $subj_date Report" >> $GITHUB_OUTPUT
 
       # ------------------------------------------------------
-      # 6.1 Cleanup old backups & deleted-data
+      # 6.2 Cleanup old backups & deleted-data
       # ------------------------------------------------------
       - name: Cleanup old backups and deleted-data
         env:
@@ -156,7 +162,7 @@ jobs:
           args: detect --source=. --report-path=reports/secrets_report.txt --no-banner --redact
 
       # ------------------------------------------------------
-      # 12. Send consolidated HTML report email (reliable)
+      # 12. Send consolidated HTML report email
       # ------------------------------------------------------
       - name: Send consolidated report email
         if: steps.run_updater.outputs.email_subject != ''
@@ -167,7 +173,7 @@ jobs:
           username: ${{ secrets.SMTP_USERNAME }}
           password: ${{ secrets.SMTP_PASSWORD }}
           subject: ${{ steps.run_updater.outputs.email_subject }}
-          body_path: email_body.html        # <-- pass HTML file directly
+          body_path: email_body.html      # <-- robust method
           content_type: text/html
           to: ${{ secrets.NOTIFY_EMAIL }}
           from: GitHub Actions <${{ secrets.SMTP_USERNAME }}>
