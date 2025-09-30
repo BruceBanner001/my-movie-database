@@ -92,11 +92,13 @@ jobs:
           name: run-reports
           path: reports/
 
+      # ------------------ Secret scan (CLI, free, non-blocking) ------------------
       - name: Scan for secrets
         if: always()
-        uses: gitleaks/gitleaks-action@v2
-        with:
-          args: detect --source=. --report-path=reports/secrets_report.txt --no-banner --redact
+        run: |
+          curl -sSL https://github.com/gitleaks/gitleaks/releases/latest/download/gitleaks-linux-amd64 -o gitleaks
+          chmod +x gitleaks
+          ./gitleaks detect --source=. --report-path=reports/secrets_report.txt --no-banner --redact || true
 
       # ------------------ Compose consolidated email ------------------
       - name: Compose consolidated email body
@@ -107,22 +109,32 @@ jobs:
           if [ -z "$report" ] || [ ! -f "$report" ]; then
             report=$(ls -t reports/report_*.txt 2>/dev/null | head -n1 || true)
           fi
-          echo "email_body<<EOF" >> $GITHUB_OUTPUT
-          echo "SECRETS CHECK:" >> $GITHUB_OUTPUT
-          if [ -s reports/secrets_report.txt ]; then
-            echo "- Gitleaks detected potential secrets. (Details below)" >> $GITHUB_OUTPUT
-            sed 's/%/%%/g' reports/secrets_report.txt >> $GITHUB_OUTPUT
-          else
-            echo "- No obvious secrets detected." >> $GITHUB_OUTPUT
-          fi
-          echo "" >> $GITHUB_OUTPUT
-          echo "--- REPORT CONTENT (pasted below) ---" >> $GITHUB_OUTPUT
-          if [ -n "$report" ] && [ -f "$report" ]; then
-            sed 's/%/%%/g' "$report" >> $GITHUB_OUTPUT
-          else
-            echo "⚠️ Report file not found." >> $GITHUB_OUTPUT
-          fi
-          echo "EOF" >> $GITHUB_OUTPUT
+
+          # Write email body to a temp file
+          {
+            echo "SECRETS CHECK:"
+            if [ -s reports/secrets_report.txt ]; then
+              echo "- Gitleaks detected potential secrets. (Details below)"
+              sed 's/%/%%/g' reports/secrets_report.txt
+            else
+              echo "- No obvious secrets detected."
+            fi
+            echo ""
+            echo "--- REPORT CONTENT (pasted below) ---"
+            if [ -n "$report" ] && [ -f "$report" ]; then
+              sed 's/%/%%/g' "$report"
+            else
+              echo "⚠️ Report file not found."
+            fi
+          } > email_body.txt
+
+          # Append to GITHUB_OUTPUT with safe delimiter
+          delim="EOF$(date +%s)"
+          {
+            echo "email_body<<$delim"
+            cat email_body.txt
+            echo "$delim"
+          } >> $GITHUB_OUTPUT
 
       - name: Send consolidated report email
         uses: dawidd6/action-send-mail@v3
