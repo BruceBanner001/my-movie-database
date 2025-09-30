@@ -125,11 +125,12 @@ jobs:
             fi
           } > email_body.txt
 
-          # Safe multiline output syntax (avoid EOF errors)
+          # Use a random delimiter so it never conflicts
+          delim="DELIM_$(date +%s%N)"
           {
-            echo "email_body<<EOF"
+            echo "email_body<<$delim"
             cat email_body.txt
-            echo "EOF"
+            echo "$delim"
           } >> "$GITHUB_OUTPUT"
 
       - name: Send consolidated report email
