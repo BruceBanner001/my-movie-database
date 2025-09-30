@@ -1314,7 +1314,10 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
                         new_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
                         new_obj['updatedDetails'] = 'First time created'
                         merged_by_id[sid] = new_obj
-                        report_changes.setdefault('created', []).append(new_obj)
+
+                        # ✅ Fix: prevent duplicate "Created" messages
+                        if not any(o.get('showID') == sid for o in report_changes.get('created', [])):
+                            report_changes.setdefault('created', []).append(new_obj)
 
         os.makedirs(BACKUP_DIR, exist_ok=True)
         backup_name = os.path.join(BACKUP_DIR, f"{filename_timestamp()}_{safe_filename(s)}.json")
