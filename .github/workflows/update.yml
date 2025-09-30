@@ -125,12 +125,10 @@ jobs:
             fi
           } > email_body.txt
 
-          # Use a random delimiter so it never conflicts
-          delim="DELIM_$(date +%s%N)"
           {
-            echo "email_body<<$delim"
+            echo "email_body<<EOF"
             cat email_body.txt
-            echo "$delim"
+            echo "EOF"
           } >> "$GITHUB_OUTPUT"
 
       - name: Send consolidated report email
