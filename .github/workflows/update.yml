@@ -81,7 +81,7 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add seriesData.json images/ backups/ reports/ deleted-data/
+          git add seriesData.json images/ backups/ reports/ deleted-data/ old-images/
           git commit -m "Automated update: $(date -u '+%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
           git push
 
@@ -91,19 +91,6 @@ jobs:
         with:
           name: run-reports
           path: reports/
-
-      # ------------------ Cleanup old reports ------------------
-      - name: Cleanup old reports (keep last 10)
-        run: |
-          ls -t reports/report_*.txt 2>/dev/null | tail -n +11 | xargs -r rm -f
-
-      # ------------------ Secrets scan (non-blocking) ------------------
-      - name: Scan for secrets
-        if: always()
-        run: |
-          echo "⚠️ Skipping gitleaks license enforcement, just scanning locally..."
-          mkdir -p reports
-          gitleaks detect --no-banner --redact --source=. --report-path=reports/secrets_report.txt || true
 
       # ------------------ Compose consolidated email ------------------
       - name: Compose consolidated email body
@@ -132,14 +119,7 @@ jobs:
             fi
           } > email_body.txt
 
-          # Use UUID as a safe delimiter
-          delim="DELIM_$(uuidgen | tr '[:lower:]' '[:upper:]')"
-
-          {
-            echo "email_body<<$delim"
-            cat email_body.txt
-            echo "$delim"
-          } >> "$GITHUB_OUTPUT"
+          echo "email_body_path=email_body.txt" >> $GITHUB_OUTPUT
 
       - name: Send consolidated report email
         uses: dawidd6/action-send-mail@v3
@@ -151,4 +131,24 @@ jobs:
           subject: ${{ steps.run_updater.outputs.email_subject }}
           to: ${{ secrets.NOTIFY_EMAIL }}
           from: GitHub Actions <${{ secrets.SMTP_USERNAME }}>
-          body: ${{ steps.compose_email.outputs.email_body }}
+          body_file: ${{ steps.compose_email.outputs.email_body_path }}
+
+      # ------------------ Cleanup old backups (older than 15 days) ------------------
+      - name: Cleanup old backups (older than 15 days)
+        run: |
+          find backups/ -type f -name "backup_*.json" -mtime +15 -print -delete
+
+      # ------------------ Cleanup old reports (older than 15 days) ------------------
+      - name: Cleanup old reports (older than 15 days)
+        run: |
+          find reports/ -type f -name "report_*.txt" -mtime +15 -print -delete
+
+      # ------------------ Cleanup old deleted-data (older than 15 days) ------------------
+      - name: Cleanup old deleted-data (older than 15 days)
+        run: |
+          find deleted-data/ -type f -name "*.json" -mtime +15 -print -delete
+
+      # ------------------ Cleanup old-images (older than 15 days) ------------------
+      - name: Cleanup old-images (older than 15 days)
+        run: |
+          find old-images/ -type f -mtime +15 -print -delete
