@@ -1,26 +1,13 @@
-# =====================================================================
-# Workflow: Excel → JSON Update (with Email Notifications & Inputs)
-# ---------------------------------------------------------------------
-# Purpose:
-#   - Fetch private Excel from Google Drive
-#   - Transform into seriesData.json with images/synopsis
-#   - Backup & cleanup old data
-#   - Generate detailed reports
-#   - Send email with inline summary + full report attached
-#
-# Trigger Types:
-#   - Manual run (workflow_dispatch) → Subject prefix: [Manual]
-#   - Scheduled run (weekly, Sunday 00:00 UTC) → Subject prefix: [Automatic]
-#
-# Manual Run Inputs:
-#   - MAX_RUN_TIME_MINUTES → Max runtime per workflow run (0 = unlimited)
-#   - MAX_PER_RUN → Limit number of shows processed (0 = process all)
-# =====================================================================
+# ============================================================================
+# Workflow: Excel → JSON Automation
+# Purpose : Automate weekly + manual Excel → JSON updates, deletions, backups,
+#           and run reports (TXT only) for "my-movie-database".
+# ============================================================================
 
-name: Excel to JSON Update
+name: Excel → JSON Update
 
 on:
-  workflow_dispatch:              # Manual trigger from GitHub UI
+  workflow_dispatch:
     inputs:
       MAX_RUN_TIME_MINUTES:
         description: 'Max run time in minutes for this run (0 = no time limit)'
@@ -31,126 +18,120 @@ on:
         default: '0'
         required: false
   schedule:
-    - cron: "0 0 * * 0"           # Automatic trigger every Sunday 00:00 UTC
+    - cron: "30 18 * * 6"  # Scheduled: Every Sunday 00:00 AM IST (Saturday 18:30 UTC)
 
 jobs:
-  update:
+  update-json:
     runs-on: ubuntu-latest
-    env:
-      # Pass workflow_dispatch inputs into environment
-      MAX_RUN_TIME_MINUTES: ${{ github.event.inputs.MAX_RUN_TIME_MINUTES }}
-      MAX_PER_RUN: ${{ github.event.inputs.MAX_PER_RUN }}
+    permissions:
+      contents: write
 
     steps:
-      # --------------------------------------------------------------
-      # 1. Checkout repository
-      # --------------------------------------------------------------
-      - name: Checkout repository
+      - name: Checkout repo
         uses: actions/checkout@v4
 
-      # --------------------------------------------------------------
-      # 2. Set up Python
-      # --------------------------------------------------------------
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"  # Consistent with requirements.txt
+          python-version: "3.11"
 
-      # --------------------------------------------------------------
-      # 3. Install dependencies
-      # --------------------------------------------------------------
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # --------------------------------------------------------------
-      # 4. Write secrets into files
-      # --------------------------------------------------------------
-      - name: Write secrets to files
-        run: |
-          echo "${{ secrets.EXCEL_FILE_ID }}" > EXCEL_FILE_ID.txt
-          echo "${{ secrets.GDRIVE_SERVICE_ACCOUNT }}" > GDRIVE_SERVICE_ACCOUNT.json
+      - name: Write Excel file ID
+        run: echo "${{ secrets.EXCEL_FILE_ID }}" > EXCEL_FILE_ID.txt
 
-      # --------------------------------------------------------------
-      # 5. Run updater script
-      # --------------------------------------------------------------
-      - name: Run updater script
+      - name: Write Google Drive service account
+        run: echo '${{ secrets.GDRIVE_SERVICE_ACCOUNT }}' > GDRIVE_SERVICE_ACCOUNT.json
+
+      # ------------------ Run the updater once ------------------
+      - name: Run seriesData updater and capture report path
         id: run_updater
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          GITHUB_PAGES_URL: https://brucebanner001.github.io/my-movie-database
+          MAX_PER_RUN: ${{ github.event.inputs.MAX_PER_RUN || 0 }}
+          MAX_RUN_TIME_MINUTES: ${{ github.event.inputs.MAX_RUN_TIME_MINUTES || 300 }}
+          KEEP_OLD_IMAGES_DAYS: 7
+          SCHEDULED_RUN: ${{ github.event_name == 'schedule' && 'true' || 'false' }}
         run: |
-          python create_update_backup_delete.py > run.log 2>&1 || true
-
-          # Extract email body portion
-          sed -n '/===EMAIL_BODY_START===/,/===EMAIL_BODY_END===/p' run.log | \
-          sed '/===EMAIL_BODY_START===/d;/===EMAIL_BODY_END===/d' > email_body.html || true
-
-          # Show last lines for quick debugging
-          tail -n 50 run.log
-
-      # --------------------------------------------------------------
-      # 6. Prepare email subject & inline summary
-      # --------------------------------------------------------------
-      - name: Set email outputs
-        id: email_data
-        if: ${{ always() }}
-        run: |
+          set -euo pipefail
+          output=$(python create_update_backup_delete.py 2>&1 || true)
+          printf '%s\n' "$output"
+          report_path=$(printf '%s\n' "$output" | awk -F'→' '/Report written/ {gsub(/^[ \t]+|[ \t]+$/, "", $2); print $2; exit}')
+          if [ -z "$report_path" ] || [ ! -f "$report_path" ]; then
+            report_path=$(ls -t reports/report_*.txt 2>/dev/null | head -n1 || true)
+          fi
+          if [ -z "$report_path" ]; then
+            echo "report_path=" >> $GITHUB_OUTPUT
+          else
+            echo "report_path=$report_path" >> $GITHUB_OUTPUT
+          fi
+          if [ "${EVENT_NAME:-}" = "schedule" ]; then
+            prefix="[Automatic]"
+          else
+            prefix="[Manual]"
+          fi
           subj_date=$(date -u "+%d %B %Y %H%M")
-          if [ "${{ github.event_name }}" = "schedule" ]; then
-            echo "email_subject=[Automatic] Workflow $subj_date Report" >> $GITHUB_OUTPUT
-          else
-            echo "email_subject=[Manual] Workflow $subj_date Report" >> $GITHUB_OUTPUT
-          fi
+          echo "email_subject=$prefix Workflow $subj_date Report" >> $GITHUB_OUTPUT
 
-          if [ -s email_body.html ]; then
-            head -n 30 email_body.html > email_body_summary.html
-            echo "email_body<<EOF" >> $GITHUB_OUTPUT
-            cat email_body_summary.html >> $GITHUB_OUTPUT
-            echo "" >> $GITHUB_OUTPUT
-            echo "➡️ Full detailed report attached as TXT file." >> $GITHUB_OUTPUT
-            echo "EOF" >> $GITHUB_OUTPUT
-          else
-            echo "email_body=No summary generated." >> $GITHUB_OUTPUT
-          fi
-
-      # --------------------------------------------------------------
-      # 7. Locate most recent report file for attachment
-      # --------------------------------------------------------------
-      - name: Find latest report file
-        id: report_file
+      - name: Commit & push changes
         run: |
-          latest=$(ls -t reports/report_*.txt | head -n 1 || true)
-          if [ -n "$latest" ]; then
-            echo "report_file=$latest" >> $GITHUB_OUTPUT
-          else
-            echo "report_file=" >> $GITHUB_OUTPUT
-          fi
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add seriesData.json images/ backups/ reports/ deleted-data/
+          git commit -m "Automated update: $(date -u '+%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
+          git push
 
-      # --------------------------------------------------------------
-      # 8. Send email with summary + attachment
-      # --------------------------------------------------------------
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: run-reports
+          path: reports/
+
+      - name: Scan for secrets
+        if: always()
+        uses: gitleaks/gitleaks-action@v2
+        with:
+          args: detect --source=. --report-path=reports/secrets_report.txt --no-banner --redact
+
+      # ------------------ Compose consolidated email ------------------
+      - name: Compose consolidated email body
+        id: compose_email
+        run: |
+          set -euo pipefail
+          report="${{ steps.run_updater.outputs.report_path }}"
+          if [ -z "$report" ] || [ ! -f "$report" ]; then
+            report=$(ls -t reports/report_*.txt 2>/dev/null | head -n1 || true)
+          fi
+          echo "email_body<<EOF" >> $GITHUB_OUTPUT
+          echo "SECRETS CHECK:" >> $GITHUB_OUTPUT
+          if [ -s reports/secrets_report.txt ]; then
+            echo "- Gitleaks detected potential secrets. (Details below)" >> $GITHUB_OUTPUT
+            sed 's/%/%%/g' reports/secrets_report.txt >> $GITHUB_OUTPUT
+          else
+            echo "- No obvious secrets detected." >> $GITHUB_OUTPUT
+          fi
+          echo "" >> $GITHUB_OUTPUT
+          echo "--- REPORT CONTENT (pasted below) ---" >> $GITHUB_OUTPUT
+          if [ -n "$report" ] && [ -f "$report" ]; then
+            sed 's/%/%%/g' "$report" >> $GITHUB_OUTPUT
+          else
+            echo "⚠️ Report file not found." >> $GITHUB_OUTPUT
+          fi
+          echo "EOF" >> $GITHUB_OUTPUT
+
       - name: Send consolidated report email
-        if: ${{ steps.email_data.outputs.email_body != '' }}
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: ${{ secrets.SMTP_SERVER }}
           server_port: ${{ secrets.SMTP_PORT }}
           username: ${{ secrets.SMTP_USERNAME }}
           password: ${{ secrets.SMTP_PASSWORD }}
-          subject: ${{ steps.email_data.outputs.email_subject }}
-          body: ${{ steps.email_data.outputs.email_body }}
-          content_type: text/html
+          subject: ${{ steps.run_updater.outputs.email_subject }}
           to: ${{ secrets.NOTIFY_EMAIL }}
           from: GitHub Actions <${{ secrets.SMTP_USERNAME }}>
-          attachments: ${{ steps.report_file.outputs.report_file }}
-
-      # --------------------------------------------------------------
-      # 9. Commit updated artifacts back to repo
-      # --------------------------------------------------------------
-      - name: Commit changes
-        if: ${{ always() }}
-        run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
-          git add seriesData.json images/ old-images/ backups/ reports/ deleted-data/ || true
-          git commit -m "Automated update: $(date -u '+%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
-          git push || echo "No changes to push"
+          body: ${{ steps.compose_email.outputs.email_body }}
