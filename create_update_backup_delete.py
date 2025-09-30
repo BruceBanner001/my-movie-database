@@ -213,6 +213,118 @@ _MONTHS = {m.lower(): m for m in ["January", "February", "March", "April", "May"
 _SHORT_MONTHS = {m[:3].lower(): m for m in _MONTHS}
 
 
+
+# ------------------------- Smart merge helpers (ADDED) -------------------------
+# Properties that should be merged intelligently rather than bluntly overwritten when the new value is empty/absent.
+PRESERVE_IF_EMPTY = {
+    "otherNames",
+    # add keys here to preserve non-empty existing values when incoming is empty
+}
+
+# Properties to treat as lists (ensure lists rather than comma-separated strings)
+LIST_PROPERTIES = {
+    "otherNames",
+    # add list-like keys here
+}
+
+def now_iso():
+    from datetime import datetime
+    return datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
+
+def write_json_file_atomic(path, obj):
+    os.makedirs(os.path.dirname(path) or '.', exist_ok=True)
+    tmp = path + ".tmp"
+    with open(tmp, 'w', encoding='utf-8') as fh:
+        json.dump(obj, fh, ensure_ascii=False, indent=2)
+    os.replace(tmp, path)
+
+def backup_object(obj_id, obj, backup_dir=BACKUP_DIR):
+    """Write a timestamped backup of obj into backup_dir and return path."""
+    try:
+        os.makedirs(backup_dir, exist_ok=True)
+        ts = datetime.datetime.now().strftime('%Y%m%dT%H%M%SZ')
+        safe_id = str(obj_id).replace(' ', '_').replace('/', '_')
+        fname = f"{safe_id}__backup__{ts}.json"
+        path = os.path.join(backup_dir, safe_filename(fname))
+        write_json_file_atomic(path, obj)
+        return path
+    except Exception as e:
+        print(f"⚠️ Backup failed for {obj_id}: {e}")
+        return None
+
+def normalize_list_value(v, delim=','):
+    if v is None:
+        return []
+    if isinstance(v, (list, tuple)):
+        return [str(x).strip() for x in v if x is not None and str(x).strip()!='']
+    if isinstance(v, str):
+        parts = [p.strip() for p in v.split(delim)]
+        return [p for p in parts if p!='']
+    return [str(v)]
+
+def ensure_list_types(obj, list_props=LIST_PROPERTIES):
+    for k in list_props:
+        if k in obj and obj[k] is not None:
+            obj[k] = normalize_list_value(obj[k])
+
+def format_property_for_message(prop_name):
+    if not prop_name:
+        return prop_name
+    s = prop_name.replace('_', ' ')
+    out = []
+    for ch in s:
+        if ch.isupper() and out and out[-1] != ' ' and out[-1].islower():
+            out.append(' ')
+        out.append(ch)
+    return ''.join(out).strip().title()
+
+def compose_updated_details(changed_props, created_first_time=False):
+    if created_first_time:
+        return 'First time created'
+    changed = [format_property_for_message(p) for p in changed_props if p != 'updatedDetails']
+    if not changed:
+        return 'Object Updated'
+    return f"{', '.join(changed)} Updated"
+
+def smart_merge(existing, incoming, preserve_if_empty=PRESERVE_IF_EMPTY, list_props=LIST_PROPERTIES):
+    """Merge incoming into existing intelligently. Returns (merged, changed_keys)."""
+    merged = dict(existing)
+    incoming_norm = dict(incoming)
+    # Normalize lists on both sides
+    for lp in list_props:
+        if lp in incoming_norm:
+            incoming_norm[lp] = normalize_list_value(incoming_norm.get(lp))
+        if lp in merged:
+            merged[lp] = normalize_list_value(merged.get(lp))
+    changed = []
+    all_keys = set(list(existing.keys()) + list(incoming_norm.keys()))
+    for key in all_keys:
+        old_val = existing.get(key)
+        new_val = incoming_norm.get(key, None)
+        is_new_empty = new_val is None or (isinstance(new_val, str) and new_val.strip()=='') or (isinstance(new_val, (list,tuple)) and len(new_val)==0)
+        is_old_empty = old_val is None or (isinstance(old_val, str) and str(old_val).strip()=='') or (isinstance(old_val, (list,tuple)) and len(old_val)==0)
+        # Preserve old if instructed
+        if key in preserve_if_empty and is_new_empty and (not is_old_empty):
+            merged[key] = old_val
+            continue
+        # If list prop
+        if key in list_props:
+            if key not in incoming_norm:
+                # incoming didn't include key -> keep existing
+                continue
+            merged[key] = normalize_list_value(new_val)
+        else:
+            if key in incoming_norm:
+                merged[key] = new_val
+            else:
+                continue
+        if old_val != merged.get(key):
+            changed.append(key)
+    return merged, changed
+
+# ---------------------- End of smart merge helpers ----------------------------
+
+
 def _normalize_month_name(m):
     mk = m.strip().lower()
     if mk in _MONTHS:
@@ -1170,25 +1282,48 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
             print(f"⚠️ Error processing {s}: {err}")
             report_changes['error'] = err
             items, processed, finished, next_start_idx = [], 0, True, start_idx
+        
         for new_obj in items:
-            sid = new_obj.get('showID')
-            if sid in merged_by_id:
-                old_obj = merged_by_id[sid]
-                if old_obj != new_obj:
-                    new_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
-                    new_obj['updatedDetails'] = 'Object updated'
-                    merged_by_id[sid] = new_obj
-            else:
-                merged_by_id[sid] = new_obj
-        if items:
-            os.makedirs(BACKUP_DIR, exist_ok=True)
-            backup_name = os.path.join(BACKUP_DIR, f"{filename_timestamp()}_{safe_filename(s)}.json")
-            try:
-                with open(backup_name, 'w', encoding='utf-8') as bf:
-                    json.dump(items, bf, indent=4, ensure_ascii=False)
-                print(f"✅ Backup saved → {backup_name}")
-            except Exception as e:
-                print(f"⚠️ Could not write backup {backup_name}: {e}")
+                    sid = new_obj.get('showID')
+                    if sid in merged_by_id:
+                        old_obj = merged_by_id[sid]
+                        # perform intelligent merge instead of blind replace
+                        ensure_list_types(old_obj, LIST_PROPERTIES)
+                        ensure_list_types(new_obj, LIST_PROPERTIES)
+                        merged_obj, changed_keys = smart_merge(old_obj, new_obj)
+                        if changed_keys:
+                            # backup existing object BEFORE writing
+                            try:
+                                bpath = backup_object(old_obj.get('showID') or old_obj.get('id') or sid, old_obj, backup_dir=BACKUP_DIR)
+                                if bpath:
+                                    report_changes.setdefault('backups', []).append(bpath)
+                            except Exception as e:
+                                print(f"⚠️ Backup failed for {sid}: {e}")
+                            # Compose granular updatedDetails
+                            merged_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
+                            merged_obj['updatedDetails'] = compose_updated_details(changed_keys, created_first_time=False)
+                            merged_by_id[sid] = merged_obj
+                            report_changes.setdefault('updated', []).append({'old': old_obj, 'new': merged_obj})
+                        else:
+                            # No meaningful changes found; keep old object
+                            merged_by_id[sid] = old_obj
+                            report_changes.setdefault('unchanged', []).append(sid)
+                    else:
+                        # New object - ensure lists normalized and mark created info
+                        ensure_list_types(new_obj, LIST_PROPERTIES)
+                        new_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
+                        new_obj['updatedDetails'] = 'First time created'
+                        merged_by_id[sid] = new_obj
+                        report_changes.setdefault('created', []).append(new_obj)
+
+        os.makedirs(BACKUP_DIR, exist_ok=True)
+        backup_name = os.path.join(BACKUP_DIR, f"{filename_timestamp()}_{safe_filename(s)}.json")
+        try:
+            with open(backup_name, 'w', encoding='utf-8') as bf:
+                json.dump(items, bf, indent=4, ensure_ascii=False)
+            print(f"✅ Backup saved → {backup_name}")
+        except Exception as e:
+            print(f"⚠️ Could not write backup {backup_name}: {e}")
         report_changes_by_sheet[s] = report_changes
         if processed > 0:
             any_sheet_processed = True
