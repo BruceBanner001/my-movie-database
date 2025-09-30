@@ -628,7 +628,7 @@ def tidy_comment(val):
     text = re.sub(r'\.([^\s])', r'. \1', text)
     return text
 
-
+def sheet_base_offset(sheet_name: str) -> int:
     if sheet_name == "Sheet1":
         return 100
     if sheet_name == "Feb 7 2023 Onwards":
