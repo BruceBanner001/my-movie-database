@@ -239,14 +239,10 @@ def write_json_file_atomic(path, obj):
     os.replace(tmp, path)
 
 def backup_object(obj_id, obj, backup_dir=BACKUP_DIR):
-    """Write a timestamped backup of `obj` into `backup_dir` and return path.
-
-    Uses now_ist() (IST) for a deterministic timestamp and writes atomically.
-    """
+    """Write a timestamped backup of obj into backup_dir and return path."""
     try:
         os.makedirs(backup_dir, exist_ok=True)
-        # Use now_ist() to ensure consistent timezone-aware timestamps
-        ts = now_ist().strftime('%Y%m%dT%H%M%SZ')
+        ts = datetime.datetime.now().strftime('%Y%m%dT%H%M%SZ')
         safe_id = str(obj_id).replace(' ', '_').replace('/', '_')
         fname = f"{safe_id}__backup__{ts}.json"
         path = os.path.join(backup_dir, safe_filename(fname))
@@ -282,22 +278,13 @@ def format_property_for_message(prop_name):
         out.append(ch)
     return ''.join(out).strip().title()
 
-def compose_updated_details(changed_props):
-    """Return a readable string describing which properties were updated.
-
-    Example:
-      ['Ratings'] -> "Ratings Updated"
-      ['Ratings','Category'] -> "Ratings, Category Updated"
-      [] -> "Object Updated (unspecified changes)"
-    """
-    if not changed_props:
-        return "Object Updated (unspecified changes)"
-    # Join the changed property names into a comma-separated list
-    try:
-        label = ", ".join(changed_props)
-    except Exception:
-        label = str(changed_props)
-    return f"{label} Updated"
+def compose_updated_details(changed_props, created_first_time=False):
+    if created_first_time:
+        return 'First time created'
+    changed = [format_property_for_message(p) for p in changed_props if p != 'updatedDetails']
+    if not changed:
+        return 'Object Updated'
+    return f"{', '.join(changed)} Updated"
 
 def smart_merge(existing, incoming, preserve_if_empty=PRESERVE_IF_EMPTY, list_props=LIST_PROPERTIES):
     """Merge incoming into existing intelligently. Returns (merged, changed_keys)."""
@@ -608,25 +595,14 @@ COLUMN_MAP = {
 
 
 def tidy_comment(val):
-    """Normalize comments so each WORD starts with a capital letter and ensure it ends with a period.
-
-    Examples:
-      'i am Subramanian' -> 'I Am Subramanian.'
-    """
     if pd.isna(val) or not str(val).strip():
         return None
-    # Collapse whitespace
     text = re.sub(r'\s+', ' ', str(val)).strip()
-    # Title-case each word (first letter capitalized)
-    try:
-        text = text.title()
-    except Exception:
-        text = text
-    # Ensure single trailing period
-    text = text.rstrip('.') + '.'
-    # Ensure period followed by space after sentences if someone gave multiple sentences without space
+    if not text.endswith('.'):
+        text = text + '.'
     text = re.sub(r'\.([^\s])', r'. \1', text)
     return text
+
 
 def sheet_base_offset(sheet_name: str) -> int:
     if sheet_name == "Sheet1":
@@ -912,6 +888,8 @@ def process_deletions(excel_file, json_file, report_changes):
         )
     except Exception as e:
         report_changes.setdefault('deleted_summary', []).append(f"⚠️ Failed to write updated {json_file}: {e}")
+    report_changes.setdefault('deleted_count', 0)
+    report_changes['deleted_count'] = len(deleted_ids)
     return deleted_ids, not_found_ids
 
 def cleanup_deleted_data():
@@ -1087,46 +1065,34 @@ def write_report(report_changes_by_sheet, report_path, final_not_found_deletions
         if 'error' in changes:
             lines.append(f"ERROR processing sheet: {changes['error']}")
         created = changes.get('created', [])
-        total_created += len(created)
-        if created:
+        created_count = changes.get('created_count', None)
+        if created_count is None:
+            try:
+                created_count = len(created) if isinstance(created, (list, tuple)) else int(created) if isinstance(created, int) else 0
+            except Exception:
+                created_count = 0
+        total_created += int(created_count)
+        if created_count and created:
             lines.append("\nData Created:")
             for obj in created:
                 lines.append(f"- {obj.get('showName', 'Unknown')} -> Created")
         updated = changes.get('updated', [])
-        total_updated += len(updated)
-        if updated:
+        updated_count = changes.get('updated_count', None)
+        if updated_count is None:
+            try:
+                updated_count = len(updated) if isinstance(updated, (list, tuple)) else int(updated) if isinstance(updated, int) else 0
+            except Exception:
+                updated_count = 0
+        total_updated += int(updated_count)
+        if updated_count and updated:
             lines.append("\nData Updated:")
             for pair in updated:
-                new = pair.get('new')
-                old = pair.get('old')
-                changed_fields = [f for f in ["showName", "showImage", "releasedYear", "totalEpisodes", "comments", "ratings", "genres", "Duration", "synopsis"] if old.get(f) != new.get(f)]
-                fields_text = ", ".join([f.capitalize() for f in changed_fields]) if changed_fields else "General"
-                lines.append(f"- {new.get('showName','Unknown')} -> Updated: {fields_text}")
-        images = changes.get('images', [])
-        if images:
-            lines.append("\nImage Updated:")
-            for itm in images:
-                lines.append(f"- {itm.get('showName','Unknown')} -> Old && New")
-                lines.append(f"  Old: {itm.get('old')}")
-                lines.append(f"  New: {itm.get('new')}")
-        deleted = changes.get('deleted', [])
-        total_deleted += len(deleted)
-        if deleted:
-            lines.append("\nDeleted Records:")
-            for iid in deleted:
-                lines.append(f"- {iid}")
-        deleted_not_found = changes.get('deleted_not_found', [])
-        if deleted_not_found:
-            lines.append("\nDeletion notes (IDs not found in seriesData.json initially):")
-            for note in deleted_not_found:
-                lines.append(f"- {note}")
-        ignored = changes.get('ignored_deleting', [])
-        if ignored:
-            lines.append("\nIgnored (present in 'Deleting Records' and already deleted earlier this run):")
-            for note in ignored:
-                lines.append(f"- {note}")
-        if changes.get('exceed'):
-            exceed_entries.extend(changes.get('exceed'))
+                try:
+                    oldn = pair.get('old', {})
+                    newn = pair.get('new', {})
+                    lines.append(f"- {newn.get('showName', oldn.get('showName', 'Unknown'))} -> {compose_updated_details(list(set(newn.keys()) - set(oldn.keys())) or [])}")
+                except Exception:
+                    lines.append(f"- {pair}")
         lines.append("\n")
     lines.insert(0, f"SUMMARY: Created: {total_created}, Updated: {total_updated}, Deleted (initially found): {total_deleted}")
     if exceed_entries:
@@ -1307,7 +1273,6 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
             report_changes['error'] = err
             items, processed, finished, next_start_idx = [], 0, True, start_idx
         
-        per_sheet_old_objs = []
         for new_obj in items:
                     sid = new_obj.get('showID')
                     if sid in merged_by_id:
@@ -1322,11 +1287,6 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
                                 bpath = backup_object(old_obj.get('showID') or old_obj.get('id') or sid, old_obj, backup_dir=BACKUP_DIR)
                                 if bpath:
                                     report_changes.setdefault('backups', []).append(bpath)
-                                    try:
-                                        per_sheet_old_objs.append(old_obj)
-                                    except Exception:
-                                        pass
-
                             except Exception as e:
                                 print(f"⚠️ Backup failed for {sid}: {e}")
                             # Compose granular updatedDetails
@@ -1334,6 +1294,7 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
                             merged_obj['updatedDetails'] = compose_updated_details(changed_keys, created_first_time=False)
                             merged_by_id[sid] = merged_obj
                             report_changes.setdefault('updated', []).append({'old': old_obj, 'new': merged_obj})
+                            report_changes['updated_count'] = report_changes.get('updated_count', 0) + 1
                         else:
                             # No meaningful changes found; keep old object
                             merged_by_id[sid] = old_obj
@@ -1348,24 +1309,17 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
                         # ✅ Fix: prevent duplicate "Created" messages
                         if not any(o.get('showID') == sid for o in report_changes.get('created', [])):
                             report_changes.setdefault('created', []).append(new_obj)
+                            report_changes['created_count'] = report_changes.get('created_count', 0) + 1
 
         os.makedirs(BACKUP_DIR, exist_ok=True)
         backup_name = os.path.join(BACKUP_DIR, f"{filename_timestamp()}_{safe_filename(s)}.json")
         try:
-            # Write a per-sheet backup that contains only the prior versions of objects that were
-            # actually backed up (i.e., overwritten). This prevents writing the entire sheet when
-            # only a few objects changed.
-            if per_sheet_old_objs:
-                with open(backup_name, 'w', encoding='utf-8') as bf:
-                    json.dump(per_sheet_old_objs, bf, indent=4, ensure_ascii=False)
-                print(f"✅ Backup saved → {backup_name} (contains {len(per_sheet_old_objs)} prior objects)")
-            else:
-                # No changed objects to back up; create a small note file to indicate nothing changed
-                with open(backup_name, 'w', encoding='utf-8') as bf:
-                    json.dump({'note': 'no objects changed in this sheet during this run'}, bf, indent=2)
-                print(f"ℹ️ No changed objects for sheet '{s}'; wrote note → {backup_name}")
+            with open(backup_name, 'w', encoding='utf-8') as bf:
+                json.dump(items, bf, indent=4, ensure_ascii=False)
+            print(f"✅ Backup saved → {backup_name}")
         except Exception as e:
             print(f"⚠️ Could not write backup {backup_name}: {e}")
+        report_changes_by_sheet[s] = report_changes
         if processed > 0:
             any_sheet_processed = True
             processed_total += processed
