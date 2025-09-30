@@ -92,11 +92,13 @@ jobs:
           name: run-reports
           path: reports/
 
+      # ------------------ Secret scan (CLI, free, non-blocking) ------------------
       - name: Scan for secrets
         if: always()
-        uses: gitleaks/gitleaks-action@v2
-        with:
-          args: detect --source=. --report-path=reports/secrets_report.txt --no-banner --redact
+        run: |
+          curl -sSL https://github.com/gitleaks/gitleaks/releases/latest/download/gitleaks-linux-amd64 -o gitleaks
+          chmod +x gitleaks
+          ./gitleaks detect --source=. --report-path=reports/secrets_report.txt --no-banner --redact || true
 
       # ------------------ Compose consolidated email ------------------
       - name: Compose consolidated email body
@@ -109,6 +111,7 @@ jobs:
           fi
 
           {
+            echo "email_body<<EOF"
             echo "SECRETS CHECK:"
             if [ -s reports/secrets_report.txt ]; then
               echo "- Gitleaks detected potential secrets. (Details below)"
@@ -123,20 +126,8 @@ jobs:
             else
               echo "⚠️ Report file not found."
             fi
-          } | tr -d '\r' > email_body.txt   # strip CR (Windows line endings)
-
-          {
-            echo "email_body<<EOF"
-            cat email_body.txt
             echo "EOF"
-          } >> "$GITHUB_OUTPUT"
-
-      # ------------------ Debug: show what we wrote ------------------
-      - name: Debug email_body output
-        run: |
-          echo "==== START \$GITHUB_OUTPUT DUMP ===="
-          cat "$GITHUB_OUTPUT"
-          echo "==== END \$GITHUB_OUTPUT DUMP ===="
+          } >> $GITHUB_OUTPUT
 
       - name: Send consolidated report email
         uses: dawidd6/action-send-mail@v3
