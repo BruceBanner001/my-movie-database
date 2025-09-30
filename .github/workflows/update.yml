@@ -107,21 +107,27 @@ jobs:
           if [ -z "$report" ] || [ ! -f "$report" ]; then
             report=$(ls -t reports/report_*.txt 2>/dev/null | head -n1 || true)
           fi
+
+          {
+            echo "SECRETS CHECK:"
+            if [ -s reports/secrets_report.txt ]; then
+              echo "- Gitleaks detected potential secrets. (Details below)"
+              sed 's/%/%%/g' reports/secrets_report.txt
+            else
+              echo "- No obvious secrets detected."
+            fi
+            echo ""
+            echo "--- REPORT CONTENT (pasted below) ---"
+            if [ -n "$report" ] && [ -f "$report" ]; then
+              sed 's/%/%%/g' "$report"
+            else
+              echo "⚠️ Report file not found."
+            fi
+          } > email_body.txt
+
+          # Proper multiline output syntax
           echo "email_body<<EOF" >> $GITHUB_OUTPUT
-          echo "SECRETS CHECK:" >> $GITHUB_OUTPUT
-          if [ -s reports/secrets_report.txt ]; then
-            echo "- Gitleaks detected potential secrets. (Details below)" >> $GITHUB_OUTPUT
-            sed 's/%/%%/g' reports/secrets_report.txt >> $GITHUB_OUTPUT
-          else
-            echo "- No obvious secrets detected." >> $GITHUB_OUTPUT
-          fi
-          echo "" >> $GITHUB_OUTPUT
-          echo "--- REPORT CONTENT (pasted below) ---" >> $GITHUB_OUTPUT
-          if [ -n "$report" ] && [ -f "$report" ]; then
-            sed 's/%/%%/g' "$report" >> $GITHUB_OUTPUT
-          else
-            echo "⚠️ Report file not found." >> $GITHUB_OUTPUT
-          fi
+          cat email_body.txt >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Send consolidated report email
