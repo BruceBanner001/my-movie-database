@@ -65,6 +65,7 @@ import re
 import sys
 import time
 import json
+import copy
 import io
 import shutil
 import traceback
@@ -224,6 +225,7 @@ PRESERVE_IF_EMPTY = {
 # Properties to treat as lists (ensure lists rather than comma-separated strings)
 LIST_PROPERTIES = {
     "otherNames",
+    "genres",
     # add list-like keys here
 }
 
@@ -242,7 +244,7 @@ def backup_object(obj_id, obj, backup_dir=BACKUP_DIR):
     """Write a timestamped backup of obj into backup_dir and return path."""
     try:
         os.makedirs(backup_dir, exist_ok=True)
-        ts = datetime.datetime.now().strftime('%Y%m%dT%H%M%SZ')
+        ts = datetime.now.now().strftime('%Y%m%dT%H%M%SZ')
         safe_id = str(obj_id).replace(' ', '_').replace('/', '_')
         fname = f"{safe_id}__backup__{ts}.json"
         path = os.path.join(backup_dir, safe_filename(fname))
@@ -588,10 +590,30 @@ def fetch_synopsis_and_duration(show_name, year, prefer_sites=None, existing_syn
 
 # ---------------------------- Excel -> objects mapping ----------------------
 COLUMN_MAP = {
-    "no": "showID", "series title": "showName", "started date": "watchStartedOn", "finished date": "watchEndedOn",
-    "year": "releasedYear", "total episodes": "totalEpisodes", "original language": "nativeLanguage", "language": "watchedLanguage",
-    "ratings": "ratings", "catagory": "genres", "category": "genres", "original network": "network", "comments": "comments"
+    "no": "showID",
+    "series title": "showName",
+    "title": "showName",
+    "started date": "watchStartedOn",
+    "finished date": "watchEndedOn",
+    "year": "releasedYear",
+    "total episodes": "totalEpisodes",
+    "released year": "releasedYear",
+    "original language": "nativeLanguage",
+    "language": "watchedLanguage",
+    "ratings": "ratings",
+    "catagory": "genres",
+    "category": "genres",
+    "genres": "genres",
+    "geners": "genres",
+    "genre": "genres",
+    "other names": "otherNames",
+    "othernames": "otherNames",
+    "otherNames": "otherNames",
+    "original network": "network",
+    "comments": "comments",
 }
+
+
 
 
 def tidy_comment(val):
@@ -888,8 +910,6 @@ def process_deletions(excel_file, json_file, report_changes):
         )
     except Exception as e:
         report_changes.setdefault('deleted_summary', []).append(f"⚠️ Failed to write updated {json_file}: {e}")
-    report_changes.setdefault('deleted_count', 0)
-    report_changes['deleted_count'] = len(deleted_ids)
     return deleted_ids, not_found_ids
 
 def cleanup_deleted_data():
@@ -1065,36 +1085,30 @@ def write_report(report_changes_by_sheet, report_path, final_not_found_deletions
         if 'error' in changes:
             lines.append(f"ERROR processing sheet: {changes['error']}")
         created = changes.get('created', [])
-        created_count = changes.get('created_count', None)
-        if created_count is None:
-            try:
-                created_count = len(created) if isinstance(created, (list, tuple)) else int(created) if isinstance(created, int) else 0
-            except Exception:
-                created_count = 0
-        total_created += int(created_count)
-        if created_count and created:
+        total_created += len(created)
+        if created:
             lines.append("\nData Created:")
             for obj in created:
                 lines.append(f"- {obj.get('showName', 'Unknown')} -> Created")
         updated = changes.get('updated', [])
-        updated_count = changes.get('updated_count', None)
-        if updated_count is None:
-            try:
-                updated_count = len(updated) if isinstance(updated, (list, tuple)) else int(updated) if isinstance(updated, int) else 0
-            except Exception:
-                updated_count = 0
-        total_updated += int(updated_count)
-        if updated_count and updated:
+        total_updated += len(updated)
+        if updated:
             lines.append("\nData Updated:")
+            # Consolidate updates per object
+            updates_by_name = {}
             for pair in updated:
                 try:
                     oldn = pair.get('old', {})
                     newn = pair.get('new', {})
-                    lines.append(f"- {newn.get('showName', oldn.get('showName', 'Unknown'))} -> {compose_updated_details(list(set(newn.keys()) - set(oldn.keys())) or [])}")
+                    nm = newn.get('showName', oldn.get('showName', 'Unknown'))
+                    diff = [k for k in newn.keys() if oldn.get(k) != newn.get(k)]
+                    updates_by_name.setdefault(nm, set()).update(diff)
                 except Exception:
-                    lines.append(f"- {pair}")
-        lines.append("\n")
-    lines.insert(0, f"SUMMARY: Created: {total_created}, Updated: {total_updated}, Deleted (initially found): {total_deleted}")
+                    updates_by_name.setdefault(str(pair), set())
+
+            for nm, keys in updates_by_name.items():
+                details = compose_updated_details(keys)
+                lines.append(f"- {nm} -> {details}")
     if exceed_entries:
         lines.append(f"=== Exceed Max Length ({SYNOPSIS_MAX_LEN}) ===")
         for e in exceed_entries:
@@ -1258,6 +1272,7 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
     any_sheet_processed = False
     for s in sheet_names:
         report_changes = {}
+        per_sheet_old_objs = []
         start_idx = int(progress.get(s, 0) or 0)
         try:
             items, processed, finished, next_start_idx = excel_to_objects(excel_file_like, s, merged_by_id, report_changes,
@@ -1284,17 +1299,23 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
                         if changed_keys:
                             # backup existing object BEFORE writing
                             try:
-                                bpath = backup_object(old_obj.get('showID') or old_obj.get('id') or sid, old_obj, backup_dir=BACKUP_DIR)
+                                # Backup the PREVIOUS state of the object (deepcopy to avoid later mutation)
+                                bpath = backup_object(old_obj.get('showID') or old_obj.get('id') or sid, copy.deepcopy(old_obj), backup_dir=BACKUP_DIR)
                                 if bpath:
                                     report_changes.setdefault('backups', []).append(bpath)
+                                    # Remember prior object for the per-sheet compact backup
+                                    try:
+                                        per_sheet_old_objs.append(copy.deepcopy(old_obj))
+                                    except Exception:
+                                        pass
                             except Exception as e:
+                                print(f"⚠️ Backup failed for {sid}: {e}")
                                 print(f"⚠️ Backup failed for {sid}: {e}")
                             # Compose granular updatedDetails
                             merged_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
                             merged_obj['updatedDetails'] = compose_updated_details(changed_keys, created_first_time=False)
                             merged_by_id[sid] = merged_obj
                             report_changes.setdefault('updated', []).append({'old': old_obj, 'new': merged_obj})
-                            report_changes['updated_count'] = report_changes.get('updated_count', 0) + 1
                         else:
                             # No meaningful changes found; keep old object
                             merged_by_id[sid] = old_obj
@@ -1309,14 +1330,18 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
                         # ✅ Fix: prevent duplicate "Created" messages
                         if not any(o.get('showID') == sid for o in report_changes.get('created', [])):
                             report_changes.setdefault('created', []).append(new_obj)
-                            report_changes['created_count'] = report_changes.get('created_count', 0) + 1
 
         os.makedirs(BACKUP_DIR, exist_ok=True)
         backup_name = os.path.join(BACKUP_DIR, f"{filename_timestamp()}_{safe_filename(s)}.json")
         try:
-            with open(backup_name, 'w', encoding='utf-8') as bf:
-                json.dump(items, bf, indent=4, ensure_ascii=False)
-            print(f"✅ Backup saved → {backup_name}")
+            if per_sheet_old_objs:
+                with open(backup_name, 'w', encoding='utf-8') as bf:
+                    json.dump(per_sheet_old_objs, bf, indent=4, ensure_ascii=False)
+                print(f"✅ Backup saved → {backup_name} (contains {len(per_sheet_old_objs)} prior objects)")
+            else:
+                with open(backup_name, 'w', encoding='utf-8') as bf:
+                    json.dump({'note': 'no objects changed in this sheet during this run'}, bf, indent=2)
+                print(f"ℹ️ No changed objects for sheet '{s}'; wrote note → {backup_name}")
         except Exception as e:
             print(f"⚠️ Could not write backup {backup_name}: {e}")
         report_changes_by_sheet[s] = report_changes
