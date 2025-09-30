@@ -92,13 +92,18 @@ jobs:
           name: run-reports
           path: reports/
 
-      # ------------------ Secret scan (CLI, free, non-blocking) ------------------
+      # ------------------ Cleanup old reports ------------------
+      - name: Cleanup old reports (keep last 10)
+        run: |
+          ls -t reports/report_*.txt 2>/dev/null | tail -n +11 | xargs -r rm -f
+
+      # ------------------ Secrets scan (non-blocking) ------------------
       - name: Scan for secrets
         if: always()
         run: |
-          curl -sSL https://github.com/gitleaks/gitleaks/releases/latest/download/gitleaks-linux-amd64 -o gitleaks
-          chmod +x gitleaks
-          ./gitleaks detect --source=. --report-path=reports/secrets_report.txt --no-banner --redact || true
+          echo "⚠️ Skipping gitleaks license enforcement, just scanning locally..."
+          mkdir -p reports
+          gitleaks detect --no-banner --redact --source=. --report-path=reports/secrets_report.txt || true
 
       # ------------------ Compose consolidated email ------------------
       - name: Compose consolidated email body
@@ -110,7 +115,6 @@ jobs:
             report=$(ls -t reports/report_*.txt 2>/dev/null | head -n1 || true)
           fi
 
-          # Write email body to a temp file
           {
             echo "SECRETS CHECK:"
             if [ -s reports/secrets_report.txt ]; then
@@ -128,13 +132,14 @@ jobs:
             fi
           } > email_body.txt
 
-          # Append to GITHUB_OUTPUT with safe delimiter
-          delim="EOF$(date +%s)"
+          # Use UUID as a safe delimiter
+          delim="DELIM_$(uuidgen | tr '[:lower:]' '[:upper:]')"
+
           {
             echo "email_body<<$delim"
             cat email_body.txt
             echo "$delim"
-          } >> $GITHUB_OUTPUT
+          } >> "$GITHUB_OUTPUT"
 
       - name: Send consolidated report email
         uses: dawidd6/action-send-mail@v3
