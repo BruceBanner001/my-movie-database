@@ -239,10 +239,14 @@ def write_json_file_atomic(path, obj):
     os.replace(tmp, path)
 
 def backup_object(obj_id, obj, backup_dir=BACKUP_DIR):
-    """Write a timestamped backup of obj into backup_dir and return path."""
+    """Write a timestamped backup of `obj` into `backup_dir` and return path.
+
+    Uses now_ist() (IST) for a deterministic timestamp and writes atomically.
+    """
     try:
         os.makedirs(backup_dir, exist_ok=True)
-        ts = datetime.datetime.now().strftime('%Y%m%dT%H%M%SZ')
+        # Use now_ist() to ensure consistent timezone-aware timestamps
+        ts = now_ist().strftime('%Y%m%dT%H%M%SZ')
         safe_id = str(obj_id).replace(' ', '_').replace('/', '_')
         fname = f"{safe_id}__backup__{ts}.json"
         path = os.path.join(backup_dir, safe_filename(fname))
@@ -278,13 +282,22 @@ def format_property_for_message(prop_name):
         out.append(ch)
     return ''.join(out).strip().title()
 
-def compose_updated_details(changed_props, created_first_time=False):
-    if created_first_time:
-        return 'First time created'
-    changed = [format_property_for_message(p) for p in changed_props if p != 'updatedDetails']
-    if not changed:
-        return 'Object Updated'
-    return f"{', '.join(changed)} Updated"
+def compose_updated_details(changed_props):
+    """Return a readable string describing which properties were updated.
+
+    Example:
+      ['Ratings'] -> "Ratings Updated"
+      ['Ratings','Category'] -> "Ratings, Category Updated"
+      [] -> "Object Updated (unspecified changes)"
+    """
+    if not changed_props:
+        return "Object Updated (unspecified changes)"
+    # Join the changed property names into a comma-separated list
+    try:
+        label = ", ".join(changed_props)
+    except Exception:
+        label = str(changed_props)
+    return f"{label} Updated"
 
 def smart_merge(existing, incoming, preserve_if_empty=PRESERVE_IF_EMPTY, list_props=LIST_PROPERTIES):
     """Merge incoming into existing intelligently. Returns (merged, changed_keys)."""
@@ -595,16 +608,27 @@ COLUMN_MAP = {
 
 
 def tidy_comment(val):
+    """Normalize comments so each WORD starts with a capital letter and ensure it ends with a period.
+
+    Examples:
+      'i am Subramanian' -> 'I Am Subramanian.'
+    """
     if pd.isna(val) or not str(val).strip():
         return None
+    # Collapse whitespace
     text = re.sub(r'\s+', ' ', str(val)).strip()
-    if not text.endswith('.'):
-        text = text + '.'
+    # Title-case each word (first letter capitalized)
+    try:
+        text = text.title()
+    except Exception:
+        text = text
+    # Ensure single trailing period
+    text = text.rstrip('.') + '.'
+    # Ensure period followed by space after sentences if someone gave multiple sentences without space
     text = re.sub(r'\.([^\s])', r'. \1', text)
     return text
 
 
-def sheet_base_offset(sheet_name: str) -> int:
     if sheet_name == "Sheet1":
         return 100
     if sheet_name == "Feb 7 2023 Onwards":
@@ -1283,6 +1307,7 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
             report_changes['error'] = err
             items, processed, finished, next_start_idx = [], 0, True, start_idx
         
+        per_sheet_old_objs = []
         for new_obj in items:
                     sid = new_obj.get('showID')
                     if sid in merged_by_id:
@@ -1297,6 +1322,11 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
                                 bpath = backup_object(old_obj.get('showID') or old_obj.get('id') or sid, old_obj, backup_dir=BACKUP_DIR)
                                 if bpath:
                                     report_changes.setdefault('backups', []).append(bpath)
+                                    try:
+                                        per_sheet_old_objs.append(old_obj)
+                                    except Exception:
+                                        pass
+
                             except Exception as e:
                                 print(f"⚠️ Backup failed for {sid}: {e}")
                             # Compose granular updatedDetails
@@ -1322,12 +1352,20 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
         os.makedirs(BACKUP_DIR, exist_ok=True)
         backup_name = os.path.join(BACKUP_DIR, f"{filename_timestamp()}_{safe_filename(s)}.json")
         try:
-            with open(backup_name, 'w', encoding='utf-8') as bf:
-                json.dump(items, bf, indent=4, ensure_ascii=False)
-            print(f"✅ Backup saved → {backup_name}")
+            # Write a per-sheet backup that contains only the prior versions of objects that were
+            # actually backed up (i.e., overwritten). This prevents writing the entire sheet when
+            # only a few objects changed.
+            if per_sheet_old_objs:
+                with open(backup_name, 'w', encoding='utf-8') as bf:
+                    json.dump(per_sheet_old_objs, bf, indent=4, ensure_ascii=False)
+                print(f"✅ Backup saved → {backup_name} (contains {len(per_sheet_old_objs)} prior objects)")
+            else:
+                # No changed objects to back up; create a small note file to indicate nothing changed
+                with open(backup_name, 'w', encoding='utf-8') as bf:
+                    json.dump({'note': 'no objects changed in this sheet during this run'}, bf, indent=2)
+                print(f"ℹ️ No changed objects for sheet '{s}'; wrote note → {backup_name}")
         except Exception as e:
             print(f"⚠️ Could not write backup {backup_name}: {e}")
-        report_changes_by_sheet[s] = report_changes
         if processed > 0:
             any_sheet_processed = True
             processed_total += processed
