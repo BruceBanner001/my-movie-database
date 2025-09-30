@@ -112,23 +112,25 @@ jobs:
             echo "SECRETS CHECK:"
             if [ -s reports/secrets_report.txt ]; then
               echo "- Gitleaks detected potential secrets. (Details below)"
-              sed 's/%/%%/g' reports/secrets_report.txt
+              cat reports/secrets_report.txt
             else
               echo "- No obvious secrets detected."
             fi
             echo ""
             echo "--- REPORT CONTENT (pasted below) ---"
             if [ -n "$report" ] && [ -f "$report" ]; then
-              sed 's/%/%%/g' "$report"
+              cat "$report"
             else
               echo "⚠️ Report file not found."
             fi
           } > email_body.txt
 
-          # Proper multiline output syntax
-          echo "email_body<<EOF" >> $GITHUB_OUTPUT
-          cat email_body.txt >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+          # Safe multiline output syntax (avoid EOF errors)
+          {
+            echo "email_body<<EOF"
+            cat email_body.txt
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
 
       - name: Send consolidated report email
         uses: dawidd6/action-send-mail@v3
