@@ -1484,5 +1484,4 @@ if __name__ == '__main__':
         exit_code = 1
     finally:
         print("All done.")
-        sys.exit(exit_code)
-os._exit(0)
+        os._exit(0)
