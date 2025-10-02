@@ -244,7 +244,7 @@ def backup_object(obj_id, obj, backup_dir=BACKUP_DIR):
     """Write a timestamped backup of obj into backup_dir and return path."""
     try:
         os.makedirs(backup_dir, exist_ok=True)
-        ts = now_ist().strftime('%Y%m%dT%H%M%SZ')  # fixed: use now_ist() for timezone-aware timestamp
+        ts = now_ist().strftime('%Y%m%dT%H%M%SZ')  # fixed: use now_ist()
         safe_id = str(obj_id).replace(' ', '_').replace('/', '_')
         fname = f"{safe_id}__backup__{ts}.json"
         path = os.path.join(backup_dir, safe_filename(fname))
@@ -1109,6 +1109,29 @@ def write_report(report_changes_by_sheet, report_path, final_not_found_deletions
             for nm, keys in updates_by_name.items():
                 details = compose_updated_details(keys)
                 lines.append(f"- {nm} -> {details}")
+    # --- Deleted entries ---
+    deleted = changes.get('deleted', [])
+    total_deleted += len(deleted)
+    if deleted:
+        lines.append("\nData Deleted:")
+        for d in deleted:
+            try:
+                if isinstance(d, str):
+                    lines.append(f"- {d}")
+                elif isinstance(d, dict):
+                    lines.append(f"- {d.get('showID', '')} -> {d.get('note', 'Deleted')}")
+                else:
+                    lines.append(f"- {str(d)}")
+            except Exception:
+                lines.append(f"- {str(d)}")
+
+    # --- Backup files referenced for this sheet (single per-sheet backups) ---
+    backups_list = changes.get('backups', [])
+    if backups_list:
+        lines.append("\nBackups:")
+        for b in backups_list:
+            lines.append(f"- {b}")
+
     if exceed_entries:
         lines.append(f"=== Exceed Max Length ({SYNOPSIS_MAX_LEN}) ===")
         for e in exceed_entries:
@@ -1297,14 +1320,13 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
                         ensure_list_types(new_obj, LIST_PROPERTIES)
                         merged_obj, changed_keys = smart_merge(old_obj, new_obj)
                         if changed_keys:
-                            # backup existing object BEFORE writing
-                                                        # Record prior object for the per-sheet compact backup (no per-object file)
+                            # Record prior object for the per-sheet compact backup (no per-object file)
                             try:
                                 per_sheet_old_objs.append(copy.deepcopy(old_obj))
                             except Exception:
                                 pass
 
-                            # Compose granular updatedDetails
+# Compose granular updatedDetails
                             merged_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
                             merged_obj['updatedDetails'] = compose_updated_details(changed_keys, created_first_time=False)
                             merged_by_id[sid] = merged_obj
@@ -1324,11 +1346,6 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
                         if not any(o.get('showID') == sid for o in report_changes.get('created', [])):
                             report_changes.setdefault('created', []).append(new_obj)
 
-                        try:
-                            per_sheet_old_objs.append(copy.deepcopy(new_obj))
-                        except Exception as e_perc:
-                            print(f"⚠️ Could not append created object to per-sheet backup store for {sid}: {e_perc}")
-
         os.makedirs(BACKUP_DIR, exist_ok=True)
         backup_name = os.path.join(BACKUP_DIR, f"{filename_timestamp()}_{safe_filename(s)}.json")
         try:
@@ -1336,7 +1353,7 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
                 with open(backup_name, 'w', encoding='utf-8') as bf:
                     json.dump(per_sheet_old_objs, bf, indent=4, ensure_ascii=False)
                 print(f"✅ Backup saved → {backup_name} (contains {len(per_sheet_old_objs)} prior objects)")
-                # Record the per-sheet backup path so the report can reference this single backup file for the sheet
+                # Record the per-sheet backup path in the per-sheet report_changes
                 report_changes.setdefault('backups', []).append(backup_name)
             else:
                 # No changed objects for this sheet in this run — do not create a note file.
@@ -1371,7 +1388,17 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
 
     
     # Compose the email body in-memory; do NOT persist email_body_*.txt to disk (reports only).
+        # Compose the email body in-memory; also write it to a file so CI/email steps can easily read it.
     email_body = compose_email_body_from_report(report_path)
+    try:
+        os.makedirs(REPORTS_DIR, exist_ok=True)
+        email_path = os.path.join(REPORTS_DIR, f"email_body_{filename_timestamp()}.txt")
+        with open(email_path, 'w', encoding='utf-8') as ef:
+            ef.write(email_body)
+        print(f"✅ Email body written → {email_path}")
+    except Exception as e_eb:
+        print(f"⚠️ Failed to write email body to file: {e_eb}")
+
     # Print to stdout between markers so CI (GitHub Actions) can capture the email body as a step output.
     try:
         print('\n===EMAIL_BODY_START===')
