@@ -244,7 +244,7 @@ def backup_object(obj_id, obj, backup_dir=BACKUP_DIR):
     """Write a timestamped backup of obj into backup_dir and return path."""
     try:
         os.makedirs(backup_dir, exist_ok=True)
-        ts = datetime.now.now().strftime('%Y%m%dT%H%M%SZ')
+        ts = now_ist().strftime('%Y%m%dT%H%M%SZ')  # fixed typo: use now_ist() for IST-aware timestamp
         safe_id = str(obj_id).replace(' ', '_').replace('/', '_')
         fname = f"{safe_id}__backup__{ts}.json"
         path = os.path.join(backup_dir, safe_filename(fname))
@@ -873,6 +873,14 @@ def process_deletions(excel_file, json_file, report_changes):
                     json.dump(deleted_obj, of, indent=4, ensure_ascii=False)
                 report_changes.setdefault('deleted', []).append(f"{iid} -> ✅ Deleted and archived -> {outpath}")
 
+                # --- Also create a copy in the backups/ folder for run-level backups ---
+                try:
+                    bpath = backup_object(iid, copy.deepcopy(deleted_obj), backup_dir=BACKUP_DIR)
+                    if bpath:
+                        report_changes.setdefault('backups', []).append(bpath)
+                except Exception as e_b:
+                    report_changes.setdefault('backups', []).append(f"{iid} -> ⚠️ Backup during deletion failed: {e_b}")
+
                 # --- Move associated image if exists ---
                 try:
                     img_url = deleted_obj.get('showImage') or ""
@@ -1109,6 +1117,22 @@ def write_report(report_changes_by_sheet, report_path, final_not_found_deletions
             for nm, keys in updates_by_name.items():
                 details = compose_updated_details(keys)
                 lines.append(f"- {nm} -> {details}")
+
+        # --- Deleted entries ---
+        deleted = changes.get('deleted', [])
+        total_deleted += len(deleted)
+        if deleted:
+            lines.append("\nData Deleted:")
+            for d in deleted:
+                try:
+                    if isinstance(d, str):
+                        lines.append(f"- {d}")
+                    elif isinstance(d, dict):
+                        lines.append(f"- {d.get('showID', '')} -> {d.get('note', 'Deleted')}")
+                    else:
+                        lines.append(f"- {str(d)}")
+                except Exception:
+                    lines.append(f"- {str(d)}")
     if exceed_entries:
         lines.append(f"=== Exceed Max Length ({SYNOPSIS_MAX_LEN}) ===")
         for e in exceed_entries:
@@ -1330,6 +1354,12 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
                         # ✅ Fix: prevent duplicate "Created" messages
                         if not any(o.get('showID') == sid for o in report_changes.get('created', [])):
                             report_changes.setdefault('created', []).append(new_obj)
+
+                        # --- Also record created object in per_sheet_old_objs for per-sheet backups ---
+                        try:
+                            per_sheet_old_objs.append(copy.deepcopy(new_obj))
+                        except Exception as e_perc:
+                            print(f"⚠️ Could not append created object to per-sheet backup store for {sid}: {e_perc}")
 
         os.makedirs(BACKUP_DIR, exist_ok=True)
         backup_name = os.path.join(BACKUP_DIR, f"{filename_timestamp()}_{safe_filename(s)}.json")
