@@ -1484,5 +1484,5 @@ if __name__ == '__main__':
         exit_code = 1
     finally:
         print("All done.")
-        # Always exit with success for CI, errors are logged instead
-        sys.exit(0)
+        sys.exit(exit_code)
+os._exit(0)
