@@ -1414,54 +1414,74 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
 
 # ---------------------------- Entrypoint -----------------------------------
 if __name__ == '__main__':
-    # Validate presence of GDrive credential files
-    if not (os.path.exists(EXCEL_FILE_ID_TXT) and os.path.exists(SERVICE_ACCOUNT_FILE)):
-        print("❌ Missing GDrive credentials. Please set EXCEL_FILE_ID.txt and GDRIVE_SERVICE_ACCOUNT.json via GitHub secrets.")
-        # exit gracefully: 3 indicates missing credentials
-        sys.exit(3)
-
+    exit_code = 0
     try:
-        with open(EXCEL_FILE_ID_TXT, 'r', encoding='utf-8') as f:
-            excel_id = f.read().strip()
-    except Exception:
-        excel_id = None
+        # Validate presence of GDrive credential files
+        if not (os.path.exists(EXCEL_FILE_ID_TXT) and os.path.exists(SERVICE_ACCOUNT_FILE)):
+            print("❌ Missing GDrive credentials. Please set EXCEL_FILE_ID.txt and GDRIVE_SERVICE_ACCOUNT.json via GitHub secrets.")
+            exit_code = 3
+            raise SystemExit(exit_code)
 
-    if not excel_id:
-        print("❌ EXCEL_FILE_ID.txt is empty or missing. Aborting gracefully.")
-        sys.exit(0)
+        try:
+            with open(EXCEL_FILE_ID_TXT, 'r', encoding='utf-8') as f:
+                excel_id = f.read().strip()
+        except Exception:
+            excel_id = None
 
-    # Determine sheet names to process
-    _sheets_env = os.environ.get("SHEETS", "").strip()
-    if _sheets_env:
-        SHEETS = [s.strip() for s in _sheets_env.split(";") if s.strip()]
-    else:
-        SHEETS = ["Sheet1"]
+        if not excel_id:
+            print("❌ EXCEL_FILE_ID.txt is empty or missing. Aborting gracefully.")
+            exit_code = 0
+            raise SystemExit(exit_code)
 
-    # Try to fetch excel bytes from Google Drive
-    excel_bytes = fetch_excel_from_gdrive_bytes(excel_id, SERVICE_ACCOUNT_FILE)
-    if excel_bytes is None:
-        print("❌ Could not fetch Excel file from Google Drive. Exiting gracefully.")
-        print("   Ensure the service account JSON and EXCEL_FILE_ID are correct, and required packages are installed.")
-        sys.exit(0)
+        # Determine sheet names to process
+        _sheets_env = os.environ.get("SHEETS", "").strip()
+        if _sheets_env:
+            SHEETS = [s.strip() for s in _sheets_env.split(";") if s.strip()]
+        else:
+            SHEETS = ["Sheet1"]
 
-    # pandas can read from a file-like BytesIO for read_excel
-    excel_file_like = excel_bytes
+        # Try to fetch excel bytes from Google Drive
+        excel_bytes = fetch_excel_from_gdrive_bytes(excel_id, SERVICE_ACCOUNT_FILE)
+        if excel_bytes is None:
+            print("❌ Could not fetch Excel file from Google Drive. Exiting gracefully.")
+            exit_code = 2
+            raise SystemExit(exit_code)
 
-    # Apply manual updates if present
-    try:
-        apply_manual_updates(excel_file_like, JSON_FILE)
+        excel_file_like = excel_bytes
+
+        # Apply manual updates if present
+        try:
+            apply_manual_updates(excel_file_like, JSON_FILE)
+        except Exception as e:
+            logd(f"apply_manual_updates error: {e}")
+
+        # Run update using Excel bytes from Drive
+        try:
+            update_json_from_excel(excel_file_like, JSON_FILE, SHEETS, max_per_run=MAX_PER_RUN, max_run_time_minutes=MAX_RUN_TIME_MINUTES)
+        except SystemExit as se:
+            # propagate intentional exits with their code
+            raise
+        except Exception as e:
+            print(f"❌ Unexpected error during update: {e}", file=sys.stderr)
+            logd(traceback.format_exc())
+            # Write failure reason file
+            os.makedirs(REPORTS_DIR, exist_ok=True)
+            with open(os.path.join(REPORTS_DIR, "failure_reason.txt"), "w", encoding="utf-8") as ff:
+                ff.write("Unexpected exception: {}\n".format(e))
+                ff.write(traceback.format_exc())
+            exit_code = 1
+            raise SystemExit(exit_code)
+
+    except SystemExit as se:
+        # Respect provided exit codes, default to 1 on error
+        if isinstance(se.code, int):
+            exit_code = se.code
+        else:
+            exit_code = 1
     except Exception as e:
-        logd(f"apply_manual_updates error: {e}")
-
-    # Run update using Excel bytes from Drive
-    try:
-        update_json_from_excel(excel_file_like, JSON_FILE, SHEETS, max_per_run=MAX_PER_RUN, max_run_time_minutes=MAX_RUN_TIME_MINUTES)
-    except SystemExit:
-        # allow sys.exit in update flow to propagate if necessary
-        raise
-    except Exception as e:
-        print(f"❌ Unexpected error during update: {e}")
+        print(f"❌ Fatal unexpected error: {e}", file=sys.stderr)
         logd(traceback.format_exc())
-        sys.exit(1)
-
-    print("All done.")
+        exit_code = 1
+    finally:
+        print("All done.")
+        sys.exit(exit_code)
