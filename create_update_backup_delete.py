@@ -98,7 +98,7 @@ IST = timezone(timedelta(hours=5, minutes=30))
 
 
 def now_ist():
-    return datetime.now()(IST)
+    return datetime.now(IST)
 
 
 def filename_timestamp():
@@ -244,7 +244,7 @@ def backup_object(obj_id, obj, backup_dir=BACKUP_DIR):
     """Write a timestamped backup of obj into backup_dir and return path."""
     try:
         os.makedirs(backup_dir, exist_ok=True)
-        ts = datetime.now().now().strftime('%Y%m%dT%H%M%SZ')
+        ts = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')
         safe_id = str(obj_id).replace(' ', '_').replace('/', '_')
         fname = f"{safe_id}__backup__{ts}.json"
         path = os.path.join(backup_dir, safe_filename(fname))
@@ -915,7 +915,7 @@ def process_deletions(excel_file, json_file, report_changes):
 def cleanup_deleted_data():
     if not os.path.exists(DELETED_DATA_DIR):
         return
-    cutoff = datetime.now()() - timedelta(days=30)
+    cutoff = datetime.now() - timedelta(days=30)
     for fname in os.listdir(DELETED_DATA_DIR):
         path = os.path.join(DELETED_DATA_DIR, fname)
         try:
@@ -1385,7 +1385,7 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
 
     if SCHEDULED_RUN:
         cleanup_deleted_data()
-    cutoff = datetime.now()() - timedelta(days=KEEP_OLD_IMAGES_DAYS)
+    cutoff = datetime.now() - timedelta(days=KEEP_OLD_IMAGES_DAYS)
     if os.path.exists(OLD_IMAGES_DIR):
         for fname in os.listdir(OLD_IMAGES_DIR):
             path = os.path.join(OLD_IMAGES_DIR, fname)
