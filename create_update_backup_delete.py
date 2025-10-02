@@ -244,7 +244,7 @@ def backup_object(obj_id, obj, backup_dir=BACKUP_DIR):
     """Write a timestamped backup of obj into backup_dir and return path."""
     try:
         os.makedirs(backup_dir, exist_ok=True)
-        ts = now_ist().strftime('%Y%m%dT%H%M%SZ')  # fixed: use now_ist()
+        ts = datetime.now.now().strftime('%Y%m%dT%H%M%SZ')
         safe_id = str(obj_id).replace(' ', '_').replace('/', '_')
         fname = f"{safe_id}__backup__{ts}.json"
         path = os.path.join(backup_dir, safe_filename(fname))
@@ -1076,12 +1076,16 @@ def fetch_and_save_image_for_show(show_name, prefer_sites, show_id):
 
 
 # ---------------------------- Reports --------------------------------------
+
 def write_report(report_changes_by_sheet, report_path, final_not_found_deletions=None):
+    """Write a human-readable report. Always include a Run Summary so the report is never empty."""
     lines = []
     exceed_entries = []
     total_created = total_updated = total_deleted = 0
-    for sheet, changes in report_changes_by_sheet.items():
-        lines.append(f"=== {sheet} — {now_ist().strftime('%d %B %Y')} ===")
+
+    # Process each sheet and collect human-readable sections
+    for sheet, changes in (report_changes_by_sheet or {}).items():
+        lines.append(f"=== {sheet} — {now_ist().strftime('%d %B %Y %H:%M')} ===")
         if 'error' in changes:
             lines.append(f"ERROR processing sheet: {changes['error']}")
         created = changes.get('created', [])
@@ -1109,81 +1113,69 @@ def write_report(report_changes_by_sheet, report_path, final_not_found_deletions
             for nm, keys in updates_by_name.items():
                 details = compose_updated_details(keys)
                 lines.append(f"- {nm} -> {details}")
-    # --- Deleted entries ---
-    deleted = changes.get('deleted', [])
-    total_deleted += len(deleted)
-    if deleted:
-        lines.append("\nData Deleted:")
-        for d in deleted:
-            try:
-                if isinstance(d, str):
-                    lines.append(f"- {d}")
-                elif isinstance(d, dict):
-                    lines.append(f"- {d.get('showID', '')} -> {d.get('note', 'Deleted')}")
-                else:
+
+        deleted = changes.get('deleted', [])
+        total_deleted += len(deleted)
+        if deleted:
+            lines.append("\nData Deleted:")
+            for d in deleted:
+                try:
+                    if isinstance(d, str):
+                        lines.append(f"- {d}")
+                    elif isinstance(d, dict):
+                        lines.append(f"- {d.get('showID', '')} -> {d.get('note', 'Deleted')}")
+                    else:
+                        lines.append(f"- {str(d)}")
+                except Exception:
                     lines.append(f"- {str(d)}")
-            except Exception:
-                lines.append(f"- {str(d)}")
 
-    # --- Backup files referenced for this sheet (single per-sheet backups) ---
-    backups_list = changes.get('backups', [])
-    if backups_list:
-        lines.append("\nBackups:")
-        for b in backups_list:
-            lines.append(f"- {b}")
+        # Include any other notable entries (e.g., moved images, backup path)
+        if changes.get('deleted_images_moved'):
+            lines.append("\nDeleted Images Moved:")
+            for it in changes.get('deleted_images_moved', []):
+                lines.append(f"- {it}")
+        if changes.get('backups'):
+            lines.append("\nBackups:")
+            for it in changes.get('backups', []):
+                lines.append(f"- {it}")
 
+        if changes.get('unchanged'):
+            lines.append(f"\nUnchanged items: {len(changes.get('unchanged', []))} (not listed)")
+
+    # Exceeded synopsis section (if any)
     if exceed_entries:
         lines.append(f"=== Exceed Max Length ({SYNOPSIS_MAX_LEN}) ===")
         for e in exceed_entries:
             lines.append(f"{e.get('id')} -> {e.get('name')} ({e.get('year')}) -> {e.get('site')} -> Link: {e.get('url')}")
         lines.append("\n")
+
+    # Not-found deletions
     if final_not_found_deletions:
         lines.append("=== NOT FOUND (Deleting Records not present in any scanned sheet) ===")
         for iid in final_not_found_deletions:
             lines.append(f"-{iid} -> ❌ Cannot be found in any Sheets.")
         lines.append("\n")
+
+    # Always prepend a run summary so report file is never empty
+    summary = f"Run Summary — {now_ist().strftime('%d %B %Y %H:%M')} | Created: {total_created} | Updated: {total_updated} | Deleted: {total_deleted}"
+    lines.insert(0, summary)
+    lines.insert(1, "")
+
     os.makedirs(os.path.dirname(report_path) or ".", exist_ok=True)
     try:
         with open(report_path, 'w', encoding='utf-8') as f:
-            f.write("\n".join(lines))
+            f.write("\\n".join(lines))
     except Exception as e:
         print(f"⚠️ Could not write TXT report: {e}")
-
-
-# ---------------------------- Secret scan & email body ---------------------
-def scan_for_possible_secrets():
-    findings = []
-    if os.path.exists(SERVICE_ACCOUNT_FILE):
-        try:
-            s = open(SERVICE_ACCOUNT_FILE, 'r', encoding='utf-8').read()
-            has_private_key = 'private_key' in s
-            m = re.search(r'"client_email"\s*:\s*"([^"]+)"', s)
-            client_email = m.group(1) if m else None
-            findings.append({'file': SERVICE_ACCOUNT_FILE, 'present': True, 'client_email': client_email, 'has_private_key': bool(has_private_key), 'note': 'Service account JSON detected'})
-        except Exception as e:
-            findings.append({'file': SERVICE_ACCOUNT_FILE, 'present': True, 'note': f'Could not read file safely: {e}'})
-    if os.path.exists(EXCEL_FILE_ID_TXT):
-        try:
-            s = open(EXCEL_FILE_ID_TXT, 'r', encoding='utf-8').read().strip()
-            findings.append({'file': EXCEL_FILE_ID_TXT, 'present': True, 'length': len(s), 'note': 'Excel file id present (not shown)'})
-        except Exception as e:
-            findings.append({'file': EXCEL_FILE_ID_TXT, 'present': True, 'note': f'Could not read file: {e}'})
-    for fname in os.listdir('.'):
-        lower = fname.lower()
-        if any(k in lower for k in ('.env', 'secret', 'credential', 'key', '.pem', '.p12')):
-            findings.append({'file': fname, 'present': True, 'note': 'Suspicious filename - check for secrets'})
-    return findings
 
 
 
 def compose_email_body_from_report(report_path):
     """Compose a single inline email body containing a secrets check followed by the full report text.
-    This string is intended to be used by the workflow runner to send a single email per run.
-    We purposely do NOT write an `email_body_*.txt` file to disk anymore; the report file `report_*.txt`
-    is kept in the repo while the composed email body is used by the runner to send the message.
+    Always include an explicit message if the report file is missing or empty, to avoid empty emails.
     """
     body_lines = []
-    # First section: secrets check (so recipients immediately see any exposed credentials)
+    # First section: secrets check
     body_lines.append("SECRETS CHECK:")
     findings = scan_for_possible_secrets()
     if not findings:
@@ -1198,15 +1190,23 @@ def compose_email_body_from_report(report_path):
             if f.get('length') is not None:
                 line += f" length: {f.get('length')} characters (value not shown)."
             body_lines.append(line)
-        body_lines.append("\nIf any of the above files were accidentally committed to your repository: (1) rotate/disable keys, (2) remove the files from the repo (git filter-repo / bfg), (3) re-issue new credentials.")
-    body_lines.append("\n--- REPORT CONTENT (pasted below) ---\n")
+        body_lines.append("\\nIf any of the above files were accidentally committed to your repository: (1) rotate/disable keys, (2) remove the files from the repo (git filter-repo / bfg), (3) re-issue new credentials.")
+    body_lines.append("\\n--- REPORT CONTENT (pasted below) ---\\n")
     body_lines.append(f"Run Report — {now_ist().strftime('%d %B %Y %H:%M')}")
     try:
-        with open(report_path, 'r', encoding='utf-8') as f:
-            body_lines.append(f.read())
+        if not report_path or not os.path.exists(report_path):
+            body_lines.append("⚠️ Report file not found.")
+        else:
+            # If the file exists but is empty, note that explicitly
+            if os.path.getsize(report_path) == 0:
+                body_lines.append("⚠️ Report file is empty.")
+            else:
+                with open(report_path, 'r', encoding='utf-8') as f:
+                    body_lines.append(f.read())
     except Exception as e:
         body_lines.append(f"⚠️ Could not read report file for email body: {e}")
-    return "\n".join(body_lines)
+    return "\\n".join(body_lines)
+
 
 def fetch_excel_from_gdrive_bytes(excel_file_id, service_account_path):
     """
@@ -1320,13 +1320,21 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
                         ensure_list_types(new_obj, LIST_PROPERTIES)
                         merged_obj, changed_keys = smart_merge(old_obj, new_obj)
                         if changed_keys:
-                            # Record prior object for the per-sheet compact backup (no per-object file)
+                            # backup existing object BEFORE writing
                             try:
-                                per_sheet_old_objs.append(copy.deepcopy(old_obj))
-                            except Exception:
-                                pass
-
-# Compose granular updatedDetails
+                                # Backup the PREVIOUS state of the object (deepcopy to avoid later mutation)
+                                bpath = backup_object(old_obj.get('showID') or old_obj.get('id') or sid, copy.deepcopy(old_obj), backup_dir=BACKUP_DIR)
+                                if bpath:
+                                    report_changes.setdefault('backups', []).append(bpath)
+                                    # Remember prior object for the per-sheet compact backup
+                                    try:
+                                        per_sheet_old_objs.append(copy.deepcopy(old_obj))
+                                    except Exception:
+                                        pass
+                            except Exception as e:
+                                print(f"⚠️ Backup failed for {sid}: {e}")
+                                print(f"⚠️ Backup failed for {sid}: {e}")
+                            # Compose granular updatedDetails
                             merged_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
                             merged_obj['updatedDetails'] = compose_updated_details(changed_keys, created_first_time=False)
                             merged_by_id[sid] = merged_obj
@@ -1353,11 +1361,10 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
                 with open(backup_name, 'w', encoding='utf-8') as bf:
                     json.dump(per_sheet_old_objs, bf, indent=4, ensure_ascii=False)
                 print(f"✅ Backup saved → {backup_name} (contains {len(per_sheet_old_objs)} prior objects)")
-                # Record the per-sheet backup path in the per-sheet report_changes
-                report_changes.setdefault('backups', []).append(backup_name)
             else:
-                # No changed objects for this sheet in this run — do not create a note file.
-                print(f"ℹ️ No changed objects for sheet '{s}'; no per-sheet backup created.")
+                with open(backup_name, 'w', encoding='utf-8') as bf:
+                    json.dump({'note': 'no objects changed in this sheet during this run'}, bf, indent=2)
+                print(f"ℹ️ No changed objects for sheet '{s}'; wrote note → {backup_name}")
         except Exception as e:
             print(f"⚠️ Could not write backup {backup_name}: {e}")
         report_changes_by_sheet[s] = report_changes
@@ -1384,21 +1391,13 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
     os.makedirs(REPORTS_DIR, exist_ok=True)
     report_path = os.path.join(REPORTS_DIR, f"report_{filename_timestamp()}.txt")
     write_report(report_changes_by_sheet, report_path, final_not_found_deletions=sorted(list(still_not_found)))
-    print(f"✅ Report written → {report_path}")
+    print(f"Report written → {report_path}")
+    # Also print a machine-friendly variable for workflow parsing
+    print(f"REPORT_PATH={report_path}")
 
     
     # Compose the email body in-memory; do NOT persist email_body_*.txt to disk (reports only).
-        # Compose the email body in-memory; also write it to a file so CI/email steps can easily read it.
     email_body = compose_email_body_from_report(report_path)
-    try:
-        os.makedirs(REPORTS_DIR, exist_ok=True)
-        email_path = os.path.join(REPORTS_DIR, f"email_body_{filename_timestamp()}.txt")
-        with open(email_path, 'w', encoding='utf-8') as ef:
-            ef.write(email_body)
-        print(f"✅ Email body written → {email_path}")
-    except Exception as e_eb:
-        print(f"⚠️ Failed to write email body to file: {e_eb}")
-
     # Print to stdout between markers so CI (GitHub Actions) can capture the email body as a step output.
     try:
         print('\n===EMAIL_BODY_START===')

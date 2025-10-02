@@ -60,15 +60,27 @@ jobs:
           set -euo pipefail
           output=$(python create_update_backup_delete.py 2>&1 || true)
           printf '%s\n' "$output"
-          report_path=$(printf '%s\n' "$output" | awk -F'→' '/Report written/ {gsub(/^[ \t]+|[ \t]+$/, "", $2); print $2; exit}')
+
+          # Primary method: look for a dedicated REPORT_PATH=... line
+          report_path=$(printf '%s\n' "$output" | grep -m1 '^REPORT_PATH=' | sed 's/^REPORT_PATH=//')
+
+          # Fallback: older scripts printed "Report written → <path>"
+          if [ -z "$report_path" ] || [ ! -f "$report_path" ]; then
+            report_path=$(printf '%s\n' "$output" | awk -F'→' '/Report written/ {gsub(/^[ \t]+|[ \t]+$/, "", $2); print $2; exit}')
+          fi
+
+          # Final fallback: pick the latest report file on disk
           if [ -z "$report_path" ] || [ ! -f "$report_path" ]; then
             report_path=$(ls -t reports/report_*.txt 2>/dev/null | head -n1 || true)
           fi
+
+          # Export to workflow output for downstream steps
           if [ -z "$report_path" ]; then
             echo "report_path=" >> $GITHUB_OUTPUT
           else
             echo "report_path=$report_path" >> $GITHUB_OUTPUT
           fi
+
           if [ "${EVENT_NAME:-}" = "schedule" ]; then
             prefix="[Automatic]"
           else
