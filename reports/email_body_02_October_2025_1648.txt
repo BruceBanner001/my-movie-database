@@ -1,0 +1,11 @@
+SECRETS CHECK:
+- File: GDRIVE_SERVICE_ACCOUNT.json — note: Service account JSON detected. client_email: subramanian-thayuman@my-dramas-data.iam.gserviceaccount.com. Contains a private_key field (DO NOT share private key material).
+- File: EXCEL_FILE_ID.txt — note: Excel file id present (not shown). length: 33 characters (value not shown).
+
+If any of the above files were accidentally committed to your repository: (1) rotate/disable keys, (2) remove the files from the repo (git filter-repo / bfg), (3) re-issue new credentials.
+
+--- REPORT CONTENT (pasted below) ---
+
+Run Report — 02 October 2025 16:48
+=== Deleting Records — 02 October 2025 ===
+=== Sheet1 — 02 October 2025 ===
