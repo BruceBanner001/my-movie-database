@@ -244,7 +244,7 @@ def backup_object(obj_id, obj, backup_dir=BACKUP_DIR):
     """Write a timestamped backup of obj into backup_dir and return path."""
     try:
         os.makedirs(backup_dir, exist_ok=True)
-        ts = now_ist().strftime('%Y%m%dT%H%M%SZ')  # fixed typo: use now_ist() for IST-aware timestamp
+        ts = now_ist().strftime('%Y%m%dT%H%M%SZ')  # fixed: use now_ist() for timezone-aware timestamp
         safe_id = str(obj_id).replace(' ', '_').replace('/', '_')
         fname = f"{safe_id}__backup__{ts}.json"
         path = os.path.join(backup_dir, safe_filename(fname))
@@ -873,14 +873,6 @@ def process_deletions(excel_file, json_file, report_changes):
                     json.dump(deleted_obj, of, indent=4, ensure_ascii=False)
                 report_changes.setdefault('deleted', []).append(f"{iid} -> ✅ Deleted and archived -> {outpath}")
 
-                # --- Also create a copy in the backups/ folder for run-level backups ---
-                try:
-                    bpath = backup_object(iid, copy.deepcopy(deleted_obj), backup_dir=BACKUP_DIR)
-                    if bpath:
-                        report_changes.setdefault('backups', []).append(bpath)
-                except Exception as e_b:
-                    report_changes.setdefault('backups', []).append(f"{iid} -> ⚠️ Backup during deletion failed: {e_b}")
-
                 # --- Move associated image if exists ---
                 try:
                     img_url = deleted_obj.get('showImage') or ""
@@ -1117,22 +1109,6 @@ def write_report(report_changes_by_sheet, report_path, final_not_found_deletions
             for nm, keys in updates_by_name.items():
                 details = compose_updated_details(keys)
                 lines.append(f"- {nm} -> {details}")
-
-        # --- Deleted entries ---
-        deleted = changes.get('deleted', [])
-        total_deleted += len(deleted)
-        if deleted:
-            lines.append("\nData Deleted:")
-            for d in deleted:
-                try:
-                    if isinstance(d, str):
-                        lines.append(f"- {d}")
-                    elif isinstance(d, dict):
-                        lines.append(f"- {d.get('showID', '')} -> {d.get('note', 'Deleted')}")
-                    else:
-                        lines.append(f"- {str(d)}")
-                except Exception:
-                    lines.append(f"- {str(d)}")
     if exceed_entries:
         lines.append(f"=== Exceed Max Length ({SYNOPSIS_MAX_LEN}) ===")
         for e in exceed_entries:
@@ -1322,19 +1298,12 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
                         merged_obj, changed_keys = smart_merge(old_obj, new_obj)
                         if changed_keys:
                             # backup existing object BEFORE writing
+                                                        # Record prior object for the per-sheet compact backup (no per-object file)
                             try:
-                                # Backup the PREVIOUS state of the object (deepcopy to avoid later mutation)
-                                bpath = backup_object(old_obj.get('showID') or old_obj.get('id') or sid, copy.deepcopy(old_obj), backup_dir=BACKUP_DIR)
-                                if bpath:
-                                    report_changes.setdefault('backups', []).append(bpath)
-                                    # Remember prior object for the per-sheet compact backup
-                                    try:
-                                        per_sheet_old_objs.append(copy.deepcopy(old_obj))
-                                    except Exception:
-                                        pass
-                            except Exception as e:
-                                print(f"⚠️ Backup failed for {sid}: {e}")
-                                print(f"⚠️ Backup failed for {sid}: {e}")
+                                per_sheet_old_objs.append(copy.deepcopy(old_obj))
+                            except Exception:
+                                pass
+
                             # Compose granular updatedDetails
                             merged_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
                             merged_obj['updatedDetails'] = compose_updated_details(changed_keys, created_first_time=False)
@@ -1355,7 +1324,6 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
                         if not any(o.get('showID') == sid for o in report_changes.get('created', [])):
                             report_changes.setdefault('created', []).append(new_obj)
 
-                        # --- Also record created object in per_sheet_old_objs for per-sheet backups ---
                         try:
                             per_sheet_old_objs.append(copy.deepcopy(new_obj))
                         except Exception as e_perc:
@@ -1368,10 +1336,11 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
                 with open(backup_name, 'w', encoding='utf-8') as bf:
                     json.dump(per_sheet_old_objs, bf, indent=4, ensure_ascii=False)
                 print(f"✅ Backup saved → {backup_name} (contains {len(per_sheet_old_objs)} prior objects)")
+                # Record the per-sheet backup path so the report can reference this single backup file for the sheet
+                report_changes.setdefault('backups', []).append(backup_name)
             else:
-                with open(backup_name, 'w', encoding='utf-8') as bf:
-                    json.dump({'note': 'no objects changed in this sheet during this run'}, bf, indent=2)
-                print(f"ℹ️ No changed objects for sheet '{s}'; wrote note → {backup_name}")
+                # No changed objects for this sheet in this run — do not create a note file.
+                print(f"ℹ️ No changed objects for sheet '{s}'; no per-sheet backup created.")
         except Exception as e:
             print(f"⚠️ Could not write backup {backup_name}: {e}")
         report_changes_by_sheet[s] = report_changes
