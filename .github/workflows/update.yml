@@ -163,6 +163,11 @@ jobs:
           # Export the path to the created email body file for the mail action
           echo "email_body_path=email_body.txt" >> $GITHUB_OUTPUT
 
+      - name: Collect Email Body File
+        id: collect_email
+        run: |
+          EMAIL_FILE=$(ls reports/email_body_*.txt | tail -n1)
+          echo "EMAIL_FILE=$EMAIL_FILE" >> $GITHUB_ENV
       - name: Send consolidated report email
         continue-on-error: true
         uses: dawidd6/action-send-mail@v3
@@ -174,7 +179,7 @@ jobs:
           subject: ${{ steps.run_updater.outputs.email_subject }}
           to: ${{ secrets.NOTIFY_EMAIL }}
           from: GitHub Actions <${{ secrets.SMTP_USERNAME }}>
-          body_file: ${{ steps.compose_email.outputs.email_body_path }}
+          body_file: ${{ env.EMAIL_FILE }}
 
       # ------------------ Cleanup old backups (older than 15 days) ------------------
       - name: Cleanup old backups (older than 15 days)
