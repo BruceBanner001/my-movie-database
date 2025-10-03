@@ -58,6 +58,8 @@ jobs:
           SCHEDULED_RUN: ${{ github.event_name == 'schedule' && 'true' || 'false' }}
         run: |
           set +e
+          output=$(python create_update_backup_delete.py 2>&1 || true)
+          printf '%s\n' "$output"
 
           # Run the updater and capture full stdout/stderr (do not fail the step on script exit)
           if [ -f create_update_backup_delete_always0.py ]; then
@@ -168,6 +170,8 @@ jobs:
         run: |
           EMAIL_FILE=$(ls reports/email_body_*.txt | tail -n1)
           echo "EMAIL_FILE=$EMAIL_FILE" >> $GITHUB_ENV
+          echo "REPORT_DATE=$(date '+%d %B %Y')" >> $GITHUB_ENV
+
       - name: Send consolidated report email
         continue-on-error: true
         uses: dawidd6/action-send-mail@v3
@@ -176,7 +180,7 @@ jobs:
           server_port: ${{ secrets.SMTP_PORT }}
           username: ${{ secrets.SMTP_USERNAME }}
           password: ${{ secrets.SMTP_PASSWORD }}
-          subject: ${{ steps.run_updater.outputs.email_subject }}
+          subject: Workflow Report — ${{ env.REPORT_DATE }}
           to: ${{ secrets.NOTIFY_EMAIL }}
           from: GitHub Actions <${{ secrets.SMTP_USERNAME }}>
           body_file: ${{ env.EMAIL_FILE }}
