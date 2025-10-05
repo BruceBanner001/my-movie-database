@@ -1,0 +1,28 @@
+✅ Workflow completed successfully
+📅 Run Time: 05 October 2025 10:04 AM (IST)
+
+=== Deleting Records — 05 October 2025 ===
+
+Deleted (initially found):
+- 101 -> ✅ Deleted and archived -> deleted-data/DELETED_05_October_2025_1004_101.json
+- 102 -> ✅ Deleted and archived -> deleted-data/DELETED_05_October_2025_1004_102.json
+- 103 -> ✅ Deleted and archived -> deleted-data/DELETED_05_October_2025_1004_103.json
+
+=== Sheet1 — 05 October 2025 ===
+
+Ignored (present in 'Deleting Records' and already deleted earlier this run):
+- 101 -> Already Deleted as per "Deleting Records" Sheet -> ⚠️ Cannot add to seriesData.json
+- 102 -> Already Deleted as per "Deleting Records" Sheet -> ⚠️ Cannot add to seriesData.json
+- 103 -> Already Deleted as per "Deleting Records" Sheet -> ⚠️ Cannot add to seriesData.json
+
+=== NOT FOUND (Deleting Records not present in any scanned sheet) ===
+- 104 -> ❌ Cannot be found in any Sheets.
+
+
+SUMMARY: Created: 0, Updated: 0, Skipped: 0, Deleted (initially found): 3
+
+Notes:
+- Preserved fields: otherNames (fields in PRESERVE_IF_EMPTY are preserved when incoming values are empty)
+- Backup file: none created this run
+
+--------------------------------------------------------------------
