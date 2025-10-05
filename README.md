@@ -1,88 +1,101 @@
+# Excel → JSON Automation Script
 
-# Excel → JSON Automation (Longform)
+### 🧭 Overview
+This project automates the process of synchronizing data between Excel (or YAML) workflows and structured JSON files.  
+It intelligently detects updates, preserves important data, creates backups, and generates detailed human-readable reports.
 
-This project automates updating a JSON database from an Excel sheet.
+The script is designed for long-term scalability — ideal for managing TV show or media datasets where values (like ratings, comments, or genres) are updated frequently.
 
-## Usage
+---
 
-### Manual run
-```bash
-python create_update_backup_delete.py --dry-run
+### ⚙️ Workflow Summary
+Each workflow run performs these steps in order:
+
+1. **Read Excel/YAML Source** – Loads sheets and extracts data objects.
+2. **Compare Existing JSON** – Checks if an object already exists and identifies differences.
+3. **Merge Intelligently** – Updates only changed fields while preserving non-empty data.
+4. **Track Changes** – Detects Created, Updated, Deleted, and Skipped items.
+5. **Backup & Report** – Backs up modified items and writes a clear summary report.
+
+---
+
+### 🧩 Key Features
+
+#### 🗂 One Backup per Workflow
+Only one backup JSON is created per run — containing *only* modified objects.  
+Example: `backups/backup_05_October_2025_0812_modified.json`
+
+#### 💤 Skipped Detection
+If no fields are changed after comparison, the object appears under **“No Modification, Skipped”** in the report.  
+Skipped entries do not trigger a backup.
+
+#### 🧠 Intelligent Merge
+Certain fields (like `otherNames`, `genres`) are preserved when incoming values are empty, preventing data loss.
+
+#### 🗒 Detailed Update Reports
+Each update includes the list of modified fields (e.g., `Ratings, Comments, Genre Updated`).  
+The report also contains counts of created, updated, skipped, and deleted items.
+
+#### ✍️ Manual Updates
+Manual edits from Excel/YAML are recognized and labeled clearly as **“Manually Updated by Owner.”**
+
+---
+
+### 🧾 updatedDetails Behavior
+
+| Scenario | Example Output | Description |
+|-----------|----------------|--------------|
+| New Object | `First time Uploaded` | First appearance of an item. |
+| Auto Update | `Ratings, Comments Updated` | Normal detected update in JSON. |
+| Manual Update | `Ratings, Genre Manually Updated by Owner` | Modified manually from Excel/YAML. |
+
+This field is automatically filled based on which keys changed during merge.
+
+---
+
+### 🧱 Backup & Report Structure
+
+#### 🔸 Backup
+- Location: `backups/`
+- Filename pattern: `backup_<date>_modified.json`
+- Contains *only previous versions* of updated objects.
+
+#### 🔸 Report
+- Location: `reports/`
+- Filename pattern: `report_<date>.txt`
+- Sections include:
+  - **Data Created**
+  - **Data Updated**
+  - **No Modification, Skipped**
+  - **Image Updated**
+  - **Deleted**
+  - **Summary (Created / Updated / Skipped / Deleted)**
+
+Example summary line:
 ```
-- Simulates updates without writing JSON.
-
-### Scheduled run (weekly)
-```bash
-python create_update_backup_delete.py --scheduled
-```
-- Enables enrichment stubs and recommendations.
-- Performs report retention cleanup.
-
-## Workflow
-
-- **Manual trigger**: Emails `[Manual] JSON Update Successful/Failed`.
-- **Automatic trigger**: Emails `[Automatic] JSON Update Successful/Failed`.
-
-## Reports
-
-- `reports/report_*.txt` → detailed updates.  
-- `reports/recommendations_*.txt` → extra values found online.  
-- `reports/secrets_report_*.txt` → secrets scan results.  
-
-## Secrets
-
-Workflow scans with gitleaks.  
-If secrets are detected, a separate email is sent with details.
-
-## Retention
-
-Old reports auto-cleaned in scheduled runs.  
-Default: 30 days (change via `REPORT_RETENTION_DAYS`).
-
-## Manual Updates
-
-When updated via Excel manually, JSON includes:  
-```
-"updatedDetails": "Updated Ratings, ShowImage Mannually By Owner"
+SUMMARY: Created: 1, Updated: 2, Skipped: 3, Deleted: 0
 ```
 
-## otherNames
+---
 
-Every object has an `otherNames` property right after `showName`.  
-- Defaults to `[]` if no names are found.  
-- Parsed from Excel if provided (English first, others later).  
-- Extras beyond limit go into recommendations (only scheduled runs).  
+### 🧩 Preservation Logic
 
-## TODO Stubs
+#### PRESERVE_IF_EMPTY
+Keeps existing values if the incoming field is empty.  
+Used for fields like `otherNames`, so previous data isn’t overwritten with blanks.
 
-- `fetch_other_names(show_name)`  
-- `fetch_images(show_name)`  
-- `fetch_ratings(show_name)`  
+#### LIST_PROPERTIES
+Ensures specified keys remain lists instead of strings.  
+Example: `["genres", "otherNames"]`
 
-Implement enrichment logic using PREFERRED_SITE_ORDER.
+---
 
+### 🚀 Scalability & Customization
+- Add new list-like fields to `LIST_PROPERTIES` to make merging automatic.
+- Add more keys to `PRESERVE_IF_EMPTY` for data safety.
+- Modify report format easily from `write_report()`.
+- The structure supports adding email notifications or API sync later without breaking logic.
 
-## Report Sections Explained
+---
 
-Each workflow run produces `reports/report_YYYYMMDD_HHMM.txt` and `.html`.  
-Below are the sections you will see:
-
-### Added / Updated Records
-Lists all new or updated JSON objects processed in this run.
-
-### Deleted Records
-Shows IDs that were removed based on the `Deleting Records` sheet.  
-Each deleted object is also stored in `deleted-data/DELETED_DD_Month_YYYY_HHMM_<id>.json` for 30 days.
-
-### Exceed Max Length
-Lists objects whose synopsis exceeded the configured max length (default: 1000).  
-The report shows ID, name, site, and a clickable `Link` to the source.
-
-### Image Cleanup
-Summarizes how many images were moved from `images/` to `old-images/`  
-and how many were permanently deleted based on the `KEEP_OLD_IMAGES_DAYS` setting.
-
-### Workflow Status
-At the end of the report, you will see:
-- **WORKFLOW CONTINUED...** if the process hit the time limit and will resume in the next run.
-- **WORKFLOW COMPLETED FOR THE SHEET: <name>** when all rows for a sheet are done.
+© 2025 — JSON/Excel Automation Workflow | Developed for maintainability, scalability, and accuracy.

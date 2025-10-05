@@ -1,3 +1,19 @@
+# ============================================================
+# Script: create_update_backup_delete.py
+# Author: [BruceBanner001]
+# Description:
+#   This script automates the creation, update, and backup process
+#   for JSON data objects derived from Excel or YAML workflows.
+#
+#   Key features:
+#   - One backup per workflow run (contains only modified objects).
+#   - Intelligent field merging (preserves 'otherNames', etc. when incoming empty).
+#   - Skipped detection for unchanged records.
+#   - Detailed reporting with per-field change summaries.
+#   - Clean, scalable structure with clear comments.
+#
+# ============================================================
+
 
 # ============================================================================
 # Patched Script: create_update_backup_delete.py
@@ -138,6 +154,134 @@ def logd(msg):
 
 
 # ---------------------------- Utilities -------------------------------------
+# ---------------------------- Merge & preservation helpers ------------------
+# Properties that should be preserved when the incoming/new value is empty/absent.
+PRESERVE_IF_EMPTY = {
+    "otherNames",
+    # add keys here to preserve non-empty existing values when incoming is empty
+}
+
+# Properties that should be normalized/treated as lists.
+LIST_PROPERTIES = {
+    "otherNames",
+    "genres",
+    # add list-like keys here
+}
+
+def _is_empty_value(v):
+    """Return True if value is considered empty (None, empty string, empty list)."""
+    if v is None:
+        return True
+    if isinstance(v, str) and not v.strip():
+        return True
+    if isinstance(v, (list, tuple)) and len(v) == 0:
+        return True
+    return False
+
+def _normalize_list_value(v):
+    """Return a clean list for list-like inputs (list, comma string, None)."""
+    if v is None:
+        return []
+    if isinstance(v, (list, tuple)):
+        return [str(x).strip() for x in v if x is not None and str(x).strip()]
+    s = str(v).strip()
+    if not s:
+        return []
+    # split on comma and strip items
+    parts = [p.strip() for p in s.split(",") if p.strip()]
+    return parts
+
+def _lists_equivalent(a, b):
+    """Compare two lists disregarding order and case/whitespace differences."""
+    la = [str(x).strip().lower() for x in (a or [])]
+    lb = [str(x).strip().lower() for x in (b or [])]
+    return set(la) == set(lb)
+
+# ============================================================
+# SECTION: Intelligent Merge & Preservation Logic
+# ------------------------------------------------------------
+# Handles merging of new and old objects with preservation of
+# certain keys and detection of changed fields for reports.
+# ============================================================
+def merge_objects_preserve(old_obj, new_obj):
+    """
+    Merge new_obj into old_obj while preserving certain keys when the new value is empty.
+    Returns (merged_obj, changed_keys_list).
+    - Only keys present in new_obj are considered for change detection.
+    - Keys listed in PRESERVE_IF_EMPTY will be kept from old_obj if new value is empty.
+    - List properties in LIST_PROPERTIES are normalized and compared set-wise.
+    """
+    merged = dict(old_obj or {})
+    changed = []
+    for k, new_val in (new_obj or {}).items():
+        # skip meta keys (we'll manage updatedOn/updatedDetails separately)
+        if k in ("updatedOn", "updatedDetails"):
+            continue
+        old_val = old_obj.get(k) if old_obj else None
+
+        if k in LIST_PROPERTIES:
+            new_list = _normalize_list_value(new_val)
+            old_list = _normalize_list_value(old_val)
+            # preserve non-empty old list if incoming is empty and key is in PRESERVE_IF_EMPTY
+            if not new_list and old_list and k in PRESERVE_IF_EMPTY:
+                merged[k] = old_list
+                # no change recorded
+            else:
+                if not _lists_equivalent(old_list, new_list):
+                    merged[k] = new_list
+                    changed.append(k)
+                else:
+                    merged[k] = old_list  # keep original ordering/value
+        else:
+            # preserve non-empty old scalar if incoming is empty and key in PRESERVE_IF_EMPTY
+            if _is_empty_value(new_val) and (not _is_empty_value(old_val)) and (k in PRESERVE_IF_EMPTY):
+                merged[k] = old_val
+                # no change recorded
+            else:
+                # treat difference strictly (None vs '' vs value considered different)
+                if new_val != old_val:
+                    merged[k] = new_val
+                    changed.append(k)
+                else:
+                    merged[k] = old_val
+    return merged, changed
+
+def format_updated_details(changed_keys):
+    """
+    Format changed_keys into a human readable 'UpdatedDetails' string.
+    Examples:
+     - ['genres'] -> 'Genre Updated'
+     - ['comments','ratings','showName'] -> 'Comments, Ratings and Show Name Updated'
+    """
+    if not changed_keys:
+        return ""
+    # display-name mapping (fallback to capitalized key)
+    disp = {
+        "showName": "Show Name",
+        "comments": "Comments",
+        "ratings": "Ratings",
+        "genres": "Genre",
+        "otherNames": "Other Names",
+        "synopsis": "Synopsis",
+        "showImage": "Show Image",
+        "Duration": "Duration",
+        "releaseDate": "Release Date",
+        "releasedYear": "Released Year",
+        "totalEpisodes": "Total Episodes",
+        "network": "Network",
+        "watchStartedOn": "Watch Started On",
+        "watchEndedOn": "Watch Ended On",
+    }
+    human = [disp.get(k, k.capitalize()) for k in changed_keys]
+    if len(human) == 1:
+        return f"{human[0]} Updated"
+    if len(human) == 2:
+        return f"{human[0]} and {human[1]} Updated"
+    # 3+ items: comma separated, with 'and' before last
+    return f"{', '.join(human[:-1])} and {human[-1]} Updated"
+
+# ---------------------------------------------------------------------------
+
 def safe_filename(name):
     return re.sub(r"[^A-Za-z0-9._-]+", "_", (name or "").strip())
 
@@ -794,6 +938,12 @@ def cleanup_deleted_data():
 
 
 # ---------------------------- Manual updates --------------------------------
+# ============================================================
+# SECTION: Manual Updates Application
+# ------------------------------------------------------------
+# Applies updates manually entered in Excel/YAML to existing
+# objects, using the same merge/preserve logic for consistency.
+# ============================================================
 def apply_manual_updates(excel_file: str, json_file: str):
     """Apply ad-hoc JSON-like updates from a 'manual update' sheet.
 
@@ -820,6 +970,7 @@ def apply_manual_updates(excel_file: str, json_file: str):
         data = []
     by_id = {o['showID']: o for o in data if 'showID' in o}
     updated_objs = []
+
     for _, row in df.iterrows():
         sid = None
         try:
@@ -853,22 +1004,30 @@ def apply_manual_updates(excel_file: str, json_file: str):
         if not upd:
             continue
         obj = by_id[sid]
+        # Prepare a candidate copy with requested changes applied
+        candidate = dict(obj)
         for k, v in upd.items():
             if k.lower() == "ratings":
                 try:
-                    obj["ratings"] = int(v)
+                    candidate["ratings"] = int(v)
                 except Exception:
-                    obj["ratings"] = obj.get("ratings", 0)
+                    candidate["ratings"] = obj.get("ratings", 0)
             elif k.lower() in ("releasedyear", "year"):
                 try:
-                    obj["releasedYear"] = int(v)
+                    candidate["releasedYear"] = int(v)
                 except Exception:
                     pass
             else:
-                obj[k] = v
-        obj['updatedOn'] = now_ist().strftime('%d %B %Y')
-        obj['updatedDetails'] = f"Updated {', '.join([k.capitalize() for k in upd.keys()])} Manually By Owner"
-        updated_objs.append(obj)
+                candidate[k] = v
+        # Merge using preservation rules to compute actual changes
+        merged_obj, changed_keys = merge_objects_preserve(obj, candidate)
+        if changed_keys:
+            merged_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
+            # Mark manual update in the details for traceability
+            merged_obj['updatedDetails'] = format_updated_details(changed_keys) + ' Manually By Owner'
+            # Persist merged object back to by_id
+            by_id[sid] = merged_obj
+            updated_objs.append(merged_obj)
     if updated_objs:
         merged = sorted(by_id.values(), key=lambda x: x.get('showID', 0))
         with open(json_file, 'w', encoding='utf-8') as f:
@@ -942,10 +1101,17 @@ def fetch_and_save_image_for_show(show_name, prefer_sites, show_id):
 
 
 # ---------------------------- Reports --------------------------------------
+# ============================================================
+# SECTION: Report Generation
+# ------------------------------------------------------------
+# Writes human-readable reports summarizing created, updated,
+# skipped, and deleted objects, along with counts and notes.
+# ============================================================
 def write_report(report_changes_by_sheet, report_path, final_not_found_deletions=None):
     lines = []
     exceed_entries = []
     total_created = total_updated = total_deleted = 0
+    total_skipped = 0
     for sheet, changes in report_changes_by_sheet.items():
         lines.append(f"=== {sheet} — {now_ist().strftime('%d %B %Y')} ===")
         if 'error' in changes:
@@ -966,6 +1132,19 @@ def write_report(report_changes_by_sheet, report_path, final_not_found_deletions
                 changed_fields = [f for f in ["showName", "showImage", "releasedYear", "totalEpisodes", "comments", "ratings", "genres", "Duration", "synopsis"] if old.get(f) != new.get(f)]
                 fields_text = ", ".join([f.capitalize() for f in changed_fields]) if changed_fields else "General"
                 lines.append(f"- {new.get('showName','Unknown')} -> Updated: {fields_text}")
+        
+        skipped = changes.get('skipped', [])
+        total_skipped += len(skipped)
+        if skipped:
+            lines.append("\nNo Modification, Skipped:")
+            for s in skipped:
+                if isinstance(s, str):
+                    lines.append(f"- {s}")
+                elif isinstance(s, dict):
+                    lines.append(f"- {s.get('showName', 'Unknown')}")
+                else:
+                    lines.append(f"- {str(s)}")
+
         images = changes.get('images', [])
         if images:
             lines.append("\nImage Updated:")
@@ -992,7 +1171,7 @@ def write_report(report_changes_by_sheet, report_path, final_not_found_deletions
         if changes.get('exceed'):
             exceed_entries.extend(changes.get('exceed'))
         lines.append("\n")
-    lines.insert(0, f"SUMMARY: Created: {total_created}, Updated: {total_updated}, Deleted (initially found): {total_deleted}")
+    lines.insert(0, f"SUMMARY: Created: {total_created}, Updated: {total_updated}, Skipped: {total_skipped}, Deleted (initially found): {total_deleted}")
     if exceed_entries:
         lines.append(f"=== Exceed Max Length ({SYNOPSIS_MAX_LEN}) ===")
         for e in exceed_entries:
@@ -1116,6 +1295,12 @@ def fetch_excel_from_gdrive_bytes(excel_file_id, service_account_path):
 
 
 # ---------------------------- Main updater ---------------------------------
+# ============================================================
+# SECTION: Main JSON Update Workflow
+# ------------------------------------------------------------
+# This function reads data from Excel/YAML, compares it with
+# existing JSON data, merges updates, and writes backups/reports.
+# ============================================================
 def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=0, max_run_time_minutes=0):
     processed_total = 0
     # Load existing JSON (if any)
@@ -1130,6 +1315,9 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
         old_objects = []
     old_by_id = {o['showID']: o for o in old_objects if 'showID' in o}
     merged_by_id = dict(old_by_id)
+    # Track the previous versions of modified objects for a single per-run backup
+    modified_old_versions = []
+
     report_changes_by_sheet = {}
 
     # 1) Process deletions first and receive lists back.
@@ -1174,21 +1362,27 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
             sid = new_obj.get('showID')
             if sid in merged_by_id:
                 old_obj = merged_by_id[sid]
-                if old_obj != new_obj:
-                    new_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
-                    new_obj['updatedDetails'] = 'Object updated'
-                    merged_by_id[sid] = new_obj
+                # Perform intelligent merge preserving certain existing values if incoming is empty.
+                merged_obj, changed_keys = merge_objects_preserve(old_obj, new_obj)
+                if changed_keys:
+                    merged_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
+                    merged_obj['updatedDetails'] = format_updated_details(changed_keys)
+                    merged_by_id[sid] = merged_obj
+                    # Record previous version (old_obj) for a single per-run backup (only previous state)
+                    modified_old_versions.append(old_obj)
+                    report_changes.setdefault("updated", []).append({"old": old_obj, "new": merged_obj})
+                else:
+                    # No meaningful change detected after applying preservation rules
+                    # Record as skipped so it's included in the report.
+                    try:
+                        skipped_name = old_obj.get('showName') if isinstance(old_obj, dict) else None
+                    except Exception:
+                        skipped_name = None
+                    report_changes.setdefault("skipped", []).append({"showID": sid, "showName": skipped_name or f"ShowID {sid}"})
             else:
+                # New item: add as-is (created)
                 merged_by_id[sid] = new_obj
-        if items:
-            os.makedirs(BACKUP_DIR, exist_ok=True)
-            backup_name = os.path.join(BACKUP_DIR, f"{filename_timestamp()}_{safe_filename(s)}.json")
-            try:
-                with open(backup_name, 'w', encoding='utf-8') as bf:
-                    json.dump(items, bf, indent=4, ensure_ascii=False)
-                print(f"✅ Backup saved → {backup_name}")
-            except Exception as e:
-                print(f"⚠️ Could not write backup {backup_name}: {e}")
+                report_changes.setdefault("created", []).append(new_obj)
         report_changes_by_sheet[s] = report_changes
         if processed > 0:
             any_sheet_processed = True
@@ -1210,6 +1404,20 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
     except Exception as e:
         print(f"⚠️ Could not write final {json_file}: {e}")
 
+    
+    # ----- Single per-run backup for modified objects -----
+    try:
+        if modified_old_versions:
+            os.makedirs(BACKUP_DIR, exist_ok=True)
+            backup_name = os.path.join(BACKUP_DIR, f"backup_{filename_timestamp()}_modified.json")
+            with open(backup_name, 'w', encoding='utf-8') as bf:
+                json.dump(modified_old_versions, bf, indent=4, ensure_ascii=False)
+            print(f"✅ Backup saved → {backup_name}")
+        else:
+            print("ℹ️ No modifications detected in existing objects; no backup created.")
+    except Exception as e:
+        print(f"⚠️ Could not write per-run backup: {e}")
+    # -----------------------------------------------------
     os.makedirs(REPORTS_DIR, exist_ok=True)
     report_path = os.path.join(REPORTS_DIR, f"report_{filename_timestamp()}.txt")
     write_report(report_changes_by_sheet, report_path, final_not_found_deletions=sorted(list(still_not_found)))
