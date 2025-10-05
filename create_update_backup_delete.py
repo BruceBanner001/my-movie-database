@@ -1024,7 +1024,7 @@ def apply_manual_updates(excel_file: str, json_file: str):
         if changed_keys:
             merged_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
             # Mark manual update in the details for traceability
-            merged_obj['updatedDetails'] = format_updated_details(changed_keys) + ' Manually By Owner'
+            merged_obj['updatedDetails'] = format_updated_details(changed_keys) + ' Manually'
             # Persist merged object back to by_id
             by_id[sid] = merged_obj
             updated_objs.append(merged_obj)
@@ -1107,90 +1107,156 @@ def fetch_and_save_image_for_show(show_name, prefer_sites, show_id):
 # Writes human-readable reports summarizing created, updated,
 # skipped, and deleted objects, along with counts and notes.
 # ============================================================
+
+
 def write_report(report_changes_by_sheet, report_path, final_not_found_deletions=None):
+    """Generate a clear human-readable report in the format requested by the user."""
+    import os, glob
     lines = []
     exceed_entries = []
     total_created = total_updated = total_deleted = 0
     total_skipped = 0
-    for sheet, changes in report_changes_by_sheet.items():
+
+    # Header
+    lines.append("✅ Workflow completed successfully")
+    lines.append(f"📅 Run Time: {now_ist().strftime('%d %B %Y %I:%M %p (IST)')}")
+    lines.append("")
+
+    for sheet, changes in (report_changes_by_sheet or {}).items():
         lines.append(f"=== {sheet} — {now_ist().strftime('%d %B %Y')} ===")
-        if 'error' in changes:
-            lines.append(f"ERROR processing sheet: {changes['error']}")
+        if not changes:
+            lines.append("No changes detected for this sheet.")
+            lines.append("")
+            continue
+
+        # Created
         created = changes.get('created', [])
         total_created += len(created)
         if created:
-            lines.append("\nData Created:")
+            lines.append("")
+            lines.append("Data Created:")
             for obj in created:
-                lines.append(f"- {obj.get('showName', 'Unknown')} -> Created")
+                name = obj.get('showName') if isinstance(obj, dict) else str(obj)
+                lines.append(f"- {name} -> Created")
+
+        # Updated
         updated = changes.get('updated', [])
         total_updated += len(updated)
         if updated:
-            lines.append("\nData Updated:")
+            lines.append("")
+            lines.append("Data Updated:")
             for pair in updated:
-                new = pair.get('new')
-                old = pair.get('old')
-                changed_fields = [f for f in ["showName", "showImage", "releasedYear", "totalEpisodes", "comments", "ratings", "genres", "Duration", "synopsis"] if old.get(f) != new.get(f)]
-                fields_text = ", ".join([f.capitalize() for f in changed_fields]) if changed_fields else "General"
-                lines.append(f"- {new.get('showName','Unknown')} -> Updated: {fields_text}")
-        
+                new = pair.get('new') if isinstance(pair, dict) else pair
+                name = (new.get('showName') if isinstance(new, dict) else str(new)) or 'Unknown'
+                details = (new.get('updatedDetails') if isinstance(new, dict) else '') or ''
+                if details:
+                    lines.append(f"- {name} -> Updated: {details}")
+                else:
+                    lines.append(f"- {name} -> Updated")
+
+        # No Modification, Skipped
         skipped = changes.get('skipped', [])
         total_skipped += len(skipped)
         if skipped:
-            lines.append("\nNo Modification, Skipped:")
+            lines.append("")
+            lines.append("No Modification, Skipped:")
             for s in skipped:
-                if isinstance(s, str):
-                    lines.append(f"- {s}")
-                elif isinstance(s, dict):
-                    lines.append(f"- {s.get('showName', 'Unknown')}")
+                if isinstance(s, dict):
+                    name = s.get('showName') or f"ShowID {s.get('showID')}"
                 else:
-                    lines.append(f"- {str(s)}")
+                    name = str(s)
+                lines.append(f"- {name}")
 
+        # Image Updated
         images = changes.get('images', [])
         if images:
-            lines.append("\nImage Updated:")
-            for itm in images:
-                lines.append(f"- {itm.get('showName','Unknown')} -> Old && New")
-                lines.append(f"  Old: {itm.get('old')}")
-                lines.append(f"  New: {itm.get('new')}")
+            lines.append("")
+            lines.append("Image Updated:")
+            for it in images:
+                show = it.get('show') or it.get('showName') or 'Unknown'
+                oldp = it.get('old') or ''
+                newp = it.get('new') or ''
+                lines.append(f"- {show} -> Old && New")
+                lines.append(f"  Old: {oldp}")
+                lines.append(f"  New: {newp}")
+
+        # Deleted (initially found)
         deleted = changes.get('deleted', [])
         total_deleted += len(deleted)
         if deleted:
-            lines.append("\nDeleted Records:")
-            for iid in deleted:
-                lines.append(f"- {iid}")
-        deleted_not_found = changes.get('deleted_not_found', [])
-        if deleted_not_found:
-            lines.append("\nDeletion notes (IDs not found in seriesData.json initially):")
-            for note in deleted_not_found:
-                lines.append(f"- {note}")
-        ignored = changes.get('ignored_deleting', [])
+            lines.append("")
+            lines.append("Deleted (initially found):")
+            for d in deleted:
+                if isinstance(d, str):
+                    lines.append(f"- {d}")
+                elif isinstance(d, dict):
+                    name = d.get('showName') or d.get('id') or str(d)
+                    note = d.get('note') or 'Deleted (was present in repo; removed this run)'
+                    lines.append(f"- {name} -> {note}")
+                else:
+                    lines.append(f"- {str(d)}")
+
+        # Ignored (Deleting Records)
+        ignored = changes.get('ignored_deleting', []) or changes.get('ignored', [])
         if ignored:
-            lines.append("\nIgnored (present in 'Deleting Records' and already deleted earlier this run):")
-            for note in ignored:
-                lines.append(f"- {note}")
-        if changes.get('exceed'):
-            exceed_entries.extend(changes.get('exceed'))
-        lines.append("\n")
-    lines.insert(0, f"SUMMARY: Created: {total_created}, Updated: {total_updated}, Skipped: {total_skipped}, Deleted (initially found): {total_deleted}")
-    if exceed_entries:
-        lines.append(f"=== Exceed Max Length ({SYNOPSIS_MAX_LEN}) ===")
-        for e in exceed_entries:
-            lines.append(f"{e.get('id')} -> {e.get('name')} ({e.get('year')}) -> {e.get('site')} -> Link: {e.get('url')}")
-        lines.append("\n")
+            lines.append("")
+            lines.append("Ignored (present in 'Deleting Records' and already deleted earlier this run):")
+            for ig in ignored:
+                if isinstance(ig, str):
+                    lines.append(f"- {ig}")
+                elif isinstance(ig, dict):
+                    lines.append(f"- {ig.get('showName') or ig.get('showID') or str(ig)}")
+                else:
+                    lines.append(f"- {str(ig)}")
+
+        lines.append("")
+
+    # NOT FOUND deletions summary
     if final_not_found_deletions:
         lines.append("=== NOT FOUND (Deleting Records not present in any scanned sheet) ===")
         for iid in final_not_found_deletions:
-            lines.append(f"-{iid} -> ❌ Cannot be found in any Sheets.")
-        lines.append("\n")
-    os.makedirs(os.path.dirname(report_path) or ".", exist_ok=True)
+            lines.append(f"- {iid} -> ❌ Cannot be found in any Sheets.")
+        lines.append("")
+
+    # Summary
+    lines.append("")
+    lines.append(f"SUMMARY: Created: {total_created}, Updated: {total_updated}, Skipped: {total_skipped}, Deleted (initially found): {total_deleted}")
+    lines.append("")
+
+    # Exceed entries (if any)
+    if exceed_entries:
+        maxlen = globals().get('SYNOPSIS_MAX_LEN', 'N/A')
+        lines.append(f"=== Exceed Max Length ({maxlen}) ===")
+        for e in exceed_entries:
+            lines.append(f"{e.get('id')} -> {e.get('name')} ({e.get('year')}) -> {e.get('site')} -> Link: {e.get('url')}")
+        lines.append("")
+
+    # Notes
+    pres = globals().get('PRESERVE_IF_EMPTY', set())
+    pres_fields = ", ".join(sorted(list(pres))) if pres else "none"
+    lines.append("Notes:")
+    lines.append(f"- Preserved fields: {pres_fields} (fields in PRESERVE_IF_EMPTY are preserved when incoming values are empty)")
+
     try:
+        bdir = globals().get('BACKUP_DIR', 'backups')
+        bfiles = sorted(glob.glob(os.path.join(bdir, 'backup_*_modified.json')), reverse=True)
+        if bfiles:
+            lines.append(f"- Backup file (previous states of modified objects): {os.path.basename(bfiles[0])}")
+        else:
+            lines.append("- Backup file: none created this run")
+    except Exception:
+        lines.append("- Backup file: unknown")
+
+    lines.append("\n" + "-" * 68 + "\n")
+
+    # Write
+    try:
+        os.makedirs(os.path.dirname(report_path) or '.', exist_ok=True)
         with open(report_path, 'w', encoding='utf-8') as f:
             f.write("\n".join(lines))
     except Exception as e:
         print(f"⚠️ Could not write TXT report: {e}")
 
-
-# ---------------------------- Secret scan & email body ---------------------
 def scan_for_possible_secrets():
     findings = []
     if os.path.exists(SERVICE_ACCOUNT_FILE):
