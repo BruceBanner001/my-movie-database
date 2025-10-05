@@ -1024,7 +1024,7 @@ def apply_manual_updates(excel_file: str, json_file: str):
         if changed_keys:
             merged_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
             # Mark manual update in the details for traceability
-            merged_obj['updatedDetails'] = format_updated_details(changed_keys) + ' Manually By Admin'
+            merged_obj['updatedDetails'] = format_updated_details(changed_keys) + ' Manually'
             # Persist merged object back to by_id
             by_id[sid] = merged_obj
             updated_objs.append(merged_obj)
