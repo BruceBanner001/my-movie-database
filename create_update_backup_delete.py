@@ -65,7 +65,6 @@ import re
 import sys
 import time
 import json
-import copy
 import io
 import shutil
 import traceback
@@ -212,119 +211,6 @@ def normalize_list_from_csv(cell_value, cap=False, strip=False):
 _MONTHS = {m.lower(): m for m in ["January", "February", "March", "April", "May", "June",
                                   "July", "August", "September", "October", "November", "December"]}
 _SHORT_MONTHS = {m[:3].lower(): m for m in _MONTHS}
-
-
-
-# ------------------------- Smart merge helpers (ADDED) -------------------------
-# Properties that should be merged intelligently rather than bluntly overwritten when the new value is empty/absent.
-PRESERVE_IF_EMPTY = {
-    "otherNames",
-    # add keys here to preserve non-empty existing values when incoming is empty
-}
-
-# Properties to treat as lists (ensure lists rather than comma-separated strings)
-LIST_PROPERTIES = {
-    "otherNames",
-    "genres",
-    # add list-like keys here
-}
-
-def now_iso():
-    from datetime import datetime
-    return datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
-
-def write_json_file_atomic(path, obj):
-    os.makedirs(os.path.dirname(path) or '.', exist_ok=True)
-    tmp = path + ".tmp"
-    with open(tmp, 'w', encoding='utf-8') as fh:
-        json.dump(obj, fh, ensure_ascii=False, indent=2)
-    os.replace(tmp, path)
-
-def backup_object(obj_id, obj, backup_dir=BACKUP_DIR):
-    """Write a timestamped backup of obj into backup_dir and return path."""
-    try:
-        os.makedirs(backup_dir, exist_ok=True)
-        ts = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')
-        safe_id = str(obj_id).replace(' ', '_').replace('/', '_')
-        fname = f"{safe_id}__backup__{ts}.json"
-        path = os.path.join(backup_dir, safe_filename(fname))
-        write_json_file_atomic(path, obj)
-        return path
-    except Exception as e:
-        print(f"⚠️ Backup failed for {obj_id}: {e}")
-        return None
-
-def normalize_list_value(v, delim=','):
-    if v is None:
-        return []
-    if isinstance(v, (list, tuple)):
-        return [str(x).strip() for x in v if x is not None and str(x).strip()!='']
-    if isinstance(v, str):
-        parts = [p.strip() for p in v.split(delim)]
-        return [p for p in parts if p!='']
-    return [str(v)]
-
-def ensure_list_types(obj, list_props=LIST_PROPERTIES):
-    for k in list_props:
-        if k in obj and obj[k] is not None:
-            obj[k] = normalize_list_value(obj[k])
-
-def format_property_for_message(prop_name):
-    if not prop_name:
-        return prop_name
-    s = prop_name.replace('_', ' ')
-    out = []
-    for ch in s:
-        if ch.isupper() and out and out[-1] != ' ' and out[-1].islower():
-            out.append(' ')
-        out.append(ch)
-    return ''.join(out).strip().title()
-
-def compose_updated_details(changed_props, created_first_time=False):
-    if created_first_time:
-        return 'First time created'
-    changed = [format_property_for_message(p) for p in changed_props if p != 'updatedDetails']
-    if not changed:
-        return 'Object Updated'
-    return f"{', '.join(changed)} Updated"
-
-def smart_merge(existing, incoming, preserve_if_empty=PRESERVE_IF_EMPTY, list_props=LIST_PROPERTIES):
-    """Merge incoming into existing intelligently. Returns (merged, changed_keys)."""
-    merged = dict(existing)
-    incoming_norm = dict(incoming)
-    # Normalize lists on both sides
-    for lp in list_props:
-        if lp in incoming_norm:
-            incoming_norm[lp] = normalize_list_value(incoming_norm.get(lp))
-        if lp in merged:
-            merged[lp] = normalize_list_value(merged.get(lp))
-    changed = []
-    all_keys = set(list(existing.keys()) + list(incoming_norm.keys()))
-    for key in all_keys:
-        old_val = existing.get(key)
-        new_val = incoming_norm.get(key, None)
-        is_new_empty = new_val is None or (isinstance(new_val, str) and new_val.strip()=='') or (isinstance(new_val, (list,tuple)) and len(new_val)==0)
-        is_old_empty = old_val is None or (isinstance(old_val, str) and str(old_val).strip()=='') or (isinstance(old_val, (list,tuple)) and len(old_val)==0)
-        # Preserve old if instructed
-        if key in preserve_if_empty and is_new_empty and (not is_old_empty):
-            merged[key] = old_val
-            continue
-        # If list prop
-        if key in list_props:
-            if key not in incoming_norm:
-                # incoming didn't include key -> keep existing
-                continue
-            merged[key] = normalize_list_value(new_val)
-        else:
-            if key in incoming_norm:
-                merged[key] = new_val
-            else:
-                continue
-        if old_val != merged.get(key):
-            changed.append(key)
-    return merged, changed
-
-# ---------------------- End of smart merge helpers ----------------------------
 
 
 def _normalize_month_name(m):
@@ -590,30 +476,10 @@ def fetch_synopsis_and_duration(show_name, year, prefer_sites=None, existing_syn
 
 # ---------------------------- Excel -> objects mapping ----------------------
 COLUMN_MAP = {
-    "no": "showID",
-    "series title": "showName",
-    "title": "showName",
-    "started date": "watchStartedOn",
-    "finished date": "watchEndedOn",
-    "year": "releasedYear",
-    "total episodes": "totalEpisodes",
-    "released year": "releasedYear",
-    "original language": "nativeLanguage",
-    "language": "watchedLanguage",
-    "ratings": "ratings",
-    "catagory": "genres",
-    "category": "genres",
-    "genres": "genres",
-    "geners": "genres",
-    "genre": "genres",
-    "other names": "otherNames",
-    "othernames": "otherNames",
-    "otherNames": "otherNames",
-    "original network": "network",
-    "comments": "comments",
+    "no": "showID", "series title": "showName", "started date": "watchStartedOn", "finished date": "watchEndedOn",
+    "year": "releasedYear", "total episodes": "totalEpisodes", "original language": "nativeLanguage", "language": "watchedLanguage",
+    "ratings": "ratings", "catagory": "genres", "category": "genres", "original network": "network", "comments": "comments"
 }
-
-
 
 
 def tidy_comment(val):
@@ -1094,21 +960,39 @@ def write_report(report_changes_by_sheet, report_path, final_not_found_deletions
         total_updated += len(updated)
         if updated:
             lines.append("\nData Updated:")
-            # Consolidate updates per object
-            updates_by_name = {}
             for pair in updated:
-                try:
-                    oldn = pair.get('old', {})
-                    newn = pair.get('new', {})
-                    nm = newn.get('showName', oldn.get('showName', 'Unknown'))
-                    diff = [k for k in newn.keys() if oldn.get(k) != newn.get(k)]
-                    updates_by_name.setdefault(nm, set()).update(diff)
-                except Exception:
-                    updates_by_name.setdefault(str(pair), set())
-
-            for nm, keys in updates_by_name.items():
-                details = compose_updated_details(keys)
-                lines.append(f"- {nm} -> {details}")
+                new = pair.get('new')
+                old = pair.get('old')
+                changed_fields = [f for f in ["showName", "showImage", "releasedYear", "totalEpisodes", "comments", "ratings", "genres", "Duration", "synopsis"] if old.get(f) != new.get(f)]
+                fields_text = ", ".join([f.capitalize() for f in changed_fields]) if changed_fields else "General"
+                lines.append(f"- {new.get('showName','Unknown')} -> Updated: {fields_text}")
+        images = changes.get('images', [])
+        if images:
+            lines.append("\nImage Updated:")
+            for itm in images:
+                lines.append(f"- {itm.get('showName','Unknown')} -> Old && New")
+                lines.append(f"  Old: {itm.get('old')}")
+                lines.append(f"  New: {itm.get('new')}")
+        deleted = changes.get('deleted', [])
+        total_deleted += len(deleted)
+        if deleted:
+            lines.append("\nDeleted Records:")
+            for iid in deleted:
+                lines.append(f"- {iid}")
+        deleted_not_found = changes.get('deleted_not_found', [])
+        if deleted_not_found:
+            lines.append("\nDeletion notes (IDs not found in seriesData.json initially):")
+            for note in deleted_not_found:
+                lines.append(f"- {note}")
+        ignored = changes.get('ignored_deleting', [])
+        if ignored:
+            lines.append("\nIgnored (present in 'Deleting Records' and already deleted earlier this run):")
+            for note in ignored:
+                lines.append(f"- {note}")
+        if changes.get('exceed'):
+            exceed_entries.extend(changes.get('exceed'))
+        lines.append("\n")
+    lines.insert(0, f"SUMMARY: Created: {total_created}, Updated: {total_updated}, Deleted (initially found): {total_deleted}")
     if exceed_entries:
         lines.append(f"=== Exceed Max Length ({SYNOPSIS_MAX_LEN}) ===")
         for e in exceed_entries:
@@ -1272,7 +1156,6 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
     any_sheet_processed = False
     for s in sheet_names:
         report_changes = {}
-        per_sheet_old_objs = []
         start_idx = int(progress.get(s, 0) or 0)
         try:
             items, processed, finished, next_start_idx = excel_to_objects(excel_file_like, s, merged_by_id, report_changes,
@@ -1287,63 +1170,25 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
             print(f"⚠️ Error processing {s}: {err}")
             report_changes['error'] = err
             items, processed, finished, next_start_idx = [], 0, True, start_idx
-        
         for new_obj in items:
-                    sid = new_obj.get('showID')
-                    if sid in merged_by_id:
-                        old_obj = merged_by_id[sid]
-                        # perform intelligent merge instead of blind replace
-                        ensure_list_types(old_obj, LIST_PROPERTIES)
-                        ensure_list_types(new_obj, LIST_PROPERTIES)
-                        merged_obj, changed_keys = smart_merge(old_obj, new_obj)
-                        if changed_keys:
-                            # backup existing object BEFORE writing
-                            try:
-                                # Backup the PREVIOUS state of the object (deepcopy to avoid later mutation)
-                                bpath = backup_object(old_obj.get('showID') or old_obj.get('id') or sid, copy.deepcopy(old_obj), backup_dir=BACKUP_DIR)
-                                if bpath:
-                                    report_changes.setdefault('backups', []).append(bpath)
-                                    # Remember prior object for the per-sheet compact backup
-                                    try:
-                                        per_sheet_old_objs.append(copy.deepcopy(old_obj))
-                                    except Exception:
-                                        pass
-                            except Exception as e:
-                                print(f"⚠️ Backup failed for {sid}: {e}")
-                                print(f"⚠️ Backup failed for {sid}: {e}")
-                            # Compose granular updatedDetails
-                            merged_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
-                            merged_obj['updatedDetails'] = compose_updated_details(changed_keys, created_first_time=False)
-                            merged_by_id[sid] = merged_obj
-                            report_changes.setdefault('updated', []).append({'old': old_obj, 'new': merged_obj})
-                        else:
-                            # No meaningful changes found; keep old object
-                            merged_by_id[sid] = old_obj
-                            report_changes.setdefault('unchanged', []).append(sid)
-                    else:
-                        # New object - ensure lists normalized and mark created info
-                        ensure_list_types(new_obj, LIST_PROPERTIES)
-                        new_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
-                        new_obj['updatedDetails'] = 'First time created'
-                        merged_by_id[sid] = new_obj
-
-                        # ✅ Fix: prevent duplicate "Created" messages
-                        if not any(o.get('showID') == sid for o in report_changes.get('created', [])):
-                            report_changes.setdefault('created', []).append(new_obj)
-
-        os.makedirs(BACKUP_DIR, exist_ok=True)
-        backup_name = os.path.join(BACKUP_DIR, f"{filename_timestamp()}_{safe_filename(s)}.json")
-        try:
-            if per_sheet_old_objs:
-                with open(backup_name, 'w', encoding='utf-8') as bf:
-                    json.dump(per_sheet_old_objs, bf, indent=4, ensure_ascii=False)
-                print(f"✅ Backup saved → {backup_name} (contains {len(per_sheet_old_objs)} prior objects)")
+            sid = new_obj.get('showID')
+            if sid in merged_by_id:
+                old_obj = merged_by_id[sid]
+                if old_obj != new_obj:
+                    new_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
+                    new_obj['updatedDetails'] = 'Object updated'
+                    merged_by_id[sid] = new_obj
             else:
+                merged_by_id[sid] = new_obj
+        if items:
+            os.makedirs(BACKUP_DIR, exist_ok=True)
+            backup_name = os.path.join(BACKUP_DIR, f"{filename_timestamp()}_{safe_filename(s)}.json")
+            try:
                 with open(backup_name, 'w', encoding='utf-8') as bf:
-                    json.dump({'note': 'no objects changed in this sheet during this run'}, bf, indent=2)
-                print(f"ℹ️ No changed objects for sheet '{s}'; wrote note → {backup_name}")
-        except Exception as e:
-            print(f"⚠️ Could not write backup {backup_name}: {e}")
+                    json.dump(items, bf, indent=4, ensure_ascii=False)
+                print(f"✅ Backup saved → {backup_name}")
+            except Exception as e:
+                print(f"⚠️ Could not write backup {backup_name}: {e}")
         report_changes_by_sheet[s] = report_changes
         if processed > 0:
             any_sheet_processed = True
@@ -1414,74 +1259,54 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
 
 # ---------------------------- Entrypoint -----------------------------------
 if __name__ == '__main__':
-    exit_code = 0
+    # Validate presence of GDrive credential files
+    if not (os.path.exists(EXCEL_FILE_ID_TXT) and os.path.exists(SERVICE_ACCOUNT_FILE)):
+        print("❌ Missing GDrive credentials. Please set EXCEL_FILE_ID.txt and GDRIVE_SERVICE_ACCOUNT.json via GitHub secrets.")
+        # exit gracefully: 3 indicates missing credentials
+        sys.exit(3)
+
     try:
-        # Validate presence of GDrive credential files
-        if not (os.path.exists(EXCEL_FILE_ID_TXT) and os.path.exists(SERVICE_ACCOUNT_FILE)):
-            print("❌ Missing GDrive credentials. Please set EXCEL_FILE_ID.txt and GDRIVE_SERVICE_ACCOUNT.json via GitHub secrets.")
-            exit_code = 3
-            raise SystemExit(exit_code)
+        with open(EXCEL_FILE_ID_TXT, 'r', encoding='utf-8') as f:
+            excel_id = f.read().strip()
+    except Exception:
+        excel_id = None
 
-        try:
-            with open(EXCEL_FILE_ID_TXT, 'r', encoding='utf-8') as f:
-                excel_id = f.read().strip()
-        except Exception:
-            excel_id = None
+    if not excel_id:
+        print("❌ EXCEL_FILE_ID.txt is empty or missing. Aborting gracefully.")
+        sys.exit(0)
 
-        if not excel_id:
-            print("❌ EXCEL_FILE_ID.txt is empty or missing. Aborting gracefully.")
-            exit_code = 0
-            raise SystemExit(exit_code)
+    # Determine sheet names to process
+    _sheets_env = os.environ.get("SHEETS", "").strip()
+    if _sheets_env:
+        SHEETS = [s.strip() for s in _sheets_env.split(";") if s.strip()]
+    else:
+        SHEETS = ["Sheet1"]
 
-        # Determine sheet names to process
-        _sheets_env = os.environ.get("SHEETS", "").strip()
-        if _sheets_env:
-            SHEETS = [s.strip() for s in _sheets_env.split(";") if s.strip()]
-        else:
-            SHEETS = ["Sheet1"]
+    # Try to fetch excel bytes from Google Drive
+    excel_bytes = fetch_excel_from_gdrive_bytes(excel_id, SERVICE_ACCOUNT_FILE)
+    if excel_bytes is None:
+        print("❌ Could not fetch Excel file from Google Drive. Exiting gracefully.")
+        print("   Ensure the service account JSON and EXCEL_FILE_ID are correct, and required packages are installed.")
+        sys.exit(0)
 
-        # Try to fetch excel bytes from Google Drive
-        excel_bytes = fetch_excel_from_gdrive_bytes(excel_id, SERVICE_ACCOUNT_FILE)
-        if excel_bytes is None:
-            print("❌ Could not fetch Excel file from Google Drive. Exiting gracefully.")
-            exit_code = 2
-            raise SystemExit(exit_code)
+    # pandas can read from a file-like BytesIO for read_excel
+    excel_file_like = excel_bytes
 
-        excel_file_like = excel_bytes
-
-        # Apply manual updates if present
-        try:
-            apply_manual_updates(excel_file_like, JSON_FILE)
-        except Exception as e:
-            logd(f"apply_manual_updates error: {e}")
-
-        # Run update using Excel bytes from Drive
-        try:
-            update_json_from_excel(excel_file_like, JSON_FILE, SHEETS, max_per_run=MAX_PER_RUN, max_run_time_minutes=MAX_RUN_TIME_MINUTES)
-        except SystemExit as se:
-            # propagate intentional exits with their code
-            raise
-        except Exception as e:
-            print(f"❌ Unexpected error during update: {e}", file=sys.stderr)
-            logd(traceback.format_exc())
-            # Write failure reason file
-            os.makedirs(REPORTS_DIR, exist_ok=True)
-            with open(os.path.join(REPORTS_DIR, "failure_reason.txt"), "w", encoding="utf-8") as ff:
-                ff.write("Unexpected exception: {}\n".format(e))
-                ff.write(traceback.format_exc())
-            exit_code = 1
-            raise SystemExit(exit_code)
-
-    except SystemExit as se:
-        # Respect provided exit codes, default to 1 on error
-        if isinstance(se.code, int):
-            exit_code = se.code
-        else:
-            exit_code = 1
+    # Apply manual updates if present
+    try:
+        apply_manual_updates(excel_file_like, JSON_FILE)
     except Exception as e:
-        print(f"❌ Fatal unexpected error: {e}", file=sys.stderr)
+        logd(f"apply_manual_updates error: {e}")
+
+    # Run update using Excel bytes from Drive
+    try:
+        update_json_from_excel(excel_file_like, JSON_FILE, SHEETS, max_per_run=MAX_PER_RUN, max_run_time_minutes=MAX_RUN_TIME_MINUTES)
+    except SystemExit:
+        # allow sys.exit in update flow to propagate if necessary
+        raise
+    except Exception as e:
+        print(f"❌ Unexpected error during update: {e}")
         logd(traceback.format_exc())
-        exit_code = 1
-    finally:
-        print("All done.")
-        os._exit(0)
+        sys.exit(1)
+
+    print("All done.")
