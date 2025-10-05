@@ -1,0 +1,16 @@
+SUMMARY: Created: 0, Updated: 0, Skipped: 0, Deleted (initially found): 3
+=== Deleting Records — 05 October 2025 ===
+
+Deleted Records:
+- 101 -> ✅ Deleted and archived -> deleted-data/DELETED_05_October_2025_0937_101.json
+- 102 -> ✅ Deleted and archived -> deleted-data/DELETED_05_October_2025_0937_102.json
+- 103 -> ✅ Deleted and archived -> deleted-data/DELETED_05_October_2025_0937_103.json
+
+
+=== Sheet1 — 05 October 2025 ===
+
+Ignored (present in 'Deleting Records' and already deleted earlier this run):
+- 101 -> Already Deleted as per "Deleting Records" Sheet -> ⚠️ Cannot add to seriesData.json
+- 102 -> Already Deleted as per "Deleting Records" Sheet -> ⚠️ Cannot add to seriesData.json
+- 103 -> Already Deleted as per "Deleting Records" Sheet -> ⚠️ Cannot add to seriesData.json
+
