@@ -101,6 +101,7 @@ jobs:
       # ------------------ Compose consolidated email ------------------
       - name: Compose consolidated email body
         id: compose_email
+        shell: bash
         run: |
           set -euo pipefail
           report="${{ steps.run_updater.outputs.report_path }}"
@@ -108,34 +109,61 @@ jobs:
             report=$(ls -t reports/report_*.txt 2>/dev/null | head -n1 || true)
           fi
 
-          # Use a unique delimiter to prevent EOF collision
-          DELIM="REPORT_$(date +%s%N)"
+          # Build full email body into a temp file
+          tmp_body=$(mktemp)
+          {
+            echo "SECRETS CHECK:"
+            if [ -s reports/secrets_report.txt ]; then
+              echo "- Gitleaks detected potential secrets. (Details below)"
+              cat reports/secrets_report.txt
+            else
+              echo "- No obvious secrets detected."
+            fi
+            echo ""
+            echo "--- REPORT CONTENT (pasted below) ---"
+            if [ -n "$report" ] && [ -f "$report" ]; then
+              cat "$report"
+            else
+              echo "⚠️ Report file not found."
+            fi
+          } > "$tmp_body"
 
-          echo "email_body<<$DELIM" >> $GITHUB_OUTPUT
-          echo "SECRETS CHECK:" >> $GITHUB_OUTPUT
-          if [ -s reports/secrets_report.txt ]; then
-            echo "- Gitleaks detected potential secrets. (Details below)" >> $GITHUB_OUTPUT
-            sed 's/%/%%/g' reports/secrets_report.txt >> $GITHUB_OUTPUT
-          else
-            echo "- No obvious secrets detected." >> $GITHUB_OUTPUT
-          fi
-          echo "" >> $GITHUB_OUTPUT
-          echo "--- REPORT CONTENT (pasted below) ---" >> $GITHUB_OUTPUT
-          if [ -n "$report" ] && [ -f "$report" ]; then
-            sed 's/%/%%/g' "$report" >> $GITHUB_OUTPUT
-          else
-            echo "⚠️ Report file not found." >> $GITHUB_OUTPUT
-          fi
-          echo "$DELIM" >> $GITHUB_OUTPUT
+          # Encode to one line to avoid delimiter errors
+          echo "email_body=$(base64 -w0 "$tmp_body")" >> $GITHUB_OUTPUT
 
+      # ------------------ Send consolidated email ------------------
       - name: Send consolidated report email
-        uses: dawidd6/action-send-mail@v3
-        with:
-          server_address: ${{ secrets.SMTP_SERVER }}
-          server_port: ${{ secrets.SMTP_PORT }}
-          username: ${{ secrets.SMTP_USERNAME }}
-          password: ${{ secrets.SMTP_PASSWORD }}
-          subject: ${{ steps.run_updater.outputs.email_subject }}
-          to: ${{ secrets.NOTIFY_EMAIL }}
-          from: GitHub Actions <${{ secrets.SMTP_USERNAME }}>
-          body: ${{ steps.compose_email.outputs.email_body }}
+        shell: bash
+        env:
+          SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          NOTIFY_EMAIL: ${{ secrets.NOTIFY_EMAIL }}
+        run: |
+          # Decode the Base64 email body
+          echo "${{ steps.compose_email.outputs.email_body }}" | base64 --decode > decoded_email.txt
+
+          # Optional: display in logs for debug
+          echo "=== EMAIL BODY START ==="
+          cat decoded_email.txt
+          echo "=== EMAIL BODY END ==="
+
+          # Send email
+          python3 - <<'PYCODE'
+import smtplib, os
+from email.mime.text import MIMEText
+
+with open("decoded_email.txt", "r", encoding="utf-8") as f:
+    body = f.read()
+
+msg = MIMEText(body, "plain", "utf-8")
+msg["Subject"] = os.environ.get("EMAIL_SUBJECT", "Workflow Report")
+msg["From"] = os.environ["SMTP_USERNAME"]
+msg["To"] = os.environ["NOTIFY_EMAIL"]
+
+with smtplib.SMTP(os.environ["SMTP_SERVER"], int(os.environ["SMTP_PORT"])) as server:
+    server.starttls()
+    server.login(os.environ["SMTP_USERNAME"], os.environ["SMTP_PASSWORD"])
+    server.send_message(msg)
+PYCODE
