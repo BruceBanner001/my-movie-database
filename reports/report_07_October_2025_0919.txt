@@ -1,0 +1,29 @@
+✅ Workflow completed successfully
+📅 Run Time: 07 October 2025 09:19 AM (IST)
+
+=== Deleting Records — 07 October 2025 ===
+
+Deleted (initially found):
+- 101 -> ✅ Deleted and archived -> deleted-data/DELETED_07_October_2025_0919_101.json
+
+=== Sheet1 — 07 October 2025 ===
+
+Data Created:
+- Meteor Garden -> Created
+- Find Me in Your Memory -> Created
+
+
+Ignored (present in 'Deleting Records' and already deleted earlier this run):
+- 101 -> Already Deleted as per "Deleting Records" Sheet -> ⚠️ Cannot add to seriesData.json
+
+=== NOT FOUND (Deleting Records not present in any scanned sheet) ===
+- 104 -> ❌ Cannot be found in any Sheets.
+
+
+SUMMARY: Created: 4, Updated: 0, Skipped: 0, Deleted (initially found): 1
+
+Notes:
+- Preserved fields: otherNames (fields in PRESERVE_IF_EMPTY are preserved when incoming values are empty unless the update came from the 'Manual Update' sheet)
+- Backup file (previous states of modified objects): backup_05_October_2025_1155_modified.json
+
+--------------------------------------------------------------------
