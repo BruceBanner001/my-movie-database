@@ -107,7 +107,11 @@ jobs:
           if [ -z "$report" ] || [ ! -f "$report" ]; then
             report=$(ls -t reports/report_*.txt 2>/dev/null | head -n1 || true)
           fi
-          echo "email_body<<EOF" >> $GITHUB_OUTPUT
+
+          # Use a unique delimiter to prevent EOF collision
+          DELIM="REPORT_$(date +%s%N)"
+
+          echo "email_body<<$DELIM" >> $GITHUB_OUTPUT
           echo "SECRETS CHECK:" >> $GITHUB_OUTPUT
           if [ -s reports/secrets_report.txt ]; then
             echo "- Gitleaks detected potential secrets. (Details below)" >> $GITHUB_OUTPUT
@@ -122,7 +126,7 @@ jobs:
           else
             echo "⚠️ Report file not found." >> $GITHUB_OUTPUT
           fi
-          echo "EOF" >> $GITHUB_OUTPUT
+          echo "$DELIM" >> $GITHUB_OUTPUT
 
       - name: Send consolidated report email
         uses: dawidd6/action-send-mail@v3
