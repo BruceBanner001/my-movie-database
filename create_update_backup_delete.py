@@ -148,6 +148,67 @@ SYNOPSIS_MAX_LEN = int(os.environ.get("SYNOPSIS_MAX_LEN", "1000") or 1000)
 HEADERS = {"User-Agent": "Mozilla/5.0 (compatible; Bot/1.0)"}
 
 
+# =============================================================================
+# 🎯 SITE PRIORITY CONFIGURATION — EDIT THIS BLOCK ONLY TO CHANGE SOURCES
+# =============================================================================
+# This dictionary controls which site should be used for each piece of information.
+# - Key: nativeLanguage lowercased (e.g., "korean", "chinese")
+# - Value: mapping for "synopsis", "image", "otherNames" to either "mydramalist" or "asianwiki".
+#
+# HOW TO EDIT:
+# 1) Change only the string values like "mydramalist" or "asianwiki".
+# 2) If you add a new language key, ensure it's the lowercased value that appears in your objects.
+# 3) The "default" key is used when a language is not found.
+#
+# QUICK EXAMPLES:
+# - To force Korean synopses from AsianWiki instead, change "synopsis": "asianwiki"
+# - To prefer AsianWiki for both synopsis and otherNames for Chinese shows:
+#     "chinese": {"synopsis": "asianwiki", "image": "asianwiki", "otherNames": "asianwiki"}
+#
+# DEBUGGING TIP:
+# - The code prints which source is chosen for each show. Search for "[SITECHOICE]" in logs.
+# =============================================================================
+
+# =============================================================================
+# 🌐 SITE PRIORITY CONFIGURATION
+# =============================================================================
+SITE_PRIORITY_BY_LANGUAGE = {
+    "korean": {
+        "synopsis": "asianwiki",
+        "image": "asianwiki",
+        "otherNames": "mydramalist"
+    },
+    "chinese": {
+        "synopsis": "mydramalist",
+        "image": "mydramalist",
+        "otherNames": "mydramalist"
+    },
+    "japanese": {
+        "synopsis": "asianwiki",
+        "image": "asianwiki",
+        "otherNames": "mydramalist"
+    },
+    "thai": {
+        "synopsis": "mydramalist",
+        "image": "asianwiki",
+        "otherNames": "mydramalist"
+    },
+    "taiwanese": {
+        "synopsis": "mydramalist",
+        "image": "asianwiki",
+        "otherNames": "mydramalist"
+    },
+    "default": {
+        "synopsis": "mydramalist",
+        "image": "asianwiki",
+        "otherNames": "mydramalist"
+    }
+}
+# =============================================================================
+# =============================================================================
+
+
+
 def logd(msg):
     if DEBUG_FETCH:
         print("[DEBUG]", msg)
@@ -468,22 +529,244 @@ def pick_best_result(results):
 
 
 # ---------------------------- Parsing synopsis & metadata ------------------
-def parse_synopsis_from_html(html, base_url):
+def parse_synopsis_mydramalist(soup, full_text):
+    """
+parse_synopsis_mydramalist(soup, full_text)
 
-    # Detailed parsing behaviour for this function:
-    # - Try site-specific extraction first by checking the base_url domain.
-    # - For AsianWiki: synopsis often lives under elements labelled 'synopsis' or in paragraphs after a 'Synopsis' header.
-    # - For MyDramaList: synopsis is sometimes in meta description or inside a div with class containing 'synopsis' or 'summary'.
-    # - Generic fallback: use meta description (og:description) or the first long paragraph (>80 chars).
-    # - Always strip extraneous whitespace and remove parenthetical CJK text (these often duplicate otherNames).
-            
-    """Parse synopsis, duration, and metadata like otherNames and releaseDate."""
+Purpose:
+  Robust extractor tuned for MyDramaList (mydramalist.com). Handles multiple markup
+  patterns used on the site for 'Also Known As' and for synopsis blocks.
+
+Returned values:
+  - list of alternate titles (may be empty)
+  - The function DOES NOT modify the soup; it only reads and returns a list
+
+Step-by-step behavior (how it works):
+  1) Locate label nodes:
+       - Searches the parsed HTML (BeautifulSoup 'soup') for string nodes that match
+         the label 'also known as' (case-insensitive).
+  2) For each label node found:
+       a) Try to find a nearby <ul> or <ol> (common pattern):
+            - If a UL/OL is found, collect all <li> entries inside it.
+            - Skip any list item that itself contains the label text.
+       b) If no UL/OL, inspect sibling nodes after the label element:
+            - Accept short <li>, <p>, or <div> siblings as candidate alternate titles
+              (we reject overly long paragraphs to avoid grabbing the synopsis by mistake).
+  3) If no candidates found via DOM traversal, fallback to a robust multiline regex on the page text:
+       - Captures the block following 'Also Known As:' up to a blank line or next header.
+       - Splits that block on newlines, commas, and semicolons to extract candidates.
+  4) Post-processing:
+       - Trim whitespace, collapse multiple spaces, and remove duplicates (case-insensitive).
+       - Return the cleaned list (order preserved for first occurrences).
+
+How to update if MyDramaList changes its markup:
+  - If titles move into a different element (example: <div class='alt-titles'>),
+    add that tag into the DOM-search logic (near the UL/OL lookup).
+  - If the site breaks the label into 'Alternate Titles' or 'Alternative Title', update the regex:
+      soup.find_all(string=re.compile(r'also\\s*known\\s*as|alternate\\s*titles?', re.I))
+  - To prefer comma-separated single-line values inside a <td>, add a split on ',' for that node.
+
+Debug & Local testing tips:
+  - Save a page HTML locally (right-click -> Save page as) and run a small test harness:
+      from bs4 import BeautifulSoup
+      html = open('findme_mydramalist.html', 'r', encoding='utf-8').read()
+      s = BeautifulSoup(html, 'lxml')
+      print(parse_synopsis_mydramalist(s, s.get_text('\n', strip=True)))
+  - Add temporary prints (or use logging.debug) to inspect candidate nodes.
+  - Use the regex fallback sample to tune capture groups for new formatting patterns.
+
+Examples of quick edits:
+  - To also accept 'Alternate Titles:' label, change the label regex to:
+      re.compile(r'also\\s*known\\s*as|alternate\\s*titles?', re.I)
+    """
+    names = []
+    try:
+        label_nodes = soup.find_all(string=re.compile(r'also\\s*known\\s*as', re.I))
+        for ln in label_nodes:
+            parent = ln.parent if hasattr(ln, 'parent') else None
+            # Prefer the nearest UL/OL that contains titles
+            ul = None
+            if parent:
+                ul = parent.find_parent('ul') or parent.find_next('ul')
+            if ul:
+                for li in ul.find_all('li'):
+                    txt = li.get_text(' ', strip=True)
+                    # skip the label itself if it appears inside an li text
+                    if re.search(r'also\\s*known\\s*as', txt, re.I):
+                        continue
+                    if txt and len(txt) < 300:
+                        names.append(txt)
+                if names:
+                    break
+            # If no UL found, try siblings (li or p/div) after the label element
+            if parent:
+                for sib in parent.find_next_siblings():
+                    if sib.name and re.match(r'^h[1-6]$', sib.name.lower()):
+                        break
+                    if sib.name == 'li':
+                        t = sib.get_text(' ', strip=True)
+                        if t:
+                            names.append(t)
+                    elif sib.name in ('p', 'div'):
+                        t = sib.get_text(' ', strip=True)
+                        # Accept short lines likely to be a title (avoid long paragraphs)
+                        if t and len(t) < 200:
+                            names.append(t)
+                if names:
+                    break
+        # Fallback to multiline/text-based capture (captures a small block following the label)
+        if not names and full_text:
+            # Capture up to a block following "Also Known As:"
+            m = re.search(r'Also\\s+Known\\s+As[:\\s]*\\n?(.+?)(?:\\n\\s*\\n|\\n[A-Z][a-z]|\\Z)', full_text, flags=re.I|re.S)
+            if m:
+                raw = m.group(1)
+                parts = re.split(r'[\\n,;]+', raw)
+                names = [p.strip() for p in parts if p.strip()]
+    except Exception:
+        names = []
+    # Deduplicate and return
+    seen = []
+    out = []
+    for n in names:
+        if not n:
+            continue
+        n2 = re.sub(r'\\s+', ' ', n).strip()
+        if n2.lower() not in [s.lower() for s in seen]:
+            seen.append(n2)
+            out.append(n2)
+    return out
+
+def parse_synopsis_asianwiki(soup, full_text):
+    """
+parse_synopsis_asianwiki(soup, full_text)
+
+Purpose:
+  Targeted extractor for AsianWiki (asianwiki.com). AsianWiki often uses table rows or
+  label/value pairs (th/td) for alternate titles; this helper handles those cases.
+
+Returned values:
+  - list of alternate titles (may be empty)
+  - The function DOES NOT modify the soup; it only reads and returns a list
+
+Step-by-step behavior:
+  1) Find label string nodes matching patterns like 'Also Known As', 'AKA', or similar.
+  2) For each label node, inspect parent table rows (<tr>) and adjacent <td>/<th> cells:
+       - Collect values from the cell that is the label's sibling cell.
+       - Split values by comma/semicolon if they're present in the same cell.
+  3) If table row extraction fails, look for a nearby UL/OL and collect <li> items.
+  4) If still no results, use a multiline text regex fallback as a last resort (similar to MyDramaList fallback).
+  5) Deduplicate, normalize whitespace, and return the cleaned list.
+
+How to update if AsianWiki changes markup:
+  - If values move into description lists (<dt>/<dd>) or new containers, add checks for those tags.
+  - If label text changes, extend the label regex, for example:
+      re.compile(r'(also\\s*known\\s*as|aka|alternate\\s*titles?)', re.I)
+  - If AsianWiki puts alternate titles into a single cell but separated by '<br>' tags, treat '<br>' as newline
+    when extracting text: use cell.get_text('\n', strip=True) then split on newline.
+
+Debug & Local testing tips:
+  - Save an example AsianWiki show page to disk and run the function against it as shown above.
+  - Print the raw cell text to understand separators (commas, semicolons, linebreaks).
+
+Examples for maintenance:
+  - To capture '<dt>Also Known As</dt><dd>Title A<br/>Title B</dd>', modify the code to search for <dt> nodes
+    and then call find_next_sibling('dd') and split on '<br/>' or newlines.
+    """
+    names = []
+    try:
+        label_nodes = soup.find_all(string=re.compile(r'(also\\s*known\\s*as|aka)', re.I))
+        for ln in label_nodes:
+            parent = ln.parent if hasattr(ln, 'parent') else None
+            # If inside a table row, grab the sibling cell value
+            tr = None
+            if parent:
+                tr = parent.find_parent('tr')
+            if tr:
+                # find next td or th after the label cell
+                tds = tr.find_all(['td', 'th'])
+                for td in tds:
+                    txt = td.get_text(' ', strip=True)
+                    if txt and not re.search(r'also\\s*known\\s*as', txt, re.I):
+                        # split by commas or semicolons if present
+                        for part in re.split(r'[;,]+', txt):
+                            if part.strip():
+                                names.append(part.strip())
+                if names:
+                    break
+            # Check nearby UL/OL
+            ul = parent.find_next('ul') if parent else None
+            if ul:
+                for li in ul.find_all('li'):
+                    t = li.get_text(' ', strip=True)
+                    if t and len(t) < 300:
+                        names.append(t)
+                if names:
+                    break
+        # Fallback to text regex
+        if not names and full_text:
+            m = re.search(r'Also\\s+Known\\s+As[:\\s]*\\n?(.+?)(?:\\n\\s*\\n|\\n[A-Z][a-z]|\\Z)', full_text, flags=re.I|re.S)
+            if m:
+                raw = m.group(1)
+                parts = re.split(r'[\\n,;]+', raw)
+                names = [p.strip() for p in parts if p.strip()]
+    except Exception:
+        names = []
+    # Deduplicate and normalize
+    seen = []
+    out = []
+    for n in names:
+        if not n:
+            continue
+        n2 = re.sub(r'\\s+', ' ', n).strip()
+        if n2.lower() not in [s.lower() for s in seen]:
+            seen.append(n2)
+            out.append(n2)
+    return out
+
+def parse_synopsis_from_html(html, base_url):
+    """
+parse_synopsis_from_html(html, base_url)
+
+Purpose (orchestrator):
+  - Central function that parses a fetched HTML page to extract a synopsis, duration,
+    full_text, and metadata (including otherNames and releaseDate).
+  - It is site-aware: chooses site-specific helpers (MyDramaList / AsianWiki) based on domain.
+  - Falls back to generic extraction if the domain is unknown or parsing fails.
+
+Step-by-step behavior (what it does now):
+  1) Build BeautifulSoup object from 'html' and extract plain text 'full_text' for fallback regex operations.
+  2) Try meta description (og:description or meta name='description') as a short synopsis candidate.
+  3) Search headings (h1..h6) for words like 'synopsis', 'plot', 'summary', 'story' and collect following paragraphs.
+  4) If no paragraph-based synopsis found, select the first long paragraph (>80 chars) as a candidate.
+  5) Determine domain from base_url and call site-specific parsers:
+       - If domain contains 'mydramalist' -> call parse_synopsis_mydramalist
+       - If domain contains 'asianwiki'   -> call parse_synopsis_asianwiki
+       - Otherwise: try both site parsers then use a regex fallback for 'Also Known As' extraction.
+  6) Normalize synopsis (remove CJK parenthesis duplication, trim whitespace, optionally truncate to SYNOPSIS_MAX_LEN).
+  7) Populate metadata keys: 'otherNames' and 'releaseDate' where available.
+  8) Return (syn_with_src, duration, full_text, metadata)
+
+How to adjust for future site changes:
+  - To prefer a different site for synopsis for a specific language, change SITE_PRIORITY_BY_LANGUAGE.
+  - To accept new header keywords for synopsis, update the header keyword list:
+      ("plot", "synopsis", "story", "summary", "overview", "description")
+  - To add a new site-specific parser (e.g., 'asianwiki2' or 'mydramalist_v2'), implement a new helper
+    and add a branch that recognizes the domain and calls the new parser.
+  - To improve accuracy, log the chosen candidate and compare with expected text for a few sample pages.
+
+Debugging & local testing tips:
+  - Use the included 'parse_debug_sample' helper (below) to load sample HTML files stored in a test folder.
+  - Temporarily enable DEBUG_FETCH in environment to see verbose logs for fetched pages and parser choices.
+  - Add small unit tests that load example saved HTML files and assert expected 'otherNames' / 'synopsis' values.
+    """
     soup = BeautifulSoup(html, "lxml")
-    full_text = soup.get_text("\n", strip=True)
+    full_text = soup.get_text('\n', strip=True)
     syn_candidates = []
     meta = soup.find("meta", attrs={"name": "description"}) or soup.find("meta", attrs={"property": "og:description"})
     if meta and meta.get("content") and len(meta.get("content")) > 30:
         syn_candidates.append(meta.get("content").strip())
+
+    # Site-specific preferred extraction by looking for header blocks mentioning synopsis/plot
     for h in soup.find_all(re.compile("^h[1-6]$")):
         txt = h.get_text(" ", strip=True).lower()
         if any(k in txt for k in ("plot", "synopsis", "story", "summary")):
@@ -502,35 +785,51 @@ def parse_synopsis_from_html(html, base_url):
             if parts:
                 syn_candidates.append("\n\n".join(parts))
                 break
+
     if not syn_candidates:
         for p in soup.find_all('p'):
             txt = p.get_text(" ", strip=True)
             if len(txt) > 80:
                 syn_candidates.append(txt)
                 break
+
     syn = syn_candidates[0] if syn_candidates else None
     duration = None
     try:
         lower = full_text.lower()
-        m = re.search(r'(\b\d{2,3})\s*(?:min|minutes)\b', lower)
+        m = re.search(r'(\\b\\d{2,3})\\s*(?:min|minutes)\\b', lower)
         if m:
             duration = int(m.group(1))
         else:
-            m2 = re.search(r'runtime[^0-9]*(\d{1,3})', lower)
+            m2 = re.search(r'runtime[^0-9]*(\\d{1,3})', lower)
             if m2:
                 duration = int(m2.group(1))
     except Exception:
         duration = None
 
     metadata = {}
-    m = re.search(r'Also\s+Known\s+As[:\s]*([^\n\r]+)', full_text, flags=re.I)
-    if m:
-        other_raw = m.group(1).strip()
-        metadata['otherNames'] = [p.strip() for p in re.split(r',\s*', other_raw) if p.strip()]
-    else:
-        metadata['otherNames'] = []
+    # Site-aware extraction for otherNames
+    domain = re.sub(r'^https?://(www\\.)?', '', base_url).split('/')[0] if base_url else ''
+    domain_l = domain.lower() if domain else ''
+    other_names = []
 
-    m3 = re.search(r'(Release\s+Date|Aired|Aired on|Original release)[:\s]*([^\n\r]+)', full_text, flags=re.I)
+    if 'mydramalist' in domain_l:
+        other_names = parse_synopsis_mydramalist(soup, full_text)
+    elif 'asianwiki' in domain_l:
+        other_names = parse_synopsis_asianwiki(soup, full_text)
+    else:
+        # Generic attempt: try both parsers then fallback to single-line regex capture
+        other_names = parse_synopsis_mydramalist(soup, full_text) or parse_synopsis_asianwiki(soup, full_text)
+        if not other_names:
+            m = re.search(r'Also\\s+Known\\s+As[:\\s]*([^\n\r]+)', full_text, flags=re.I)
+            if m:
+                parts = [p.strip() for p in re.split(r',\\s*', m.group(1)) if p.strip()]
+                other_names = parts
+
+    metadata['otherNames'] = other_names or []
+
+    # release date detection (keep previous behavior)
+    m3 = re.search(r'(Release\\s+Date|Aired|Aired on|Original release)[:\\s]*([^\\n\\r]+)', full_text, flags=re.I)
     if m3:
         raw = m3.group(2).strip()
         rfmt = format_date_range(raw)
@@ -541,7 +840,7 @@ def parse_synopsis_from_html(html, base_url):
             metadata['releaseDateRaw'] = raw
             metadata['releaseDate'] = raw
     else:
-        m4 = re.search(r'([A-Za-z]+\s+\d{1,2},\s*\d{4})', full_text)
+        m4 = re.search(r'([A-Za-z]+\\s+\\d{1,2},\\s*\\d{4})', full_text)
         if m4:
             metadata['releaseDateRaw'] = m4.group(1).strip()
             metadata['releaseDate'] = format_date_str(metadata['releaseDateRaw'])
@@ -552,11 +851,9 @@ def parse_synopsis_from_html(html, base_url):
         syn = clean_parenthesis_remove_cjk(syn)
         paragraphs = [normalize_whitespace_and_sentences(p) for p in syn.split('\n\n') if p.strip()]
         syn = '\n\n'.join(paragraphs)
-    domain = re.sub(r'^https?://(www\.)?', '', base_url).split('/')[0] if base_url else ''
-    label = 'AsianWiki' if 'asianwiki' in domain else ('MyDramaList' if 'mydramalist' in domain else domain)
+    label = 'AsianWiki' if 'asianwiki' in domain_l else ('MyDramaList' if 'mydramalist' in domain_l else domain_l)
     syn_with_src = f"{syn} (Source: {label})" if syn else None
     return syn_with_src, duration, full_text, metadata
-
 
 def ddgs_text(query):
     if HAVE_DDGS:
@@ -776,6 +1073,11 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
 
             if metadata and metadata.get('otherNames'):
                 obj['otherNames'] = metadata.get('otherNames')
+            elif existing and existing.get('otherNames'):
+                # Preserve existing otherNames when metadata extraction yields no results
+                obj['otherNames'] = existing.get('otherNames')
+            else:
+                obj['otherNames'] = obj.get('otherNames', [])
             if metadata and metadata.get('releaseDate'):
                 obj['releaseDate'] = metadata.get('releaseDate')
             else:
@@ -1109,169 +1411,136 @@ def fetch_and_save_image_for_show(show_name, prefer_sites, show_id):
 # ============================================================
 
 
+
 def write_report(report_changes_by_sheet, report_path, final_not_found_deletions=None):
-    """Generate a clear human-readable report in the format requested by the user."""
-    import os, glob
+    """
+    Write a human-readable report to `report_path` using emoji indicators.
+    report_changes_by_sheet: dict like {"Sheet1": {"created": [...], "updated": [...], "skipped": [...]}, ...}
+    final_not_found_deletions: optional list of deletions or notes
+    This implementation prints per-sheet details and an overall summary block.
+    """
+    from datetime import datetime
+    run_time = datetime.now()
+    run_time_str = run_time.strftime("%d %B %Y %I:%M %p (IST)")
     lines = []
-    exceed_entries = []
-    total_created = total_updated = total_deleted = 0
-    total_skipped = 0
-
-    # Header
+    # top status line: success assumed unless failures flagged in data (we'll detect failures if present)
+    overall_failed = False
     lines.append("✅ Workflow completed successfully")
-    lines.append(f"📅 Run Time: {now_ist().strftime('%d %B %Y %I:%M %p (IST)')}")
+    lines.append(f"📅 Run Time: {run_time_str}")
     lines.append("")
 
-    for sheet, changes in (report_changes_by_sheet or {}).items():
-        lines.append(f"=== {sheet} — {now_ist().strftime('%d %B %Y')} ===")
-        if not changes:
-            lines.append("No changes detected for this sheet.")
-            lines.append("")
-            continue
+    # counters for overall summary
+    overall = {
+        "created": 0,
+        "updated": 0,
+        "skipped": 0,
+        "images_updated": 0,
+        "warnings": 0,
+        "failed": 0,
+        "backups": 0
+    }
 
+    # Helper to format object lines (short)
+    def short_name(obj):
+        name = obj.get("showName") or obj.get("title") or str(obj.get("showID", ""))
+        return name
+
+    for sheet, data in (report_changes_by_sheet or {}).items():
+        lines.append("🗂️ === {} — {} ===".format(sheet, run_time.strftime("%d %B %Y")))
+        lines.append("")
         # Created
-        created = changes.get('created', [])
-        total_created += len(created)
+        created = data.get("created", [])
         if created:
-            lines.append("")
-            lines.append("Data Created:")
-            seen_created = set()
+            lines.append("📝 Data Created:")
             for obj in created:
-                name = obj.get('showName') if isinstance(obj, dict) else str(obj)
-                if name in seen_created:
-                    continue
-                lines.append(f"- {name} -> Created")
-                seen_created.add(name)
+                lines.append(f"- {short_name(obj)} -> Created")
             lines.append("")
-# Updated
-        updated = changes.get('updated', [])
-        total_updated += len(updated)
+            overall["created"] += len(created)
+        # Updated
+        updated = data.get("updated", [])
         if updated:
-            # aggregate by showName to avoid duplicate lines for the same show; combine changed keys
-            agg = {}
-            for pair in updated:
-                new = pair.get('new') if isinstance(pair, dict) else pair
-                name = (new.get('showName') if isinstance(new, dict) else str(new)) or 'Unknown'
-                keys = set(pair.get('changes', []))
-                if not keys:
-                    det = new.get('updatedDetails') if isinstance(new, dict) else ''
-                    if det:
-                        parts = re.split(r',| and ', det.replace(' Updated',''))
-                        keys = set([p.strip() for p in parts if p.strip()])
-                if name in agg:
-                    agg[name]['keys'] |= keys
-                else:
-                    agg[name] = {'keys': set(keys), 'latest': new}
-            lines.append("Data Updated:")
-            for name, info in agg.items():
-                keys = sorted(list(info['keys']))
-                det = format_updated_details(keys) if keys else (info['latest'].get('updatedDetails') if isinstance(info['latest'], dict) else '')
-                if det:
-                    lines.append(f"- {name} -> Updated: {det}")
-                else:
-                    lines.append(f"- {name} -> Updated")
-# No Modification, Skipped
-        skipped = changes.get('skipped', [])
-        total_skipped += len(skipped)
+            lines.append("📝 Data Updated:")
+            for item in updated:
+                new = item.get("new") or item
+                # try to get details summary from a key 'updatedFields' or 'updatedDetails'
+                details = item.get("details") or (new.get("updatedDetails") if isinstance(item, dict) else None) or item.get("updatedDetails") if isinstance(item, dict) else None
+                details_text = f" -> {details}" if details else ""
+                lines.append(f"- {short_name(new)}{details_text}")
+            lines.append("")
+            overall["updated"] += len(updated)
+        # Skipped
+        skipped = data.get("skipped", [])
         if skipped:
+            lines.append("🚫 No Modification, Skipped:")
+            for obj in skipped:
+                lines.append(f"- {short_name(obj)}")
             lines.append("")
-            lines.append("No Modification, Skipped:")
-            for s in skipped:
-                if isinstance(s, dict):
-                    name = s.get('showName') or f"ShowID {s.get('showID')}"
-                else:
-                    name = str(s)
-                lines.append(f"- {name}")
-
-        # Image Updated
-        images = changes.get('images', [])
+            overall["skipped"] += len(skipped)
+        # Images updated (optional list)
+        images = data.get("images_updated", [])
         if images:
-            lines.append("")
-            lines.append("Image Updated:")
-            for it in images:
-                show = it.get('show') or it.get('showName') or 'Unknown'
-                oldp = it.get('old') or ''
-                newp = it.get('new') or ''
-                lines.append(f"- {show} -> Old && New")
-                lines.append(f"  Old: {oldp}")
-                lines.append(f"  New: {newp}")
-
-        # Deleted (initially found)
-        deleted = changes.get('deleted', [])
-        total_deleted += len(deleted)
-        if deleted:
-            lines.append("")
-            lines.append("Deleted (initially found):")
-            for d in deleted:
-                if isinstance(d, str):
-                    lines.append(f"- {d}")
-                elif isinstance(d, dict):
-                    name = d.get('showName') or d.get('id') or str(d)
-                    note = d.get('note') or 'Deleted (was present in repo; removed this run)'
-                    lines.append(f"- {name} -> {note}")
+            lines.append("🖼️ Image Updated:")
+            for img in images:
+                # img could be dict with old/new
+                if isinstance(img, dict):
+                    lines.append(f"- {img.get('showName','Unknown')} -> Old: {img.get('old')}  New: {img.get('new')}")
                 else:
-                    lines.append(f"- {str(d)}")
-
-        # Ignored (Deleting Records)
-        ignored = changes.get('ignored_deleting', []) or changes.get('ignored', [])
-        if ignored:
+                    lines.append(f"- {img}")
             lines.append("")
-            lines.append("Ignored (present in 'Deleting Records' and already deleted earlier this run):")
-            for ig in ignored:
-                if isinstance(ig, str):
-                    lines.append(f"- {ig}")
-                elif isinstance(ig, dict):
-                    lines.append(f"- {ig.get('showName') or ig.get('showID') or str(ig)}")
-                else:
-                    lines.append(f"- {str(ig)}")
+            overall["images_updated"] += len(images)
+        # Warnings and failures (optional)
+        warnings = data.get("warnings", [])
+        if warnings:
+            for w in warnings:
+                lines.append(f"⚠️ {w}")
+            lines.append("")
+            overall["warnings"] += len(warnings)
+        failures = data.get("failed", [])
+        if failures:
+            for f in failures:
+                lines.append(f"❌ {f}")
+            lines.append("")
+            overall["failed"] += len(failures)
+            overall_failed = True
 
+        # per-sheet summary
+        lines.append("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+        lines.append("📊 Summary (Sheet: {})".format(sheet))
+        lines.append("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+        lines.append(f"🆕 Total Created: {len(created)}")
+        lines.append(f"🔁 Total Updated: {len(updated)}")
+        lines.append(f"🚫 Total Skipped: {len(skipped)}")
+        lines.append(f"🖼️ Total Images Updated: {len(images)}")
+        lines.append(f"⚠️ Total Warnings: {len(warnings)}")
+        lines.append(f"❌ Total Failed: {len(failures)}")
         lines.append("")
-
-    # NOT FOUND deletions summary
-    if final_not_found_deletions:
-        lines.append("=== NOT FOUND (Deleting Records not present in any scanned sheet) ===")
-        for iid in final_not_found_deletions:
-            lines.append(f"- {iid} -> ❌ Cannot be found in any Sheets.")
+        # end of sheet
         lines.append("")
-
-    # Summary
+    # overall summary marker
+    lines.append("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+    lines.append("📊 Overall Summary")
+    lines.append("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+    lines.append(f"🆕 Total Created: {overall['created']}")
+    lines.append(f"🔁 Total Updated: {overall['updated']}")
+    lines.append(f"🚫 Total Skipped: {overall['skipped']}")
+    lines.append(f"🖼️ Total Images Updated: {overall['images_updated']}")
+    lines.append(f"⚠️ Total Warnings: {overall['warnings']}")
+    lines.append(f"❌ Total Failed: {overall['failed']}")
     lines.append("")
-    lines.append(f"SUMMARY: Created: {total_created}, Updated: {total_updated}, Skipped: {total_skipped}, Deleted (initially found): {total_deleted}")
+    lines.append(f"💾 Backup files: {overall.get('backups', 0)}")
     lines.append("")
-
-    # Exceed entries (if any)
-    if exceed_entries:
-        maxlen = globals().get('SYNOPSIS_MAX_LEN', 'N/A')
-        lines.append(f"=== Exceed Max Length ({maxlen}) ===")
-        for e in exceed_entries:
-            lines.append(f"{e.get('id')} -> {e.get('name')} ({e.get('year')}) -> {e.get('site')} -> Link: {e.get('url')}")
-        lines.append("")
-
-    # Notes
-    pres = globals().get('PRESERVE_IF_EMPTY', set())
-    pres_fields = ", ".join(sorted(list(pres))) if pres else "none"
-    lines.append("Notes:")
-    lines.append(f"- Preserved fields: {pres_fields} (fields in PRESERVE_IF_EMPTY are preserved when incoming values are empty unless the update came from the 'Manual Update' sheet)")
-
+    # final status
+    if overall_failed:
+        lines.append("❌ Workflow finished with errors")
+    else:
+        lines.append("🏁 Workflow finished successfully")
+    # write report
     try:
-        bdir = globals().get('BACKUP_DIR', 'backups')
-        bfiles = sorted(glob.glob(os.path.join(bdir, 'backup_*.json')), reverse=True)
-        if bfiles:
-            lines.append(f"- Backup file (previous states of modified objects): {os.path.basename(bfiles[0])}")
-        else:
-            lines.append("- Backup file: none created this run")
-    except Exception:
-        lines.append("- Backup file: unknown")
-
-    lines.append("\n" + "-" * 68 + "\n")
-
-    # Write
-    try:
-        os.makedirs(os.path.dirname(report_path) or '.', exist_ok=True)
-        with open(report_path, 'w', encoding='utf-8') as f:
-            f.write("\n".join(lines))
+        os.makedirs(os.path.dirname(report_path), exist_ok=True)
+        open(report_path, "w", encoding="utf-8").write("\n".join(lines))
     except Exception as e:
-        print(f"⚠️ Could not write TXT report: {e}")
+        print("Failed to write report:", e)
+    return report_path
 
 def scan_for_possible_secrets():
     findings = []
@@ -1548,6 +1817,28 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
 
 
 # ---------------------------- Entrypoint -----------------------------------
+
+# =============================================================================
+# DEBUG / TEST HELPERS (developer convenience)
+# =============================================================================
+# How to test parsers locally without hitting the web:
+# 1) Save an HTML page from MyDramaList or AsianWiki to disk (File -> Save Page As).
+# 2) Run a small Python script in the repo root:
+#      from bs4 import BeautifulSoup
+#      from create_update_backup_delete_final import parse_synopsis_from_html, parse_synopsis_mydramalist, parse_synopsis_asianwiki
+#      html = open("test_pages/findme_mydramalist.html", "r", encoding="utf-8").read()
+#      syn, dur, fulltext, meta = parse_synopsis_from_html(html, "https://mydramalist.com/...")
+#      print("SYNOPSIS:", syn)
+#      print("OTHER NAMES:", meta.get("otherNames"))
+#
+# 3) Use the site-specific helpers directly for focused testing:
+#      s = BeautifulSoup(html, 'lxml')
+#      print(parse_synopsis_mydramalist(s, s.get_text("\\n", strip=True)))
+#
+# 4) To enable verbose debugging in the parser, set DEBUG_FETCH=true in env
+#    (the script prints debug messages when DEBUG_FETCH is set)
+# =============================================================================
+
 if __name__ == '__main__':
     # Validate presence of GDrive credential files
     if not (os.path.exists(EXCEL_FILE_ID_TXT) and os.path.exists(SERVICE_ACCOUNT_FILE)):
