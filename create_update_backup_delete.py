@@ -203,7 +203,7 @@ def _lists_equivalent(a, b):
 # Handles merging of new and old objects with preservation of
 # certain keys and detection of changed fields for reports.
 # ============================================================
-def merge_objects_preserve(old_obj, new_obj):
+def merge_objects_preserve(old_obj, new_obj, allow_clear=False):
     """
     Merge new_obj into old_obj while preserving certain keys when the new value is empty.
     Returns (merged_obj, changed_keys_list).
@@ -223,7 +223,7 @@ def merge_objects_preserve(old_obj, new_obj):
             new_list = _normalize_list_value(new_val)
             old_list = _normalize_list_value(old_val)
             # preserve non-empty old list if incoming is empty and key is in PRESERVE_IF_EMPTY
-            if not new_list and old_list and k in PRESERVE_IF_EMPTY:
+            if not new_list and old_list and k in PRESERVE_IF_EMPTY and not allow_clear:
                 merged[k] = old_list
                 # no change recorded
             else:
@@ -951,7 +951,7 @@ def apply_manual_updates(excel_file: str, json_file: str):
     parameter should be a file-like object (BytesIO) or a path-like object if your workflow
     provides a local copy.
     """
-    sheet = 'manual update'
+    sheet = 'Manual Update'
     try:
         df = pd.read_excel(excel_file, sheet_name=sheet)
     except Exception:
@@ -1020,11 +1020,11 @@ def apply_manual_updates(excel_file: str, json_file: str):
             else:
                 candidate[k] = v
         # Merge using preservation rules to compute actual changes
-        merged_obj, changed_keys = merge_objects_preserve(obj, candidate)
+        merged_obj, changed_keys = merge_objects_preserve(obj, candidate, allow_clear=True)
         if changed_keys:
             merged_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
             # Mark manual update in the details for traceability
-            merged_obj['updatedDetails'] = format_updated_details(changed_keys) + ' Manually'
+            merged_obj['updatedDetails'] = format_updated_details(changed_keys) + ' Manually By Admin'
             # Persist merged object back to by_id
             by_id[sid] = merged_obj
             updated_objs.append(merged_obj)
@@ -1135,26 +1135,42 @@ def write_report(report_changes_by_sheet, report_path, final_not_found_deletions
         if created:
             lines.append("")
             lines.append("Data Created:")
+            seen_created = set()
             for obj in created:
                 name = obj.get('showName') if isinstance(obj, dict) else str(obj)
+                if name in seen_created:
+                    continue
                 lines.append(f"- {name} -> Created")
-
-        # Updated
+                seen_created.add(name)
+            lines.append("")
+# Updated
         updated = changes.get('updated', [])
         total_updated += len(updated)
         if updated:
-            lines.append("")
-            lines.append("Data Updated:")
+            # aggregate by showName to avoid duplicate lines for the same show; combine changed keys
+            agg = {}
             for pair in updated:
                 new = pair.get('new') if isinstance(pair, dict) else pair
                 name = (new.get('showName') if isinstance(new, dict) else str(new)) or 'Unknown'
-                details = (new.get('updatedDetails') if isinstance(new, dict) else '') or ''
-                if details:
-                    lines.append(f"- {name} -> Updated: {details}")
+                keys = set(pair.get('changes', []))
+                if not keys:
+                    det = new.get('updatedDetails') if isinstance(new, dict) else ''
+                    if det:
+                        parts = re.split(r',| and ', det.replace(' Updated',''))
+                        keys = set([p.strip() for p in parts if p.strip()])
+                if name in agg:
+                    agg[name]['keys'] |= keys
+                else:
+                    agg[name] = {'keys': set(keys), 'latest': new}
+            lines.append("Data Updated:")
+            for name, info in agg.items():
+                keys = sorted(list(info['keys']))
+                det = format_updated_details(keys) if keys else (info['latest'].get('updatedDetails') if isinstance(info['latest'], dict) else '')
+                if det:
+                    lines.append(f"- {name} -> Updated: {det}")
                 else:
                     lines.append(f"- {name} -> Updated")
-
-        # No Modification, Skipped
+# No Modification, Skipped
         skipped = changes.get('skipped', [])
         total_skipped += len(skipped)
         if skipped:
@@ -1235,11 +1251,11 @@ def write_report(report_changes_by_sheet, report_path, final_not_found_deletions
     pres = globals().get('PRESERVE_IF_EMPTY', set())
     pres_fields = ", ".join(sorted(list(pres))) if pres else "none"
     lines.append("Notes:")
-    lines.append(f"- Preserved fields: {pres_fields} (fields in PRESERVE_IF_EMPTY are preserved when incoming values are empty)")
+    lines.append(f"- Preserved fields: {pres_fields} (fields in PRESERVE_IF_EMPTY are preserved when incoming values are empty unless the update came from the 'Manual Update' sheet)")
 
     try:
         bdir = globals().get('BACKUP_DIR', 'backups')
-        bfiles = sorted(glob.glob(os.path.join(bdir, 'backup_*_modified.json')), reverse=True)
+        bfiles = sorted(glob.glob(os.path.join(bdir, 'backup_*.json')), reverse=True)
         if bfiles:
             lines.append(f"- Backup file (previous states of modified objects): {os.path.basename(bfiles[0])}")
         else:
@@ -1382,7 +1398,7 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
     old_by_id = {o['showID']: o for o in old_objects if 'showID' in o}
     merged_by_id = dict(old_by_id)
     # Track the previous versions of modified objects for a single per-run backup
-    modified_old_versions = []
+    modified_pairs = []
 
     report_changes_by_sheet = {}
 
@@ -1435,7 +1451,7 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
                     merged_obj['updatedDetails'] = format_updated_details(changed_keys)
                     merged_by_id[sid] = merged_obj
                     # Record previous version (old_obj) for a single per-run backup (only previous state)
-                    modified_old_versions.append(old_obj)
+                    modified_pairs.append({'showID': sid, 'before': old_obj, 'after': merged_obj})
                     report_changes.setdefault("updated", []).append({"old": old_obj, "new": merged_obj})
                 else:
                     # No meaningful change detected after applying preservation rules
@@ -1473,11 +1489,11 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
     
     # ----- Single per-run backup for modified objects -----
     try:
-        if modified_old_versions:
+        if modified_pairs:
             os.makedirs(BACKUP_DIR, exist_ok=True)
-            backup_name = os.path.join(BACKUP_DIR, f"backup_{filename_timestamp()}_modified.json")
+            backup_name = os.path.join(BACKUP_DIR, f"backup_{filename_timestamp()}.json")
             with open(backup_name, 'w', encoding='utf-8') as bf:
-                json.dump(modified_old_versions, bf, indent=4, ensure_ascii=False)
+                json.dump(modified_pairs, bf, indent=4, ensure_ascii=False)
             print(f"✅ Backup saved → {backup_name}")
         else:
             print("ℹ️ No modifications detected in existing objects; no backup created.")
