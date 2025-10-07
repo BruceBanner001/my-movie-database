@@ -60,6 +60,7 @@ jobs:
           set -euo pipefail
           output=$(python create_update_backup_delete.py 2>&1 || true)
           printf '%s\n' "$output"
+          # Extract report path from script output (if printed as "Report written → reports/report_...txt")
           report_path=$(printf '%s\n' "$output" | awk -F'→' '/Report written/ {gsub(/^[ \t]+|[ \t]+$/, "", $2); print $2; exit}')
           if [ -z "$report_path" ] || [ ! -f "$report_path" ]; then
             report_path=$(ls -t reports/report_*.txt 2>/dev/null | head -n1 || true)
@@ -84,7 +85,7 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git fetch origin main || true
           git rebase origin/main || true
-          git add seriesData.json images/ backups/ reports/ deleted-data/
+          git add seriesData.json images/ backups/ reports/ deleted-data/ || true
           git commit -m "Automated update: $(date -u '+%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
           git push origin HEAD:main --force-with-lease || true
 
@@ -101,70 +102,51 @@ jobs:
         with:
           args: detect --source=. --report-path=reports/secrets_report.txt --no-banner --redact
 
-      # ------------------ Compose email ------------------
-      - name: Compose consolidated email body
-        id: compose_email
+      # ------------------ Compose email body (write to file) ------------------
+      - name: Compose consolidated email body file
+        id: compose_email_file
         shell: bash
         run: |
           set -euo pipefail
           report="${{ steps.run_updater.outputs.report_path }}"
+          # fallback to latest report if run_updater didn't set a path
           if [ -z "$report" ] || [ ! -f "$report" ]; then
             report=$(ls -t reports/report_*.txt 2>/dev/null | head -n1 || true)
           fi
 
-          tmp_body=$(mktemp)
+          mkdir -p reports
+          email_file="reports/email_body.txt"
           {
             echo "SECRETS CHECK:"
             if [ -s reports/secrets_report.txt ]; then
               echo "- Gitleaks detected potential secrets. (Details below)"
-              cat reports/secrets_report.txt
+              sed 's/%/%%/g' reports/secrets_report.txt
             else
               echo "- No obvious secrets detected."
             fi
             echo ""
             echo "--- REPORT CONTENT (pasted below) ---"
             if [ -n "$report" ] && [ -f "$report" ]; then
-              cat "$report"
+              sed 's/%/%%/g' "$report"
             else
               echo "⚠️ Report file not found."
             fi
-          } > "$tmp_body"
+          } > "$email_file"
+          echo "Wrote email body to: $email_file"
+        # no outputs; email body exists as reports/email_body.txt in workspace
 
-          echo "email_body=$(base64 -w0 "$tmp_body")" >> $GITHUB_OUTPUT
-
-      # ------------------ Send Email ------------------
+      # ------------------ Send consolidated report email (action reads file) ------------------
       - name: Send consolidated report email
-        shell: bash
-        env:
-          SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
-          SMTP_PORT: ${{ secrets.SMTP_PORT }}
-          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
-          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
-          NOTIFY_EMAIL: ${{ secrets.NOTIFY_EMAIL }}
-          EMAIL_SUBJECT: ${{ steps.run_updater.outputs.email_subject }}
-        run: |
-          echo "${{ steps.compose_email.outputs.email_body }}" | base64 --decode > decoded_email.txt
-
-          echo "=== EMAIL BODY START ==="
-          head -n 20 decoded_email.txt || true
-          echo "=== EMAIL BODY END ==="
-
-          cat > send_mail.py <<'EOF'
-import os, smtplib
-from email.mime.text import MIMEText
-
-with open("decoded_email.txt", encoding="utf-8") as f:
-    body = f.read()
-
-msg = MIMEText(body, "plain", "utf-8")
-msg["Subject"] = os.environ.get("EMAIL_SUBJECT", "Workflow Report")
-msg["From"] = os.environ["SMTP_USERNAME"]
-msg["To"] = os.environ["NOTIFY_EMAIL"]
-
-with smtplib.SMTP(os.environ["SMTP_SERVER"], int(os.environ["SMTP_PORT"])) as server:
-    server.starttls()
-    server.login(os.environ["SMTP_USERNAME"], os.environ["SMTP_PASSWORD"])
-    server.send_message(msg)
-EOF
-
-          python3 send_mail.py
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.SMTP_SERVER }}
+          server_port: ${{ secrets.SMTP_PORT }}
+          username: ${{ secrets.SMTP_USERNAME }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          subject: ${{ steps.run_updater.outputs.email_subject }}
+          to: ${{ secrets.NOTIFY_EMAIL }}
+          from: GitHub Actions <${{ secrets.SMTP_USERNAME }}>
+          # read body directly from file
+          body: file://reports/email_body.txt
+          # attach all reports (optional)
+          attachments: reports/*.txt
