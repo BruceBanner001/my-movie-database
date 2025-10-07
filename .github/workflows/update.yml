@@ -146,14 +146,14 @@ jobs:
           echo "${{ steps.compose_email.outputs.email_body }}" | base64 --decode > decoded_email.txt
 
           echo "=== EMAIL BODY START ==="
-          cat decoded_email.txt
+          head -n 20 decoded_email.txt || true
           echo "=== EMAIL BODY END ==="
 
-          python3 - <<'PYCODE'
-import smtplib, os
+          cat > send_mail.py <<'EOF'
+import os, smtplib
 from email.mime.text import MIMEText
 
-with open("decoded_email.txt", "r", encoding="utf-8") as f:
+with open("decoded_email.txt", encoding="utf-8") as f:
     body = f.read()
 
 msg = MIMEText(body, "plain", "utf-8")
@@ -165,4 +165,6 @@ with smtplib.SMTP(os.environ["SMTP_SERVER"], int(os.environ["SMTP_PORT"])) as se
     server.starttls()
     server.login(os.environ["SMTP_USERNAME"], os.environ["SMTP_PASSWORD"])
     server.send_message(msg)
-PYCODE
+EOF
+
+          python3 send_mail.py
