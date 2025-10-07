@@ -18,7 +18,7 @@ on:
         default: '0'
         required: false
   schedule:
-    - cron: "30 18 * * 6"  # Scheduled: Every Sunday 00:00 AM IST (Saturday 18:30 UTC)
+    - cron: "30 18 * * 6"  # Every Sunday 00:00 AM IST (Saturday 18:30 UTC)
 
 jobs:
   update-json:
@@ -46,7 +46,7 @@ jobs:
       - name: Write Google Drive service account
         run: echo '${{ secrets.GDRIVE_SERVICE_ACCOUNT }}' > GDRIVE_SERVICE_ACCOUNT.json
 
-      # ------------------ Run the updater once ------------------
+      # ------------------ Run updater ------------------
       - name: Run seriesData updater and capture report path
         id: run_updater
         env:
@@ -77,13 +77,16 @@ jobs:
           subj_date=$(date -u "+%d %B %Y %H%M")
           echo "email_subject=$prefix Workflow $subj_date Report" >> $GITHUB_OUTPUT
 
+      # ------------------ Commit & Push ------------------
       - name: Commit & push changes
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin main || true
+          git rebase origin/main || true
           git add seriesData.json images/ backups/ reports/ deleted-data/
           git commit -m "Automated update: $(date -u '+%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
-          git push
+          git push origin HEAD:main --force-with-lease || true
 
       - name: Upload reports
         if: always()
@@ -98,7 +101,7 @@ jobs:
         with:
           args: detect --source=. --report-path=reports/secrets_report.txt --no-banner --redact
 
-      # ------------------ Compose consolidated email ------------------
+      # ------------------ Compose email ------------------
       - name: Compose consolidated email body
         id: compose_email
         shell: bash
@@ -109,7 +112,6 @@ jobs:
             report=$(ls -t reports/report_*.txt 2>/dev/null | head -n1 || true)
           fi
 
-          # Build full email body into a temp file
           tmp_body=$(mktemp)
           {
             echo "SECRETS CHECK:"
@@ -128,10 +130,9 @@ jobs:
             fi
           } > "$tmp_body"
 
-          # Encode to one line to avoid delimiter errors
           echo "email_body=$(base64 -w0 "$tmp_body")" >> $GITHUB_OUTPUT
 
-      # ------------------ Send consolidated email ------------------
+      # ------------------ Send Email ------------------
       - name: Send consolidated report email
         shell: bash
         env:
@@ -140,16 +141,14 @@ jobs:
           SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           NOTIFY_EMAIL: ${{ secrets.NOTIFY_EMAIL }}
+          EMAIL_SUBJECT: ${{ steps.run_updater.outputs.email_subject }}
         run: |
-          # Decode the Base64 email body
           echo "${{ steps.compose_email.outputs.email_body }}" | base64 --decode > decoded_email.txt
 
-          # Optional: display in logs for debug
           echo "=== EMAIL BODY START ==="
           cat decoded_email.txt
           echo "=== EMAIL BODY END ==="
 
-          # Send email
           python3 - <<'PYCODE'
 import smtplib, os
 from email.mime.text import MIMEText
