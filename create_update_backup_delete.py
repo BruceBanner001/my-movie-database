@@ -1159,7 +1159,15 @@ def process_deletions(excel_file, json_file, report_changes):
             data = []
     else:
         data = []
-    by_id = {int(o['showID']): o for o in data if 'showID' in o and isinstance(o['showID'], int)}
+    by_id = {}
+    for o in data:
+        sid = o.get('showID')
+        try:
+            sid_int = int(sid)
+        except Exception:
+            # Skip non-integer showID values (e.g., non-numeric strings)
+            continue
+        by_id[sid_int] = o
     to_delete = []
     for _, row in df.iterrows():
         val = row[id_col]
@@ -1807,10 +1815,12 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
     except Exception as e:
         print(f"⚠️ Could not write status json: {e}")
 
-    if processed_total == 0:
+    # Consider deletions and any report entries (e.g. deletions) as legitimate activity.
+    any_report_entries = any(bool(v) for v in report_changes_by_sheet.values()) or bool(modified_pairs)
+    if processed_total == 0 and not any_report_entries:
         print("⚠️ No records were processed in this run. Please check your Excel file and sheet names.")
         with open(os.path.join(REPORTS_DIR, "failure_reason.txt"), "w", encoding="utf-8") as ff:
-            ff.write("No records processed. Check logs and the report.\n")
+            ff.write("No records processed. Check logs and the report.")
         # Exit gracefully instead of failing the workflow
         return
     return
