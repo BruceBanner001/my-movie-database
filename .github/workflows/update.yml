@@ -149,4 +149,3 @@ jobs:
           # read body directly from file
           body: file://reports/email_body.txt
           # attach all reports (optional)
-          attachments: reports/*.txt

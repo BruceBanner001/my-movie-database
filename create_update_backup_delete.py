@@ -951,7 +951,19 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
       - excel_file may be a file path or a file-like object (BytesIO).
     """
     # pandas.read_excel accepts a file-like object or path
-    df = pd.read_excel(excel_file, sheet_name=sheet_name)
+    # Support file-like objects safely for reading Excel (generic sheet)
+    try:
+        if hasattr(excel_file, 'getvalue'):
+            df = pd.read_excel(io.BytesIO(excel_file.getvalue()), sheet_name=sheet_name)
+        else:
+            if hasattr(excel_file, 'seek'):
+                try:
+                    excel_file.seek(0)
+                except Exception:
+                    pass
+            df = pd.read_excel(excel_file, sheet_name=sheet_name)
+    except Exception as e:
+        raise RuntimeError(f"Could not read sheet sheet_name: {e}")
     df.columns = [c.strip().lower() for c in df.columns]
     again_idx = None
     for i, c in enumerate(df.columns):
@@ -1138,7 +1150,19 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
 def process_deletions(excel_file, json_file, report_changes):
     """Read the 'Deleting Records' sheet and remove any showIDs present in seriesData.json."""
     try:
-        df = pd.read_excel(excel_file, sheet_name='Deleting Records')
+        # Support file-like objects safely for reading Excel (Deleting Records)
+        try:
+            if hasattr(excel_file, 'getvalue'):
+                df = pd.read_excel(io.BytesIO(excel_file.getvalue()), sheet_name='Deleting Records')
+            else:
+                if hasattr(excel_file, 'seek'):
+                    try:
+                        excel_file.seek(0)
+                    except Exception:
+                        pass
+                df = pd.read_excel(excel_file, sheet_name='Deleting Records')
+        except Exception:
+            return [], []
     except Exception:
         return [], []
     if df.shape[1] < 1:
@@ -1159,15 +1183,7 @@ def process_deletions(excel_file, json_file, report_changes):
             data = []
     else:
         data = []
-    by_id = {}
-    for o in data:
-        sid = o.get('showID')
-        try:
-            sid_int = int(sid)
-        except Exception:
-            # Skip non-integer showID values (e.g., non-numeric strings)
-            continue
-        by_id[sid_int] = o
+    by_id = {int(o['showID']): o for o in data if 'showID' in o and isinstance(o['showID'], int)}
     to_delete = []
     for _, row in df.iterrows():
         val = row[id_col]
@@ -1263,7 +1279,19 @@ def apply_manual_updates(excel_file: str, json_file: str):
     """
     sheet = 'Manual Update'
     try:
-        df = pd.read_excel(excel_file, sheet_name=sheet)
+        # Support file-like objects safely for reading Excel (generic sheet)
+        try:
+            if hasattr(excel_file, 'getvalue'):
+                df = pd.read_excel(io.BytesIO(excel_file.getvalue()), sheet_name=sheet)
+            else:
+                if hasattr(excel_file, 'seek'):
+                    try:
+                        excel_file.seek(0)
+                    except Exception:
+                        pass
+                df = pd.read_excel(excel_file, sheet_name=sheet)
+        except Exception as e:
+            raise RuntimeError(f"Could not read sheet sheet: {e}")
     except Exception:
         print("ℹ️ No 'manual update' sheet found; skipping manual updates.")
         return
@@ -1815,12 +1843,10 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
     except Exception as e:
         print(f"⚠️ Could not write status json: {e}")
 
-    # Consider deletions and any report entries (e.g. deletions) as legitimate activity.
-    any_report_entries = any(bool(v) for v in report_changes_by_sheet.values()) or bool(modified_pairs)
-    if processed_total == 0 and not any_report_entries:
+    if processed_total == 0:
         print("⚠️ No records were processed in this run. Please check your Excel file and sheet names.")
         with open(os.path.join(REPORTS_DIR, "failure_reason.txt"), "w", encoding="utf-8") as ff:
-            ff.write("No records processed. Check logs and the report.")
+            ff.write("No records processed. Check logs and the report.\n")
         # Exit gracefully instead of failing the workflow
         return
     return
@@ -1877,21 +1903,34 @@ if __name__ == '__main__':
     excel_bytes = fetch_excel_from_gdrive_bytes(excel_id, SERVICE_ACCOUNT_FILE)
     if excel_bytes is None:
         print("❌ Could not fetch Excel file from Google Drive. Exiting gracefully.")
-        print("   Ensure the service account JSON and EXCEL_FILE_ID are correct, and required packages are installed.")
         sys.exit(0)
 
-    # pandas can read from a file-like BytesIO for read_excel
-    excel_file_like = excel_bytes
-
-    # Apply manual updates if present
+    # Ensure we have raw bytes and create independent BytesIO copies for each reader.
     try:
-        apply_manual_updates(excel_file_like, JSON_FILE)
+        excel_bytes.seek(0)
+        excel_data = excel_bytes.read()
+    except Exception:
+        try:
+            excel_data = excel_bytes.getvalue()
+        except Exception:
+            excel_data = None
+    if not excel_data:
+        print("❌ Could not read Excel bytes into memory. Exiting gracefully.")
+        sys.exit(1)
+
+    # Create separate file-like objects so pandas can read different sheets without stream consumption issues.
+    excel_file_for_manual = io.BytesIO(excel_data)
+    excel_file_for_update = io.BytesIO(excel_data)
+
+    # Apply manual updates if present (use a fresh BytesIO to avoid stream consumption).
+    try:
+        apply_manual_updates(excel_file_for_manual, JSON_FILE)
     except Exception as e:
         logd(f"apply_manual_updates error: {e}")
 
-    # Run update using Excel bytes from Drive
+    # Run update using Excel bytes from Drive (use a separate BytesIO).
     try:
-        update_json_from_excel(excel_file_like, JSON_FILE, SHEETS, max_per_run=MAX_PER_RUN, max_run_time_minutes=MAX_RUN_TIME_MINUTES)
+        update_json_from_excel(excel_file_for_update, JSON_FILE, SHEETS, max_per_run=MAX_PER_RUN, max_run_time_minutes=MAX_RUN_TIME_MINUTES)
     except SystemExit:
         # allow sys.exit in update flow to propagate if necessary
         raise
