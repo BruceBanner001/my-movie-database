@@ -18,7 +18,7 @@ on:
         default: '0'
         required: false
   schedule:
-    - cron: "30 18 * * 6"  # Every Sunday 00:00 AM IST (Saturday 18:30 UTC)
+    - cron: "30 18 * * 6"  # Scheduled: Every Sunday 00:00 AM IST (Saturday 18:30 UTC)
 
 jobs:
   update-json:
@@ -46,7 +46,7 @@ jobs:
       - name: Write Google Drive service account
         run: echo '${{ secrets.GDRIVE_SERVICE_ACCOUNT }}' > GDRIVE_SERVICE_ACCOUNT.json
 
-      # ------------------ Run updater ------------------
+      # ------------------ Run the updater once ------------------
       - name: Run seriesData updater and capture report path
         id: run_updater
         env:
@@ -60,7 +60,6 @@ jobs:
           set -euo pipefail
           output=$(python create_update_backup_delete.py 2>&1 || true)
           printf '%s\n' "$output"
-          # Extract report path from script output (if printed as "Report written → reports/report_...txt")
           report_path=$(printf '%s\n' "$output" | awk -F'→' '/Report written/ {gsub(/^[ \t]+|[ \t]+$/, "", $2); print $2; exit}')
           if [ -z "$report_path" ] || [ ! -f "$report_path" ]; then
             report_path=$(ls -t reports/report_*.txt 2>/dev/null | head -n1 || true)
@@ -78,16 +77,13 @@ jobs:
           subj_date=$(date -u "+%d %B %Y %H%M")
           echo "email_subject=$prefix Workflow $subj_date Report" >> $GITHUB_OUTPUT
 
-      # ------------------ Commit & Push ------------------
       - name: Commit & push changes
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git fetch origin main || true
-          git rebase origin/main || true
-          git add seriesData.json images/ backups/ reports/ deleted-data/ || true
+          git add seriesData.json images/ backups/ reports/ deleted-data/
           git commit -m "Automated update: $(date -u '+%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
-          git push origin HEAD:main --force-with-lease || true
+          git push
 
       - name: Upload reports
         if: always()
@@ -102,40 +98,32 @@ jobs:
         with:
           args: detect --source=. --report-path=reports/secrets_report.txt --no-banner --redact
 
-      # ------------------ Compose email body (write to file) ------------------
-      - name: Compose consolidated email body file
-        id: compose_email_file
-        shell: bash
+      # ------------------ Compose consolidated email ------------------
+      - name: Compose consolidated email body
+        id: compose_email
         run: |
           set -euo pipefail
           report="${{ steps.run_updater.outputs.report_path }}"
-          # fallback to latest report if run_updater didn't set a path
           if [ -z "$report" ] || [ ! -f "$report" ]; then
             report=$(ls -t reports/report_*.txt 2>/dev/null | head -n1 || true)
           fi
+          echo "email_body<<EOF" >> $GITHUB_OUTPUT
+          echo "SECRETS CHECK:" >> $GITHUB_OUTPUT
+          if [ -s reports/secrets_report.txt ]; then
+            echo "- Gitleaks detected potential secrets. (Details below)" >> $GITHUB_OUTPUT
+            sed 's/%/%%/g' reports/secrets_report.txt >> $GITHUB_OUTPUT
+          else
+            echo "- No obvious secrets detected." >> $GITHUB_OUTPUT
+          fi
+          echo "" >> $GITHUB_OUTPUT
+          echo "--- REPORT CONTENT (pasted below) ---" >> $GITHUB_OUTPUT
+          if [ -n "$report" ] && [ -f "$report" ]; then
+            sed 's/%/%%/g' "$report" >> $GITHUB_OUTPUT
+          else
+            echo "⚠️ Report file not found." >> $GITHUB_OUTPUT
+          fi
+          echo "EOF" >> $GITHUB_OUTPUT
 
-          mkdir -p reports
-          email_file="reports/email_body.txt"
-          {
-            echo "SECRETS CHECK:"
-            if [ -s reports/secrets_report.txt ]; then
-              echo "- Gitleaks detected potential secrets. (Details below)"
-              sed 's/%/%%/g' reports/secrets_report.txt
-            else
-              echo "- No obvious secrets detected."
-            fi
-            echo ""
-            echo "--- REPORT CONTENT (pasted below) ---"
-            if [ -n "$report" ] && [ -f "$report" ]; then
-              sed 's/%/%%/g' "$report"
-            else
-              echo "⚠️ Report file not found."
-            fi
-          } > "$email_file"
-          echo "Wrote email body to: $email_file"
-        # no outputs; email body exists as reports/email_body.txt in workspace
-
-      # ------------------ Send consolidated report email (action reads file) ------------------
       - name: Send consolidated report email
         uses: dawidd6/action-send-mail@v3
         with:
@@ -146,6 +134,4 @@ jobs:
           subject: ${{ steps.run_updater.outputs.email_subject }}
           to: ${{ secrets.NOTIFY_EMAIL }}
           from: GitHub Actions <${{ secrets.SMTP_USERNAME }}>
-          # read body directly from file
-          body: file://reports/email_body.txt
-          # attach all reports (optional)
+          body: ${{ steps.compose_email.outputs.email_body }}
