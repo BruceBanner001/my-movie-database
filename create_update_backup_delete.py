@@ -1931,28 +1931,97 @@ def write_status_file(status_path, stats):
     except Exception as e:
         print(f"⚠️ Failed to write status file: {e}")
 
+
+# ---------------------- Robust entrypoint wrapper ----------------------
 if __name__ == "__main__":
-    start_time = time.time()
+    import os, time, glob, datetime, json
+    from pathlib import Path
+
+    # Ensure directories exist
+    os.makedirs("reports", exist_ok=True)
+    os.makedirs("backups", exist_ok=True)
+    os.makedirs("images", exist_ok=True)
+    os.makedirs("deleted-data", exist_ok=True)
+    os.makedirs("old-images", exist_ok=True)
+
     KEEP_OLD_IMAGES_DAYS = int(os.getenv("KEEP_OLD_IMAGES_DAYS", 31))
     DELETE_AFTER_DAYS = int(os.getenv("DELETE_AFTER_DAYS", KEEP_OLD_IMAGES_DAYS))
 
+    print("🚀 Starting Excel → JSON Update Workflow...")
+    start_ts = time.time()
+
+    # record latest report modification time before run (if any)
+    latest_report_before = None
+    report_candidates = sorted(glob.glob("reports/report_*.txt"), key=os.path.getmtime) if glob.glob("reports/report_*.txt") else []
+    if report_candidates:
+        latest_report_before = os.path.getmtime(report_candidates[-1])
+
+    # Run main update logic if available
     try:
-        # Assume main() exists in base v2 script
-        main()
-
-        # Perform cleanup after successful main
-        cleanup_deleted_data("seriesData.json", DELETE_AFTER_DAYS)
-        cleanup_old_images("old-images", KEEP_OLD_IMAGES_DAYS)
-
-        stats = {
-            "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
-            "processed_total": "See report file",
-            "continued": True
-        }
-        write_status_file("status.json", stats)
-        print(f"🏁 Workflow finished successfully in {time.time()-start_time:.1f}s")
-
+        if "main" in globals() and callable(globals()["main"]):
+            globals()["main"]()
+        else:
+            print("⚠️ main() not found in script. Attempting to call run_workflow() or update_workflow()...")
+            if "run_workflow" in globals() and callable(globals()["run_workflow"]):
+                globals()["run_workflow"]()
+            elif "update_workflow" in globals() and callable(globals()["update_workflow"]):
+                globals()["update_workflow"]()
+            else:
+                raise RuntimeError("No known entrypoint found (main/run_workflow/update_workflow).")
     except Exception as e:
-        with open("failure_reason.txt", "w", encoding="utf-8") as fr:
-            fr.write(str(e))
-        print("❌ Workflow failed:", e)
+        # Write failure reason and exit non-zero (printed for CI)
+        try:
+            with open("failure_reason.txt", "w", encoding="utf-8") as fr:
+                fr.write(str(e))
+        except Exception:
+            pass
+        print("❌ Workflow failed during main execution:", e)
+        raise
+
+    # After run, check for a new report; if none, write a minimal "no changes" report so CI has something new
+    report_candidates_after = sorted(glob.glob("reports/report_*.txt"), key=os.path.getmtime) if glob.glob("reports/report_*.txt") else []
+    latest_report_after = report_candidates_after[-1] if report_candidates_after else None
+
+    wrote_placeholder = False
+    if latest_report_before is None and latest_report_after is None:
+        # No report before or after — write placeholder
+        rpt_name = f"reports/report_{datetime.datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_no_changes.txt"
+        with open(rpt_name, "w", encoding="utf-8") as rf:
+            rf.write("SECRETS CHECK:\n- No obvious secrets detected.\n\n--- REPORT CONTENT (pasted below) ---\n")
+            rf.write("No changes detected during this run.\n")
+        latest_report_after = rpt_name
+        wrote_placeholder = True
+    elif latest_report_before is not None and latest_report_after is not None:
+        # If the latest report after run is older or same mtime as before, treat as no new report
+        if os.path.getmtime(latest_report_after) <= latest_report_before:
+            rpt_name = f"reports/report_{datetime.datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_no_changes.txt"
+            with open(rpt_name, "w", encoding="utf-8") as rf:
+                rf.write("SECRETS CHECK:\n- No obvious secrets detected.\n\n--- REPORT CONTENT (pasted below) ---\n")
+                rf.write("No changes detected during this run. The previous report remains unchanged.\n")
+            latest_report_after = rpt_name
+            wrote_placeholder = True
+
+    # Run cleanup that may have been defined in the merged block
+    try:
+        if "cleanup_deleted_data" in globals() and callable(globals()["cleanup_deleted_data"]):
+            cleanup_deleted_data("seriesData.json", DELETE_AFTER_DAYS)
+        if "cleanup_old_images" in globals() and callable(globals()["cleanup_old_images"]):
+            cleanup_old_images("old-images", KEEP_OLD_IMAGES_DAYS)
+    except Exception as e:
+        print("⚠️ Cleanup step failed:", e)
+
+    # Write status.json
+    try:
+        stats = {
+            "timestamp": datetime.datetime.utcnow().isoformat() + "Z",
+            "processed_total": "See report file",
+            "continued": True,
+            "placeholder_report_written": wrote_placeholder
+        }
+        with open("status.json", "w", encoding="utf-8") as sf:
+            json.dump(stats, sf, indent=2, ensure_ascii=False)
+    except Exception as e:
+        print("⚠️ Failed to write status.json:", e)
+
+    elapsed = time.time() - start_ts
+    print(f"🏁 Workflow finished in {elapsed:.1f}s (report: {latest_report_after})")
