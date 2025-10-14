@@ -1,7 +1,8 @@
 # ============================================================================
-# Workflow: Excel → JSON Automation (v2 for latest Python script)
+# Workflow: Excel → JSON Automation (v3 patched)
 # Purpose : Automate weekly + manual Excel → JSON updates, deletions, backups,
 #           apply manual updates, image cleanup, and run TXT/HTML reports.
+#           SHEETS are now controlled only by Python defaults.
 # ============================================================================
 
 name: Excel → JSON Update
@@ -56,7 +57,7 @@ jobs:
           MAX_RUN_TIME_MINUTES: ${{ github.event.inputs.MAX_RUN_TIME_MINUTES || 300 }}
           KEEP_OLD_IMAGES_DAYS: 7
           SCHEDULED_RUN: ${{ github.event_name == 'schedule' && 'true' || 'false' }}
-          SHEETS: "Sheet1;Feb 7 2023 Onwards"
+          # SHEETS removed so Python default is used
         run: |
           set -euo pipefail
           output=$(python create_update_backup_delete.py 2>&1 || true)
