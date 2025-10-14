@@ -1843,13 +1843,19 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
     except Exception as e:
         print(f"⚠️ Could not write status json: {e}")
 
+try:
+    reset_stale_progress_if_no_processing(excel_file_like, SHEETS)
+except Exception:
+    pass
+
+
     if processed_total == 0:
         print("⚠️ No records were processed in this run. Please check your Excel file and sheet names.")
         with open(os.path.join(REPORTS_DIR, "failure_reason.txt"), "w", encoding="utf-8") as ff:
             ff.write("No records processed. Check logs and the report.\n")
         # Exit gracefully instead of failing the workflow
-        return
-    return
+        import sys
+        sys.exit(0)
 
 
 # ---------------------------- Entrypoint -----------------------------------
@@ -2025,3 +2031,54 @@ if __name__ == "__main__":
 
     elapsed = time.time() - start_ts
     print(f"🏁 Workflow finished in {elapsed:.1f}s (report: {latest_report_after})")
+
+
+
+# --- START: reset_stale_progress_if_no_processing helper ---
+def reset_stale_progress_if_no_processing(excel_file_like, sheets, progress_path=PROGRESS_FILE):
+    """
+    If progress indicates we've already processed past the end of a sheet, clear that entry.
+    This avoids runs doing nothing when new rows were appended to the sheet(s).
+    Safe: only removes entries when saved start_index >= current sheet rows.
+    """
+    try:
+        import pandas as _pd
+        import json as _json
+        import os as _os
+    except Exception:
+        return False
+
+    try:
+        if not _os.path.exists(progress_path):
+            return False
+        with open(progress_path, 'r', encoding='utf-8') as pf:
+            prog = _json.load(pf)
+    except Exception:
+        return False
+
+    changed = False
+    for s in sheets:
+        try:
+            # pd.read_excel accepts a path or file-like; use the provided object.
+            df = _pd.read_excel(excel_file_like, sheet_name=s)
+            total_rows = len(df)
+        except Exception:
+            # if we can't read the sheet, skip
+            continue
+        start_idx = int(prog.get(s, 0) or 0)
+        if start_idx >= total_rows:
+            prog.pop(s, None)
+            changed = True
+            print(f"ℹ️ Clearing stale progress for sheet '{s}' (saved start {start_idx} >= current rows {total_rows}).")
+
+    if changed:
+        try:
+            os.makedirs(os.path.dirname(progress_path) or '.', exist_ok=True)
+            with open(progress_path, 'w', encoding='utf-8') as pf:
+                _json.dump(prog, pf, indent=2)
+            return True
+        except Exception as e:
+            print(f"⚠️ Failed to reset progress file: {e}")
+            return False
+    return False
+# --- END: helper ---
