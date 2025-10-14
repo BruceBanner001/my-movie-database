@@ -104,34 +104,42 @@ jobs:
         id: compose_email
         run: |
           set -euo pipefail
+
+          # Create a temp file with the report + secrets check content
           tmpfile=$(mktemp)
 
           {
             echo "SECRETS CHECK:"
             if [ -s reports/secrets_report.txt ]; then
               echo "- Gitleaks detected potential secrets. (Details below)"
+              # Escape % for GitHub output formatting
               sed 's/%/%%/g' reports/secrets_report.txt
             else
               echo "- No obvious secrets detected."
             fi
             echo ""
             echo "--- REPORT CONTENT (pasted below) ---"
-            report="${{ steps.run_updater.outputs.report_path }}"
-            if [ -z "$report" ] || [ ! -f "$report" ]; then
+
+            # Determine the report file path (prefer output captured from run_updater)
+            report="${{ steps.run_updater.outputs.report_path }}" || true
+            if [ -z "${report}" ] || [ ! -f "${report}" ]; then
               report=$(ls -t reports/report_*.txt 2>/dev/null | head -n1 || true)
             fi
-            if [ -n "$report" ] && [ -f "$report" ]; then
-              sed 's/%/%%/g' "$report"
+
+            if [ -n "${report}" ] && [ -f "${report}" ]; then
+              sed 's/%/%%/g' "${report}"
             else
               echo "⚠️ Report file not found."
             fi
           } > "$tmpfile"
 
-          {
-            echo "email_body<<EOF"
-            cat "$tmpfile"
-            echo "EOF"
-          } >> "$GITHUB_OUTPUT"
+          # Use a unique delimiter so it can't possibly appear inside the content
+          DELIM="__GHA_OUTPUT_DELIM_$(date +%s%N)__"
+
+          # Write the multi-line output block to GITHUB_OUTPUT using the unique delimiter
+          printf 'email_body<<%s\n' "$DELIM" >> $GITHUB_OUTPUT
+          cat "$tmpfile" >> $GITHUB_OUTPUT
+          printf '%s\n' "$DELIM" >> $GITHUB_OUTPUT
 
           rm -f "$tmpfile"
 
