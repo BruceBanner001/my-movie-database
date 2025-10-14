@@ -131,11 +131,9 @@ OLD_IMAGES_DIR = "old-images"
 DELETED_DATA_DIR = "deleted-data"
 REPORTS_DIR = "reports"
 PROGRESS_DIR = ".progress"
-# --- Added by patch: ensure reset helper has a default sheet list ---
+# --- Added by patch v2: default sheets and safer stale-progress handling ---
 DEFAULT_SHEETS = [
     "Sheet1",
-    "Sheet2",
-    "Feb 7 2023 Onwards",
     "Deleting Records",
     "Manual Update",
 ]
@@ -1853,13 +1851,48 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
     except Exception as e:
         print(f"⚠️ Could not write status json: {e}")
 
+
 try:
-    # Determine a valid sheets list to pass to reset_stale_progress_if_no_processing.
-    # Prefer a runtime variable like 'sheet_names' or 'SHEETS' if present, otherwise fallback to DEFAULT_SHEETS.
+    # Determine a valid sheets list for the reset helper
     sheets_for_reset = globals().get('SHEETS') or globals().get('sheet_names') or DEFAULT_SHEETS
+    # Defensive check: if a progress file exists, check for stale entries (start_index >= current_rows).
+    try:
+        if os.path.exists(PROGRESS_FILE):
+            with open(PROGRESS_FILE, 'r', encoding='utf-8') as pf:
+                try:
+                    progress_data = json.load(pf)
+                except Exception:
+                    progress_data = {}
+            stale_found = False
+            for sht in sheets_for_reset:
+                entry = progress_data.get(sht)
+                if entry and isinstance(entry, dict) and 'start_index' in entry:
+                    start_index = entry.get('start_index', 0)
+                    # Try to get current rows for this sheet via excel_file_like (if available)
+                    try:
+                        # excel_file_like is expected to be an object that can parse sheets; we handle failures gracefully
+                        parsed = excel_file_like.parse(sht)
+                        # parsed likely is a DataFrame-like object or list; try len()
+                        current_rows = len(parsed)
+                    except Exception:
+                        current_rows = None
+                    if current_rows is not None and start_index >= current_rows:
+                        stale_found = True
+                        print(f"⚠️ Stale progress detected for sheet '{sht}': start_index={start_index} >= current_rows={current_rows}")
+            if stale_found:
+                try:
+                    print("⚠️ Removing stale progress file to allow reprocessing:", PROGRESS_FILE)
+                    os.remove(PROGRESS_FILE)
+                except Exception as e:
+                    print("⚠️ Could not remove progress file:", e)
+    except Exception as _e:
+        # If anything goes wrong during stale detection, proceed to call the reset helper anyway.
+        pass
+    # Now call the original reset helper with a valid sheet list
     reset_stale_progress_if_no_processing(excel_file_like, sheets_for_reset)
 except Exception as exc:
     print("⚠️ reset_stale_progress_if_no_processing skipped:", exc)
+
 
     pass
 
