@@ -1,6 +1,7 @@
-
 # ============================================================================
-# Workflow: Excel → JSON Automation (v3 merged cleanup version)
+# Workflow: Excel → JSON Automation (v2 for latest Python script)
+# Purpose : Automate weekly + manual Excel → JSON updates, deletions, backups,
+#           apply manual updates, image cleanup, and run TXT/HTML reports.
 # ============================================================================
 
 name: Excel → JSON Update
@@ -45,16 +46,17 @@ jobs:
       - name: Write Google Drive service account
         run: echo '${{ secrets.GDRIVE_SERVICE_ACCOUNT }}' > GDRIVE_SERVICE_ACCOUNT.json
 
-      - name: Run updater and capture report path
+      # ------------------ Run the updater ------------------
+      - name: Run seriesData updater and capture report path
         id: run_updater
         env:
           EVENT_NAME: ${{ github.event_name }}
           GITHUB_PAGES_URL: https://brucebanner001.github.io/my-movie-database
           MAX_PER_RUN: ${{ github.event.inputs.MAX_PER_RUN || 0 }}
           MAX_RUN_TIME_MINUTES: ${{ github.event.inputs.MAX_RUN_TIME_MINUTES || 300 }}
-          KEEP_OLD_IMAGES_DAYS: 31
-          DELETE_AFTER_DAYS: 31
+          KEEP_OLD_IMAGES_DAYS: 7
           SCHEDULED_RUN: ${{ github.event_name == 'schedule' && 'true' || 'false' }}
+          SHEETS: "Sheet1;Feb 7 2023 Onwards"
         run: |
           set -euo pipefail
           output=$(python create_update_backup_delete.py 2>&1 || true)
@@ -63,16 +65,24 @@ jobs:
           if [ -z "$report_path" ] || [ ! -f "$report_path" ]; then
             report_path=$(ls -t reports/report_*.txt 2>/dev/null | head -n1 || true)
           fi
-          echo "report_path=$report_path" >> $GITHUB_OUTPUT
+          if [ -z "$report_path" ]; then
+            echo "report_path=" >> $GITHUB_OUTPUT
+          else
+            echo "report_path=$report_path" >> $GITHUB_OUTPUT
+          fi
+          if [ "${EVENT_NAME:-}" = "schedule" ]; then
+            prefix="[Automatic]"
+          else
+            prefix="[Manual]"
+          fi
           subj_date=$(date -u "+%d %B %Y %H%M")
-          prefix=$([[ "${EVENT_NAME:-}" == "schedule" ]] && echo "[Automatic]" || echo "[Manual]")
           echo "email_subject=$prefix Workflow $subj_date Report" >> $GITHUB_OUTPUT
 
       - name: Commit & push changes
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add seriesData.json images/ backups/ reports/ deleted-data/ status.json || true
+          git add seriesData.json images/ backups/ reports/ deleted-data/
           git commit -m "Automated update: $(date -u '+%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
           git push
 
@@ -89,6 +99,7 @@ jobs:
         with:
           args: detect --source=. --report-path=reports/secrets_report.txt --no-banner --redact
 
+      # ------------------ Compose consolidated email ------------------
       - name: Compose consolidated email body
         id: compose_email
         run: |
