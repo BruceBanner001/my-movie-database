@@ -1,8 +1,7 @@
 # ============================================================================
-# Workflow: Excel → JSON Automation (v3 patched)
+# Workflow: Excel → JSON Automation
 # Purpose : Automate weekly + manual Excel → JSON updates, deletions, backups,
-#           apply manual updates, image cleanup, and run TXT/HTML reports.
-#           SHEETS are now controlled only by Python defaults.
+#           and run reports (TXT only) for "my-movie-database".
 # ============================================================================
 
 name: Excel → JSON Update
@@ -19,7 +18,7 @@ on:
         default: '0'
         required: false
   schedule:
-    - cron: "30 18 * * 6"  # Every Sunday 00:00 AM IST (Saturday 18:30 UTC)
+    - cron: "30 18 * * 6"  # Scheduled: Every Sunday 00:00 AM IST (Saturday 18:30 UTC)
 
 jobs:
   update-json:
@@ -47,7 +46,7 @@ jobs:
       - name: Write Google Drive service account
         run: echo '${{ secrets.GDRIVE_SERVICE_ACCOUNT }}' > GDRIVE_SERVICE_ACCOUNT.json
 
-      # ------------------ Run the updater ------------------
+      # ------------------ Run the updater once ------------------
       - name: Run seriesData updater and capture report path
         id: run_updater
         env:
@@ -57,7 +56,6 @@ jobs:
           MAX_RUN_TIME_MINUTES: ${{ github.event.inputs.MAX_RUN_TIME_MINUTES || 300 }}
           KEEP_OLD_IMAGES_DAYS: 7
           SCHEDULED_RUN: ${{ github.event_name == 'schedule' && 'true' || 'false' }}
-          # SHEETS removed so Python default is used
         run: |
           set -euo pipefail
           output=$(python create_update_backup_delete.py 2>&1 || true)
