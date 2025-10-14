@@ -56,7 +56,7 @@ jobs:
           MAX_RUN_TIME_MINUTES: ${{ github.event.inputs.MAX_RUN_TIME_MINUTES || 300 }}
           KEEP_OLD_IMAGES_DAYS: 7
           SCHEDULED_RUN: ${{ github.event_name == 'schedule' && 'true' || 'false' }}
-        # continue-on-error: true  # optional safeguard for initial runs
+        # continue-on-error: true  # optional safeguard for first few runs
         run: |
           set -euo pipefail
           output=$(python create_update_backup_delete.py 2>&1 || true)
@@ -104,8 +104,9 @@ jobs:
         id: compose_email
         run: |
           set -euo pipefail
+          tmpfile=$(mktemp)
+
           {
-            echo "email_body<<EOF"
             echo "SECRETS CHECK:"
             if [ -s reports/secrets_report.txt ]; then
               echo "- Gitleaks detected potential secrets. (Details below)"
@@ -124,8 +125,15 @@ jobs:
             else
               echo "⚠️ Report file not found."
             fi
+          } > "$tmpfile"
+
+          {
+            echo "email_body<<EOF"
+            cat "$tmpfile"
             echo "EOF"
-          } >> $GITHUB_OUTPUT
+          } >> "$GITHUB_OUTPUT"
+
+          rm -f "$tmpfile"
 
       - name: Send consolidated report email
         uses: dawidd6/action-send-mail@v3

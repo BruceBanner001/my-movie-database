@@ -825,16 +825,16 @@ def process_deletions(excel_file, json_file, report_changes):
         report_changes.setdefault('deleted_summary', []).append(f"⚠️ Failed to write updated {json_file}: {e}")
     return deleted_ids, not_found_ids
 
-# ---------------------------- Manual updates (preserve original) ----------
+# ---------------------------- Manual Updates (preserve original) ----------
 def apply_manual_updates(excel_file: str, json_file: str):
-    sheet = 'manual update'
+    sheet = 'Manual Update'
     try:
         df = pd.read_excel(excel_file, sheet_name=sheet)
     except Exception:
-        print("ℹ️ No 'manual update' sheet found; skipping manual updates.")
+        print("ℹ️ No 'Manual Update' sheet found; skipping Manual Updates.")
         return
     if df.shape[1] < 2:
-        print("Manual update sheet must have at least two columns: showID and dataString")
+        print("Manual Update sheet must have at least two columns: showID and dataString")
         return
     if not os.path.exists(json_file):
         print("No JSON file to update")
@@ -899,9 +899,9 @@ def apply_manual_updates(excel_file: str, json_file: str):
         merged = sorted(by_id.values(), key=lambda x: x.get('showID', 0))
         with open(json_file, 'w', encoding='utf-8') as f:
             json.dump(merged, f, indent=4, ensure_ascii=False)
-        print(f"✅ Applied {len(updated_objs)} manual updates")
+        print(f"✅ Applied {len(updated_objs)} Manual Updates")
     else:
-        print("ℹ️ No valid manual updates found/applied.")
+        print("ℹ️ No valid Manual Updates found/applied.")
 
 # ---------------------------- Excel -> objects mapping ----------------------
 COLUMN_MAP = {
