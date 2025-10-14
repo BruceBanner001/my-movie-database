@@ -131,6 +131,16 @@ OLD_IMAGES_DIR = "old-images"
 DELETED_DATA_DIR = "deleted-data"
 REPORTS_DIR = "reports"
 PROGRESS_DIR = ".progress"
+# --- Added by patch: ensure reset helper has a default sheet list ---
+DEFAULT_SHEETS = [
+    "Sheet1",
+    "Sheet2",
+    "Feb 7 2023 Onwards",
+    "Deleting Records",
+    "Manual Update",
+]
+
+
 PROGRESS_FILE = os.path.join(PROGRESS_DIR, "progress.json")
 STATUS_JSON = os.path.join(REPORTS_DIR, "status.json")
 
@@ -1844,8 +1854,13 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
         print(f"⚠️ Could not write status json: {e}")
 
 try:
-    reset_stale_progress_if_no_processing(excel_file_like, SHEETS)
-except Exception:
+    # Determine a valid sheets list to pass to reset_stale_progress_if_no_processing.
+    # Prefer a runtime variable like 'sheet_names' or 'SHEETS' if present, otherwise fallback to DEFAULT_SHEETS.
+    sheets_for_reset = globals().get('SHEETS') or globals().get('sheet_names') or DEFAULT_SHEETS
+    reset_stale_progress_if_no_processing(excel_file_like, sheets_for_reset)
+except Exception as exc:
+    print("⚠️ reset_stale_progress_if_no_processing skipped:", exc)
+
     pass
 
 
