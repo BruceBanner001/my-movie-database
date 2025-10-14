@@ -32,6 +32,9 @@ google-auth>=2.23.0
 google-auth-httplib2>=0.1.0
 google-auth-oauthlib>=1.1.0
 
+# === Timezone & Date Utilities ===
+python-dateutil>=2.8.2
+
 # === Optional / Future (uncomment if needed) ===
 # httpx>=0.24.0          # Async HTTP client - for future concurrency optimizations
 # aiohttp>=3.8.4         # Async HTTP used with asyncio (alternative)

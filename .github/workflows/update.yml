@@ -56,6 +56,7 @@ jobs:
           MAX_RUN_TIME_MINUTES: ${{ github.event.inputs.MAX_RUN_TIME_MINUTES || 300 }}
           KEEP_OLD_IMAGES_DAYS: 7
           SCHEDULED_RUN: ${{ github.event_name == 'schedule' && 'true' || 'false' }}
+        # continue-on-error: true  # optional safeguard for initial runs
         run: |
           set -euo pipefail
           output=$(python create_update_backup_delete.py 2>&1 || true)
@@ -81,7 +82,7 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add seriesData.json images/ backups/ reports/ deleted-data/
+          git add seriesData.json images/ backups/ reports/ deleted-data/ backup-meta-data/
           git commit -m "Automated update: $(date -u '+%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
           git push
 
