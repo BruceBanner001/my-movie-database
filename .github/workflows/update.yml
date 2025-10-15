@@ -112,7 +112,6 @@ jobs:
             fi
             echo ""
             echo "--- REPORT CONTENT (pasted below) ---"
-            # Prefer the path captured from the updater; fallback to latest report file
             report="${{ steps.run_updater.outputs.report_path }}" || true
             if [ -z "${report}" ] || [ ! -f "${report}" ]; then
               report=$(ls -t reports/report_*.txt 2>/dev/null | head -n1 || true)
@@ -124,9 +123,9 @@ jobs:
             fi
           } > "$OUTFILE"
           echo "Wrote email body to $OUTFILE"
-        shell: /usr/bin/bash -e {0}
+        shell: bash
 
-      # ------------------ Send consolidated report email (Python / smtplib) ------------------
+      # ------------------ Send consolidated report email (Python smtp) ------------------
       - name: Send consolidated report email (Python smtp)
         if: always()
         env:
@@ -138,7 +137,7 @@ jobs:
           EMAIL_SUBJECT: ${{ steps.run_updater.outputs.email_subject }}
         run: |
           set -euo pipefail
-          python - <<'PY'
+          python - <<PYCODE
 import os, smtplib, ssl, sys
 from email.message import EmailMessage
 
@@ -172,7 +171,6 @@ try:
     print("✅ Email sent successfully to", to_addr)
 except Exception as e:
     print("⚠️ Failed to send email:", e)
-    # Do not fail the workflow because email is optional
     sys.exit(0)
-PY
-        shell: /usr/bin/bash -e {0}
+PYCODE
+        shell: bash
