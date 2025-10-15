@@ -1,0 +1,77 @@
+✅ Workflow completed successfully
+📅 Run Time: 15 October 2025 10:51 AM (IST)
+🕒 Duration: 0 min 11 sec
+⚙️ Script Version: v2.0.0 (Stable)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Deleting Records — 15 October 2025 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+❌ Data Deleted:
+- 101 -> ✅ Deleted and archived -> deleted-data/DELETED_15_October_2025_1051_101.json
+
+❌ Deletion notes (IDs not found in seriesData.json initially):
+- -102 -> ❌ Not found in seriesData.json
+- -103 -> ❌ Not found in seriesData.json
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 Summary (Sheet: Deleting Records)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Total Created: 0
+🔁 Total Updated: 0
+🚫 Total Skipped: 0
+🖼️ Total Images Updated: 0
+⚠️ Total Warnings: 0
+❌ Total Failed: 0
+  Total Number of Rows: 0
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Sheet1 — 15 October 2025 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🆕 Data Created:
+- Find Me in Your Memory (2020) → First Time Uploaded
+- Unforgettable Love (2021) → First Time Uploaded
+
+🖼️ Image Updated:
+- Find Me in Your Memory → updated
+- Unforgettable Love → updated
+
+💾 Metadata Backups Created:
+- backup-meta-data/META_15_October_2025_1051_102.json
+- backup-meta-data/META_15_October_2025_1051_103.json
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 Summary (Sheet: Sheet1)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Total Created: 2
+🔁 Total Updated: 0
+🚫 Total Skipped: 0
+🖼️ Total Images Updated: 2
+⚠️ Total Warnings: 0
+❌ Total Failed: 0
+  Total Number of Rows: 2
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗑️ === Deleting Records — 15 October 2025 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+❌ Data Deleted:
+- 101 -> ✅ Deleted and archived -> deleted-data/DELETED_15_October_2025_1051_101.json
+
+✅ Deleted archived items: 1 (IDs: 101)
+💾 Backup files saved: before_15_October_2025_1051.json, after_15_October_2025_1051.json
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 Overall Summary
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Total Created: 2
+🔁 Total Updated: 0
+🚫 Total Skipped: 0
+❌ Total Deleted: 1
+💾 Backup files: 10
+  Grand Total Rows Processed: 2
+
+💾 Metadata Backups Created: 2
+🧹 Cleaned up old metadata backups: 0 removed (older than 90 days)
+
+⚠️ WARNING: No duplicate records detected.
+🏁 Workflow finished successfully
