@@ -1,0 +1,73 @@
+✅ Workflow completed successfully
+📅 Run Time: 15 October 2025 02:45 PM (IST)
+🕒 Duration: 0 min 3 sec
+⚙️ Script Version: v2.0.0 (Stable)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Deleting Records — 15 October 2025 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+❌ Data Deleted:
+- 102 -> ✅ Deleted and archived -> deleted-data/DELETED_15_October_2025_1445_102.json
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 Summary (Sheet: Deleting Records)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Total Created: 0
+🔁 Total Updated: 0
+🚫 Total Skipped: 0
+🖼️ Total Images Updated: 0
+⚠️ Total Warnings: 0
+❌ Total Failed: 0
+  Total Number of Rows: 0
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Sheet1 — 15 October 2025 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🆕 Data Created:
+- Taste of Love (2023) → First Time Uploaded
+
+🔁 Data Updated:
+- It's Okay to Not be Okay (2020) → Comments, Ratings Updated
+
+🖼️ Image Updated:
+- Taste of Love → updated
+
+💾 Metadata Backups Created:
+- backup-meta-data/META_15_October_2025_1445_103.json
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 Summary (Sheet: Sheet1)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Total Created: 1
+🔁 Total Updated: 1
+🚫 Total Skipped: 0
+🖼️ Total Images Updated: 1
+⚠️ Total Warnings: 0
+❌ Total Failed: 0
+  Total Number of Rows: 2
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗑️ === Deleting Records — 15 October 2025 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+❌ Data Deleted:
+- 102 -> ✅ Deleted and archived -> deleted-data/DELETED_15_October_2025_1445_102.json
+
+✅ Deleted archived items: 1 (IDs: 102)
+💾 Backup files saved: before_15_October_2025_1445.json, after_15_October_2025_1445.json
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 Overall Summary
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Total Created: 1
+🔁 Total Updated: 1
+🚫 Total Skipped: 0
+❌ Total Deleted: 1
+💾 Backup files: 12
+  Grand Total Rows Processed: 2
+
+💾 Metadata Backups Created: 1
+🧹 Cleaned up old metadata backups: 0 removed (older than 90 days)
+
+⚠️ WARNING: No duplicate records detected.
+🏁 Workflow finished successfully
