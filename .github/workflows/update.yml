@@ -1,10 +1,10 @@
 # ============================================================================
-# Workflow: Excel → JSON Automation
-# Purpose : Automate weekly + manual Excel → JSON updates, deletions, backups,
+# Workflow: Excel-to-JSON Automation
+# Purpose : Automate weekly + manual Excel -> JSON updates, deletions, backups,
 #           and run reports (TXT only) for "my-movie-database".
 # ============================================================================
 
-name: Excel → JSON Update
+name: Excel-to-JSON Update
 
 on:
   workflow_dispatch:
@@ -47,13 +47,13 @@ jobs:
         run: echo '${{ secrets.GDRIVE_SERVICE_ACCOUNT }}' > GDRIVE_SERVICE_ACCOUNT.json
 
       # ------------------ Run updater and capture report ------------------
-      - name: Run Excel→JSON updater
+      - name: Run Excel->JSON updater
         id: run_updater
         env:
           EVENT_NAME: ${{ github.event_name }}
           GITHUB_PAGES_URL: https://brucebanner001.github.io/my-movie-database
-          MAX_PER_RUN: ${{ github.event.inputs.MAX_PER_RUN || 0 }}
-          MAX_RUN_TIME_MINUTES: ${{ github.event.inputs.MAX_RUN_TIME_MINUTES || 300 }}
+          MAX_PER_RUN: ${{ github.event.inputs.MAX_PER_RUN }}
+          MAX_RUN_TIME_MINUTES: ${{ github.event.inputs.MAX_RUN_TIME_MINUTES }}
           KEEP_OLD_IMAGES_DAYS: 7
           SCHEDULED_RUN: ${{ github.event_name == 'schedule' && 'true' || 'false' }}
         run: |
@@ -61,7 +61,7 @@ jobs:
           output=$(python create_update_backup_delete.py 2>&1 || true)
           printf '%s\n' "$output"
 
-          report_path=$(printf '%s\n' "$output" | awk -F'→' '/Report written/ {gsub(/^[ \t]+|[ \t]+$/, "", $2); print $2; exit}')
+          report_path=$(printf '%s\n' "$output" | awk -F'->' '/Report written/ {gsub(/^[ \t]+|[ \t]+$/, "", $2); print $2; exit}')
           if [ -z "$report_path" ] || [ ! -f "$report_path" ]; then
             report_path=$(ls -t reports/report_*.txt 2>/dev/null | head -n1 || true)
           fi
@@ -105,12 +105,15 @@ jobs:
         id: compose_email
         run: |
           set -euo pipefail
+
+          # Pick report path (from previous step or latest)
           report="${{ steps.run_updater.outputs.report_path }}"
           if [ -z "$report" ] || [ ! -f "$report" ]; then
             report=$(ls -t reports/report_*.txt 2>/dev/null | head -n1 || true)
           fi
 
           tmpfile=$(mktemp)
+
           {
             echo "SECRETS CHECK:"
             if [ -s reports/secrets_report.txt ]; then
@@ -129,6 +132,7 @@ jobs:
             fi
           } > "$tmpfile"
 
+          # Expose the temp file path as a single-line output
           echo "email_file=$tmpfile" >> "$GITHUB_OUTPUT"
 
       # ------------------ Send consolidated report email ------------------
@@ -144,6 +148,7 @@ jobs:
           EMAIL_SUBJECT: ${{ steps.run_updater.outputs.email_subject }}
         run: |
           set -euo pipefail
+
           email_file="${{ steps.compose_email.outputs.email_file }}"
           if [ -z "$email_file" ] || [ ! -f "$email_file" ]; then
             echo "::warning::Email body file not found; sending short fallback message."
@@ -165,6 +170,7 @@ to_addr = os.environ.get("NOTIFY_EMAIL")
 from_addr = os.environ.get("FROM_EMAIL") or smtp_user
 subject = os.environ.get("EMAIL_SUBJECT") or "Workflow Report"
 
+# Read the email body from file (utf-8 fallback)
 with open(email_file, "r", encoding="utf-8", errors="replace") as fh:
     body = fh.read()
 
@@ -197,4 +203,3 @@ PY
           email_file="${{ steps.compose_email.outputs.email_file }}"
           if [ -n "${email_file:-}" ] && [ -f "$email_file" ]; then
             rm -f "$email_file" || true
-          fi
