@@ -1,9 +1,10 @@
 # ============================================================================
-# Workflow: Excel → JSON Automation (Simplified)
-# Purpose : Test YAML syntax and confirm end-to-end run without email section.
+# Workflow: Excel → JSON Automation (Full)
+# Purpose : Automate weekly + manual Excel → JSON updates, deletions, backups,
+#           run reports (TXT only) for "my-movie-database" and email results.
 # ============================================================================
 
-name: Excel → JSON Update (Simplified)
+name: Excel → JSON Update (Full)
 
 on:
   workflow_dispatch:
@@ -45,29 +46,45 @@ jobs:
       - name: Write Google Drive service account
         run: echo '${{ secrets.GDRIVE_SERVICE_ACCOUNT }}' > GDRIVE_SERVICE_ACCOUNT.json
 
-      # ------------------ Run updater and capture report ------------------
       - name: Run Excel→JSON updater
         id: run_updater
         env:
           EVENT_NAME: ${{ github.event_name }}
           GITHUB_PAGES_URL: https://brucebanner001.github.io/my-movie-database
-          MAX_PER_RUN: ${{ github.event.inputs.MAX_PER_RUN || 0 }}
-          MAX_RUN_TIME_MINUTES: ${{ github.event.inputs.MAX_RUN_TIME_MINUTES || 300 }}
+          MAX_PER_RUN: ${{ github.event.inputs.MAX_PER_RUN }}
+          MAX_RUN_TIME_MINUTES: ${{ github.event.inputs.MAX_RUN_TIME_MINUTES }}
           KEEP_OLD_IMAGES_DAYS: 7
           SCHEDULED_RUN: ${{ github.event_name == 'schedule' && 'true' || 'false' }}
         run: |
           set -euo pipefail
+
+          MAX_PER_RUN="${MAX_PER_RUN:-0}"
+          MAX_RUN_TIME_MINUTES="${MAX_RUN_TIME_MINUTES:-300}"
+          EVENT_NAME="${EVENT_NAME:-}"
+          SCHEDULED_RUN="${SCHEDULED_RUN:-false}"
+
           output=$(python create_update_backup_delete.py 2>&1 || true)
           printf '%s\n' "$output"
 
-          report_path=$(printf '%s\n' "$output" | awk -F'→' '/Report written/ {gsub(/^[ \t]+|[ \t]+$/, "", $2); print $2; exit}')
+          report_path=$(printf '%s\n' "$output" | awk -F'->' '/Report written/ {gsub(/^[ \t]+|[ \t]+$/, "", $2); print $2; exit}')
+          if [ -z "$report_path" ]; then
+            report_path=$(printf '%s\n' "$output" | awk -F'→' '/Report written/ {gsub(/^[ \t]+|[ \t]+$/, "", $2); print $2; exit}')
+          fi
+
           if [ -z "$report_path" ] || [ ! -f "$report_path" ]; then
             report_path=$(ls -t reports/report_*.txt 2>/dev/null | head -n1 || true)
           fi
 
-          echo "report_path=$report_path" >> $GITHUB_OUTPUT
+          echo "report_path=$report_path" >> "$GITHUB_OUTPUT"
 
-      # ------------------ Commit and Push Changes ------------------
+          if [ "${EVENT_NAME:-}" = "schedule" ]; then
+            prefix="[Automatic]"
+          else
+            prefix="[Manual]"
+          fi
+          subj_date=$(date -u "+%d %B %Y %H:%M")
+          echo "email_subject=$prefix Workflow $subj_date Report" >> "$GITHUB_OUTPUT"
+
       - name: Commit & push changes
         run: |
           git config --global user.name "github-actions[bot]"
@@ -76,7 +93,6 @@ jobs:
           git commit -m "Automated update: $(date -u '+%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
           git push
 
-      # ------------------ Upload Reports ------------------
       - name: Upload reports
         if: always()
         uses: actions/upload-artifact@v4
@@ -84,11 +100,110 @@ jobs:
           name: run-reports
           path: reports/
 
-      # ------------------ Scan for Secrets ------------------
       - name: Scan for secrets
         if: always()
         uses: gitleaks/gitleaks-action@v2
         with:
           args: detect --source=. --report-path=reports/secrets_report.txt --no-banner --redact
 
-      # ------------------ End of Simplified Workflow ------------------
+      - name: Compose consolidated email body
+        id: compose_email
+        run: |
+          set -euo pipefail
+          report="${{ steps.run_updater.outputs.report_path }}"
+          if [ -z "$report" ] || [ ! -f "$report" ]; then
+            report=$(ls -t reports/report_*.txt 2>/dev/null | head -n1 || true)
+          fi
+
+          tmpfile=$(mktemp)
+
+          {
+            echo "SECRETS CHECK:"
+            if [ -s reports/secrets_report.txt ]; then
+              echo "- Gitleaks detected potential secrets. (Details below)"
+              sed 's/%/%%/g' reports/secrets_report.txt || true
+            else
+              echo "- No obvious secrets detected."
+            fi
+
+            echo ""
+            echo "--- REPORT CONTENT (pasted below) ---"
+            if [ -n "$report" ] && [ -f "$report" ]; then
+              sed 's/%/%%/g' "$report" || true
+            else
+              echo "⚠️ Report file not found."
+            fi
+          } > "$tmpfile"
+
+          echo "email_file=$tmpfile" >> "$GITHUB_OUTPUT"
+
+      - name: Send consolidated report email
+        if: always()
+        env:
+          SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          NOTIFY_EMAIL: ${{ secrets.NOTIFY_EMAIL }}
+          FROM_EMAIL: ${{ secrets.SMTP_USERNAME }}
+          EMAIL_SUBJECT: ${{ steps.run_updater.outputs.email_subject }}
+        run: |
+          set -euo pipefail
+          email_file="${{ steps.compose_email.outputs.email_file }}"
+          if [ -z "$email_file" ] || [ ! -f "$email_file" ]; then
+            echo "::warning::Email body file not found; sending short fallback message."
+            printf "%s\n" "Automated workflow ran. No detailed report available." > /tmp/email_fallback.txt
+            email_file=/tmp/email_fallback.txt
+          fi
+
+          python - "$email_file" <<'PY'
+import sys, os, smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
+email_file = sys.argv[1]
+smtp_server = os.environ.get("SMTP_SERVER")
+smtp_port = os.environ.get("SMTP_PORT") or "587"
+smtp_user = os.environ.get("SMTP_USERNAME")
+smtp_pass = os.environ.get("SMTP_PASSWORD")
+to_addr = os.environ.get("NOTIFY_EMAIL")
+from_addr = os.environ.get("FROM_EMAIL") or smtp_user
+subject = os.environ.get("EMAIL_SUBJECT") or "Workflow Report"
+
+with open(email_file, "r", encoding="utf-8", errors="replace") as fh:
+    body = fh.read()
+
+msg = MIMEMultipart()
+msg["From"] = from_addr
+msg["To"] = to_addr
+msg["Subject"] = subject
+msg.attach(MIMEText(body, "plain"))
+
+try:
+    port = int(smtp_port)
+except Exception:
+    port = 587
+
+if port == 465:
+    server = smtplib.SMTP_SSL(smtp_server, port, timeout=30)
+else:
+    server = smtplib.SMTP(smtp_server, port, timeout=30)
+    server.starttls()
+try:
+    if smtp_user and smtp_pass:
+        server.login(smtp_user, smtp_pass)
+    server.sendmail(from_addr, [to_addr], msg.as_string())
+finally:
+    try:
+        server.quit()
+    except Exception:
+        pass
+PY
+
+      - name: Cleanup email temp file
+        if: always()
+        run: |
+          set -euo pipefail
+          email_file="${{ steps.compose_email.outputs.email_file }}"
+          if [ -n "${email_file:-}" ] && [ -f "$email_file" ]; then
+            rm -f "$email_file" || true
