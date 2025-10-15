@@ -100,7 +100,7 @@ jobs:
         with:
           args: detect --source=. --report-path=reports/secrets_report.txt --no-banner --redact
 
-      # ------------------ Compose Email ------------------
+      # ------------------ Compose email body into a temp file (single-line output) ----
       - name: Compose consolidated email body
         id: compose_email
         run: |
@@ -112,9 +112,10 @@ jobs:
             report=$(ls -t reports/report_*.txt 2>/dev/null | head -n1 || true)
           fi
 
+          # Create a temporary file that will persist for the job run
           tmpfile=$(mktemp)
 
-          # Build the email content
+          # Build the email content into that file
           {
             echo "SECRETS CHECK:"
             if [ -s reports/secrets_report.txt ]; then
@@ -123,6 +124,7 @@ jobs:
             else
               echo "- No obvious secrets detected."
             fi
+
             echo ""
             echo "--- REPORT CONTENT (pasted below) ---"
             if [ -n "$report" ] && [ -f "$report" ]; then
@@ -132,29 +134,80 @@ jobs:
             fi
           } > "$tmpfile"
 
-          # Safely append to GitHub Actions output file
-          if [ -z "${GITHUB_OUTPUT:-}" ]; then
-            echo "::error::GITHUB_OUTPUT not set, aborting."
-            cat "$tmpfile" >&2
-            rm -f "$tmpfile"
-            exit 1
+          # Expose the temp file path as a single-line output (safe)
+          # NOTE: this writes a single-line to $GITHUB_OUTPUT — no multiline here.
+          echo "email_file=$tmpfile" >> $GITHUB_OUTPUT
+
+      # ------------------ Send consolidated report email using Python (reads temp file) --
+      - name: Send consolidated report email
+        if: always()
+        env:
+          SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          NOTIFY_EMAIL: ${{ secrets.NOTIFY_EMAIL }}
+          FROM_EMAIL: ${{ secrets.SMTP_USERNAME }}
+          EMAIL_SUBJECT: ${{ steps.run_updater.outputs.email_subject }}
+        run: |
+          set -euo pipefail
+
+          # get the path to the email body file created in previous step
+          email_file="${{ steps.compose_email.outputs.email_file }}"
+          if [ -z "$email_file" ] || [ ! -f "$email_file" ]; then
+            echo "::warning::Email body file not found; sending short fallback message."
+            printf "%s\n" "Automated workflow ran. No detailed report available." > /tmp/email_fallback.txt
+            email_file=/tmp/email_fallback.txt
           fi
 
-          printf '%s\n' "email_body<<EOF" >> "$GITHUB_OUTPUT"
-          cat "$tmpfile" >> "$GITHUB_OUTPUT"
-          printf '%s\n' "EOF" >> "$GITHUB_OUTPUT"
+          # Use a small Python script to send email via SMTP (supports TLS)
+          python - "$email_file" <<'PY'
+import sys, os, smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
-          rm -f "$tmpfile"
+email_file = sys.argv[1]
+smtp_server = os.environ.get("SMTP_SERVER")
+smtp_port = os.environ.get("SMTP_PORT") or "587"
+smtp_user = os.environ.get("SMTP_USERNAME")
+smtp_pass = os.environ.get("SMTP_PASSWORD")
+to_addr = os.environ.get("NOTIFY_EMAIL")
+from_addr = os.environ.get("FROM_EMAIL") or smtp_user
+subject = os.environ.get("EMAIL_SUBJECT") or "Workflow Report"
 
-      # ------------------ Send Email ------------------
-      - name: Send consolidated report email
-        uses: dawidd6/action-send-mail@v3
-        with:
-          server_address: ${{ secrets.SMTP_SERVER }}
-          server_port: ${{ secrets.SMTP_PORT }}
-          username: ${{ secrets.SMTP_USERNAME }}
-          password: ${{ secrets.SMTP_PASSWORD }}
-          subject: ${{ steps.run_updater.outputs.email_subject }}
-          to: ${{ secrets.NOTIFY_EMAIL }}
-          from: GitHub Actions <${{ secrets.SMTP_USERNAME }}>
-          body: ${{ steps.compose_email.outputs.email_body }}
+# Read the email body from file (utf-8 fallback)
+with open(email_file, "r", encoding="utf-8", errors="replace") as fh:
+    body = fh.read()
+
+msg = MIMEMultipart()
+msg["From"] = from_addr
+msg["To"] = to_addr
+msg["Subject"] = subject
+msg.attach(MIMEText(body, "plain"))
+
+# Try SMTPS (SSL) on port 465 first if port suggests it, else TLS
+port = int(smtp_port)
+if port == 465:
+    server = smtplib.SMTP_SSL(smtp_server, port, timeout=30)
+else:
+    server = smtplib.SMTP(smtp_server, port, timeout=30)
+    server.starttls()
+try:
+    if smtp_user and smtp_pass:
+        server.login(smtp_user, smtp_pass)
+    server.sendmail(from_addr, [to_addr], msg.as_string())
+finally:
+    server.quit()
+PY
+
+      # ------------------ Cleanup temp email file (best-effort) ------------------
+      - name: Cleanup email temp file
+        if: always()
+        run: |
+          set -euo pipefail
+          email_file="${{ steps.compose_email.outputs.email_file }}"
+          if [ -n "${email_file:-}" ] && [ -f "$email_file" ]; then
+            rm -f "$email_file" || true
+          fi
+
+      # ------------------ End of workflow ------------------------------------------------
