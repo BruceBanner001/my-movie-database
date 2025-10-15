@@ -52,33 +52,27 @@ jobs:
         run: |
           set -euo pipefail
 
-          # Read inputs (expanded by Actions). Provide safe defaults in shell.
           MAX_PER_RUN="${{ github.event.inputs.MAX_PER_RUN }}"
           MAX_PER_RUN="${MAX_PER_RUN:-0}"
           MAX_RUN_TIME_MINUTES="${{ github.event.inputs.MAX_RUN_TIME_MINUTES }}"
           MAX_RUN_TIME_MINUTES="${MAX_RUN_TIME_MINUTES:-300}"
           EVENT_NAME="${{ github.event_name }}"
-          KEEP_OLD_IMAGES_DAYS="${{ env.KEEP_OLD_IMAGES_DAYS:-7 }:-7}"
+          KEEP_OLD_IMAGES_DAYS="${{ env.KEEP_OLD_IMAGES_DAYS:-7 }}"
 
-          # Run your Python updater; capture output to parse report path
           output=$(python create_update_backup_delete.py 2>&1 || true)
           printf '%s\n' "$output"
 
-          # try to parse a "Report written -> path" or "Report written → path" line
           report_path=$(printf '%s\n' "$output" | awk -F'->' '/Report written/ {gsub(/^[ \t]+|[ \t]+$/, "", $2); print $2; exit}')
           if [ -z "$report_path" ]; then
             report_path=$(printf '%s\n' "$output" | awk -F'→' '/Report written/ {gsub(/^[ \t]+|[ \t]+$/, "", $2); print $2; exit}')
           fi
-
-          # fallback to latest report file in reports/
           if [ -z "$report_path" ] || [ ! -f "$report_path" ]; then
             report_path=$(ls -t reports/report_*.txt 2>/dev/null | head -n1 || true)
           fi
 
           echo "report_path=$report_path" >> "$GITHUB_OUTPUT"
 
-          # prepare email subject as an output
-          if [ "${EVENT_NAME:-}" = "schedule" ]; then
+          if [ "$EVENT_NAME" = "schedule" ]; then
             prefix="[Automatic]"
           else
             prefix="[Manual]"
@@ -145,7 +139,6 @@ jobs:
             fi
           } > "$tmpfile"
 
-          # Expose the temp file path as a single-line output
           echo "email_file=$tmpfile" >> "$GITHUB_OUTPUT"
 
       # ------------------ Send consolidated report email ------------------
@@ -161,28 +154,21 @@ jobs:
           EMAIL_SUBJECT: ${{ steps.run_updater.outputs.email_subject }}
         run: |
           set -euo pipefail
-
-          # Get the path to the email body file created in previous step (Actions expands this)
           email_file="${{ steps.compose_email.outputs.email_file }}"
           if [ -z "$email_file" ] || [ ! -f "$email_file" ]; then
-            echo "::warning::Email body file not found; sending short fallback message."
-            printf "%s\n" "Automated workflow ran. No detailed report available." > /tmp/email_fallback.txt
-            email_file=/tmp/email_fallback.txt
+            echo "::warning::Email body file not found; using fallback message."
+            echo "Automated workflow ran. No detailed report available." > /tmp/email.txt
+            email_file=/tmp/email.txt
           fi
 
-          # Embedded Python mailer is base64-encoded to avoid YAML/heredoc parsing issues.
           echo "aW1wb3J0IHN5cywgb3MsIHNtdHBsaWIKZnJvbSBlbWFpbC5taW1lLnRleHQgaW1wb3J0IE1JTUVUZXh0CmZyb20gZW1haWwubWltZS5tdWx0aXBhcnQgaW1wb3J0IE1JTUVNdWx0aXBhcnQKCmVtYWlsX2ZpbGUgPSBzeXMuYXJndlsxXQpzbXRwX3NlcnZlciA9IG9zLmVudmlyb24uZ2V0KCJTTVRQX1NFUlZFUiIpCnNtdHBfcG9ydCA9IG9zLmVudmlyb24uZ2V0KCJTTVRQX1BPUlQiKSBvciAiNTg3IgpzbXRwX3VzZXIgPSBvcy5lbnZpcm9uLmdldCgiU01UUF9VU0VSTkFNRSIpCnNtdHBfcGFzcyA9IG9zLmVudmlyb24uZ2V0KCJTTVRQX1BBU1NXT1JEIikKdG9fYWRkciA9IG9zLmVudmlyb24uZ2V0KCJOT1RJRllfRU1BSUwiKQpmcm9tX2FkZHIgPSBvcy5lbnZpcm9uLmdldCgiRlJPTV9FTUFJTCIpIG9yIHNtdHBfdXNlcgpzdWJqZWN0ID0gb3MuZW52aXJvbi5nZXQoIkVNQUlMX1NVQkpFQ1QiKSBvciAiV29ya2Zsb3cgUmVwb3J0IgoKd2l0aCBvcGVuKGVtYWlsX2ZpbGUsICJyIiwgZW5jb2Rpbmc9InV0Zi04IiwgZXJyb3JzPSJyZXBsYWNlIikgYXMgZmg6CiAgICBib2R5ID0gZmgucmVhZCgpCgptc2cgPSBNSU1FTXVsdGlwYXJ0KCkKbXNnWyJGcm9tIl0gPSBmcm9tX2FkZHIKbXNnWyJUbyJdID0gdG9fYWRkcgptc2dbIlN1YmplY3QiXSA9IHN1YmplY3QKbXNnLmF0dGFjaChNSU1FVGV4dChib2R5LCAicGxhaW4iKSkKCnRyeToKICAgIHBvcnQgPSBpbnQoc210cF9wb3J0KQpleGNlcHQgRXhjZXB0aW9uOgogICAgcG9ydCA9IDU4NwoKaWYgcG9ydCA9PSA0NjU6CiAgICBzZXJ2ZXIgPSBzbXRwbGliLlNNVFBfU1NMKHNtdHBfc2VydmVyLCBwb3J0LCB0aW1lb3V0PTMwKQplbHNlOgogICAgc2VydmVyID0gc210cGxpYi5TTVRQKHNtdHBfc2VydmVyLCBwb3J0LCB0aW1lb3V0PTMwKQogICAgc2VydmVyLnN0YXJ0dGxzKCkKdHJ5OgogICAgaWYgc210cF91c2VyIGFuZCBzbXRwX3Bhc3M6CiAgICAgICAgc2VydmVyLmxvZ2luKHNtdHBfdXNlciwgc210cF9wYXNzKQogICAgc2VydmVyLnNlbmRtYWlsKGZyb21fYWRkciwgW3RvX2FkZHJdLCBtc2cuYXNfc3RyaW5nKCkpCmZpbmFsbHk6CiAgICB0cnk6CiAgICAgICAgc2VydmVyLnF1aXQoKQogICAgZXhjZXB0IEV4Y2VwdGlvbjoKICAgICAgICBwYXNzCg==" | base64 --decode > /tmp/send_email.py
-
           python /tmp/send_email.py "$email_file"
           rm -f /tmp/send_email.py
 
-      # ------------------ Cleanup temp email file ------------------
-      - name: Cleanup email temp file
+      - name: Cleanup temp email file
         if: always()
         run: |
           set -euo pipefail
           email_file="${{ steps.compose_email.outputs.email_file }}"
           if [ -n "${email_file:-}" ] && [ -f "$email_file" ]; then
             rm -f "$email_file" || true
-
-      # ------------------ End of workflow ------------------------------------------------
