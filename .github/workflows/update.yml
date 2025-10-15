@@ -1,5 +1,7 @@
 # ============================================================================
-# Workflow: Excel → JSON Automation (Robust email via Python)
+# Workflow: Excel → JSON Automation (Robust, YAML-safe)
+# Purpose : Automate weekly + manual Excel → JSON updates, deletions, backups,
+#           and run reports (TXT only) for "my-movie-database".
 # ============================================================================
 
 name: Excel → JSON Update
@@ -16,7 +18,7 @@ on:
         default: '0'
         required: false
   schedule:
-    - cron: "30 18 * * 6"
+    - cron: "30 18 * * 6"  # Scheduled: Every Sunday 00:00 AM IST (Saturday 18:30 UTC)
 
 jobs:
   update-json:
@@ -55,8 +57,10 @@ jobs:
           SCHEDULED_RUN: ${{ github.event_name == 'schedule' && 'true' || 'false' }}
         run: |
           set -euo pipefail
+          # run the updater script and capture stdout / stderr
           output=$(python create_update_backup_delete.py 2>&1 || true)
           printf '%s\n' "$output"
+          # try to extract the report path printed by the script
           report_path=$(printf '%s\n' "$output" | awk -F'→' '/Report written/ {gsub(/^[ \t]+|[ \t]+$/, "", $2); print $2; exit}')
           if [ -z "$report_path" ] || [ ! -f "$report_path" ]; then
             report_path=$(ls -t reports/report_*.txt 2>/dev/null | head -n1 || true)
@@ -106,12 +110,14 @@ jobs:
             echo "SECRETS CHECK:"
             if [ -s reports/secrets_report.txt ]; then
               echo "- Gitleaks detected potential secrets. (Details below)"
+              # Escape % for GitHub Actions formatting
               sed 's/%/%%/g' reports/secrets_report.txt
             else
               echo "- No obvious secrets detected."
             fi
             echo ""
             echo "--- REPORT CONTENT (pasted below) ---"
+            # Prefer the path captured from the updater; fallback to latest report file
             report="${{ steps.run_updater.outputs.report_path }}" || true
             if [ -z "${report}" ] || [ ! -f "${report}" ]; then
               report=$(ls -t reports/report_*.txt 2>/dev/null | head -n1 || true)
@@ -123,7 +129,6 @@ jobs:
             fi
           } > "$OUTFILE"
           echo "Wrote email body to $OUTFILE"
-        shell: bash
 
       # ------------------ Send consolidated report email (Python smtp) ------------------
       - name: Send consolidated report email (Python smtp)
@@ -137,7 +142,7 @@ jobs:
           EMAIL_SUBJECT: ${{ steps.run_updater.outputs.email_subject }}
         run: |
           set -euo pipefail
-          python - <<PYCODE
+          python - <<'PY'
 import os, smtplib, ssl, sys
 from email.message import EmailMessage
 
@@ -171,6 +176,6 @@ try:
     print("✅ Email sent successfully to", to_addr)
 except Exception as e:
     print("⚠️ Failed to send email:", e)
+    # Keep the workflow from failing solely due to email send problems
     sys.exit(0)
-PYCODE
-        shell: bash
+PY
