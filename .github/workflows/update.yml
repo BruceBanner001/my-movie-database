@@ -66,7 +66,7 @@ jobs:
             report_path=$(ls -t reports/report_*.txt 2>/dev/null | head -n1 || true)
           fi
 
-          echo "report_path=$report_path" >> $GITHUB_OUTPUT
+          echo "report_path=$report_path" >> "$GITHUB_OUTPUT"
 
           if [ "${EVENT_NAME:-}" = "schedule" ]; then
             prefix="[Automatic]"
@@ -74,7 +74,7 @@ jobs:
             prefix="[Manual]"
           fi
           subj_date=$(date -u "+%d %B %Y %H:%M")
-          echo "email_subject=$prefix Workflow $subj_date Report" >> $GITHUB_OUTPUT
+          echo "email_subject=$prefix Workflow $subj_date Report" >> "$GITHUB_OUTPUT"
 
       # ------------------ Commit and Push Changes ------------------
       - name: Commit & push changes
@@ -100,22 +100,17 @@ jobs:
         with:
           args: detect --source=. --report-path=reports/secrets_report.txt --no-banner --redact
 
-      # ------------------ Compose email body into a temp file (single-line output) ----
+      # ------------------ Compose consolidated email body ------------------
       - name: Compose consolidated email body
         id: compose_email
         run: |
           set -euo pipefail
-
-          # Pick report path (from previous step or latest)
           report="${{ steps.run_updater.outputs.report_path }}"
           if [ -z "$report" ] || [ ! -f "$report" ]; then
             report=$(ls -t reports/report_*.txt 2>/dev/null | head -n1 || true)
           fi
 
-          # Create a temporary file that will persist for the job run
           tmpfile=$(mktemp)
-
-          # Build the email content into that file
           {
             echo "SECRETS CHECK:"
             if [ -s reports/secrets_report.txt ]; then
@@ -134,11 +129,9 @@ jobs:
             fi
           } > "$tmpfile"
 
-          # Expose the temp file path as a single-line output (safe)
-          # NOTE: this writes a single-line to $GITHUB_OUTPUT — no multiline here.
-          echo "email_file=$tmpfile" >> $GITHUB_OUTPUT
+          echo "email_file=$tmpfile" >> "$GITHUB_OUTPUT"
 
-      # ------------------ Send consolidated report email using Python (reads temp file) --
+      # ------------------ Send consolidated report email ------------------
       - name: Send consolidated report email
         if: always()
         env:
@@ -151,8 +144,6 @@ jobs:
           EMAIL_SUBJECT: ${{ steps.run_updater.outputs.email_subject }}
         run: |
           set -euo pipefail
-
-          # get the path to the email body file created in previous step
           email_file="${{ steps.compose_email.outputs.email_file }}"
           if [ -z "$email_file" ] || [ ! -f "$email_file" ]; then
             echo "::warning::Email body file not found; sending short fallback message."
@@ -160,7 +151,6 @@ jobs:
             email_file=/tmp/email_fallback.txt
           fi
 
-          # Use a small Python script to send email via SMTP (supports TLS)
           python - "$email_file" <<'PY'
 import sys, os, smtplib
 from email.mime.text import MIMEText
@@ -175,7 +165,6 @@ to_addr = os.environ.get("NOTIFY_EMAIL")
 from_addr = os.environ.get("FROM_EMAIL") or smtp_user
 subject = os.environ.get("EMAIL_SUBJECT") or "Workflow Report"
 
-# Read the email body from file (utf-8 fallback)
 with open(email_file, "r", encoding="utf-8", errors="replace") as fh:
     body = fh.read()
 
@@ -185,13 +174,13 @@ msg["To"] = to_addr
 msg["Subject"] = subject
 msg.attach(MIMEText(body, "plain"))
 
-# Try SMTPS (SSL) on port 465 first if port suggests it, else TLS
 port = int(smtp_port)
 if port == 465:
     server = smtplib.SMTP_SSL(smtp_server, port, timeout=30)
 else:
     server = smtplib.SMTP(smtp_server, port, timeout=30)
     server.starttls()
+
 try:
     if smtp_user and smtp_pass:
         server.login(smtp_user, smtp_pass)
@@ -200,7 +189,7 @@ finally:
     server.quit()
 PY
 
-      # ------------------ Cleanup temp email file (best-effort) ------------------
+      # ------------------ Cleanup temp email file ------------------
       - name: Cleanup email temp file
         if: always()
         run: |
@@ -209,5 +198,3 @@ PY
           if [ -n "${email_file:-}" ] && [ -f "$email_file" ]; then
             rm -f "$email_file" || true
           fi
-
-      # ------------------ End of workflow ------------------------------------------------
