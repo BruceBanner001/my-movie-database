@@ -105,34 +105,45 @@ jobs:
         id: compose_email
         run: |
           set -euo pipefail
+
+          # Pick report path (from previous step or latest)
           report="${{ steps.run_updater.outputs.report_path }}"
           if [ -z "$report" ] || [ ! -f "$report" ]; then
             report=$(ls -t reports/report_*.txt 2>/dev/null | head -n1 || true)
           fi
 
           tmpfile=$(mktemp)
+
+          # Build the email content
           {
             echo "SECRETS CHECK:"
             if [ -s reports/secrets_report.txt ]; then
               echo "- Gitleaks detected potential secrets. (Details below)"
-              sed 's/%/%%/g' reports/secrets_report.txt
+              sed 's/%/%%/g' reports/secrets_report.txt || true
             else
               echo "- No obvious secrets detected."
             fi
             echo ""
             echo "--- REPORT CONTENT (pasted below) ---"
             if [ -n "$report" ] && [ -f "$report" ]; then
-              sed 's/%/%%/g' "$report"
+              sed 's/%/%%/g' "$report" || true
             else
               echo "⚠️ Report file not found."
             fi
           } > "$tmpfile"
 
-          {
-            echo "email_body<<EOF"
-            cat "$tmpfile"
-            echo "EOF"
-          } >> $GITHUB_OUTPUT
+          # Safely append to GitHub Actions output file
+          if [ -z "${GITHUB_OUTPUT:-}" ]; then
+            echo "::error::GITHUB_OUTPUT not set, aborting."
+            cat "$tmpfile" >&2
+            rm -f "$tmpfile"
+            exit 1
+          fi
+
+          printf '%s\n' "email_body<<EOF" >> "$GITHUB_OUTPUT"
+          cat "$tmpfile" >> "$GITHUB_OUTPUT"
+          printf '%s\n' "EOF" >> "$GITHUB_OUTPUT"
+
           rm -f "$tmpfile"
 
       # ------------------ Send Email ------------------
