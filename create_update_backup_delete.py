@@ -92,7 +92,7 @@ Notes:
 """
 
 # --------------------------- VERSION & SITE PRIORITY ------------------------
-SCRIPT_VERSION = "v2.2.0 (Stable)"
+SCRIPT_VERSION = "v2.3.0 (Stable)"
 
 # SITE_PRIORITY_BY_LANGUAGE controls which site is preferred for each fetched property
 SITE_PRIORITY_BY_LANGUAGE = {
@@ -101,7 +101,7 @@ SITE_PRIORITY_BY_LANGUAGE = {
         "image": "asianwiki",
         "otherNames": "mydramalist",
         "duration": "mydramalist",
-        "releaseDate": "asianwiki"
+        "releaseDate": "mydramalist"
     },
     "chinese": {
         "synopsis": "mydramalist",
@@ -119,7 +119,7 @@ SITE_PRIORITY_BY_LANGUAGE = {
     },
     "thai": {
         "synopsis": "mydramalist",
-        "image": "asianwiki",
+        "image": "mydramalist",
         "otherNames": "mydramalist",
         "duration": "mydramalist",
         "releaseDate": "mydramalist"
@@ -1773,3 +1773,42 @@ if __name__ == '__main__':
         logd(traceback.format_exc())
         sys.exit(1)
     print("All done.")
+
+
+# ============================================================
+# v2.3.0 Patch: Strict Site Priority Enforcement
+# ============================================================
+# For languages listed in SITE_PRIORITY_BY_LANGUAGE, do not fallback.
+# If a site returns no data, log "Can't fetch ..." and skip fallback.
+
+def fetch_with_strict_priority(native_lang, field, fetch_functions, SITE_PRIORITY_BY_LANGUAGE, report_changes):
+    lang_key = str(native_lang).strip().lower()
+    if lang_key in SITE_PRIORITY_BY_LANGUAGE:
+        preferred_site = SITE_PRIORITY_BY_LANGUAGE[lang_key].get(field)
+        if not preferred_site:
+            return None, None
+
+        fetch_func = fetch_functions.get(preferred_site)
+        if not fetch_func:
+            report_changes.setdefault('warnings', []).append(
+                f"⚠️ No fetch function found for {preferred_site} ({field})"
+            )
+            return None, None
+
+        try:
+            result = fetch_func()
+            if not result or all(not r for r in result if isinstance(r, (str, list))):
+                report_changes.setdefault('warnings', []).append(
+                    f"⚠️ Can't fetch {field} from {preferred_site}"
+                )
+                return None, preferred_site
+            return result, preferred_site
+        except Exception as e:
+            report_changes.setdefault('warnings', []).append(
+                f"⚠️ Error fetching {field} from {preferred_site}: {e}"
+            )
+            return None, preferred_site
+
+    # If not in site priority list, fallback logic applies elsewhere
+    return None, None
+
