@@ -1308,7 +1308,7 @@ def write_report(report_changes_by_sheet, report_path, final_not_found_deletions
             lines.append("")
             lines.append("🆕 Data Created:")
             for obj in created:
-                lines.append(f"- {obj.get('showName','Unknown')} ({obj.get('releasedYear','N/A')}) → First Time Uploaded")
+                lines.append(f"- {obj.get('showName','Unknown')} ({obj.get('releasedYear','N/A')}) -> First Time Uploaded")
         updated = changes.get('updated', [])
         if updated:
             lines.append("")
@@ -1324,7 +1324,7 @@ def write_report(report_changes_by_sheet, report_path, final_not_found_deletions
                             continue
                         changed_fields.append(human_readable_field(k))
                 fields_text = ", ".join(changed_fields) + " Updated" if changed_fields else "Updated"
-                lines.append(f"- {new.get('showName','Unknown')} ({new.get('releasedYear','N/A')}) → {fields_text}")
+                lines.append(f"- {new.get('showName','Unknown')} ({new.get('releasedYear','N/A')}) -> {fields_text}")
         skipped = changes.get('skipped', [])
         if skipped:
             lines.append("")
@@ -1336,7 +1336,7 @@ def write_report(report_changes_by_sheet, report_path, final_not_found_deletions
             lines.append("")
             lines.append("🖼️ Image Updated:")
             for itm in images:
-                lines.append(f"- {itm.get('showName','Unknown')} → updated")
+                lines.append(f"- {itm.get('showName','Unknown')} -> updated")
                 total_images_updated += 1
         if changes.get('metadata_backups_created'):
             lines.append("")
@@ -1422,8 +1422,6 @@ def write_report(report_changes_by_sheet, report_path, final_not_found_deletions
                     lines.append(f"💾 Backup files check failed: {e}")
 
                 lines.append("")
-
-
     # overall summary
     lines.append(sep)
     lines.append("📊 Overall Summary")
@@ -1630,6 +1628,9 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
                     else:
                         new_obj['updatedDetails'] = 'Updated'
                     merged_by_id[sid] = new_obj
+                else:
+                    # no changes found -> mark as skipped
+                    report_changes.setdefault('skipped', []).append(f"{sid} - {old_obj.get('showName', 'Unknown')} ({old_obj.get('releasedYear', 'N/A')})")
             else:
                 merged_by_id[sid] = new_obj
         if items:
@@ -1638,7 +1639,7 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
             try:
                 with open(backup_name, 'w', encoding='utf-8') as bf:
                     json.dump(items, bf, indent=4, ensure_ascii=False)
-                print(f"✅ Backup saved → {backup_name}")
+                print(f"✅ Backup saved -> {backup_name}")
             except Exception as e:
                 print(f"⚠️ Could not write backup {backup_name}: {e}")
         report_changes_by_sheet[s] = report_changes
@@ -1678,7 +1679,7 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
     # Now cleanup old metadata backups and record count for report
     removed_metadata_backups = cleanup_old_metadata_backups(METADATA_BACKUP_RETENTION_DAYS)
     write_report(report_changes_by_sheet, report_path, final_not_found_deletions=sorted(list(still_not_found)), start_time=start_time, end_time=now_ist(), metadata_backups_removed=removed_metadata_backups)
-    print(f"✅ Report written → {report_path}")
+    print(f"✅ Report written -> {report_path}")
     # Compose email body
     email_body = compose_email_body_from_report(report_path)
     try:
