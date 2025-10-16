@@ -92,7 +92,7 @@ Notes:
 """
 
 # --------------------------- VERSION & SITE PRIORITY ------------------------
-SCRIPT_VERSION = "v2.3.3 (Stable)"
+SCRIPT_VERSION = "v2.3.4 (Stable)"
 
 # SITE_PRIORITY_BY_LANGUAGE controls which site is preferred for each fetched property
 SITE_PRIORITY_BY_LANGUAGE = {
@@ -1018,6 +1018,28 @@ def save_metadata_backup(show_id, show_name, language, fetched_fields, site_prio
         logd(f"save_metadata_backup failed: {e}")
         return None
 
+
+# ---------------------------- Helper: backup before modification ------------------
+
+# ---------------------------- Helper: backup before modification ------------------
+def backup_before_modification(show_id, old_obj):
+    """Save the *old* object to BACKUP_DIR as BEFORE_<timestamp>_<show_id>.json
+    only when an actual modification occurs. Returns the backup path or None.
+    """
+    try:
+        if not old_obj or not isinstance(old_obj, dict):
+            return None
+        os.makedirs(BACKUP_DIR, exist_ok=True)
+        fname = f"BEFORE_{now_ist().strftime('%d_%B_%Y_%H%M')}_{show_id}.json"
+        outpath = os.path.join(BACKUP_DIR, safe_filename(fname))
+        with open(outpath, 'w', encoding='utf-8') as of:
+            json.dump(old_obj, of, indent=4, ensure_ascii=False)
+        return outpath
+    except Exception as e:
+        logd(f"backup_before_modification failed for {show_id}: {e}")
+        return None
+
+
 # ---------------------------- Cleanup metadata backups ---------------------
 def cleanup_old_metadata_backups(retention_days=METADATA_BACKUP_RETENTION_DAYS):
     if not os.path.exists(BACKUP_META_DIR):
@@ -1643,6 +1665,7 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
             items, processed, finished, next_start_idx = [], 0, True, start_idx
         for new_obj in items:
             sid = new_obj.get('showID')
+
             if sid in merged_by_id:
                 old_obj = merged_by_id[sid]
                 if old_obj != new_obj:
@@ -1658,21 +1681,27 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
                         new_obj['updatedDetails'] = f"{', '.join(changed)} Updated"
                     else:
                         new_obj['updatedDetails'] = 'Updated'
+                    # Backup the old object before replacing (only when actual difference)
+                    try:
+                        backup_path = backup_before_modification(sid, old_obj)
+                        if backup_path:
+                            report_changes.setdefault('metadata_backups_created', []).append(f"💾 Backup Created: {backup_path}")
+                    except Exception as e:
+                        logd(f"backup attempt failed for {sid}: {e}")
+                    # replace object
                     merged_by_id[sid] = new_obj
                 else:
                     # no changes found -> mark as skipped
-                    report_changes.setdefault('skipped', []).append(f"{sid} - {old_obj.get('showName', 'Unknown')} ({old_obj.get('releasedYear', 'N/A')})")
+                    report_changes.setdefault('skipped', []).append(f"{old_obj.get('showName', 'Unknown')} ({old_obj.get('releasedYear', 'N/A')}) -> Unchanged (Skipped)")
             else:
                 merged_by_id[sid] = new_obj
+
         if items:
             os.makedirs(BACKUP_DIR, exist_ok=True)
-            backup_name = os.path.join(BACKUP_DIR, f"{filename_timestamp()}_{safe_filename(s)}.json")
-            try:
-                with open(backup_name, 'w', encoding='utf-8') as bf:
-                    json.dump(items, bf, indent=4, ensure_ascii=False)
-                print(f"✅ Backup saved -> {backup_name}")
-            except Exception as e:
-                print(f"⚠️ Could not write backup {backup_name}: {e}")
+        # Per-sheet full-item backup skipped. Only individual BEFORE_* backups are created for modified records.
+        if not any(k in report_changes for k in ('metadata_backups_created', 'images', 'updated')):
+            report_changes.setdefault('info', []).append('No modified items to backup (full per-sheet backup skipped)')
+
         report_changes_by_sheet[s] = report_changes
         if processed > 0:
             any_sheet_processed = True
