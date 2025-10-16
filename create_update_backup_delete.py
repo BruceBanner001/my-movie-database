@@ -1192,10 +1192,19 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
                     try:
                         os.makedirs(BACKUP_META_DIR, exist_ok=True)
                         backup_path = save_metadata_backup(sid, show_name, language, {}, site_priority_used or {})
-                        if backup_path:
-                            report_changes.setdefault('metadata_backups_created', []).append(f"💾 Metadata Backup Created: {backup_path}")
+                        if backup_path and os.path.exists(backup_path):
+                            report_changes.setdefault('metadata_backups_created', []).append(
+                                f"💾 Metadata Backup Created: {backup_path}"
+                            )
+                        else:
+                            report_changes.setdefault('metadata_backups_failed', []).append(
+                                f"⚠️ Failed to create metadata backup for {sid}: File not found after save attempt"
+                            )
                     except Exception as e:
-                        logd(f"empty metadata backup save failed: {e}")
+                        report_changes.setdefault('metadata_backups_failed', []).append(
+                            f"⚠️ Exception during metadata backup for {sid}: {e}"
+                        )
+
                 # Also populate sourceSites in main object (only for new shows)
                 if site_priority_used:
                     obj['sourceSites'] = site_priority_used.copy()
