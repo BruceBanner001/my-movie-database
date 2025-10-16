@@ -1000,25 +1000,29 @@ def sheet_base_offset(sheet_name: str) -> int:
     return 0
 
 # ---------------------------- Helper: save metadata backup ------------------
-def save_metadata_backup(show_id, show_name, language, fetched_fields, site_priority_used):
+def save_metadata_backup(show_id, show_name, language, metadata, site_priority_used):
+    """Save metadata backup safely and verify creation."""
     try:
         os.makedirs(BACKUP_META_DIR, exist_ok=True)
-        fname = f"META_{now_ist().strftime('%d_%B_%Y_%H%M')}_{show_id}.json"
-        outpath = os.path.join(BACKUP_META_DIR, safe_filename(fname))
-        payload = {
-            "scriptVersion": SCRIPT_VERSION,
-            "showID": show_id,
-            "showName": show_name,
-            "language": language,
-            "timestamp": now_ist().strftime("%d %B %Y %I:%M %p (IST)"),
-            "fetchedFields": fetched_fields,
-            "sitePriorityUsed": site_priority_used
-        }
-        with open(outpath, 'w', encoding='utf-8') as of:
-            json.dump(payload, of, indent=2, ensure_ascii=False)
-        return outpath
+        timestamp = now_ist().strftime('%d_%B_%Y_%H%M')
+        filename = f"META_{timestamp}_{show_id}.json"
+        path = os.path.join(BACKUP_META_DIR, safe_filename(filename))
+        
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump({
+                "showID": show_id,
+                "showName": show_name,
+                "language": language,
+                "metadata": metadata,
+                "sitePriorityUsed": site_priority_used
+            }, f, indent=4, ensure_ascii=False)
+
+        if os.path.exists(path):
+            return path
+        else:
+            raise IOError("File not found after writing.")
     except Exception as e:
-        logd(f"save_metadata_backup failed: {e}")
+        logd(f"⚠️ Metadata backup save failed for {show_id}: {e}")
         return None
 
 # ---------------------------- Cleanup metadata backups ---------------------
