@@ -120,7 +120,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "No metadata backups to commit."
           else
-            git commit -m "Add metadata backups [skip ci]"
+            git commit -m "Added metadata backups: $(date -u '+%Y-%m-%d %H:%M:%S')"
             git push
           fi
 
