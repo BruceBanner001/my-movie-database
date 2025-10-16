@@ -14,69 +14,6 @@
 #
 # ============================================================
 
-# ---------------------------- PATCHED HELPERS (Inserted by assistant) ----------------------------
-import re, json, os
-from datetime import datetime, timedelta
-
-FIELD_NAME_MAP = {
-    "showName": "Show Name",
-    "showImage": "Show Image",
-    "otherNames": "Other Names",
-    "watchStartedOn": "Watch Started On",
-    "watchEndedOn": "Watch Ended On",
-    "releasedYear": "Released Year",
-    "releaseDate": "Release Date",
-    "totalEpisodes": "Total Episodes",
-    "showType": "Show Type",
-    "nativeLanguage": "Native Language",
-    "watchedLanguage": "Watched Language",
-    "country": "Country",
-    "comments": "Comments",
-    "ratings": "Ratings",
-    "genres": "Category",
-    "network": "Network",
-    "againWatchedDates": "Again Watched Dates",
-    "updatedOn": "Updated On",
-    "updatedDetails": "Updated Details",
-    "synopsis": "Synopsis",
-    "topRatings": "Top Ratings",
-    "Duration": "Duration"
-}
-
-def humanize_field_name(k: str) -> str:
-    if k in FIELD_NAME_MAP:
-        return FIELD_NAME_MAP[k]
-    s = re.sub('([a-z0-9])([A-Z])', r'\\1 \\2', str(k))
-    s = s.replace('_', ' ')
-    parts = [p.capitalize() for p in s.split()]
-    return " ".join(parts)
-
-def format_updated_details(field_keys):
-    if not field_keys:
-        return "Updated"
-    human = [humanize_field_name(k) for k in field_keys]
-    return f"{', '.join(human)} Updated"
-
-def normalize_list_from_csv(cell_value, cap=False, strip=False, preserve_case=False):
-    if cell_value is None:
-        return []
-    if isinstance(cell_value, (list, tuple)):
-        items = [str(x) for x in cell_value if x is not None and str(x).strip()]
-    else:
-        s = str(cell_value)
-        if not s.strip():
-            return []
-        items = [p for p in [p.strip() for p in s.split(",")] if p]
-    if strip:
-        items = [p.strip() for p in items]
-    if preserve_case:
-        return items
-    if cap:
-        items = [p.capitalize() if p else p for p in items]
-    return items
-
-# --------------------------------------------------------------------------------
-
 
 # ============================================================================
 # Patched Script: create_update_backup_delete.py
@@ -231,7 +168,6 @@ try:
     from google.oauth2 import service_account
     from googleapiclient.discovery import build
     from googleapiclient.http import MediaIoBaseDownload, HttpRequest
-
     HAVE_GOOGLE_API = True
 except Exception:
     HAVE_GOOGLE_API = False
@@ -957,7 +893,11 @@ def apply_manual_updates(excel_file: str, json_file: str):
             else:
                 obj[k] = v
         obj['updatedOn'] = now_ist().strftime('%d %B %Y')
-        obj['updatedDetails'] = format_updated_details(list(upd.keys()))
+        try:
+            human_fields = [human_readable_field(k) for k in upd.keys()]
+            obj['updatedDetails'] = ", ".join(human_fields) + " Updated"
+        except Exception:
+            obj['updatedDetails'] = f"Updated {', '.join([k.capitalize() for k in upd.keys()])} Updated"
         updated_objs.append(obj)
     if updated_objs:
         merged = sorted(by_id.values(), key=lambda x: x.get('showID', 0))
@@ -974,6 +914,57 @@ COLUMN_MAP = {
     "ratings": "ratings", "catagory": "genres", "category": "genres", "original network": "network", "comments": "comments"
 }
 
+
+
+# ---------------------------- Field name helpers ---------------------------
+# Mapping for human-readable field names
+_HUMAN_FIELD_MAP = {
+    "showName": "Show Name",
+    "showImage": "Show Image",
+    "otherNames": "Other Names",
+    "watchStartedOn": "Watch Started On",
+    "watchEndedOn": "Watch Ended On",
+    "releasedYear": "Released Year",
+    "releaseDate": "Release Date",
+    "totalEpisodes": "Total Episodes",
+    "showType": "Show Type",
+    "nativeLanguage": "Native Language",
+    "watchedLanguage": "Watched Language",
+    "country": "Country",
+    "comments": "Comments",
+    "ratings": "Ratings",
+    "genres": "Category",
+    "network": "Network",
+    "againWatchedDates": "Again Watched Dates",
+    "updatedOn": "Updated On",
+    "updatedDetails": "Updated Details",
+    "synopsis": "Synopsis",
+    "topRatings": "Top Ratings",
+    "Duration": "Duration"
+}
+
+def human_readable_field(name):
+    if not name:
+        return ""
+    if name in _HUMAN_FIELD_MAP:
+        return _HUMAN_FIELD_MAP[name]
+    # Split camelCase and capitalize words
+    parts = re.sub('([a-z0-9])([A-Z])', r'\1 \2', name).replace('_',' ').split()
+    return ' '.join([p.capitalize() for p in parts])
+
+def changed_fields_text(old_obj, new_obj):
+    changed = []
+    for k in new_obj.keys():
+        # ignore metadata fields
+        if k in ('updatedOn','updatedDetails','sitePriorityUsed','sourceSites','topRatings'):
+            continue
+        old_v = old_obj.get(k) if isinstance(old_obj, dict) else None
+        new_v = new_obj.get(k)
+        if old_v != new_v:
+            changed.append(human_readable_field(k))
+    if not changed:
+        return "General Updated"
+    return ", ".join(changed) + " Updated"
 def tidy_comment(val):
     if pd.isna(val) or not str(val).strip():
         return None
@@ -1085,7 +1076,7 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
                     except Exception:
                         obj[key] = 0
                 elif key == "genres":
-                    obj[key] = normalize_list_from_csv(val, preserve_case=True, strip=True)
+                    obj[key] = normalize_list_from_csv(val, cap=False, strip=True)
                 elif key == "network":
                     obj[key] = normalize_list_from_csv(val, cap=False, strip=True)
                 else:
@@ -1103,8 +1094,8 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
                     obj["country"] = "Japan"
             dates = [ddmmyyyy(v) for v in row[again_idx:] if ddmmyyyy(v)]
             obj["againWatchedDates"] = dates
-            obj['updatedOn'] = now_ist().strftime('%d %B %Y')
-            obj['updatedDetails'] = format_updated_details(list(upd.keys()))
+            obj["updatedOn"] = now_ist().strftime("%d %B %Y")
+            obj["updatedDetails"] = "First time Uploaded"
             r = int(obj.get("ratings") or 0)
             obj["topRatings"] = r * (len(dates) if len(dates) > 0 else 1) * 100
             obj.setdefault("otherNames", [])
@@ -1250,16 +1241,12 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
     return items, processed, finished, next_index
 
 # ---------------------------- Reports --------------------------------------
-
 def write_report(report_changes_by_sheet, report_path, final_not_found_deletions=None, start_time=None, end_time=None, metadata_backups_removed=0):
-    try:
-        from datetime import datetime as _dt
-    except Exception:
-        _dt = datetime
     lines = []
+    # Header
     lines.append("✅ Workflow completed successfully")
     if end_time is None:
-        end_time = datetime.now()
+        end_time = now_ist()
     if start_time is None:
         start_time = end_time
     lines.append(f"📅 Run Time: {end_time.strftime('%d %B %Y %I:%M %p (IST)')}")
@@ -1267,53 +1254,38 @@ def write_report(report_changes_by_sheet, report_path, final_not_found_deletions
     seconds = int(duration_td.total_seconds())
     mins, secs = divmod(seconds, 60)
     lines.append(f"🕒 Duration: {mins} min {secs} sec")
-    SCRIPT_VERSION = globals().get('SCRIPT_VERSION', 'v2.0.0 (Stable)')
-    BACKUP_DIR = globals().get('BACKUP_DIR', 'backups')
-    JSON_FILE = globals().get('JSON_FILE', 'seriesData.json')
-    METADATA_BACKUP_RETENTION_DAYS = globals().get('METADATA_BACKUP_RETENTION_DAYS', 90)
-
     lines.append(f"⚙️ Script Version: {SCRIPT_VERSION}")
     lines.append("")
     sep = "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-
-    total_created = total_updated = total_deleted = total_skipped = total_images_updated = 0
+    total_created = total_updated = total_deleted = total_skipped = total_images_updated = total_warnings = total_failed = 0
     grand_rows = 0
-
-    SKIP_SHEET_SUMMARIES = {"Deleting Records", "Manual Update"}
-
-    for sheet, changes in (report_changes_by_sheet or {}).items():
+    # Per-sheet details
+    for sheet, changes in report_changes_by_sheet.items():
         lines.append(sep)
-        lines.append(f"🗂️ === {sheet} — {end_time.strftime('%d %B %Y')} ===")
+        lines.append(f"🗂️ === {sheet} — {now_ist().strftime('%d %B %Y')} ===")
         lines.append(sep)
-
         created = changes.get('created', [])
         if created:
             lines.append("")
             lines.append("🆕 Data Created:")
             for obj in created:
                 lines.append(f"- {obj.get('showName','Unknown')} ({obj.get('releasedYear','N/A')}) → First Time Uploaded")
-
         updated = changes.get('updated', [])
         if updated:
             lines.append("")
             lines.append("🔁 Data Updated:")
             for pair in updated:
-                new = pair.get('new', {})
-                old = pair.get('old', {})
-                changed_fields = [k for k in new.keys() if old.get(k) != new.get(k) and k not in ("updatedOn", "updatedDetails", "sourceSites")]
-                if changed_fields:
-                    fields_text = ", ".join([humanize_field_name(f) for f in changed_fields])
-                    lines.append(f"- {new.get('showName','Unknown')} ({new.get('releasedYear','N/A')}) → {fields_text} Updated")
-                else:
-                    lines.append(f"- {new.get('showName','Unknown')} ({new.get('releasedYear','N/A')}) → Updated")
-
+                new = pair.get('new')
+                old = pair.get('old')
+                changed_fields = [f for f in ["showName", "showImage", "releasedYear", "totalEpisodes", "comments", "ratings", "genres", "Duration", "synopsis"] if old.get(f) != new.get(f)]
+                fields_text = ", ".join([f.capitalize() for f in changed_fields]) if changed_fields else "General"
+                lines.append(f"- {new.get('showName','Unknown')} ({new.get('releasedYear','N/A')}) → {fields_text} Updated")
         skipped = changes.get('skipped', [])
         if skipped:
             lines.append("")
             lines.append("🚫 Unchanged Entries (Skipped):")
             for name in skipped:
                 lines.append(f"- {name}")
-
         images = changes.get('images', [])
         if images:
             lines.append("")
@@ -1321,38 +1293,22 @@ def write_report(report_changes_by_sheet, report_path, final_not_found_deletions
             for itm in images:
                 lines.append(f"- {itm.get('showName','Unknown')} → updated")
                 total_images_updated += 1
-
         if changes.get('metadata_backups_created'):
             lines.append("")
             lines.append("💾 Metadata Backups Created:")
             for b in changes.get('metadata_backups_created'):
                 lines.append(f"- {b}")
-
         if changes.get('deleted'):
             lines.append("")
             lines.append("❌ Data Deleted:")
             for d in changes.get('deleted'):
                 lines.append(f"- {d}")
-
         if changes.get('deleted_not_found'):
             lines.append("")
             lines.append("❌ Deletion notes (IDs not found in seriesData.json initially):")
             for note in changes.get('deleted_not_found'):
                 lines.append(f"- {note}")
-
-        if changes.get('cant_fetch'):
-            lines.append("")
-            lines.append("⚠️ Could not fetch (per-show):")
-            for msg in changes.get('cant_fetch'):
-                lines.append(f"- {msg}")
-
-        if sheet in SKIP_SHEET_SUMMARIES:
-            lines.append("")
-            lines.append(f"ℹ️ Sheet '{sheet}' — summary suppressed (no row-count contribution).")
-            lines.append(f"  Total Created (in sheet): {len(created)}")
-            lines.append(f"  Total Updated (in sheet): {len(updated)}")
-            continue
-
+        # summary per sheet
         lines.append("")
         lines.append(sep)
         lines.append(f"📊 Summary (Sheet: {sheet})")
@@ -1365,34 +1321,34 @@ def write_report(report_changes_by_sheet, report_path, final_not_found_deletions
         total_skipped += scount
         total_deleted += len(changes.get('deleted', [])) if changes.get('deleted') else 0
         rows_count = changes.get('rows_processed', None)
-        sheet_rows = rows_count if rows_count is not None else (ccount + ucount + scount)
-        grand_rows += sheet_rows
+        # Do not include Deleting Records / Manual Update rows in grand total
+        if str(sheet).strip().lower() in ('deleting records','manual update','manual_update'):
+            rows_to_add = 0
+        else:
+            rows_to_add = rows_count if rows_count else (ccount + ucount + scount)
+        grand_rows += rows_to_add
         lines.append(f"🆕 Total Created: {ccount}")
         lines.append(f"🔁 Total Updated: {ucount}")
         lines.append(f"🚫 Total Skipped: {scount}")
         lines.append(f"🖼️ Total Images Updated: {len(images) if images else 0}")
         lines.append(f"⚠️ Total Warnings: {len(changes.get('warnings', [])) if changes.get('warnings') else 0}")
         lines.append(f"❌ Total Failed: {len(changes.get('failed', [])) if changes.get('failed') else 0}")
-        lines.append(f"  Total Number of Rows: {sheet_rows}")
+        lines.append(f"  Total Number of Rows: {rows_count if rows_count is not None else (ccount + ucount + scount)}")
         lines.append("")
-
-    if 'Deleting Records' in (report_changes_by_sheet or {}):
+    # Deletion summary aggregated if present
+    if 'Deleting Records' in report_changes_by_sheet:
         del_changes = report_changes_by_sheet['Deleting Records']
         lines.append(sep)
-        lines.append(f"🗑️ === Deleting Records (aggregated) — {end_time.strftime('%d %B %Y')} ===")
+        lines.append(f"🗑️ === Deleting Records — {now_ist().strftime('%d %B %Y')} ===")
         lines.append(sep)
         if del_changes.get('deleted'):
-            lines.append("❌ Data Deleted: ")
+            lines.append("❌ Data Deleted:")
             for d in del_changes.get('deleted'):
                 lines.append(f"- {d}")
             lines.append("")
-            lines.append(f"✅ Deleted archived items: {len(del_changes.get('deleted'))}")
-        if del_changes.get('deleted_not_found'):
-            lines.append("")
-            lines.append("❌ Deleting Records — IDs not found initially:")
-            for n in del_changes.get('deleted_not_found'):
-                lines.append(f"- {n}")
-
+            lines.append(f"✅ Deleted archived items: {len(del_changes.get('deleted'))} (IDs: {', '.join([str(x).split(' ')[0] for x in del_changes.get('deleted')])})")
+            lines.append(f"💾 Backup files saved: before_{now_ist().strftime('%d_%B_%Y_%H%M')}.json, after_{now_ist().strftime('%d_%B_%Y_%H%M')}.json")
+    # overall summary
     lines.append(sep)
     lines.append("📊 Overall Summary")
     lines.append(sep)
@@ -1400,33 +1356,30 @@ def write_report(report_changes_by_sheet, report_path, final_not_found_deletions
     lines.append(f"🔁 Total Updated: {total_updated}")
     lines.append(f"🚫 Total Skipped: {total_skipped}")
     lines.append(f"❌ Total Deleted: {total_deleted}")
-    lines.append(f"💾 Backup files: {len(os.listdir(BACKUP_DIR)) if os.path.exists(BACKUP_DIR) else 0}")
-    lines.append(f"  Grand Total Rows Processed: {grand_rows}")
-
+    # Total objects in seriesData.json
     try:
+        count_objs = 0
         if os.path.exists(JSON_FILE):
             with open(JSON_FILE, 'r', encoding='utf-8') as jf:
-                jdata = json.load(jf)
-                total_objects = len(jdata) if isinstance(jdata, list) else 0
-        else:
-            total_objects = 0
+                data_objs = json.load(jf)
+                if isinstance(data_objs, list):
+                    count_objs = len(data_objs)
+        lines.append(f"📦 Total Objects in {JSON_FILE}: {count_objs}")
     except Exception:
-        total_objects = 0
+        lines.append(f"📦 Total Objects in {JSON_FILE}: Unknown (error reading file)")
     lines.append("")
-    lines.append(f"📦 Total Objects in {JSON_FILE}: {total_objects}")
-
-    lines.append("")
-    lines.append(f"💾 Metadata Backups Created: {sum(len(ch.get('metadata_backups_created', [])) for ch in (report_changes_by_sheet or {}).values())}")
+    lines.append(f"💾 Metadata Backups Created: {sum(len(ch.get('metadata_backups_created', [])) for ch in report_changes_by_sheet.values())}")
     lines.append(f"🧹 Cleaned up old metadata backups: {metadata_backups_removed} removed (older than {METADATA_BACKUP_RETENTION_DAYS} days)")
     lines.append("")
     lines.append("⚠️ WARNING: No duplicate records detected.")
     lines.append("🏁 Workflow finished successfully")
     try:
         with open(report_path, 'w', encoding='utf-8') as f:
-            f.write('\n'.join(lines))
+            f.write("\n".join(lines))
     except Exception as e:
         print(f"⚠️ Could not write TXT report: {e}")
 
+# ---------------------------- Secret scan & email body ---------------------
 def scan_for_possible_secrets():
     findings = []
     if os.path.exists(SERVICE_ACCOUNT_FILE):
@@ -1572,17 +1525,24 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
             print(f"⚠️ Error processing {s}: {err}")
             report_changes['error'] = err
             items, processed, finished, next_start_idx = [], 0, True, start_idx
-for new_obj in items:
-    sid = new_obj.get('showID')
-    if sid in merged_by_id:
-        old_obj = merged_by_id[sid]
-        if old_obj != new_obj:
-            new_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
-            changed = [k for k in new_obj.keys() if k not in ('updatedOn', 'updatedDetails', 'sourceSites') and old_obj.get(k) != new_obj.get(k)]
-            new_obj['updatedDetails'] = format_updated_details(changed)
-            merged_by_id[sid] = new_obj
-    else:
-        merged_by_id[sid] = new_obj
+        for new_obj in items:
+            sid = new_obj.get('showID')
+            if sid in merged_by_id:
+                old_obj = merged_by_id[sid]
+                if old_obj != new_obj:
+                    new_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
+                    # List specific changed fields using human-readable names
+                    try:
+                        new_obj['updatedDetails'] = changed_fields_text(old_obj, new_obj)
+                    except Exception:
+                        new_obj['updatedDetails'] = 'Object Updated'
+                    # preserve/merge sitePriorityUsed if present
+                    if old_obj.get('sitePriorityUsed'):
+                        new_obj.setdefault('sitePriorityUsed', old_obj.get('sitePriorityUsed'))
+                    merged_by_id[sid] = new_obj
+            else:
+                merged_by_id[sid] = new_obj
+        if items:
             os.makedirs(BACKUP_DIR, exist_ok=True)
             backup_name = os.path.join(BACKUP_DIR, f"{filename_timestamp()}_{safe_filename(s)}.json")
             try:
@@ -1687,18 +1647,3 @@ if __name__ == '__main__':
         logd(traceback.format_exc())
         sys.exit(1)
     print("All done.")
-
-
-def _report_missing_fetches(obj, sid, show_name, released_year, report_changes):
-    missing = []
-    if not obj.get("showImage"):
-        missing.append("Show Image")
-    if not obj.get("releaseDate"):
-        missing.append("Release Date")
-    if not obj.get("synopsis") or obj.get("synopsis") == "Synopsis not available.":
-        missing.append("Synopsis")
-    if not obj.get("otherNames"):
-        missing.append("Other Names")
-    if missing:
-        sname = f"{sid} - {show_name} ({released_year if released_year else 'N/A'})"
-        report_changes.setdefault('cant_fetch', []).append(f"{sname} -> Can't Fetch {', '.join(missing)}")
