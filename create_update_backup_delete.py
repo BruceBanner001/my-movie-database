@@ -893,11 +893,7 @@ def apply_manual_updates(excel_file: str, json_file: str):
             else:
                 obj[k] = v
         obj['updatedOn'] = now_ist().strftime('%d %B %Y')
-        try:
-            human_fields = [human_readable_field(k) for k in upd.keys()]
-            obj['updatedDetails'] = ", ".join(human_fields) + " Updated"
-        except Exception:
-            obj['updatedDetails'] = f"Updated {', '.join([k.capitalize() for k in upd.keys()])} Updated"
+        obj['updatedDetails'] = f"Updated {', '.join([k.capitalize() for k in upd.keys()])} Manually By Owner"
         updated_objs.append(obj)
     if updated_objs:
         merged = sorted(by_id.values(), key=lambda x: x.get('showID', 0))
@@ -914,57 +910,6 @@ COLUMN_MAP = {
     "ratings": "ratings", "catagory": "genres", "category": "genres", "original network": "network", "comments": "comments"
 }
 
-
-
-# ---------------------------- Field name helpers ---------------------------
-# Mapping for human-readable field names
-_HUMAN_FIELD_MAP = {
-    "showName": "Show Name",
-    "showImage": "Show Image",
-    "otherNames": "Other Names",
-    "watchStartedOn": "Watch Started On",
-    "watchEndedOn": "Watch Ended On",
-    "releasedYear": "Released Year",
-    "releaseDate": "Release Date",
-    "totalEpisodes": "Total Episodes",
-    "showType": "Show Type",
-    "nativeLanguage": "Native Language",
-    "watchedLanguage": "Watched Language",
-    "country": "Country",
-    "comments": "Comments",
-    "ratings": "Ratings",
-    "genres": "Category",
-    "network": "Network",
-    "againWatchedDates": "Again Watched Dates",
-    "updatedOn": "Updated On",
-    "updatedDetails": "Updated Details",
-    "synopsis": "Synopsis",
-    "topRatings": "Top Ratings",
-    "Duration": "Duration"
-}
-
-def human_readable_field(name):
-    if not name:
-        return ""
-    if name in _HUMAN_FIELD_MAP:
-        return _HUMAN_FIELD_MAP[name]
-    # Split camelCase and capitalize words
-    parts = re.sub('([a-z0-9])([A-Z])', r'\1 \2', name).replace('_',' ').split()
-    return ' '.join([p.capitalize() for p in parts])
-
-def changed_fields_text(old_obj, new_obj):
-    changed = []
-    for k in new_obj.keys():
-        # ignore metadata fields
-        if k in ('updatedOn','updatedDetails','sitePriorityUsed','sourceSites','topRatings'):
-            continue
-        old_v = old_obj.get(k) if isinstance(old_obj, dict) else None
-        new_v = new_obj.get(k)
-        if old_v != new_v:
-            changed.append(human_readable_field(k))
-    if not changed:
-        return "General Updated"
-    return ", ".join(changed) + " Updated"
 def tidy_comment(val):
     if pd.isna(val) or not str(val).strip():
         return None
@@ -1076,7 +1021,7 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
                     except Exception:
                         obj[key] = 0
                 elif key == "genres":
-                    obj[key] = normalize_list_from_csv(val, cap=False, strip=True)
+                    obj[key] = normalize_list_from_csv(val, cap=True, strip=True)
                 elif key == "network":
                     obj[key] = normalize_list_from_csv(val, cap=False, strip=True)
                 else:
@@ -1321,12 +1266,7 @@ def write_report(report_changes_by_sheet, report_path, final_not_found_deletions
         total_skipped += scount
         total_deleted += len(changes.get('deleted', [])) if changes.get('deleted') else 0
         rows_count = changes.get('rows_processed', None)
-        # Do not include Deleting Records / Manual Update rows in grand total
-        if str(sheet).strip().lower() in ('deleting records','manual update','manual_update'):
-            rows_to_add = 0
-        else:
-            rows_to_add = rows_count if rows_count else (ccount + ucount + scount)
-        grand_rows += rows_to_add
+        grand_rows += rows_count if rows_count else (ccount + ucount + scount)
         lines.append(f"🆕 Total Created: {ccount}")
         lines.append(f"🔁 Total Updated: {ucount}")
         lines.append(f"🚫 Total Skipped: {scount}")
@@ -1356,17 +1296,9 @@ def write_report(report_changes_by_sheet, report_path, final_not_found_deletions
     lines.append(f"🔁 Total Updated: {total_updated}")
     lines.append(f"🚫 Total Skipped: {total_skipped}")
     lines.append(f"❌ Total Deleted: {total_deleted}")
-    # Total objects in seriesData.json
-    try:
-        count_objs = 0
-        if os.path.exists(JSON_FILE):
-            with open(JSON_FILE, 'r', encoding='utf-8') as jf:
-                data_objs = json.load(jf)
-                if isinstance(data_objs, list):
-                    count_objs = len(data_objs)
-        lines.append(f"📦 Total Objects in {JSON_FILE}: {count_objs}")
-    except Exception:
-        lines.append(f"📦 Total Objects in {JSON_FILE}: Unknown (error reading file)")
+    lines.append(f"💾 Backup files: {len(os.listdir(BACKUP_DIR)) if os.path.exists(BACKUP_DIR) else 0}")
+    lines.append(f"  Grand Total Rows Processed: {grand_rows}")
+    # metadata backup cleanup summary
     lines.append("")
     lines.append(f"💾 Metadata Backups Created: {sum(len(ch.get('metadata_backups_created', [])) for ch in report_changes_by_sheet.values())}")
     lines.append(f"🧹 Cleaned up old metadata backups: {metadata_backups_removed} removed (older than {METADATA_BACKUP_RETENTION_DAYS} days)")
@@ -1531,14 +1463,7 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
                 old_obj = merged_by_id[sid]
                 if old_obj != new_obj:
                     new_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
-                    # List specific changed fields using human-readable names
-                    try:
-                        new_obj['updatedDetails'] = changed_fields_text(old_obj, new_obj)
-                    except Exception:
-                        new_obj['updatedDetails'] = 'Object Updated'
-                    # preserve/merge sitePriorityUsed if present
-                    if old_obj.get('sitePriorityUsed'):
-                        new_obj.setdefault('sitePriorityUsed', old_obj.get('sitePriorityUsed'))
+                    new_obj['updatedDetails'] = 'Object updated'
                     merged_by_id[sid] = new_obj
             else:
                 merged_by_id[sid] = new_obj
