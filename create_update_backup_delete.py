@@ -859,7 +859,7 @@ def process_deletions(excel_file, json_file, report_changes):
                                 dst = os.path.join(DELETE_IMAGES_DIR, safe_filename(dst_name))
                                 shutil.move(src, dst)
                                 report_changes.setdefault('deleted_images_moved', []).append(
-                                    f"{iid} -> image moved: {src} -> {dst}"
+                                    f"{iid} -> image moved: {candidate} -> {dst}"
                                 )
                 except Exception as e_img:
                     report_changes.setdefault('deleted_images_moved', []).append(f"{iid} -> ⚠️ Image move failed: {e_img}")
@@ -946,6 +946,15 @@ def apply_manual_updates(excel_file: str, json_file: str):
                     pass
             else:
                 obj[k] = v
+                try:
+                    mapping = {'showImage':'image','releaseDate':'releaseDate','otherNames':'otherNames','Duration':'duration','synopsis':'synopsis'}
+                    key_for_site = mapping.get(k)
+                    if key_for_site:
+                        spu = obj.get('sitePriorityUsed') or {}
+                        spu[key_for_site] = 'Manual'
+                        obj['sitePriorityUsed'] = spu
+                except Exception:
+                    pass
         obj['updatedOn'] = now_ist().strftime('%d %B %Y')
         obj['updatedDetails'] = f"{', '.join([human_readable_field(k) for k in upd.keys()])} Updated"
         updated_objs.append(obj)
@@ -1131,7 +1140,7 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
                     local_image_path, remote_image_url, img_site = fetch_and_save_image_for_show(show_name, None, sid, site_priority=site_priority)
                     if local_image_path:
                         new_image_url = build_absolute_url(local_image_path)
-                        report_changes.setdefault('images', []).append({'showName': show_name, 'old': existing_image_url, 'new': new_image_url})
+                        report_changes.setdefault('images', []).append({'showID': sid, 'showName': show_name, 'old': existing_image_url, 'new': new_image_url})
                         metadata_backup_fields.setdefault("showImage", {"value": new_image_url, "source": img_site})
                         site_priority_used["image"] = img_site or site_priority.get("image")
                     else:
@@ -1163,18 +1172,25 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
                 except Exception as e:
                     logd(f"Synopsis/metadata fetch failed for {show_name}: {e}")
 
-                # Save metadata backup (one-time)
-                if metadata_backup_fields:
+                                # Save metadata backup (one-time)
+                try:
+                    os.makedirs(BACKUP_META_DIR, exist_ok=True)
+                    backup_path = save_metadata_backup(sid, show_name, language, metadata_backup_fields or {}, site_priority_used or {})
+                    if backup_path:
+                        report_changes.setdefault('metadata_backups_created', []).append(f"💾 Metadata Backup Created: {backup_path}")
+                    if site_priority_used:
+                        obj['sitePriorityUsed'] = site_priority_used.copy()
+                except Exception as e:
+                    logd(f"metadata backup save failed: {e}")
+                # If no metadata fields were collected, still create an empty metadata backup
+                if not metadata_backup_fields:
                     try:
                         os.makedirs(BACKUP_META_DIR, exist_ok=True)
-                        backup_path = save_metadata_backup(sid, show_name, language, metadata_backup_fields, site_priority_used)
+                        backup_path = save_metadata_backup(sid, show_name, language, {}, site_priority_used or {})
                         if backup_path:
-                            report_changes.setdefault('metadata_backups_created', []).append(backup_path)
-                        if site_priority_used:
-                            obj['sitePriorityUsed'] = site_priority_used.copy()
+                            report_changes.setdefault('metadata_backups_created', []).append(f"💾 Metadata Backup Created: {backup_path}")
                     except Exception as e:
-                        logd(f"metadata backup save failed: {e}")
-
+                        logd(f"empty metadata backup save failed: {e}")
                 # Also populate sourceSites in main object (only for new shows)
                 if site_priority_used:
                     obj['sourceSites'] = site_priority_used.copy()
@@ -1196,7 +1212,7 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
                         local_image_path, remote_image_url, img_site = fetch_and_save_image_for_show(show_name, None, sid, site_priority=site_priority)
                         if local_image_path:
                             new_image_url = build_absolute_url(local_image_path)
-                            report_changes.setdefault('images', []).append({'showName': show_name, 'old': existing_image_url, 'new': new_image_url})
+                            report_changes.setdefault('images', []).append({'showID': sid, 'showName': show_name, 'old': existing_image_url, 'new': new_image_url})
                             obj['showImage'] = new_image_url
                     except Exception as e:
                         logd(f"Existing object image fetch failed for {show_name}: {e}")
@@ -1226,7 +1242,8 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
                 "updatedDetails": obj.get("updatedDetails"),
                 "synopsis": obj.get("synopsis"),
                 "topRatings": obj.get("topRatings"),
-                "Duration": obj.get("Duration")
+                "Duration": obj.get("Duration"),
+                "sitePriorityUsed": obj.get("sitePriorityUsed", {})
             }
             items.append(ordered)
             processed += 1
@@ -1308,7 +1325,7 @@ def write_report(report_changes_by_sheet, report_path, final_not_found_deletions
             lines.append("")
             lines.append("🆕 Data Created:")
             for obj in created:
-                lines.append(f"- {obj.get('showName','Unknown')} ({obj.get('releasedYear','N/A')}) -> First Time Uploaded")
+                lines.append(f"- {obj.get('showID','N/A')} - {obj.get('showName','Unknown')} ({obj.get('releasedYear','N/A')}) -> First Time Uploaded")
         updated = changes.get('updated', [])
         if updated:
             lines.append("")
@@ -1324,7 +1341,7 @@ def write_report(report_changes_by_sheet, report_path, final_not_found_deletions
                             continue
                         changed_fields.append(human_readable_field(k))
                 fields_text = ", ".join(changed_fields) + " Updated" if changed_fields else "Updated"
-                lines.append(f"- {new.get('showName','Unknown')} ({new.get('releasedYear','N/A')}) -> {fields_text}")
+                lines.append(f"- {new.get('showID','N/A')} - {new.get('showName','Unknown')} ({new.get('releasedYear','N/A')}) -> {fields_text}")
         skipped = changes.get('skipped', [])
         if skipped:
             lines.append("")
@@ -1336,7 +1353,7 @@ def write_report(report_changes_by_sheet, report_path, final_not_found_deletions
             lines.append("")
             lines.append("🖼️ Image Updated:")
             for itm in images:
-                lines.append(f"- {itm.get('showName','Unknown')} -> updated")
+                lines.append(f"- {itm.get('showID','N/A')} - {itm.get('showName','Unknown')} -> Updated Successfully")
                 total_images_updated += 1
         if changes.get('metadata_backups_created'):
             lines.append("")
@@ -1655,6 +1672,19 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
         save_progress(progress)
     still_not_found = set(deleting_not_found_initial or []) - deleting_found_in_sheets
     merged = sorted(merged_by_id.values(), key=lambda x: x.get('showID', 0))
+
+    # Ensure sitePriorityUsed exists on every object (fill defaults if missing)
+    for _obj in merged:
+        try:
+            sp = _obj.get('sitePriorityUsed') or {}
+            language = (_obj.get('nativeLanguage') or '').strip().lower()
+            defaults = SITE_PRIORITY_BY_LANGUAGE.get(language, SITE_PRIORITY_BY_LANGUAGE.get('default', {}))
+            for k in ('image','releaseDate','otherNames','duration','synopsis'):
+                if k not in sp or not sp.get(k):
+                    sp[k] = defaults.get(k)
+            _obj['sitePriorityUsed'] = sp
+        except Exception:
+            pass
     try:
         with open(json_file, 'w', encoding='utf-8') as f:
             json.dump(merged, f, indent=4, ensure_ascii=False)
