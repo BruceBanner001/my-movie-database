@@ -1001,28 +1001,38 @@ def sheet_base_offset(sheet_name: str) -> int:
 
 # ---------------------------- Helper: save metadata backup ------------------
 def save_metadata_backup(show_id, show_name, language, metadata, site_priority_used):
-    """Save metadata backup safely and verify creation."""
+    """Strict version that writes, verifies, and logs everything."""
     try:
-        os.makedirs(BACKUP_META_DIR, exist_ok=True)
-        timestamp = now_ist().strftime('%d_%B_%Y_%H%M')
-        filename = f"META_{timestamp}_{show_id}.json"
-        path = os.path.join(BACKUP_META_DIR, safe_filename(filename))
-        
-        with open(path, "w", encoding="utf-8") as f:
-            json.dump({
-                "showID": show_id,
-                "showName": show_name,
-                "language": language,
-                "metadata": metadata,
-                "sitePriorityUsed": site_priority_used
-            }, f, indent=4, ensure_ascii=False)
+        base_dir = os.path.dirname(__file__)
+        backup_dir = os.path.join(base_dir, "backup-meta-data")
+        os.makedirs(backup_dir, exist_ok=True)
 
+        timestamp = now_ist().strftime("%d_%B_%Y_%H%M")
+        filename = f"META_{timestamp}_{show_id}.json"
+        path = os.path.join(backup_dir, safe_filename(filename))
+
+        # Construct metadata payload
+        payload = {
+            "showID": show_id,
+            "showName": show_name,
+            "language": language,
+            "metadata": metadata or {},
+            "sitePriorityUsed": site_priority_used or {}
+        }
+
+        print(f"📝 Writing metadata backup to: {path}")
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(payload, f, indent=4, ensure_ascii=False)
+
+        # Double-check existence
         if os.path.exists(path):
+            print(f"✅ Metadata backup verified: {path}")
             return path
         else:
-            raise IOError("File not found after writing.")
+            raise FileNotFoundError("Backup file missing after write.")
+
     except Exception as e:
-        logd(f"⚠️ Metadata backup save failed for {show_id}: {e}")
+        print(f"⚠️ Metadata backup save failed for {show_id}: {e}")
         return None
 
 # ---------------------------- Cleanup metadata backups ---------------------
