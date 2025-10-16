@@ -92,7 +92,7 @@ Notes:
 """
 
 # --------------------------- VERSION & SITE PRIORITY ------------------------
-SCRIPT_VERSION = "v2.0.0 (Stable)"
+SCRIPT_VERSION = "v2.2.0 (Stable)"
 
 # SITE_PRIORITY_BY_LANGUAGE controls which site is preferred for each fetched property
 SITE_PRIORITY_BY_LANGUAGE = {
@@ -223,7 +223,7 @@ def filename_timestamp():
 JSON_FILE = "seriesData.json"
 BACKUP_DIR = "backups"
 IMAGES_DIR = "images"
-DELETE_IMAGES_DIR = "delete-images"
+DELETE_IMAGES_DIR = "deleted-images"
 DELETED_DATA_DIR = "deleted-data"
 REPORTS_DIR = "reports"
 PROGRESS_DIR = ".progress"
@@ -231,6 +231,11 @@ PROGRESS_FILE = os.path.join(PROGRESS_DIR, "progress.json")
 MANUAL_UPDATE_REPORT = os.path.join(REPORTS_DIR, 'manual_update_report.json')
 STATUS_JSON = os.path.join(REPORTS_DIR, "status.json")
 BACKUP_META_DIR = "backup-meta-data"
+
+# Ensure all necessary folders exist at startup
+for _d in [BACKUP_DIR, IMAGES_DIR, DELETE_IMAGES_DIR, DELETED_DATA_DIR, REPORTS_DIR, BACKUP_META_DIR]:
+    os.makedirs(_d, exist_ok=True)
+
 
 EXCEL_FILE_ID_TXT = "EXCEL_FILE_ID.txt"
 SERVICE_ACCOUNT_FILE = "GDRIVE_SERVICE_ACCOUNT.json"
