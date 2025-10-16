@@ -140,6 +140,44 @@ SITE_PRIORITY_BY_LANGUAGE = {
     }
 }
 
+
+# ---------------------------- Human-readable field name mapping ----------------
+FIELD_NAME_MAP = {
+    "showName": "Show Name",
+    "showImage": "Show Image",
+    "otherNames": "Other Names",
+    "watchStartedOn": "Watch Started On",
+    "watchEndedOn": "Watch Ended On",
+    "releasedYear": "Released Year",
+    "releaseDate": "Release Date",
+    "totalEpisodes": "Total Episodes",
+    "showType": "Show Type",
+    "nativeLanguage": "Native Language",
+    "watchedLanguage": "Watched Language",
+    "country": "Country",
+    "comments": "Comments",
+    "ratings": "Ratings",
+    "genres": "Category",
+    "network": "Network",
+    "againWatchedDates": "Again Watched Dates",
+    "updatedOn": "Updated On",
+    "updatedDetails": "Updated Details",
+    "synopsis": "Synopsis",
+    "topRatings": "Top Ratings",
+    "Duration": "Duration"
+}
+
+def human_readable_field(field):
+    if not field:
+        return field
+    if field in FIELD_NAME_MAP:
+        return FIELD_NAME_MAP[field]
+    # split camelCase or snake_case
+    parts = re.sub(r'[_\-]+', ' ', field)
+    parts = re.sub(r'([a-z])([A-Z])', r'\1 \2', parts)
+    parts = parts.split()
+    return " ".join([p.capitalize() for p in parts])
+
 # ---------------------------- Imports & Globals ----------------------------
 import os
 import re
@@ -185,11 +223,12 @@ def filename_timestamp():
 JSON_FILE = "seriesData.json"
 BACKUP_DIR = "backups"
 IMAGES_DIR = "images"
-OLD_IMAGES_DIR = "old-images"
+DELETE_IMAGES_DIR = "delete-images"
 DELETED_DATA_DIR = "deleted-data"
 REPORTS_DIR = "reports"
 PROGRESS_DIR = ".progress"
 PROGRESS_FILE = os.path.join(PROGRESS_DIR, "progress.json")
+MANUAL_UPDATE_REPORT = os.path.join(REPORTS_DIR, 'manual_update_report.json')
 STATUS_JSON = os.path.join(REPORTS_DIR, "status.json")
 BACKUP_META_DIR = "backup-meta-data"
 
@@ -660,6 +699,21 @@ def fetch_synopsis_and_duration(show_name, release_year, prefer_sites=None, exis
 
     # Determine prefer order from site_priority and prefer_sites
     prefer_list = []
+    # if prefer_sites include unknown platform names try a ddgs search first
+    if prefer_sites and HAVE_DDGS:
+        unknowns = [p for p in prefer_sites if p and p.lower() not in ('asianwiki','mydramalist')]
+        if unknowns:
+            try:
+                q = f"{show_name} {release_year or ''} {' '.join(unknowns)}"
+                results = try_ddgs_text(q, max_results=6)
+                url = pick_best_result(results) if results else None
+                if url:
+                    html = fetch_page(url)
+                    if html:
+                        syn, dur, fulltext, metadata = parse_synopsis_from_html(html, url)
+                        return syn, dur, metadata.get('releaseDate'), metadata.get('otherNames', []), 'ddgs_search'
+            except Exception as e:
+                logd(f"ddgs prefer_sites search failed: {e}")
     if site_priority and isinstance(site_priority, dict):
         # Put explicitly preferred synopsis site first, then fallbacks
         primary = site_priority.get("synopsis")
@@ -800,9 +854,9 @@ def process_deletions(excel_file, json_file, report_changes):
                         if candidate:
                             src = os.path.join('.', candidate)
                             if os.path.exists(src):
-                                os.makedirs(OLD_IMAGES_DIR, exist_ok=True)
-                                dst_name = f"{filename_timestamp()}_{os.path.basename(src)}"
-                                dst = os.path.join(OLD_IMAGES_DIR, safe_filename(dst_name))
+                                os.makedirs(DELETE_IMAGES_DIR, exist_ok=True)
+                                dst_name = f"{iid}_{filename_timestamp()}.jpg"
+                                dst = os.path.join(DELETE_IMAGES_DIR, safe_filename(dst_name))
                                 shutil.move(src, dst)
                                 report_changes.setdefault('deleted_images_moved', []).append(
                                     f"{iid} -> image moved: {src} -> {dst}"
@@ -893,7 +947,7 @@ def apply_manual_updates(excel_file: str, json_file: str):
             else:
                 obj[k] = v
         obj['updatedOn'] = now_ist().strftime('%d %B %Y')
-        obj['updatedDetails'] = f"Updated {', '.join([k.capitalize() for k in upd.keys()])} Manually By Owner"
+        obj['updatedDetails'] = f"{', '.join([human_readable_field(k) for k in upd.keys()])} Updated"
         updated_objs.append(obj)
     if updated_objs:
         merged = sorted(by_id.values(), key=lambda x: x.get('showID', 0))
@@ -1021,7 +1075,7 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
                     except Exception:
                         obj[key] = 0
                 elif key == "genres":
-                    obj[key] = normalize_list_from_csv(val, cap=True, strip=True)
+                    obj[key] = normalize_list_from_csv(val, cap=False, strip=True)
                 elif key == "network":
                     obj[key] = normalize_list_from_csv(val, cap=False, strip=True)
                 else:
@@ -1080,6 +1134,8 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
                         report_changes.setdefault('images', []).append({'showName': show_name, 'old': existing_image_url, 'new': new_image_url})
                         metadata_backup_fields.setdefault("showImage", {"value": new_image_url, "source": img_site})
                         site_priority_used["image"] = img_site or site_priority.get("image")
+                    else:
+                        report_changes.setdefault('fetch_errors', []).append(f"{sid} - {show_name} ({released_year}) -> Can't Fetch Show Image")
                 except Exception as e:
                     logd(f"Image fetch failed for {show_name}: {e}")
 
@@ -1090,7 +1146,7 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
                         new_syn = normalize_whitespace_and_sentences(new_syn)
                     obj["synopsis"] = new_syn
                     if rdate:
-                        obj['releaseDate'] = rdate
+                        obj['releaseDate'] = format_date_range(rdate) or format_date_str(rdate) or rdate
                         metadata_backup_fields.setdefault("releaseDate", {"value": rdate, "source": site_used})
                         site_priority_used["releaseDate"] = site_used or site_priority.get("releaseDate")
                     if othernames:
@@ -1114,6 +1170,8 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
                         backup_path = save_metadata_backup(sid, show_name, language, metadata_backup_fields, site_priority_used)
                         if backup_path:
                             report_changes.setdefault('metadata_backups_created', []).append(backup_path)
+                        if site_priority_used:
+                            obj['sitePriorityUsed'] = site_priority_used.copy()
                     except Exception as e:
                         logd(f"metadata backup save failed: {e}")
 
@@ -1186,6 +1244,7 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
     return items, processed, finished, next_index
 
 # ---------------------------- Reports --------------------------------------
+
 def write_report(report_changes_by_sheet, report_path, final_not_found_deletions=None, start_time=None, end_time=None, metadata_backups_removed=0):
     lines = []
     # Header
@@ -1204,8 +1263,43 @@ def write_report(report_changes_by_sheet, report_path, final_not_found_deletions
     sep = "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
     total_created = total_updated = total_deleted = total_skipped = total_images_updated = total_warnings = total_failed = 0
     grand_rows = 0
-    # Per-sheet details
+
+    # Per-sheet details (skip per-sheet summary for Deleting Records and Manual Update)
     for sheet, changes in report_changes_by_sheet.items():
+        # Skip empty Deleting Records / Manual Update sections unless they contain meaningful entries
+        if sheet in ('Deleting Records', 'Manual Update'):
+            meaningful = any(changes.get(k) for k in ('deleted','deleted_not_found','deleted_summary','error','metadata_backups_created','updated_objs'))
+            if not meaningful:
+                continue
+            lines.append(sep)
+            lines.append(f"🗂️ === {sheet} — {now_ist().strftime('%d %B %Y')} ===")
+            lines.append(sep)
+            if sheet == 'Deleting Records':
+                if changes.get('deleted'):
+                    lines.append("❌ Data Deleted:")
+                    for d in changes.get('deleted'):
+                        lines.append(f"- {d}")
+                    lines.append("")
+                if changes.get('deleted_not_found'):
+                    lines.append("❌ Deletion notes (IDs not found in seriesData.json initially):")
+                    for note in changes.get('deleted_not_found'):
+                        lines.append(f"- {note}")
+                    lines.append("")
+                continue
+            if sheet == 'Manual Update':
+                if changes.get('updated_objs'):
+                    lines.append("")
+                    lines.append("🔁 Manual Updates Applied:")
+                    for u in changes.get('updated_objs'):
+                        lines.append(f"- {u}")
+                if changes.get('metadata_backups_created'):
+                    lines.append("")
+                    lines.append("💾 Metadata Backups Created:")
+                    for b in changes.get('metadata_backups_created'):
+                        lines.append(f"- {b}")
+                lines.append("")
+                continue
+
         lines.append(sep)
         lines.append(f"🗂️ === {sheet} — {now_ist().strftime('%d %B %Y')} ===")
         lines.append(sep)
@@ -1222,9 +1316,15 @@ def write_report(report_changes_by_sheet, report_path, final_not_found_deletions
             for pair in updated:
                 new = pair.get('new')
                 old = pair.get('old')
-                changed_fields = [f for f in ["showName", "showImage", "releasedYear", "totalEpisodes", "comments", "ratings", "genres", "Duration", "synopsis"] if old.get(f) != new.get(f)]
-                fields_text = ", ".join([f.capitalize() for f in changed_fields]) if changed_fields else "General"
-                lines.append(f"- {new.get('showName','Unknown')} ({new.get('releasedYear','N/A')}) → {fields_text} Updated")
+                # compute changed fields and map to human readable names
+                changed_fields = []
+                for k in new.keys():
+                    if old.get(k) != new.get(k):
+                        if k in ('updatedOn','updatedDetails','topRatings'):
+                            continue
+                        changed_fields.append(human_readable_field(k))
+                fields_text = ", ".join(changed_fields) + " Updated" if changed_fields else "Updated"
+                lines.append(f"- {new.get('showName','Unknown')} ({new.get('releasedYear','N/A')}) → {fields_text}")
         skipped = changes.get('skipped', [])
         if skipped:
             lines.append("")
@@ -1253,6 +1353,12 @@ def write_report(report_changes_by_sheet, report_path, final_not_found_deletions
             lines.append("❌ Deletion notes (IDs not found in seriesData.json initially):")
             for note in changes.get('deleted_not_found'):
                 lines.append(f"- {note}")
+        if changes.get('fetch_errors'):
+            lines.append("")
+            lines.append("⚠️ Fetch Errors:")
+            for fe in changes.get('fetch_errors'):
+                lines.append(f"- {fe}")
+
         # summary per sheet
         lines.append("")
         lines.append(sep)
@@ -1266,7 +1372,9 @@ def write_report(report_changes_by_sheet, report_path, final_not_found_deletions
         total_skipped += scount
         total_deleted += len(changes.get('deleted', [])) if changes.get('deleted') else 0
         rows_count = changes.get('rows_processed', None)
-        grand_rows += rows_count if rows_count else (ccount + ucount + scount)
+        # Exclude Deleting Records and Manual Update rows from grand total
+        if sheet not in ('Deleting Records', 'Manual Update'):
+            grand_rows += rows_count if rows_count else (ccount + ucount + scount)
         lines.append(f"🆕 Total Created: {ccount}")
         lines.append(f"🔁 Total Updated: {ucount}")
         lines.append(f"🚫 Total Skipped: {scount}")
@@ -1275,19 +1383,47 @@ def write_report(report_changes_by_sheet, report_path, final_not_found_deletions
         lines.append(f"❌ Total Failed: {len(changes.get('failed', [])) if changes.get('failed') else 0}")
         lines.append(f"  Total Number of Rows: {rows_count if rows_count is not None else (ccount + ucount + scount)}")
         lines.append("")
-    # Deletion summary aggregated if present
+
+    # Deletion summary aggregated if present (include only if meaningful)
     if 'Deleting Records' in report_changes_by_sheet:
         del_changes = report_changes_by_sheet['Deleting Records']
-        lines.append(sep)
-        lines.append(f"🗑️ === Deleting Records — {now_ist().strftime('%d %B %Y')} ===")
-        lines.append(sep)
-        if del_changes.get('deleted'):
-            lines.append("❌ Data Deleted:")
-            for d in del_changes.get('deleted'):
-                lines.append(f"- {d}")
-            lines.append("")
-            lines.append(f"✅ Deleted archived items: {len(del_changes.get('deleted'))} (IDs: {', '.join([str(x).split(' ')[0] for x in del_changes.get('deleted')])})")
-            lines.append(f"💾 Backup files saved: before_{now_ist().strftime('%d_%B_%Y_%H%M')}.json, after_{now_ist().strftime('%d_%B_%Y_%H%M')}.json")
+        meaningful = any(del_changes.get(k) for k in ('deleted','deleted_not_found','deleted_summary'))
+        if meaningful:
+            lines.append(sep)
+            lines.append(f"🗑️ === Deleting Records — {now_ist().strftime('%d %B %Y')} ===")
+            lines.append(sep)
+            if del_changes.get('deleted'):
+                lines.append("❌ Data Deleted:")
+                for d in del_changes.get('deleted'):
+                    lines.append(f"- {d}")
+                lines.append("")
+
+                # Corrected f-string — properly closed quotes and parentheses
+                lines.append(
+                    f"✅ Deleted archived items: {len(del_changes.get('deleted'))} "
+                    f"(IDs: {', '.join([str(x).split(' ')[0] for x in del_changes.get('deleted')])})"
+                )
+
+                # Dynamically check for before/after backup JSON files
+                try:
+                    backup_files = [
+                        f for f in os.listdir(BACKUP_DIR)
+                        if f.startswith('before_') or f.startswith('after_')
+                    ]
+                    if backup_files:
+                        before_files = [f for f in backup_files if f.startswith('before_')]
+                        after_files = [f for f in backup_files if f.startswith('after_')]
+                        before_list = ', '.join(before_files) if before_files else 'N/A'
+                        after_list = ', '.join(after_files) if after_files else 'N/A'
+                        lines.append(f"💾 Backup files saved: {before_list}, {after_list}")
+                    else:
+                        lines.append("💾 Backup files saved: None found")
+                except Exception as e:
+                    lines.append(f"💾 Backup files check failed: {e}")
+
+                lines.append("")
+
+
     # overall summary
     lines.append(sep)
     lines.append("📊 Overall Summary")
@@ -1298,18 +1434,29 @@ def write_report(report_changes_by_sheet, report_path, final_not_found_deletions
     lines.append(f"❌ Total Deleted: {total_deleted}")
     lines.append(f"💾 Backup files: {len(os.listdir(BACKUP_DIR)) if os.path.exists(BACKUP_DIR) else 0}")
     lines.append(f"  Grand Total Rows Processed: {grand_rows}")
+
     # metadata backup cleanup summary
     lines.append("")
     lines.append(f"💾 Metadata Backups Created: {sum(len(ch.get('metadata_backups_created', [])) for ch in report_changes_by_sheet.values())}")
     lines.append(f"🧹 Cleaned up old metadata backups: {metadata_backups_removed} removed (older than {METADATA_BACKUP_RETENTION_DAYS} days)")
     lines.append("")
-    lines.append("⚠️ WARNING: No duplicate records detected.")
+
+    # total objects in seriesData.json
+    try:
+        if os.path.exists(JSON_FILE):
+            with open(JSON_FILE, 'r', encoding='utf-8') as jf:
+                arr = json.load(jf)
+                lines.append(f"📦 Total Objects in seriesData.json: {len(arr)}")
+    except Exception:
+        lines.append("📦 Total Objects in seriesData.json: Unknown (could not read file)")
+    lines.append("\n⚠️ WARNING: No duplicate records detected.")
     lines.append("🏁 Workflow finished successfully")
     try:
         with open(report_path, 'w', encoding='utf-8') as f:
             f.write("\n".join(lines))
     except Exception as e:
         print(f"⚠️ Could not write TXT report: {e}")
+
 
 # ---------------------------- Secret scan & email body ---------------------
 def scan_for_possible_secrets():
@@ -1420,6 +1567,14 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
     old_by_id = {o['showID']: o for o in old_objects if 'showID' in o}
     merged_by_id = dict(old_by_id)
     report_changes_by_sheet = {}
+    # import manual update summary if produced
+    try:
+        if os.path.exists(MANUAL_UPDATE_REPORT):
+            with open(MANUAL_UPDATE_REPORT, 'r', encoding='utf-8') as muf:
+                mu = json.load(muf)
+            report_changes_by_sheet['Manual Update'] = mu
+    except Exception:
+        pass
     # 1) Process deletions first
     try:
         deleted_ids, deleting_not_found_initial = process_deletions(excel_file_like, json_file,
@@ -1462,8 +1617,18 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
             if sid in merged_by_id:
                 old_obj = merged_by_id[sid]
                 if old_obj != new_obj:
+                    # compute changed fields and human-readable names
+                    changed = []
+                    for k in new_obj.keys():
+                        if old_obj.get(k) != new_obj.get(k):
+                            if k in ('updatedOn','updatedDetails','topRatings'):
+                                continue
+                            changed.append(human_readable_field(k))
                     new_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
-                    new_obj['updatedDetails'] = 'Object updated'
+                    if changed:
+                        new_obj['updatedDetails'] = f"{', '.join(changed)} Updated"
+                    else:
+                        new_obj['updatedDetails'] = 'Updated'
                     merged_by_id[sid] = new_obj
             else:
                 merged_by_id[sid] = new_obj
@@ -1501,9 +1666,9 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
     if SCHEDULED_RUN:
         cleanup_deleted_data()
     cutoff = datetime.now() - timedelta(days=KEEP_OLD_IMAGES_DAYS)
-    if os.path.exists(OLD_IMAGES_DIR):
-        for fname in os.listdir(OLD_IMAGES_DIR):
-            path = os.path.join(OLD_IMAGES_DIR, fname)
+    if os.path.exists(DELETE_IMAGES_DIR):
+        for fname in os.listdir(DELETE_IMAGES_DIR):
+            path = os.path.join(DELETE_IMAGES_DIR, fname)
             try:
                 mtime = datetime.fromtimestamp(os.path.getmtime(path))
                 if mtime < cutoff:
