@@ -98,8 +98,9 @@ jobs:
           else
             prefix="[Manual]"
           fi
-          subj_date=$(date -u "+%d %B %Y %H:%M")
-          echo "email_subject=$prefix Workflow $subj_date Report" >> "$GITHUB_OUTPUT"
+          # Convert UTC to IST (UTC+5:30)
+          subj_date=$(date -u -d '+5 hours 30 minutes' "+%d %B %Y %H:%M")
+          echo "email_subject=$prefix Workflow $subj_date IST Report" >> "$GITHUB_OUTPUT"
 
       # ------------------ Commit & push changes ------------------
       - name: Commit & push changes

@@ -92,7 +92,7 @@ Notes:
 """
 
 # --------------------------- VERSION & SITE PRIORITY ------------------------
-SCRIPT_VERSION = "v2.3.0 (Stable)"
+SCRIPT_VERSION = "v2.3.1 (Stable)"
 
 # SITE_PRIORITY_BY_LANGUAGE controls which site is preferred for each fetched property
 SITE_PRIORITY_BY_LANGUAGE = {
@@ -799,80 +799,81 @@ def fetch_and_save_image_for_show(show_name, prefer_sites, show_id, site_priorit
     return None, None, None
 
 # ---------------------------- Deletion processing (kept original logic) ---
+
 def process_deletions(excel_file, json_file, report_changes):
+    """Enhanced: creates deleted-images folder automatically and moves local images."""
     try:
         df = pd.read_excel(excel_file, sheet_name='Deleting Records')
     except Exception:
         return [], []
     if df.shape[1] < 1:
         return [], []
+
     cols = [str(c).strip().lower() for c in df.columns]
-    id_col = None
-    for i, c in enumerate(cols):
-        if c == 'id' or 'id' in c:
-            id_col = df.columns[i]
-            break
-    if id_col is None:
-        id_col = df.columns[0]
+    id_col = next((df.columns[i] for i, c in enumerate(cols) if 'id' in c), df.columns[0])
+
+    # Load data
+    data = []
     if os.path.exists(json_file):
         try:
             with open(json_file, 'r', encoding='utf-8') as jf:
                 data = json.load(jf)
         except Exception:
             data = []
-    else:
-        data = []
+
     by_id = {int(o['showID']): o for o in data if 'showID' in o and isinstance(o['showID'], int)}
-    to_delete = []
-    for _, row in df.iterrows():
-        val = row[id_col]
-        if pd.isna(val):
-            continue
-        try:
-            to_delete.append(int(val))
-        except Exception:
-            continue
+    to_delete = [int(v) for v in df[id_col].dropna() if str(v).strip().isdigit()]
     if not to_delete:
         return [], []
+
     os.makedirs(DELETED_DATA_DIR, exist_ok=True)
-    deleted_ids = []
-    not_found_ids = []
+    os.makedirs(DELETE_IMAGES_DIR, exist_ok=True)
+
+    deleted_ids, not_found_ids = [], []
+
     for iid in to_delete:
-        if iid in by_id:
-            deleted_obj = by_id.pop(iid)
-            deleted_ids.append(iid)
-            fname = f"DELETED_{now_ist().strftime('%d_%B_%Y_%H%M')}_{iid}.json"
-            outpath = os.path.join(DELETED_DATA_DIR, safe_filename(fname))
-            try:
-                with open(outpath, 'w', encoding='utf-8') as of:
-                    json.dump(deleted_obj, of, indent=4, ensure_ascii=False)
-                report_changes.setdefault('deleted', []).append(f"{iid} -> ✅ Deleted and archived -> {outpath}")
-                try:
-                    img_url = deleted_obj.get('showImage') or ""
-                    if img_url:
-                        candidate = None
-                        m = re.search(r'/(images/[^/?#]+)$', img_url)
-                        if m:
-                            candidate = m.group(1)
-                        elif img_url.startswith('images/'):
-                            candidate = img_url
-                        if candidate:
-                            src = os.path.join('.', candidate)
-                            if os.path.exists(src):
-                                os.makedirs(DELETE_IMAGES_DIR, exist_ok=True)
-                                dst_name = f"{iid}_{filename_timestamp()}.jpg"
-                                dst = os.path.join(DELETE_IMAGES_DIR, safe_filename(dst_name))
-                                shutil.move(src, dst)
-                                report_changes.setdefault('deleted_images_moved', []).append(
-                                    f"{iid} -> image moved: {candidate} -> {dst}"
-                                )
-                except Exception as e_img:
-                    report_changes.setdefault('deleted_images_moved', []).append(f"{iid} -> ⚠️ Image move failed: {e_img}")
-            except Exception as e:
-                report_changes.setdefault('deleted', []).append(f"{iid} -> ⚠️ Deletion recorded but failed to write archive: {e}")
-        else:
+        if iid not in by_id:
             not_found_ids.append(iid)
             report_changes.setdefault('deleted_not_found', []).append(f"-{iid} -> ❌ Not found in seriesData.json")
+            continue
+
+        deleted_obj = by_id.pop(iid)
+        deleted_ids.append(iid)
+
+        # Save deleted object
+        fname = f"DELETED_{now_ist().strftime('%d_%B_%Y_%H%M')}_{iid}.json"
+        outpath = os.path.join(DELETED_DATA_DIR, safe_filename(fname))
+        try:
+            with open(outpath, 'w', encoding='utf-8') as of:
+                json.dump(deleted_obj, of, indent=4, ensure_ascii=False)
+            report_changes.setdefault('deleted', []).append(f"{iid} -> ✅ Deleted and archived -> {outpath}")
+        except Exception as e:
+            report_changes.setdefault('deleted', []).append(f"{iid} -> ⚠️ Failed to write archive: {e}")
+            continue
+
+        # Move deleted image if exists locally
+        try:
+            img_url = deleted_obj.get('showImage') or ""
+            if img_url:
+                m = re.search(r'/images/([^/?#]+)$', img_url)
+                candidate = os.path.join(IMAGES_DIR, m.group(1)) if m else None
+
+                if candidate and os.path.exists(candidate):
+                    dst_name = f"{iid}_{filename_timestamp()}.jpg"
+                    dst = os.path.join(DELETE_IMAGES_DIR, safe_filename(dst_name))
+                    shutil.move(candidate, dst)
+                    report_changes.setdefault('deleted_images_moved', []).append(
+                        f"{iid} -> image moved: {candidate} -> {dst}"
+                    )
+                else:
+                    report_changes.setdefault('deleted_images_moved', []).append(
+                        f"{iid} -> ⚠️ No local image found for {img_url}"
+                    )
+        except Exception as e_img:
+            report_changes.setdefault('deleted_images_moved', []).append(
+                f"{iid} -> ⚠️ Image move failed: {e_img}"
+            )
+
     merged = sorted(by_id.values(), key=lambda x: x.get('showID', 0))
     try:
         with open(json_file, 'w', encoding='utf-8') as jf:
@@ -882,7 +883,9 @@ def process_deletions(excel_file, json_file, report_changes):
         )
     except Exception as e:
         report_changes.setdefault('deleted_summary', []).append(f"⚠️ Failed to write updated {json_file}: {e}")
+
     return deleted_ids, not_found_ids
+
 
 # ---------------------------- Manual Updates (preserve original) ----------
 def apply_manual_updates(excel_file: str, json_file: str):
