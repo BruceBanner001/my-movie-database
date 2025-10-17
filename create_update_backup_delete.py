@@ -846,7 +846,10 @@ def process_deletions(excel_file, json_file, report_changes):
             try:
                 with open(outpath, 'w', encoding='utf-8') as of:
                     json.dump(deleted_obj, of, indent=4, ensure_ascii=False)
-                report_changes.setdefault('deleted', []).append(f"{iid} -> {obj.get('showName')} ({obj.get('releasedYear')}) -> ✅ Deleted and archived -> {outpath}")
+                report_changes.setdefault('deleted', []).append(
+    f"{iid} -> {deleted_obj.get('showName', 'Unknown')} ({deleted_obj.get('releasedYear', 'N/A')}) -> ✅ Deleted and archived -> {outpath}"
+)
+
                 try:
                     img_url = deleted_obj.get('showImage') or ""
                     if img_url:
@@ -1069,6 +1072,36 @@ def backup_before_modification(show_id, old_obj):
 
 
 # ---------------------------- Cleanup metadata backups ---------------------
+
+# ---------------------------- Helper: move deleted image --------------------
+def move_deleted_image(show_id, img_path):
+    """Move an image file for a deleted object into DELETE_IMAGES_DIR.
+    Returns destination path on success, None otherwise. Creates the directory if needed.
+    Safe and idempotent: if file not found or move fails, it logs and returns None.
+    """
+    try:
+        if not img_path or not os.path.exists(img_path):
+            return None
+        os.makedirs(DELETE_IMAGES_DIR, exist_ok=True)
+        # create a safe destination filename using show_id and timestamp
+        dst_name = f"{show_id}_{filename_timestamp()}.jpg"
+        dst_path = os.path.join(DELETE_IMAGES_DIR, safe_filename(dst_name))
+        # If destination already exists, append a counter
+        counter = 1
+        base, ext = os.path.splitext(dst_path)
+        while os.path.exists(dst_path):
+            dst_path = f"{base}_{counter}{ext}"
+            counter += 1
+        shutil.move(img_path, dst_path)
+        return dst_path
+    except Exception as e:
+        try:
+            logd(f"move_deleted_image failed for {show_id}: {e}")
+        except Exception:
+            pass
+        return None
+
+
 def cleanup_old_metadata_backups(retention_days=METADATA_BACKUP_RETENTION_DAYS):
     if not os.path.exists(BACKUP_META_DIR):
         return 0
@@ -1910,3 +1943,4 @@ def determine_skip_reason(existing_obj, new_data, site_status=None, site_used=No
         return "All fields already matched"
     else:
         return "No significant changes detected"
+    
