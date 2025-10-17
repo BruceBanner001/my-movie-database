@@ -885,26 +885,32 @@ def process_deletions(excel_file, json_file, report_changes):
     return deleted_ids, not_found_ids
 
 # ---------------------------- Manual Updates (preserve original) ----------
+
 def apply_manual_updates(excel_file: str, json_file: str):
-    sheet = 'Manual Update'
+    sheet = 'manual update'
     try:
         df = pd.read_excel(excel_file, sheet_name=sheet)
     except Exception:
-        print("ℹ️ No 'Manual Update' sheet found; skipping Manual Updates.")
+        print("ℹ️ No 'manual update' sheet found; skipping manual updates.")
         return
+
     if df.shape[1] < 2:
-        print("Manual Update sheet must have at least two columns: showID and dataString")
+        print("Manual update sheet must have at least two columns: showID and dataString")
         return
+
     if not os.path.exists(json_file):
         print("No JSON file to update")
         return
+
     try:
         with open(json_file, 'r', encoding='utf-8') as f:
             data = json.load(f)
     except Exception:
         data = []
+
     by_id = {o['showID']: o for o in data if 'showID' in o}
     updated_objs = []
+
     for _, row in df.iterrows():
         sid = None
         try:
@@ -913,9 +919,11 @@ def apply_manual_updates(excel_file: str, json_file: str):
             continue
         if sid is None or sid not in by_id:
             continue
+
         raw = row[1]
         if pd.isna(raw) or not str(raw).strip():
             continue
+
         s = str(raw).strip()
         try:
             if s.startswith('{') and s.endswith('}'):
@@ -935,9 +943,13 @@ def apply_manual_updates(excel_file: str, json_file: str):
                 if ':' in part:
                     k, v = part.split(':', 1)
                     upd[k.strip()] = v.strip()
+
         if not upd:
             continue
+
         obj = by_id[sid]
+
+        # --- Apply updates ---
         for k, v in upd.items():
             if k.lower() == "ratings":
                 try:
@@ -951,33 +963,34 @@ def apply_manual_updates(excel_file: str, json_file: str):
                     pass
             else:
                 obj[k] = v
-                try:
-                    mapping = {'showImage':'image','releaseDate':'releaseDate','otherNames':'otherNames','Duration':'duration','synopsis':'synopsis'}
-                    key_for_site = mapping.get(k)
-                    if key_for_site:
-                        spu = obj.get('sitePriorityUsed') or {}
-                        spu[key_for_site] = 'Manual'
-                        obj['sitePriorityUsed'] = spu
-                except Exception:
-                    pass
-        obj['updatedOn'] = now_ist().strftime('%d %B %Y')
-        obj['updatedDetails'] = f"{', '.join([human_readable_field(k) for k in upd.keys()])} Updated"
+
+            # Handle site priority for manual update
+            mapping = {
+                'showImage': 'image',
+                'releaseDate': 'releaseDate',
+                'otherNames': 'otherNames',
+                'Duration': 'duration',
+                'synopsis': 'synopsis'
+            }
+            key_for_site = mapping.get(k)
+            if key_for_site:
+                spu = obj.get('sitePriorityUsed') or {}
+                spu[key_for_site] = 'Manual'
+                obj['sitePriorityUsed'] = spu
+
+        # --- Set update metadata ---
+        obj['updatedOn'] = now_ist().strftime("%d %B %Y, %I:%M %p (IST)")
+        obj['updatedDetails'] = f"Updated {', '.join([k.capitalize() for k in upd.keys()])} Manually By Owner"
+
         updated_objs.append(obj)
+
     if updated_objs:
         merged = sorted(by_id.values(), key=lambda x: x.get('showID', 0))
         with open(json_file, 'w', encoding='utf-8') as f:
             json.dump(merged, f, indent=4, ensure_ascii=False)
-        print(f"✅ Applied {len(updated_objs)} Manual Updates")
+        print(f"✅ Applied {len(updated_objs)} manual updates")
     else:
-        print("ℹ️ No valid Manual Updates found/applied.")
-
-# ---------------------------- Excel -> objects mapping ----------------------
-COLUMN_MAP = {
-    "no": "showID", "series title": "showName", "started date": "watchStartedOn", "finished date": "watchEndedOn",
-    "year": "releasedYear", "total episodes": "totalEpisodes", "original language": "nativeLanguage", "language": "watchedLanguage",
-    "ratings": "ratings", "catagory": "genres", "category": "genres", "original network": "network", "comments": "comments"
-}
-
+        print("ℹ️ No valid manual updates found/applied.")
 def tidy_comment(val):
     if pd.isna(val) or not str(val).strip():
         return None
@@ -1022,6 +1035,21 @@ def save_metadata_backup(show_id, show_name, language, fetched_fields, site_prio
 # ---------------------------- Helper: backup before modification ------------------
 
 # ---------------------------- Helper: backup before modification ------------------
+
+def objects_differ(old, new, ignore_fields=None):
+    """Return True if objects differ on any key except ignore_fields."""
+    if ignore_fields is None:
+        ignore_fields = {'updatedOn', 'updatedDetails', 'topRatings'}
+    if not isinstance(old, dict) or not isinstance(new, dict):
+        return True
+    keys = set(old.keys()) | set(new.keys())
+    for k in keys:
+        if k in ignore_fields:
+            continue
+        if old.get(k) != new.get(k):
+            return True
+    return False
+
 def backup_before_modification(show_id, old_obj):
     """Save the *old* object to BACKUP_DIR as BEFORE_<timestamp>_<show_id>.json
     only when an actual modification occurs. Returns the backup path or None.
@@ -1288,8 +1316,22 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
             if existing is None:
                 report_changes.setdefault("created", []).append(ordered)
             else:
-                if existing != ordered:
+                # Precise change detection: ignore trivial fields like updatedOn/updatedDetails/topRatings
+                try:
+                    changed = objects_differ(existing, ordered)
+                except Exception:
+                    changed = (existing != ordered)
+                if changed:
+                    # Save BEFORE backup only when there is a real modification
+                    try:
+                        backup_before_modification(ordered.get('showID'), existing)
+                    except Exception as _e:
+                        logd(f"backup failed for {ordered.get('showID')}: {_e}")
                     report_changes.setdefault("updated", []).append({"old": existing, "new": ordered})
+                else:
+                    # Mark as skipped (unchanged)
+                    report_changes.setdefault('skipped', []).append(f"{ordered.get('showID')} - {ordered.get('showName')} ({ordered.get('releasedYear')})")
+
         except Exception as e:
             raise RuntimeError(f"Row {idx} in sheet '{sheet_name}' processing failed: {e}")
     finished = (last_idx >= total_rows - 1) if total_rows > 0 else True
@@ -1868,3 +1910,4 @@ def determine_skip_reason(existing_obj, new_data, site_status=None, site_used=No
         return "All fields already matched"
     else:
         return "No significant changes detected"
+    
