@@ -846,7 +846,7 @@ def process_deletions(excel_file, json_file, report_changes):
             try:
                 with open(outpath, 'w', encoding='utf-8') as of:
                     json.dump(deleted_obj, of, indent=4, ensure_ascii=False)
-                report_changes.setdefault('deleted', []).append(f"{iid} -> ✅ Deleted and archived -> {outpath}")
+                report_changes.setdefault('deleted', []).append(f"{iid} -> {obj.get('showName')} ({obj.get('releasedYear')}) -> ✅ Deleted and archived -> {outpath}")
                 try:
                     img_url = deleted_obj.get('showImage') or ""
                     if img_url:
@@ -1910,4 +1910,3 @@ def determine_skip_reason(existing_obj, new_data, site_status=None, site_used=No
         return "All fields already matched"
     else:
         return "No significant changes detected"
-    
