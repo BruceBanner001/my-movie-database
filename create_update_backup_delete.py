@@ -1,6 +1,3 @@
-# =====================
-# Excel → JSON Automation v2.4.2 (Final)
-# =====================
 # ============================================================
 # Script: create_update_backup_delete.py
 # Author: [BruceBanner001]
@@ -95,7 +92,7 @@ Notes:
 """
 
 # --------------------------- VERSION & SITE PRIORITY ------------------------
-SCRIPT_VERSION = "v2.4.2 (Final)"
+SCRIPT_VERSION = "v2.3.4 (Stable)"
 
 # SITE_PRIORITY_BY_LANGUAGE controls which site is preferred for each fetched property
 SITE_PRIORITY_BY_LANGUAGE = {
