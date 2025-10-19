@@ -92,7 +92,7 @@ Notes:
 """
 
 # --------------------------- VERSION & SITE PRIORITY ------------------------
-SCRIPT_VERSION = "v2.3.4 (Stable)"
+SCRIPT_VERSION = "v2.4.0 (Stable)"
 
 # SITE_PRIORITY_BY_LANGUAGE controls which site is preferred for each fetched property
 SITE_PRIORITY_BY_LANGUAGE = {
@@ -231,6 +231,20 @@ PROGRESS_FILE = os.path.join(PROGRESS_DIR, "progress.json")
 MANUAL_UPDATE_REPORT = os.path.join(REPORTS_DIR, 'manual_update_report.json')
 STATUS_JSON = os.path.join(REPORTS_DIR, "status.json")
 BACKUP_META_DIR = "backup-meta-data"
+
+MISSING_CHECK_FIELDS = [
+    "watchStartedOn",
+    "watchEndedOn",
+    "otherNames",
+    "releaseDate",
+    "Duration",
+    "synopsis",
+    "showImage",
+    "genres",
+    "network",
+    "sitePriorityUsed",
+]
+
 
 # Ensure all necessary folders exist at startup
 for _d in [BACKUP_DIR, IMAGES_DIR, DELETE_IMAGES_DIR, DELETED_DATA_DIR, REPORTS_DIR, BACKUP_META_DIR]:
@@ -1010,6 +1024,8 @@ def sheet_base_offset(sheet_name: str) -> int:
         return 1000
     if sheet_name == "Sheet2":
         return 3000
+    if sheet_name == "Sheet3":
+        return 5000
     return 0
 
 # ---------------------------- Helper: save metadata backup ------------------
@@ -1124,6 +1140,11 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
                      deleted_ids_for_run=None, deleting_not_found_initial=None, deleting_found_in_sheets=None):
     df = pd.read_excel(excel_file, sheet_name=sheet_name)
     df.columns = [c.strip().lower() for c in df.columns]
+    # Safe defaults: ensure optional columns exist to avoid KeyError for sheets missing these columns
+    for opt_col in ("started date", "start date", "finished date", "finish date", "comment", "comments", "original network", "network", "total episodes", "totalepisodes", "again watched date", "again watched dates"):
+        if opt_col not in df.columns:
+            df[opt_col] = None
+
     again_idx = None
     for i, c in enumerate(df.columns):
         if "again watched" in c:
@@ -1342,6 +1363,20 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
                 "Duration": obj.get("Duration"),
                 "sitePriorityUsed": obj.get("sitePriorityUsed", {})
             }
+            
+            # Missing / Value Not Found detection
+            try:
+                mfields = []
+                for f in MISSING_CHECK_FIELDS:
+                    v = ordered.get(f)
+                    if v is None or v == "" or (isinstance(v, (list, tuple)) and len(v) == 0):
+                        mfields.append(human_readable_field(f))
+                if mfields:
+                    report_changes.setdefault('value_not_found', []).append(
+                        f"{ordered.get('showID')} - {ordered.get('showName')} ({ordered.get('releasedYear')}) -> ⚠️ {', '.join(mfields)} were not found."
+                    )
+            except Exception as _e:
+                logd(f"Missing fields detection failed for {ordered.get('showID')}: {_e}")
             items.append(ordered)
             processed += 1
             last_idx = idx
@@ -1363,7 +1398,7 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
                     report_changes.setdefault("updated", []).append({"old": existing, "new": ordered})
                 else:
                     # Mark as skipped (unchanged)
-                    report_changes.setdefault('skipped', []).append(f"{ordered.get('showID')} - {ordered.get('showName')} ({ordered.get('releasedYear')})")
+                    report_changes.setdefault('skipped', []).append(f"{ordered.get('showID')} - {ordered.get('showName')} ({ordered.get('releasedYear')}) -> Already exists (no changes)")
 
         except Exception as e:
             raise RuntimeError(f"Row {idx} in sheet '{sheet_name}' processing failed: {e}")
@@ -1767,7 +1802,7 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
                     merged_by_id[sid] = new_obj
                 else:
                     # no changes found -> mark as skipped
-                    report_changes.setdefault('skipped', []).append(f"{old_obj.get('showName', 'Unknown')} ({old_obj.get('releasedYear', 'N/A')}) -> Unchanged (Skipped)")
+                    report_changes.setdefault('skipped', []).append(f"{ordered.get('showID')} - {ordered.get('showName')} ({ordered.get('releasedYear')}) -> Already exists (no changes)")
             else:
                 merged_by_id[sid] = new_obj
 
@@ -1943,4 +1978,3 @@ def determine_skip_reason(existing_obj, new_data, site_status=None, site_used=No
         return "All fields already matched"
     else:
         return "No significant changes detected"
-    
