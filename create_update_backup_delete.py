@@ -92,7 +92,7 @@ Notes:
 """
 
 # --------------------------- VERSION & SITE PRIORITY ------------------------
-SCRIPT_VERSION = "v2.4.1 (Stable)"
+SCRIPT_VERSION = "v2.4.2 (Stable)"
 
 # SITE_PRIORITY_BY_LANGUAGE controls which site is preferred for each fetched property
 SITE_PRIORITY_BY_LANGUAGE = {
