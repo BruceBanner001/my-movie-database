@@ -178,6 +178,9 @@ def human_readable_field(field):
     parts = parts.split()
     return " ".join([p.capitalize() for p in parts])
 
+print("🚀 DEBUG CHECK — Running:", __file__)
+print("🚀 DEBUG CHECK — Version:", SCRIPT_VERSION)
+
 # ---------------------------- Imports & Globals ----------------------------
 import os
 import re
