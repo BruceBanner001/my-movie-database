@@ -92,7 +92,7 @@ Notes:
 """
 
 # --------------------------- VERSION & SITE PRIORITY ------------------------
-SCRIPT_VERSION = "v2.0.0 (Stable)"
+SCRIPT_VERSION = "v2.4.0 (Patched)"
 
 # SITE_PRIORITY_BY_LANGUAGE controls which site is preferred for each fetched property
 SITE_PRIORITY_BY_LANGUAGE = {
@@ -195,6 +195,21 @@ from bs4 import BeautifulSoup
 from PIL import Image
 from io import BytesIO
 
+
+# Safety: ensure essential directories exist on module import to avoid missing-folder errors
+try:
+    os.makedirs(BACKUP_DIR, exist_ok=True)
+    os.makedirs(IMAGES_DIR, exist_ok=True)
+    os.makedirs(DELETE_IMAGES_DIR, exist_ok=True)
+    os.makedirs(DELETED_DATA_DIR, exist_ok=True)
+    os.makedirs(REPORTS_DIR, exist_ok=True)
+    os.makedirs(BACKUP_META_DIR, exist_ok=True)
+    os.makedirs(PROGRESS_DIR, exist_ok=True)
+except Exception:
+    pass
+
+
+
 try:
     from ddgs import DDGS
     HAVE_DDGS = True
@@ -223,7 +238,7 @@ def filename_timestamp():
 JSON_FILE = "seriesData.json"
 BACKUP_DIR = "backups"
 IMAGES_DIR = "images"
-DELETE_IMAGES_DIR = "delete-images"
+DELETE_IMAGES_DIR = "deleted-images"
 DELETED_DATA_DIR = "deleted-data"
 REPORTS_DIR = "reports"
 PROGRESS_DIR = ".progress"
@@ -1702,39 +1717,148 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
     return
 
 # ---------------------------- Entrypoint -----------------------------------
-if __name__ == '__main__':
-    if not (os.path.exists(EXCEL_FILE_ID_TXT) and os.path.exists(SERVICE_ACCOUNT_FILE)):
-        print("❌ Missing GDrive credentials. Please set EXCEL_FILE_ID.txt and GDRIVE_SERVICE_ACCOUNT.json via GitHub secrets.")
-        sys.exit(3)
+
+
+# ---------------------------- Integrated helper functions ----------------------
+def ensure_directories():
+    """Create required folders at startup to avoid folder-missing errors."""
+    dirs = [BACKUP_DIR, IMAGES_DIR, DELETE_IMAGES_DIR, DELETED_DATA_DIR, REPORTS_DIR, BACKUP_META_DIR, PROGRESS_DIR]
+    for d in dirs:
+        try:
+            os.makedirs(d, exist_ok=True)
+        except Exception as e:
+            logd(f"ensure_directories: failed to create {d}: {e}")
+
+def save_backup_before_modification(obj):
+    """Save the previous version of an object into BACKUP_DIR as BEFORE_<timestamp>_<showID>.json"""
+    if not obj or not isinstance(obj, dict):
+        return None
     try:
-        with open(EXCEL_FILE_ID_TXT, 'r', encoding='utf-8') as f:
-            excel_id = f.read().strip()
-    except Exception:
-        excel_id = None
-    if not excel_id:
-        print("❌ EXCEL_FILE_ID.txt is empty or missing. Aborting gracefully.")
-        sys.exit(0)
-    _sheets_env = os.environ.get("SHEETS", "").strip()
-    if _sheets_env:
-        SHEETS = [s.strip() for s in _sheets_env.split(";") if s.strip()]
-    else:
-        SHEETS = ["Sheet1"]
-    excel_bytes = fetch_excel_from_gdrive_bytes(excel_id, SERVICE_ACCOUNT_FILE)
-    if excel_bytes is None:
-        print("❌ Could not fetch Excel file from Google Drive. Exiting gracefully.")
-        print("   Ensure the service account JSON and EXCEL_FILE_ID are correct, and required packages are installed.")
-        sys.exit(0)
-    excel_file_like = excel_bytes
-    try:
-        apply_manual_updates(excel_file_like, JSON_FILE)
+        os.makedirs(BACKUP_DIR, exist_ok=True)
+        sid = obj.get('showID', 'unknown')
+        fname = f"BEFORE_{now_ist().strftime('%d_%B_%Y_%H%M')}_{sid}.json"
+        out = os.path.join(BACKUP_DIR, safe_filename(fname))
+        with open(out, 'w', encoding='utf-8') as of:
+            json.dump(obj, of, indent=2, ensure_ascii=False)
+        return out
     except Exception as e:
-        logd(f"apply_manual_updates error: {e}")
+        logd(f"save_backup_before_modification failed: {e}")
+        return None
+
+def default_site_priority_for_obj(obj):
+    """Return a full sitePriorityUsed mapping (ensuring all keys exist) based on nativeLanguage or default."""
+    lang = (obj.get('nativeLanguage') or '').strip().lower()
+    sp = SITE_PRIORITY_BY_LANGUAGE.get(lang, SITE_PRIORITY_BY_LANGUAGE.get('default', {}))
+    # ensure all keys exist and default to 'mydramalist' if missing
+    keys = ['image', 'releaseDate', 'otherNames', 'duration', 'synopsis']
+    res = {}
+    for k in keys:
+        res[k] = sp.get(k) or 'mydramalist'
+    return res
+
+def reorder_object_with_sitepriority(obj):
+    """Return a new dict with sitePriorityUsed placed right after Duration."""
+    # preserve existing order where possible: build a list and insert sitePriorityUsed after Duration
+    new = {}
+    inserted = False
+    for k, v in obj.items():
+        new[k] = v
+        if not inserted and k == 'Duration':
+            new['sitePriorityUsed'] = obj.get('sitePriorityUsed') or default_site_priority_for_obj(obj)
+            inserted = True
+    if not inserted:
+        # Duration not found; append at the end
+        new['sitePriorityUsed'] = obj.get('sitePriorityUsed') or default_site_priority_for_obj(obj)
+    return new
+
+def patched_run_and_postprocess(excel_file_like, json_file, sheet_names, max_per_run=0, max_run_time_minutes=0):
+    """Run the original update_json_from_excel and then perform backups for modified objects and ensure sitePriorityUsed."""
+    ensure_directories()
+    # Load previous JSON snapshot
+    old_arr = []
+    if os.path.exists(json_file):
+        try:
+            with open(json_file, 'r', encoding='utf-8') as jf:
+                old_arr = json.load(jf)
+        except Exception:
+            old_arr = []
+    old_by_id = {o.get('showID'): o for o in old_arr if isinstance(o, dict) and 'showID' in o}
+
+    # Call the original updater
     try:
-        update_json_from_excel(excel_file_like, JSON_FILE, SHEETS, max_per_run=MAX_PER_RUN, max_run_time_minutes=MAX_RUN_TIME_MINUTES)
-    except SystemExit:
+        update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=max_per_run, max_run_time_minutes=max_run_time_minutes)
+    except Exception as e:
+        print(f"Original updater raised an exception: {e}")
         raise
+
+    # Load new JSON
+    new_arr = []
+    if os.path.exists(json_file):
+        try:
+            with open(json_file, 'r', encoding='utf-8') as jf:
+                new_arr = json.load(jf)
+        except Exception:
+            new_arr = []
+
+    new_by_id = {o.get('showID'): o for o in new_arr if isinstance(o, dict) and 'showID' in o}
+
+    # For each id present in both old and new, if different, save old to backups (ONLY modified)
+    backups = []
+    for sid, old_obj in old_by_id.items():
+        if sid in new_by_id:
+            new_obj = new_by_id[sid]
+            try:
+                old_json = json.dumps(old_obj, sort_keys=True, ensure_ascii=False)
+                new_json = json.dumps(new_obj, sort_keys=True, ensure_ascii=False)
+            except Exception:
+                old_json = str(old_obj)
+                new_json = str(new_obj)
+            if old_json != new_json:
+                bak = save_backup_before_modification(old_obj)
+                if bak:
+                    backups.append(bak)
+
+    # Ensure sitePriorityUsed exists and is placed after Duration for every object
+    final_arr = []
+    for o in new_arr:
+        if not isinstance(o, dict):
+            final_arr.append(o)
+            continue
+        sp = o.get('sitePriorityUsed')
+        if not isinstance(sp, dict):
+            o['sitePriorityUsed'] = default_site_priority_for_obj(o)
+        # Reorder so sitePriorityUsed comes after Duration
+        o2 = reorder_object_with_sitepriority(o)
+        final_arr.append(o2)
+
+    # Write final JSON back (overwrite)
+    try:
+        with open(json_file, 'w', encoding='utf-8') as jf:
+            json.dump(final_arr, jf, indent=4, ensure_ascii=False)
     except Exception as e:
-        print(f"❌ Unexpected error during update: {e}")
-        logd(traceback.format_exc())
+        print(f"Failed to write final {json_file}: {e}")
+
+    # Print summary of backups created
+    if backups:
+        print(f"Backups created for modified objects: {len(backups)}")
+        for b in backups:
+            print('-', b)
+    else:
+        print("No modified objects detected; no backups created.")
+
+# ---------------------------- End of helpers ----------------------
+
+
+if __name__ == '__main__':
+    import sys
+    # Usage: python create_update_backup_delete_v2_4_0_integrated.py <excel_file_like> <json_file> [sheet1,sheet2,...]
+    if len(sys.argv) < 3:
+        print("Usage: python create_update_backup_delete_v2_4_0_integrated.py <excel_file_like> <json_file> [sheet1,sheet2,...]")
         sys.exit(1)
-    print("All done.")
+    excel_file = sys.argv[1]
+    json_file = sys.argv[2]
+    sheets = sys.argv[3].split(',') if len(sys.argv) > 3 else ['Sheet1']
+    max_per_run = int(os.environ.get('MAX_PER_RUN', '0') or 0)
+    max_run_time_minutes = int(os.environ.get('MAX_RUN_TIME_MINUTES', '0') or 0)
+    print(f"🚀 Running patched integrated script — {SCRIPT_VERSION}")
+    patched_run_and_postprocess(excel_file, json_file, sheets, max_per_run=max_per_run, max_run_time_minutes=max_run_time_minutes)
