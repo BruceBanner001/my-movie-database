@@ -92,14 +92,7 @@ Notes:
 """
 
 # --------------------------- VERSION & SITE PRIORITY ------------------------
-# ============================================================================
-# Script metadata
-# ============================================================================
-SCRIPT_VERSION = "v2.4.4 (Patched Final)"
-
-# Diagnostic print — visible in Actions logs for confirmation
-print(f"✅ Running NEW PATCHED SCRIPT {SCRIPT_VERSION}")
-
+SCRIPT_VERSION = "v2.4.5 (Final Fix)"
 
 # SITE_PRIORITY_BY_LANGUAGE controls which site is preferred for each fetched property
 SITE_PRIORITY_BY_LANGUAGE = {
@@ -1151,7 +1144,7 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
                     local_image_path, remote_image_url, img_site = fetch_and_save_image_for_show(show_name, None, sid, site_priority=site_priority)
                     if local_image_path:
                         new_image_url = build_absolute_url(local_image_path)
-                        report_changes.setdefault('images', []).append({'showID': sid, 'showName': show_name, 'releasedYear': released_year, 'old': existing_image_url, 'new': new_image_url})
+                        report_changes.setdefault('images', []).append({'showName': show_name, 'old': existing_image_url, 'new': new_image_url})
                         metadata_backup_fields.setdefault("showImage", {"value": new_image_url, "source": img_site})
                         site_priority_used["image"] = img_site or site_priority.get("image")
                     else:
@@ -1216,7 +1209,7 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
                         local_image_path, remote_image_url, img_site = fetch_and_save_image_for_show(show_name, None, sid, site_priority=site_priority)
                         if local_image_path:
                             new_image_url = build_absolute_url(local_image_path)
-                            report_changes.setdefault('images', []).append({'showID': sid, 'showName': show_name, 'releasedYear': released_year, 'old': existing_image_url, 'new': new_image_url})
+                            report_changes.setdefault('images', []).append({'showName': show_name, 'old': existing_image_url, 'new': new_image_url})
                             obj['showImage'] = new_image_url
                     except Exception as e:
                         logd(f"Existing object image fetch failed for {show_name}: {e}")
@@ -1572,8 +1565,6 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
     print(f"🚀 Running create_update_backup_delete.py — Version {SCRIPT_VERSION}")
     processed_total = 0
     start_time = now_ist()
-    # per-run collection of old objects that changed (showID -> old object)
-    run_change_backup = {}
     # Load existing JSON (if any)
     if os.path.exists(json_file):
         try:
@@ -1632,36 +1623,27 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
             print(f"⚠️ Error processing {s}: {err}")
             report_changes['error'] = err
             items, processed, finished, next_start_idx = [], 0, True, start_idx
-        
-for new_obj in items:
-    sid = new_obj.get('showID')
-    if sid in merged_by_id:
-        old_obj = merged_by_id[sid]
-        # compute meaningful changed fields (ignore metadata-only fields)
-        METADATA_IGNORE = {'updatedOn', 'updatedDetails', 'topRatings'}
-        changed_fields = [k for k in new_obj.keys() if k not in METADATA_IGNORE and old_obj.get(k) != new_obj.get(k)]
-        if changed_fields:
-            # record previous object for single-run backup (store previous state)
-            try:
-                run_change_backup[sid] = old_obj
-            except Exception:
-                pass
-            # human readable field names
-            human = ', '.join([human_readable_field(k) for k in changed_fields])
-            new_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
-            new_obj['updatedDetails'] = f"Updated {human} Manually By Owner"
-            # preserve sitePriorityUsed from old if present and not provided in new
-            if old_obj.get('sitePriorityUsed') and not new_obj.get('sitePriorityUsed'):
-                new_obj['sitePriorityUsed'] = old_obj.get('sitePriorityUsed')
-            merged_by_id[sid] = new_obj
-            report_changes.setdefault('updated', []).append({'old': old_obj, 'new': new_obj})
-        else:
-            # No meaningful changes -> skip
-            report_changes.setdefault('skipped', []).append(f"{sid} - {old_obj.get('showName', 'Unknown')} ({old_obj.get('releasedYear', 'N/A')})")
-    else:
-        # new object
-        merged_by_id[sid] = new_obj
+        # ============================================================================
+# Write backup file — only include changed objects
+# ============================================================================
+changed_objects = []
 
+# Compare old vs new data to find modified entries
+if 'series_data' in locals() and 'updated_series_data' in locals():
+    for old_obj, new_obj in zip(series_data, updated_series_data):
+        if old_obj != new_obj:
+            changed_objects.append(old_obj)
+
+if changed_objects:
+    for obj in changed_objects:
+        json.dump(obj, backup_f, ensure_ascii=False, indent=2)
+    print(f"💾 Backup file created: {backup_filename}")
+else:
+    print("⚠️ No changed objects found for backup (skipping write).")
+
+                print(f"✅ Backup saved -> {backup_name}")
+            except Exception as e:
+                print(f"⚠️ Could not write backup {backup_name}: {e}")
         report_changes_by_sheet[s] = report_changes
         if processed > 0:
             any_sheet_processed = True
@@ -1675,17 +1657,6 @@ for new_obj in items:
         save_progress(progress)
     still_not_found = set(deleting_not_found_initial or []) - deleting_found_in_sheets
     merged = sorted(merged_by_id.values(), key=lambda x: x.get('showID', 0))
-    # Write single-run backup containing only previous states of changed objects
-    try:
-        if run_change_backup:
-            os.makedirs(BACKUP_DIR, exist_ok=True)
-            backup_changes_name = f"BACKUP_changes_before_update_{now_ist().strftime('%d_%B_%Y_%H%M')}.json"
-            backup_changes_path = os.path.join(BACKUP_DIR, safe_filename(backup_changes_name))
-            with open(backup_changes_path, 'w', encoding='utf-8') as bf:
-                json.dump(run_change_backup, bf, indent=2, ensure_ascii=False)
-            report_changes_by_sheet.setdefault('Run Backups', {})['changes_backup'] = backup_changes_path
-    except Exception as e:
-        print(f"⚠️ Failed to write run-change backup: {e}")
     try:
         with open(json_file, 'w', encoding='utf-8') as f:
             json.dump(merged, f, indent=4, ensure_ascii=False)
@@ -1729,6 +1700,8 @@ for new_obj in items:
         print("⚠️ No records were processed in this run. Please check your Excel file and sheet names.")
         with open(os.path.join(REPORTS_DIR, "failure_reason.txt"), "w", encoding="utf-8") as ff:
             ff.write("No records processed. Check logs and the report.\n")
+        return
+    return
 
 # ---------------------------- Entrypoint -----------------------------------
 if __name__ == '__main__':
