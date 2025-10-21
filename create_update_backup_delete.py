@@ -92,7 +92,14 @@ Notes:
 """
 
 # --------------------------- VERSION & SITE PRIORITY ------------------------
-SCRIPT_VERSION = "v2.4.3 (Final)"
+# ============================================================================
+# Script metadata
+# ============================================================================
+SCRIPT_VERSION = "v2.4.4 (Patched Final)"
+
+# Diagnostic print — visible in Actions logs for confirmation
+print(f"✅ Running NEW PATCHED SCRIPT {SCRIPT_VERSION}")
+
 
 # SITE_PRIORITY_BY_LANGUAGE controls which site is preferred for each fetched property
 SITE_PRIORITY_BY_LANGUAGE = {
