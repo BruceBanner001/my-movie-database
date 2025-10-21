@@ -92,7 +92,7 @@ Notes:
 """
 
 # --------------------------- VERSION & SITE PRIORITY ------------------------
-SCRIPT_VERSION = "v2.4.5 (Final Fix)"
+SCRIPT_VERSION = "v2.4.3 (Final)"
 
 # SITE_PRIORITY_BY_LANGUAGE controls which site is preferred for each fetched property
 SITE_PRIORITY_BY_LANGUAGE = {
@@ -1623,24 +1623,36 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
             print(f"⚠️ Error processing {s}: {err}")
             report_changes['error'] = err
             items, processed, finished, next_start_idx = [], 0, True, start_idx
-        # ============================================================================
-# Write backup file — only include changed objects
-# ============================================================================
-changed_objects = []
-
-# Compare old vs new data to find modified entries
-if 'series_data' in locals() and 'updated_series_data' in locals():
-    for old_obj, new_obj in zip(series_data, updated_series_data):
-        if old_obj != new_obj:
-            changed_objects.append(old_obj)
-
-if changed_objects:
-    for obj in changed_objects:
-        json.dump(obj, backup_f, ensure_ascii=False, indent=2)
-    print(f"💾 Backup file created: {backup_filename}")
-else:
-    print("⚠️ No changed objects found for backup (skipping write).")
-
+        for new_obj in items:
+            sid = new_obj.get('showID')
+            if sid in merged_by_id:
+                old_obj = merged_by_id[sid]
+                if old_obj != new_obj:
+                    # compute changed fields and human-readable names
+                    changed = []
+                    for k in new_obj.keys():
+                        if old_obj.get(k) != new_obj.get(k):
+                            if k in ('updatedOn','updatedDetails','topRatings'):
+                                continue
+                            changed.append(human_readable_field(k))
+                    new_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
+                    if changed:
+                        human = ', '.join([human_readable_field(k).capitalize() for k in changed])
+                        new_obj['updatedDetails'] = f"Updated {human} Manually By Owner"
+                    else:
+                        new_obj['updatedDetails'] = 'Updated Manually By Owner'
+                    merged_by_id[sid] = new_obj
+                else:
+                    # no changes found -> mark as skipped
+                    report_changes.setdefault('skipped', []).append(f"{sid} - {old_obj.get('showName', 'Unknown')} ({old_obj.get('releasedYear', 'N/A')})")
+            else:
+                merged_by_id[sid] = new_obj
+        if items:
+            os.makedirs(BACKUP_DIR, exist_ok=True)
+            backup_name = os.path.join(BACKUP_DIR, f"{filename_timestamp()}_{safe_filename(s)}.json")
+            try:
+                with open(backup_name, 'w', encoding='utf-8') as bf:
+                    json.dump(items, bf, indent=4, ensure_ascii=False)
                 print(f"✅ Backup saved -> {backup_name}")
             except Exception as e:
                 print(f"⚠️ Could not write backup {backup_name}: {e}")
