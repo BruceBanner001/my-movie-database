@@ -223,7 +223,7 @@ def filename_timestamp():
 JSON_FILE = "seriesData.json"
 BACKUP_DIR = "backups"
 IMAGES_DIR = "images"
-DELETE_IMAGES_DIR = "delete-images"
+DELETE_IMAGES_DIR = "deleted-images"
 DELETED_DATA_DIR = "deleted-data"
 REPORTS_DIR = "reports"
 PROGRESS_DIR = ".progress"
@@ -841,7 +841,7 @@ def process_deletions(excel_file, json_file, report_changes):
             try:
                 with open(outpath, 'w', encoding='utf-8') as of:
                     json.dump(deleted_obj, of, indent=4, ensure_ascii=False)
-                report_changes.setdefault('deleted', []).append(f"{iid} -> ✅ Deleted and archived -> {outpath}")
+                report_changes.setdefault('deleted', []).append(f"{iid} -> {deleted_obj.get('showName', 'Unknown')} ({deleted_obj.get('releasedYear', 'N/A')}) -> ✅ Deleted and archived -> {outpath}")
                 try:
                     img_url = deleted_obj.get('showImage') or ""
                     if img_url:
@@ -858,9 +858,7 @@ def process_deletions(excel_file, json_file, report_changes):
                                 dst_name = f"{iid}_{filename_timestamp()}.jpg"
                                 dst = os.path.join(DELETE_IMAGES_DIR, safe_filename(dst_name))
                                 shutil.move(src, dst)
-                                report_changes.setdefault('deleted_images_moved', []).append(
-                                    f"{iid} -> image moved: {src} -> {dst}"
-                                )
+                                report_changes.setdefault('deleted_images_moved', []).append(f"{iid} -> {deleted_obj.get('showName', 'Unknown')} ({deleted_obj.get('releasedYear', 'N/A')}) -> image moved: {src} -> {dst}")
                 except Exception as e_img:
                     report_changes.setdefault('deleted_images_moved', []).append(f"{iid} -> ⚠️ Image move failed: {e_img}")
             except Exception as e:
@@ -948,6 +946,21 @@ def apply_manual_updates(excel_file: str, json_file: str):
                 obj[k] = v
         obj['updatedOn'] = now_ist().strftime('%d %B %Y')
         
+        # Mark fields updated via Manual Update in sitePriorityUsed
+        try:
+            spu = obj.get('sitePriorityUsed') or {}
+            FIELD_TO_SITE_KEY = {
+                'showimage': 'image', 'image': 'image', 'releasedyear': 'releaseYear',
+                'releasedate': 'releaseDate', 'othernames': 'otherNames', 'duration': 'duration', 'synopsis': 'synopsis'
+            }
+            for k2 in upd.keys():
+                mapped = FIELD_TO_SITE_KEY.get(str(k2).lower())
+                if mapped:
+                    spu[mapped] = 'Manual'
+            obj['sitePriorityUsed'] = spu
+        except Exception:
+            pass
+
         updated_objs.append(obj)
     if updated_objs:
         merged = sorted(by_id.values(), key=lambda x: x.get('showID', 0))
@@ -1308,7 +1321,7 @@ def write_report(report_changes_by_sheet, report_path, final_not_found_deletions
             lines.append("")
             lines.append("🆕 Data Created:")
             for obj in created:
-                lines.append(f"- {obj.get('showName','Unknown')} ({obj.get('releasedYear','N/A')}) -> First Time Uploaded")
+                lines.append(f"- {obj.get('showID','N/A')} - {obj.get('showName','Unknown')} ({obj.get('releasedYear','N/A')}) -> First Time Uploaded")
         updated = changes.get('updated', [])
         if updated:
             lines.append("")
@@ -1324,7 +1337,7 @@ def write_report(report_changes_by_sheet, report_path, final_not_found_deletions
                             continue
                         changed_fields.append(human_readable_field(k))
                 fields_text = ", ".join(changed_fields) + " Updated" if changed_fields else "Updated"
-                lines.append(f"- {new.get('showName','Unknown')} ({new.get('releasedYear','N/A')}) -> {fields_text}")
+                lines.append(f"- {new.get('showID','N/A')} - {new.get('showName','Unknown')} ({new.get('releasedYear','N/A')}) -> {fields_text}")
         skipped = changes.get('skipped', [])
         if skipped:
             lines.append("")
@@ -1336,7 +1349,7 @@ def write_report(report_changes_by_sheet, report_path, final_not_found_deletions
             lines.append("")
             lines.append("🖼️ Image Updated:")
             for itm in images:
-                lines.append(f"- {itm.get('showName','Unknown')} -> updated")
+                lines.append(f"- {itm.get('showID','N/A')} - {itm.get('showName','Unknown')} ({itm.get('releasedYear','N/A')}) -> updated")
                 total_images_updated += 1
         if changes.get('metadata_backups_created'):
             lines.append("")
