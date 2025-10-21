@@ -306,6 +306,29 @@ def normalize_list_from_csv(cell_value, cap=False, strip=False):
         items = [p.strip() for p in items]
     return items
 
+
+# --- Helper: compare objects ignoring non-meaningful keys ---
+def objects_differ(old, new, ignore_keys=None):
+    if ignore_keys is None:
+        ignore_keys = set(['updatedOn', 'updatedDetails', 'topRatings'])
+    else:
+        ignore_keys = set(ignore_keys)
+    ks = set(old.keys() if isinstance(old, dict) else []) | set(new.keys() if isinstance(new, dict) else [])
+    for k in ks:
+        if k in ignore_keys:
+            continue
+        o = old.get(k) if isinstance(old, dict) else None
+        n = new.get(k) if isinstance(new, dict) else None
+        if isinstance(o, list) and isinstance(n, list):
+            if [str(x) for x in o] != [str(x) for x in n]:
+                return True
+            else:
+                continue
+        if o != n:
+            return True
+    return False
+
+
 # ---------------------------- Date helpers ---------------------------------
 _MONTHS = {m.lower(): m for m in ["January", "February", "March", "April", "May", "June",
                                   "July", "August", "September", "October", "November", "December"]}
@@ -878,6 +901,7 @@ def process_deletions(excel_file, json_file, report_changes):
     return deleted_ids, not_found_ids
 
 # ---------------------------- Manual Updates (preserve original) ----------
+
 def apply_manual_updates(excel_file: str, json_file: str):
     sheet = 'Manual Update'
     try:
@@ -898,6 +922,15 @@ def apply_manual_updates(excel_file: str, json_file: str):
         data = []
     by_id = {o['showID']: o for o in data if 'showID' in o}
     updated_objs = []
+    # Fields that we treat as fetched-from-web fields
+    fetched_fields_map = {
+        'synopsis': 'synopsis',
+        'showimage': 'image',
+        'image': 'image',
+        'duration': 'Duration',
+        'othernames': 'otherNames',
+        'releasedate': 'releaseDate'
+    }
     for _, row in df.iterrows():
         sid = None
         try:
@@ -931,37 +964,56 @@ def apply_manual_updates(excel_file: str, json_file: str):
         if not upd:
             continue
         obj = by_id[sid]
+        changed_any = False
+        changed_fetched = []
         for k, v in upd.items():
-            if k.lower() == "ratings":
+            key_l = str(k).lower()
+            if key_l == 'ratings':
                 try:
-                    obj["ratings"] = int(v)
+                    newv = int(v)
                 except Exception:
-                    obj["ratings"] = obj.get("ratings", 0)
-            elif k.lower() in ("releasedyear", "year"):
+                    newv = obj.get('ratings', 0)
+                if obj.get('ratings') != newv:
+                    obj['ratings'] = newv
+                    changed_any = True
+            elif key_l in ('releasedyear', 'year'):
                 try:
-                    obj["releasedYear"] = int(v)
+                    newv = int(v)
                 except Exception:
-                    pass
+                    newv = obj.get('releasedYear')
+                if obj.get('releasedYear') != newv:
+                    obj['releasedYear'] = newv
+                    changed_any = True
             else:
-                obj[k] = v
-        obj['updatedOn'] = now_ist().strftime('%d %B %Y')
-        
-        # Mark fields updated via Manual Update in sitePriorityUsed
-        try:
-            spu = obj.get('sitePriorityUsed') or {}
-            FIELD_TO_SITE_KEY = {
-                'showimage': 'image', 'image': 'image', 'releasedyear': 'releaseYear',
-                'releasedate': 'releaseDate', 'othernames': 'otherNames', 'duration': 'duration', 'synopsis': 'synopsis'
-            }
-            for k2 in upd.keys():
-                mapped = FIELD_TO_SITE_KEY.get(str(k2).lower())
-                if mapped:
-                    spu[mapped] = 'Manual'
-            obj['sitePriorityUsed'] = spu
-        except Exception:
-            pass
-
-        updated_objs.append(obj)
+                newv = v
+                if obj.get(k) != newv:
+                    obj[k] = newv
+                    changed_any = True
+                    if key_l in fetched_fields_map:
+                        changed_fetched.append(fetched_fields_map[key_l])
+        if changed_any:
+            obj['updatedOn'] = now_ist().strftime('%d %B %Y')
+            # Update sitePriorityUsed only for fetched fields changed
+            try:
+                spu = obj.get('sitePriorityUsed') or {}
+                for ff in changed_fetched:
+                    if ff:
+                        key_for_spu = ff if ff != 'showImage' else 'image'
+                        spu[key_for_spu] = 'Manual'
+                if spu:
+                    obj['sitePriorityUsed'] = spu
+            except Exception:
+                pass
+            # updatedDetails summarization
+            if changed_fetched:
+                human = ', '.join([human_readable_field(x) for x in changed_fetched])
+                obj['updatedDetails'] = "Updated " + human + " Manually By Owner"
+            else:
+                obj['updatedDetails'] = 'Updated Manually By Owner'
+            updated_objs.append(obj)
+        else:
+            # no real change -> skip
+            continue
     if updated_objs:
         merged = sorted(by_id.values(), key=lambda x: x.get('showID', 0))
         with open(json_file, 'w', encoding='utf-8') as f:
@@ -1144,7 +1196,7 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
                     local_image_path, remote_image_url, img_site = fetch_and_save_image_for_show(show_name, None, sid, site_priority=site_priority)
                     if local_image_path:
                         new_image_url = build_absolute_url(local_image_path)
-                        report_changes.setdefault('images', []).append({'showName': show_name, 'old': existing_image_url, 'new': new_image_url})
+                        report_changes.setdefault('images', []).append({'showID': sid, 'showName': show_name, 'releasedYear': released_year, 'old': existing_image_url, 'new': new_image_url})
                         metadata_backup_fields.setdefault("showImage", {"value": new_image_url, "source": img_site})
                         site_priority_used["image"] = img_site or site_priority.get("image")
                     else:
@@ -1209,7 +1261,7 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
                         local_image_path, remote_image_url, img_site = fetch_and_save_image_for_show(show_name, None, sid, site_priority=site_priority)
                         if local_image_path:
                             new_image_url = build_absolute_url(local_image_path)
-                            report_changes.setdefault('images', []).append({'showName': show_name, 'old': existing_image_url, 'new': new_image_url})
+                            report_changes.setdefault('images', []).append({'showID': sid, 'showName': show_name, 'releasedYear': released_year, 'old': existing_image_url, 'new': new_image_url})
                             obj['showImage'] = new_image_url
                     except Exception as e:
                         logd(f"Existing object image fetch failed for {show_name}: {e}")
@@ -1239,7 +1291,8 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
                 "updatedDetails": obj.get("updatedDetails"),
                 "synopsis": obj.get("synopsis"),
                 "topRatings": obj.get("topRatings"),
-                "Duration": obj.get("Duration")
+                "Duration": obj.get("Duration"),
+                "sitePriorityUsed": obj.get("sitePriorityUsed", {})
             }
             items.append(ordered)
             processed += 1
@@ -1623,36 +1676,38 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
             print(f"⚠️ Error processing {s}: {err}")
             report_changes['error'] = err
             items, processed, finished, next_start_idx = [], 0, True, start_idx
+        modified_items = []
         for new_obj in items:
             sid = new_obj.get('showID')
             if sid in merged_by_id:
                 old_obj = merged_by_id[sid]
-                if old_obj != new_obj:
-                    # compute changed fields and human-readable names
+                if objects_differ(old_obj, new_obj):
+                    # compute changed fields and human-readable names (ignore meta keys)
                     changed = []
                     for k in new_obj.keys():
-                        if old_obj.get(k) != new_obj.get(k):
-                            if k in ('updatedOn','updatedDetails','topRatings'):
-                                continue
+                        if old_obj.get(k) != new_obj.get(k) and k not in ('updatedOn','updatedDetails','topRatings'):
                             changed.append(human_readable_field(k))
                     new_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
                     if changed:
                         human = ', '.join([human_readable_field(k).capitalize() for k in changed])
-                        new_obj['updatedDetails'] = f"Updated {human} Manually By Owner"
+                        new_obj['updatedDetails'] = "Updated " + human + " Manually By Owner"
                     else:
                         new_obj['updatedDetails'] = 'Updated Manually By Owner'
+                    report_changes.setdefault('updated', []).append({'old': old_obj, 'new': new_obj})
                     merged_by_id[sid] = new_obj
+                    modified_items.append(new_obj)
                 else:
-                    # no changes found -> mark as skipped
                     report_changes.setdefault('skipped', []).append(f"{sid} - {old_obj.get('showName', 'Unknown')} ({old_obj.get('releasedYear', 'N/A')})")
             else:
                 merged_by_id[sid] = new_obj
-        if items:
+                report_changes.setdefault('created', []).append(new_obj)
+        # write backup containing only modified items (not created/new or deleted)
+        if modified_items:
             os.makedirs(BACKUP_DIR, exist_ok=True)
             backup_name = os.path.join(BACKUP_DIR, f"{filename_timestamp()}_{safe_filename(s)}.json")
             try:
                 with open(backup_name, 'w', encoding='utf-8') as bf:
-                    json.dump(items, bf, indent=4, ensure_ascii=False)
+                    json.dump(modified_items, bf, indent=4, ensure_ascii=False)
                 print(f"✅ Backup saved -> {backup_name}")
             except Exception as e:
                 print(f"⚠️ Could not write backup {backup_name}: {e}")
