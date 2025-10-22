@@ -1,0 +1,40 @@
+{
+  "scriptVersion": "v2.5.0",
+  "showID": 101,
+  "showName": "Miracle That We Met",
+  "language": "korean",
+  "timestamp": "22 October 2025 03:22 PM (IST)",
+  "fetchedFields": {
+    "showImage": {
+      "value": "https://brucebanner001.github.io/my-movie-database/images/101.jpg",
+      "source": "mydramalist"
+    },
+    "releaseDate": {
+      "value": "2 april 2018 - 29 May 2018",
+      "source": "mydramalist"
+    },
+    "otherNames": {
+      "value": [
+        "The Miracle We Met",
+        "Uriga Mannan Gijeok",
+        "Wooriga Mannan Kijeok"
+      ],
+      "source": "mydramalist"
+    },
+    "Duration": {
+      "value": 60,
+      "source": "mydramalist"
+    },
+    "synopsis": {
+      "value": "Miracle That We Met (Korean Drama); 우리가 만난 기적; The Miracle We Met;Uriga Mannan Gijeok;Wooriga Mannan Kijeok; An ordinary man dies in a car crash, (Source: MyDramaList)",
+      "source": "mydramalist"
+    }
+  },
+  "sitePriorityUsed": {
+    "image": "mydramalist",
+    "releaseDate": "mydramalist",
+    "otherNames": "mydramalist",
+    "duration": "mydramalist",
+    "synopsis": "mydramalist"
+  }
+}
