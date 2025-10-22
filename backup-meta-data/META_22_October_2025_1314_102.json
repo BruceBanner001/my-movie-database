@@ -1,0 +1,45 @@
+{
+  "scriptVersion": "v2.4.3 (Final)",
+  "showID": 102,
+  "showName": "Meteor Garden",
+  "language": "chinese",
+  "timestamp": "22 October 2025 01:14 PM (IST)",
+  "fetchedFields": {
+    "showImage": {
+      "value": "https://brucebanner001.github.io/my-movie-database/images/102.jpg",
+      "source": "mydramalist"
+    },
+    "releaseDate": {
+      "value": "9 july 2018 - 29 august 2018",
+      "source": "mydramalist"
+    },
+    "otherNames": {
+      "value": [
+        "Jardim de Meteoros",
+        "Jardín de meteoros",
+        "Liu Xing Hua Yuan",
+        "Meteor Garden 2018",
+        "Meteor Garden Chinese Version",
+        "Сад падающих звезд",
+        "جامعة الزّهور",
+        "流星花園"
+      ],
+      "source": "mydramalist"
+    },
+    "Duration": {
+      "value": 45,
+      "source": "mydramalist"
+    },
+    "synopsis": {
+      "value": "Meteor Garden (Chinese Drama); 流星花园; Jardim de Meteoros;Jardín de meteoros;Liu Xing Hua Yuan;Meteor Garden 2018;Meteor Garden Chinese Version;Сад падающих (Source: MyDramaList)",
+      "source": "mydramalist"
+    }
+  },
+  "sitePriorityUsed": {
+    "image": "mydramalist",
+    "releaseDate": "mydramalist",
+    "otherNames": "mydramalist",
+    "duration": "mydramalist",
+    "synopsis": "mydramalist"
+  }
+}

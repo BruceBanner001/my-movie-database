@@ -1,0 +1,39 @@
+{
+  "scriptVersion": "v2.4.3 (Final)",
+  "showID": 101,
+  "showName": "Meloholic",
+  "language": "korean",
+  "timestamp": "22 October 2025 01:14 PM (IST)",
+  "fetchedFields": {
+    "showImage": {
+      "value": "https://brucebanner001.github.io/my-movie-database/images/101.jpg",
+      "source": "mydramalist"
+    },
+    "releaseDate": {
+      "value": "6 november 2017 - 5 december 2017",
+      "source": "mydramalist"
+    },
+    "otherNames": {
+      "value": [
+        "Melo Holic",
+        "Melroholrik"
+      ],
+      "source": "mydramalist"
+    },
+    "Duration": {
+      "value": 60,
+      "source": "mydramalist"
+    },
+    "synopsis": {
+      "value": "Meloholic (Korean Drama); 멜로홀릭; Melo Holic;Melroholrik; Yoo Eun Ho has a special ability which allows him to read the minds of other people when he places (Source: MyDramaList)",
+      "source": "mydramalist"
+    }
+  },
+  "sitePriorityUsed": {
+    "image": "mydramalist",
+    "releaseDate": "mydramalist",
+    "otherNames": "mydramalist",
+    "duration": "mydramalist",
+    "synopsis": "mydramalist"
+  }
+}
