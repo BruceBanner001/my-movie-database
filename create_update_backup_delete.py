@@ -859,7 +859,7 @@ def process_deletions(excel_file, json_file, report_changes):
         if iid in by_id:
             deleted_obj = by_id.pop(iid)
             deleted_ids.append(iid)
-            fname = f"DELETED_{now_ist().strftime('%d_%B_%Y_%H%M')}_{iid}.json"%d_%B_%Y_%H%M')}_{iid}.json"
+            fname = f"DELETED_{now_ist().strftime('%d_%B_%Y_%H%M')}_{iid}.json"
             outpath = os.path.join(DELETED_DATA_DIR, safe_filename(fname))
             try:
                 with open(outpath, 'w', encoding='utf-8') as of:
@@ -1836,3 +1836,69 @@ if __name__ == '__main__':
         logd(traceback.format_exc())
         sys.exit(1)
     print("All done.")
+
+# [Reinforced main execution block]
+
+# ============================================================================
+# MAIN EXECUTION (Auto-Patched by Assistant)
+# ============================================================================
+
+if __name__ == "__main__":
+    start_time = now_ist()
+    report_changes_by_sheet = {}
+    metadata_backups_removed = cleanup_old_metadata_backups()
+
+    EXCEL_PATH = "input.xlsx"  # Path for downloaded Excel file
+    JSON_FILE_PATH = JSON_FILE
+
+    if not os.path.exists(EXCEL_PATH):
+        print("⚠️ Excel file not found — skipping processing.")
+        sys.exit(0)
+
+    # Process deletions first
+    report_changes_by_sheet["Deleting Records"] = {}
+    deleted_ids, not_found_ids = process_deletions(EXCEL_PATH, JSON_FILE_PATH, report_changes_by_sheet["Deleting Records"])
+
+    # Process main sheets
+    xls = pd.ExcelFile(EXCEL_PATH)
+    for sheet in xls.sheet_names:
+        if sheet in ("Deleting Records", "Manual Update"):
+            continue
+        report_changes = {}
+        existing_by_id = {}
+        if os.path.exists(JSON_FILE_PATH):
+            with open(JSON_FILE_PATH, "r", encoding="utf-8") as jf:
+                try:
+                    data = json.load(jf)
+                    existing_by_id = {o["showID"]: o for o in data if "showID" in o}
+                except Exception:
+                    existing_by_id = {}
+        new_items, processed, finished, next_index = excel_to_objects(
+            EXCEL_PATH, sheet, existing_by_id, report_changes
+        )
+        if new_items:
+            merged = sorted(
+                list(existing_by_id.values()) + new_items, key=lambda x: x.get("showID", 0)
+            )
+            with open(JSON_FILE_PATH, "w", encoding="utf-8") as jf:
+                json.dump(merged, jf, indent=4, ensure_ascii=False)
+        report_changes["rows_processed"] = processed
+        report_changes_by_sheet[sheet] = report_changes
+
+    # Manual updates
+    report_changes_by_sheet["Manual Update"] = {}
+    apply_manual_updates(EXCEL_PATH, JSON_FILE_PATH)
+
+    # Write report
+    os.makedirs(REPORTS_DIR, exist_ok=True)
+    report_name = f"report_{filename_timestamp()}.txt"
+    report_path = os.path.join(REPORTS_DIR, report_name)
+    end_time = now_ist()
+    write_report(
+        report_changes_by_sheet,
+        report_path,
+        start_time=start_time,
+        end_time=end_time,
+        metadata_backups_removed=metadata_backups_removed,
+    )
+    print(f"✅ Report generated: {report_path}")
