@@ -80,38 +80,55 @@
         "sitePriorityUsed": {}
     },
     {
-        "showID": 103,
-        "showName": "King 2 Hearts",
-        "otherNames": [],
-        "showImage": "https://brucebanner001.github.io/my-movie-database/images/103.jpg",
-        "watchStartedOn": "26-03-2023",
-        "watchEndedOn": "28-03-2023",
-        "releasedYear": 2012,
-        "releaseDate": "21 March 2012",
-        "totalEpisodes": 20,
+        "showID": 104,
+        "showName": "Tale of the Nine Tailed",
+        "otherNames": [
+            "Chasing the Nine-Tailed Fox",
+            "Gumihodyeon",
+            "Le conte des neuf queues",
+            "O Conto da Raposa de Nove Caudas",
+            "Tale of Gumiho",
+            "Tale of the Nine Tailed",
+            "Tale of the Nine-Tailed Season 1",
+            "The Story of Gumiho",
+            "The Tale of the Nine-Tailed Fox",
+            "Сказание о Кумихо",
+            "حكاية الثعلب ذو الذيول التسعة"
+        ],
+        "showImage": "https://brucebanner001.github.io/my-movie-database/images/104.jpg",
+        "watchStartedOn": "30-03-2023",
+        "watchEndedOn": "31-03-2023",
+        "releasedYear": 2020,
+        "releaseDate": "7 October 2020 - 3 December 2020",
+        "totalEpisodes": 16,
         "showType": "Drama",
         "nativeLanguage": "Korean",
         "watchedLanguage": "Korean",
         "country": "South Korea",
-        "comments": "Not Bad. One Time Watchable. Anyway The Story Of The Series Not In One Flow. Ending Is Not Satisfied.",
+        "comments": "When I Read The Story Of This Series, Gumiho Was Familiar From 'My Girlfriend Is An Gumiho'. But The Story Is Quite Different. It Contains Horror, Twist And So On. Not Bad.",
         "ratings": 7,
         "genres": [
+            "Horror",
+            "Supernatural",
             "Romance"
         ],
         "network": [
-            "MBC TV"
+            "tvN"
         ],
         "againWatchedDates": [
-            "04-10-2023"
+            "19-12-2023"
         ],
         "updatedOn": "22 October 2025",
         "updatedDetails": "First time Uploaded",
-        "synopsis": null,
+        "synopsis": "Tale of the Nine-Tailed (Korean Drama); 구미호뎐; Chasing the Nine-Tailed Fox;Gumihodyeon;Le conte des neuf queues;O Conto da Raposa de Nove Caudas;Tale of (Source: MyDramaList)",
         "topRatings": 700,
-        "Duration": null,
+        "Duration": 10,
         "sitePriorityUsed": {
             "image": "mydramalist",
-            "releaseDate": "mydramalist"
+            "releaseDate": "mydramalist",
+            "otherNames": "mydramalist",
+            "duration": "mydramalist",
+            "synopsis": "mydramalist"
         }
     }
 ]
