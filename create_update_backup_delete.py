@@ -1843,62 +1843,138 @@ if __name__ == '__main__':
 # MAIN EXECUTION (Auto-Patched by Assistant)
 # ============================================================================
 
+
+# ============================================================================
+# MAIN EXECUTION (Repaired and Enhanced)
+# ============================================================================
+def _write_report_and_print(report_changes_by_sheet, start_time, end_time, metadata_backups_removed=0):
+    os.makedirs(REPORTS_DIR, exist_ok=True)
+    report_name = f"report_{filename_timestamp()}.txt"
+    report_path = os.path.join(os.getcwd(), REPORTS_DIR, report_name)
+    # write report file
+    try:
+        write_report(report_changes_by_sheet, report_path, start_time=start_time, end_time=end_time, metadata_backups_removed=metadata_backups_removed)
+    except Exception as e:
+        print(f"⚠️ Failed to write report file: {e}")
+    # Also print report content to stdout (so CI email action captures it)
+    try:
+        with open(report_path, "r", encoding="utf-8") as rf:
+            print(rf.read())
+    except Exception as e:
+        print(f"⚠️ Could not print report file: {e}")
+    return report_path
+
 if __name__ == "__main__":
     start_time = now_ist()
     report_changes_by_sheet = {}
     metadata_backups_removed = cleanup_old_metadata_backups()
 
-    EXCEL_PATH = "input.xlsx"  # Path for downloaded Excel file
+    EXCEL_PATH = "input.xlsx"  # Path used by your CI workflow
     JSON_FILE_PATH = JSON_FILE
 
     if not os.path.exists(EXCEL_PATH):
         print("⚠️ Excel file not found — skipping processing.")
         sys.exit(0)
 
-    # Process deletions first
-    report_changes_by_sheet["Deleting Records"] = {}
-    deleted_ids, not_found_ids = process_deletions(EXCEL_PATH, JSON_FILE_PATH, report_changes_by_sheet["Deleting Records"])
+    # Ensure folders exist
+    os.makedirs(BACKUP_DIR, exist_ok=True)
+    os.makedirs(REPORTS_DIR, exist_ok=True)
+    os.makedirs(BACKUP_META_DIR, exist_ok=True)
+    os.makedirs(DELETED_DATA_DIR, exist_ok=True)
+    os.makedirs(DELETE_IMAGES_DIR, exist_ok=True)
+    os.makedirs(IMAGES_DIR, exist_ok=True)
 
-    # Process main sheets
-    xls = pd.ExcelFile(EXCEL_PATH)
+    # Load existing JSON
+    existing_data = []
+    existing_by_id = {}
+    if os.path.exists(JSON_FILE_PATH):
+        try:
+            with open(JSON_FILE_PATH, "r", encoding="utf-8") as jf:
+                existing_data = json.load(jf) or []
+                for o in existing_data:
+                    try:
+                        sid = int(o.get("showID"))
+                        existing_by_id[sid] = o
+                    except Exception:
+                        continue
+        except Exception as e:
+            print(f"⚠️ Warning: Failed to read existing {JSON_FILE_PATH}: {e}")
+
+    # 1) Process deletions first
+    report_changes_by_sheet["Deleting Records"] = {}
+    try:
+        deleted_ids, not_found_ids = process_deletions(EXCEL_PATH, JSON_FILE_PATH, report_changes_by_sheet["Deleting Records"])
+        # If deletions modified JSON, refresh existing_by_id
+        if os.path.exists(JSON_FILE_PATH):
+            try:
+                with open(JSON_FILE_PATH, "r", encoding="utf-8") as jf:
+                    existing_data = json.load(jf) or []
+                    existing_by_id = {int(o.get("showID")): o for o in existing_data if o.get("showID") is not None}
+            except Exception:
+                pass
+    except Exception as e:
+        print(f"⚠️ Deletion processing failed: {e}")
+
+    # 2) Process each sheet (except Deleting Records and Manual Update)
+    try:
+        xls = pd.ExcelFile(EXCEL_PATH)
+    except Exception as e:
+        print(f"⚠️ Failed to read Excel file: {e}")
+        sys.exit(1)
+
+    grand_changes = {}
+
     for sheet in xls.sheet_names:
         if sheet in ("Deleting Records", "Manual Update"):
             continue
-        report_changes = {}
-        existing_by_id = {}
-        if os.path.exists(JSON_FILE_PATH):
-            with open(JSON_FILE_PATH, "r", encoding="utf-8") as jf:
-                try:
-                    data = json.load(jf)
-                    existing_by_id = {o["showID"]: o for o in data if "showID" in o}
-                except Exception:
-                    existing_by_id = {}
-        new_items, processed, finished, next_index = excel_to_objects(
-            EXCEL_PATH, sheet, existing_by_id, report_changes
-        )
-        if new_items:
-            merged = sorted(
-                list(existing_by_id.values()) + new_items, key=lambda x: x.get("showID", 0)
+        try:
+            report_changes = {}
+            # Pass a copy of existing_by_id so excel_to_objects can check existing objects
+            new_items, processed, finished, next_index = excel_to_objects(
+                EXCEL_PATH, sheet, existing_by_id, report_changes
             )
-            with open(JSON_FILE_PATH, "w", encoding="utf-8") as jf:
-                json.dump(merged, jf, indent=4, ensure_ascii=False)
-        report_changes["rows_processed"] = processed
-        report_changes_by_sheet[sheet] = report_changes
+            report_changes["rows_processed"] = processed
+            # Merge returned items into existing_by_id (replace or add)
+            for itm in new_items:
+                try:
+                    sid = int(itm.get("showID"))
+                except Exception:
+                    continue
+                # If existing present and different, create metadata backup for the old object
+                old = existing_by_id.get(sid)
+                if old and objects_differ(old, itm):
+                    # create metadata backup for modified object (per developer instructions)
+                    try:
+                        meta_path = save_metadata_backup(sid, old.get("showName"), old.get("nativeLanguage"), {}, old.get("sitePriorityUsed", {}))
+                        if meta_path:
+                            report_changes.setdefault("metadata_backups_created", []).append(meta_path)
+                    except Exception as e:
+                        report_changes.setdefault("warnings", []).append(f"Metadata backup failed for {sid}: {e}")
+                # replace/add
+                existing_by_id[sid] = itm
+            # store sheet report
+            report_changes_by_sheet[sheet] = report_changes
+        except Exception as e:
+            report_changes_by_sheet[sheet] = {"error": str(e)}
+            print(f"⚠️ Error processing sheet '{sheet}': {e}")
 
-    # Manual updates
-    report_changes_by_sheet["Manual Update"] = {}
-    apply_manual_updates(EXCEL_PATH, JSON_FILE_PATH)
+    # 3) Write merged seriesData.json
+    try:
+        merged_list = sorted(list(existing_by_id.values()), key=lambda x: int(x.get("showID") or 0))
+        with open(JSON_FILE_PATH, "w", encoding="utf-8") as jf:
+            json.dump(merged_list, jf, indent=4, ensure_ascii=False)
+        print(f"✅ Written {JSON_FILE_PATH} with {len(merged_list)} entries.")
+    except Exception as e:
+        print(f"⚠️ Failed to write {JSON_FILE_PATH}: {e}")
 
-    # Write report
-    os.makedirs(REPORTS_DIR, exist_ok=True)
-    report_name = f"report_{filename_timestamp()}.txt"
-    report_path = os.path.join(REPORTS_DIR, report_name)
+    # 4) Apply manual updates (if any)
+    try:
+        report_changes_by_sheet["Manual Update"] = {}
+        apply_manual_updates(EXCEL_PATH, JSON_FILE_PATH)
+    except Exception as e:
+        print(f"⚠️ Manual updates failed: {e}")
+
+    # 5) Final report: write and print so CI captures it
     end_time = now_ist()
-    write_report(
-        report_changes_by_sheet,
-        report_path,
-        start_time=start_time,
-        end_time=end_time,
-        metadata_backups_removed=metadata_backups_removed,
-    )
+    report_path = _write_report_and_print(report_changes_by_sheet, start_time, end_time, metadata_backups_removed)
     print(f"✅ Report generated: {report_path}")
