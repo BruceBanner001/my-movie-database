@@ -92,7 +92,7 @@ Notes:
 """
 
 # --------------------------- VERSION & SITE PRIORITY ------------------------
-SCRIPT_VERSION = "v2.4.3 (Final)"
+SCRIPT_VERSION = "v2.5.0"
 
 # SITE_PRIORITY_BY_LANGUAGE controls which site is preferred for each fetched property
 SITE_PRIORITY_BY_LANGUAGE = {
@@ -1313,6 +1313,31 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
 
 def write_report(report_changes_by_sheet, report_path, final_not_found_deletions=None, start_time=None, end_time=None, metadata_backups_removed=0):
     lines = []
+
+# --- Deduplication helpers to avoid duplicate entries across created/updated/skipped/images ---
+def _dedupe_by_showid(lst, key_field='showID'):
+    seen = set()
+    out = []
+    for it in lst:
+        sid = None
+        try:
+            sid = int(it.get('showID')) if isinstance(it, dict) and it.get('showID') is not None else None
+        except Exception:
+            sid = None
+        # fallback: if list contains strings like "101 - Name (Year)"
+        if sid is None and isinstance(it, str):
+            m = re.match(r'^\s*(\d+)\s*-\s*', it)
+            if m:
+                try:
+                    sid = int(m.group(1))
+                except Exception:
+                    sid = None
+        key = (sid, str(it.get('showName')) if isinstance(it, dict) else str(it))
+        if key not in seen:
+            seen.add(key)
+            out.append(it)
+    return out
+
     # Header
     lines.append("✅ Workflow completed successfully")
     if end_time is None:
@@ -1370,12 +1395,14 @@ def write_report(report_changes_by_sheet, report_path, final_not_found_deletions
         lines.append(f"🗂️ === {sheet} — {now_ist().strftime('%d %B %Y')} ===")
         lines.append(sep)
         created = changes.get('created', [])
+        created = _dedupe_by_showid(created)
         if created:
             lines.append("")
             lines.append("🆕 Data Created:")
             for obj in created:
                 lines.append(f"- {obj.get('showID','N/A')} - {obj.get('showName','Unknown')} ({obj.get('releasedYear','N/A')}) -> First Time Uploaded")
         updated = changes.get('updated', [])
+        updated = _dedupe_by_showid(updated)
         if updated:
             lines.append("")
             lines.append("🔁 Data Updated:")
@@ -1386,18 +1413,20 @@ def write_report(report_changes_by_sheet, report_path, final_not_found_deletions
                 changed_fields = []
                 for k in new.keys():
                     if old.get(k) != new.get(k):
-                        if k in ('updatedOn','updatedDetails','topRatings'):
+                        if k in ('updatedOn','updatedDetails','topRatings','sitePriorityUsed'):
                             continue
                         changed_fields.append(human_readable_field(k))
                 fields_text = ", ".join(changed_fields) + " Updated" if changed_fields else "Updated"
                 lines.append(f"- {new.get('showID','N/A')} - {new.get('showName','Unknown')} ({new.get('releasedYear','N/A')}) -> {fields_text}")
         skipped = changes.get('skipped', [])
+        skipped = _dedupe_by_showid(skipped)
         if skipped:
             lines.append("")
             lines.append("🚫 Unchanged Entries (Skipped):")
             for name in skipped:
                 lines.append(f"- {name}")
         images = changes.get('images', [])
+        images = _dedupe_by_showid(images)
         if images:
             lines.append("")
             lines.append("🖼️ Image Updated:")
@@ -1685,7 +1714,7 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
                     # compute changed fields and human-readable names (ignore meta keys)
                     changed = []
                     for k in new_obj.keys():
-                        if old_obj.get(k) != new_obj.get(k) and k not in ('updatedOn','updatedDetails','topRatings'):
+                        if old_obj.get(k) != new_obj.get(k) and k not in ('updatedOn','updatedDetails','topRatings','sitePriorityUsed'):
                             changed.append(human_readable_field(k))
                     new_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
                     if changed:
