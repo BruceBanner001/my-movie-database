@@ -14,6 +14,7 @@
 #
 # ============================================================
 
+
 # ============================================================================
 # Patched Script: create_update_backup_delete.py
 # Purpose: Excel -> JSON automation (patched for enhanced synopsis/image fetching,
@@ -91,7 +92,7 @@ Notes:
 """
 
 # --------------------------- VERSION & SITE PRIORITY ------------------------
-SCRIPT_VERSION = "v2.5.0"
+SCRIPT_VERSION = "v2.5.1 (Patched)"
 
 # SITE_PRIORITY_BY_LANGUAGE controls which site is preferred for each fetched property
 SITE_PRIORITY_BY_LANGUAGE = {
@@ -139,8 +140,6 @@ SITE_PRIORITY_BY_LANGUAGE = {
     }
 }
 
-def meta_filename(show_id: str) -> str:
-    return f"META_{now_ist().strftime('%d_%B_%Y_%H%M')}_{show_id}.json"
 
 # ---------------------------- Human-readable field name mapping ----------------
 FIELD_NAME_MAP = {
@@ -218,8 +217,7 @@ def now_ist():
     return datetime.now(IST)
 
 def filename_timestamp():
-    # Compact filename timestamp required by developer instructions: DDMMYYYY_HHMMSS (IST)
-    return now_ist().strftime("%d%m%Y_%H%M%S")
+    return now_ist().strftime("%d_%B_%Y_%H%M")
 
 # Paths and config (preserve original values)
 JSON_FILE = "seriesData.json"
@@ -308,11 +306,11 @@ def normalize_list_from_csv(cell_value, cap=False, strip=False):
         items = [p.strip() for p in items]
     return items
 
+
 # --- Helper: compare objects ignoring non-meaningful keys ---
 def objects_differ(old, new, ignore_keys=None):
-    # By default ignore non-meaningful keys when checking for meaningful changes
     if ignore_keys is None:
-        ignore_keys = set(['updatedOn', 'updatedDetails', 'topRatings', 'sitePriorityUsed'])
+        ignore_keys = set(['updatedOn', 'updatedDetails', 'topRatings'])
     else:
         ignore_keys = set(ignore_keys)
     ks = set(old.keys() if isinstance(old, dict) else []) | set(new.keys() if isinstance(new, dict) else [])
@@ -329,6 +327,7 @@ def objects_differ(old, new, ignore_keys=None):
         if o != n:
             return True
     return False
+
 
 # ---------------------------- Date helpers ---------------------------------
 _MONTHS = {m.lower(): m for m in ["January", "February", "March", "April", "May", "June",
@@ -818,7 +817,16 @@ def fetch_and_save_image_for_show(show_name, prefer_sites, show_id, site_priorit
     return None, None, None
 
 # ---------------------------- Deletion processing (kept original logic) ---
+
 def process_deletions(excel_file, json_file, report_changes):
+    """
+    Robust deletion handler:
+    - Reads sheet 'Deleting Records' from the Excel file (pandas read_excel expected)
+    - Normalizes ID values to strings for matching against seriesData.json showID values
+    - Removes matching objects from seriesData.json, writes deleted objects to deleted-data/DELETED_{timestamp}_{id}.json
+    - Moves associated images (if present) to deleted-images/
+    - Returns (deleted_ids_list, not_found_ids_list)
+    """
     try:
         df = pd.read_excel(excel_file, sheet_name='Deleting Records')
     except Exception:
@@ -833,75 +841,86 @@ def process_deletions(excel_file, json_file, report_changes):
             break
     if id_col is None:
         id_col = df.columns[0]
-    if os.path.exists(json_file):
-        try:
-            with open(json_file, 'r', encoding='utf-8') as jf:
-                data = json.load(jf)
-        except Exception:
-            data = []
-    else:
-        data = []
-    by_id = {int(o['showID']): o for o in data if 'showID' in o and isinstance(o['showID'], int)}
-    to_delete = []
-    for _, row in df.iterrows():
-        val = row[id_col]
-        if pd.isna(val):
+
+    # Collect requested deletions (as normalized strings)
+    requested = []
+    for idx, row in df.iterrows():
+        val = row.get(id_col)
+        if val is None or (isinstance(val, float) and str(val).strip() == 'nan'):
             continue
-        try:
-            to_delete.append(int(val))
-        except Exception:
-            continue
-    if not to_delete:
+        requested.append(str(val).strip())
+
+    if not requested:
         return [], []
-    os.makedirs(DELETED_DATA_DIR, exist_ok=True)
+
+    # Load existing series data
+    if not os.path.exists(json_file):
+        return [], requested  # nothing to delete from
+
+    try:
+        with open(json_file, 'r', encoding='utf-8') as jf:
+            series = json.load(jf)
+    except Exception:
+        return [], requested
+
+    # Build lookup by string showID
+    by_id = {str(item.get('showID')): item for item in series}
+
     deleted_ids = []
     not_found_ids = []
-    for iid in to_delete:
-        if iid in by_id:
-            deleted_obj = by_id.pop(iid)
-            deleted_ids.append(iid)
-            fname = f"DELETED_{now_ist().strftime('%d_%B_%Y_%H%M')}_{iid}.json"
-            outpath = os.path.join(DELETED_DATA_DIR, safe_filename(fname))
+    deleted_objects = []
+
+    # Ensure directories exist
+    deleted_data_dir = "deleted-data"
+    deleted_images_dir = "deleted-images"
+    os.makedirs(deleted_data_dir, exist_ok=True)
+    os.makedirs(deleted_images_dir, exist_ok=True)
+
+    timestamp = filename_timestamp()
+
+    for rid in requested:
+        if rid in by_id:
+            obj = by_id.pop(rid)
+            deleted_ids.append(rid)
+            deleted_objects.append(obj)
+            # Save deleted object snapshot
             try:
-                with open(outpath, 'w', encoding='utf-8') as of:
-                    json.dump(deleted_obj, of, indent=4, ensure_ascii=False)
-                report_changes.setdefault('deleted', []).append(f"{iid} -> {deleted_obj.get('showName', 'Unknown')} ({deleted_obj.get('releasedYear', 'N/A')}) -> ✅ Deleted and archived -> {outpath}")
-                try:
-                    img_url = deleted_obj.get('showImage') or ""
-                    if img_url:
-                        candidate = None
-                        m = re.search(r'/(images/[^/?#]+)$', img_url)
-                        if m:
-                            candidate = m.group(1)
-                        elif img_url.startswith('images/'):
-                            candidate = img_url
-                        if candidate:
-                            src = os.path.join('.', candidate)
-                            if os.path.exists(src):
-                                os.makedirs(DELETE_IMAGES_DIR, exist_ok=True)
-                                dst_name = f"{iid}_{filename_timestamp()}.jpg"
-                                dst = os.path.join(DELETE_IMAGES_DIR, safe_filename(dst_name))
-                                shutil.move(src, dst)
-                                report_changes.setdefault('deleted_images_moved', []).append(f"{iid} -> {deleted_obj.get('showName', 'Unknown')} ({deleted_obj.get('releasedYear', 'N/A')}) -> image moved: {src} -> {dst}")
-                except Exception as e_img:
-                    report_changes.setdefault('deleted_images_moved', []).append(f"{iid} -> ⚠️ Image move failed: {e_img}")
+                fname = os.path.join(deleted_data_dir, f"DELETED_{timestamp}_{rid}.json")
+                with open(fname, "w", encoding="utf-8") as dfh:
+                    json.dump(obj, dfh, indent=2, ensure_ascii=False)
             except Exception as e:
-                report_changes.setdefault('deleted', []).append(f"{iid} -> ⚠️ Deletion recorded but failed to write archive: {e}")
+                report_changes.setdefault('deleted_summary', []).append(f"⚠️ Failed to save deleted object {rid}: {e}")
+            # Move image if present
+            image_field = obj.get('image') or obj.get('poster') or obj.get('image_url')
+            if image_field:
+                # assume images stored in 'images/' with filename containing showID or direct filename
+                img_candidates = []
+                img_dir = "images"
+                if os.path.isdir(img_dir):
+                    for fname in os.listdir(img_dir):
+                        if rid in fname or os.path.basename(image_field) in fname:
+                            img_candidates.append(os.path.join(img_dir, fname))
+                for path in img_candidates:
+                    try:
+                        dst = os.path.join(deleted_images_dir, os.path.basename(path))
+                        shutil.move(path, dst)
+                        report_changes.setdefault('deleted_images_moved', []).append(f"{rid} -> {os.path.basename(path)}")
+                    except Exception as e:
+                        report_changes.setdefault('deleted_summary', []).append(f"⚠️ Failed moving image for {rid}: {e}")
         else:
-            not_found_ids.append(iid)
-            report_changes.setdefault('deleted_not_found', []).append(f"-{iid} -> ❌ Not found in seriesData.json")
-    merged = sorted(by_id.values(), key=lambda x: x.get('showID', 0))
+            not_found_ids.append(rid)
+            report_changes.setdefault('deleted_not_found', []).append(f"-{rid} -> ❌ Not found in seriesData.json")
+
+    # Write back remaining series data
+    remaining = sorted(by_id.values(), key=lambda x: x.get('showID', 0))
     try:
         with open(json_file, 'w', encoding='utf-8') as jf:
-            json.dump(merged, jf, indent=4, ensure_ascii=False)
-        report_changes.setdefault('deleted_summary', []).append(
-            f"seriesData.json updated after deletions (deleted {len(deleted_ids)} items)."
-        )
+            json.dump(remaining, jf, indent=4, ensure_ascii=False)
+        report_changes.setdefault('deleted_summary', []).append(f"seriesData.json updated after deletions (deleted {len(deleted_ids)} items).")
     except Exception as e:
         report_changes.setdefault('deleted_summary', []).append(f"⚠️ Failed to write updated {json_file}: {e}")
-    return deleted_ids, not_found_ids
 
-# ---------------------------- Manual Updates (preserve original) ----------
+    return deleted_ids, not_found_ids
 
 def apply_manual_updates(excel_file: str, json_file: str):
     sheet = 'Manual Update'
@@ -1191,18 +1210,7 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
             # fetch synopsis, image, otherNames, releaseDate, Duration.
             metadata_backup_fields = {}
             site_priority_used = {}
-            # Ensure default sitePriorityUsed keys for new objects
-            DEFAULT_SPU = {
-                'image': 'mydramalist',
-                'releaseDate': 'mydramalist',
-                'duration': 'mydramalist',
-                'synopsis': 'mydramalist',
-                'otherNames': 'asianwiki'
-            }
             if existing is None:
-                # start with defaults, then overlay any detected site_priority_used
-                site_priority_used = DEFAULT_SPU.copy()
-            
                 # Fetch image
                 try:
                     local_image_path, remote_image_url, img_site = fetch_and_save_image_for_show(show_name, None, sid, site_priority=site_priority)
@@ -1304,13 +1312,7 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
                 "synopsis": obj.get("synopsis"),
                 "topRatings": obj.get("topRatings"),
                 "Duration": obj.get("Duration"),
-                "sitePriorityUsed": obj.get("sitePriorityUsed", {
-                    "image": "mydramalist",
-                    "releaseDate": "mydramalist",
-                    "duration": "mydramalist",
-                    "synopsis": "mydramalist",
-                    "otherNames": "asianwiki"
-                })
+                "sitePriorityUsed": obj.get("sitePriorityUsed", {})
             }
             items.append(ordered)
             processed += 1
@@ -1319,7 +1321,8 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
             if existing is None:
                 report_changes.setdefault("created", []).append(ordered)
             else:
-                if objects_differ(existing, ordered, ignore_keys=['updatedOn','updatedDetails','topRatings','sitePriorityUsed']): report_changes.setdefault("updated", []).append({"old": existing, "new": ordered})
+                if existing != ordered:
+                    report_changes.setdefault("updated", []).append({"old": existing, "new": ordered})
         except Exception as e:
             raise RuntimeError(f"Row {idx} in sheet '{sheet_name}' processing failed: {e}")
     finished = (last_idx >= total_rows - 1) if total_rows > 0 else True
@@ -1537,6 +1540,7 @@ def write_report(report_changes_by_sheet, report_path, final_not_found_deletions
             f.write("\n".join(lines))
     except Exception as e:
         print(f"⚠️ Could not write TXT report: {e}")
+
 
 # ---------------------------- Secret scan & email body ---------------------
 def scan_for_possible_secrets():
@@ -1787,3 +1791,39 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
     return
 
 # ---------------------------- Entrypoint -----------------------------------
+if __name__ == '__main__':
+    if not (os.path.exists(EXCEL_FILE_ID_TXT) and os.path.exists(SERVICE_ACCOUNT_FILE)):
+        print("❌ Missing GDrive credentials. Please set EXCEL_FILE_ID.txt and GDRIVE_SERVICE_ACCOUNT.json via GitHub secrets.")
+        sys.exit(3)
+    try:
+        with open(EXCEL_FILE_ID_TXT, 'r', encoding='utf-8') as f:
+            excel_id = f.read().strip()
+    except Exception:
+        excel_id = None
+    if not excel_id:
+        print("❌ EXCEL_FILE_ID.txt is empty or missing. Aborting gracefully.")
+        sys.exit(0)
+    _sheets_env = os.environ.get("SHEETS", "").strip()
+    if _sheets_env:
+        SHEETS = [s.strip() for s in _sheets_env.split(";") if s.strip()]
+    else:
+        SHEETS = ["Sheet1"]
+    excel_bytes = fetch_excel_from_gdrive_bytes(excel_id, SERVICE_ACCOUNT_FILE)
+    if excel_bytes is None:
+        print("❌ Could not fetch Excel file from Google Drive. Exiting gracefully.")
+        print("   Ensure the service account JSON and EXCEL_FILE_ID are correct, and required packages are installed.")
+        sys.exit(0)
+    excel_file_like = excel_bytes
+    try:
+        apply_manual_updates(excel_file_like, JSON_FILE)
+    except Exception as e:
+        logd(f"apply_manual_updates error: {e}")
+    try:
+        update_json_from_excel(excel_file_like, JSON_FILE, SHEETS, max_per_run=MAX_PER_RUN, max_run_time_minutes=MAX_RUN_TIME_MINUTES)
+    except SystemExit:
+        raise
+    except Exception as e:
+        print(f"❌ Unexpected error during update: {e}")
+        logd(traceback.format_exc())
+        sys.exit(1)
+    print("All done.")
