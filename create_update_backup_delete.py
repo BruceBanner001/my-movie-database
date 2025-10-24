@@ -92,7 +92,21 @@ Notes:
 """
 
 # --------------------------- VERSION & SITE PRIORITY ------------------------
-SCRIPT_VERSION = "v2.4.3 (Final)"
+SCRIPT_VERSION = "v2.4.4 (Report Fix)"
+
+# ---------------------------- RUN ID & Timestamp Helpers -------------------
+def generate_run_id(now_dt=None):
+    """Return RUN_YYYYMMDD_HHMM format using IST-equivalent datetime provided or now_ist()."""
+    dt = now_dt or now_ist()
+    return "RUN_" + dt.strftime("%Y%m%d_%H%M")
+
+def readable_timestamp(now_dt=None):
+    dt = now_dt or now_ist()
+    return dt.strftime("%d %B %Y %I:%M %p (IST)")
+
+# Global run id for this execution (assigned when script runs)
+RUN_ID = generate_run_id()
+
 
 # SITE_PRIORITY_BY_LANGUAGE controls which site is preferred for each fetched property
 SITE_PRIORITY_BY_LANGUAGE = {
@@ -1311,10 +1325,34 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
 
 # ---------------------------- Reports --------------------------------------
 
+
+def meaningful_changed_fields(old, new, protected_fields=None):
+    """Return list of human-readable fields that changed meaningfully (excluding metadata-only fields)."""
+    if protected_fields is None:
+        protected_fields = set(['otherNames', 'showImage', 'releaseDate', 'synopsis', 'Duration', 'sitePriorityUsed'])
+    ignored = set(['updatedOn', 'updatedDetails', 'topRatings'])
+    changed = []
+    keys = set(old.keys() if isinstance(old, dict) else []) | set(new.keys() if isinstance(new, dict) else [])
+    for k in keys:
+        if k in ignored or k in protected_fields:
+            continue
+        o = old.get(k) if isinstance(old, dict) else None
+        n = new.get(k) if isinstance(new, dict) else None
+        if isinstance(o, list) and isinstance(n, list):
+            if [str(x) for x in o] != [str(x) for x in n]:
+                changed.append(human_readable_field(k))
+        else:
+            if o != n:
+                changed.append(human_readable_field(k))
+    return changed
+
+
+
 def write_report(report_changes_by_sheet, report_path, final_not_found_deletions=None, start_time=None, end_time=None, metadata_backups_removed=0):
     lines = []
     # Header
     lines.append("✅ Workflow completed successfully")
+    lines.append(f"🆔 Run ID: {RUN_ID}")
     if end_time is None:
         end_time = now_ist()
     if start_time is None:
@@ -1516,6 +1554,35 @@ def write_report(report_changes_by_sheet, report_path, final_not_found_deletions
     lines.append("\n⚠️ WARNING: No duplicate records detected.")
     lines.append("🏁 Workflow finished successfully")
     try:
+        # Append folder contents summary
+        lines.append("")
+        lines.append('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
+        lines.append('🗂️ Folders Generated:')
+        lines.append("")
+        try:
+            if os.path.exists(BACKUP_META_DIR):
+                lines.append('backup-meta-data/')
+                for fn in sorted(os.listdir(BACKUP_META_DIR)):
+                    lines.append(f'    {fn}')
+                lines.append("")
+        except Exception:
+            pass
+        try:
+            if os.path.exists(DELETED_DATA_DIR):
+                lines.append('deleted-data/')
+                for fn in sorted(os.listdir(DELETED_DATA_DIR)):
+                    lines.append(f'    {fn}')
+                lines.append("")
+        except Exception:
+            pass
+        try:
+            if os.path.exists(REPORTS_DIR):
+                lines.append('reports/')
+                for fn in sorted(os.listdir(REPORTS_DIR)):
+                    lines.append(f'    {fn}')
+                lines.append("")
+        except Exception:
+            pass
         with open(report_path, 'w', encoding='utf-8') as f:
             f.write("\n".join(lines))
     except Exception as e:
