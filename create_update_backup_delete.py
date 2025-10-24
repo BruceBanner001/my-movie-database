@@ -92,7 +92,7 @@ Notes:
 """
 
 # --------------------------- VERSION & SITE PRIORITY ------------------------
-SCRIPT_VERSION = "v2.5.1 (Patched & Optimized)"
+SCRIPT_VERSION = "v2.4.3 (Final)"
 
 # SITE_PRIORITY_BY_LANGUAGE controls which site is preferred for each fetched property
 SITE_PRIORITY_BY_LANGUAGE = {
@@ -310,7 +310,7 @@ def normalize_list_from_csv(cell_value, cap=False, strip=False):
 # --- Helper: compare objects ignoring non-meaningful keys ---
 def objects_differ(old, new, ignore_keys=None):
     if ignore_keys is None:
-        ignore_keys = set(['updatedOn', 'updatedDetails', 'topRatings', 'sitePriorityUsed'])
+        ignore_keys = set(['updatedOn', 'updatedDetails', 'topRatings'])
     else:
         ignore_keys = set(ignore_keys)
     ks = set(old.keys() if isinstance(old, dict) else []) | set(new.keys() if isinstance(new, dict) else [])
@@ -1228,7 +1228,19 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
                 except Exception as e:
                     logd(f"Synopsis/metadata fetch failed for {show_name}: {e}")
 
-                                # Also populate sourceSites in main object (only for new shows)
+                # Save metadata backup (one-time)
+                if metadata_backup_fields:
+                    try:
+                        os.makedirs(BACKUP_META_DIR, exist_ok=True)
+                        backup_path = save_metadata_backup(sid, show_name, language, metadata_backup_fields, site_priority_used)
+                        if backup_path:
+                            report_changes.setdefault('metadata_backups_created', []).append(backup_path)
+                        if site_priority_used:
+                            obj['sitePriorityUsed'] = site_priority_used.copy()
+                    except Exception as e:
+                        logd(f"metadata backup save failed: {e}")
+
+                # Also populate sourceSites in main object (only for new shows)
                 if site_priority_used:
                     obj['sourceSites'] = site_priority_used.copy()
 
@@ -1282,50 +1294,15 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
                 "Duration": obj.get("Duration"),
                 "sitePriorityUsed": obj.get("sitePriorityUsed", {})
             }
-
             items.append(ordered)
             processed += 1
             last_idx = idx
             sid = ordered.get("showID")
-
-            # Decide if this row is new, updated, or unchanged (skipped).
             if existing is None:
-                # Created (new) object
-                # Ensure sitePriorityUsed contains the five required keys with defaults (preserve mapping fallbacks)
-                sp = site_priority_used.copy() if site_priority_used else {}
-                # ensure required keys exist
-                for _k, _def in (("image", site_priority.get("image")), ("releaseDate", site_priority.get("releaseDate")),
-                                 ("duration", site_priority.get("duration")), ("synopsis", site_priority.get("synopsis")),
-                                 ("otherNames", site_priority.get("otherNames"))):
-                    if _k not in sp or not sp.get(_k):
-                        sp[_k] = _def or "mydramalist"
-                obj['sitePriorityUsed'] = sp.copy()
-                # created
                 report_changes.setdefault("created", []).append(ordered)
             else:
-                # Compare ignoring non-meaningful keys
-                if objects_differ(existing, ordered):
-                    # Before recording the update, create a metadata backup for the modified object (one backup per modified object)
-                    try:
-                        fetched_fields = []
-                        # compute which meaningful fields changed for backup (exclude ignored keys)
-                        for k in ordered.keys():
-                            if k in ('updatedOn', 'updatedDetails', 'topRatings', 'sitePriorityUsed'):
-                                continue
-                            if existing.get(k) != ordered.get(k):
-                                fetched_fields.append(k)
-                        # include existing sitePriorityUsed in backup payload
-                        spu = existing.get('sitePriorityUsed') or {}
-                        backup_path = save_metadata_backup(sid, ordered.get('showName'), language, fetched_fields, spu)
-                        if backup_path:
-                            report_changes.setdefault('metadata_backups_created', []).append(backup_path)
-                    except Exception as _e:
-                        report_changes.setdefault('warnings', []).append(f"Failed to create metadata backup for {sid}: {_e}")
+                if existing != ordered:
                     report_changes.setdefault("updated", []).append({"old": existing, "new": ordered})
-                else:
-                    # unchanged -> skipped
-                    report_changes.setdefault("skipped", []).append(f"{ordered.get('showID','N/A')} - {ordered.get('showName','Unknown')}")
-
         except Exception as e:
             raise RuntimeError(f"Row {idx} in sheet '{sheet_name}' processing failed: {e}")
     finished = (last_idx >= total_rows - 1) if total_rows > 0 else True
@@ -1409,7 +1386,7 @@ def write_report(report_changes_by_sheet, report_path, final_not_found_deletions
                 changed_fields = []
                 for k in new.keys():
                     if old.get(k) != new.get(k):
-                        if k in ('updatedOn','updatedDetails','topRatings','sitePriorityUsed'):
+                        if k in ('updatedOn','updatedDetails','topRatings'):
                             continue
                         changed_fields.append(human_readable_field(k))
                 fields_text = ", ".join(changed_fields) + " Updated" if changed_fields else "Updated"
@@ -1720,7 +1697,7 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
                     merged_by_id[sid] = new_obj
                     modified_items.append(new_obj)
                 else:
-                    report_changes.setdefault("skipped", []).append(f"{ordered.get('showID','N/A')} - {ordered.get('showName','Unknown')}")
+                    report_changes.setdefault('skipped', []).append(f"{sid} - {old_obj.get('showName', 'Unknown')} ({old_obj.get('releasedYear', 'N/A')})")
             else:
                 merged_by_id[sid] = new_obj
                 report_changes.setdefault('created', []).append(new_obj)
@@ -1832,125 +1809,221 @@ if __name__ == '__main__':
     print("All done.")
 
 
-# Overriding write_report to produce the v2.5.1 styled report
-def write_report(report_changes_by_sheet, report_path, final_notification_line=None, start_time=None, end_time=None, metadata_backups_removed=0):
-    import os
+# ------------------ v2.5.2 overrides & helpers ------------------
+# These functions override behavior in the original script to ensure
+# reporting, backups, deletion, and sitePriorityUsed operate per the spec.
+import os, json, shutil, traceback
+from datetime import datetime, timedelta, timezone
+
+SCRIPT_VERSION = "v2.5.2 (Final & Stable)"
+METADATA_BACKUP_RETENTION_DAYS = 90
+SERIES_DATA_PATH = "/mnt/data/seriesData.json"
+BACKUP_META_DIR = "/mnt/data/backup-meta-data"
+DELETED_DATA_DIR = "/mnt/data/deleted-data"
+IMAGES_DIR = "/mnt/data/images"
+DELETED_IMAGES_DIR = "/mnt/data/deleted-images"
+REPORTS_DIR = "/mnt/data/reports"
+
+os.makedirs(BACKUP_META_DIR, exist_ok=True)
+os.makedirs(DELETED_DATA_DIR, exist_ok=True)
+os.makedirs(IMAGES_DIR, exist_ok=True)
+os.makedirs(DELETED_IMAGES_DIR, exist_ok=True)
+os.makedirs(REPORTS_DIR, exist_ok=True)
+
+IST = timezone(timedelta(hours=5, minutes=30))
+
+def now_ist():
+    return datetime.now(IST)
+
+def filename_timestamp():
+    return now_ist().strftime("%d%m%Y_%H%M%S")
+
+def deleted_filename_timestamp():
+    return now_ist().strftime("%d_%B_%Y_%H%M")
+
+SITE_PRIORITY_BY_LANGUAGE = {
+    "default": {"image":"mydramalist","releaseDate":"mydramalist","duration":"mydramalist","synopsis":"mydramalist","otherNames":"asianwiki"}
+}
+
+IGNORED_CHANGE_KEYS = set(["updatedOn", "updatedDetails", "topRatings", "sitePriorityUsed"])
+
+def objects_differ(old, new, ignore_keys=None):
+    if ignore_keys is None:
+        ignore_keys = IGNORED_CHANGE_KEYS
+    if not isinstance(old, dict) or not isinstance(new, dict):
+        return old != new
+    keys = set(old.keys()) | set(new.keys())
+    for k in keys:
+        if k in ignore_keys:
+            continue
+        if old.get(k) != new.get(k):
+            return True
+    return False
+
+def ensure_site_priority(obj, language="default", manual_overrides=None):
+    sp_defaults = SITE_PRIORITY_BY_LANGUAGE.get(language, SITE_PRIORITY_BY_LANGUAGE["default"])
+    sp = obj.get("sitePriorityUsed") or {}
+    # ensure keys exist
+    for k, default in (("image", sp_defaults.get("image")), ("releaseDate", sp_defaults.get("releaseDate")),
+                       ("duration", sp_defaults.get("duration")), ("synopsis", sp_defaults.get("synopsis")),
+                       ("otherNames", sp_defaults.get("otherNames"))):
+        if not sp.get(k):
+            sp[k] = default
+    # manual overrides mark field as Manual if provided
+    if manual_overrides:
+        for mk, mv in manual_overrides.items():
+            sp[mk] = mv if mv is not None else sp.get(mk)
+    obj["sitePriorityUsed"] = sp
+    return obj
+
+def save_metadata_backup(show_id, obj):
+    try:
+        fname = "META_{}_{}.json".format(now_ist().strftime("%d_%B_%Y_%H%M"), show_id)
+        path = os.path.join(BACKUP_META_DIR, fname)
+        with open(path, 'w', encoding='utf-8') as f:
+            json.dump(obj, f, ensure_ascii=False, indent=2)
+        return path
+    except Exception:
+        return None
+
+def cleanup_old_backups(retention_days=METADATA_BACKUP_RETENTION_DAYS):
+    removed = 0
+    try:
+        cutoff = now_ist() - timedelta(days=retention_days)
+        for fn in os.listdir(BACKUP_META_DIR):
+            fp = os.path.join(BACKUP_META_DIR, fn)
+            try:
+                mtime = datetime.fromtimestamp(os.path.getmtime(fp), IST)
+                if mtime < cutoff:
+                    os.remove(fp)
+                    removed += 1
+            except Exception:
+                continue
+    except Exception:
+        pass
+    return removed
+
+def dedupe_list_of_dicts(lst, key='showID'):
+    seen = set()
+    out = []
+    for it in lst or []:
+        sid = None
+        if isinstance(it, dict):
+            sid = str(it.get(key,''))
+        elif isinstance(it, str):
+            parts = it.split(' - ', 1)
+            sid = parts[0].strip() if parts else None
+        else:
+            sid = None
+        if sid is None or sid == '':
+            out.append(it)
+            continue
+        if sid in seen:
+            continue
+        seen.add(sid)
+        out.append(it)
+    return out
+
+# Replacement write_report that matches your exact required format.
+def write_report(report_changes_by_sheet, report_path, start_time=None, end_time=None, metadata_backups_removed=0):
     lines = []
-    status = "✅ Workflow completed successfully"
-    lines.append(status)
     if end_time is None:
         end_time = now_ist()
     if start_time is None:
         start_time = end_time
-    lines.append(f"📅 Run Time: {end_time.strftime('%d %B %Y %I:%M %p (IST)')}")
     duration_td = end_time - start_time
     seconds = int(duration_td.total_seconds())
     mins, secs = divmod(seconds, 60)
+    lines.append("✅ Workflow completed successfully")
+    lines.append(f"📅 Run Time: {end_time.strftime('%d %B %Y %I:%M %p (IST)')}")
     lines.append(f"🕒 Duration: {mins} min {secs:02d} sec")
     lines.append(f"⚙️ Script Version: {SCRIPT_VERSION}")
     lines.append("")
     sep = "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
-    # Totals
-    totals = {
-        "created": 0, "updated": 0, "images_updated": 0, "skipped": 0,
-        "deleted": 0, "warnings": 0, "failed": 0, "rows": 0, "metadata_backups": 0
-    }
+    totals = {'created':0,'updated':0,'images_updated':0,'skipped':0,'deleted':0,'warnings':0,'failed':0,'rows':0,'metadata_backups':0}
     backup_files = []
     deleted_files = []
-    # Process per-sheet
+
     for sheet, changes in report_changes_by_sheet.items():
-        # skip totally empty sections
+        # Dedupe lists to avoid duplicates
+        for k in ('created','updated','images_updated','skipped','deleted'):
+            if changes.get(k):
+                changes[k] = dedupe_list_of_dicts(changes.get(k))
         meaningful = any(changes.get(k) for k in ('created','updated','images_updated','skipped','deleted','warnings'))
         if not meaningful:
             continue
         lines.append(sep)
         lines.append(f"🗂️ === {sheet} — {end_time.strftime('%d %B %Y')} ===")
         lines.append(sep)
-        # Created
         if changes.get('created'):
             lines.append("")
             lines.append("🆕 Data Created:")
             for it in changes.get('created', []):
-                try:
-                    sid = it.get('showID') if isinstance(it, dict) else it
-                    sname = it.get('showName') if isinstance(it, dict) else ''
-                    # determine message
-                    note = "First Time Uploaded" if it.get('first_time', True) else "Added new entry"
-                    lines.append(f"- {sid} - {sname} -> {note}")
-                except Exception:
-                    lines.append(f"- {it}")
+                sid = it.get('showID') if isinstance(it, dict) else it
+                sname = it.get('showName') if isinstance(it, dict) else ''
+                note = it.get('note') or ("First Time Uploaded" if it.get('first_time', True) else "Added new entry")
+                lines.append(f"- {sid} - {sname} -> {note}")
             totals['created'] += len(changes.get('created', []))
-        # Updated
         if changes.get('updated'):
             lines.append("")
             lines.append("🔁 Data Updated:")
             for upd in changes.get('updated', []):
-                # upd may be dict with 'old' and 'new' or a tuple
-                try:
-                    old = upd.get('old') if isinstance(upd, dict) else None
-                    new = upd.get('new') if isinstance(upd, dict) else None
-                    sid = (new or old or {}).get('showID', 'N/A')
-                    sname = (new or old or {}).get('showName', 'Unknown')
-                    # figure changed fields if provided
-                    changed = upd.get('changed_fields') if isinstance(upd, dict) and upd.get('changed_fields') else None
-                    if not changed and old and new:
-                        # compute diff ignoring ignored keys
-                        changed = [k for k in new.keys() if k not in ('updatedOn','updatedDetails','topRatings','sitePriorityUsed') and old.get(k) != new.get(k)]
-                    changed_str = ", ".join(changed) + " Updated" if changed else "Updated"
-                    lines.append(f"- {sid} - {sname} -> {changed_str}")
-                except Exception:
-                    lines.append(f"- {upd}")
+                old = upd.get('old') if isinstance(upd, dict) else None
+                new = upd.get('new') if isinstance(upd, dict) else None
+                sid = (new or old or {}).get('showID','N/A')
+                sname = (new or old or {}).get('showName','Unknown')
+                changed = upd.get('changed_fields') if isinstance(upd, dict) else None
+                if not changed and old and new:
+                    changed = [k for k in new.keys() if k not in ('updatedOn','updatedDetails','topRatings','sitePriorityUsed') and old.get(k) != new.get(k)]
+                changed_str = ", ".join(changed) + " Updated" if changed else "Updated"
+                lines.append(f"- {sid} - {sname} -> {changed_str}")
             totals['updated'] += len(changes.get('updated', []))
-        # Images Updated
         if changes.get('images_updated'):
             lines.append("")
             lines.append("🖼️ Images Updated:")
             for im in changes.get('images_updated', []):
-                try:
-                    sid = im.get('showID', 'N/A')
-                    sname = im.get('showName', 'Unknown')
-                    note = im.get('note') or im.get('reason') or "Poster updated"
-                    lines.append(f"- {sid} - {sname} -> {note}")
-                except Exception:
-                    lines.append(f"- {im}")
+                sid = im.get('showID') if isinstance(im, dict) else None
+                sname = im.get('showName') if isinstance(im, dict) else None
+                note = im.get('note') or "updated"
+                lines.append(f"- {sid} - {sname} -> {note}")
             totals['images_updated'] += len(changes.get('images_updated', []))
-        # Value Not Found / Warnings
         if changes.get('warnings'):
             lines.append("")
             lines.append("🕳️ Value Not Found:")
             for w in changes.get('warnings', []):
-                try:
-                    sid = w.get('showID', 'N/A') if isinstance(w, dict) else 'N/A'
-                    sname = w.get('showName', '') if isinstance(w, dict) else ''
-                    missing = w.get('missing') if isinstance(w, dict) else None
+                if isinstance(w, dict):
+                    sid = w.get('showID','N/A')
+                    sname = w.get('showName','')
+                    missing = w.get('missing')
                     if missing:
                         lines.append(f"- {sid} - {sname} -> ⚠️ Missing: {', '.join(missing)}")
                     else:
-                        lines.append(f"- {sid} - {sname} -> ⚠️ {w}")
-                except Exception:
+                        lines.append(f"- {sid} - {sname} -> ⚠️ {w.get('note','')}")
+                else:
                     lines.append(f"- {w}")
             totals['warnings'] += len(changes.get('warnings', []))
-        # Skipped / Unchanged
         if changes.get('skipped'):
             lines.append("")
             lines.append("🚫 Unchanged Entries (Skipped):")
             for s in changes.get('skipped', []):
-                lines.append(f"- {s} -> Already exists (no changes)")
+                if isinstance(s, dict):
+                    sid = s.get('showID','N/A')
+                    sname = s.get('showName','Unknown')
+                    lines.append(f"- {sid} - {sname} -> Already exists (no changes)")
+                else:
+                    lines.append(f"- {s} -> Already exists (no changes)")
             totals['skipped'] += len(changes.get('skipped', []))
-        # Deleted entries
         if changes.get('deleted'):
             lines.append("")
             lines.append("❌ Deleted Entries:")
             for d in changes.get('deleted', []):
                 lines.append(f"- {d} -> Removed as per deletion list")
             totals['deleted'] += len(changes.get('deleted', []))
-        # Summary per sheet rows count
         sheet_rows = changes.get('total_rows') or sum(len(changes.get(k, [])) for k in ('created','updated','images_updated','skipped','deleted'))
         totals['rows'] += sheet_rows
         lines.append("")
-        # Per-sheet summary box
-        lines.append("📊 Summary (Sheet: {})".format(sheet))
+        lines.append(f"📊 Summary (Sheet: {sheet})")
         lines.append(sep)
         lines.append(f"🆕 Total Created: {len(changes.get('created', []))}")
         lines.append(f"🔁 Total Updated: {len(changes.get('updated', []))}")
@@ -1962,18 +2035,14 @@ def write_report(report_changes_by_sheet, report_path, final_notification_line=N
         lines.append(f"  Total Number of Rows: {sheet_rows}")
         lines.append("")
 
-        # collect metadata backup file names
         for b in changes.get('metadata_backups_created', []):
             if isinstance(b, str):
                 backup_files.append(b)
-        # collect deleted files if listed
         for df in changes.get('deleted_files', []):
             if isinstance(df, str):
                 deleted_files.append(df)
-        # track metadata backups count
         totals['metadata_backups'] += len(changes.get('metadata_backups_created', []))
 
-    # Overall summary
     lines.append(sep)
     lines.append("📊 Overall Summary")
     lines.append(sep)
@@ -1989,22 +2058,18 @@ def write_report(report_changes_by_sheet, report_path, final_notification_line=N
     lines.append("")
     lines.append(f"💾 Metadata Backups Created: {totals['metadata_backups']}")
     lines.append(f"🧹 Cleaned Up Old Metadata Backups: {metadata_backups_removed} removed (older than 90 days)")
-    # total objects in seriesData.json - try to compute if file exists
     try:
-        import json
+        sdata = []
         if os.path.exists(SERIES_DATA_PATH):
-            with open(SERIES_DATA_PATH, 'r', encoding='utf-8') as fh:
-                sdata = json.load(fh)
-                total_objs = len(sdata)
-        else:
-            total_objs = "N/A"
+            with open(SERIES_DATA_PATH, 'r', encoding='utf-8') as sf:
+                sdata = json.load(sf)
+        total_objs = len(sdata)
     except Exception:
-        total_objs = "N/A"
+        total_objs = 'N/A'
     lines.append(f"📦 Total Objects in seriesData.json: {total_objs}")
     lines.append("⚠️ WARNING: No duplicate records detected.")
     lines.append("🏁 Workflow finished successfully")
     lines.append("")
-    # Folders generated listing
     lines.append(sep)
     lines.append("🗂️ Folders Generated:")
     lines.append(sep)
@@ -2017,23 +2082,22 @@ def write_report(report_changes_by_sheet, report_path, final_notification_line=N
         except Exception:
             return ["    (none)"]
     lines.append("backup-meta-data/")
-    for ln in list_folder("backup-meta-data"):
+    for ln in list_folder(BACKUP_META_DIR):
         lines.append(ln)
     lines.append("")
     lines.append("deleted-data/")
-    for ln in list_folder("deleted-data"):
+    for ln in list_folder(DELETED_DATA_DIR):
         lines.append(ln)
     lines.append("")
     lines.append("reports/")
-    for ln in list_folder("reports"):
+    for ln in list_folder(REPORTS_DIR):
         lines.append(ln)
-    # write to file
+
     try:
         os.makedirs(os.path.dirname(report_path), exist_ok=True)
-        with open(report_path, "w", encoding="utf-8") as rf:
-            rf.write("\n".join(lines))
-    except Exception as e:
-        # fallback: print lines to stdout if writing failed
-        print("Failed to write report:", e)
-        print("\n".join(lines))
-    return lines
+        with open(report_path, 'w', encoding='utf-8') as rf:
+            rf.write('\\n'.join(lines))
+    except Exception:
+        print('Failed to write report to', report_path)
+    return '\\n'.join(lines)
+# ------------------ end overrides ------------------
