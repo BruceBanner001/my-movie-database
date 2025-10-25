@@ -92,21 +92,7 @@ Notes:
 """
 
 # --------------------------- VERSION & SITE PRIORITY ------------------------
-SCRIPT_VERSION = "v2.4.4 (Report Fix)"
-
-# ---------------------------- RUN ID & Timestamp Helpers -------------------
-def generate_run_id(now_dt=None):
-    """Return RUN_YYYYMMDD_HHMM format using IST-equivalent datetime provided or now_ist()."""
-    dt = now_dt or now_ist()
-    return "RUN_" + dt.strftime("%Y%m%d_%H%M")
-
-def readable_timestamp(now_dt=None):
-    dt = now_dt or now_ist()
-    return dt.strftime("%d %B %Y %I:%M %p (IST)")
-
-# Global run id for this execution (assigned when script runs)
-RUN_ID = generate_run_id()
-
+SCRIPT_VERSION = "v2.4.3 (Final)"
 
 # SITE_PRIORITY_BY_LANGUAGE controls which site is preferred for each fetched property
 SITE_PRIORITY_BY_LANGUAGE = {
@@ -1325,34 +1311,10 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
 
 # ---------------------------- Reports --------------------------------------
 
-
-def meaningful_changed_fields(old, new, protected_fields=None):
-    """Return list of human-readable fields that changed meaningfully (excluding metadata-only fields)."""
-    if protected_fields is None:
-        protected_fields = set(['otherNames', 'showImage', 'releaseDate', 'synopsis', 'Duration', 'sitePriorityUsed'])
-    ignored = set(['updatedOn', 'updatedDetails', 'topRatings'])
-    changed = []
-    keys = set(old.keys() if isinstance(old, dict) else []) | set(new.keys() if isinstance(new, dict) else [])
-    for k in keys:
-        if k in ignored or k in protected_fields:
-            continue
-        o = old.get(k) if isinstance(old, dict) else None
-        n = new.get(k) if isinstance(new, dict) else None
-        if isinstance(o, list) and isinstance(n, list):
-            if [str(x) for x in o] != [str(x) for x in n]:
-                changed.append(human_readable_field(k))
-        else:
-            if o != n:
-                changed.append(human_readable_field(k))
-    return changed
-
-
-
 def write_report(report_changes_by_sheet, report_path, final_not_found_deletions=None, start_time=None, end_time=None, metadata_backups_removed=0):
     lines = []
     # Header
     lines.append("✅ Workflow completed successfully")
-    lines.append(f"🆔 Run ID: {RUN_ID}")
     if end_time is None:
         end_time = now_ist()
     if start_time is None:
@@ -1554,35 +1516,6 @@ def write_report(report_changes_by_sheet, report_path, final_not_found_deletions
     lines.append("\n⚠️ WARNING: No duplicate records detected.")
     lines.append("🏁 Workflow finished successfully")
     try:
-        # Append folder contents summary
-        lines.append("")
-        lines.append('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
-        lines.append('🗂️ Folders Generated:')
-        lines.append("")
-        try:
-            if os.path.exists(BACKUP_META_DIR):
-                lines.append('backup-meta-data/')
-                for fn in sorted(os.listdir(BACKUP_META_DIR)):
-                    lines.append(f'    {fn}')
-                lines.append("")
-        except Exception:
-            pass
-        try:
-            if os.path.exists(DELETED_DATA_DIR):
-                lines.append('deleted-data/')
-                for fn in sorted(os.listdir(DELETED_DATA_DIR)):
-                    lines.append(f'    {fn}')
-                lines.append("")
-        except Exception:
-            pass
-        try:
-            if os.path.exists(REPORTS_DIR):
-                lines.append('reports/')
-                for fn in sorted(os.listdir(REPORTS_DIR)):
-                    lines.append(f'    {fn}')
-                lines.append("")
-        except Exception:
-            pass
         with open(report_path, 'w', encoding='utf-8') as f:
             f.write("\n".join(lines))
     except Exception as e:
@@ -2168,3 +2101,292 @@ def write_report(report_changes_by_sheet, report_path, start_time=None, end_time
         print('Failed to write report to', report_path)
     return '\\n'.join(lines)
 # ------------------ end overrides ------------------
+
+
+
+# ----- PATCHED BLOCK START: v2.4.4 / v2.5.0 BEHAVIORS -----
+from datetime import datetime as _dt
+
+# RUN_ID generator (format RUN_YYYYMMDD_HHMM)
+try:
+    RUN_ID
+except NameError:
+    try:
+        RUN_ID = f"RUN_{now_ist().strftime('%Y%m%d_%H%M')}"
+    except Exception:
+        RUN_ID = f"RUN_{_dt.now().strftime('%Y%m%d_%H%M')}"
+
+# Partial diff saver
+def save_partial_diff(show_old, show_new, changed_fields, updated_details=None):
+    try:
+        os.makedirs(BACKUP_DIR, exist_ok=True)
+        sid = show_new.get('showID') if isinstance(show_new, dict) else None
+        fname = f"DIFF_{now_ist().strftime('%d_%B_%Y_%H%M')}_{sid}.json"
+        outpath = os.path.join(BACKUP_DIR, safe_filename(fname))
+        payload = {
+            "scriptVersion": SCRIPT_VERSION,
+            "runID": RUN_ID,
+            "timestamp": now_ist().strftime("%d %B %Y %I:%M %p (IST)"),
+            "backupType": "partial_diff",
+            "showID": sid,
+            "showName": show_new.get('showName') if isinstance(show_new, dict) else None,
+            "releasedYear": show_new.get('releasedYear') if isinstance(show_new, dict) else None,
+            "updatedDetails": updated_details,
+            "changedFields": changed_fields
+        }
+        with open(outpath, 'w', encoding='utf-8') as of:
+            json.dump(payload, of, indent=2, ensure_ascii=False)
+        return outpath
+    except Exception as e:
+        logd(f"save_partial_diff failed: {e}")
+        return None
+
+# Enhanced metadata backup (includes runID)
+def save_metadata_backup_patched(show_id, show_name, language, fetched_fields, site_priority_used):
+    try:
+        os.makedirs(BACKUP_META_DIR, exist_ok=True)
+        fname = f"META_{now_ist().strftime('%d_%B_%Y_%H%M')}_{show_id}.json"
+        outpath = os.path.join(BACKUP_META_DIR, safe_filename(fname))
+        payload = {
+            "scriptVersion": SCRIPT_VERSION,
+            "runID": RUN_ID,
+            "showID": show_id,
+            "showName": show_name,
+            "language": language,
+            "timestamp": now_ist().strftime("%d %B %Y %I:%M %p (IST)"),
+            "backupType": "metadata_diff",
+            "fetchedFields": fetched_fields,
+            "sitePriorityUsed": site_priority_used
+        }
+        with open(outpath, 'w', encoding='utf-8') as of:
+            json.dump(payload, of, indent=2, ensure_ascii=False)
+        return outpath
+    except Exception as e:
+        logd(f"save_metadata_backup_patched failed: {e}")
+        return None
+
+# Replace original if present
+try:
+    save_metadata_backup = save_metadata_backup_patched
+except Exception:
+    pass
+
+# Deletion processor patch: consistent DELETED_<date>_<time>_<id> naming and image rename
+def process_deletions_patched(excel_file, json_file, report_changes):
+    try:
+        df = pd.read_excel(excel_file, sheet_name='Deleting Records')
+    except Exception:
+        return [], []
+    if df.shape[1] < 1:
+        return [], []
+    cols = [str(c).strip().lower() for c in df.columns]
+    id_col = None
+    for i, c in enumerate(cols):
+        if c == 'id' or 'id' in c:
+            id_col = df.columns[i]
+            break
+    if id_col is None:
+        id_col = df.columns[0]
+    data = []
+    if os.path.exists(json_file):
+        try:
+            with open(json_file, 'r', encoding='utf-8') as jf:
+                data = json.load(jf)
+        except Exception:
+            data = []
+    by_id = {int(o['showID']): o for o in data if 'showID' in o and isinstance(o['showID'], int)}
+    to_delete = []
+    for _, row in df.iterrows():
+        val = row[id_col]
+        if pd.isna(val):
+            continue
+        try:
+            to_delete.append(int(val))
+        except Exception:
+            continue
+    if not to_delete:
+        return [], []
+    os.makedirs(DELETED_DATA_DIR, exist_ok=True)
+    os.makedirs(DELETE_IMAGES_DIR, exist_ok=True)
+    deleted_ids = []
+    not_found_ids = []
+    for iid in to_delete:
+        if iid in by_id:
+            deleted_obj = by_id.pop(iid)
+            deleted_ids.append(iid)
+            fname = f"DELETED_{now_ist().strftime('%d_%B_%Y_%H%M')}_{iid}.json"
+            outpath = os.path.join(DELETED_DATA_DIR, safe_filename(fname))
+            try:
+                snap = deleted_obj.copy()
+                snap['_deleted_runID'] = RUN_ID
+                snap['_deleted_at'] = now_ist().strftime('%d %B %Y %I:%M %p (IST)')
+                with open(outpath, 'w', encoding='utf-8') as of:
+                    json.dump(snap, of, indent=4, ensure_ascii=False)
+                report_changes.setdefault('deleted', []).append(f"{iid} -> {deleted_obj.get('showName', 'Unknown')} ({deleted_obj.get('releasedYear', 'N/A')}) -> ✅ Deleted and archived -> {outpath}")
+                # move image if local
+                try:
+                    img_url = deleted_obj.get('showImage') or ''
+                    candidate = None
+                    m = re.search(r'/(images/[^/?#]+)$', img_url)
+                    if m:
+                        candidate = m.group(1)
+                    elif img_url.startswith('images/'):
+                        candidate = img_url
+                    if candidate:
+                        src = os.path.join('.', candidate)
+                        if os.path.exists(src):
+                            dst_name = f"DELETED_{now_ist().strftime('%d_%B_%Y_%H%M')}_{iid}.jpg"
+                            dst = os.path.join(DELETE_IMAGES_DIR, safe_filename(dst_name))
+                            shutil.move(src, dst)
+                            report_changes.setdefault('deleted_images_moved', []).append(f"{iid} -> image moved: {src} -> {dst}")
+                except Exception as e_img:
+                    report_changes.setdefault('deleted_images_moved', []).append(f"{iid} -> ⚠️ Image move failed: {e_img}")
+            except Exception as e:
+                report_changes.setdefault('deleted', []).append(f"{iid} -> ⚠️ Deletion recorded but failed to write archive: {e}")
+        else:
+            not_found_ids.append(iid)
+            report_changes.setdefault('deleted_not_found', []).append(f"-{iid} -> ❌ Not found in seriesData.json")
+    merged = sorted(by_id.values(), key=lambda x: x.get('showID', 0))
+    try:
+        with open(json_file, 'w', encoding='utf-8') as jf:
+            json.dump(merged, jf, indent=4, ensure_ascii=False)
+        report_changes.setdefault('deleted_summary', []).append(f"seriesData.json updated after deletions (deleted {len(deleted_ids)} items).")
+    except Exception as e:
+        report_changes.setdefault('deleted_summary', []).append(f"⚠️ Failed to write updated {json_file}: {e}")
+    return deleted_ids, not_found_ids
+
+# override original
+process_deletions = process_deletions_patched
+
+# Minimal excel_to_objects patch: preserve protected fields and dedupe created entries per sheet
+def excel_to_objects_patched(excel_file, sheet_name, existing_by_id, report_changes, start_index=0, max_items=None, time_limit_seconds=None,
+                     deleted_ids_for_run=None, deleting_not_found_initial=None, deleting_found_in_sheets=None):
+    try:
+        df = pd.read_excel(excel_file, sheet_name=sheet_name)
+    except Exception as e:
+        raise
+    df.columns = [c.strip().lower() for c in df.columns]
+    again_idx = None
+    for i, c in enumerate(df.columns):
+        if 'again watched' in c:
+            again_idx = i
+            break
+    if again_idx is None:
+        again_idx = len(df.columns) - 1
+    items = []
+    protected = set(['otherNames','showImage','releaseDate','synopsis','Duration','sitePriorityUsed'])
+    seen = set()
+    for idx in range(start_index, len(df)):
+        row = df.iloc[idx]
+        try:
+            sid = None
+            try:
+                sid = int(row[df.columns[0]]) if not pd.isna(row[df.columns[0]]) else None
+            except Exception:
+                sid = None
+            if sid in seen:
+                continue
+            seen.add(sid)
+            obj = {'showID': sid}
+            # minimal parsing for showName and ratings/comments for update detection
+            title_col = df.columns[1] if len(df.columns) > 1 else df.columns[0]
+            obj['showName'] = str(row.get(title_col)) if not pd.isna(row.get(title_col)) else None
+            obj['ratings'] = int(row.get('ratings')) if 'ratings' in df.columns and not pd.isna(row.get('ratings')) else None
+            obj['comments'] = tidy_comment(row.get('comments')) if 'comments' in df.columns else None
+            existing = existing_by_id.get(sid)
+            # preserve protected fields from existing if present
+            if existing:
+                for p in protected:
+                    if existing.get(p) is not None:
+                        obj[p] = existing.get(p)
+                # copy other fields as necessary
+                obj['topRatings'] = existing.get('topRatings', 0)
+            else:
+                # mark for fetching elsewhere in main flow (one-time fetch)
+                obj.setdefault('otherNames', [])
+                obj.setdefault('sitePriorityUsed', {})
+                obj.setdefault('Duration', None)
+            # set updatedOn and updatedDetails conservatively
+            obj['updatedOn'] = now_ist().strftime('%d %B %Y')
+            obj['updatedDetails'] = 'First time Uploaded' if existing is None else 'No meaningful update'
+            items.append(obj)
+            # report handling: created or updated/skip will be determined later in main flow
+        except Exception:
+            continue
+    processed = len(items)
+    finished = True
+    next_index = start_index + processed if processed > 0 else start_index
+    return items, processed, finished, next_index
+
+# override original
+excel_to_objects = excel_to_objects_patched
+
+# Lightweight write_report override to ensure RUN_ID and folders block
+def write_report_patched(report_changes_by_sheet, report_path, final_not_found_deletions=None, start_time=None, end_time=None, metadata_backups_removed=0):
+    try:
+        lines = []
+        lines.append('✅ Workflow completed successfully')
+        lines.append(f'🆔 Run ID: {RUN_ID}')
+        nowt = now_ist() if 'now_ist' in globals() else _dt.now()
+        lines.append(f'📅 Run Time: {nowt.strftime("%d %B %Y %I:%M %p (IST)")}')
+        lines.append(f'⚙️ Script Version: {SCRIPT_VERSION}')
+        lines.append('')
+        sep = '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
+        for sheet, changes in report_changes_by_sheet.items():
+            meaningful = any(changes.get(k) for k in ('created','updated','images','skipped','deleted'))
+            if not meaningful:
+                continue
+            lines.append(sep)
+            lines.append(f'🗂️ === {sheet} — {nowt.strftime("%d %B %Y")} ===')
+            lines.append(sep)
+            created = changes.get('created', [])
+            if created:
+                lines.append('')
+                lines.append('🆕 Data Created:')
+                for obj in created:
+                    lines.append(f"- {obj.get('showID')} - {obj.get('showName')} ({obj.get('releasedYear') if isinstance(obj, dict) else 'N/A'}) -> First Time Uploaded")
+            updated = changes.get('updated', [])
+            if updated:
+                lines.append('')
+                lines.append('🔁 Data Updated:')
+                for pair in updated:
+                    new = pair.get('new')
+                    old = pair.get('old')
+                    changed_fields = []
+                    for k in new.keys():
+                        if old.get(k) != new.get(k) and k not in ('updatedOn','updatedDetails','topRatings'):
+                            changed_fields.append(human_readable_field(k))
+                    fields_text = ', '.join(changed_fields) + ' Updated' if changed_fields else 'Updated'
+                    lines.append(f"- {new.get('showID','N/A')} - {new.get('showName','Unknown')} ({new.get('releasedYear','N/A')}) -> {fields_text}")
+            skipped = changes.get('skipped', [])
+            if skipped:
+                lines.append('')
+                lines.append('🚫 Unchanged Entries (Skipped):')
+                for s in skipped:
+                    lines.append(f"- {s} -> Already exists (no changes)")
+            if changes.get('images'):
+                lines.append('')
+                lines.append('🖼️ Images Updated:')
+                for it in changes.get('images'):
+                    lines.append(f"- {it.get('showID')} - {it.get('showName')} -> updated")
+            lines.append('')
+        # folders generated block
+        lines.append(sep)
+        lines.append('🗂️ Folders Generated:')
+        lines.append(sep)
+        for d in (BACKUP_META_DIR, DELETED_DATA_DIR, REPORTS_DIR):
+            lines.append(d + '/')
+            if os.path.exists(d):
+                for fn in sorted(os.listdir(d)):
+                    lines.append('    ' + fn)
+            lines.append('')
+        with open(report_path, 'w', encoding='utf-8') as f:
+            f.write('\n'.join(lines))
+    except Exception as e:
+        print('⚠️ write_report_patched failed:', e)
+    return
+
+# apply override
+write_report = write_report_patched
+
+# ----- PATCHED BLOCK END -----
