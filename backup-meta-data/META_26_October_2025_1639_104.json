@@ -1,0 +1,42 @@
+{
+  "scriptVersion": "v2.4.4a (Report Fix + Safe Hardening)",
+  "runID": "RUN_20251026_1639",
+  "showID": 104,
+  "showName": "18 Again",
+  "language": "korean",
+  "timestamp": "26 October 2025 04:39 PM (IST)",
+  "backupType": "metadata_diff",
+  "fetchedFields": {
+    "showImage": {
+      "value": "https://brucebanner001.github.io/my-movie-database/images/104.jpg",
+      "source": "mydramalist"
+    },
+    "releaseDate": {
+      "value": "21 september 2020 - 10 november 2020",
+      "source": "mydramalist"
+    },
+    "otherNames": {
+      "value": [
+        "Eighteen Again",
+        "Eitin Eogein",
+        "에이틴 어게인"
+      ],
+      "source": "mydramalist"
+    },
+    "Duration": {
+      "value": 10,
+      "source": "mydramalist"
+    },
+    "synopsis": {
+      "value": "18 Again (Korean Drama); 18 어게인; Eighteen Again;Eitin Eogein;에이틴 어게인; Jung Da Jeong and Hong Dae Yeong have been married for almost two decades, (Source: MyDramaList)",
+      "source": "mydramalist"
+    }
+  },
+  "sitePriorityUsed": {
+    "image": "mydramalist",
+    "releaseDate": "mydramalist",
+    "otherNames": "mydramalist",
+    "duration": "mydramalist",
+    "synopsis": "mydramalist"
+  }
+}
