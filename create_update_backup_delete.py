@@ -1104,6 +1104,9 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
     start_time = time.time()
     last_idx = start_index
     total_rows = len(df)
+    # Initialize tracker before starting the loop
+    new_ids_this_run = set()
+
     for idx in range(start_index, total_rows):
         if max_items and processed >= max_items:
             break
@@ -1294,12 +1297,12 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
                 "Duration": obj.get("Duration"),
                 "sitePriorityUsed": obj.get("sitePriorityUsed", {})
             }
-            # ---- PATCH: prevent duplicate creation logs ----
+            # ---- PATCH: prevent duplicate creation logs  and Objects----
             sid = ordered.get("showID")
             if existing is None:
-                already_created_ids = {c.get("showID") for c in report_changes.get("created", [])}
-                if sid not in already_created_ids:
+                if sid not in new_ids_this_run:
                     report_changes.setdefault("created", []).append(ordered)
+                    new_ids_this_run.add(sid)
                 else:
                     report_changes.setdefault("duplicates_in_sheet", []).append(
                         f"{sid} - {obj.get('showName','Unknown')} ({obj.get('releasedYear','N/A')})"
@@ -1311,6 +1314,7 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
             items.append(ordered)
             processed += 1
             last_idx = idx
+
         except Exception as e:
             raise RuntimeError(f"Row {idx} in sheet '{sheet_name}' processing failed: {e}")
     finished = (last_idx >= total_rows - 1) if total_rows > 0 else True
