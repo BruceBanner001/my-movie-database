@@ -1294,15 +1294,23 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
                 "Duration": obj.get("Duration"),
                 "sitePriorityUsed": obj.get("sitePriorityUsed", {})
             }
-            items.append(ordered)
-            processed += 1
-            last_idx = idx
+            # ---- PATCH: prevent duplicate creation logs ----
             sid = ordered.get("showID")
             if existing is None:
-                report_changes.setdefault("created", []).append(ordered)
+                already_created_ids = {c.get("showID") for c in report_changes.get("created", [])}
+                if sid not in already_created_ids:
+                    report_changes.setdefault("created", []).append(ordered)
+                else:
+                    report_changes.setdefault("duplicates_in_sheet", []).append(
+                        f"{sid} - {obj.get('showName','Unknown')} ({obj.get('releasedYear','N/A')})"
+                    )
             else:
                 if existing != ordered:
                     report_changes.setdefault("updated", []).append({"old": existing, "new": ordered})
+
+            items.append(ordered)
+            processed += 1
+            last_idx = idx
         except Exception as e:
             raise RuntimeError(f"Row {idx} in sheet '{sheet_name}' processing failed: {e}")
     finished = (last_idx >= total_rows - 1) if total_rows > 0 else True
@@ -1424,7 +1432,12 @@ def write_report(report_changes_by_sheet, report_path, final_not_found_deletions
             lines.append("⚠️ Fetch Errors:")
             for fe in changes.get('fetch_errors'):
                 lines.append(f"- {fe}")
-
+        duplicates = changes.get('duplicates_in_sheet', [])
+        if duplicates:
+            lines.append("")
+            lines.append("🚨 Duplicate Entries Detected:")
+            for d in duplicates:
+                lines.append(f"- {d}")
         # summary per sheet
         lines.append("")
         lines.append(sep)
