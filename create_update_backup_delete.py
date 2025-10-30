@@ -92,7 +92,7 @@ Notes:
 """
 
 # --------------------------- VERSION & SITE PRIORITY ------------------------
-SCRIPT_VERSION = "v2.4.4a (Report Fix + Safe Hardening)"
+SCRIPT_VERSION = "v2.4.3 (Final)"
 
 # SITE_PRIORITY_BY_LANGUAGE controls which site is preferred for each fetched property
 SITE_PRIORITY_BY_LANGUAGE = {
@@ -187,10 +187,6 @@ import json
 import io
 import shutil
 import traceback
-
-# Visual separator used in reports
-sep = "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-
 from datetime import datetime, timedelta, timezone
 
 import pandas as pd
@@ -223,19 +219,11 @@ def now_ist():
 def filename_timestamp():
     return now_ist().strftime("%d_%B_%Y_%H%M")
 
-
-
-def run_id_timestamp():
-    return now_ist().strftime("RUN_%Y%m%d_%H%M")
-
-def timestamp_for_filename():
-    return now_ist().strftime("%d_%B_%Y_%H%M")
-
 # Paths and config (preserve original values)
 JSON_FILE = "seriesData.json"
 BACKUP_DIR = "backups"
 IMAGES_DIR = "images"
-DELETED_IMAGES_DIR = "deleted-images"
+DELETE_IMAGES_DIR = "deleted-images"
 DELETED_DATA_DIR = "deleted-data"
 REPORTS_DIR = "reports"
 PROGRESS_DIR = ".progress"
@@ -257,8 +245,6 @@ SYNOPSIS_MAX_LEN = int(os.environ.get("SYNOPSIS_MAX_LEN", "1000") or 1000)
 METADATA_BACKUP_RETENTION_DAYS = int(os.environ.get("METADATA_BACKUP_RETENTION_DAYS", "90") or 90)
 
 HEADERS = {"User-Agent": "Mozilla/5.0 (compatible; Bot/1.0)"}
-
-PROTECTED_FETCHED_FIELDS = set(['otherNames','showImage','releaseDate','synopsis','Duration','sitePriorityUsed'])
 
 def logd(msg):
     if DEBUG_FETCH:
@@ -820,8 +806,7 @@ def fetch_and_save_image_for_show(show_name, prefer_sites, show_id, site_priorit
             logd(f"fetch_and_save_image_for_show site {site} failed: {e}")
     # Last resort: ddgs image results
     try:
-        release_year_safe = locals().get("release_year", "")
-        imgs = ddgs_images(f"{show_name} {release_year_safe}")
+        imgs = ddgs_images(f"{show_name} {release_year if 'release_year' in locals() else ''}")
         for img in imgs:
             if img:
                 local_path, remote = save_image_locally_from_url(img, show_id)
@@ -858,8 +843,6 @@ def process_deletions(excel_file, json_file, report_changes):
     by_id = {int(o['showID']): o for o in data if 'showID' in o and isinstance(o['showID'], int)}
     to_delete = []
     for _, row in df.iterrows():
-        ordered = {}
-        release_year_safe = ""
         val = row[id_col]
         if pd.isna(val):
             continue
@@ -876,7 +859,7 @@ def process_deletions(excel_file, json_file, report_changes):
         if iid in by_id:
             deleted_obj = by_id.pop(iid)
             deleted_ids.append(iid)
-            fname = f"DELETED_{timestamp_for_filename()}_{iid}.json"
+            fname = f"DELETED_{now_ist().strftime('%d_%B_%Y_%H%M')}_{iid}.json"
             outpath = os.path.join(DELETED_DATA_DIR, safe_filename(fname))
             try:
                 with open(outpath, 'w', encoding='utf-8') as of:
@@ -894,9 +877,9 @@ def process_deletions(excel_file, json_file, report_changes):
                         if candidate:
                             src = os.path.join('.', candidate)
                             if os.path.exists(src):
-                                os.makedirs(DELETED_IMAGES_DIR, exist_ok=True)
-                                dst_name = f"DELETED_{timestamp_for_filename()}_{iid}.jpg"
-                                dst = os.path.join(DELETED_IMAGES_DIR, safe_filename(dst_name))
+                                os.makedirs(DELETE_IMAGES_DIR, exist_ok=True)
+                                dst_name = f"{iid}_{filename_timestamp()}.jpg"
+                                dst = os.path.join(DELETE_IMAGES_DIR, safe_filename(dst_name))
                                 shutil.move(src, dst)
                                 report_changes.setdefault('deleted_images_moved', []).append(f"{iid} -> {deleted_obj.get('showName', 'Unknown')} ({deleted_obj.get('releasedYear', 'N/A')}) -> image moved: {src} -> {dst}")
                 except Exception as e_img:
@@ -1010,12 +993,12 @@ def apply_manual_updates(excel_file: str, json_file: str):
                         changed_fetched.append(fetched_fields_map[key_l])
         if changed_any:
             obj['updatedOn'] = now_ist().strftime('%d %B %Y')
-            # Update sitePriorityUsed only for fetched fields changed (mark as Manual)
+            # Update sitePriorityUsed only for fetched fields changed
             try:
                 spu = obj.get('sitePriorityUsed') or {}
                 for ff in changed_fetched:
                     if ff:
-                        key_for_spu = ff if ff != 'showImage' else 'showImage'
+                        key_for_spu = ff if ff != 'showImage' else 'image'
                         spu[key_for_spu] = 'Manual'
                 if spu:
                     obj['sitePriorityUsed'] = spu
@@ -1065,30 +1048,6 @@ def sheet_base_offset(sheet_name: str) -> int:
     return 0
 
 # ---------------------------- Helper: save metadata backup ------------------
-
-
-def write_partial_diff(show_id, show_name, changed_fields, updated_details):
-    try:
-        os.makedirs(BACKUP_DIR, exist_ok=True)
-        fname = f"DIFF_{timestamp_for_filename()}_{show_id}.json"
-        outpath = os.path.join(BACKUP_DIR, safe_filename(fname))
-        payload = {
-            "scriptVersion": SCRIPT_VERSION,
-            "runID": run_id_timestamp(),
-            "timestamp": now_ist().strftime("%d %B %Y %I:%M %p (IST)"),
-            "backupType": "partial_diff",
-            "showID": show_id,
-            "showName": show_name,
-            "updatedDetails": updated_details,
-            "changedFields": changed_fields
-        }
-        with open(outpath, 'w', encoding='utf-8') as of:
-            json.dump(payload, of, indent=2, ensure_ascii=False)
-        return outpath
-    except Exception as e:
-        logd(f"write_partial_diff failed: {e}")
-    return None
-
 def save_metadata_backup(show_id, show_name, language, fetched_fields, site_priority_used):
     try:
         os.makedirs(BACKUP_META_DIR, exist_ok=True)
@@ -1096,12 +1055,10 @@ def save_metadata_backup(show_id, show_name, language, fetched_fields, site_prio
         outpath = os.path.join(BACKUP_META_DIR, safe_filename(fname))
         payload = {
             "scriptVersion": SCRIPT_VERSION,
-            "runID": run_id_timestamp(),
             "showID": show_id,
             "showName": show_name,
             "language": language,
             "timestamp": now_ist().strftime("%d %B %Y %I:%M %p (IST)"),
-            "backupType": "metadata_diff",
             "fetchedFields": fetched_fields,
             "sitePriorityUsed": site_priority_used
         }
@@ -1288,39 +1245,28 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
                     obj['sourceSites'] = site_priority_used.copy()
 
             else:
-                # Existing object: preserve protected fetched fields. Do NOT overwrite protected fields unless Manual Update.
-                try:
-                    for f in PROTECTED_FETCHED_FIELDS:
-                        if f in existing and existing.get(f) not in (None, [], {}, ""):
-                            obj[f] = existing.get(f)
-                    # Preserve non-empty sitePriorityUsed mapping
-                    spu_existing = existing.get('sitePriorityUsed')
-                    if spu_existing and isinstance(spu_existing, dict) and spu_existing != {}:
-                        obj['sitePriorityUsed'] = spu_existing.copy()
-                except Exception as _e:
-                    logd(f"preserve protected fields failed: {_e}")
+                # Existing object: preserve existing synopsis, image, otherNames, etc. Do not overwrite.
+                obj['synopsis'] = existing.get("synopsis") or existing.get("synopsis", None)
+                obj['Duration'] = existing.get("Duration") or obj.get("Duration")
+                obj['otherNames'] = existing.get("otherNames") or obj.get("otherNames", [])
+                obj['showImage'] = existing.get("showImage") or obj.get("showImage")
+                obj['releaseDate'] = existing.get("releaseDate") or None
 
-                # Fill missing individual fields only if they are completely missing.
-                # For existing objects, we'll fetch missing fields only (not overwrite).
-                if (existing_image_url is None or existing_image_url in (None, "")) and (sid is not None):
+                # Fill missing individual fields only if they are completely missing
+                # (e.g., if an existing object has no showImage, we may fetch image)
+                # For existing objects, we'll fetch missing fields only (not overwrite)
+                # Image missing? fetch it
+                if (existing_image_url is None) and (sid is not None):
                     try:
                         local_image_path, remote_image_url, img_site = fetch_and_save_image_for_show(show_name, None, sid, site_priority=site_priority)
                         if local_image_path:
                             new_image_url = build_absolute_url(local_image_path)
                             report_changes.setdefault('images', []).append({'showID': sid, 'showName': show_name, 'releasedYear': released_year, 'old': existing_image_url, 'new': new_image_url})
                             obj['showImage'] = new_image_url
-                            # Update sitePriorityUsed only for newly fetched field
-                            spu = obj.get('sitePriorityUsed') or {}
-                            spu['showImage'] = img_site or site_priority.get('showImage')
-                            obj['sitePriorityUsed'] = spu
                     except Exception as e:
                         logd(f"Existing object image fetch failed for {show_name}: {e}")
 
-                # Do NOT overwrite other protected fields (synopsis, otherNames, releaseDate, Duration) for existing objects.
-                # Existing non-protected fields (comments, ratings, genres, againWatchedDates) will be taken from the sheet as usual.
-
-                obj['showImage'] = new_image_url
-
+            obj["showImage"] = new_image_url
 
             ordered = {
                 "showID": obj.get("showID"),
@@ -1351,33 +1297,12 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
             items.append(ordered)
             processed += 1
             last_idx = idx
-            sid = (ordered.get("showID") if ordered else None)
+            sid = ordered.get("showID")
             if existing is None:
                 report_changes.setdefault("created", []).append(ordered)
             else:
-                # Only treat as updated if objects_differ considers meaningful changes (ignoring metadata-only keys)
-                if objects_differ(existing, ordered):
+                if existing != ordered:
                     report_changes.setdefault("updated", []).append({"old": existing, "new": ordered})
-                    # Create partial diff backup for meaningful changes
-                    try:
-                        old = existing
-                        new = ordered
-                        changed = {}
-                        for k in set(old.keys()) | set(new.keys()):
-                            if k in ('updatedOn','updatedDetails','topRatings'):
-                                continue
-                            o = old.get(k)
-                            n = new.get(k)
-                            if o != n:
-                                changed[k] = {'old': o, 'new': n}
-                        if changed:
-                            diff_path = write_partial_diff((ordered.get('showID') if ordered else None), (ordered.get('showName') if ordered else None), changed, new.get('updatedDetails'))
-                            if diff_path:
-                                report_changes.setdefault('metadata_backups_created', []).append(diff_path)
-                    except Exception as _e:
-                        logd(f'partial diff creation failed: {_e}')
-                else:
-                    report_changes.setdefault('skipped', []).append(f"{(ordered.get('showID', 'N/A') if ordered else 'N/A')} - {(ordered.get('showName', 'Unknown') if ordered else 'Unknown')}")
         except Exception as e:
             raise RuntimeError(f"Row {idx} in sheet '{sheet_name}' processing failed: {e}")
     finished = (last_idx >= total_rows - 1) if total_rows > 0 else True
@@ -1387,32 +1312,9 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
 # ---------------------------- Reports --------------------------------------
 
 def write_report(report_changes_by_sheet, report_path, final_not_found_deletions=None, start_time=None, end_time=None, metadata_backups_removed=0):
-        # Deduplicate lists per sheet for clarity (by showID or showName where possible)
-    try:
-        for sheet, ch in report_changes_by_sheet.items():
-            for k in ('created','updated','images','deleted','deleted_not_found','skipped','metadata_backups_created'):
-                if ch.get(k) and isinstance(ch.get(k), list):
-                    seen = set()
-                    uniq = []
-                    for itm in ch.get(k):
-                        if isinstance(itm, dict):
-                            key = str(itm.get('showID') or itm.get('showName') or json.dumps(itm, sort_keys=True))
-                        else:
-                            key = str(itm)
-                        if key not in seen:
-                            seen.add(key)
-                            uniq.append(itm)
-                    ch[k] = uniq
-    except Exception:
-        pass
-
     lines = []
     # Header
     lines.append("✅ Workflow completed successfully")
-    try:
-        lines.append(f"🆔 Run ID: {run_id_timestamp()}")
-    except Exception:
-        pass
     if end_time is None:
         end_time = now_ist()
     if start_time is None:
@@ -1424,41 +1326,7 @@ def write_report(report_changes_by_sheet, report_path, final_not_found_deletions
     lines.append(f"🕒 Duration: {mins} min {secs} sec")
     lines.append(f"⚙️ Script Version: {SCRIPT_VERSION}")
     lines.append("")
-
-    lines.append("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-    lines.append("🗂️ Folders Generated:")
-    try:
-        folders = [
-            BACKUP_DIR,
-            BACKUP_META_DIR,
-            DELETED_DATA_DIR,
-            DELETED_IMAGES_DIR,
-            REPORTS_DIR,
-            PROGRESS_DIR
-        ]
-        for f in folders:
-            os.makedirs(f, exist_ok=True)
-            lines.append(f"- {f}")
-    except Exception as e:
-        lines.append(f"⚠️ Error listing folders: {e}")
-    lines.append("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-
-    lines.append("🗂️ Folders Generated:")
-    try:
-        folders = [
-            BACKUP_DIR,
-            BACKUP_META_DIR,
-            DELETED_DATA_DIR,
-            DELETED_IMAGES_DIR,
-            REPORTS_DIR,
-            PROGRESS_DIR
-        ]
-        for f in folders:
-            os.makedirs(f, exist_ok=True)
-    except Exception as e:
-        lines.append("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-
-    lines.append("")
+    sep = "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
     total_created = total_updated = total_deleted = total_skipped = total_images_updated = total_warnings = total_failed = 0
     grand_rows = 0
 
@@ -1654,7 +1522,7 @@ def write_report(report_changes_by_sheet, report_path, final_not_found_deletions
         print(f"⚠️ Could not write TXT report: {e}")
 
 
-    # ---------------------------- Secret scan & email body ---------------------
+# ---------------------------- Secret scan & email body ---------------------
 def scan_for_possible_secrets():
     findings = []
     if os.path.exists(SERVICE_ACCOUNT_FILE):
@@ -1868,9 +1736,9 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
     if SCHEDULED_RUN:
         cleanup_deleted_data()
     cutoff = datetime.now() - timedelta(days=KEEP_OLD_IMAGES_DAYS)
-    if os.path.exists(DELETED_IMAGES_DIR):
-        for fname in os.listdir(DELETED_IMAGES_DIR):
-            path = os.path.join(DELETED_IMAGES_DIR, fname)
+    if os.path.exists(DELETE_IMAGES_DIR):
+        for fname in os.listdir(DELETE_IMAGES_DIR):
+            path = os.path.join(DELETE_IMAGES_DIR, fname)
             try:
                 mtime = datetime.fromtimestamp(os.path.getmtime(path))
                 if mtime < cutoff:
