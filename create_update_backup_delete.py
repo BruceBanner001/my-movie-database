@@ -1795,7 +1795,45 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
                 print(f"⚠️ Could not cleanup old image {path}: {e}")
     # Now cleanup old metadata backups and record count for report
     removed_metadata_backups = cleanup_old_metadata_backups(METADATA_BACKUP_RETENTION_DAYS)
+    # ---------------------------- Final dedupe before writing report ----------------------------
+    try:
+        for sheet_name, sheet_changes in report_changes_by_sheet.items():
+            if not isinstance(sheet_changes, dict):
+                continue
 
+            # Deduplicate 'created' list by showID
+            if isinstance(sheet_changes.get('created'), list):
+                seen_created = set()
+                unique_created = []
+                for obj in sheet_changes['created']:
+                    sid = obj.get('showID')
+                    if sid and sid not in seen_created:
+                        seen_created.add(sid)
+                        unique_created.append(obj)
+                sheet_changes['created'] = unique_created
+
+            # Deduplicate 'updated' list by showID
+            if isinstance(sheet_changes.get('updated'), list):
+                seen_updated = set()
+                unique_updated = []
+                for obj in sheet_changes['updated']:
+                    if isinstance(obj, dict):
+                        new_obj = obj.get('new')
+                        sid = new_obj.get('showID') if new_obj else None
+                        if sid and sid not in seen_updated:
+                            seen_updated.add(sid)
+                            unique_updated.append(obj)
+                sheet_changes['updated'] = unique_updated
+
+            # Remove any updated items that are also in created
+            created_ids = {c.get('showID') for c in sheet_changes['created'] if c.get('showID')}
+            sheet_changes['updated'] = [
+                u for u in sheet_changes['updated']
+                if not (isinstance(u, dict) and u.get('new', {}).get('showID') in created_ids)
+            ]
+    except Exception as e:
+        print(f"⚠️ Final dedupe step failed: {e}")
+    # ---------------------------- End final dedupe ----------------------------
 
     write_report(report_changes_by_sheet, report_path, final_not_found_deletions=sorted(list(still_not_found)), start_time=start_time, end_time=now_ist(), metadata_backups_removed=removed_metadata_backups)
     print(f"✅ Report written -> {report_path}")
