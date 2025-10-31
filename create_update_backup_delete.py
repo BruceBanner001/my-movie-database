@@ -1340,7 +1340,29 @@ def write_report(report_changes_by_sheet, report_path, final_not_found_deletions
     grand_rows = 0
 
     # Per-sheet details (skip per-sheet summary for Deleting Records and Manual Update)
-    for sheet, changes in report_changes_by_sheet.items():
+    # ✅ Deduplicate report entries before printing
+for sheet, changes in report_changes_by_sheet.items():
+    if 'created' in changes:
+        seen_ids = set()
+        unique_created = []
+        for obj in changes['created']:
+            sid = obj.get('showID')
+            if sid not in seen_ids:
+                unique_created.append(obj)
+                seen_ids.add(sid)
+        changes['created'] = unique_created
+
+    if 'updated' in changes:
+        seen_pairs = set()
+        unique_updated = []
+        for pair in changes['updated']:
+            sid = pair.get('new', {}).get('showID') if isinstance(pair, dict) else None
+            if sid not in seen_pairs:
+                unique_updated.append(pair)
+                seen_pairs.add(sid)
+        changes['updated'] = unique_updated
+
+
         # Skip empty Deleting Records / Manual Update sections unless they contain meaningful entries
         if sheet in ('Deleting Records', 'Manual Update'):
             meaningful = any(changes.get(k) for k in ('deleted','deleted_not_found','deleted_summary','error','metadata_backups_created','updated_objs'))
