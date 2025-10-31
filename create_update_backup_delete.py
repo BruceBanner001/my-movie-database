@@ -1100,6 +1100,7 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
     if again_idx is None:
         raise ValueError(f"'Again Watched Date' columns not found in sheet: {sheet_name}")
     items = []
+    seen_show_ids = set()  # ✅ Prevent duplicate showIDs within this sheet
     processed = 0
     start_time = time.time()
     last_idx = start_index
@@ -1298,6 +1299,14 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
             processed += 1
             last_idx = idx
             sid = ordered.get("showID")
+
+            # ✅ Skip duplicate showID within same sheet
+            if sid in seen_show_ids:
+                report_changes.setdefault('duplicates_skipped', []).append(
+                    f"{sid} -> {obj.get('showName')} ({obj.get('releasedYear')}) -> Skipped duplicate row in {sheet_name}"
+                )
+                continue
+            seen_show_ids.add(sid)
             if existing is None:
                 report_changes.setdefault("created", []).append(ordered)
             else:
@@ -1677,6 +1686,7 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
             report_changes['error'] = err
             items, processed, finished, next_start_idx = [], 0, True, start_idx
         modified_items = []
+        seen_show_ids = set()  # ✅ Prevent duplicate showIDs within this sheet
         for new_obj in items:
             sid = new_obj.get('showID')
             if sid in merged_by_id:
