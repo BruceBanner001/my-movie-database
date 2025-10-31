@@ -1106,7 +1106,6 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
     total_rows = len(df)
     # Initialize tracker before starting the loop
     new_ids_this_run = set()
-
     for idx in range(start_index, total_rows):
         if max_items and processed >= max_items:
             break
@@ -1310,11 +1309,9 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
             else:
                 if existing != ordered:
                     report_changes.setdefault("updated", []).append({"old": existing, "new": ordered})
-
             items.append(ordered)
             processed += 1
             last_idx = idx
-
         except Exception as e:
             raise RuntimeError(f"Row {idx} in sheet '{sheet_name}' processing failed: {e}")
     finished = (last_idx >= total_rows - 1) if total_rows > 0 else True
