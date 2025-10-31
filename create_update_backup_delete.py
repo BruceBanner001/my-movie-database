@@ -201,6 +201,9 @@ try:
 except Exception:
     HAVE_DDGS = False
 
+# ---------------------------- Global runtime trackers ---------------------
+GLOBAL_CREATED_IDS = set()
+
 # Try Google APIs optionally (same as original)
 try:
     from google.oauth2 import service_account
@@ -1298,10 +1301,11 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
             }
             # ---- PATCH: prevent duplicate creation logs  and Objects----
             sid = ordered.get("showID")
+            global GLOBAL_CREATED_IDS
             if existing is None:
-                if sid not in new_ids_this_run:
+                if sid not in GLOBAL_CREATED_IDS:
                     report_changes.setdefault("created", []).append(ordered)
-                    new_ids_this_run.add(sid)
+                    GLOBAL_CREATED_IDS.add(sid)
                 else:
                     report_changes.setdefault("duplicates_in_sheet", []).append(
                         f"{sid} - {obj.get('showName','Unknown')} ({obj.get('releasedYear','N/A')})"
@@ -1761,6 +1765,8 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
                 print(f"⚠️ Could not cleanup old image {path}: {e}")
     # Now cleanup old metadata backups and record count for report
     removed_metadata_backups = cleanup_old_metadata_backups(METADATA_BACKUP_RETENTION_DAYS)
+    # ✅ Reset global duplicate tracker before generating report
+    GLOBAL_CREATED_IDS.clear()
     write_report(report_changes_by_sheet, report_path, final_not_found_deletions=sorted(list(still_not_found)), start_time=start_time, end_time=now_ist(), metadata_backups_removed=removed_metadata_backups)
     print(f"✅ Report written -> {report_path}")
     # Compose email body
