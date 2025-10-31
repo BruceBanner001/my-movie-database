@@ -200,9 +200,10 @@ try:
     HAVE_DDGS = True
 except Exception:
     HAVE_DDGS = False
-
 # ---------------------------- Global runtime trackers ---------------------
 GLOBAL_CREATED_IDS = set()
+
+
 
 # Try Google APIs optionally (same as original)
 try:
@@ -1108,7 +1109,7 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
     last_idx = start_index
     total_rows = len(df)
     # Initialize tracker before starting the loop
-    new_ids_this_run = set()
+    # GLOBAL_CREATED_IDS removed; using GLOBAL_CREATED_IDS instead
     for idx in range(start_index, total_rows):
         if max_items and processed >= max_items:
             break
@@ -1301,7 +1302,6 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
             }
             # ---- PATCH: prevent duplicate creation logs  and Objects----
             sid = ordered.get("showID")
-            global GLOBAL_CREATED_IDS
             if existing is None:
                 if sid not in GLOBAL_CREATED_IDS:
                     report_changes.setdefault("created", []).append(ordered)
@@ -1323,6 +1323,36 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
     return items, processed, finished, next_index
 
 # ---------------------------- Reports --------------------------------------
+
+GLOBAL_CREATED_IDS.clear()
+
+# ---------------------------- Auto-deduplicate created/updated entries ---------------------
+try:
+    for sheet_name, sheet_changes in report_changes_by_sheet.items():
+        # Deduplicate 'created' list by showID
+        if isinstance(sheet_changes.get('created'), list):
+            unique = {}
+            new_created = []
+            for obj in sheet_changes.get('created', []):
+                sid = obj.get('showID')
+                if sid not in unique and sid is not None:
+                    unique[sid] = obj
+                    new_created.append(obj)
+            sheet_changes['created'] = new_created
+        # Remove any items in 'updated' that are already in 'created'
+        created_ids = set([c.get('showID') for c in sheet_changes.get('created', []) if c.get('showID') is not None])
+        if isinstance(sheet_changes.get('updated'), list) and created_ids:
+            new_updated = []
+            for pair in sheet_changes.get('updated', []):
+                new_obj = pair.get('new') if isinstance(pair, dict) else None
+                sid = new_obj.get('showID') if new_obj else None
+                if sid is None or sid not in created_ids:
+                    new_updated.append(pair)
+            sheet_changes['updated'] = new_updated
+except Exception as _dedupe_exc:
+    print(f'⚠️ Deduplication step failed: {_dedupe_exc}')
+# ---------------------------- End dedupe ---------------------
+GLOBAL_CREATED_IDS.clear()
 
 def write_report(report_changes_by_sheet, report_path, final_not_found_deletions=None, start_time=None, end_time=None, metadata_backups_removed=0):
     lines = []
@@ -1765,8 +1795,8 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
                 print(f"⚠️ Could not cleanup old image {path}: {e}")
     # Now cleanup old metadata backups and record count for report
     removed_metadata_backups = cleanup_old_metadata_backups(METADATA_BACKUP_RETENTION_DAYS)
-    # ✅ Reset global duplicate tracker before generating report
-    GLOBAL_CREATED_IDS.clear()
+
+
     write_report(report_changes_by_sheet, report_path, final_not_found_deletions=sorted(list(still_not_found)), start_time=start_time, end_time=now_ist(), metadata_backups_removed=removed_metadata_backups)
     print(f"✅ Report written -> {report_path}")
     # Compose email body
@@ -1787,8 +1817,6 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
         print("⚠️ No records were processed in this run. Please check your Excel file and sheet names.")
         with open(os.path.join(REPORTS_DIR, "failure_reason.txt"), "w", encoding="utf-8") as ff:
             ff.write("No records processed. Check logs and the report.\n")
-        return
-    return
 
 # ---------------------------- Entrypoint -----------------------------------
 if __name__ == '__main__':
