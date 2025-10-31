@@ -200,10 +200,6 @@ try:
     HAVE_DDGS = True
 except Exception:
     HAVE_DDGS = False
-# ---------------------------- Global runtime trackers ---------------------
-GLOBAL_CREATED_IDS = set()
-
-
 
 # Try Google APIs optionally (same as original)
 try:
@@ -1108,8 +1104,6 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
     start_time = time.time()
     last_idx = start_index
     total_rows = len(df)
-    # Initialize tracker before starting the loop
-    # GLOBAL_CREATED_IDS removed; using GLOBAL_CREATED_IDS instead
     for idx in range(start_index, total_rows):
         if max_items and processed >= max_items:
             break
@@ -1300,22 +1294,15 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
                 "Duration": obj.get("Duration"),
                 "sitePriorityUsed": obj.get("sitePriorityUsed", {})
             }
-            # ---- PATCH: prevent duplicate creation logs  and Objects----
-            sid = ordered.get("showID")
-            if existing is None:
-                if sid not in GLOBAL_CREATED_IDS:
-                    report_changes.setdefault("created", []).append(ordered)
-                    GLOBAL_CREATED_IDS.add(sid)
-                else:
-                    report_changes.setdefault("duplicates_in_sheet", []).append(
-                        f"{sid} - {obj.get('showName','Unknown')} ({obj.get('releasedYear','N/A')})"
-                    )
-            else:
-                if existing != ordered:
-                    report_changes.setdefault("updated", []).append({"old": existing, "new": ordered})
             items.append(ordered)
             processed += 1
             last_idx = idx
+            sid = ordered.get("showID")
+            if existing is None:
+                report_changes.setdefault("created", []).append(ordered)
+            else:
+                if existing != ordered:
+                    report_changes.setdefault("updated", []).append({"old": existing, "new": ordered})
         except Exception as e:
             raise RuntimeError(f"Row {idx} in sheet '{sheet_name}' processing failed: {e}")
     finished = (last_idx >= total_rows - 1) if total_rows > 0 else True
@@ -1323,36 +1310,6 @@ def excel_to_objects(excel_file, sheet_name, existing_by_id, report_changes, sta
     return items, processed, finished, next_index
 
 # ---------------------------- Reports --------------------------------------
-
-GLOBAL_CREATED_IDS.clear()
-
-# ---------------------------- Auto-deduplicate created/updated entries ---------------------
-try:
-    for sheet_name, sheet_changes in report_changes_by_sheet.items():
-        # Deduplicate 'created' list by showID
-        if isinstance(sheet_changes.get('created'), list):
-            unique = {}
-            new_created = []
-            for obj in sheet_changes.get('created', []):
-                sid = obj.get('showID')
-                if sid not in unique and sid is not None:
-                    unique[sid] = obj
-                    new_created.append(obj)
-            sheet_changes['created'] = new_created
-        # Remove any items in 'updated' that are already in 'created'
-        created_ids = set([c.get('showID') for c in sheet_changes.get('created', []) if c.get('showID') is not None])
-        if isinstance(sheet_changes.get('updated'), list) and created_ids:
-            new_updated = []
-            for pair in sheet_changes.get('updated', []):
-                new_obj = pair.get('new') if isinstance(pair, dict) else None
-                sid = new_obj.get('showID') if new_obj else None
-                if sid is None or sid not in created_ids:
-                    new_updated.append(pair)
-            sheet_changes['updated'] = new_updated
-except Exception as _dedupe_exc:
-    print(f'⚠️ Deduplication step failed: {_dedupe_exc}')
-# ---------------------------- End dedupe ---------------------
-GLOBAL_CREATED_IDS.clear()
 
 def write_report(report_changes_by_sheet, report_path, final_not_found_deletions=None, start_time=None, end_time=None, metadata_backups_removed=0):
     lines = []
@@ -1467,12 +1424,7 @@ def write_report(report_changes_by_sheet, report_path, final_not_found_deletions
             lines.append("⚠️ Fetch Errors:")
             for fe in changes.get('fetch_errors'):
                 lines.append(f"- {fe}")
-        duplicates = changes.get('duplicates_in_sheet', [])
-        if duplicates:
-            lines.append("")
-            lines.append("🚨 Duplicate Entries Detected:")
-            for d in duplicates:
-                lines.append(f"- {d}")
+
         # summary per sheet
         lines.append("")
         lines.append(sep)
@@ -1795,46 +1747,6 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
                 print(f"⚠️ Could not cleanup old image {path}: {e}")
     # Now cleanup old metadata backups and record count for report
     removed_metadata_backups = cleanup_old_metadata_backups(METADATA_BACKUP_RETENTION_DAYS)
-    # ---------------------------- Final dedupe before writing report ----------------------------
-    try:
-        for sheet_name, sheet_changes in report_changes_by_sheet.items():
-            if not isinstance(sheet_changes, dict):
-                continue
-
-            # Deduplicate 'created' list by showID
-            if isinstance(sheet_changes.get('created'), list):
-                seen_created = set()
-                unique_created = []
-                for obj in sheet_changes['created']:
-                    sid = obj.get('showID')
-                    if sid and sid not in seen_created:
-                        seen_created.add(sid)
-                        unique_created.append(obj)
-                sheet_changes['created'] = unique_created
-
-            # Deduplicate 'updated' list by showID
-            if isinstance(sheet_changes.get('updated'), list):
-                seen_updated = set()
-                unique_updated = []
-                for obj in sheet_changes['updated']:
-                    if isinstance(obj, dict):
-                        new_obj = obj.get('new')
-                        sid = new_obj.get('showID') if new_obj else None
-                        if sid and sid not in seen_updated:
-                            seen_updated.add(sid)
-                            unique_updated.append(obj)
-                sheet_changes['updated'] = unique_updated
-
-            # Remove any updated items that are also in created
-            created_ids = {c.get('showID') for c in sheet_changes['created'] if c.get('showID')}
-            sheet_changes['updated'] = [
-                u for u in sheet_changes['updated']
-                if not (isinstance(u, dict) and u.get('new', {}).get('showID') in created_ids)
-            ]
-    except Exception as e:
-        print(f"⚠️ Final dedupe step failed: {e}")
-    # ---------------------------- End final dedupe ----------------------------
-
     write_report(report_changes_by_sheet, report_path, final_not_found_deletions=sorted(list(still_not_found)), start_time=start_time, end_time=now_ist(), metadata_backups_removed=removed_metadata_backups)
     print(f"✅ Report written -> {report_path}")
     # Compose email body
@@ -1855,6 +1767,8 @@ def update_json_from_excel(excel_file_like, json_file, sheet_names, max_per_run=
         print("⚠️ No records were processed in this run. Please check your Excel file and sheet names.")
         with open(os.path.join(REPORTS_DIR, "failure_reason.txt"), "w", encoding="utf-8") as ff:
             ff.write("No records processed. Check logs and the report.\n")
+        return
+    return
 
 # ---------------------------- Entrypoint -----------------------------------
 if __name__ == '__main__':
