@@ -8,9 +8,9 @@
 #   Key features:
 #   - Enforces a consistent 24-property schema for all JSON objects.
 #   - Detailed diff-based backups for all updates.
+#   - Creates metadata backups for all newly created items.
 #   - Field locking to protect fetched data from being overwritten.
 #   - Highly detailed and structured run reports.
-#   - Robust handling of new data, updates, manual overrides, and deletions.
 #
 # ============================================================
 
@@ -18,7 +18,7 @@
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v3.2.0 (Object Schema & Finalization)"
+SCRIPT_VERSION = "v3.2.1 (Fix: Restore Metadata Backups)"
 
 # --- Master JSON Object Template ---
 # Ensures every object written to seriesData.json has a consistent structure.
@@ -461,7 +461,6 @@ def excel_to_objects(excel_file_like, sheet_name, existing_by_id, run_context):
 
     processed_objects = []
     for _, row in df.iterrows():
-        # --- 1. Extract data from Excel row ---
         obj = {}
         for col in df.columns[:again_idx]:
             key = COLUMN_MAP.get(col, col.strip())
@@ -479,7 +478,6 @@ def excel_to_objects(excel_file_like, sheet_name, existing_by_id, run_context):
         obj["showType"] = "Mini Drama" if "mini" in sheet_name.lower() else "Drama"
         if obj.get("nativeLanguage", "").lower() in ("korean", "korea"): obj["country"] = "South Korea"
         
-        # --- 2. Handle object based on whether it's new or existing ---
         sid = obj['showID']
         existing = existing_by_id.get(sid)
         
@@ -493,27 +491,46 @@ def excel_to_objects(excel_file_like, sheet_name, existing_by_id, run_context):
             if img_url: obj['showImage'] = img_url
 
             metadata = fetch_metadata_for_show(obj['showName'], obj['releasedYear'], site_priority)
-            obj.update(metadata) # Add fetched metadata to the object
+            obj.update(metadata)
 
-            # Set sitePriorityUsed based on successful fetches
             spu = {k:None for k in JSON_OBJECT_TEMPLATE['sitePriorityUsed']}
             if img_site: spu['showImage'] = img_site
             if 'sitePriorityUsed' in metadata: spu.update(metadata['sitePriorityUsed'])
             obj['sitePriorityUsed'] = spu
-
         else:
             for field in LOCKED_FIELDS_AFTER_CREATION:
                 if field in existing: obj[field] = existing[field]
         
-        # --- 3. Finalize object structure ---
         obj["topRatings"] = (obj.get("ratings", 0)) * (len(obj.get("againWatchedDates", [])) + 1) * 100
         
-        # Merge with template to ensure all 24 fields are present
         final_obj = {**copy.deepcopy(JSON_OBJECT_TEMPLATE), **obj}
-        
         processed_objects.append(final_obj)
         
     return processed_objects
+
+def save_metadata_backup(new_obj, run_context):
+    """Saves a metadata backup file for a newly created object."""
+    fetched_fields = {}
+    spu = new_obj.get('sitePriorityUsed', {})
+    for key, site in spu.items():
+        if site:
+            fetched_fields[key] = {"value": new_obj.get(key), "source": site}
+
+    if not fetched_fields: return # Don't create empty backups
+
+    backup_data = {
+        "scriptVersion": SCRIPT_VERSION,
+        "runID": run_context['run_id'],
+        "timestamp": now_ist().strftime("%d %B %Y %I:%M %p (IST)"),
+        "showID": new_obj['showID'],
+        "showName": new_obj['showName'],
+        "fetchedFields": fetched_fields
+    }
+    
+    backup_path = os.path.join(BACKUP_META_DIR, f"META_{filename_timestamp()}_{new_obj['showID']}.json")
+    os.makedirs(BACKUP_META_DIR, exist_ok=True)
+    with open(backup_path, 'w', encoding='utf-8') as f: json.dump(backup_data, f, indent=4)
+    run_context['files_generated']['meta_backups'].append(backup_path)
 
 def create_diff_backup(old_obj, new_obj, run_context):
     changed_fields = {}
@@ -565,7 +582,7 @@ def write_report(run_context):
     for sheet, changes in report_changes.items():
         if not changes: continue
 
-        lines.extend([sep, f"🗂️ === {sheet} — {now_ist().strftime('%d %B %Y')} ==="])
+        lines.extend([sep, f"𗀂 === {sheet} — {now_ist().strftime('%d %B %Y')} ==="])
         lines.append(sep)
         
         if changes.get('created'):
@@ -628,6 +645,8 @@ def write_report(run_context):
         f"⚠️ Total Warnings: {overall_stats['warnings']}",
         f"💾 Backup Files Created: {len(run_context['files_generated']['backups'])}",
         f"  Grand Total Rows Processed: {overall_stats['rows']}",
+        "",
+        f"💾 Metadata Backups Created: {len(run_context['files_generated']['meta_backups'])}",
         ""
     ])
 
@@ -636,7 +655,7 @@ def write_report(run_context):
             lines.append(f"📦 Total Objects in seriesData.json: {len(json.load(f))}")
     except Exception: lines.append("📦 Total Objects in seriesData.json: Unknown")
     
-    lines.extend([sep, "🗂️ Folders Generated:", sep])
+    lines.extend([sep, "𗀂 Folders Generated:", sep])
     for folder, files in run_context['files_generated'].items():
         if files:
             lines.append(f"{folder}/")
@@ -702,8 +721,8 @@ def main():
             if old_obj is None:
                 report['created'].append(new_obj)
                 merged_by_id[sid] = new_obj
+                save_metadata_backup(new_obj, run_context)
                 
-                # Check for null values in the finalized object for reporting
                 missing = [human_readable_field(k) for k, v in new_obj.items() if v is None and k in JSON_OBJECT_TEMPLATE]
                 fetched = [human_readable_field(k) for k, v in new_obj['sitePriorityUsed'].items() if v]
                 
