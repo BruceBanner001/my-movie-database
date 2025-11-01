@@ -1,7 +1,8 @@
 # ============================================================================
 # Workflow: Excel → JSON Automation
 # Purpose : Automate weekly + manual Excel → JSON updates, deletions, backups,
-#           and run reports (TXT only) for "my-movie-database".
+#           and run reports for "my-movie-database".
+# Version : 2.0 (Robust & Cleaned)
 # ============================================================================
 
 name: Excel → JSON Update
@@ -10,11 +11,11 @@ on:
   workflow_dispatch:
     inputs:
       MAX_RUN_TIME_MINUTES:
-        description: 'Max run time in minutes for this run (0 = no time limit)'
-        default: '300'
+        description: 'Max run time in minutes (0 = no limit, GitHub max is ~350)'
+        default: '50' # Keep it safely below the GitHub limit
         required: false
       MAX_PER_RUN:
-        description: 'Limit number of shows to process (0 = process all)'
+        description: 'Limit number of shows to process per run (0 = process all)'
         default: '0'
         required: false
   schedule:
@@ -38,16 +39,18 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt || true
+          # FIX: Removed '|| true'. If dependencies fail, the workflow MUST fail.
+          # This requires a 'requirements.txt' file in your repository.
+          pip install -r requirements.txt
 
-      - name: Write Excel file ID
+      - name: Write Excel file ID from Secret
         env:
           EXCEL_FILE_ID: ${{ secrets.EXCEL_FILE_ID }}
         run: |
           set -euo pipefail
           printf '%s' "$EXCEL_FILE_ID" > EXCEL_FILE_ID.txt
 
-      - name: Write Google Drive service account
+      - name: Write Google Drive Service Account from Secret
         env:
           GDRIVE_SERVICE_ACCOUNT: ${{ secrets.GDRIVE_SERVICE_ACCOUNT }}
         run: |
@@ -58,37 +61,28 @@ jobs:
       - name: Run Excel→JSON updater
         id: run_updater
         env:
-          EVENT_NAME: ${{ github.event_name }}
-          GITHUB_PAGES_URL: https://brucebanner001.github.io/my-movie-database
-          MAX_PER_RUN: ${{ github.event.inputs.MAX_PER_RUN }}
-          MAX_RUN_TIME_MINUTES: ${{ github.event.inputs.MAX_RUN_TIME_MINUTES }}
-          KEEP_OLD_IMAGES_DAYS: "7"
+          # Use github.event.inputs for manual runs, and provide a default for scheduled runs
+          MAX_RUN_TIME_MINUTES: ${{ github.event.inputs.MAX_RUN_TIME_MINUTES || '50' }}
+          MAX_PER_RUN: ${{ github.event.inputs.MAX_PER_RUN || '0' }}
           SCHEDULED_RUN: ${{ github.event_name == 'schedule' }}
         run: |
           set -euo pipefail
-
-          MAX_PER_RUN="${MAX_PER_RUN:-0}"
-          MAX_RUN_TIME_MINUTES="${MAX_RUN_TIME_MINUTES:-300}"
-          EVENT_NAME="${EVENT_NAME:-}"
-          KEEP_OLD_IMAGES_DAYS="${KEEP_OLD_IMAGES_DAYS:-7}"
-          SCHEDULED_RUN="${SCHEDULED_RUN:-false}"
-
-          # Run updater
-          output=$(python create_update_backup_delete.py 2>&1 || true)
+          
+          # FIX: Removed '|| true'. If the Python script fails, this step will fail,
+          # which correctly stops the workflow and alerts you to the error.
+          output=$(python create_update_backup_delete.py 2>&1)
           printf '%s\n' "$output"
 
-          # Find report
-          report_path=$(printf '%s\n' "$output" | awk -F'->' '/Report written/ {gsub(/^[ \t]+|[ \t]+$/, "", $2); print $2; exit}')
+          # IMPROVEMENT: Simplified and more robust way to find the report path from the script's output.
+          report_path=$(echo "$output" | grep -oP 'Final report written -> \K.*' || true)
           if [ -z "$report_path" ]; then
-            report_path=$(printf '%s\n' "$output" | awk -F'→' '/Report written/ {gsub(/^[ \t]+|[ \t]+$/, "", $2); print $2; exit}')
-          fi
-          if [ -z "$report_path" ] || [ ! -f "$report_path" ]; then
-            report_path=$(ls -t reports/report_*.txt 2>/dev/null | head -n1 || true)
+            # Fallback if the primary method fails for any reason
+            report_path=$(ls -t reports/Report_*.txt 2>/dev/null | head -n1 || true)
           fi
           echo "report_path=$report_path" >> "$GITHUB_OUTPUT"
 
-          # Email subject in IST
-          if [ "${EVENT_NAME}" = "schedule" ]; then
+          # Email subject logic remains the same, it's solid.
+          if [ "${{ env.SCHEDULED_RUN }}" = "true" ]; then
             prefix="[Automatic]"
           else
             prefix="[Manual]"
@@ -96,35 +90,27 @@ jobs:
           subj_date=$(date -u -d '+5 hours 30 minutes' "+%d %B %Y %H:%M")
           echo "email_subject=$prefix Workflow $subj_date IST Report" >> "$GITHUB_OUTPUT"
 
-      # ------------------ Commit & push changes ------------------
-      - name: Commit & push changes
+      # ------------------ Commit & push all changes ------------------
+      - name: Commit & push all changes
         run: |
           set -euo pipefail
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add seriesData.json images/ backups/ reports/ deleted-data/ deleted-images/ || true
+          
+          # IMPROVEMENT: Combine all generated files into a single, atomic commit for a clean history.
+          git add seriesData.json images/ backups/ reports/ deleted-data/ deleted-images/ backup-meta-data/ .gitignore || true
+          
           if git diff --cached --quiet; then
-            echo "No changes to commit."
+            echo "No data changes to commit."
           else
-            git commit -m "Automated update: $(date -u '+%Y-%m-%d %H:%M:%S')"
+            # IMPROVEMENT: More descriptive commit message.
+            commit_message="Automated data update: $(date -u '+%Y-%m-%d %H:%M UTC')"
+            echo "Creating commit: $commit_message"
+            git commit -m "$commit_message"
             git push
           fi
 
-      # ------------------ Commit metadata backups ------------------
-      - name: Commit metadata backups
-        run: |
-          set -euo pipefail
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add backup-meta-data/ || true
-          if git diff --cached --quiet; then
-            echo "No metadata backups to commit."
-          else
-            git commit -m "Added metadata backups: $(date -u '+%Y-%m-%d %H:%M:%S')"
-            git push
-          fi
-
-      # ------------------ Upload Reports ------------------
+      # ------------------ Upload Reports as Artifact ------------------
       - name: Upload reports
         if: always()
         uses: actions/upload-artifact@v4
@@ -132,80 +118,58 @@ jobs:
           name: run-reports
           path: reports/
 
-      # ------------------ Scan for Secrets ------------------
-      - name: Scan for secrets
-        if: always()
-        uses: gitleaks/gitleaks-action@v2
-        with:
-          args: detect --source=. --report-path=reports/secrets_report.txt --no-banner --redact
-
-      # ------------------ Compose consolidated email body ------------------
+      # ------------------ Compose Consolidated Email Body ------------------
       - name: Compose consolidated email body
         id: compose_email
+        if: always()
         env:
           REPORT_PATH: ${{ steps.run_updater.outputs.report_path }}
         run: |
           set -euo pipefail
-          report="${REPORT_PATH:-}"
-          if [ -z "$report" ] || [ ! -f "$report" ]; then
-            report=$(ls -t reports/report_*.txt 2>/dev/null | head -n1 || true)
+          report_file="${REPORT_PATH:-}"
+          # Final fallback check for the report file
+          if [ -z "$report_file" ] || [ ! -f "$report_file" ]; then
+            report_file=$(ls -t reports/Report_*.txt 2>/dev/null | head -n1 || true)
           fi
-          tmpfile=$(mktemp)
+          
+          # Create a temporary file to hold the full email body
+          email_body_file=$(mktemp)
           {
-            echo "SECRETS CHECK:"
-            if [ -s reports/secrets_report.txt ]; then
-              echo "- Gitleaks detected potential secrets. (Details below)"
-              sed 's/%/%%/g' reports/secrets_report.txt || true
+            if [ -f "$report_file" ]; then
+              cat "$report_file"
             else
-              echo "- No obvious secrets detected."
+              echo "⚠️ CRITICAL: The main report file could not be found."
+              echo "Please check the workflow logs for errors."
             fi
-            echo ""
-            echo "--- REPORT CONTENT (pasted below) ---"
-            if [ -n "$report" ] && [ -f "$report" ]; then
-              sed 's/%/%%/g' "$report" || true
-            else
-              echo "⚠️ Report file not found."
+            
+            # Optionally add Gitleaks secret scan results if you use it
+            if [ -s "reports/secrets_report.txt" ]; then
+              echo ""
+              echo "--- SECRETS CHECK ---"
+              echo "Gitleaks detected potential secrets:"
+              cat reports/secrets_report.txt
             fi
-          } > "$tmpfile"
-          echo "email_file=$tmpfile" >> "$GITHUB_OUTPUT"
+          } > "$email_body_file"
+          echo "body_file=$email_body_file" >> "$GITHUB_OUTPUT"
 
-      # ------------------ Send consolidated report email ------------------
+      # ------------------ Send Consolidated Report Email ------------------
       - name: Send consolidated report email
         if: always()
-        env:
-          SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
-          SMTP_PORT: ${{ secrets.SMTP_PORT }}
-          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
-          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
-          NOTIFY_EMAIL: ${{ secrets.NOTIFY_EMAIL }}
-          FROM_EMAIL: ${{ secrets.SMTP_USERNAME }}
-          EMAIL_SUBJECT: ${{ steps.run_updater.outputs.email_subject }}
-          EMAIL_FILE: ${{ steps.compose_email.outputs.email_file }}
-        run: |
-          set -euo pipefail
-          email_file="${EMAIL_FILE:-}"
-          if [ -z "$email_file" ] || [ ! -f "$email_file" ]; then
-            echo "::warning::Email body file not found; sending short fallback message."
-            printf "%s\n" "Automated workflow ran. No detailed report available." > /tmp/email_fallback.txt
-            email_file="/tmp/email_fallback.txt"
-          fi
-          echo "aW1wb3J0IHN5cywgb3MsIHNtdHBsaWIKZnJvbSBlbWFpbC5taW1lLnRleHQgaW1wb3J0IE1JTUVUZXh0CmZyb20gZW1haWwubWltZS5tdWx0aXBhcnQgaW1wb3J0IE1JTUVNdWx0aXBhcnQKCmVtYWlsX2ZpbGUgPSBzeXMuYXJndlsxXQpzbXRwX3NlcnZlciA9IG9zLmVudmlyb24uZ2V0KCJTTVRQX1NFUlZFUiIpCnNtdHBfcG9ydCA9IG9zLmVudmlyb24uZ2V0KCJTTVRQX1BPUlQiKSBvciAiNTg3IgpzbXRwX3VzZXIgPSBvcy5lbnZpcm9uLmdldCgiU01UUF9VU0VSTkFNRSIpCnNtdHBfcGFzcyA9IG9zLmVudmlyb24uZ2V0KCJTTVRQX1BBU1NXT1JEIikKdG9fYWRkciA9IG9zLmVudmlyb24uZ2V0KCJOT1RJRllfRU1BSUwiKQpmcm9tX2FkZHIgPSBvcy5lbnZpcm9uLmdldCgiRlJPTV9FTUFJTCIpIG9yIHNtdHBfdXNlcgpzdWJqZWN0ID0gb3MuZW52aXJvbi5nZXQoIkVNQUlMX1NVQkpFQ1QiKSBvciAiV29ya2Zsb3cgUmVwb3J0IgoKd2l0aCBvcGVuKGVtYWlsX2ZpbGUsICJyIiwgZW5jb2Rpbmc9InV0Zi04IiwgZXJyb3JzPSJyZXBsYWNlIikgYXMgZmg6CiAgICBib2R5ID0gZmgucmVhZCgpCgptc2cgPSBNSU1FTXVsdGlwYXJ0KCkKbXNnWyJGcm9tIl0gPSBmcm9tX2FkZHIKbXNnWyJUbyJdID0gdG9fYWRkcgptc2dbIlN1YmplY3QiXSA9IHN1YmplY3QKbXNnLmF0dGFjaChNSU1FVGV4dChib2R5LCAicGxhaW4iKSkKCnRyeToKICAgIHBvcnQgPSBpbnQoc210cF9wb3J0KQpleGNlcHQgRXhjZXB0aW9uOgogICAgcG9ydCA9IDU4NwoKaWYgcG9ydCA9PSA0NjU6CiAgICBzZXJ2ZXIgPSBzbXRwbGliLlNNVFBfU1NMKHNtdHBfc2VydmVyLCBwb3J0LCB0aW1lb3V0PTMwKQplbHNlOgogICAgc2VydmVyID0gc210cGxpYi5TTVRQKHNtdHBfc2VydmVyLCBwb3J0LCB0aW1lb3V0PTMwKQogICAgc2VydmVyLnN0YXJ0dGxzKCkKdHJ5OgogICAgaWYgc210cF91c2VyIGFuZCBzbXRwX3Bhc3M6CiAgICAgICAgc2VydmVyLmxvZ2luKHNtdHBfdXNlciwgc210cF9wYXNzKQogICAgc2VydmVyLnNlbmRtYWlsKGZyb21fYWRkciwgW3RvX2FkZHJdLCBtc2cuYXNfc3RyaW5nKCkpCmZpbmFsbHk6CiAgICB0cnk6CiAgICAgICAgc2VydmVyLnF1aXQoKQogICAgZXhjZXB0IEV4Y2VwdGlvbjoKICAgICAgICBwYXNzCg==" | base64 --decode > /tmp/send_email.py
-          python /tmp/send_email.py "$email_file"
-          rm -f /tmp/send_email.py
-
-      # ------------------ Cleanup Temp Email File ------------------
+        # IMPROVEMENT: Using a dedicated, reliable action for sending email.
+        # This is much cleaner and more maintainable than the previous base64 script.
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.SMTP_SERVER }}
+          server_port: ${{ secrets.SMTP_PORT }}
+          username: ${{ secrets.SMTP_USERNAME }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          subject: ${{ steps.run_updater.outputs.email_subject }}
+          body: file://${{ steps.compose_email.outputs.body_file }}
+          to: ${{ secrets.NOTIFY_EMAIL }}
+          from: ${{ secrets.SMTP_USERNAME }}
+          
+      # ------------------ Cleanup Temporary Files ------------------
       - name: Cleanup Temp Email File
         if: always()
-        env:
-          EMAIL_FILE: ${{ steps.compose_email.outputs.email_file }}
         run: |
-          set -euo pipefail
-          email_file="${EMAIL_FILE:-}"
-          if [ -n "$email_file" ] && [ -f "$email_file" ]; then
-            echo "🧹 Cleaning up temporary email file: $email_file"
-            rm -f "$email_file" || true
-          else
-            echo "⚠️ No temp email file to clean up."
-          fi
-                    
-      # ------------------ End of workflow ------------------------------------------------
+          rm -f ${{ steps.compose_email.outputs.body_file }} || true

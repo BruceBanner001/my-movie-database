@@ -2,40 +2,27 @@
 # Excel → JSON Automation - Python Dependencies
 # ==========================================
 # NOTE:
-# Email notifications are NOT handled in Python.
-# They are sent using the GitHub Action:
-#   dawidd6/action-send-mail
-# So no SMTP/email libraries are required here.
-# Only include packages that the Python script uses.
+# This file lists all the Python packages required to run the
+# 'create_update_backup_delete.py' script. The GitHub Actions
+# workflow uses this file to install the correct dependencies.
 # ==========================================
 
-# === Core Excel & JSON processing ===
-pandas==2.2.2            # Read Excel files and handle tabular data
-openpyxl>=3.1.2          # Engine for pandas to read .xlsx files
+# === Core Data Handling ===
+pandas>=2.0.0            # For reading and processing data from Excel files
+openpyxl>=3.1.0          # The engine pandas uses to read modern .xlsx Excel files
 
-# === Networking & Requests ===
-requests>=2.31.0         # HTTP requests for downloading images and fetching web pages
+# === Web Scraping & Networking ===
+requests>=2.31.0         # For making HTTP requests to download web pages and images
+beautifulsoup4>=4.12.0   # The primary library for parsing HTML content from websites
+lxml>=4.9.0              # A high-performance parser that BeautifulSoup4 can use
+duckduckgo-search>=4.0.0 # For using DuckDuckGo as a search engine to find show pages
 
 # === Image Processing ===
-Pillow>=10.2.0           # Resize and save cover images (Pillow is the modern PIL fork)
+Pillow>=10.0.0           # For resizing and saving downloaded show images in a standard format
 
-# === Search Engines ===
-ddgs==9.5.5              # DuckDuckGo Search (image + text search fallback used in script)
-
-# === Synopsis Extraction (HTML parsing) ===
-beautifulsoup4>=4.12.2   # Parse HTML pages (AsianWiki, MyDramaList, etc.)
-lxml>=4.9.3              # Fast parser for BeautifulSoup
-
-# === Google Drive API (private Excel fetch) ===
+# === Google Drive API Integration ===
+# These packages are required to securely connect to the Google Drive API
+# and download the private Excel file.
 google-api-python-client>=2.100.0
-google-auth>=2.23.0
 google-auth-httplib2>=0.1.0
-google-auth-oauthlib>=1.1.0
-
-# === Timezone & Date Utilities ===
-python-dateutil>=2.8.2
-
-# === Optional / Future (uncomment if needed) ===
-# httpx>=0.24.0          # Async HTTP client - for future concurrency optimizations
-# aiohttp>=3.8.4         # Async HTTP used with asyncio (alternative)
-# requests-futures>=1.0  # Simple futures wrapper for requests (lightweight concurrency)
+google-auth>=2.23.0

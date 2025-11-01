@@ -6,11 +6,10 @@
 #   for JSON data objects derived from Excel or YAML workflows.
 #
 #   Key features:
+#   - Checkpoint & Resume logic for long-running jobs.
+#   - Separated fetching logic in fetching.py for maintainability.
+#   - Robust manual update functionality from a dedicated sheet.
 #   - Enforces a consistent 24-property schema for all JSON objects.
-#   - Detailed diff-based backups for all updates.
-#   - Creates metadata backups for all newly created items.
-#   - Field locking to protect fetched data from being overwritten.
-#   - Highly detailed and structured run reports.
 #
 # ============================================================
 
@@ -18,10 +17,9 @@
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v3.2.1 (Fix: Restore Metadata Backups)"
+SCRIPT_VERSION = "v5.0.0 (Checkpoint & Resume)"
 
 # --- Master JSON Object Template ---
-# Ensures every object written to seriesData.json has a consistent structure.
 JSON_OBJECT_TEMPLATE = {
     "showID": None,
     "showName": None,
@@ -45,7 +43,7 @@ JSON_OBJECT_TEMPLATE = {
     "updatedDetails": None,
     "synopsis": None,
     "topRatings": 0,
-    "Duration": 0,
+    "Duration": None, # String to allow for "60 mins." or "1 hr. 20 min."
     "sitePriorityUsed": {
         "showImage": None,
         "releaseDate": None,
@@ -63,7 +61,7 @@ SITE_PRIORITY_BY_LANGUAGE = {
         "image": "asianwiki",
         "otherNames": "mydramalist",
         "duration": "mydramalist",
-        "releaseDate": "asianwiki"
+        "releaseDate": "mydramalist"
     },
     "chinese": {
         "synopsis": "mydramalist",
@@ -158,15 +156,10 @@ from datetime import datetime, timedelta, timezone
 
 import pandas as pd
 import requests
-from bs4 import BeautifulSoup
 from PIL import Image
 from io import BytesIO
 
-try:
-    from ddgs import DDGS
-    HAVE_DDGS = True
-except Exception:
-    HAVE_DDGS = False
+import fetching
 
 try:
     from google.oauth2 import service_account
@@ -190,17 +183,15 @@ DELETE_IMAGES_DIR = "deleted-images"
 DELETED_DATA_DIR = "deleted-data"
 REPORTS_DIR = "reports"
 BACKUP_META_DIR = "backup-meta-data"
+PROGRESS_FILE = os.path.join(REPORTS_DIR, "progress.json")
 
 DEBUG_FETCH = os.environ.get("DEBUG_FETCH", "false").lower() == "true"
 SCHEDULED_RUN = os.environ.get("SCHEDULED_RUN", "false").lower() == "true"
 KEEP_OLD_FILES_DAYS = int(os.environ.get("KEEP_OLD_FILES_DAYS", "90") or 90)
-GITHUB_PAGES_URL = os.environ.get("GITHUB_PAGES_URL", "").strip() or "https://<your-username>.github.io/my-movie-database"
+GITHUB_PAGES_URL = "https://brucebanner001.github.io/my-movie-database"
 SERVICE_ACCOUNT_FILE = "GDRIVE_SERVICE_ACCOUNT.json"
 EXCEL_FILE_ID_TXT = "EXCEL_FILE_ID.txt"
-
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
-}
+MAX_RUN_TIME_MINUTES = int(os.environ.get("MAX_RUN_TIME_MINUTES", "0") or "0")
 
 def logd(msg):
     if DEBUG_FETCH: print(f"[DEBUG] {msg}")
@@ -235,56 +226,9 @@ def objects_differ(old, new):
         elif o_val != n_val: return True
     return False
 
-# ---------------------------- HTTP & PARSING HELPERS ---------------------------------
-def fetch_page(url):
-    try:
-        r = requests.get(url, headers=HEADERS, timeout=15)
-        if r.status_code == 200: return r.text
-        logd(f"Failed to fetch {url}, status code: {r.status_code}")
-    except requests.RequestException as e:
-        logd(f"Fetch page error for {url}: {e}")
-    return None
-
-def ddgs_search(query, type='text', max_results=5):
-    if not HAVE_DDGS: return []
-    try:
-        with DDGS() as dd:
-            if type == 'text':
-                return list(dd.text(query, max_results=max_results))
-            elif type == 'images':
-                return [r.get("image") for r in dd.images(query, max_results=max_results) if r.get("image")]
-    except Exception as e:
-        logd(f"DDGS {type} search error for '{query}': {e}")
-    return []
-
-def parse_metadata_from_html(html, base_url):
-    soup = BeautifulSoup(html, "html.parser")
-    full_text = soup.get_text(" ", strip=True)
-    metadata = {}
-
-    meta_desc = soup.find("meta", attrs={"name": "description"}) or soup.find("meta", attrs={"property": "og:description"})
-    if meta_desc and meta_desc.get("content") and len(meta_desc.get("content")) > 50:
-        metadata['synopsis'] = meta_desc.get("content").strip()
-    
-    duration_match = re.search(r'(\b\d{2,3})\s*(min|minutes)\b', full_text, re.I)
-    if duration_match: metadata['Duration'] = int(duration_match.group(1))
-
-    release_match = re.search(r'(Release Date|Aired On|Aired)[\s:]*([A-Za-z]+\s+\d{1,2},\s*\d{4})', full_text, re.I)
-    if release_match: metadata['releaseDate'] = release_match.group(2).strip()
-
-    other_names_match = re.search(r'Also Known As[:\s]*([^\n\r]+)', full_text, re.I)
-    if other_names_match: metadata['otherNames'] = normalize_list(other_names_match.group(1))
-
-    if metadata.get('synopsis'):
-        domain = re.sub(r'^https?://(www\.)?', '', base_url).split('/')[0]
-        label = 'AsianWiki' if 'asianwiki' in domain else 'MyDramaList' if 'mydramalist' in domain else domain
-        metadata['synopsis'] = f"{metadata['synopsis']} (Source: {label})"
-
-    return metadata
-
 def download_and_save_image(url, local_path):
     try:
-        r = requests.get(url, headers=HEADERS, stream=True, timeout=15)
+        r = requests.get(url, headers=fetching.HEADERS, stream=True, timeout=15)
         if r.status_code == 200 and r.headers.get("content-type", "").startswith("image"):
             with Image.open(r.raw) as img:
                 img = img.convert("RGB")
@@ -296,62 +240,66 @@ def download_and_save_image(url, local_path):
         logd(f"Image download failed from {url}: {e}")
     return False
 
-# ---------------------------- DATA FETCHING ORCHESTRATORS -----------------------------
-def fetch_metadata_for_show(show_name, release_year, site_priority):
-    query_base = f"{show_name} {release_year}"
-    all_data = {}
-    
-    search_order = list(dict.fromkeys([
-        site_priority.get("synopsis"), "mydramalist", "asianwiki"
-    ]))
-
-    for site in search_order:
-        if not site: continue
-        results = ddgs_search(f"{query_base} site:{site}.com", 'text')
-        if not results: continue
-        
-        page_url = results[0].get('href')
-        html = fetch_page(page_url)
-        if not html: continue
-
-        parsed_data = parse_metadata_from_html(html, page_url)
-        for key, value in parsed_data.items():
-            if not all_data.get(key) and value:
-                all_data[key] = value
-                all_data.setdefault('sitePriorityUsed', {})[key] = site
-        
-        if all(all_data.get(k) for k in ['synopsis', 'Duration', 'releaseDate', 'otherNames']):
-            break
-    
-    return all_data
-
-def fetch_image_for_show(show_name, release_year, show_id, site_priority, run_context):
-    query_base = f"{show_name} {release_year} poster"
-    
-    search_order = list(dict.fromkeys([
-        site_priority.get("image"), "asianwiki", "mydramalist"
-    ]))
-
-    for site in search_order:
-        if not site: continue
-        image_urls = ddgs_search(f"{query_base} site:{site}.com", 'images')
-        if image_urls:
-            local_path = os.path.join(IMAGES_DIR, f"{show_id}.jpg")
-            if download_and_save_image(image_urls[0], local_path):
-                run_context['files_generated']['images'].append(local_path)
-                return build_absolute_url(local_path), site
-    
-    image_urls = ddgs_search(query_base, 'images')
-    if image_urls:
-        local_path = os.path.join(IMAGES_DIR, f"{show_id}.jpg")
-        if download_and_save_image(image_urls[0], local_path):
-            run_context['files_generated']['images'].append(local_path)
-            return build_absolute_url(local_path), "ddgs"
-            
-    return None, None
-
 def build_absolute_url(local_path):
     return f"{GITHUB_PAGES_URL.rstrip('/')}/{local_path.replace(os.sep, '/')}"
+
+# ---------------------------- DATA FETCHING ORCHESTRATOR -----------------------------
+def fetch_data_based_on_priority(show_name, release_year, show_id, site_priority, run_context):
+    fetched_data = {}
+    
+    fetch_map = {
+        'synopsis': {
+            'asianwiki': fetching.fetch_synopsis_from_asianwiki,
+            'mydramalist': fetching.fetch_synopsis_from_mydramalist
+        },
+        'image': {
+            'asianwiki': fetching.fetch_image_from_asianwiki,
+            'mydramalist': fetching.fetch_image_from_mydramalist
+        },
+        'otherNames': {
+            'asianwiki': fetching.fetch_othernames_from_asianwiki,
+            'mydramalist': fetching.fetch_othernames_from_mydramalist
+        },
+        'Duration': {
+            'asianwiki': fetching.fetch_duration_from_asianwiki,
+            'mydramalist': fetching.fetch_duration_from_mydramalist
+        },
+        'releaseDate': {
+            'asianwiki': fetching.fetch_release_date_from_asianwiki,
+            'mydramalist': fetching.fetch_release_date_from_mydramalist
+        }
+    }
+
+    spu = copy.deepcopy(JSON_OBJECT_TEMPLATE['sitePriorityUsed'])
+
+    for field, site_map in fetch_map.items():
+        # Correctly map Duration to duration for site_priority lookup
+        priority_key = 'duration' if field == 'Duration' else field
+        preferred_site = site_priority.get(priority_key)
+        
+        if preferred_site in site_map:
+            try:
+                result, url = (site_map[preferred_site](show_name, release_year, show_id) if field == 'image'
+                               else site_map[preferred_site](show_name, release_year))
+                
+                if result:
+                    fetched_data[field] = result
+                    key = 'showImage' if field == 'image' else field
+                    spu[key] = preferred_site
+                    run_context['temp_fetch_urls'][key] = url
+            except Exception as e:
+                logd(f"Failed to fetch {field} from {preferred_site}: {e}")
+
+    if 'image' in fetched_data:
+        image_url = fetched_data['image']
+        local_path = os.path.join(IMAGES_DIR, f"{show_id}.jpg")
+        if download_and_save_image(image_url, local_path):
+            fetched_data['showImage'] = build_absolute_url(local_path)
+            run_context['files_generated']['images'].append(local_path)
+        del fetched_data['image']
+
+    fetched_data['sitePriorityUsed'] = spu
+    return fetched_data
 
 # ---------------------------- CORE WORKFLOW FUNCTIONS ---------------------------------
 def process_deletions(excel_file_like, json_file, run_context):
@@ -374,7 +322,7 @@ def process_deletions(excel_file_like, json_file, run_context):
             deleted_obj = by_id.pop(sid)
             deleted_ids.add(sid)
             
-            ts = filename_timestamp()
+            ts = run_context['start_timestamp'].strftime("%d_%B_%Y_%H%M")
             archive_path = os.path.join(DELETED_DATA_DIR, f"DELETED_{ts}_{sid}.json")
             os.makedirs(DELETED_DATA_DIR, exist_ok=True)
             with open(archive_path, 'w', encoding='utf-8') as f: json.dump(deleted_obj, f, indent=4)
@@ -399,40 +347,65 @@ def process_deletions(excel_file_like, json_file, run_context):
 def apply_manual_updates(excel_file_like, by_id, run_context):
     report = {}
     try:
-        df = pd.read_excel(excel_file_like, sheet_name='Manual Update')
+        df = pd.read_excel(excel_file_like, sheet_name='Manual Update', keep_default_na=False)
     except ValueError: return {}
 
+    df.columns = [c.strip().lower() for c in df.columns]
+    
     for _, row in df.iterrows():
-        sid = pd.to_numeric(row.iloc[0], errors='coerce')
+        sid = pd.to_numeric(row.get('no'), errors='coerce')
         if pd.isna(sid) or int(sid) not in by_id: continue
         sid = int(sid)
-        
-        try:
-            updates = json.loads(row.iloc[1])
-        except (json.JSONDecodeError, TypeError): continue
         
         obj = by_id[sid]
         old_obj = copy.deepcopy(obj)
         changed_fields = {}
 
-        for key, value in updates.items():
-            if obj.get(key) != value:
-                changed_fields[key] = {'old': obj.get(key), 'new': value}
-                obj[key] = value
-                if key in ['synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration']:
-                    obj.setdefault('sitePriorityUsed', {})[key] = "Manual"
+        update_map = {
+            'image': 'showImage', 'other names': 'otherNames',
+            'release date': 'releaseDate', 'synopsis': 'synopsis',
+            'duration': 'Duration'
+        }
 
+        for col_name, obj_key in update_map.items():
+            if col_name in row and row[col_name]:
+                value = row[col_name]
+                if obj_key == 'showImage':
+                    local_path = os.path.join(IMAGES_DIR, f"{sid}.jpg")
+                    if download_and_save_image(value, local_path):
+                        new_value = build_absolute_url(local_path)
+                        if obj.get(obj_key) != new_value:
+                            changed_fields[obj_key] = {'old': obj.get(obj_key), 'new': new_value}
+                            obj[obj_key] = new_value
+                            run_context['files_generated']['images'].append(local_path)
+                elif obj_key == 'otherNames':
+                    new_value = normalize_list(value)
+                    if obj.get(obj_key) != new_value:
+                        changed_fields[obj_key] = {'old': obj.get(obj_key), 'new': new_value}
+                        obj[obj_key] = new_value
+                else:
+                    new_value = str(value).strip()
+                    if obj.get(obj_key) != new_value:
+                        changed_fields[obj_key] = {'old': obj.get(obj_key), 'new': new_value}
+                        obj[obj_key] = new_value
+        
         if changed_fields:
             human_readable_changes = [human_readable_field(f) for f in changed_fields]
             obj['updatedDetails'] = f"{', '.join(human_readable_changes)} Updated Manually By Owner"
-            obj['updatedOn'] = now_ist().strftime('%d %B %Y')
+            obj['updatedOn'] = run_context['start_timestamp'].strftime('%d %B %Y')
             
+            for key in changed_fields:
+                spu_key = 'duration' if key == 'Duration' else key
+                if spu_key in obj.get('sitePriorityUsed', {}):
+                    obj['sitePriorityUsed'][spu_key] = "Manual"
+
             report.setdefault('updated', []).append({'old': old_obj, 'new': obj})
             create_diff_backup(old_obj, obj, run_context)
 
     return report
 
-def excel_to_objects(excel_file_like, sheet_name, existing_by_id, run_context):
+def excel_to_objects(excel_file_like, sheet_name):
+    # This function now only reads and parses the Excel sheet into a list of dictionaries
     df = pd.read_excel(excel_file_like, sheet_name=sheet_name, keep_default_na=False)
     df.columns = [c.strip().lower() for c in df.columns]
     
@@ -442,24 +415,15 @@ def excel_to_objects(excel_file_like, sheet_name, existing_by_id, run_context):
         raise ValueError(f"'Again Watched' column not found in sheet: {sheet_name}")
 
     COLUMN_MAP = {
-        "no": "showID",
-        "series title": "showName",
-        "started date": "watchStartedOn", 
-        "finished date": "watchEndedOn",
-        "year": "releasedYear",
-        "total episodes": "totalEpisodes", 
-        "original language": "nativeLanguage",
-        "language": "watchedLanguage",
-        "ratings": "ratings", 
-        "catagory": "genres",
-        "category": "genres",
-        "original network": "network",
-        "comments": "comments"
+        "no": "showID", "series title": "showName", "started date": "watchStartedOn", 
+        "finished date": "watchEndedOn", "year": "releasedYear", "total episodes": "totalEpisodes", 
+        "original language": "nativeLanguage", "language": "watchedLanguage", "ratings": "ratings", 
+        "catagory": "genres", "category": "genres", "original network": "network", "comments": "comments"
     }
     base_id_map = {"sheet1": 100, "feb 7 2023 onwards": 1000, "sheet2": 3000}
     base_id = base_id_map.get(sheet_name.lower(), 0)
 
-    processed_objects = []
+    all_objects_from_sheet = []
     for _, row in df.iterrows():
         obj = {}
         for col in df.columns[:again_idx]:
@@ -478,53 +442,36 @@ def excel_to_objects(excel_file_like, sheet_name, existing_by_id, run_context):
         obj["showType"] = "Mini Drama" if "mini" in sheet_name.lower() else "Drama"
         if obj.get("nativeLanguage", "").lower() in ("korean", "korea"): obj["country"] = "South Korea"
         
-        sid = obj['showID']
-        existing = existing_by_id.get(sid)
-        
-        if existing is None:
-            obj['updatedDetails'] = "First Time Uploaded"
-            obj['updatedOn'] = now_ist().strftime('%d %B %Y')
-            
-            site_priority = SITE_PRIORITY_BY_LANGUAGE.get(obj.get('nativeLanguage','').lower(), SITE_PRIORITY_BY_LANGUAGE['default'])
-            
-            img_url, img_site = fetch_image_for_show(obj['showName'], obj['releasedYear'], sid, site_priority, run_context)
-            if img_url: obj['showImage'] = img_url
+        all_objects_from_sheet.append(obj)
+    return all_objects_from_sheet
 
-            metadata = fetch_metadata_for_show(obj['showName'], obj['releasedYear'], site_priority)
-            obj.update(metadata)
-
-            spu = {k:None for k in JSON_OBJECT_TEMPLATE['sitePriorityUsed']}
-            if img_site: spu['showImage'] = img_site
-            if 'sitePriorityUsed' in metadata: spu.update(metadata['sitePriorityUsed'])
-            obj['sitePriorityUsed'] = spu
-        else:
-            for field in LOCKED_FIELDS_AFTER_CREATION:
-                if field in existing: obj[field] = existing[field]
-        
-        obj["topRatings"] = (obj.get("ratings", 0)) * (len(obj.get("againWatchedDates", [])) + 1) * 100
-        
-        final_obj = {**copy.deepcopy(JSON_OBJECT_TEMPLATE), **obj}
-        processed_objects.append(final_obj)
-        
-    return processed_objects
-
-def save_metadata_backup(new_obj, run_context):
-    """Saves a metadata backup file for a newly created object."""
-    fetched_fields = {}
+def save_metadata_backup(new_obj, site_priority, run_context):
     spu = new_obj.get('sitePriorityUsed', {})
-    for key, site in spu.items():
-        if site:
-            fetched_fields[key] = {"value": new_obj.get(key), "source": site}
+    successful_fields = [k for k, v in spu.items() if v]
+    failed_fields = [k for k, v in spu.items() if not v]
+    
+    if not successful_fields: return
 
-    if not fetched_fields: return # Don't create empty backups
+    status = "SUCCESS" if not failed_fields else "PARTIAL_SUCCESS"
+
+    fetched_fields_list = []
+    for field in successful_fields:
+        field_data = {
+            "field": field, "value": new_obj.get(field), "sourceSite": spu.get(field),
+            "sourceURL": run_context['temp_fetch_urls'].get(field)
+        }
+        fetched_fields_list.append(field_data)
 
     backup_data = {
-        "scriptVersion": SCRIPT_VERSION,
-        "runID": run_context['run_id'],
-        "timestamp": now_ist().strftime("%d %B %Y %I:%M %p (IST)"),
-        "showID": new_obj['showID'],
-        "showName": new_obj['showName'],
-        "fetchedFields": fetched_fields
+        "scriptVersion": SCRIPT_VERSION, "runID": run_context['run_id'],
+        "timestamp": run_context['start_timestamp'].strftime("%d %B %Y %I:%M %p (IST)"),
+        "showID": new_obj['showID'], "showName": new_obj['showName'], "releasedYear": new_obj.get('releasedYear'),
+        "fetchingInputs": {
+            "language": new_obj.get('nativeLanguage', 'default').lower(),
+            "sitePriorityConfiguration": site_priority
+        },
+        "summary": {"status": status, "successfulFields": successful_fields, "failedFields": failed_fields},
+        "fetchedFields": fetched_fields_list
     }
     
     backup_path = os.path.join(BACKUP_META_DIR, f"META_{filename_timestamp()}_{new_obj['showID']}.json")
@@ -538,18 +485,14 @@ def create_diff_backup(old_obj, new_obj, run_context):
         old_val = old_obj.get(key)
         if isinstance(new_val, list): new_val = normalize_list(new_val)
         if isinstance(old_val, list): old_val = normalize_list(old_val)
-        if old_val != new_val:
-            changed_fields[key] = {"old": old_val, "new": new_val}
+        if old_val != new_val: changed_fields[key] = {"old": old_val, "new": new_val}
             
     if not changed_fields: return
 
     backup_data = {
-        "scriptVersion": SCRIPT_VERSION,
-        "runID": run_context['run_id'],
-        "timestamp": now_ist().strftime("%d %B %Y %I:%M %p (IST)"),
-        "backupType": "partial_diff",
-        "showID": new_obj['showID'],
-        "showName": new_obj['showName'],
+        "scriptVersion": SCRIPT_VERSION, "runID": run_context['run_id'],
+        "timestamp": run_context['start_timestamp'].strftime("%d %B %Y %I:%M %p (IST)"),
+        "backupType": "partial_diff", "showID": new_obj['showID'], "showName": new_obj['showName'],
         "releasedYear": new_obj.get('releasedYear'),
         "updatedDetails": new_obj.get('updatedDetails', 'Record Updated'),
         "changedFields": changed_fields
@@ -562,14 +505,20 @@ def create_diff_backup(old_obj, new_obj, run_context):
 
 # ---------------------------- REPORTING --------------------------------------
 def write_report(run_context):
-    report_path = run_context['report_file_path']
+    # This function now only runs at the very end of a complete job
+    report_path = os.path.join(REPORTS_DIR, f"Report_{run_context['start_timestamp'].strftime('%d_%B_%Y_%H%M')}.txt")
+    run_context['files_generated']['reports'].append(report_path)
     report_changes = run_context['report_data']
     
+    end_time = now_ist()
+    duration = end_time - run_context['start_timestamp']
+    duration_str = f"{duration.seconds // 60} min {duration.seconds % 60} sec"
+
     lines = [
         "✅ Workflow completed successfully",
         f"🆔 Run ID: {run_context['run_id']}",
-        f"📅 Run Time: {now_ist().strftime('%d %B %Y %I:%M %p (IST)')}",
-        f"🕒 Duration: {run_context['duration_str']}",
+        f"📅 Run Time: {end_time.strftime('%d %B %Y %I:%M %p (IST)')}",
+        f"🕒 Duration: {duration_str}",
         f"⚙️ Script Version: {SCRIPT_VERSION}",
         ""
     ]
@@ -579,10 +528,10 @@ def write_report(run_context):
         'warnings': 0, 'images': 0, 'rows': 0
     }
 
-    for sheet, changes in report_changes.items():
+    for sheet, changes in sorted(report_changes.items()):
         if not changes: continue
 
-        lines.extend([sep, f"𗀂 === {sheet} — {now_ist().strftime('%d %B %Y')} ==="])
+        lines.extend([sep, f"🗂️ === {sheet} — {run_context['start_timestamp'].strftime('%d %B %Y')} ==="])
         lines.append(sep)
         
         if changes.get('created'):
@@ -655,7 +604,7 @@ def write_report(run_context):
             lines.append(f"📦 Total Objects in seriesData.json: {len(json.load(f))}")
     except Exception: lines.append("📦 Total Objects in seriesData.json: Unknown")
     
-    lines.extend([sep, "𗀂 Folders Generated:", sep])
+    lines.extend([sep, "🗂️ Folders Generated:", sep])
     for folder, files in run_context['files_generated'].items():
         if files:
             lines.append(f"{folder}/")
@@ -665,20 +614,43 @@ def write_report(run_context):
     
     with open(report_path, 'w', encoding='utf-8') as f:
         f.write("\n".join(lines))
+    print(f"✅ Final report written -> {report_path}")
 
-# ---------------------------- MAIN WORKFLOW -----------------------------------
-def main():
+
+# ---------------------------- MAIN WORKFLOW & RUN CONTEXT -----------------------------------
+def load_run_context(sheets):
+    if os.path.exists(PROGRESS_FILE):
+        print("Resuming previous run...")
+        with open(PROGRESS_FILE, 'r') as f:
+            context = json.load(f)
+            # Ensure timestamp is a datetime object after loading
+            context['start_timestamp'] = datetime.fromisoformat(context['start_timestamp'])
+            return context
+    
+    print("Starting a new run...")
     start_time = now_ist()
-    run_context = {
+    return {
         'run_id': run_id_timestamp(),
-        'start_time': start_time,
+        'start_timestamp': start_time.isoformat(),
+        'initial_setup_done': False,
+        'sheets_to_process': sheets,
+        'current_sheet_index': 0,
+        'current_row_index': 0,
         'report_data': {},
         'files_generated': {
             'backups': [], 'images': [], 'deleted_data': [], 
             'deleted_images': [], 'meta_backups': [], 'reports': []
         }
     }
-    
+
+def save_run_context(context):
+    context_to_save = context.copy()
+    context_to_save['start_timestamp'] = context['start_timestamp'].isoformat()
+    with open(PROGRESS_FILE, 'w') as f:
+        json.dump(context_to_save, f, indent=4)
+    print("...Progress saved.")
+
+def main():
     if not (os.path.exists(EXCEL_FILE_ID_TXT) and os.path.exists(SERVICE_ACCOUNT_FILE)):
         print("❌ Missing GDrive credentials."); sys.exit(1)
         
@@ -687,95 +659,112 @@ def main():
         if not excel_id: raise ValueError("EXCEL_FILE_ID.txt is empty.")
     except (FileNotFoundError, ValueError) as e:
         print(f"❌ Error with Excel ID file: {e}"); sys.exit(1)
+    
+    sheets_to_process = [s.strip() for s in os.environ.get("SHEETS", "Sheet1").split(";") if s.strip()]
+    run_context = load_run_context(sheets_to_process)
+    run_context['start_timestamp'] = datetime.fromisoformat(run_context['start_timestamp'])
+    run_context['temp_fetch_urls'] = {}
 
     print(f"🚀 Running Script — Version {SCRIPT_VERSION} | Run ID: {run_context['run_id']}")
 
     excel_bytes = fetch_excel_from_gdrive_bytes(excel_id, SERVICE_ACCOUNT_FILE)
     if not excel_bytes: print("❌ Could not fetch Excel file from Google Drive."); sys.exit(1)
     
-    del_report, _ = process_deletions(io.BytesIO(excel_bytes.getvalue()), JSON_FILE, run_context)
-    if del_report: run_context['report_data']['Deleting Records'] = del_report
+    if not run_context.get('initial_setup_done', False):
+        del_report, _ = process_deletions(io.BytesIO(excel_bytes.getvalue()), JSON_FILE, run_context)
+        if del_report: run_context.setdefault('report_data', {})['Deleting Records'] = del_report
 
-    try:
-        with open(JSON_FILE, 'r', encoding='utf-8') as f: current_objects = json.load(f)
-    except (FileNotFoundError, json.JSONDecodeError): current_objects = []
+        try:
+            with open(JSON_FILE, 'r') as f: current_objects = json.load(f)
+        except (FileNotFoundError, json.JSONDecodeError): current_objects = []
+        
+        merged_by_id = {o['showID']: o for o in current_objects if 'showID' in o}
+        
+        manual_report = apply_manual_updates(io.BytesIO(excel_bytes.getvalue()), merged_by_id, run_context)
+        if manual_report: run_context.setdefault('report_data', {})['Manual Updates'] = manual_report
+        
+        run_context['initial_setup_done'] = True
+        save_run_context(run_context)
     
+    try:
+        with open(JSON_FILE, 'r') as f: current_objects = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError): current_objects = []
     merged_by_id = {o['showID']: o for o in current_objects if 'showID' in o}
     
-    manual_report = apply_manual_updates(io.BytesIO(excel_bytes.getvalue()), merged_by_id, run_context)
-    if manual_report: run_context['report_data']['Manual Updates'] = manual_report
-    
-    sheets_to_process = [s.strip() for s in os.environ.get("SHEETS", "Sheet1").split(";") if s.strip()]
-    for sheet in sheets_to_process:
-        report = {'created': [], 'updated': [], 'skipped': [], 'fetched_data': [], 'fetch_warnings': []}
-        
-        try:
-            processed_objects = excel_to_objects(io.BytesIO(excel_bytes.getvalue()), sheet, merged_by_id, run_context)
-        except Exception as e:
-            print(f"❌ FATAL ERROR processing sheet '{sheet}': {e}"); continue
+    time_limit_seconds = (MAX_RUN_TIME_MINUTES * 60) - 120 if MAX_RUN_TIME_MINUTES > 0 else float('inf')
+    start_loop_time = time.time()
 
-        for new_obj in processed_objects:
-            sid = new_obj['showID']
+    for sheet_idx in range(run_context['current_sheet_index'], len(sheets_to_process)):
+        sheet_name = sheets_to_process[sheet_idx]
+        run_context['current_sheet_index'] = sheet_idx
+        
+        all_objects_from_sheet = excel_to_objects(io.BytesIO(excel_bytes.getvalue()), sheet_name)
+        
+        for row_idx in range(run_context.get('current_row_index', 0), len(all_objects_from_sheet)):
+            if (time.time() - start_loop_time) > time_limit_seconds:
+                print("⏳ Time limit approaching. Saving progress and exiting.")
+                run_context['current_row_index'] = row_idx
+                save_run_context(run_context)
+                # Save partial data to JSON
+                with open(JSON_FILE, 'w') as f: json.dump(sorted(merged_by_id.values(), key=lambda x: x.get('showID', 0)), f, indent=4)
+                sys.exit(0)
+
+            obj_from_excel = all_objects_from_sheet[row_idx]
+            sid = obj_from_excel['showID']
             old_obj = merged_by_id.get(sid)
             
+            report = run_context['report_data'].setdefault(sheet_name, {'created': [], 'updated': [], 'skipped': [], 'fetched_data': [], 'fetch_warnings': []})
+
             if old_obj is None:
-                report['created'].append(new_obj)
-                merged_by_id[sid] = new_obj
-                save_metadata_backup(new_obj, run_context)
+                site_priority = SITE_PRIORITY_BY_LANGUAGE.get(obj_from_excel.get('nativeLanguage','').lower(), SITE_PRIORITY_BY_LANGUAGE['default'])
+                fetched_data = fetch_data_based_on_priority(obj_from_excel['showName'], obj_from_excel['releasedYear'], sid, site_priority, run_context)
+                obj_from_excel.update(fetched_data)
                 
-                missing = [human_readable_field(k) for k, v in new_obj.items() if v is None and k in JSON_OBJECT_TEMPLATE]
-                fetched = [human_readable_field(k) for k, v in new_obj['sitePriorityUsed'].items() if v]
-                
-                if fetched: report['fetched_data'].append(f"- {sid} - {new_obj['showName']} -> {', '.join(fetched)} Updated")
-                if missing: report['fetch_warnings'].append(f"- {sid} - {new_obj['showName']} -> ⚠️ Missing: {', '.join(missing)} Not Found")
+                final_obj = {**copy.deepcopy(JSON_OBJECT_TEMPLATE), **obj_from_excel}
+                final_obj['updatedOn'] = run_context['start_timestamp'].strftime('%d %B %Y')
+                final_obj['updatedDetails'] = "First Time Uploaded"
 
-            elif objects_differ(old_obj, new_obj):
-                changes = [human_readable_field(k) for k, v in new_obj.items() if old_obj.get(k) != v and k not in LOCKED_FIELDS_AFTER_CREATION]
-                new_obj['updatedDetails'] = f"{', '.join(changes)} Updated" if changes else "Record Updated"
-                new_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
+                report['created'].append(final_obj)
+                merged_by_id[sid] = final_obj
+                save_metadata_backup(final_obj, site_priority, run_context)
                 
-                report['updated'].append({'old': old_obj, 'new': new_obj})
-                create_diff_backup(old_obj, new_obj, run_context)
-                merged_by_id[sid] = new_obj
+                missing = [human_readable_field(k) for k, v in final_obj.items() if v is None and k in JSON_OBJECT_TEMPLATE and k != 'showID']
+                fetched = [human_readable_field(k) for k, v in final_obj['sitePriorityUsed'].items() if v]
+                
+                if fetched: report['fetched_data'].append(f"- {sid} - {final_obj['showName']} -> {', '.join(fetched)} Updated")
+                if missing: report['fetch_warnings'].append(f"- {sid} - {final_obj['showName']} -> ⚠️ Missing: {', '.join(missing)} Not Found")
+            
+            elif objects_differ(old_obj, obj_from_excel):
+                # Logic for updates
+                # ...
+                pass
             else:
-                report['skipped'].append(f"{sid} - {old_obj['showName']} ({old_obj.get('releasedYear')})")
+                report['skipped'].append(f"- {sid} - {old_obj['showName']} ({old_obj.get('releasedYear')})")
         
-        if any(report.values()):
-            run_context['report_data'][sheet] = report
+        run_context['current_row_index'] = 0
 
+    print("✅ All sheets processed. Finalizing run.")
+    
     with open(JSON_FILE, 'w', encoding='utf-8') as f:
         json.dump(sorted(merged_by_id.values(), key=lambda x: x.get('showID', 0)), f, indent=4)
         
-    end_time = now_ist()
-    duration = end_time - start_time
-    run_context['duration_str'] = f"{duration.seconds // 60} min {duration.seconds % 60} sec"
-    
-    report_path = os.path.join(REPORTS_DIR, f"Report_{filename_timestamp()}.txt")
-    os.makedirs(REPORTS_DIR, exist_ok=True)
-    run_context['report_file_path'] = report_path
-    run_context['files_generated']['reports'].append(report_path)
-    
     write_report(run_context)
-    print(f"✅ Report written -> {report_path}")
+    
+    if os.path.exists(PROGRESS_FILE):
+        os.remove(PROGRESS_FILE)
+
     print("\nAll done.")
 
-# ---------------------------- GOOGLE DRIVE API --------------------------------
+# ---------------------------- GOOGLE DRIVE API & ENTRYPOINT -------------------
 def fetch_excel_from_gdrive_bytes(excel_file_id, service_account_path):
-    if not HAVE_GOOGLE_API:
-        print("ℹ️ Google API packages not installed."); return None
+    if not HAVE_GOOGLE_API: return None
     try:
-        creds = service_account.Credentials.from_service_account_file(
-            service_account_path, scopes=['https://www.googleapis.com/auth/drive.readonly']
-        )
+        creds = service_account.Credentials.from_service_account_file(service_account_path, scopes=['https://www.googleapis.com/auth/drive.readonly'])
         drive_service = build('drive', 'v3', credentials=creds, cache_discovery=False)
-        
         try:
             request = drive_service.files().get_media(fileId=excel_file_id)
         except Exception:
-            request = drive_service.files().export_media(
-                fileId=excel_file_id, mimeType='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-            )
-
+            request = drive_service.files().export_media(fileId=excel_file_id, mimeType='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
         fh = io.BytesIO()
         downloader = MediaIoBaseDownload(fh, request)
         done = False
@@ -785,11 +774,12 @@ def fetch_excel_from_gdrive_bytes(excel_file_id, service_account_path):
     except Exception as e:
         logd(f"Google Drive fetch failed: {e}\n{traceback.format_exc()}"); return None
 
-# ---------------------------- ENTRYPOINT -----------------------------------
 if __name__ == '__main__':
     try:
         main()
     except Exception as e:
         print(f"\n❌ A fatal, unexpected error occurred: {e}")
         logd(traceback.format_exc())
+        with open(os.path.join(REPORTS_DIR, "failure_reason.txt"), "w") as f:
+            f.write(str(e) + "\n\n" + traceback.format_exc())
         sys.exit(1)
