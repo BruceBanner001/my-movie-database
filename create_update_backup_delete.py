@@ -6,6 +6,7 @@
 #   for JSON data objects derived from Excel or YAML workflows.
 #
 #   Key features:
+#   - Enforces a consistent 24-property schema for all JSON objects.
 #   - Detailed diff-based backups for all updates.
 #   - Field locking to protect fetched data from being overwritten.
 #   - Highly detailed and structured run reports.
@@ -17,10 +18,45 @@
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v3.1.0 (Robust Fetch & Processing Fix)"
+SCRIPT_VERSION = "v3.2.0 (Object Schema & Finalization)"
+
+# --- Master JSON Object Template ---
+# Ensures every object written to seriesData.json has a consistent structure.
+JSON_OBJECT_TEMPLATE = {
+    "showID": None,
+    "showName": None,
+    "otherNames": [],
+    "showImage": None,
+    "watchStartedOn": None,
+    "watchEndedOn": None,
+    "releasedYear": 0,
+    "releaseDate": None,
+    "totalEpisodes": 0,
+    "showType": None,
+    "nativeLanguage": None,
+    "watchedLanguage": None,
+    "country": None,
+    "comments": None,
+    "ratings": 0,
+    "genres": [],
+    "network": [],
+    "againWatchedDates": [],
+    "updatedOn": None,
+    "updatedDetails": None,
+    "synopsis": None,
+    "topRatings": 0,
+    "Duration": 0,
+    "sitePriorityUsed": {
+        "showImage": None,
+        "releaseDate": None,
+        "otherNames": None,
+        "duration": None,
+        "synopsis": None
+    }
+}
+
 
 # --- Site Priority Configuration ---
-# Controls which site is preferred for fetching each data point based on language.
 SITE_PRIORITY_BY_LANGUAGE = {
     "korean": {
         "synopsis": "asianwiki",
@@ -67,11 +103,11 @@ SITE_PRIORITY_BY_LANGUAGE = {
 }
 
 # --- Field Name Mapping ---
-# For generating human-readable names in reports and backups.
 FIELD_NAME_MAP = {
+    "showID": "Show ID",
     "showName": "Show Name",
-    "showImage": "Show Image",
     "otherNames": "Other Names",
+    "showImage": "Show Image",
     "watchStartedOn": "Watch Started On",
     "watchEndedOn": "Watch Ended On",
     "releasedYear": "Released Year",
@@ -95,8 +131,6 @@ FIELD_NAME_MAP = {
 }
 
 # --- Locked Fields Configuration ---
-# Fields set once at creation and NOT automatically updated from Excel.
-# Can only be changed via the "Manual Updates" sheet.
 LOCKED_FIELDS_AFTER_CREATION = {
     'synopsis',
     'showImage',
@@ -173,10 +207,7 @@ def logd(msg):
 
 # ---------------------------- CORE UTILITIES --------------------------------
 def human_readable_field(field):
-    if not field: return field
-    if field in FIELD_NAME_MAP: return FIELD_NAME_MAP[field]
-    parts = re.sub(r'([a-z])([A-Z])', r'\1 \2', re.sub(r'[_\-]+', ' ', field)).split()
-    return " ".join([p.capitalize() for p in parts])
+    return FIELD_NAME_MAP.get(field, field)
 
 def safe_filename(name):
     return re.sub(r"[^A-Za-z0-9._-]+", "_", (name or "").strip())
@@ -227,28 +258,16 @@ def ddgs_search(query, type='text', max_results=5):
     return []
 
 def parse_metadata_from_html(html, base_url):
-    """Robust parser to extract metadata from HTML content."""
     soup = BeautifulSoup(html, "html.parser")
     full_text = soup.get_text(" ", strip=True)
     metadata = {}
 
-    # 1. Synopsis
     meta_desc = soup.find("meta", attrs={"name": "description"}) or soup.find("meta", attrs={"property": "og:description"})
     if meta_desc and meta_desc.get("content") and len(meta_desc.get("content")) > 50:
         metadata['synopsis'] = meta_desc.get("content").strip()
-    else:
-        synopsis_header = soup.find(['h2', 'h3'], string=re.compile(r'Synopsis|Plot', re.I))
-        if synopsis_header:
-            content = []
-            for sibling in synopsis_header.find_next_siblings():
-                if sibling.name in ['h2', 'h3']: break
-                if sibling.name == 'p' and sibling.get_text(strip=True):
-                    content.append(sibling.get_text(strip=True))
-            if content: metadata['synopsis'] = " ".join(content)
-
-    # 2. Other fields using regex
+    
     duration_match = re.search(r'(\b\d{2,3})\s*(min|minutes)\b', full_text, re.I)
-    if duration_match: metadata['duration'] = int(duration_match.group(1))
+    if duration_match: metadata['Duration'] = int(duration_match.group(1))
 
     release_match = re.search(r'(Release Date|Aired On|Aired)[\s:]*([A-Za-z]+\s+\d{1,2},\s*\d{4})', full_text, re.I)
     if release_match: metadata['releaseDate'] = release_match.group(2).strip()
@@ -256,7 +275,6 @@ def parse_metadata_from_html(html, base_url):
     other_names_match = re.search(r'Also Known As[:\s]*([^\n\r]+)', full_text, re.I)
     if other_names_match: metadata['otherNames'] = normalize_list(other_names_match.group(1))
 
-    # Add source label
     if metadata.get('synopsis'):
         domain = re.sub(r'^https?://(www\.)?', '', base_url).split('/')[0]
         label = 'AsianWiki' if 'asianwiki' in domain else 'MyDramaList' if 'mydramalist' in domain else domain
@@ -302,7 +320,7 @@ def fetch_metadata_for_show(show_name, release_year, site_priority):
                 all_data[key] = value
                 all_data.setdefault('sitePriorityUsed', {})[key] = site
         
-        if all(all_data.get(k) for k in ['synopsis', 'duration', 'releaseDate', 'otherNames']):
+        if all(all_data.get(k) for k in ['synopsis', 'Duration', 'releaseDate', 'otherNames']):
             break
     
     return all_data
@@ -443,6 +461,7 @@ def excel_to_objects(excel_file_like, sheet_name, existing_by_id, run_context):
 
     processed_objects = []
     for _, row in df.iterrows():
+        # --- 1. Extract data from Excel row ---
         obj = {}
         for col in df.columns[:again_idx]:
             key = COLUMN_MAP.get(col, col.strip())
@@ -460,6 +479,7 @@ def excel_to_objects(excel_file_like, sheet_name, existing_by_id, run_context):
         obj["showType"] = "Mini Drama" if "mini" in sheet_name.lower() else "Drama"
         if obj.get("nativeLanguage", "").lower() in ("korean", "korea"): obj["country"] = "South Korea"
         
+        # --- 2. Handle object based on whether it's new or existing ---
         sid = obj['showID']
         existing = existing_by_id.get(sid)
         
@@ -468,25 +488,31 @@ def excel_to_objects(excel_file_like, sheet_name, existing_by_id, run_context):
             obj['updatedOn'] = now_ist().strftime('%d %B %Y')
             
             site_priority = SITE_PRIORITY_BY_LANGUAGE.get(obj.get('nativeLanguage','').lower(), SITE_PRIORITY_BY_LANGUAGE['default'])
-            obj['sitePriorityUsed'] = {k: None for k in ['showImage', 'releaseDate', 'otherNames', 'duration', 'synopsis']}
             
             img_url, img_site = fetch_image_for_show(obj['showName'], obj['releasedYear'], sid, site_priority, run_context)
-            if img_url:
-                obj['showImage'] = img_url
-                obj['sitePriorityUsed']['showImage'] = img_site
+            if img_url: obj['showImage'] = img_url
 
             metadata = fetch_metadata_for_show(obj['showName'], obj['releasedYear'], site_priority)
-            for key, value in metadata.items():
-                if key == 'sitePriorityUsed':
-                    for sub_key, site in value.items(): obj['sitePriorityUsed'][sub_key] = site
-                else: obj[key] = value
+            obj.update(metadata) # Add fetched metadata to the object
+
+            # Set sitePriorityUsed based on successful fetches
+            spu = {k:None for k in JSON_OBJECT_TEMPLATE['sitePriorityUsed']}
+            if img_site: spu['showImage'] = img_site
+            if 'sitePriorityUsed' in metadata: spu.update(metadata['sitePriorityUsed'])
+            obj['sitePriorityUsed'] = spu
+
         else:
             for field in LOCKED_FIELDS_AFTER_CREATION:
                 if field in existing: obj[field] = existing[field]
-            
-            obj["topRatings"] = (obj.get("ratings", 0)) * (len(obj.get("againWatchedDates", [])) + 1) * 100
         
-        processed_objects.append(obj)
+        # --- 3. Finalize object structure ---
+        obj["topRatings"] = (obj.get("ratings", 0)) * (len(obj.get("againWatchedDates", [])) + 1) * 100
+        
+        # Merge with template to ensure all 24 fields are present
+        final_obj = {**copy.deepcopy(JSON_OBJECT_TEMPLATE), **obj}
+        
+        processed_objects.append(final_obj)
+        
     return processed_objects
 
 def create_diff_backup(old_obj, new_obj, run_context):
@@ -577,16 +603,16 @@ def write_report(run_context):
             overall_stats['created'] += stats.get('created', 0)
             overall_stats['updated'] += stats.get('updated', 0)
             overall_stats['skipped'] += stats.get('skipped', 0)
-            overall_stats['images'] += len(run_context['files_generated']['images'])
+            overall_stats['images'] += sum(1 for item in changes.get('fetched_data', []) if "Show Image" in item)
             overall_stats['rows'] += total_rows
             
             lines.extend([
                 f"\n📊 Summary (Sheet: {sheet})", sep,
                 f"🆕 Total Created: {stats.get('created', 0)}",
                 f"🔁 Total Updated: {stats.get('updated', 0)}",
-                f"🖼️ Total Images Updated: {stats.get('images', 0)}",
+                f"🖼️ Total Images Updated: {sum(1 for item in changes.get('fetched_data', []) if 'Show Image' in item)}",
                 f"🚫 Total Skipped: {stats.get('skipped', 0)}",
-                f"⚠️ Total Warnings: {stats.get('fetch_warnings', 0)}",
+                f"⚠️ Total Warnings: {len(changes.get('fetch_warnings', []))}",
                 f"  Total Number of Rows: {total_rows}"
             ])
         lines.append("")
@@ -677,9 +703,9 @@ def main():
                 report['created'].append(new_obj)
                 merged_by_id[sid] = new_obj
                 
-                spu = new_obj.get('sitePriorityUsed', {})
-                fetched = [human_readable_field(k) for k, v in spu.items() if v]
-                missing = [human_readable_field(k) for k, v in spu.items() if not v]
+                # Check for null values in the finalized object for reporting
+                missing = [human_readable_field(k) for k, v in new_obj.items() if v is None and k in JSON_OBJECT_TEMPLATE]
+                fetched = [human_readable_field(k) for k, v in new_obj['sitePriorityUsed'].items() if v]
                 
                 if fetched: report['fetched_data'].append(f"- {sid} - {new_obj['showName']} -> {', '.join(fetched)} Updated")
                 if missing: report['fetch_warnings'].append(f"- {sid} - {new_obj['showName']} -> ⚠️ Missing: {', '.join(missing)} Not Found")
