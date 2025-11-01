@@ -2,7 +2,7 @@
 # Workflow: Excel → JSON Automation
 # Purpose : Automate weekly + manual Excel → JSON updates, deletions, backups,
 #           and run reports for "my-movie-database".
-# Version : 2.0 (Robust & Cleaned)
+# Version : 2.1 (Resilient Failure Reporting)
 # ============================================================================
 
 name: Excel → JSON Update
@@ -12,7 +12,7 @@ on:
     inputs:
       MAX_RUN_TIME_MINUTES:
         description: 'Max run time in minutes (0 = no limit, GitHub max is ~350)'
-        default: '50' # Keep it safely below the GitHub limit
+        default: '50'
         required: false
       MAX_PER_RUN:
         description: 'Limit number of shows to process per run (0 = process all)'
@@ -39,8 +39,6 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          # FIX: Removed '|| true'. If dependencies fail, the workflow MUST fail.
-          # This requires a 'requirements.txt' file in your repository.
           pip install -r requirements.txt
 
       - name: Write Excel file ID from Secret
@@ -60,52 +58,75 @@ jobs:
       # ------------------ Run updater and capture report ------------------
       - name: Run Excel→JSON updater
         id: run_updater
+        # IMPROVEMENT: Use 'continue-on-error' to allow subsequent steps to run even if the script fails.
+        continue-on-error: true
         env:
-          # Use github.event.inputs for manual runs, and provide a default for scheduled runs
           MAX_RUN_TIME_MINUTES: ${{ github.event.inputs.MAX_RUN_TIME_MINUTES || '50' }}
           MAX_PER_RUN: ${{ github.event.inputs.MAX_PER_RUN || '0' }}
           SCHEDULED_RUN: ${{ github.event_name == 'schedule' }}
         run: |
           set -euo pipefail
           
-          # FIX: Removed '|| true'. If the Python script fails, this step will fail,
-          # which correctly stops the workflow and alerts you to the error.
+          # The script will now exit with an error code on failure, which is caught by 'continue-on-error'.
           output=$(python create_update_backup_delete.py 2>&1)
           printf '%s\n' "$output"
 
-          # IMPROVEMENT: Simplified and more robust way to find the report path from the script's output.
           report_path=$(echo "$output" | grep -oP 'Final report written -> \K.*' || true)
           if [ -z "$report_path" ]; then
-            # Fallback if the primary method fails for any reason
             report_path=$(ls -t reports/Report_*.txt 2>/dev/null | head -n1 || true)
           fi
           echo "report_path=$report_path" >> "$GITHUB_OUTPUT"
 
-          # Email subject logic remains the same, it's solid.
-          if [ "${{ env.SCHEDULED_RUN }}" = "true" ]; then
+      # ------------------ Check Workflow Status ------------------
+      - name: Check workflow status
+        id: check_status
+        if: always()
+        run: |
+          # This step determines if the previous step succeeded or failed.
+          if [ "${{ steps.run_updater.outcome }}" = "success" ]; then
+            echo "status=success" >> "$GITHUB_OUTPUT"
+          else
+            echo "status=failure" >> "$GITHUB_OUTPUT"
+          fi
+
+      # ------------------ Set Email Subject ------------------
+      - name: Set Email Subject
+        id: set_subject
+        if: always()
+        env:
+          SCHEDULED_RUN: ${{ github.event_name == 'schedule' }}
+          WORKFLOW_STATUS: ${{ steps.check_status.outputs.status }}
+        run: |
+          # FIX: This logic now correctly checks the SCHEDULED_RUN variable.
+          if [ "${SCHEDULED_RUN}" = "true" ]; then
             prefix="[Automatic]"
           else
             prefix="[Manual]"
           fi
-          subj_date=$(date -u -d '+5 hours 30 minutes' "+%d %B %Y %H:%M")
-          echo "email_subject=$prefix Workflow $subj_date IST Report" >> "$GITHUB_OUTPUT"
+
+          # IMPROVEMENT: The subject now reflects the success or failure of the workflow.
+          if [ "${WORKFLOW_STATUS}" = "failure" ]; then
+            final_subject="[ACTION REQUIRED] $prefix Workflow FAILED"
+          else
+            subj_date=$(date -u -d '+5 hours 30 minutes' "+%d %B %Y %H:%M")
+            final_subject="$prefix Workflow $subj_date IST Report"
+          fi
+          echo "email_subject=$final_subject" >> "$GITHUB_OUTPUT"
 
       # ------------------ Commit & push all changes ------------------
       - name: Commit & push all changes
+        # Only run this step if the script was successful.
+        if: steps.check_status.outputs.status == 'success'
         run: |
           set -euo pipefail
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          
-          # IMPROVEMENT: Combine all generated files into a single, atomic commit for a clean history.
           git add seriesData.json images/ backups/ reports/ deleted-data/ deleted-images/ backup-meta-data/ .gitignore || true
           
           if git diff --cached --quiet; then
             echo "No data changes to commit."
           else
-            # IMPROVEMENT: More descriptive commit message.
             commit_message="Automated data update: $(date -u '+%Y-%m-%d %H:%M UTC')"
-            echo "Creating commit: $commit_message"
             git commit -m "$commit_message"
             git push
           fi
@@ -124,30 +145,36 @@ jobs:
         if: always()
         env:
           REPORT_PATH: ${{ steps.run_updater.outputs.report_path }}
+          WORKFLOW_STATUS: ${{ steps.check_status.outputs.status }}
         run: |
           set -euo pipefail
-          report_file="${REPORT_PATH:-}"
-          # Final fallback check for the report file
-          if [ -z "$report_file" ] || [ ! -f "$report_file" ]; then
-            report_file=$(ls -t reports/Report_*.txt 2>/dev/null | head -n1 || true)
-          fi
-          
-          # Create a temporary file to hold the full email body
           email_body_file=$(mktemp)
           {
+            # IMPROVEMENT: Add a clear failure notice to the top of the email if the job fails.
+            if [ "${WORKFLOW_STATUS}" = "failure" ]; then
+              echo "❌ WORKFLOW FAILED"
+              echo "The script encountered a fatal error. See details below."
+              echo ""
+            fi
+
+            # Check for the main report file
+            report_file="${REPORT_PATH:-}"
+            if [ -z "$report_file" ] || [ ! -f "$report_file" ]; then
+              report_file=$(ls -t reports/Report_*.txt 2>/dev/null | head -n1 || true)
+            fi
+            
+            echo "--- SCRIPT LOG & REPORT ---"
             if [ -f "$report_file" ]; then
               cat "$report_file"
             else
-              echo "⚠️ CRITICAL: The main report file could not be found."
-              echo "Please check the workflow logs for errors."
+              echo "⚠️ The main report file could not be found."
             fi
-            
-            # Optionally add Gitleaks secret scan results if you use it
-            if [ -s "reports/secrets_report.txt" ]; then
+
+            # If the workflow failed, also include the failure_reason.txt for easy debugging.
+            if [ "${WORKFLOW_STATUS}" = "failure" ] && [ -f "reports/failure_reason.txt" ]; then
               echo ""
-              echo "--- SECRETS CHECK ---"
-              echo "Gitleaks detected potential secrets:"
-              cat reports/secrets_report.txt
+              echo "--- FAILURE REASON ---"
+              cat "reports/failure_reason.txt"
             fi
           } > "$email_body_file"
           echo "body_file=$email_body_file" >> "$GITHUB_OUTPUT"
@@ -155,15 +182,13 @@ jobs:
       # ------------------ Send Consolidated Report Email ------------------
       - name: Send consolidated report email
         if: always()
-        # IMPROVEMENT: Using a dedicated, reliable action for sending email.
-        # This is much cleaner and more maintainable than the previous base64 script.
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: ${{ secrets.SMTP_SERVER }}
           server_port: ${{ secrets.SMTP_PORT }}
           username: ${{ secrets.SMTP_USERNAME }}
           password: ${{ secrets.SMTP_PASSWORD }}
-          subject: ${{ steps.run_updater.outputs.email_subject }}
+          subject: ${{ steps.set_subject.outputs.email_subject }}
           body: file://${{ steps.compose_email.outputs.body_file }}
           to: ${{ secrets.NOTIFY_EMAIL }}
           from: ${{ secrets.SMTP_USERNAME }}
