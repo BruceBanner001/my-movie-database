@@ -45,12 +45,33 @@ def _get_page_html(site, show_name, release_year):
         try:
             response = requests.get(page_url, headers=HEADERS, timeout=15)
             if response.status_code == 200:
-                # Basic check to see if the page is relevant
-                if show_name.lower().split()[0] in response.text.lower():
+                # A better check: ensure both name and year are in the title tag
+                soup = BeautifulSoup(response.text, 'lxml')
+                title = soup.title.string.lower() if soup.title else ''
+                if show_name.lower() in title and str(release_year) in title:
                     return response.text, page_url
         except requests.RequestException:
             continue
     return None, None
+
+def _find_detail_by_label(soup, label):
+    """Finds a text label in the soup and returns the text of the next sibling or parent's value."""
+    found_label = soup.find(string=re.compile(label, re.I))
+    if not found_label:
+        return None
+    
+    # Try to get the next element's text
+    next_element = found_label.find_next()
+    if next_element and next_element.get_text(strip=True):
+        return next_element.get_text(strip=True)
+        
+    # Fallback: get the parent's text and remove the label
+    parent = found_label.parent
+    if parent:
+        return parent.get_text(strip=True).replace(found_label, "").strip()
+        
+    return None
+
 
 def _parse_asianwiki_page(html):
     """Extracts data from AsianWiki using robust text-based searching."""
@@ -71,16 +92,16 @@ def _parse_asianwiki_page(html):
             if sibling.name == 'p': synopsis_content.append(sibling.get_text(strip=True))
         if synopsis_content: data['synopsis'] = ' '.join(synopsis_content)
 
-    # Use regex on text content for other details for maximum robustness
+    # Details from the info box
     text_content = soup.get_text(" ", strip=True)
     
-    other_names_match = re.search(r'English title\)\s*/\s*(.*?)\s*\(literal title\)', text_content)
-    if other_names_match:
-        data['otherNames'] = other_names_match.group(1).strip()
-    
+    # Release Date
     release_date_match = re.search(r'Release Date:\s*([A-Za-z0-9,\s\-]+)', text_content)
-    if release_date_match:
-        data['releaseDate'] = release_date_match.group(1).strip()
+    if release_date_match: data['releaseDate'] = release_date_match.group(1).strip()
+    
+    # Other Names
+    other_names_match = re.search(r'English title\)\s*/\s*(.*?)\s*\(literal title\)', text_content)
+    if other_names_match: data['otherNames'] = other_names_match.group(1).strip()
         
     return data
 
@@ -89,32 +110,23 @@ def _parse_mydramalist_page(html):
     soup = BeautifulSoup(html, 'lxml')
     data = {}
 
+    # Image (meta tag is most reliable)
     og_image = soup.find('meta', property='og:image')
     if og_image and og_image.get('content'):
         data['image'] = og_image['content']
 
+    # Synopsis
     synopsis_div = soup.find('div', class_='show-synopsis')
     if synopsis_div:
         synopsis_text = re.sub(r'\s*\(\s*Source:.*?\)\s*$', '', synopsis_div.get_text()).strip()
         data['synopsis'] = synopsis_text
     
-    # Search the entire page for text labels
-    page_text = soup.get_text()
-    
-    # Duration
-    duration_match = re.search(r'Duration:\s*([\w\s.]+)', page_text)
-    if duration_match:
-        data['duration'] = duration_match.group(1).replace("min.", "mins.").strip()
-
-    # Release Date
-    release_date_match = re.search(r'Aired:\s*([A-Za-z]{3}\s\d{1,2},\s\d{4})', page_text)
-    if release_date_match:
-        data['releaseDate'] = release_date_match.group(1).strip()
-    
-    # Other Names
-    other_names_match = re.search(r'Also Known As:\s*([\w\s,]+)', page_text)
-    if other_names_match:
-        data['otherNames'] = other_names_match.group(1).strip()
+    # Use the label-finding helper for other details
+    data['otherNames'] = _find_detail_by_label(soup, "Also Known As:")
+    data['releaseDate'] = _find_detail_by_label(soup, "Aired:")
+    duration_text = _find_detail_by_label(soup, "Duration:")
+    if duration_text:
+        data['duration'] = duration_text.replace("min.", "mins.")
 
     return data
 

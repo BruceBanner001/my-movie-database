@@ -130,27 +130,18 @@ def objects_differ(old, new):
         o_val = old.get(k)
         n_val = new.get(k)
 
-        # Normalize values for a more reliable comparison
-        o_norm = o_val
-        n_norm = n_val
-
-        if isinstance(o_val, list) or isinstance(n_val, list):
-            o_norm = normalize_list(o_val)
-            n_norm = normalize_list(n_val)
-        elif isinstance(o_val, (int, float)) or isinstance(n_val, (int, float)):
-            # Compare numbers as numbers, not strings
-            try:
-                if int(o_val or 0) == int(n_val or 0):
-                    continue
-            except (ValueError, TypeError):
-                pass # Fallback to string comparison
+        # Normalize empty/null values to a common representation (empty string)
+        o_norm = "" if o_val is None or o_val == 0 or o_val == [] else o_val
+        n_norm = "" if n_val is None or n_val == 0 or n_val == [] else n_val
         
-        # Final comparison
-        if str(o_norm or '').strip() != str(n_norm or '').strip():
+        # Normalize lists for consistent comparison
+        if isinstance(o_norm, list): o_norm = sorted(o_norm)
+        if isinstance(n_norm, list): n_norm = sorted(n_norm)
+
+        if str(o_norm) != str(n_norm):
             return True
             
     return False
-
 
 def download_and_save_image(url, local_path):
     try:
@@ -187,8 +178,7 @@ def fetch_data_based_on_priority(show_name, release_year, show_id, site_priority
         
         if preferred_site in site_map:
             try:
-                result, url = (site_map[preferred_site](show_name, release_year, show_id) if field == 'image'
-                               else site_map[preferred_site](show_name, release_year))
+                result, url = (site_map[preferred_site](show_name, release_year, show_id) if field == 'image' else site_map[preferred_site](show_name, release_year))
                 if result:
                     fetched_data[field] = result
                     key_map = {'image': 'showImage', 'Duration': 'duration'}
