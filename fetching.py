@@ -46,7 +46,7 @@ def _get_page_html(site, show_name, release_year):
             response = requests.get(page_url, headers=HEADERS, timeout=15)
             if response.status_code == 200:
                 # Basic check to see if the page is relevant
-                if show_name.lower() in response.text.lower():
+                if show_name.lower().split()[0] in response.text.lower():
                     return response.text, page_url
         except requests.RequestException:
             continue
@@ -74,12 +74,10 @@ def _parse_asianwiki_page(html):
     # Use regex on text content for other details for maximum robustness
     text_content = soup.get_text(" ", strip=True)
     
-    # Other Names
     other_names_match = re.search(r'English title\)\s*/\s*(.*?)\s*\(literal title\)', text_content)
     if other_names_match:
         data['otherNames'] = other_names_match.group(1).strip()
     
-    # Release Date
     release_date_match = re.search(r'Release Date:\s*([A-Za-z0-9,\s\-]+)', text_content)
     if release_date_match:
         data['releaseDate'] = release_date_match.group(1).strip()
@@ -91,32 +89,32 @@ def _parse_mydramalist_page(html):
     soup = BeautifulSoup(html, 'lxml')
     data = {}
 
-    # Image (meta tag is most reliable)
     og_image = soup.find('meta', property='og:image')
     if og_image and og_image.get('content'):
         data['image'] = og_image['content']
 
-    # Synopsis
     synopsis_div = soup.find('div', class_='show-synopsis')
     if synopsis_div:
         synopsis_text = re.sub(r'\s*\(\s*Source:.*?\)\s*$', '', synopsis_div.get_text()).strip()
         data['synopsis'] = synopsis_text
     
-    # Details from the info list
-    for li in soup.select('ul.list.m-b-0 > li.list-item, div.details-side > ul.list > li.list-item'):
-        header = li.find('b')
-        if not header: continue
-        
-        header_text = header.get_text(strip=True)
-        # Get text after the header
-        value_text = header.next_sibling.strip() if header.next_sibling and isinstance(header.next_sibling, str) else ""
+    # Search the entire page for text labels
+    page_text = soup.get_text()
+    
+    # Duration
+    duration_match = re.search(r'Duration:\s*([\w\s.]+)', page_text)
+    if duration_match:
+        data['duration'] = duration_match.group(1).replace("min.", "mins.").strip()
 
-        if "Also Known As:" in header_text:
-            data['otherNames'] = value_text.strip()
-        elif "Aired:" in header_text:
-            data['releaseDate'] = value_text.strip()
-        elif "Duration:" in header_text:
-            data['duration'] = value_text.replace("min.", "mins.").strip()
+    # Release Date
+    release_date_match = re.search(r'Aired:\s*([A-Za-z]{3}\s\d{1,2},\s\d{4})', page_text)
+    if release_date_match:
+        data['releaseDate'] = release_date_match.group(1).strip()
+    
+    # Other Names
+    other_names_match = re.search(r'Also Known As:\s*([\w\s,]+)', page_text)
+    if other_names_match:
+        data['otherNames'] = other_names_match.group(1).strip()
 
     return data
 

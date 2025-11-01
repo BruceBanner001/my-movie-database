@@ -124,27 +124,31 @@ def normalize_list(cell_value):
     return sorted([item for item in items if item])
 
 def objects_differ(old, new):
-    """Smarter comparison to prevent false positives."""
+    """Smarter comparison to prevent false positives by normalizing values before comparing."""
     keys_to_compare = set(old.keys()) | set(new.keys()) - LOCKED_FIELDS_AFTER_CREATION
     for k in keys_to_compare:
         o_val = old.get(k)
         n_val = new.get(k)
 
-        # Treat None, 0, and empty strings/lists as equivalent for many fields
-        if k not in ['showName', 'showID', 'releasedYear']:
-            o_is_empty = o_val is None or o_val == "" or o_val == [] or o_val == 0
-            n_is_empty = n_val is None or n_val == "" or n_val == [] or n_val == 0
-            if o_is_empty and n_is_empty:
-                continue
+        # Normalize values for a more reliable comparison
+        o_norm = o_val
+        n_norm = n_val
 
         if isinstance(o_val, list) or isinstance(n_val, list):
-            if normalize_list(o_val) != normalize_list(n_val): return True
-        elif o_val != n_val:
+            o_norm = normalize_list(o_val)
+            n_norm = normalize_list(n_val)
+        elif isinstance(o_val, (int, float)) or isinstance(n_val, (int, float)):
+            # Compare numbers as numbers, not strings
             try:
-                # Handle cases like 10 vs "10"
-                if str(o_val or "") != str(n_val or ""): return True
-            except (TypeError, ValueError):
-                if o_val != n_val: return True
+                if int(o_val or 0) == int(n_val or 0):
+                    continue
+            except (ValueError, TypeError):
+                pass # Fallback to string comparison
+        
+        # Final comparison
+        if str(o_norm or '').strip() != str(n_norm or '').strip():
+            return True
+            
     return False
 
 
@@ -183,7 +187,8 @@ def fetch_data_based_on_priority(show_name, release_year, show_id, site_priority
         
         if preferred_site in site_map:
             try:
-                result, url = (site_map[preferred_site](show_name, release_year, show_id) if field == 'image' else site_map[preferred_site](show_name, release_year))
+                result, url = (site_map[preferred_site](show_name, release_year, show_id) if field == 'image'
+                               else site_map[preferred_site](show_name, release_year))
                 if result:
                     fetched_data[field] = result
                     key_map = {'image': 'showImage', 'Duration': 'duration'}
