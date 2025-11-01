@@ -55,13 +55,12 @@ def _get_page_html(site, show_name, release_year):
     return None, None
 
 def _find_detail_by_label(soup, label_regex):
-    """Finds a text label in the soup and returns the text of the next sibling or parent's value."""
+    """Finds a text label in the soup and returns the text of its container, cleaned."""
     try:
         element = soup.find(string=re.compile(label_regex, re.I))
         if element:
             parent = element.find_parent(['li', 'div'])
             if parent:
-                # Clean the text by removing the label itself and extra whitespace
                 full_text = parent.get_text(" ", strip=True)
                 value = re.sub(label_regex, '', full_text, flags=re.I).strip()
                 return value
@@ -74,17 +73,14 @@ def _parse_asianwiki_page(html):
     soup = BeautifulSoup(html, 'lxml')
     data = {}
     
-    # Image
     image_tag = soup.select_one(".profile_container img")
     if image_tag and image_tag.get('src'):
         data['image'] = 'https://asianwiki.com' + image_tag['src']
 
-    # Synopsis
     plot_header = soup.find('h2', string='Plot Synopsis')
     if plot_header and plot_header.find_next_sibling('p'):
         data['synopsis'] = plot_header.find_next_sibling('p').get_text(strip=True)
 
-    # Details from the profile text block for robustness
     profile_text = soup.select_one('div.profile_container').get_text(" ", strip=True) if soup.select_one('div.profile_container') else ''
     
     release_match = re.search(r'Release Date:\s*([^-|]+)', profile_text)

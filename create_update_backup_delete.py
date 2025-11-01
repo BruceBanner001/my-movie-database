@@ -118,32 +118,26 @@ def normalize_list(cell_value):
 
 def objects_differ(old, new_from_excel):
     """Definitive comparison function to prevent false positives."""
-    # Create a hypothetical merged object for accurate comparison
     hypothetical_obj = old.copy()
     for key, value in new_from_excel.items():
         if key not in LOCKED_FIELDS_AFTER_CREATION:
             hypothetical_obj[key] = value
 
-    # Now compare the original object with the hypothetical one
     for key in set(old.keys()) | set(hypothetical_obj.keys()):
         if key in LOCKED_FIELDS_AFTER_CREATION:
             continue
-
+            
         old_val = old.get(key)
         new_val = hypothetical_obj.get(key)
-
-        # Normalize lists for comparison
+        
+        # Normalize for comparison
         if isinstance(old_val, list) or isinstance(new_val, list):
             if normalize_list(old_val) != normalize_list(new_val):
                 return True
-        # Normalize empty vs. non-empty values
-        elif (old_val or 0) != (new_val or 0):
-             # Final string comparison to catch type differences like 7 vs "7"
-            if str(old_val or '') != str(new_val or ''):
-                return True
+        elif str(old_val or '') != str(new_val or ''):
+             return True
                 
     return False
-
 
 def download_and_save_image(url, local_path):
     try:
