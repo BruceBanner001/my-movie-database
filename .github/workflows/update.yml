@@ -2,7 +2,7 @@
 # Workflow: Excel → JSON Automation
 # Purpose : Automate weekly + manual Excel → JSON updates, deletions, backups,
 #           and run reports for "my-movie-database".
-# Version : 2.1 (Resilient Failure Reporting)
+# Version : 2.3 (Final Commit Fix)
 # ============================================================================
 
 name: Excel → JSON Update
@@ -19,7 +19,7 @@ on:
         default: '0'
         required: false
   schedule:
-    - cron: "30 18 * * 6"  # Every Sunday 00:00 AM IST (Saturday 18:30 UTC)
+    - cron: "30 18 * * 6"
 
 jobs:
   update-json:
@@ -55,41 +55,38 @@ jobs:
           set -euo pipefail
           printf '%s' "$GDRIVE_SERVICE_ACCOUNT" > GDRIVE_SERVICE_ACCOUNT.json
 
-      # ------------------ Run updater and capture report ------------------
       - name: Run Excel→JSON updater
         id: run_updater
-        # IMPROVEMENT: Use 'continue-on-error' to allow subsequent steps to run even if the script fails.
-        continue-on-error: true
+        continue-on-error: true # Keep this to ensure email is always sent
         env:
           MAX_RUN_TIME_MINUTES: ${{ github.event.inputs.MAX_RUN_TIME_MINUTES || '50' }}
           MAX_PER_RUN: ${{ github.event.inputs.MAX_PER_RUN || '0' }}
           SCHEDULED_RUN: ${{ github.event_name == 'schedule' }}
         run: |
           set -euo pipefail
-          
-          # The script will now exit with an error code on failure, which is caught by 'continue-on-error'.
+          # Create the reports directory beforehand to prevent early crashes
+          mkdir -p reports
           output=$(python create_update_backup_delete.py 2>&1)
           printf '%s\n' "$output"
-
+          echo "output_log<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$output" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
           report_path=$(echo "$output" | grep -oP 'Final report written -> \K.*' || true)
           if [ -z "$report_path" ]; then
             report_path=$(ls -t reports/Report_*.txt 2>/dev/null | head -n1 || true)
           fi
           echo "report_path=$report_path" >> "$GITHUB_OUTPUT"
 
-      # ------------------ Check Workflow Status ------------------
       - name: Check workflow status
         id: check_status
         if: always()
         run: |
-          # This step determines if the previous step succeeded or failed.
           if [ "${{ steps.run_updater.outcome }}" = "success" ]; then
             echo "status=success" >> "$GITHUB_OUTPUT"
           else
             echo "status=failure" >> "$GITHUB_OUTPUT"
           fi
 
-      # ------------------ Set Email Subject ------------------
       - name: Set Email Subject
         id: set_subject
         if: always()
@@ -97,14 +94,11 @@ jobs:
           SCHEDULED_RUN: ${{ github.event_name == 'schedule' }}
           WORKFLOW_STATUS: ${{ steps.check_status.outputs.status }}
         run: |
-          # FIX: This logic now correctly checks the SCHEDULED_RUN variable.
           if [ "${SCHEDULED_RUN}" = "true" ]; then
             prefix="[Automatic]"
           else
             prefix="[Manual]"
           fi
-
-          # IMPROVEMENT: The subject now reflects the success or failure of the workflow.
           if [ "${WORKFLOW_STATUS}" = "failure" ]; then
             final_subject="[ACTION REQUIRED] $prefix Workflow FAILED"
           else
@@ -115,18 +109,19 @@ jobs:
 
       # ------------------ Commit & push all changes ------------------
       - name: Commit & push all changes
-        # Only run this step if the script was successful.
-        if: steps.check_status.outputs.status == 'success'
         run: |
           set -euo pipefail
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add seriesData.json images/ backups/ reports/ deleted-data/ deleted-images/ backup-meta-data/ .gitignore || true
+          
+          # FIX: Use --force to ensure that generated files are added even if they are in .gitignore
+          git add --force seriesData.json images/ backups/ reports/ deleted-data/ deleted-images/ backup-meta-data/ || true
           
           if git diff --cached --quiet; then
             echo "No data changes to commit."
           else
             commit_message="Automated data update: $(date -u '+%Y-%m-%d %H:%M UTC')"
+            echo "Creating commit: $commit_message"
             git commit -m "$commit_message"
             git push
           fi
@@ -138,6 +133,7 @@ jobs:
         with:
           name: run-reports
           path: reports/
+          if-no-files-found: warn
 
       # ------------------ Compose Consolidated Email Body ------------------
       - name: Compose consolidated email body
@@ -146,18 +142,20 @@ jobs:
         env:
           REPORT_PATH: ${{ steps.run_updater.outputs.report_path }}
           WORKFLOW_STATUS: ${{ steps.check_status.outputs.status }}
+          SCRIPT_OUTPUT: ${{ steps.run_updater.outputs.output_log }}
         run: |
           set -euo pipefail
           email_body_file=$(mktemp)
           {
-            # IMPROVEMENT: Add a clear failure notice to the top of the email if the job fails.
             if [ "${WORKFLOW_STATUS}" = "failure" ]; then
               echo "❌ WORKFLOW FAILED"
               echo "The script encountered a fatal error. See details below."
               echo ""
+              echo "--- SCRIPT OUTPUT ---"
+              echo "$SCRIPT_OUTPUT"
+              echo ""
             fi
-
-            # Check for the main report file
+            
             report_file="${REPORT_PATH:-}"
             if [ -z "$report_file" ] || [ ! -f "$report_file" ]; then
               report_file=$(ls -t reports/Report_*.txt 2>/dev/null | head -n1 || true)
@@ -168,13 +166,6 @@ jobs:
               cat "$report_file"
             else
               echo "⚠️ The main report file could not be found."
-            fi
-
-            # If the workflow failed, also include the failure_reason.txt for easy debugging.
-            if [ "${WORKFLOW_STATUS}" = "failure" ] && [ -f "reports/failure_reason.txt" ]; then
-              echo ""
-              echo "--- FAILURE REASON ---"
-              cat "reports/failure_reason.txt"
             fi
           } > "$email_body_file"
           echo "body_file=$email_body_file" >> "$GITHUB_OUTPUT"
