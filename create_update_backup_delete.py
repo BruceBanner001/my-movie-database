@@ -116,32 +116,34 @@ def normalize_list(cell_value):
     items = [str(x).strip() for x in cell_value] if isinstance(cell_value, (list, tuple)) else [p.strip() for p in str(cell_value).split(',') if p.strip()]
     return sorted([item for item in items if item])
 
-def objects_differ(old, new):
-    """Smarter comparison to prevent false positives by normalizing values before comparing."""
-    # First, create a "hypothetical" updated object to compare against
-    hypothetical_update = old.copy()
-    for key, value in new.items():
+def objects_differ(old, new_from_excel):
+    """Definitive comparison function to prevent false positives."""
+    # Create a hypothetical merged object for accurate comparison
+    hypothetical_obj = old.copy()
+    for key, value in new_from_excel.items():
         if key not in LOCKED_FIELDS_AFTER_CREATION:
-            hypothetical_update[key] = value
+            hypothetical_obj[key] = value
 
-    # Now, compare the original 'old' object with this complete hypothetical object
-    for k in set(old.keys()) | set(hypothetical_update.keys()):
-        if k in LOCKED_FIELDS_AFTER_CREATION:
+    # Now compare the original object with the hypothetical one
+    for key in set(old.keys()) | set(hypothetical_obj.keys()):
+        if key in LOCKED_FIELDS_AFTER_CREATION:
             continue
-            
-        o_val = old.get(k)
-        h_val = hypothetical_update.get(k)
-        
-        o_norm = "" if o_val is None or o_val == 0 or o_val == [] else o_val
-        h_norm = "" if h_val is None or h_val == 0 or h_val == [] else h_val
-        
-        if isinstance(o_norm, list): o_norm = sorted(o_norm)
-        if isinstance(h_norm, list): h_norm = sorted(h_norm)
-        
-        if str(o_norm) != str(h_norm):
-            return True
-            
+
+        old_val = old.get(key)
+        new_val = hypothetical_obj.get(key)
+
+        # Normalize lists for comparison
+        if isinstance(old_val, list) or isinstance(new_val, list):
+            if normalize_list(old_val) != normalize_list(new_val):
+                return True
+        # Normalize empty vs. non-empty values
+        elif (old_val or 0) != (new_val or 0):
+             # Final string comparison to catch type differences like 7 vs "7"
+            if str(old_val or '') != str(new_val or ''):
+                return True
+                
     return False
+
 
 def download_and_save_image(url, local_path):
     try:

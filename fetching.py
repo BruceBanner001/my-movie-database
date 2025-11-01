@@ -18,7 +18,9 @@ HEADERS = {
 # --- HELPER FUNCTIONS ---
 
 def _ddgs_search(query, type='text', max_results=3):
-    if not HAVE_DDGS: return []
+    """Performs a DuckDuckGo search and returns results."""
+    if not HAVE_DDGS:
+        return []
     try:
         with DDGS() as ddgs:
             if type == 'text':
@@ -29,60 +31,72 @@ def _ddgs_search(query, type='text', max_results=3):
         return []
 
 def _get_page_html(site, show_name, release_year):
+    """
+    Finds the correct page on a site by checking multiple search results
+    and returns its HTML content and URL.
+    """
     query = f"{show_name} {release_year} site:{site}.com"
     results = _ddgs_search(query, type='text')
     
     for result in results:
         page_url = result.get('href')
-        if not page_url: continue
+        if not page_url:
+            continue
         try:
             response = requests.get(page_url, headers=HEADERS, timeout=15)
             if response.status_code == 200:
                 soup = BeautifulSoup(response.text, 'lxml')
                 title = soup.title.string.lower() if soup.title else ''
-                if show_name.lower() in title and str(release_year) in title:
+                # A more lenient check that is more likely to succeed
+                if show_name.lower().split()[0] in title and str(release_year) in title:
                     return response.text, page_url
         except requests.RequestException:
             continue
     return None, None
 
 def _find_detail_by_label(soup, label_regex):
-    element = soup.find(string=re.compile(label_regex, re.I))
-    if element:
-        # Navigate up to a common parent (like <li> or <div>) and get all its text
-        parent = element.find_parent(['li', 'div'])
-        if parent:
-            # Clean the text by removing the label itself
-            return re.sub(label_regex, '', parent.get_text(" ", strip=True), flags=re.I).strip()
+    """Finds a text label in the soup and returns the text of the next sibling or parent's value."""
+    try:
+        element = soup.find(string=re.compile(label_regex, re.I))
+        if element:
+            parent = element.find_parent(['li', 'div'])
+            if parent:
+                # Clean the text by removing the label itself and extra whitespace
+                full_text = parent.get_text(" ", strip=True)
+                value = re.sub(label_regex, '', full_text, flags=re.I).strip()
+                return value
+    except Exception:
+        return None
     return None
 
 def _parse_asianwiki_page(html):
+    """Extracts data from AsianWiki using a combination of selectors and text searching."""
     soup = BeautifulSoup(html, 'lxml')
     data = {}
-
+    
     # Image
-    image_tag = soup.select_one("td.ent-img img")
+    image_tag = soup.select_one(".profile_container img")
     if image_tag and image_tag.get('src'):
         data['image'] = 'https://asianwiki.com' + image_tag['src']
 
     # Synopsis
     plot_header = soup.find('h2', string='Plot Synopsis')
-    if plot_header:
-        synopsis_p = plot_header.find_next_sibling('p')
-        if synopsis_p: data['synopsis'] = synopsis_p.get_text(strip=True)
+    if plot_header and plot_header.find_next_sibling('p'):
+        data['synopsis'] = plot_header.find_next_sibling('p').get_text(strip=True)
 
-    # Details from the profile section
+    # Details from the profile text block for robustness
     profile_text = soup.select_one('div.profile_container').get_text(" ", strip=True) if soup.select_one('div.profile_container') else ''
     
-    release_match = re.search(r'Release Date:\s*([^|]+)', profile_text)
+    release_match = re.search(r'Release Date:\s*([^-|]+)', profile_text)
     if release_match: data['releaseDate'] = release_match.group(1).strip()
     
-    duration_match = re.search(r'Runtime:\s*([^|]+)', profile_text)
+    duration_match = re.search(r'Runtime:\s*([^-|]+)', profile_text)
     if duration_match: data['duration'] = duration_match.group(1).strip() + " mins."
-
+        
     return data
 
 def _parse_mydramalist_page(html):
+    """Extracts data from MyDramaList using a combination of selectors and text searching."""
     soup = BeautifulSoup(html, 'lxml')
     data = {}
 
