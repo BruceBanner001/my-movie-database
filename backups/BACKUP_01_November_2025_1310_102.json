@@ -1,0 +1,37 @@
+{
+    "scriptVersion": "v3.2.1 (Fix: Restore Metadata Backups)",
+    "runID": "RUN_20251101_131027",
+    "timestamp": "01 November 2025 01:10 PM (IST)",
+    "backupType": "partial_diff",
+    "showID": 102,
+    "showName": "Meloholic",
+    "releasedYear": 2017,
+    "updatedDetails": "Total Episodes, Comments, Again Watched Dates Updated",
+    "changedFields": {
+        "totalEpisodes": {
+            "old": 10,
+            "new": 12
+        },
+        "comments": {
+            "old": "Nice Drama. The Sad Part Is The Series Has Only 10 Episode. Nice Melodrama.",
+            "new": "Nice Drama. The Sad Part Is The Series Has Only 10 Episode. Nice Melodrama.EEEE"
+        },
+        "againWatchedDates": {
+            "old": [
+                "12-07-2025"
+            ],
+            "new": [
+                "06-07-2023",
+                "12-07-2025"
+            ]
+        },
+        "updatedDetails": {
+            "old": "First Time Uploaded",
+            "new": "Total Episodes, Comments, Again Watched Dates Updated"
+        },
+        "topRatings": {
+            "old": 1800,
+            "new": 2700
+        }
+    }
+}
