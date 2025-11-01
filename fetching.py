@@ -17,33 +17,39 @@ HEADERS = {
 
 # --- HELPER FUNCTIONS ---
 
-def _ddgs_search(query, type='text'):
+def _ddgs_search(query, type='text', max_results=3):
     """Performs a DuckDuckGo search and returns results."""
     if not HAVE_DDGS:
         return []
     try:
         with DDGS() as ddgs:
             if type == 'text':
-                return list(ddgs.text(query, max_results=1))
+                return list(ddgs.text(query, max_results=max_results))
             elif type == 'images':
-                return [r.get("image") for r in ddgs.images(query, max_results=3) if r.get("image")]
+                return [r.get("image") for r in ddgs.images(query, max_results=max_results) if r.get("image")]
     except Exception:
         return []
 
 def _get_page_html(site, show_name, release_year):
-    """Finds the correct page on a site and returns its HTML content and URL."""
+    """
+    Finds the correct page on a site by checking multiple search results
+    and returns its HTML content and URL.
+    """
     query = f"{show_name} {release_year} site:{site}.com"
     results = _ddgs_search(query, type='text')
-    if not results:
-        return None, None
     
-    page_url = results[0]['href']
-    try:
-        response = requests.get(page_url, headers=HEADERS, timeout=15)
-        if response.status_code == 200:
-            return response.text, page_url
-    except requests.RequestException:
-        return None, None
+    for result in results:
+        page_url = result.get('href')
+        if not page_url:
+            continue
+        try:
+            response = requests.get(page_url, headers=HEADERS, timeout=15)
+            if response.status_code == 200:
+                # Basic check to see if the page is relevant
+                if show_name.lower() in response.text.lower():
+                    return response.text, page_url
+        except requests.RequestException:
+            continue
     return None, None
 
 def _parse_asianwiki_page(html):
@@ -57,11 +63,11 @@ def _parse_asianwiki_page(html):
         data['image'] = image_tag['src'].split('/revision/')[0]
 
     # Synopsis
-    plot_header = soup.find('span', id=re.compile(r'Plot|Synopsis', re.I))
+    plot_header = soup.find(['h2', 'h3'], id=re.compile(r'Plot|Synopsis', re.I))
     if plot_header:
         synopsis_content = []
-        for sibling in plot_header.find_parent('h2').find_next_siblings():
-            if sibling.name == 'h2': break
+        for sibling in plot_header.find_next_siblings():
+            if sibling.name in ['h2', 'h3']: break
             if sibling.name == 'p': synopsis_content.append(sibling.get_text(strip=True))
         if synopsis_content: data['synopsis'] = ' '.join(synopsis_content)
 
@@ -97,13 +103,13 @@ def _parse_mydramalist_page(html):
         data['synopsis'] = synopsis_text
     
     # Details from the info list
-    for li in soup.select('ul.list.m-b-0 > li.list-item'):
+    for li in soup.select('ul.list.m-b-0 > li.list-item, div.details-side > ul.list > li.list-item'):
         header = li.find('b')
         if not header: continue
         
         header_text = header.get_text(strip=True)
         # Get text after the header
-        value_text = header.next_sibling.strip() if header.next_sibling else ""
+        value_text = header.next_sibling.strip() if header.next_sibling and isinstance(header.next_sibling, str) else ""
 
         if "Also Known As:" in header_text:
             data['otherNames'] = value_text.strip()
