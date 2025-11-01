@@ -17,7 +17,7 @@
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v5.0.0 (Checkpoint & Resume)"
+SCRIPT_VERSION = "v5.1.0 (Robust Fetching)"
 
 # --- Master JSON Object Template ---
 JSON_OBJECT_TEMPLATE = {
@@ -43,7 +43,7 @@ JSON_OBJECT_TEMPLATE = {
     "updatedDetails": None,
     "synopsis": None,
     "topRatings": 0,
-    "Duration": None, # String to allow for "60 mins." or "1 hr. 20 min."
+    "Duration": None,
     "sitePriorityUsed": {
         "showImage": None,
         "releaseDate": None,
@@ -273,8 +273,7 @@ def fetch_data_based_on_priority(show_name, release_year, show_id, site_priority
     spu = copy.deepcopy(JSON_OBJECT_TEMPLATE['sitePriorityUsed'])
 
     for field, site_map in fetch_map.items():
-        # Correctly map Duration to duration for site_priority lookup
-        priority_key = 'duration' if field == 'Duration' else field
+        priority_key = 'duration' if field == 'Duration' else field.lower()
         preferred_site = site_priority.get(priority_key)
         
         if preferred_site in site_map:
@@ -285,7 +284,8 @@ def fetch_data_based_on_priority(show_name, release_year, show_id, site_priority
                 if result:
                     fetched_data[field] = result
                     key = 'showImage' if field == 'image' else field
-                    spu[key] = preferred_site
+                    spu_key = key if key != 'Duration' else 'duration'
+                    spu[spu_key] = preferred_site
                     run_context['temp_fetch_urls'][key] = url
             except Exception as e:
                 logd(f"Failed to fetch {field} from {preferred_site}: {e}")
@@ -405,7 +405,6 @@ def apply_manual_updates(excel_file_like, by_id, run_context):
     return report
 
 def excel_to_objects(excel_file_like, sheet_name):
-    # This function now only reads and parses the Excel sheet into a list of dictionaries
     df = pd.read_excel(excel_file_like, sheet_name=sheet_name, keep_default_na=False)
     df.columns = [c.strip().lower() for c in df.columns]
     
@@ -457,20 +456,29 @@ def save_metadata_backup(new_obj, site_priority, run_context):
     fetched_fields_list = []
     for field in successful_fields:
         field_data = {
-            "field": field, "value": new_obj.get(field), "sourceSite": spu.get(field),
+            "field": field,
+            "value": new_obj.get(field),
+            "sourceSite": spu.get(field),
             "sourceURL": run_context['temp_fetch_urls'].get(field)
         }
         fetched_fields_list.append(field_data)
 
     backup_data = {
-        "scriptVersion": SCRIPT_VERSION, "runID": run_context['run_id'],
+        "scriptVersion": SCRIPT_VERSION,
+        "runID": run_context['run_id'],
         "timestamp": run_context['start_timestamp'].strftime("%d %B %Y %I:%M %p (IST)"),
-        "showID": new_obj['showID'], "showName": new_obj['showName'], "releasedYear": new_obj.get('releasedYear'),
+        "showID": new_obj['showID'],
+        "showName": new_obj['showName'],
+        "releasedYear": new_obj.get('releasedYear'),
         "fetchingInputs": {
             "language": new_obj.get('nativeLanguage', 'default').lower(),
             "sitePriorityConfiguration": site_priority
         },
-        "summary": {"status": status, "successfulFields": successful_fields, "failedFields": failed_fields},
+        "summary": {
+            "status": status,
+            "successfulFields": successful_fields,
+            "failedFields": failed_fields
+        },
         "fetchedFields": fetched_fields_list
     }
     
@@ -485,14 +493,18 @@ def create_diff_backup(old_obj, new_obj, run_context):
         old_val = old_obj.get(key)
         if isinstance(new_val, list): new_val = normalize_list(new_val)
         if isinstance(old_val, list): old_val = normalize_list(old_val)
-        if old_val != new_val: changed_fields[key] = {"old": old_val, "new": new_val}
+        if old_val != new_val:
+            changed_fields[key] = {"old": old_val, "new": new_val}
             
     if not changed_fields: return
 
     backup_data = {
-        "scriptVersion": SCRIPT_VERSION, "runID": run_context['run_id'],
+        "scriptVersion": SCRIPT_VERSION,
+        "runID": run_context['run_id'],
         "timestamp": run_context['start_timestamp'].strftime("%d %B %Y %I:%M %p (IST)"),
-        "backupType": "partial_diff", "showID": new_obj['showID'], "showName": new_obj['showName'],
+        "backupType": "partial_diff",
+        "showID": new_obj['showID'],
+        "showName": new_obj['showName'],
         "releasedYear": new_obj.get('releasedYear'),
         "updatedDetails": new_obj.get('updatedDetails', 'Record Updated'),
         "changedFields": changed_fields
@@ -505,7 +517,6 @@ def create_diff_backup(old_obj, new_obj, run_context):
 
 # ---------------------------- REPORTING --------------------------------------
 def write_report(run_context):
-    # This function now only runs at the very end of a complete job
     report_path = os.path.join(REPORTS_DIR, f"Report_{run_context['start_timestamp'].strftime('%d_%B_%Y_%H%M')}.txt")
     run_context['files_generated']['reports'].append(report_path)
     report_changes = run_context['report_data']
@@ -616,14 +627,12 @@ def write_report(run_context):
         f.write("\n".join(lines))
     print(f"✅ Final report written -> {report_path}")
 
-
 # ---------------------------- MAIN WORKFLOW & RUN CONTEXT -----------------------------------
 def load_run_context(sheets):
     if os.path.exists(PROGRESS_FILE):
         print("Resuming previous run...")
         with open(PROGRESS_FILE, 'r') as f:
             context = json.load(f)
-            # Ensure timestamp is a datetime object after loading
             context['start_timestamp'] = datetime.fromisoformat(context['start_timestamp'])
             return context
     
@@ -705,7 +714,6 @@ def main():
                 print("⏳ Time limit approaching. Saving progress and exiting.")
                 run_context['current_row_index'] = row_idx
                 save_run_context(run_context)
-                # Save partial data to JSON
                 with open(JSON_FILE, 'w') as f: json.dump(sorted(merged_by_id.values(), key=lambda x: x.get('showID', 0)), f, indent=4)
                 sys.exit(0)
 
@@ -735,9 +743,14 @@ def main():
                 if missing: report['fetch_warnings'].append(f"- {sid} - {final_obj['showName']} -> ⚠️ Missing: {', '.join(missing)} Not Found")
             
             elif objects_differ(old_obj, obj_from_excel):
-                # Logic for updates
-                # ...
-                pass
+                changes = [human_readable_field(k) for k, v in obj_from_excel.items() if old_obj.get(k) != v and k not in LOCKED_FIELDS_AFTER_CREATION]
+                final_obj = {**old_obj, **obj_from_excel} # Merge changes from Excel
+                final_obj['updatedDetails'] = f"{', '.join(changes)} Updated" if changes else "Record Updated"
+                final_obj['updatedOn'] = run_context['start_timestamp'].strftime('%d %B %Y')
+                
+                report['updated'].append({'old': old_obj, 'new': final_obj})
+                create_diff_backup(old_obj, final_obj, run_context)
+                merged_by_id[sid] = final_obj
             else:
                 report['skipped'].append(f"- {sid} - {old_obj['showName']} ({old_obj.get('releasedYear')})")
         
@@ -780,6 +793,7 @@ if __name__ == '__main__':
     except Exception as e:
         print(f"\n❌ A fatal, unexpected error occurred: {e}")
         logd(traceback.format_exc())
+        os.makedirs(REPORTS_DIR, exist_ok=True)
         with open(os.path.join(REPORTS_DIR, "failure_reason.txt"), "w") as f:
             f.write(str(e) + "\n\n" + traceback.format_exc())
         sys.exit(1)
