@@ -130,7 +130,6 @@ def objects_differ(old, new_from_excel):
         old_val = old.get(key)
         new_val = hypothetical_obj.get(key)
         
-        # Normalize for comparison
         if isinstance(old_val, list) or isinstance(new_val, list):
             if normalize_list(old_val) != normalize_list(new_val):
                 return True
@@ -484,7 +483,7 @@ def main():
                 if fetched: report['fetched_data'].append(f"- {sid} - {final_obj['showName']} ({final_obj.get('releasedYear')}) -> {', '.join(fetched)} Updated")
                 if missing: report['fetch_warnings'].append(f"- {sid} - {final_obj['showName']} ({final_obj.get('releasedYear')}) -> ⚠️ Missing: {', '.join(missing)} Not Found")
             elif objects_differ(old_obj, obj_from_excel):
-                changes = [human_readable_field(k) for k, v in obj_from_excel.items() if old_obj.get(k) != v and k not in LOCKED_FIELDS_AFTER_CREATION]
+                changes = [human_readable_field(k) for k, v in obj_from_excel.items() if str(old_obj.get(k) or '') != str(v or '') and k not in LOCKED_FIELDS_AFTER_CREATION]
                 final_obj = {**old_obj, **obj_from_excel}
                 final_obj['updatedDetails'] = f"{', '.join(changes)} Updated" if changes else "Record Updated"
                 final_obj['updatedOn'] = run_context['start_timestamp'].strftime('%d %B %Y')
