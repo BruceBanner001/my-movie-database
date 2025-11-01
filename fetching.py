@@ -18,9 +18,7 @@ HEADERS = {
 # --- HELPER FUNCTIONS ---
 
 def _ddgs_search(query, type='text', max_results=3):
-    """Performs a DuckDuckGo search and returns results."""
-    if not HAVE_DDGS:
-        return []
+    if not HAVE_DDGS: return []
     try:
         with DDGS() as ddgs:
             if type == 'text':
@@ -31,21 +29,15 @@ def _ddgs_search(query, type='text', max_results=3):
         return []
 
 def _get_page_html(site, show_name, release_year):
-    """
-    Finds the correct page on a site by checking multiple search results
-    and returns its HTML content and URL.
-    """
     query = f"{show_name} {release_year} site:{site}.com"
     results = _ddgs_search(query, type='text')
     
     for result in results:
         page_url = result.get('href')
-        if not page_url:
-            continue
+        if not page_url: continue
         try:
             response = requests.get(page_url, headers=HEADERS, timeout=15)
             if response.status_code == 200:
-                # A better check: ensure both name and year are in the title tag
                 soup = BeautifulSoup(response.text, 'lxml')
                 title = soup.title.string.lower() if soup.title else ''
                 if show_name.lower() in title and str(release_year) in title:
@@ -54,82 +46,60 @@ def _get_page_html(site, show_name, release_year):
             continue
     return None, None
 
-def _find_detail_by_label(soup, label):
-    """Finds a text label in the soup and returns the text of the next sibling or parent's value."""
-    found_label = soup.find(string=re.compile(label, re.I))
-    if not found_label:
-        return None
-    
-    # Try to get the next element's text
-    next_element = found_label.find_next()
-    if next_element and next_element.get_text(strip=True):
-        return next_element.get_text(strip=True)
-        
-    # Fallback: get the parent's text and remove the label
-    parent = found_label.parent
-    if parent:
-        return parent.get_text(strip=True).replace(found_label, "").strip()
-        
+def _find_detail_by_label(soup, label_regex):
+    element = soup.find(string=re.compile(label_regex, re.I))
+    if element:
+        # Navigate up to a common parent (like <li> or <div>) and get all its text
+        parent = element.find_parent(['li', 'div'])
+        if parent:
+            # Clean the text by removing the label itself
+            return re.sub(label_regex, '', parent.get_text(" ", strip=True), flags=re.I).strip()
     return None
 
-
 def _parse_asianwiki_page(html):
-    """Extracts data from AsianWiki using robust text-based searching."""
     soup = BeautifulSoup(html, 'lxml')
     data = {}
-    
+
     # Image
-    image_tag = soup.select_one("a.image-thumbnail img")
+    image_tag = soup.select_one("td.ent-img img")
     if image_tag and image_tag.get('src'):
-        data['image'] = image_tag['src'].split('/revision/')[0]
+        data['image'] = 'https://asianwiki.com' + image_tag['src']
 
     # Synopsis
-    plot_header = soup.find(['h2', 'h3'], id=re.compile(r'Plot|Synopsis', re.I))
+    plot_header = soup.find('h2', string='Plot Synopsis')
     if plot_header:
-        synopsis_content = []
-        for sibling in plot_header.find_next_siblings():
-            if sibling.name in ['h2', 'h3']: break
-            if sibling.name == 'p': synopsis_content.append(sibling.get_text(strip=True))
-        if synopsis_content: data['synopsis'] = ' '.join(synopsis_content)
+        synopsis_p = plot_header.find_next_sibling('p')
+        if synopsis_p: data['synopsis'] = synopsis_p.get_text(strip=True)
 
-    # Details from the info box
-    text_content = soup.get_text(" ", strip=True)
+    # Details from the profile section
+    profile_text = soup.select_one('div.profile_container').get_text(" ", strip=True) if soup.select_one('div.profile_container') else ''
     
-    # Release Date
-    release_date_match = re.search(r'Release Date:\s*([A-Za-z0-9,\s\-]+)', text_content)
-    if release_date_match: data['releaseDate'] = release_date_match.group(1).strip()
+    release_match = re.search(r'Release Date:\s*([^|]+)', profile_text)
+    if release_match: data['releaseDate'] = release_match.group(1).strip()
     
-    # Other Names
-    other_names_match = re.search(r'English title\)\s*/\s*(.*?)\s*\(literal title\)', text_content)
-    if other_names_match: data['otherNames'] = other_names_match.group(1).strip()
-        
+    duration_match = re.search(r'Runtime:\s*([^|]+)', profile_text)
+    if duration_match: data['duration'] = duration_match.group(1).strip() + " mins."
+
     return data
 
 def _parse_mydramalist_page(html):
-    """Extracts data from MyDramaList using robust text-based searching."""
     soup = BeautifulSoup(html, 'lxml')
     data = {}
 
-    # Image (meta tag is most reliable)
     og_image = soup.find('meta', property='og:image')
-    if og_image and og_image.get('content'):
-        data['image'] = og_image['content']
+    if og_image and og_image.get('content'): data['image'] = og_image['content']
 
-    # Synopsis
     synopsis_div = soup.find('div', class_='show-synopsis')
     if synopsis_div:
         synopsis_text = re.sub(r'\s*\(\s*Source:.*?\)\s*$', '', synopsis_div.get_text()).strip()
         data['synopsis'] = synopsis_text
     
-    # Use the label-finding helper for other details
-    data['otherNames'] = _find_detail_by_label(soup, "Also Known As:")
-    data['releaseDate'] = _find_detail_by_label(soup, "Aired:")
-    duration_text = _find_detail_by_label(soup, "Duration:")
-    if duration_text:
-        data['duration'] = duration_text.replace("min.", "mins.")
+    data['otherNames'] = _find_detail_by_label(soup, r'Also Known As:')
+    data['releaseDate'] = _find_detail_by_label(soup, r'Aired:')
+    duration_text = _find_detail_by_label(soup, r'Duration:')
+    if duration_text: data['duration'] = duration_text.replace("min.", "mins.")
 
     return data
-
 
 # ============================================================
 # 🏮 ASIANWIKI FETCHING BLOCKS

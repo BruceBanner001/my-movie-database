@@ -4,20 +4,13 @@
 # Description:
 #   This script automates the creation, update, and backup process
 #   for JSON data objects derived from Excel or YAML workflows.
-#
-#   Key features:
-#   - Checkpoint & Resume logic for long-running jobs.
-#   - Separated fetching logic in fetching.py for maintainability.
-#   - Robust manual update functionality from a dedicated sheet.
-#   - Enforces a consistent 24-property schema for all JSON objects.
-#
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v5.2.0 (False Update & Reporting Fix)"
+SCRIPT_VERSION = "v5.3.0 (Definitive Bugfix)"
 
 # --- Master JSON Object Template ---
 JSON_OBJECT_TEMPLATE = {
@@ -125,20 +118,27 @@ def normalize_list(cell_value):
 
 def objects_differ(old, new):
     """Smarter comparison to prevent false positives by normalizing values before comparing."""
-    keys_to_compare = set(old.keys()) | set(new.keys()) - LOCKED_FIELDS_AFTER_CREATION
-    for k in keys_to_compare:
+    # First, create a "hypothetical" updated object to compare against
+    hypothetical_update = old.copy()
+    for key, value in new.items():
+        if key not in LOCKED_FIELDS_AFTER_CREATION:
+            hypothetical_update[key] = value
+
+    # Now, compare the original 'old' object with this complete hypothetical object
+    for k in set(old.keys()) | set(hypothetical_update.keys()):
+        if k in LOCKED_FIELDS_AFTER_CREATION:
+            continue
+            
         o_val = old.get(k)
-        n_val = new.get(k)
-
-        # Normalize empty/null values to a common representation (empty string)
-        o_norm = "" if o_val is None or o_val == 0 or o_val == [] else o_val
-        n_norm = "" if n_val is None or n_val == 0 or n_val == [] else n_val
+        h_val = hypothetical_update.get(k)
         
-        # Normalize lists for consistent comparison
+        o_norm = "" if o_val is None or o_val == 0 or o_val == [] else o_val
+        h_norm = "" if h_val is None or h_val == 0 or h_val == [] else h_val
+        
         if isinstance(o_norm, list): o_norm = sorted(o_norm)
-        if isinstance(n_norm, list): n_norm = sorted(n_norm)
-
-        if str(o_norm) != str(n_norm):
+        if isinstance(h_norm, list): h_norm = sorted(h_norm)
+        
+        if str(o_norm) != str(h_norm):
             return True
             
     return False
@@ -171,11 +171,9 @@ def fetch_data_based_on_priority(show_name, release_year, show_id, site_priority
         'releaseDate': {'asianwiki': fetching.fetch_release_date_from_asianwiki, 'mydramalist': fetching.fetch_release_date_from_mydramalist}
     }
     spu = copy.deepcopy(JSON_OBJECT_TEMPLATE['sitePriorityUsed'])
-
     for field, site_map in fetch_map.items():
         priority_key = 'duration' if field == 'Duration' else field.lower()
         preferred_site = site_priority.get(priority_key)
-        
         if preferred_site in site_map:
             try:
                 result, url = (site_map[preferred_site](show_name, release_year, show_id) if field == 'image' else site_map[preferred_site](show_name, release_year))
@@ -187,7 +185,6 @@ def fetch_data_based_on_priority(show_name, release_year, show_id, site_priority
                     run_context['temp_fetch_urls'][key_map.get(field, field)] = url
             except Exception as e:
                 logd(f"Failed to fetch {field} from {preferred_site}: {e}")
-
     if 'image' in fetched_data:
         image_url = fetched_data['image']
         local_path = os.path.join(IMAGES_DIR, f"{show_id}.jpg")
@@ -195,7 +192,6 @@ def fetch_data_based_on_priority(show_name, release_year, show_id, site_priority
             fetched_data['showImage'] = build_absolute_url(local_path)
             run_context['files_generated']['images'].append(local_path)
         del fetched_data['image']
-
     fetched_data['sitePriorityUsed'] = spu
     return fetched_data
 
@@ -487,7 +483,7 @@ def main():
                 report['created'].append(final_obj)
                 merged_by_id[sid] = final_obj
                 save_metadata_backup(final_obj, site_priority, run_context)
-                missing = [human_readable_field(k) for k, v in final_obj.items() if v is None and k in JSON_OBJECT_TEMPLATE and k != 'showID']
+                missing = [human_readable_field(k) for k, v in final_obj.items() if (v is None or v == []) and k in JSON_OBJECT_TEMPLATE and k not in ['watchStartedOn', 'watchEndedOn', 'comments']]
                 fetched = [human_readable_field(k) for k, v in final_obj['sitePriorityUsed'].items() if v]
                 if fetched: report['fetched_data'].append(f"- {sid} - {final_obj['showName']} ({final_obj.get('releasedYear')}) -> {', '.join(fetched)} Updated")
                 if missing: report['fetch_warnings'].append(f"- {sid} - {final_obj['showName']} ({final_obj.get('releasedYear')}) -> ⚠️ Missing: {', '.join(missing)} Not Found")
