@@ -1,7 +1,7 @@
 # ============================================================================
 # Workflow: Excel → JSON Automation
 # Purpose : Automate scheduled and manual Excel-to-JSON updates.
-# Version : 3.3 (Fix: Added heavy debugging to the commit step)
+# Version : 3.4 (Fix: Re-added --force to git add to override .gitignore)
 # ============================================================================
 
 name: Excel → JSON Update
@@ -69,7 +69,7 @@ jobs:
           echo "report_path=$report_path" >> "$GITHUB_OUTPUT"
 
       # ===================================================================
-      #  STEP 3: COMMIT CHANGES (NOW WITH HEAVY DEBUGGING)
+      #  STEP 3: COMMIT CHANGES (THE FINAL FIX)
       # ===================================================================
       - name: 6. Commit and push all generated files
         if: steps.run_updater.outcome == 'success'
@@ -78,35 +78,21 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           
-          # [ NEW DEBUGGING COMMANDS ARE HERE ]
-          echo "--- 1. Listing all files and folders before doing anything ---"
-          ls -laR
-          
-          echo ""
-          echo "--- 2. Checking git status before adding files ---"
+          echo "Checking git status before adding files..."
           git status
           
-          echo ""
-          echo "--- 3. Adding all generated files to the commit ---"
-          # We add each potential directory and file individually for clarity.
-          git add reports/
-          git add deleted_data/
-          git add deleted-images/
-          git add backup-meta-data/
-          git add backups/
-          git add images/
-          git add seriesData.json
-          git add run_state.json || true # Use || true for state file in case it was deleted
+          # [ THE DEFINITIVE FIX IS HERE ]
+          # We use "git add --force" to ensure that all generated files are staged
+          # for commit, even if they are listed in the repository's .gitignore file.
+          # This is the key to making the commit work.
+          echo "Adding all generated files with --force..."
+          git add --force seriesData.json images/ backups/ reports/ deleted-data/ deleted-images/ backup-meta-data/ run_state.json || true
           
-          echo ""
-          echo "--- 4. Checking git status AFTER adding files ---"
-          # This is the most important check. If files were added, they will show up here as "changes to be committed".
+          echo "Checking git status AFTER adding files..."
           git status
           
-          echo ""
-          echo "--- 5. Checking for staged changes and committing if they exist ---"
           if git diff --cached --quiet; then
-            echo "Git found no staged changes. Nothing to commit."
+            echo "No data changes to commit."
           else
             commit_message="Automated data update: $(date -u '+%Y-%m-%d %H:%M UTC')"
             echo "Staged changes found. Creating commit: $commit_message"
@@ -116,7 +102,7 @@ jobs:
           fi
 
       # ===================================================================
-      #  STEP 4: NOTIFICATIONS & CLEANUP (No changes here)
+      #  STEP 4: NOTIFICATIONS & CLEANUP (No changes needed here)
       # ===================================================================
       - name: 7. Determine workflow final status
         id: check_status
@@ -178,7 +164,7 @@ jobs:
               echo "$SCRIPT_OUTPUT"
             fi
           } > "$email_body_file"
-          echo "body_file=$email_body_file" >> "$GITHUB_OUTPUT"
+          echo "body_file=$body_file" >> "$GITHUB_OUTPUT"
 
       - name: 11. Send consolidated report email
         if: always()
