@@ -12,7 +12,7 @@
 #   - Field locking to protect fetched data from being overwritten.
 #   - Highly detailed and structured run reports.
 #   - Specialized, site-specific data fetchers (AsianWiki, MyDramaList).
-#   - Resumable workflow support for long-running jobs.
+#   - Robust data validation to prevent crashes from bad Excel data.
 #
 # ============================================================
 
@@ -20,7 +20,7 @@
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v4.1.0 (Feat: Explicit Fetching Functions)"
+SCRIPT_VERSION = "v4.2.0 (Feat: Robust Data Validation)"
 
 # --- Master JSON Object Template ---
 # Ensures every object written to seriesData.json has a consistent structure.
@@ -150,7 +150,6 @@ LOCKED_FIELDS_AFTER_CREATION = {
 import os
 import re
 import sys
-import time
 import json
 import io
 import shutil
@@ -195,7 +194,6 @@ STATE_FILE = "run_state.json"
 
 DEBUG_FETCH = os.environ.get("DEBUG_FETCH", "false").lower() == "true"
 SCHEDULED_RUN = os.environ.get("SCHEDULED_RUN", "false").lower() == "true"
-KEEP_OLD_FILES_DAYS = int(os.environ.get("KEEP_OLD_FILES_DAYS", "90") or 90)
 GITHUB_PAGES_URL = os.environ.get("GITHUB_PAGES_URL", "").strip() or "https://<your-username>.github.io/my-movie-database"
 SERVICE_ACCOUNT_FILE = "GDRIVE_SERVICE_ACCOUNT.json"
 EXCEL_FILE_ID_TXT = "EXCEL_FILE_ID.txt"
@@ -210,9 +208,6 @@ def logd(msg):
 # ---------------------------- CORE UTILITIES --------------------------------
 def human_readable_field(field):
     return FIELD_NAME_MAP.get(field, field)
-
-def safe_filename(name):
-    return re.sub(r"[^A-Za-z0-9._-]+", "_", (name or "").strip())
 
 def ddmmyyyy(val):
     if pd.isna(val): return None
@@ -285,25 +280,20 @@ def build_absolute_url(local_path):
 def fetch_synopsis_from_asianwiki(show_name, release_year):
     soup = get_soup_from_search(f"{show_name} {release_year} site:asianwiki.com")
     if not soup: return None
-    
     h2_synopsis = soup.find('h2', string='Synopsis')
     if not h2_synopsis: return None
-    
     content = []
     for sibling in h2_synopsis.find_next_siblings():
         if sibling.name == 'h2': break
         if sibling.name == 'p': content.append(sibling.get_text(strip=True))
-    
     synopsis = " ".join(content)
     return f"{synopsis} (Source: AsianWiki)" if synopsis else None
 
 def fetch_image_from_asianwiki(show_name, release_year, show_id):
     soup = get_soup_from_search(f"{show_name} {release_year} site:asianwiki.com")
     if not soup: return None
-    
     img_tag = soup.select_one('a.image > img')
     if not img_tag or not img_tag.get('src'): return None
-    
     image_url = img_tag['src']
     local_path = os.path.join(IMAGES_DIR, f"{show_id}.jpg")
     if download_and_save_image(image_url, local_path):
@@ -313,22 +303,18 @@ def fetch_image_from_asianwiki(show_name, release_year, show_id):
 def fetch_othernames_from_asianwiki(show_name, release_year):
     soup = get_soup_from_search(f"{show_name} {release_year} site:asianwiki.com")
     if not soup: return None
-    
     parent_div = soup.find('div', id='mw-content-text')
     if not parent_div: return []
-    
     text_content = parent_div.get_text(" ", strip=True)
     match = re.search(r"Drama:\s*([^(\n\r]+)", text_content)
     return normalize_list(match.group(1).strip()) if match else []
 
 def fetch_duration_from_asianwiki(show_name, release_year):
-    # AsianWiki rarely provides this information reliably.
     return None
 
 def fetch_release_date_from_asianwiki(show_name, release_year):
     soup = get_soup_from_search(f"{show_name} {release_year} site:asianwiki.com")
     if not soup: return None
-    
     text_content = soup.get_text(" ", strip=True)
     match = re.search(r"Release Date:\s*([^\n\r]+)", text_content)
     return match.group(1).strip() if match else None
@@ -338,20 +324,16 @@ def fetch_release_date_from_asianwiki(show_name, release_year):
 def fetch_synopsis_from_mydramalist(show_name, release_year):
     soup = get_soup_from_search(f"{show_name} {release_year} site:mydramalist.com")
     if not soup: return None
-
     synopsis_div = soup.select_one('.show-synopsis')
     if not synopsis_div: return None
-    
     synopsis = synopsis_div.get_text(strip=True).replace('(Source: MyDramaList)', '').strip()
     return f"{synopsis} (Source: MyDramaList)" if synopsis else None
 
 def fetch_image_from_mydramalist(show_name, release_year, show_id):
     soup = get_soup_from_search(f"{show_name} {release_year} site:mydramalist.com")
     if not soup: return None
-
     img_tag = soup.select_one('.film-cover img, .cover img')
     if not img_tag or not img_tag.get('src'): return None
-    
     image_url = img_tag['src']
     local_path = os.path.join(IMAGES_DIR, f"{show_id}.jpg")
     if download_and_save_image(image_url, local_path):
@@ -360,46 +342,36 @@ def fetch_image_from_mydramalist(show_name, release_year, show_id):
 
 def fetch_othernames_from_mydramalist(show_name, release_year):
     soup = get_soup_from_search(f"{show_name} {release_year} site:mydramalist.com")
-    if not soup: return None
-    
+    if not soup: return []
     aka_header = soup.find('b', string=re.compile(r'Also Known As:'))
     if not aka_header: return []
-    
     names_text = aka_header.next_sibling
     return normalize_list(names_text) if names_text and isinstance(names_text, str) else []
 
 def fetch_duration_from_mydramalist(show_name, release_year):
     soup = get_soup_from_search(f"{show_name} {release_year} site:mydramalist.com")
     if not soup: return None
-
     duration_el = soup.find(lambda tag: 'Duration:' in tag.get_text() and tag.name == 'li')
     if not duration_el: return None
-    
     return duration_el.get_text().replace('Duration:', '').strip()
 
 def fetch_release_date_from_mydramalist(show_name, release_year):
     soup = get_soup_from_search(f"{show_name} {release_year} site:mydramalist.com")
     if not soup: return None
-
     aired_el = soup.find(lambda tag: 'Aired:' in tag.get_text() and tag.name == 'li')
     if not aired_el: return None
-    
     return aired_el.get_text().replace('Aired:', '').strip()
 
 # ---------------------------- DATA FETCHING ORCHESTRATOR -----------------------------
 FETCH_MAP = {
     'asianwiki': {
-        'synopsis': fetch_synopsis_from_asianwiki,
-        'image': fetch_image_from_asianwiki,
-        'otherNames': fetch_othernames_from_asianwiki,
-        'duration': fetch_duration_from_asianwiki,
+        'synopsis': fetch_synopsis_from_asianwiki, 'image': fetch_image_from_asianwiki,
+        'otherNames': fetch_othernames_from_asianwiki, 'duration': fetch_duration_from_asianwiki,
         'releaseDate': fetch_release_date_from_asianwiki,
     },
     'mydramalist': {
-        'synopsis': fetch_synopsis_from_mydramalist,
-        'image': fetch_image_from_mydramalist,
-        'otherNames': fetch_othernames_from_mydramalist,
-        'duration': fetch_duration_from_mydramalist,
+        'synopsis': fetch_synopsis_from_mydramalist, 'image': fetch_image_from_mydramalist,
+        'otherNames': fetch_othernames_from_mydramalist, 'duration': fetch_duration_from_mydramalist,
         'releaseDate': fetch_release_date_from_mydramalist,
     }
 }
@@ -407,24 +379,19 @@ FETCH_MAP = {
 def fetch_and_populate_metadata(obj, site_priority, run_context):
     show_name, release_year, show_id = obj['showName'], obj['releasedYear'], obj['showID']
     spu = obj.setdefault('sitePriorityUsed', {})
-
     fields_to_fetch = ['synopsis', 'image', 'releaseDate', 'duration', 'otherNames']
     
     for field in fields_to_fetch:
         primary_site = site_priority.get(field)
         fallback_site = 'mydramalist' if primary_site == 'asianwiki' else 'asianwiki'
+        result, used_site = None, None
         
-        result = None
-        used_site = None
-        
-        # Try primary site
         if primary_site in FETCH_MAP and field in FETCH_MAP[primary_site]:
             fetch_func = FETCH_MAP[primary_site][field]
             args = (show_name, release_year, show_id) if field == 'image' else (show_name, release_year)
             result = fetch_func(*args)
             if result: used_site = primary_site
 
-        # If primary failed, try fallback site
         if not result and fallback_site in FETCH_MAP and field in FETCH_MAP[fallback_site]:
             fetch_func = FETCH_MAP[fallback_site][field]
             args = (show_name, release_year, show_id) if field == 'image' else (show_name, release_year)
@@ -438,7 +405,6 @@ def fetch_and_populate_metadata(obj, site_priority, run_context):
             else:
                 obj[field] = result
             spu[field] = used_site
-
     return obj
 
 # ---------------------------- CORE WORKFLOW FUNCTIONS ---------------------------------
@@ -461,7 +427,6 @@ def process_deletions(excel_file_like, json_file, run_context):
         if sid in by_id:
             deleted_obj = by_id.pop(sid)
             deleted_ids.add(sid)
-            
             ts = filename_timestamp()
             archive_path = os.path.join(DELETED_DATA_DIR, f"DELETED_{ts}_{sid}.json")
             os.makedirs(DELETED_DATA_DIR, exist_ok=True)
@@ -477,11 +442,9 @@ def process_deletions(excel_file_like, json_file, run_context):
                     os.makedirs(DELETE_IMAGES_DIR, exist_ok=True)
                     shutil.move(src_path, img_archive_path)
                     run_context['files_generated']['deleted_images'].append(img_archive_path)
-
     if deleted_ids:
         with open(json_file, 'w', encoding='utf-8') as f:
             json.dump(list(by_id.values()), f, indent=4)
-    
     return report, list(deleted_ids)
 
 def apply_manual_updates(excel_file_like, by_id, run_context):
@@ -491,41 +454,26 @@ def apply_manual_updates(excel_file_like, by_id, run_context):
         df.columns = [c.strip().lower() for c in df.columns]
     except ValueError: return {}
     
-    COLUMN_MAP = {
-        "no": "showID",
-        "image": "showImage",
-        "other names": "otherNames",
-        "release date": "releaseDate",
-        "synopsis": "synopsis",
-        "duration": "Duration"
-    }
+    COLUMN_MAP = {"no": "showID", "image": "showImage", "other names": "otherNames",
+                  "release date": "releaseDate", "synopsis": "synopsis", "duration": "Duration"}
 
     for _, row in df.iterrows():
         sid = pd.to_numeric(row.get('no'), errors='coerce')
         if pd.isna(sid) or int(sid) not in by_id: continue
         sid = int(sid)
-
-        obj = by_id[sid]
-        old_obj = copy.deepcopy(obj)
-        changed_fields = {}
+        obj, old_obj, changed_fields = by_id[sid], copy.deepcopy(by_id[sid]), {}
 
         for col, key in COLUMN_MAP.items():
             if col in row and row[col]:
                 new_value = row[col]
-                
                 if key == 'showImage':
                     local_path = os.path.join(IMAGES_DIR, f"{sid}.jpg")
                     if download_and_save_image(new_value, local_path):
                         new_value = build_absolute_url(local_path)
                         run_context['files_generated']['images'].append(local_path)
-                    else:
-                        continue # Skip if download fails
-                
-                elif key == 'otherNames':
-                    new_value = normalize_list(new_value)
-                
-                else: # For string fields
-                    new_value = str(new_value).strip()
+                    else: continue
+                elif key == 'otherNames': new_value = normalize_list(new_value)
+                else: new_value = str(new_value).strip()
 
                 if obj.get(key) != new_value:
                     changed_fields[key] = {'old': obj.get(key), 'new': new_value}
@@ -536,45 +484,62 @@ def apply_manual_updates(excel_file_like, by_id, run_context):
             human_readable_changes = [human_readable_field(f) for f in changed_fields]
             obj['updatedDetails'] = f"{', '.join(human_readable_changes)} Updated Manually By Owner"
             obj['updatedOn'] = now_ist().strftime('%d %B %Y')
-            
             report.setdefault('updated', []).append({'old': old_obj, 'new': obj})
             create_diff_backup(old_obj, obj, run_context)
-
     return report
 
-
 def excel_to_objects(excel_file_like, sheet_name, existing_by_id, run_context):
-    df = pd.read_excel(excel_file_like, sheet_name=sheet_name, keep_default_na=False)
-    df.columns = [c.strip().lower() for c in df.columns]
+    try:
+        df = pd.read_excel(excel_file_like, sheet_name=sheet_name, keep_default_na=False)
+        df.columns = [c.strip().lower() for c in df.columns]
+    except Exception as e:
+        # This will catch if the sheet itself doesn't exist
+        print(f"INFO: Could not read sheet '{sheet_name}': {e}")
+        return []
+
+    report = run_context['report_data'].setdefault(sheet_name, {})
+    report.setdefault('data_warnings', [])
     
     try:
         again_idx = [i for i, c in enumerate(df.columns) if "again watched" in c][0]
     except IndexError:
-        raise ValueError(f"'Again Watched' column not found in sheet: {sheet_name}")
+        print(f"ERROR: 'Again Watched' column not found in sheet: {sheet_name}. Skipping sheet.")
+        return []
 
-    COLUMN_MAP = {
-        "no": "showID", "series title": "showName", "started date": "watchStartedOn", 
-        "finished date": "watchEndedOn", "year": "releasedYear", "total episodes": "totalEpisodes", 
-        "original language": "nativeLanguage", "language": "watchedLanguage", "ratings": "ratings", 
-        "catagory": "genres", "category": "genres", "original network": "network", "comments": "comments"
-    }
+    COLUMN_MAP = {"no": "showID", "series title": "showName", "started date": "watchStartedOn", 
+                  "finished date": "watchEndedOn", "year": "releasedYear", "total episodes": "totalEpisodes", 
+                  "original language": "nativeLanguage", "language": "watchedLanguage", "ratings": "ratings", 
+                  "catagory": "genres", "category": "genres", "original network": "network", "comments": "comments"}
     base_id_map = {"sheet1": 100, "feb 7 2023 onwards": 1000, "sheet2": 3000}
     base_id = base_id_map.get(sheet_name.lower(), 0)
 
     processed_objects = []
-    for _, row in df.iterrows():
+    for index, row in df.iterrows():
         obj = {}
+        row_num = index + 2
+        
         for col in df.columns[:again_idx]:
-            key = COLUMN_MAP.get(col, col.strip())
-            val = row[col]
-            if key == "showID": obj[key] = base_id + int(val) if val else None
+            key, val = COLUMN_MAP.get(col, col.strip()), row[col]
+            
+            if key in ("showID", "releasedYear", "totalEpisodes", "ratings"):
+                numeric_val = pd.to_numeric(val, errors='coerce')
+                if pd.isna(numeric_val):
+                    if val and str(val).strip(): # Only warn if there was actual bad data
+                        warning_msg = f"- Row {row_num}: Invalid value '{val}' in numeric column '{col}'. Using 0."
+                        report['data_warnings'].append(warning_msg)
+                    obj[key] = 0
+                else:
+                    obj[key] = int(numeric_val)
             elif key == "showName": obj[key] = str(val).strip() if val else None
             elif key in ("watchStartedOn", "watchEndedOn"): obj[key] = ddmmyyyy(val)
-            elif key in ("releasedYear", "totalEpisodes", "ratings"): obj[key] = int(val) if val else 0
             elif key in ("genres", "network"): obj[key] = normalize_list(val)
             else: obj[key] = str(val).strip() if val else None
 
-        if not obj.get("showID") or not obj.get("showName"): continue
+        if 'showID' in obj and obj['showID'] != 0:
+            obj['showID'] += base_id
+
+        if not obj.get("showID") or not obj.get("showName"):
+            continue
 
         obj["againWatchedDates"] = [ddmmyyyy(d) for d in row[again_idx:] if ddmmyyyy(d)]
         obj["showType"] = "Mini Drama" if "mini" in sheet_name.lower() else "Drama"
@@ -586,42 +551,27 @@ def excel_to_objects(excel_file_like, sheet_name, existing_by_id, run_context):
         if existing is None:
             obj['updatedDetails'] = "First Time Uploaded"
             obj['updatedOn'] = now_ist().strftime('%d %B %Y')
-            
             site_priority = SITE_PRIORITY_BY_LANGUAGE.get(obj.get('nativeLanguage','').lower(), SITE_PRIORITY_BY_LANGUAGE['default'])
-            
-            # New orchestrator fetches all metadata
             obj = fetch_and_populate_metadata(obj, site_priority, run_context)
-
         else:
             for field in LOCKED_FIELDS_AFTER_CREATION:
                 if field in existing: obj[field] = existing[field]
         
         obj["topRatings"] = (obj.get("ratings", 0)) * (len(obj.get("againWatchedDates", [])) + 1) * 100
-        
         final_obj = {**copy.deepcopy(JSON_OBJECT_TEMPLATE), **obj}
         processed_objects.append(final_obj)
         
     return processed_objects
 
 def save_metadata_backup(new_obj, run_context):
-    """Saves a metadata backup file for a newly created object."""
-    fetched_fields = {}
-    spu = new_obj.get('sitePriorityUsed', {})
+    fetched_fields, spu = {}, new_obj.get('sitePriorityUsed', {})
     for key, site in spu.items():
-        if site:
-            fetched_fields[key] = {"value": new_obj.get(key), "source": site}
-
+        if site: fetched_fields[key] = {"value": new_obj.get(key), "source": site}
     if not fetched_fields: return
-
-    backup_data = {
-        "scriptVersion": SCRIPT_VERSION,
-        "runID": run_context['run_id'],
-        "timestamp": now_ist().strftime("%d %B %Y %I:%M %p (IST)"),
-        "showID": new_obj['showID'],
-        "showName": new_obj['showName'],
-        "fetchedFields": fetched_fields
-    }
-    
+    backup_data = {"scriptVersion": SCRIPT_VERSION, "runID": run_context['run_id'],
+                   "timestamp": now_ist().strftime("%d %B %Y %I:%M %p (IST)"),
+                   "showID": new_obj['showID'], "showName": new_obj['showName'],
+                   "fetchedFields": fetched_fields}
     backup_path = os.path.join(BACKUP_META_DIR, f"META_{filename_timestamp()}_{new_obj['showID']}.json")
     os.makedirs(BACKUP_META_DIR, exist_ok=True)
     with open(backup_path, 'w', encoding='utf-8') as f: json.dump(backup_data, f, indent=4)
@@ -633,23 +583,14 @@ def create_diff_backup(old_obj, new_obj, run_context):
         old_val = old_obj.get(key)
         if isinstance(new_val, list): new_val = normalize_list(new_val)
         if isinstance(old_val, list): old_val = normalize_list(old_val)
-        if old_val != new_val:
-            changed_fields[key] = {"old": old_val, "new": new_val}
-            
+        if old_val != new_val: changed_fields[key] = {"old": old_val, "new": new_val}
     if not changed_fields: return
-
-    backup_data = {
-        "scriptVersion": SCRIPT_VERSION,
-        "runID": run_context['run_id'],
-        "timestamp": now_ist().strftime("%d %B %Y %I:%M %p (IST)"),
-        "backupType": "partial_diff",
-        "showID": new_obj['showID'],
-        "showName": new_obj['showName'],
-        "releasedYear": new_obj.get('releasedYear'),
-        "updatedDetails": new_obj.get('updatedDetails', 'Record Updated'),
-        "changedFields": changed_fields
-    }
-    
+    backup_data = {"scriptVersion": SCRIPT_VERSION, "runID": run_context['run_id'],
+                   "timestamp": now_ist().strftime("%d %B %Y %I:%M %p (IST)"),
+                   "backupType": "partial_diff", "showID": new_obj['showID'],
+                   "showName": new_obj['showName'], "releasedYear": new_obj.get('releasedYear'),
+                   "updatedDetails": new_obj.get('updatedDetails', 'Record Updated'),
+                   "changedFields": changed_fields}
     backup_path = os.path.join(BACKUP_DIR, f"BACKUP_{filename_timestamp()}_{new_obj['showID']}.json")
     os.makedirs(BACKUP_DIR, exist_ok=True)
     with open(backup_path, 'w', encoding='utf-8') as f: json.dump(backup_data, f, indent=4)
@@ -660,142 +601,98 @@ def write_report(run_context):
     report_path = run_context['report_file_path']
     report_changes = run_context['report_data']
     
-    lines = [
-        "✅ Workflow completed successfully",
-        f"🆔 Run ID: {run_context['run_id']}",
-        f"📅 Run Time: {now_ist().strftime('%d %B %Y %I:%M %p (IST)')}",
-        f"🕒 Duration: {run_context['duration_str']}",
-        f"⚙️ Script Version: {SCRIPT_VERSION}",
-        ""
-    ]
+    lines = [f"✅ Workflow completed successfully", f"🆔 Run ID: {run_context['run_id']}",
+             f"📅 Run Time: {now_ist().strftime('%d %B %Y %I:%M %p (IST)')}",
+             f"🕒 Duration: {run_context['duration_str']}", f"⚙️ Script Version: {SCRIPT_VERSION}", ""]
     sep = "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-    overall_stats = {
-        'created': 0, 'updated': 0, 'skipped': 0, 'deleted': 0,
-        'warnings': 0, 'images': 0, 'rows': 0
-    }
+    overall_stats = {'created': 0, 'updated': 0, 'skipped': 0, 'deleted': 0, 'warnings': 0, 'images': 0, 'rows': 0}
 
     for sheet, changes in report_changes.items():
         if not changes: continue
-        
-        # Capitalize sheet name for display, e.g., "sheet1" -> "Sheet 1"
         display_sheet = sheet.replace("sheet", "Sheet ").title()
         lines.extend([sep, f"🗂️ === {display_sheet} — {now_ist().strftime('%d %B %Y')} ==="])
         lines.append(sep)
         
         if changes.get('created'):
             lines.append("\n🆕 Data Created:")
-            for obj in changes['created']:
-                lines.append(f"- {obj['showID']} - {obj['showName']} ({obj.get('releasedYear')}) -> First Time Uploaded")
-
+            for obj in changes['created']: lines.append(f"- {obj['showID']} - {obj['showName']} ({obj.get('releasedYear')}) -> First Time Uploaded")
         if changes.get('updated'):
             lines.append("\n🔁 Data Updated:")
             for pair in changes['updated']:
                 obj = pair['new']
                 emoji = "✍️" if "Manually" in obj.get('updatedDetails', '') else "🔁"
                 lines.append(f"{emoji} {obj['showID']} - {obj['showName']} ({obj.get('releasedYear')}) -> {obj['updatedDetails']}")
-        
+        if changes.get('data_warnings'):
+            lines.append("\n⚠️ Data Validation Warnings:")
+            for item in changes['data_warnings']: lines.append(item)
+            overall_stats['warnings'] += len(changes['data_warnings'])
         if changes.get('fetched_data'):
             lines.append("\n🖼️ Fetched Data Updated:")
             for item in changes['fetched_data']: lines.append(item)
-
         if changes.get('fetch_warnings'):
             lines.append("\n🕳️ Value Not Found:")
             for item in changes['fetch_warnings']: lines.append(item)
             overall_stats['warnings'] += len(changes['fetch_warnings'])
-
         if changes.get('skipped'):
             lines.append("\n🚫 Unchanged Entries (Skipped):")
             for item in changes['skipped']: lines.append(f"- {item}")
-        
         if changes.get('data_deleted'):
             lines.append("\n❌ Data Deleted:")
             for item in changes['data_deleted']: lines.append(item)
         
         if sheet not in ["Deleting Records", "Manual Updates"]:
             stats = {k: len(v) for k, v in changes.items()}
-            total_rows = stats.get('created', 0) + stats.get('updated', 0) + stats.get('skipped', 0)
+            total = sum(stats.get(k, 0) for k in ['created', 'updated', 'skipped'])
             overall_stats['created'] += stats.get('created', 0)
             overall_stats['updated'] += stats.get('updated', 0)
             overall_stats['skipped'] += stats.get('skipped', 0)
             overall_stats['images'] += sum(1 for item in changes.get('fetched_data', []) if "Show Image" in item)
-            overall_stats['rows'] += total_rows
-            
-            lines.extend([
-                f"\n📊 Summary (Sheet: {display_sheet})", sep,
-                f"🆕 Total Created: {stats.get('created', 0)}",
-                f"🔁 Total Updated: {stats.get('updated', 0)}",
-                f"🖼️ Total Images Updated: {sum(1 for item in changes.get('fetched_data', []) if 'Show Image' in item)}",
-                f"🚫 Total Skipped: {stats.get('skipped', 0)}",
-                f"⚠️ Total Warnings: {len(changes.get('fetch_warnings', []))}",
-                f"  Total Number of Rows: {total_rows}"
-            ])
+            overall_stats['rows'] += total
+            lines.extend([f"\n📊 Summary (Sheet: {display_sheet})", sep, f"🆕 Total Created: {stats.get('created', 0)}",
+                          f"🔁 Total Updated: {stats.get('updated', 0)}", f"🚫 Total Skipped: {stats.get('skipped', 0)}",
+                          f"⚠️ Total Warnings: {stats.get('data_warnings', 0) + stats.get('fetch_warnings', 0)}",
+                          f"  Total Number of Rows: {total}"])
         lines.append("")
 
     overall_stats['deleted'] = len(run_context['files_generated']['deleted_data'])
-    lines.extend([
-        sep, "📊 Overall Summary", sep,
-        f"🆕 Total Created: {overall_stats['created']}",
-        f"🔁 Total Updated: {overall_stats['updated']}",
-        f"🖼️ Total Images Updated: {overall_stats['images']}",
-        f"🚫 Total Skipped: {overall_stats['skipped']}",
-        f"❌ Total Deleted: {overall_stats['deleted']}",
-        f"⚠️ Total Warnings: {overall_stats['warnings']}",
-        f"💾 Backup Files Created: {len(run_context['files_generated']['backups'])}",
-        f"  Grand Total Rows Processed: {overall_stats['rows']}",
-        "",
-        f"💾 Metadata Backups Created: {len(run_context['files_generated']['meta_backups'])}",
-        ""
-    ])
-
+    lines.extend([sep, "📊 Overall Summary", sep, f"🆕 Total Created: {overall_stats['created']}",
+                  f"🔁 Total Updated: {overall_stats['updated']}", f"🖼️ Total Images Updated: {overall_stats['images']}",
+                  f"🚫 Total Skipped: {overall_stats['skipped']}", f"❌ Total Deleted: {overall_stats['deleted']}",
+                  f"⚠️ Total Warnings: {overall_stats['warnings']}",
+                  f"💾 Backup Files Created: {len(run_context['files_generated']['backups'])}",
+                  f"  Grand Total Rows Processed: {overall_stats['rows']}", "",
+                  f"💾 Metadata Backups Created: {len(run_context['files_generated']['meta_backups'])}", ""])
     try:
         with open(JSON_FILE, 'r', encoding='utf-8') as f:
             lines.append(f"📦 Total Objects in seriesData.json: {len(json.load(f))}")
     except Exception: lines.append("📦 Total Objects in seriesData.json: Unknown")
-    
     lines.extend([sep, "🗂️ Folders Generated:", sep])
     for folder, files in run_context['files_generated'].items():
         if files:
             lines.append(f"{folder}/")
-            for file_path in files:
-                lines.append(f"    {os.path.basename(file_path)}")
+            for file_path in files: lines.append(f"    {os.path.basename(file_path)}")
     lines.extend([sep, "🏁 Workflow finished successfully"])
-    
-    with open(report_path, 'w', encoding='utf-8') as f:
-        f.write("\n".join(lines))
+    with open(report_path, 'w', encoding='utf-8') as f: f.write("\n".join(lines))
 
 # ---------------------------- MAIN WORKFLOW -----------------------------------
 def main():
-    # --- State Management for Resumable Workflows ---
-    if os.path.exists(STATE_FILE):
-        with open(STATE_FILE, 'r') as f:
-            state = json.load(f)
-        run_context = state['run_context']
-        # You would add logic here to determine which items are remaining
-        print(f"🔄 Resuming Workflow — Run ID: {run_context['run_id']}")
-    else:
-        start_time = now_ist()
-        run_context = {
-            'run_id': run_id_timestamp(),
-            'start_time_iso': start_time.isoformat(),
-            'report_data': {},
-            'files_generated': {
-                'backups': [], 'images': [], 'deleted_data': [], 
-                'deleted_images': [], 'meta_backups': [], 'reports': []
-            }
-        }
-        print(f"🚀 Running Script — Version {SCRIPT_VERSION} | Run ID: {run_context['run_id']}")
-        # In a real resumable setup, you'd save the initial state here
-        # with open(STATE_FILE, 'w') as f: json.dump({'run_context': run_context, 'items_to_process': all_ids}, f)
-
+    start_time = now_ist()
+    run_context = {
+        'run_id': run_id_timestamp(), 'start_time_iso': start_time.isoformat(),
+        'report_data': {},
+        'files_generated': {'backups': [], 'images': [], 'deleted_data': [], 'deleted_images': [],
+                            'meta_backups': [], 'reports': []}
+    }
+    
     if not (os.path.exists(EXCEL_FILE_ID_TXT) and os.path.exists(SERVICE_ACCOUNT_FILE)):
         print("❌ Missing GDrive credentials."); sys.exit(1)
-        
     try:
         with open(EXCEL_FILE_ID_TXT, 'r') as f: excel_id = f.read().strip()
         if not excel_id: raise ValueError("EXCEL_FILE_ID.txt is empty.")
     except (FileNotFoundError, ValueError) as e:
         print(f"❌ Error with Excel ID file: {e}"); sys.exit(1)
 
+    print(f"🚀 Running Script — Version {SCRIPT_VERSION} | Run ID: {run_context['run_id']}")
     excel_bytes = fetch_excel_from_gdrive_bytes(excel_id, SERVICE_ACCOUNT_FILE)
     if not excel_bytes: print("❌ Could not fetch Excel file from Google Drive."); sys.exit(1)
     
@@ -807,54 +704,41 @@ def main():
     except (FileNotFoundError, json.JSONDecodeError): current_objects = []
     
     merged_by_id = {o['showID']: o for o in current_objects if 'showID' in o}
-    
     manual_report = apply_manual_updates(io.BytesIO(excel_bytes.getvalue()), merged_by_id, run_context)
     if manual_report: run_context['report_data']['Manual Updates'] = manual_report
     
     sheets_to_process = [s.strip() for s in os.environ.get("SHEETS", "Sheet1").split(";") if s.strip()]
     for sheet in sheets_to_process:
-        report = {'created': [], 'updated': [], 'skipped': [], 'fetched_data': [], 'fetch_warnings': []}
-        
         try:
             processed_objects = excel_to_objects(io.BytesIO(excel_bytes.getvalue()), sheet, merged_by_id, run_context)
+            for new_obj in processed_objects:
+                sid, old_obj = new_obj['showID'], merged_by_id.get(new_obj['showID'])
+                if old_obj is None:
+                    merged_by_id[sid] = new_obj
+                    save_metadata_backup(new_obj, run_context)
+                    run_context['report_data'][sheet].setdefault('created', []).append(new_obj)
+                    missing = [human_readable_field(k) for k, v in new_obj.items() if (v is None or v == []) and k not in ['comments', 'againWatchedDates']]
+                    fetched = [human_readable_field(k) for k, v in new_obj['sitePriorityUsed'].items() if v]
+                    if fetched: run_context['report_data'][sheet].setdefault('fetched_data', []).append(f"- {sid} - {new_obj['showName']} -> {', '.join(fetched)} Updated")
+                    if missing: run_context['report_data'][sheet].setdefault('fetch_warnings', []).append(f"- {sid} - {new_obj['showName']} -> ⚠️ Missing: {', '.join(missing)} Not Found")
+                elif objects_differ(old_obj, new_obj):
+                    changes = [human_readable_field(k) for k, v in new_obj.items() if old_obj.get(k) != v and k not in LOCKED_FIELDS_AFTER_CREATION]
+                    new_obj['updatedDetails'] = f"{', '.join(changes)} Updated" if changes else "Record Updated"
+                    new_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
+                    merged_by_id[sid] = new_obj
+                    create_diff_backup(old_obj, new_obj, run_context)
+                    run_context['report_data'][sheet].setdefault('updated', []).append({'old': old_obj, 'new': new_obj})
+                else:
+                    run_context['report_data'][sheet].setdefault('skipped', []).append(f"{sid} - {old_obj['showName']} ({old_obj.get('releasedYear')})")
         except Exception as e:
-            print(f"❌ FATAL ERROR processing sheet '{sheet}': {e}"); continue
-
-        for new_obj in processed_objects:
-            sid = new_obj['showID']
-            old_obj = merged_by_id.get(sid)
-            
-            if old_obj is None:
-                report['created'].append(new_obj)
-                merged_by_id[sid] = new_obj
-                save_metadata_backup(new_obj, run_context)
-                
-                missing = [human_readable_field(k) for k, v in new_obj.items() if (v is None or v == []) and k in JSON_OBJECT_TEMPLATE and k not in ['comments', 'againWatchedDates']]
-                fetched = [human_readable_field(k) for k, v in new_obj['sitePriorityUsed'].items() if v]
-                
-                if fetched: report['fetched_data'].append(f"- {sid} - {new_obj['showName']} -> {', '.join(fetched)} Updated")
-                if missing: report['fetch_warnings'].append(f"- {sid} - {new_obj['showName']} -> ⚠️ Missing: {', '.join(missing)} Not Found")
-
-            elif objects_differ(old_obj, new_obj):
-                changes = [human_readable_field(k) for k, v in new_obj.items() if old_obj.get(k) != v and k not in LOCKED_FIELDS_AFTER_CREATION]
-                new_obj['updatedDetails'] = f"{', '.join(changes)} Updated" if changes else "Record Updated"
-                new_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
-                
-                report['updated'].append({'old': old_obj, 'new': new_obj})
-                create_diff_backup(old_obj, new_obj, run_context)
-                merged_by_id[sid] = new_obj
-            else:
-                report['skipped'].append(f"{sid} - {old_obj['showName']} ({old_obj.get('releasedYear')})")
-        
-        if any(report.values()):
-            run_context['report_data'][sheet] = report
+            print(f"❌ FATAL ERROR processing sheet '{sheet}': {e}")
+            logd(traceback.format_exc())
 
     with open(JSON_FILE, 'w', encoding='utf-8') as f:
         json.dump(sorted(merged_by_id.values(), key=lambda x: x.get('showID', 0)), f, indent=4)
         
     end_time = now_ist()
-    start_time = datetime.fromisoformat(run_context['start_time_iso'])
-    duration = end_time - start_time
+    duration = end_time - datetime.fromisoformat(run_context['start_time_iso'])
     run_context['duration_str'] = f"{duration.seconds // 60} min {duration.seconds % 60} sec"
     
     report_path = os.path.join(REPORTS_DIR, f"Report_{filename_timestamp()}.txt")
@@ -864,11 +748,6 @@ def main():
     
     write_report(run_context)
     print(f"✅ Report written -> {report_path}")
-
-    # If job is complete, clean up state file
-    # if job_is_fully_complete:
-    #     if os.path.exists(STATE_FILE): os.remove(STATE_FILE)
-
     print("\nAll done.")
 
 # ---------------------------- GOOGLE DRIVE API --------------------------------
@@ -880,14 +759,11 @@ def fetch_excel_from_gdrive_bytes(excel_file_id, service_account_path):
             service_account_path, scopes=['https://www.googleapis.com/auth/drive.readonly']
         )
         drive_service = build('drive', 'v3', credentials=creds, cache_discovery=False)
-        
         try:
             request = drive_service.files().get_media(fileId=excel_file_id)
         except Exception:
             request = drive_service.files().export_media(
-                fileId=excel_file_id, mimeType='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-            )
-
+                fileId=excel_file_id, mimeType='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
         fh = io.BytesIO()
         downloader = MediaIoBaseDownload(fh, request)
         done = False

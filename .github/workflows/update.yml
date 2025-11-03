@@ -1,7 +1,6 @@
 # ============================================================================
 # Workflow: Excel → JSON Automation
-# Purpose : Automate scheduled and manual Excel-to-JSON updates.
-# Version : 3.4 (Fix: Re-added --force to git add to override .gitignore)
+# Version : 3.5 (Fix: Made email composition step resilient)
 # ============================================================================
 
 name: Excel → JSON Update
@@ -19,9 +18,6 @@ jobs:
       contents: write
 
     steps:
-      # ===================================================================
-      #  STEP 1: SETUP & CONFIGURATION
-      # ===================================================================
       - name: 1. Checkout repository
         uses: actions/checkout@v4
 
@@ -44,9 +40,6 @@ jobs:
           printf '%s' "$EXCEL_FILE_ID" > EXCEL_FILE_ID.txt
           printf '%s' "$GDRIVE_SERVICE_ACCOUNT" > GDRIVE_SERVICE_ACCOUNT.json
 
-      # ===================================================================
-      #  STEP 2: EXECUTE THE PYTHON SCRIPT
-      # ===================================================================
       - name: 5. Run the Excel-to-JSON update script
         id: run_updater
         continue-on-error: true
@@ -57,53 +50,29 @@ jobs:
         run: |
           python create_update_backup_delete.py 2>&1 | tee output.log
           script_exit_code=${PIPESTATUS[0]}
-          if [ "$script_exit_code" -ne 0 ]; then
-            echo "::error::Python script failed with exit code $script_exit_code."
-            exit 1
-          fi
           output=$(cat output.log)
           echo "output_log<<EOF" >> "$GITHUB_OUTPUT"
           echo "$output" >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
           report_path=$(echo "$output" | grep -oP 'Report written -> \K.*')
           echo "report_path=$report_path" >> "$GITHUB_OUTPUT"
+          # Exit with the script's code to correctly set the step outcome
+          exit $script_exit_code
 
-      # ===================================================================
-      #  STEP 3: COMMIT CHANGES (THE FINAL FIX)
-      # ===================================================================
       - name: 6. Commit and push all generated files
         if: steps.run_updater.outcome == 'success'
         run: |
           set -euo pipefail
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          
-          echo "Checking git status before adding files..."
-          git status
-          
-          # [ THE DEFINITIVE FIX IS HERE ]
-          # We use "git add --force" to ensure that all generated files are staged
-          # for commit, even if they are listed in the repository's .gitignore file.
-          # This is the key to making the commit work.
-          echo "Adding all generated files with --force..."
           git add --force seriesData.json images/ backups/ reports/ deleted-data/ deleted-images/ backup-meta-data/ run_state.json || true
-          
-          echo "Checking git status AFTER adding files..."
-          git status
-          
           if git diff --cached --quiet; then
             echo "No data changes to commit."
           else
-            commit_message="Automated data update: $(date -u '+%Y-%m-%d %H:%M UTC')"
-            echo "Staged changes found. Creating commit: $commit_message"
-            git commit -m "$commit_message"
+            git commit -m "Automated data update: $(date -u '+%Y-%m-%d %H:%M UTC')"
             git push
-            echo "Push successful."
           fi
 
-      # ===================================================================
-      #  STEP 4: NOTIFICATIONS & CLEANUP (No changes needed here)
-      # ===================================================================
       - name: 7. Determine workflow final status
         id: check_status
         if: always()
@@ -144,8 +113,12 @@ jobs:
           WORKFLOW_STATUS: ${{ steps.check_status.outputs.status }}
           SCRIPT_OUTPUT: ${{ steps.run_updater.outputs.output_log }}
         run: |
-          set -euo pipefail
+          # [ THE FIX IS HERE ] - This is now much more robust
+          # We create the temp file FIRST, ensuring the variable is never unbound.
           email_body_file=$(mktemp)
+          echo "body_file=$email_body_file" >> "$GITHUB_OUTPUT"
+          
+          # Now we safely write to the file.
           {
             if [ "${WORKFLOW_STATUS}" = "failure" ]; then
               echo "❌ WORKFLOW FAILED"
@@ -164,7 +137,6 @@ jobs:
               echo "$SCRIPT_OUTPUT"
             fi
           } > "$email_body_file"
-          echo "body_file=$body_file" >> "$GITHUB_OUTPUT"
 
       - name: 11. Send consolidated report email
         if: always()
