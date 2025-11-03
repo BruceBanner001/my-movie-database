@@ -1,122 +1,125 @@
 # ============================================================================
 # Workflow: Excel → JSON Automation
-# Purpose : Automate weekly + manual Excel → JSON updates, deletions, backups,
-#           and run reports for "my-movie-database".
-# Version : 2.3 (Final Commit Fix)
+# Purpose : Automate scheduled and manual Excel-to-JSON updates, including
+#           deletions, backups, and detailed run reports for the database.
+# Version : 3.0 (Aligned with Python Script v4.1.0)
 # ============================================================================
 
 name: Excel → JSON Update
 
 on:
+  # Allows you to manually trigger this workflow from the Actions tab in GitHub.
   workflow_dispatch:
-    inputs:
-      MAX_RUN_TIME_MINUTES:
-        description: 'Max run time in minutes (0 = no limit, GitHub max is ~350)'
-        default: '50'
-        required: false
-      MAX_PER_RUN:
-        description: 'Limit number of shows to process per run (0 = process all)'
-        default: '0'
-        required: false
+
+  # Sets up a scheduled run. The cron syntax "30 18 * * 6" means it will run
+  # at 18:30 UTC every Saturday. (This is 12:00 AM IST on Sunday).
   schedule:
     - cron: "30 18 * * 6"
 
 jobs:
   update-json:
+    # This sets a hard time limit for the entire job. If it runs longer than
+    # 50 minutes, GitHub will automatically cancel it. This prevents runaway workflows.
+    timeout-minutes: 50
+    
+    # The workflow will run on the latest version of Ubuntu provided by GitHub.
     runs-on: ubuntu-latest
+
+    # These permissions are required for the workflow to perform specific actions:
+    #   - contents: write --> Allows the job to commit changes back to your repository.
     permissions:
       contents: write
 
     steps:
-      - name: Checkout repo
+      # ===================================================================
+      #  STEP 1: SETUP & CONFIGURATION
+      # ===================================================================
+      - name: 1. Checkout repository
+        # This action checks out your repository code, so the workflow can access
+        # your script, requirements file, and other repo contents.
         uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: 2. Set up Python environment
+        # Sets up a specific version of Python for the runner.
+        # Using a specific version ensures the script runs consistently.
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Install dependencies
+      - name: 3. Install Python dependencies
+        # Reads the requirements.txt file and installs all the necessary Python
+        # packages (like pandas, requests, etc.) using pip.
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Write Excel file ID from Secret
+      - name: 4. Configure Google Drive & Excel Secrets
+        # These steps securely write the secrets (stored in GitHub) into files.
+        # The Python script reads these files to get the credentials it needs to
+        # access your private Google Sheet without exposing them in the code.
         env:
           EXCEL_FILE_ID: ${{ secrets.EXCEL_FILE_ID }}
-        run: |
-          set -euo pipefail
-          printf '%s' "$EXCEL_FILE_ID" > EXCEL_FILE_ID.txt
-
-      - name: Write Google Drive Service Account from Secret
-        env:
           GDRIVE_SERVICE_ACCOUNT: ${{ secrets.GDRIVE_SERVICE_ACCOUNT }}
         run: |
           set -euo pipefail
+          echo "Writing secrets to temporary files..."
+          printf '%s' "$EXCEL_FILE_ID" > EXCEL_FILE_ID.txt
           printf '%s' "$GDRIVE_SERVICE_ACCOUNT" > GDRIVE_SERVICE_ACCOUNT.json
 
-      - name: Run Excel→JSON updater
+      # ===================================================================
+      #  STEP 2: EXECUTE THE PYTHON SCRIPT
+      # ===================================================================
+      - name: 5. Run the Excel-to-JSON update script
+        # This is the main step where your Python script is executed.
         id: run_updater
-        continue-on-error: true # Keep this to ensure email is always sent
+        # continue-on-error: true --> Ensures that even if the script fails,
+        # the subsequent steps (like sending a failure email) will still run.
+        continue-on-error: true
         env:
-          MAX_RUN_TIME_MINUTES: ${{ github.event.inputs.MAX_RUN_TIME_MINUTES || '50' }}
-          MAX_PER_RUN: ${{ github.event.inputs.MAX_PER_RUN || '0' }}
+          # IMPORTANT: Define which Excel sheets the script should process.
+          # Separate multiple sheets with a semicolon (;).
+          SHEETS: "Sheet1;Feb 7 2023 Onwards;Sheet2"
+          # This tells the script whether the run was triggered by a schedule.
           SCHEDULED_RUN: ${{ github.event_name == 'schedule' }}
+          # This passes your repo's GitHub Pages URL to the script so it can
+          # create correct, absolute URLs for the show images.
+          GITHUB_PAGES_URL: ${{ secrets.GITHUB_PAGES_URL }}
         run: |
           set -euo pipefail
-          # Create the reports directory beforehand to prevent early crashes
-          mkdir -p reports
+          echo "Starting the Python script..."
+          # Run the script and capture all its output (both standard and error) into a variable.
           output=$(python create_update_backup_delete.py 2>&1)
-          printf '%s\n' "$output"
+          
+          # Print the captured output to the workflow log for debugging.
+          printf '--- Script Output ---\n%s\n--- End Script Output ---\n' "$output"
+          
+          # This is a special syntax to save the multi-line script output
+          # so it can be used in later steps (like the email body).
           echo "output_log<<EOF" >> "$GITHUB_OUTPUT"
           echo "$output" >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
-          report_path=$(echo "$output" | grep -oP 'Final report written -> \K.*' || true)
-          if [ -z "$report_path" ]; then
-            report_path=$(ls -t reports/Report_*.txt 2>/dev/null | head -n1 || true)
-          fi
+          
+          # This command intelligently finds the path of the generated report file
+          # from the script's output, making it available for later steps.
+          report_path=$(echo "$output" | grep -oP 'Report written -> \K.*' || true)
           echo "report_path=$report_path" >> "$GITHUB_OUTPUT"
 
-      - name: Check workflow status
-        id: check_status
-        if: always()
-        run: |
-          if [ "${{ steps.run_updater.outcome }}" = "success" ]; then
-            echo "status=success" >> "$GITHUB_OUTPUT"
-          else
-            echo "status=failure" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Set Email Subject
-        id: set_subject
-        if: always()
-        env:
-          SCHEDULED_RUN: ${{ github.event_name == 'schedule' }}
-          WORKFLOW_STATUS: ${{ steps.check_status.outputs.status }}
-        run: |
-          if [ "${SCHEDULED_RUN}" = "true" ]; then
-            prefix="[Automatic]"
-          else
-            prefix="[Manual]"
-          fi
-          if [ "${WORKFLOW_STATUS}" = "failure" ]; then
-            final_subject="[ACTION REQUIRED] $prefix Workflow FAILED"
-          else
-            subj_date=$(date -u -d '+5 hours 30 minutes' "+%d %B %Y %H:%M")
-            final_subject="$prefix Workflow $subj_date IST Report"
-          fi
-          echo "email_subject=$final_subject" >> "$GITHUB_OUTPUT"
-
-      # ------------------ Commit & push all changes ------------------
-      - name: Commit & push all changes
+      # ===================================================================
+      #  STEP 3: COMMIT CHANGES TO THE REPOSITORY
+      # ===================================================================
+      - name: 6. Commit and push all generated files
+        # This step saves all the work done by the script back to your repository.
         run: |
           set -euo pipefail
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           
-          # FIX: Use --force to ensure that generated files are added even if they are in .gitignore
-          git add --force seriesData.json images/ backups/ reports/ deleted-data/ deleted-images/ backup-meta-data/ || true
+          echo "Adding generated files to the commit..."
+          # Add all relevant generated files. This now includes `run_state.json` which is
+          # critical for resumable workflows. --force ensures files are added even if gitignored.
+          git add --force seriesData.json images/ backups/ reports/ deleted-data/ deleted-images/ backup-meta-data/ run_state.json || true
           
+          # This checks if there are any actual changes to commit.
           if git diff --cached --quiet; then
             echo "No data changes to commit."
           else
@@ -126,17 +129,59 @@ jobs:
             git push
           fi
 
-      # ------------------ Upload Reports as Artifact ------------------
-      - name: Upload reports
+      # ===================================================================
+      #  STEP 4: NOTIFICATIONS & CLEANUP
+      # ===================================================================
+      - name: 7. Determine workflow final status
+        # This step checks the outcome of the main script execution step. This is more
+        # reliable than checking the job status directly and is used for notifications.
+        id: check_status
+        if: always() # always() ensures this runs even if a previous step failed.
+        run: |
+          if [ "${{ steps.run_updater.outcome }}" = "success" ]; then
+            echo "status=success" >> "$GITHUB_OUTPUT"
+            echo "Workflow step succeeded."
+          else
+            echo "status=failure" >> "$GITHUB_OUTPUT"
+            echo "Workflow step failed."
+          fi
+
+      - name: 8. Set dynamic email subject
+        # Creates a clear, informative email subject based on the workflow's
+        # trigger type (Manual/Automatic) and its final status (Success/Failure).
+        id: set_subject
+        if: always()
+        run: |
+          trigger_type=$([ "${{ github.event_name }}" = "schedule" ] && echo "[Automatic]" || echo "[Manual]")
+          workflow_status="${{ steps.check_status.outputs.status }}"
+          
+          if [ "$workflow_status" = "failure" ]; then
+            final_subject="[ACTION REQUIRED] $trigger_type Workflow FAILED"
+          else
+            # Checks if the run was partial (state file still exists) or final.
+            if [ -f "run_state.json" ]; then
+              run_status="Partial Run Report"
+            else
+              run_status="Final Report"
+            fi
+            subj_date=$(date -u -d '+5 hours 30 minutes' "+%d %B %Y")
+            final_subject="$trigger_type Workflow $subj_date - $run_status"
+          fi
+          echo "email_subject=$final_subject" >> "$GITHUB_OUTPUT"
+
+      - name: 9. Upload report as a workflow artifact
+        # Saves the entire 'reports' directory as a downloadable artifact.
+        # This is useful for keeping a historical record of all run reports.
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: run-reports
           path: reports/
-          if-no-files-found: warn
+          if-no-files-found: warn # Won't fail the job if the reports folder is empty.
 
-      # ------------------ Compose Consolidated Email Body ------------------
-      - name: Compose consolidated email body
+      - name: 10. Compose consolidated email body
+        # Gathers all the relevant information (script logs and the final report)
+        # into a single, clean text file to be used as the email body.
         id: compose_email
         if: always()
         env:
@@ -145,33 +190,36 @@ jobs:
           SCRIPT_OUTPUT: ${{ steps.run_updater.outputs.output_log }}
         run: |
           set -euo pipefail
-          email_body_file=$(mktemp)
+          email_body_file=$(mktemp) # Creates a temporary file to store the body.
           {
             if [ "${WORKFLOW_STATUS}" = "failure" ]; then
               echo "❌ WORKFLOW FAILED"
-              echo "The script encountered a fatal error. See details below."
-              echo ""
-              echo "--- SCRIPT OUTPUT ---"
+              echo "The script encountered a fatal error. See the full script output below for details."
+              echo "===================================================================="
               echo "$SCRIPT_OUTPUT"
-              echo ""
+              echo "===================================================================="
             fi
             
+            # This logic finds the report file, even if the grep in the earlier step failed.
             report_file="${REPORT_PATH:-}"
-            if [ -z "$report_file" ] || [ ! -f "$report_file" ]; then
+            if [ ! -f "$report_file" ]; then
               report_file=$(ls -t reports/Report_*.txt 2>/dev/null | head -n1 || true)
             fi
             
-            echo "--- SCRIPT LOG & REPORT ---"
             if [ -f "$report_file" ]; then
+              echo "✅ SCRIPT LOG & REPORT"
+              echo "===================================================================="
               cat "$report_file"
             else
-              echo "⚠️ The main report file could not be found."
+              echo "⚠️ The main report file could not be found, showing raw output instead."
+              echo "===================================================================="
+              echo "$SCRIPT_OUTPUT"
             fi
           } > "$email_body_file"
           echo "body_file=$email_body_file" >> "$GITHUB_OUTPUT"
 
-      # ------------------ Send Consolidated Report Email ------------------
-      - name: Send consolidated report email
+      - name: 11. Send consolidated report email
+        # Uses a third-party action to send the composed email.
         if: always()
         uses: dawidd6/action-send-mail@v3
         with:
@@ -183,9 +231,3 @@ jobs:
           body: file://${{ steps.compose_email.outputs.body_file }}
           to: ${{ secrets.NOTIFY_EMAIL }}
           from: ${{ secrets.SMTP_USERNAME }}
-          
-      # ------------------ Cleanup Temporary Files ------------------
-      - name: Cleanup Temp Email File
-        if: always()
-        run: |
-          rm -f ${{ steps.compose_email.outputs.body_file }} || true

@@ -8,21 +8,21 @@
 # ==========================================
 
 # === Core Data Handling ===
-pandas>=2.0.0            # For reading and processing data from Excel files
-openpyxl>=3.1.0          # The engine pandas uses to read modern .xlsx Excel files
+pandas>=2.0.0            # Essential for reading and processing data from Excel files (.xlsx).
+openpyxl>=3.1.0          # The engine that pandas uses under the hood to read/write modern Excel files.
 
 # === Web Scraping & Networking ===
-requests>=2.31.0         # For making HTTP requests to download web pages and images
-beautifulsoup4>=4.12.0   # The primary library for parsing HTML content from websites
-lxml>=4.9.0              # A high-performance parser that BeautifulSoup4 can use
-duckduckgo-search>=4.0.0 # For using DuckDuckGo as a search engine to find show pages
+requests>=2.31.0         # The workhorse for making all HTTP requests to download web pages and images.
+beautifulsoup4>=4.12.0   # The primary library for parsing and navigating the HTML content of fetched web pages.
+duckduckgo-search>=4.0.0 # Used as the search engine to find the correct AsianWiki and MyDramaList pages for each show.
 
 # === Image Processing ===
-Pillow>=10.0.0           # For resizing and saving downloaded show images in a standard format
+Pillow>=10.0.0           # Crucial for processing downloaded images: resizing, converting to RGB, and saving as optimized JPEGs.
 
 # === Google Drive API Integration ===
-# These packages are required to securely connect to the Google Drive API
-# and download the private Excel file.
-google-api-python-client>=2.100.0
-google-auth-httplib2>=0.1.0
-google-auth>=2.23.0
+# These two packages are the only ones you need to specify directly. They handle the
+# entire process of authenticating with Google and interacting with the Drive API.
+# They will automatically install other required helper libraries (like google-auth-httplib2).
+
+google-api-python-client>=2.100.0  # The main Google client library to interact with services like Google Drive.
+google-auth>=2.23.0                # Handles all authentication, specifically the service account flow used in the script.
