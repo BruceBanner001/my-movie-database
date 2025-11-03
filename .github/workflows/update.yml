@@ -1,7 +1,7 @@
 # ============================================================================
 # Workflow: Excel → JSON Automation
 # Purpose : Automate scheduled and manual Excel-to-JSON updates.
-# Version : 4.3 (Final: Cleans up secrets and handles App Passwords)
+# Version : 4.5 (Final: Robust email and debugging support)
 # ============================================================================
 
 name: Excel → JSON Update
@@ -45,17 +45,23 @@ jobs:
         env:
           SHEETS: "Sheet1"
           GITHUB_PAGES_URL: "https://brucebanner001.github.io/my-movie-database"
+          # [ IMPORTANT FOR DEBUGGING ]
+          # To see why fetching is failing, uncomment the next line by removing the "#"
+          # DEBUG_FETCH: "true"
         run: |
-          python create_update_backup_delete.py
+          python create_update_backup_delete.py 2>&1 | tee output.log
+          script_exit_code=${PIPESTATUS[0]}
+          output=$(cat output.log)
+          echo "output_log<<EOF" >> "$GITHUB_OUTPUT"; echo "$output" >> "$GITHUB_OUTPUT"; echo "EOF" >> "$GITHUB_OUTPUT"
+          report_path=$(echo "$output" | grep -oP 'Report written -> \K.*')
+          echo "report_path=$report_path" >> "$GITHUB_OUTPUT"
+          exit $script_exit_code
 
-      # [ THE PUSH PROTECTION FIX IS HERE ]
       - name: 6. Cleanup Secret Files
-        # This step runs whether the script succeeded or failed, ensuring secrets are never committed.
         if: always()
         run: |
-          echo "Removing temporary secret files..."
           rm -f EXCEL_FILE_ID.txt GDRIVE_SERVICE_ACCOUNT.json
-      
+
       - name: 7. Commit and Push Changes
         if: success()
         run: |
@@ -69,36 +75,39 @@ jobs:
             git push
           fi
       
-      - name: 8. Find Report File Path (on success)
-        id: find_report
-        if: success()
+      - name: 8. Compose Email Body
+        id: compose_email
+        if: always()
+        env:
+          WORKFLOW_STATUS: ${{ job.status }}
+          SCRIPT_OUTPUT: ${{ steps.run_updater.outputs.output_log }}
         run: |
-          report_path=$(find reports -type f -name "Report_*.txt" | sort -r | head -n1)
-          echo "report_path=$report_path" >> "$GITHUB_OUTPUT"
+          email_body_file=$(mktemp)
+          echo "body_file=$email_body_file" >> "$GITHUB_OUTPUT"
+          report_file=$(find reports -type f -name "Report_*.txt" | sort -r | head -n1 || true)
+          {
+            if [[ "${WORKFLOW_STATUS}" == "success" ]]; then
+              echo "✅ Workflow completed successfully."
+              echo ""
+              if [[ -f "$report_file" ]]; then cat "$report_file"; else echo "⚠️ Report file not found."; fi
+            else
+              echo "❌ Workflow FAILED."
+              echo "Please check the Actions log on GitHub. Raw script output is below:"
+              echo "===================================================================="
+              echo "$SCRIPT_OUTPUT"
+            fi
+          } > "$email_body_file"
           
-      - name: 9. Send Success Email
-        if: success()
+      - name: 9. Send Final Email Notification
+        if: always()
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: ${{ secrets.SMTP_SERVER }}
           server_port: ${{ secrets.SMTP_PORT }}
           username: ${{ secrets.SMTP_USERNAME }}
-          password: ${{ secrets.SMTP_PASSWORD }} # Use your new App Password here
-          subject: '[Manual] Workflow - Final Report'
-          body: 'Workflow completed successfully. See attached report.'
-          to: ${{ secrets.NOTIFY_EMAIL }}
-          from: ${{ secrets.SMTP_USERNAME }}
-          files: ${{ steps.find_report.outputs.report_path }}
-
-      - name: 10. Send Failure Email
-        if: failure()
-        uses: dawidd6/action-send-mail@v3
-        with:
-          server_address: ${{ secrets.SMTP_SERVER }}
-          server_port: ${{ secrets.SMTP_PORT }}
-          username: ${{ secrets.SMTP_USERNAME }}
-          password: ${{ secrets.SMTP_PASSWORD }} # Use your new App Password here
-          subject: '[ACTION REQUIRED] Workflow FAILED'
-          body: 'The workflow failed. Please check the Actions log on GitHub for details.'
+          password: ${{ secrets.SMTP_PASSWORD }}
+          subject: >
+            ${{ job.status == 'success' && '[Manual] Workflow - Final Report' || '[ACTION REQUIRED] Workflow FAILED' }}
+          body: file://${{ steps.compose_email.outputs.body_file }}
           to: ${{ secrets.NOTIFY_EMAIL }}
           from: ${{ secrets.SMTP_USERNAME }}
