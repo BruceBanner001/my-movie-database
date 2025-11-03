@@ -2,32 +2,20 @@
 # Workflow: Excel → JSON Automation
 # Purpose : Automate scheduled and manual Excel-to-JSON updates, including
 #           deletions, backups, and detailed run reports for the database.
-# Version : 3.1 (Fix: Corrected report path detection)
+# Version : 3.2 (Fix: Implemented robust exit code checking)
 # ============================================================================
 
 name: Excel → JSON Update
 
 on:
-  # Allows you to manually trigger this workflow from the Actions tab in GitHub.
   workflow_dispatch:
-
-  # Sets up a scheduled run. The cron syntax "30 18 * * 6" means it will run
-  # at 18:30 UTC every Saturday. (This is 12:00 AM IST on Sunday).
   schedule:
     - cron: "30 18 * * 6"
 
 jobs:
   update-json:
-    # This sets a hard time limit for the entire job. If it runs longer than
-    # 50 minutes, GitHub will automatically cancel it. This prevents runaway workflows
-    # and enables our resumable workflow strategy.
     timeout-minutes: 50
-    
-    # The workflow will run on the latest version of Ubuntu provided by GitHub.
     runs-on: ubuntu-latest
-
-    # These permissions are required for the workflow to perform specific actions:
-    #   - contents: write --> Allows the job to commit changes back to your repository.
     permissions:
       contents: write
 
@@ -36,28 +24,19 @@ jobs:
       #  STEP 1: SETUP & CONFIGURATION
       # ===================================================================
       - name: 1. Checkout repository
-        # This action checks out your repository code, so the workflow can access
-        # your script, requirements file, and other repo contents.
         uses: actions/checkout@v4
 
       - name: 2. Set up Python environment
-        # Sets up a specific version of Python for the runner.
-        # Using a specific version ensures the script runs consistently.
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
       - name: 3. Install Python dependencies
-        # Reads the requirements.txt file and installs all the necessary Python
-        # packages (like pandas, requests, etc.) using pip.
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
       - name: 4. Configure Google Drive & Excel Secrets
-        # These steps securely write the secrets (stored in GitHub) into files.
-        # The Python script reads these files to get the credentials it needs to
-        # access your private Google Sheet without exposing them in the code.
         env:
           EXCEL_FILE_ID: ${{ secrets.EXCEL_FILE_ID }}
           GDRIVE_SERVICE_ACCOUNT: ${{ secrets.GDRIVE_SERVICE_ACCOUNT }}
@@ -68,42 +47,43 @@ jobs:
           printf '%s' "$GDRIVE_SERVICE_ACCOUNT" > GDRIVE_SERVICE_ACCOUNT.json
 
       # ===================================================================
-      #  STEP 2: EXECUTE THE PYTHON SCRIPT
+      #  STEP 2: EXECUTE THE PYTHON SCRIPT (IMPROVED & ROBUST)
       # ===================================================================
       - name: 5. Run the Excel-to-JSON update script
-        # This is the main step where your Python script is executed.
         id: run_updater
-        # continue-on-error: true --> Ensures that even if the script fails,
-        # the subsequent steps (like sending a failure email) will still run.
         continue-on-error: true
         env:
-          # IMPORTANT: Define which Excel sheets the script should process.
-          # Separate multiple sheets with a semicolon (;).
           SHEETS: "Sheet1;Feb 7 2023 Onwards;Sheet2"
-          # This tells the script whether the run was triggered by a schedule.
           SCHEDULED_RUN: ${{ github.event_name == 'schedule' }}
-          # This passes your repo's GitHub Pages URL to the script so it can
-          # create correct, absolute URLs for the show images.
-          GITHUB_PAGES_URL: ${{ secrets.GITHUB_PAGES_URL }}
+          GITHUB_PAGES_URL: ${{ secrets.GDRIVE_SERVICE_ACCOUNT }}
         run: |
-          set -euo pipefail
+          # We remove 'set -e' to handle the exit code manually for better control.
           echo "Starting the Python script..."
-          # Run the script and capture all its output (both standard and error) into a variable.
-          output=$(python create_update_backup_delete.py 2>&1)
           
-          # Print the captured output to the workflow log for debugging.
-          printf '--- Script Output ---\n%s\n--- End Script Output ---\n' "$output"
+          # This command runs the script and saves all its output to a file named 'output.log'.
+          # The 'tee' command also prints the output to the console in real-time, which is great for debugging.
+          python create_update_backup_delete.py 2>&1 | tee output.log
           
-          # This is a special syntax to save the multi-line script output
-          # so it can be used in later steps (like the email body).
+          # [ THE NEW ROBUST FIX IS HERE ]
+          # We check the exit code of the first command in the pipeline (the python script).
+          # PIPESTATUS is a special bash variable that holds the exit codes of all commands in the last pipeline.
+          # This is the most reliable way to determine if YOUR script succeeded or failed.
+          script_exit_code=${PIPESTATUS[0]}
+          if [ "$script_exit_code" -ne 0 ]; then
+            echo "::error::Python script failed with exit code $script_exit_code."
+            exit 1 # Explicitly fail the step
+          fi
+          
+          echo "Python script completed successfully. Processing output..."
+          
+          # Now that we know it succeeded, we safely process the output.
+          output=$(cat output.log)
           echo "output_log<<EOF" >> "$GITHUB_OUTPUT"
           echo "$output" >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
           
-          # [ THE FIX IS HERE ]
-          # This command now correctly searches for the "Report written -> " text
-          # that the Python script actually outputs. This ensures the step succeeds.
-          report_path=$(echo "$output" | grep -oP 'Report written -> \K.*' || true)
+          # This grep is now much safer because we only run it after confirming script success.
+          report_path=$(echo "$output" | grep -oP 'Report written -> \K.*')
           echo "Found report path: $report_path"
           echo "report_path=$report_path" >> "$GITHUB_OUTPUT"
 
@@ -111,18 +91,15 @@ jobs:
       #  STEP 3: COMMIT CHANGES TO THE REPOSITORY
       # ===================================================================
       - name: 6. Commit and push all generated files
-        # This step will now run correctly because step 5 will succeed.
-        # It saves all the work done by the script back to your repository.
+        if: steps.run_updater.outcome == 'success'
         run: |
           set -euo pipefail
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           
           echo "Adding generated files to the commit..."
-          # Add all relevant generated files. --force ensures files are added even if gitignored.
           git add --force seriesData.json images/ backups/ reports/ deleted-data/ deleted-images/ backup-meta-data/ run_state.json || true
           
-          # This checks if there are any actual changes to commit.
           if git diff --cached --quiet; then
             echo "No data changes to commit."
           else
@@ -136,27 +113,21 @@ jobs:
       #  STEP 4: NOTIFICATIONS & CLEANUP
       # ===================================================================
       - name: 7. Determine workflow final status
-        # This step checks the outcome of the main script execution step.
         id: check_status
-        if: always() # always() ensures this runs even if a previous step failed.
+        if: always()
         run: |
           if [ "${{ steps.run_updater.outcome }}" = "success" ]; then
             echo "status=success" >> "$GITHUB_OUTPUT"
-            echo "Workflow step succeeded."
           else
             echo "status=failure" >> "$GITHUB_OUTPUT"
-            echo "Workflow step failed."
           fi
 
       - name: 8. Set dynamic email subject
-        # Creates a clear, informative email subject based on the workflow's
-        # trigger type (Manual/Automatic) and its final status (Success/Failure).
         id: set_subject
         if: always()
         run: |
           trigger_type=$([ "${{ github.event_name }}" = "schedule" ] && echo "[Automatic]" || echo "[Manual]")
           workflow_status="${{ steps.check_status.outputs.status }}"
-          
           if [ "$workflow_status" = "failure" ]; then
             final_subject="[ACTION REQUIRED] $trigger_type Workflow FAILED"
           else
@@ -166,16 +137,14 @@ jobs:
           echo "email_subject=$final_subject" >> "$GITHUB_OUTPUT"
 
       - name: 9. Upload report as a workflow artifact
-        # Saves the entire 'reports' directory as a downloadable artifact.
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: run-reports
           path: reports/
-          if-no-files-found: warn # Won't fail the job if the reports folder is empty.
+          if-no-files-found: warn
 
       - name: 10. Compose consolidated email body
-        # Gathers all the relevant information into a single text file for the email body.
         id: compose_email
         if: always()
         env:
@@ -184,7 +153,7 @@ jobs:
           SCRIPT_OUTPUT: ${{ steps.run_updater.outputs.output_log }}
         run: |
           set -euo pipefail
-          email_body_file=$(mktemp) # Creates a temporary file to store the body.
+          email_body_file=$(mktemp)
           {
             if [ "${WORKFLOW_STATUS}" = "failure" ]; then
               echo "❌ WORKFLOW FAILED"
@@ -212,7 +181,6 @@ jobs:
           echo "body_file=$email_body_file" >> "$GITHUB_OUTPUT"
 
       - name: 11. Send consolidated report email
-        # Uses a third-party action to send the composed email.
         if: always()
         uses: dawidd6/action-send-mail@v3
         with:
