@@ -1,7 +1,7 @@
 # ============================================================================
 # Workflow: Excel → JSON Automation
 # Purpose : Automate scheduled and manual Excel-to-JSON updates.
-# Version : 4.2 (Final: Simplified and reliable email steps)
+# Version : 4.3 (Final: Cleans up secrets and handles App Passwords)
 # ============================================================================
 
 name: Excel → JSON Update
@@ -48,7 +48,15 @@ jobs:
         run: |
           python create_update_backup_delete.py
 
-      - name: 6. Commit and Push Changes
+      # [ THE PUSH PROTECTION FIX IS HERE ]
+      - name: 6. Cleanup Secret Files
+        # This step runs whether the script succeeded or failed, ensuring secrets are never committed.
+        if: always()
+        run: |
+          echo "Removing temporary secret files..."
+          rm -f EXCEL_FILE_ID.txt GDRIVE_SERVICE_ACCOUNT.json
+      
+      - name: 7. Commit and Push Changes
         if: success()
         run: |
           git config --global user.name "github-actions[bot]"
@@ -61,41 +69,35 @@ jobs:
             git push
           fi
       
-      - name: 7. Find Report File Path (on success)
+      - name: 8. Find Report File Path (on success)
         id: find_report
         if: success()
         run: |
           report_path=$(find reports -type f -name "Report_*.txt" | sort -r | head -n1)
           echo "report_path=$report_path" >> "$GITHUB_OUTPUT"
           
-      # [ THE FINAL FIX IS HERE ]
-      # We now have two simple, separate steps for email notifications.
-
-      - name: 8. Send Success Email
-        # This step ONLY runs if all previous steps succeeded.
+      - name: 9. Send Success Email
         if: success()
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: ${{ secrets.SMTP_SERVER }}
           server_port: ${{ secrets.SMTP_PORT }}
           username: ${{ secrets.SMTP_USERNAME }}
-          password: ${{ secrets.SMTP_PASSWORD }}
+          password: ${{ secrets.SMTP_PASSWORD }} # Use your new App Password here
           subject: '[Manual] Workflow - Final Report'
           body: 'Workflow completed successfully. See attached report.'
           to: ${{ secrets.NOTIFY_EMAIL }}
           from: ${{ secrets.SMTP_USERNAME }}
-          # The report file is attached because this step only runs on success.
           files: ${{ steps.find_report.outputs.report_path }}
 
-      - name: 9. Send Failure Email
-        # This step ONLY runs if any of the previous steps failed.
+      - name: 10. Send Failure Email
         if: failure()
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: ${{ secrets.SMTP_SERVER }}
           server_port: ${{ secrets.SMTP_PORT }}
           username: ${{ secrets.SMTP_USERNAME }}
-          password: ${{ secrets.PASSWORD }}
+          password: ${{ secrets.SMTP_PASSWORD }} # Use your new App Password here
           subject: '[ACTION REQUIRED] Workflow FAILED'
           body: 'The workflow failed. Please check the Actions log on GitHub for details.'
           to: ${{ secrets.NOTIFY_EMAIL }}
