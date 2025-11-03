@@ -1,8 +1,7 @@
 # ============================================================================
 # Workflow: Excel → JSON Automation
-# Purpose : Automate scheduled and manual Excel-to-JSON updates, including
-#           deletions, backups, and detailed run reports for the database.
-# Version : 3.2 (Fix: Implemented robust exit code checking)
+# Purpose : Automate scheduled and manual Excel-to-JSON updates.
+# Version : 3.3 (Fix: Added heavy debugging to the commit step)
 # ============================================================================
 
 name: Excel → JSON Update
@@ -42,12 +41,11 @@ jobs:
           GDRIVE_SERVICE_ACCOUNT: ${{ secrets.GDRIVE_SERVICE_ACCOUNT }}
         run: |
           set -euo pipefail
-          echo "Writing secrets to temporary files..."
           printf '%s' "$EXCEL_FILE_ID" > EXCEL_FILE_ID.txt
           printf '%s' "$GDRIVE_SERVICE_ACCOUNT" > GDRIVE_SERVICE_ACCOUNT.json
 
       # ===================================================================
-      #  STEP 2: EXECUTE THE PYTHON SCRIPT (IMPROVED & ROBUST)
+      #  STEP 2: EXECUTE THE PYTHON SCRIPT
       # ===================================================================
       - name: 5. Run the Excel-to-JSON update script
         id: run_updater
@@ -55,40 +53,23 @@ jobs:
         env:
           SHEETS: "Sheet1;Feb 7 2023 Onwards;Sheet2"
           SCHEDULED_RUN: ${{ github.event_name == 'schedule' }}
-          GITHUB_PAGES_URL: ${{ secrets.GDRIVE_SERVICE_ACCOUNT }}
+          GITHUB_PAGES_URL: ${{ secrets.GITHUB_PAGES_URL }}
         run: |
-          # We remove 'set -e' to handle the exit code manually for better control.
-          echo "Starting the Python script..."
-          
-          # This command runs the script and saves all its output to a file named 'output.log'.
-          # The 'tee' command also prints the output to the console in real-time, which is great for debugging.
           python create_update_backup_delete.py 2>&1 | tee output.log
-          
-          # [ THE NEW ROBUST FIX IS HERE ]
-          # We check the exit code of the first command in the pipeline (the python script).
-          # PIPESTATUS is a special bash variable that holds the exit codes of all commands in the last pipeline.
-          # This is the most reliable way to determine if YOUR script succeeded or failed.
           script_exit_code=${PIPESTATUS[0]}
           if [ "$script_exit_code" -ne 0 ]; then
             echo "::error::Python script failed with exit code $script_exit_code."
-            exit 1 # Explicitly fail the step
+            exit 1
           fi
-          
-          echo "Python script completed successfully. Processing output..."
-          
-          # Now that we know it succeeded, we safely process the output.
           output=$(cat output.log)
           echo "output_log<<EOF" >> "$GITHUB_OUTPUT"
           echo "$output" >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
-          
-          # This grep is now much safer because we only run it after confirming script success.
           report_path=$(echo "$output" | grep -oP 'Report written -> \K.*')
-          echo "Found report path: $report_path"
           echo "report_path=$report_path" >> "$GITHUB_OUTPUT"
 
       # ===================================================================
-      #  STEP 3: COMMIT CHANGES TO THE REPOSITORY
+      #  STEP 3: COMMIT CHANGES (NOW WITH HEAVY DEBUGGING)
       # ===================================================================
       - name: 6. Commit and push all generated files
         if: steps.run_updater.outcome == 'success'
@@ -97,20 +78,45 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           
-          echo "Adding generated files to the commit..."
-          git add --force seriesData.json images/ backups/ reports/ deleted-data/ deleted-images/ backup-meta-data/ run_state.json || true
+          # [ NEW DEBUGGING COMMANDS ARE HERE ]
+          echo "--- 1. Listing all files and folders before doing anything ---"
+          ls -laR
           
+          echo ""
+          echo "--- 2. Checking git status before adding files ---"
+          git status
+          
+          echo ""
+          echo "--- 3. Adding all generated files to the commit ---"
+          # We add each potential directory and file individually for clarity.
+          git add reports/
+          git add deleted_data/
+          git add deleted-images/
+          git add backup-meta-data/
+          git add backups/
+          git add images/
+          git add seriesData.json
+          git add run_state.json || true # Use || true for state file in case it was deleted
+          
+          echo ""
+          echo "--- 4. Checking git status AFTER adding files ---"
+          # This is the most important check. If files were added, they will show up here as "changes to be committed".
+          git status
+          
+          echo ""
+          echo "--- 5. Checking for staged changes and committing if they exist ---"
           if git diff --cached --quiet; then
-            echo "No data changes to commit."
+            echo "Git found no staged changes. Nothing to commit."
           else
             commit_message="Automated data update: $(date -u '+%Y-%m-%d %H:%M UTC')"
-            echo "Creating commit: $commit_message"
+            echo "Staged changes found. Creating commit: $commit_message"
             git commit -m "$commit_message"
             git push
+            echo "Push successful."
           fi
 
       # ===================================================================
-      #  STEP 4: NOTIFICATIONS & CLEANUP
+      #  STEP 4: NOTIFICATIONS & CLEANUP (No changes here)
       # ===================================================================
       - name: 7. Determine workflow final status
         id: check_status
@@ -157,24 +163,18 @@ jobs:
           {
             if [ "${WORKFLOW_STATUS}" = "failure" ]; then
               echo "❌ WORKFLOW FAILED"
-              echo "The script encountered a fatal error. See the full script output below for details."
-              echo "===================================================================="
               echo "$SCRIPT_OUTPUT"
-              echo "===================================================================="
             fi
-            
             report_file="${REPORT_PATH:-}"
             if [ ! -f "$report_file" ]; then
               report_file=$(ls -t reports/Report_*.txt 2>/dev/null | head -n1 || true)
             fi
-            
             if [ -f "$report_file" ]; then
               echo "✅ SCRIPT LOG & REPORT"
               echo "===================================================================="
               cat "$report_file"
             else
               echo "⚠️ The main report file could not be found, showing raw output instead."
-              echo "===================================================================="
               echo "$SCRIPT_OUTPUT"
             fi
           } > "$email_body_file"
