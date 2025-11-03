@@ -1,6 +1,7 @@
 # ============================================================================
 # Workflow: Excel → JSON Automation
-# Version : 3.5 (Fix: Made email composition step resilient)
+# Purpose : Automate scheduled and manual Excel-to-JSON updates.
+# Version : 3.8 (Final: Explicit URL and robust commits)
 # ============================================================================
 
 name: Excel → JSON Update
@@ -42,21 +43,29 @@ jobs:
 
       - name: 5. Run the Excel-to-JSON update script
         id: run_updater
-        continue-on-error: true
+        continue-on-error: true # Keep this true for failure notifications
         env:
-          SHEETS: "Sheet1;Feb 7 2023 Onwards;Sheet2"
-          SCHEDULED_RUN: ${{ github.event_name == 'schedule' }}
-          GITHUB_PAGES_URL: ${{ secrets.GITHUB_PAGES_URL }}
+          # [ YOUR CONTROL PANEL ]
+          # Edit this line to control which sheets are processed.
+          SHEETS: "Sheet1"
+
+          # [ THIS IS THE CHANGE - NO MORE SECRET ]
+          # The public URL to your GitHub Pages site.
+          # IMPORTANT: Replace <YOUR_USERNAME> and <YOUR_REPO_NAME> with your actual details.
+          GITHUB_PAGES_URL: "https://brucebanner001.github.io/my-movie-database"
+          
         run: |
+          # Run the script and capture its exit code correctly
           python create_update_backup_delete.py 2>&1 | tee output.log
           script_exit_code=${PIPESTATUS[0]}
+          
+          # Pass outputs to later steps
           output=$(cat output.log)
-          echo "output_log<<EOF" >> "$GITHUB_OUTPUT"
-          echo "$output" >> "$GITHUB_OUTPUT"
-          echo "EOF" >> "$GITHUB_OUTPUT"
+          echo "output_log<<EOF" >> "$GITHUB_OUTPUT"; echo "$output" >> "$GITHUB_OUTPUT"; echo "EOF" >> "$GITHUB_OUTPUT"
           report_path=$(echo "$output" | grep -oP 'Report written -> \K.*')
           echo "report_path=$report_path" >> "$GITHUB_OUTPUT"
-          # Exit with the script's code to correctly set the step outcome
+          
+          # Exit with the script's actual exit code to set the step's outcome
           exit $script_exit_code
 
       - name: 6. Commit and push all generated files
@@ -65,7 +74,10 @@ jobs:
           set -euo pipefail
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add --force seriesData.json images/ backups/ reports/ deleted-data/ deleted-images/ backup-meta-data/ run_state.json || true
+          
+          echo "Adding all generated files with --force to override .gitignore..."
+          git add --force .
+          
           if git diff --cached --quiet; then
             echo "No data changes to commit."
           else
@@ -113,28 +125,20 @@ jobs:
           WORKFLOW_STATUS: ${{ steps.check_status.outputs.status }}
           SCRIPT_OUTPUT: ${{ steps.run_updater.outputs.output_log }}
         run: |
-          # [ THE FIX IS HERE ] - This is now much more robust
-          # We create the temp file FIRST, ensuring the variable is never unbound.
           email_body_file=$(mktemp)
           echo "body_file=$email_body_file" >> "$GITHUB_OUTPUT"
-          
-          # Now we safely write to the file.
           {
+            report_file="${REPORT_PATH:-}"
+            if [ ! -f "$report_file" ]; then report_file=$(ls -t reports/Report_*.txt 2>/dev/null | head -n1 || true); fi
+            
             if [ "${WORKFLOW_STATUS}" = "failure" ]; then
               echo "❌ WORKFLOW FAILED"
-              echo "$SCRIPT_OUTPUT"
-            fi
-            report_file="${REPORT_PATH:-}"
-            if [ ! -f "$report_file" ]; then
-              report_file=$(ls -t reports/Report_*.txt 2>/dev/null | head -n1 || true)
-            fi
-            if [ -f "$report_file" ]; then
+              echo "===================================================================="
+              if [ -f "$report_file" ]; then cat "$report_file"; else echo "$SCRIPT_OUTPUT"; fi
+            else
               echo "✅ SCRIPT LOG & REPORT"
               echo "===================================================================="
-              cat "$report_file"
-            else
-              echo "⚠️ The main report file could not be found, showing raw output instead."
-              echo "$SCRIPT_OUTPUT"
+              if [ -f "$report_file" ]; then cat "$report_file"; else echo "⚠️ Report file not found."; fi
             fi
           } > "$email_body_file"
 
