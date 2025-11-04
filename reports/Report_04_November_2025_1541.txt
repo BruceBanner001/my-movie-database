@@ -1,0 +1,67 @@
+✅ Workflow completed successfully
+🆔 Run ID: RUN_20251104_154059
+📅 Run Time: 04 November 2025 03:41 PM (IST)
+🕒 Duration: 0 min 3 sec
+⚙️ Script Version: v4.5.2 (Final: Added clear logging for missing sheets)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Deleting Records — 04 November 2025 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+❌ Data Deleted:
+- 101 -> Meteor Garden (2018) -> ✅ Deleted
+- 102 -> Once We Get Married (2021) -> ✅ Deleted
+- 103 -> About is Love (2018) -> ✅ Deleted
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Sheet1 — 04 November 2025 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🆕 Data Created:
+- 101 - It's Okay That's Love (2014)
+- 102 - Descendant of the Sun (2016)
+- 103 - Find Me in Your Memory (2020)
+- 104 - Lawless Lawyer (2018)
+- 105 - Love to Hate You (2023)
+
+🕳️ Value Not Found:
+- 101 - It's Okay That's Love -> ⚠️ Missing: Other Names, Show Image, Release Date, Synopsis, Duration
+- 102 - Descendant of the Sun -> ⚠️ Missing: Other Names, Show Image, Release Date, Synopsis, Duration
+- 103 - Find Me in Your Memory -> ⚠️ Missing: Other Names, Show Image, Release Date, Synopsis, Duration
+- 104 - Lawless Lawyer -> ⚠️ Missing: Other Names, Show Image, Release Date, Synopsis, Duration
+- 105 - Love to Hate You -> ⚠️ Missing: Other Names, Show Image, Release Date, Synopsis, Duration
+
+📊 Summary (Sheet: Sheet1)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Created: 5
+🔁 Updated: 0
+🚫 Skipped: 0
+⚠️ Warnings: 5
+  Total Rows: 5
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 Overall Summary
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Total Created: 5
+🔁 Total Updated: 0
+🖼️ Total Images Updated: 0
+🚫 Total Skipped: 0
+❌ Total Deleted: 3
+⚠️ Total Warnings: 5
+💾 Backup Files: 0
+  Grand Total Rows: 5
+
+💾 Metadata Backups: 0
+
+📦 Total Objects in seriesData.json: 5
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ Folders Generated:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+deleted_data/
+    DELETED_04_November_2025_1541_101.json
+    DELETED_04_November_2025_1541_102.json
+    DELETED_04_November_2025_1541_103.json
+reports/
+    Report_04_November_2025_1541.txt
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🏁 Workflow finished successfully
