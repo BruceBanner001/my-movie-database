@@ -1,23 +1,41 @@
-🚀 Running Script — Version v4.6.0 (Final: Rebuilt scrapers and added verbose logging) | Run ID: RUN_20251104_161735
-[DEBUG] Searching: Youth of May 2021 site:asianwiki.com
-[DEBUG] DDGS library not available.
-[DEBUG] Searching: Youth of May 2021 site:mydramalist.com
-[DEBUG] DDGS library not available.
-[DEBUG] Searching: Youth of May 2021 site:asianwiki.com
-[DEBUG] DDGS library not available.
-[DEBUG] Searching: Youth of May 2021 site:mydramalist.com
-[DEBUG] DDGS library not available.
-[DEBUG] Searching: Youth of May 2021 site:mydramalist.com
-[DEBUG] DDGS library not available.
-[DEBUG] Searching: Youth of May 2021 site:asianwiki.com
-[DEBUG] DDGS library not available.
-[DEBUG] Searching: Youth of May 2021 site:mydramalist.com
-[DEBUG] DDGS library not available.
-[DEBUG] Searching: Youth of May 2021 site:mydramalist.com
-[DEBUG] DDGS library not available.
-[DEBUG] Searching: Youth of May 2021 site:asianwiki.com
-[DEBUG] DDGS library not available.
-[DEBUG] Skipping metadata backup for 101: no new data fetched.
-✅ Report written -> reports/Report_04_November_2025_1617.txt
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:97: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS() as dd:
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:97: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS() as dd:
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:97: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS() as dd:
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:97: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS() as dd:
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:97: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS() as dd:
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:97: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS() as dd:
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:97: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS() as dd:
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:97: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS() as dd:
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:97: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS() as dd:
+🚀 Running Script — Version v4.6.1 (Final: Corrected DDGS import bug) | Run ID: RUN_20251104_162430
+[DEBUG] Searching: Find Me in Your Memory 2020 site:asianwiki.com
+[DEBUG] No search results found.
+[DEBUG] Searching: Find Me in Your Memory 2020 site:mydramalist.com
+[DEBUG] No search results found.
+[DEBUG] Searching: Find Me in Your Memory 2020 poster site:asianwiki.com
+[DEBUG] No search results found.
+[DEBUG] Searching: Find Me in Your Memory 2020 poster site:mydramalist.com
+[DEBUG] No search results found.
+[DEBUG] Searching: Find Me in Your Memory 2020 site:mydramalist.com
+[DEBUG] No search results found.
+[DEBUG] Searching: Find Me in Your Memory 2020 site:asianwiki.com
+[DEBUG] No search results found.
+[DEBUG] Searching: Find Me in Your Memory 2020 site:mydramalist.com
+[DEBUG] No search results found.
+[DEBUG] Searching: Find Me in Your Memory 2020 site:mydramalist.com
+[DEBUG] No search results found.
+[DEBUG] Searching: Find Me in Your Memory 2020 site:asianwiki.com
+[DEBUG] No search results found.
+[DEBUG] Skipping metadata backup for 102: no new data fetched.
+✅ Report written -> reports/Report_04_November_2025_1624.txt
 
 All done.
