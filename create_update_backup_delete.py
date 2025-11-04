@@ -2,17 +2,17 @@
 # Script: create_update_backup_delete.py
 # Author: [BruceBanner001]
 # Description:
-#   Automates creation/update/backup of a JSON database from Excel.
-#   This version has rebuilt, robust scrapers to defeat anti-bot measures.
+#   This is the definitive version. It fixes the DDGS crash, removes vague
+#   "Updated" messages, and restores correct reporting logic.
 #
-# Version: v4.7.0 (Final: Rebuilt scrapers and improved user agent)
+# Version: v4.7.1 (Definitive Fix for DDGS Crash & Vague Reporting)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v4.7.0 (Final: Rebuilt scrapers and improved user agent)"
+SCRIPT_VERSION = "v4.7.1 (Definitive Fix for DDGS Crash & Vague Reporting)"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames": [], "showImage": None,
@@ -69,14 +69,7 @@ DELETED_DATA_DIR, REPORTS_DIR, BACKUP_META_DIR = "deleted-data", "reports", "bac
 DEBUG_FETCH = os.environ.get("DEBUG_FETCH", "false").lower() == "true"
 GITHUB_PAGES_URL = os.environ.get("GITHUB_PAGES_URL", "").strip()
 SERVICE_ACCOUNT_FILE, EXCEL_FILE_ID_TXT = "GDRIVE_SERVICE_ACCOUNT.json", "EXCEL_FILE_ID.txt"
-
-# [ THE FIX IS HERE ] - Upgraded User-Agent to look like a modern browser
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36",
-    "Accept-Language": "en-US,en;q=0.9",
-    "Accept-Encoding": "gzip, deflate, br",
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
-}
+HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"}
 
 def logd(msg):
     if DEBUG_FETCH: print(f"[DEBUG] {msg}")
@@ -93,14 +86,19 @@ def normalize_list(val):
 def objects_differ(old, new):
     keys = set(old.keys()) | set(new.keys()) - LOCKED_FIELDS_AFTER_CREATION
     for k in keys:
-        if normalize_list(old.get(k)) != normalize_list(new.get(k)): return True
+        # Treat None and empty list as the same for comparison purposes
+        old_val = old.get(k) if old.get(k) is not None else []
+        new_val = new.get(k) if new.get(k) is not None else []
+        if normalize_list(old_val) != normalize_list(new_val):
+            return True
     return False
 
 def get_soup_from_search(query):
     logd(f"Searching: {query}")
     if not HAVE_DDGS: logd("DDGS library not available."); return None
     try:
-        with DDGS(headers=HEADERS) as dd: # Use the better headers
+        # [ THE FIX IS HERE ] - Reverted the broken change. DDGS does not take a 'headers' argument here.
+        with DDGS() as dd:
             results = list(dd.text(query, max_results=1))
             if not results or not results[0].get('href'): logd("No search results found."); return None
             url = results[0]['href']; logd(f"Found URL: {url}")
@@ -121,8 +119,6 @@ def download_and_save_image(url, local_path):
     return False
 def build_absolute_url(local_path): return f"{GITHUB_PAGES_URL.rstrip('/')}/{local_path.replace(os.sep, '/')}"
 
-# [ THE FIX IS HERE ] - All fetching functions have been rebuilt and made more specific.
-
 def fetch_synopsis_from_asianwiki(s, y):
     soup = get_soup_from_search(f'"{s} {y}" site:asianwiki.com');
     if not soup: return None
@@ -131,7 +127,6 @@ def fetch_synopsis_from_asianwiki(s, y):
     p_tags = h2.find_next_siblings('p')
     synopsis = " ".join([p.get_text(strip=True) for p in p_tags])
     return f"{synopsis} (Source: AsianWiki)" if synopsis else None
-
 def fetch_image_from_asianwiki(s, y, sid):
     soup = get_soup_from_search(f'"{s} {y}" site:asianwiki.com');
     if not soup: return None
@@ -140,7 +135,6 @@ def fetch_image_from_asianwiki(s, y, sid):
     if download_and_save_image(img['src'], os.path.join(IMAGES_DIR, f"{sid}.jpg")):
         return build_absolute_url(os.path.join(IMAGES_DIR, f"{sid}.jpg"))
     return None
-
 def fetch_othernames_from_asianwiki(s, y):
     soup = get_soup_from_search(f'"{s} {y}" site:asianwiki.com');
     if not soup: return []
@@ -151,9 +145,7 @@ def fetch_othernames_from_asianwiki(s, y):
     if match: return normalize_list(match.group(1).strip())
     logd("'Drama:' field not found on AsianWiki.")
     return []
-
 def fetch_duration_from_asianwiki(s, y): return None
-
 def fetch_release_date_from_asianwiki(s, y):
     soup = get_soup_from_search(f'"{s} {y}" site:asianwiki.com');
     if not soup: return None
@@ -172,7 +164,6 @@ def fetch_synopsis_from_mydramalist(s, y):
     if not div: logd("Synopsis element not found on MyDramaList."); return None
     synopsis = div.get_text(strip=True).replace('(Source: MyDramaList)', '').strip()
     return f"{synopsis} (Source: MyDramaList)" if synopsis else None
-
 def fetch_image_from_mydramalist(s, y, sid):
     soup = get_soup_from_search(f'"{s} {y}" site:mydramalist.com');
     if not soup: return None
@@ -181,7 +172,6 @@ def fetch_image_from_mydramalist(s, y, sid):
     if download_and_save_image(img['src'], os.path.join(IMAGES_DIR, f"{sid}.jpg")):
         return build_absolute_url(os.path.join(IMAGES_DIR, f"{sid}.jpg"))
     return None
-
 def fetch_othernames_from_mydramalist(s, y):
     soup = get_soup_from_search(f'"{s} {y}" site:mydramalist.com');
     if not soup: return []
@@ -190,7 +180,6 @@ def fetch_othernames_from_mydramalist(s, y):
     b = li.find('b', string=re.compile(r'Also Known As:'))
     if not b: logd("'Also Known As:' field not found on MyDramaList."); return []
     return normalize_list(b.next_sibling)
-
 def fetch_duration_from_mydramalist(s, y):
     soup = get_soup_from_search(f'"{s} {y}" site:mydramalist.com');
     if not soup: return None
@@ -198,7 +187,6 @@ def fetch_duration_from_mydramalist(s, y):
     if not li: logd("'Duration:' field not found on MyDramaList."); return None
     duration_text = li.get_text().replace('Duration:', '').strip()
     return duration_text.replace("min.", "mins")
-
 def fetch_release_date_from_mydramalist(s, y):
     soup = get_soup_from_search(f'"{s} {y}" site:mydramalist.com');
     if not soup: return None
@@ -315,9 +303,14 @@ def save_metadata_backup(obj, context):
     context['files_generated']['meta_backups'].append(path)
 
 def create_diff_backup(old, new, context):
-    changed = {k: {"old": old.get(k), "new": v} for k, v in new.items() if normalize_list(old.get(k)) != normalize_list(v)}
-    if not changed: return
-    data = {"scriptVersion": SCRIPT_VERSION, "runID": context['run_id'], "timestamp": now_ist().strftime("%d %B %Y %I:%M %p (IST)"), "backupType": "partial_diff", "showID": new['showID'], "showName": new['showName'], "releasedYear": new.get('releasedYear'), "updatedDetails": new.get('updatedDetails', 'Record Updated'), "changedFields": changed}
+    changed_fields = {}
+    for key, new_val in new.items():
+        if key not in LOCKED_FIELDS_AFTER_CREATION:
+             old_val = old.get(key)
+             if normalize_list(old_val) != normalize_list(new_val):
+                 changed_fields[key] = {"old": old_val, "new": new_val}
+    if not changed_fields: return
+    data = {"scriptVersion": SCRIPT_VERSION, "runID": context['run_id'], "timestamp": now_ist().strftime("%d %B %Y %I:%M %p (IST)"), "backupType": "partial_diff", "showID": new['showID'], "showName": new['showName'], "releasedYear": new.get('releasedYear'), "updatedDetails": new.get('updatedDetails', 'Record Updated'), "changedFields": changed_fields}
     path = os.path.join(BACKUP_DIR, f"BACKUP_{filename_timestamp()}_{new['showID']}.json"); os.makedirs(BACKUP_DIR, exist_ok=True)
     with open(path, 'w', encoding='utf-8') as f: json.dump(data, f, indent=4)
     context['files_generated']['backups'].append(path)
@@ -328,7 +321,7 @@ def write_report(context):
     for sheet, changes in context['report_data'].items():
         if not any(v for k, v in changes.items()): continue
         display_sheet = sheet.replace("sheet", "Sheet ").title(); lines.extend([sep, f"🗂️ === {display_sheet} — {now_ist().strftime('%d %B %Y')} ==="]); lines.append(sep)
-        if changes.get('created'): lines.append("\n🆕 Data Created:"); [lines.append(f"- {o['showID']} - {o['showName']} ({o.get('releasedYear')})") for o in changes['created']]
+        if changes.get('created'): lines.append("\n🆕 Data Created:"); [lines.append(f"- {o['showID']} - {o['showName']} ({o.get('releasedYear')}) -> {o.get('updatedDetails', '')}") for o in changes['created']]
         if changes.get('updated'): lines.append("\n🔁 Data Updated:"); [lines.append(f"✍️ {p['new']['showID']} - {p['new']['showName']} -> {p['new']['updatedDetails']}") for p in changes['updated']]
         if changes.get('data_warnings'): lines.append("\n⚠️ Data Validation Warnings:"); [lines.append(i) for i in changes['data_warnings']]; stats['warnings'] += len(changes['data_warnings'])
         if changes.get('fetched_data'): lines.append("\n🖼️ Fetched Data:"); [lines.append(i) for i in changes['fetched_data']]
@@ -393,11 +386,17 @@ def main():
                     if fetched: report['fetched_data'].append(f"- {sid} - {new_obj['showName']} -> Fetched: {', '.join(fetched)}")
                     if missing: report['fetch_warnings'].append(f"- {sid} - {new_obj['showName']} -> ⚠️ Missing: {', '.join(missing)}")
                 elif objects_differ(old_obj, new_obj):
-                    changes = [human_readable_field(k) for k,v in new_obj.items() if old_obj.get(k)!=v and k not in LOCKED_FIELDS_AFTER_CREATION]
-                    new_obj['updatedDetails'] = f"{', '.join(changes)} Updated"; new_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
-                    report['updated'].append({'old': old_obj, 'new': new_obj})
-                    merged_by_id[sid] = new_obj
-                    create_diff_backup(old_obj, new_obj, context)
+                    changes = [human_readable_field(k) for k, v in new_obj.items() if old_obj.get(k) != v and k not in LOCKED_FIELDS_AFTER_CREATION]
+                    # [ THE FIX IS HERE ] - Only create an update if there are actual changes.
+                    if changes:
+                        new_obj['updatedDetails'] = f"{', '.join(changes)} Updated"
+                        new_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
+                        report['updated'].append({'old': old_obj, 'new': new_obj})
+                        merged_by_id[sid] = new_obj
+                        create_diff_backup(old_obj, new_obj, context)
+                    else:
+                        # If objects_differ was true but no specific fields changed, it's a skip.
+                        report['skipped'].append(f"- {sid} - {old_obj['showName']} ({old_obj.get('releasedYear')})")
                 else:
                     report['skipped'].append(f"- {sid} - {old_obj['showName']} ({old_obj.get('releasedYear')})")
         except Exception as e:
