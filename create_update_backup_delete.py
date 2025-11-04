@@ -3,16 +3,16 @@
 # Author: [BruceBanner001]
 # Description:
 #   Automates creation/update/backup of a JSON database from Excel.
-#   This version uses the new, correct 'ddgs' library for web scraping.
+#   This version has rebuilt, robust scrapers to defeat anti-bot measures.
 #
-# Version: v4.6.2 (Final: Switched to the new ddgs library)
+# Version: v4.7.0 (Final: Rebuilt scrapers and improved user agent)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v4.6.2 (Final: Switched to the new ddgs library)"
+SCRIPT_VERSION = "v4.7.0 (Final: Rebuilt scrapers and improved user agent)"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames": [], "showImage": None,
@@ -45,8 +45,6 @@ import requests
 from bs4 import BeautifulSoup, NavigableString
 from PIL import Image
 
-# [ THE FINAL FIX IS HERE ]
-# Import from the new, correct 'ddgs' library.
 try:
     from ddgs import DDGS
     HAVE_DDGS = True
@@ -71,7 +69,14 @@ DELETED_DATA_DIR, REPORTS_DIR, BACKUP_META_DIR = "deleted-data", "reports", "bac
 DEBUG_FETCH = os.environ.get("DEBUG_FETCH", "false").lower() == "true"
 GITHUB_PAGES_URL = os.environ.get("GITHUB_PAGES_URL", "").strip()
 SERVICE_ACCOUNT_FILE, EXCEL_FILE_ID_TXT = "GDRIVE_SERVICE_ACCOUNT.json", "EXCEL_FILE_ID.txt"
-HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"}
+
+# [ THE FIX IS HERE ] - Upgraded User-Agent to look like a modern browser
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
+}
 
 def logd(msg):
     if DEBUG_FETCH: print(f"[DEBUG] {msg}")
@@ -95,7 +100,7 @@ def get_soup_from_search(query):
     logd(f"Searching: {query}")
     if not HAVE_DDGS: logd("DDGS library not available."); return None
     try:
-        with DDGS() as dd:
+        with DDGS(headers=HEADERS) as dd: # Use the better headers
             results = list(dd.text(query, max_results=1))
             if not results or not results[0].get('href'): logd("No search results found."); return None
             url = results[0]['href']; logd(f"Found URL: {url}")
@@ -116,8 +121,10 @@ def download_and_save_image(url, local_path):
     return False
 def build_absolute_url(local_path): return f"{GITHUB_PAGES_URL.rstrip('/')}/{local_path.replace(os.sep, '/')}"
 
+# [ THE FIX IS HERE ] - All fetching functions have been rebuilt and made more specific.
+
 def fetch_synopsis_from_asianwiki(s, y):
-    soup = get_soup_from_search(f'{s} {y} site:asianwiki.com');
+    soup = get_soup_from_search(f'"{s} {y}" site:asianwiki.com');
     if not soup: return None
     h2 = soup.find('h2', string='Synopsis');
     if not h2: logd("Synopsis heading not found on AsianWiki."); return None
@@ -126,7 +133,7 @@ def fetch_synopsis_from_asianwiki(s, y):
     return f"{synopsis} (Source: AsianWiki)" if synopsis else None
 
 def fetch_image_from_asianwiki(s, y, sid):
-    soup = get_soup_from_search(f'{s} {y} poster site:asianwiki.com');
+    soup = get_soup_from_search(f'"{s} {y}" site:asianwiki.com');
     if not soup: return None
     img = soup.select_one('a.image > img[src]')
     if not img: logd("Image tag not found on AsianWiki."); return None
@@ -135,23 +142,20 @@ def fetch_image_from_asianwiki(s, y, sid):
     return None
 
 def fetch_othernames_from_asianwiki(s, y):
-    soup = get_soup_from_search(f'{s} {y} site:asianwiki.com');
+    soup = get_soup_from_search(f'"{s} {y}" site:asianwiki.com');
     if not soup: return []
     div = soup.find('div', id='mw-content-text')
     if not div: logd("Main content div not found on AsianWiki."); return []
-    ps = div.find_all('p', limit=5)
-    for p in ps:
-        text = p.get_text(" ", strip=True)
-        if 'Drama:' in text:
-            match = re.search(r"Drama:\s*([^/(\n\r]+)", text)
-            if match: return normalize_list(match.group(1).strip())
-    logd("'Drama:' field not found in initial paragraphs on AsianWiki.")
+    text_content = div.get_text(" ", strip=True)
+    match = re.search(r"Drama:\s*([^/(\n\r]+)", text_content)
+    if match: return normalize_list(match.group(1).strip())
+    logd("'Drama:' field not found on AsianWiki.")
     return []
 
 def fetch_duration_from_asianwiki(s, y): return None
 
 def fetch_release_date_from_asianwiki(s, y):
-    soup = get_soup_from_search(f'{s} {y} site:asianwiki.com');
+    soup = get_soup_from_search(f'"{s} {y}" site:asianwiki.com');
     if not soup: return None
     for b in soup.find_all('b'):
         if 'Release Date:' in b.get_text():
@@ -162,15 +166,15 @@ def fetch_release_date_from_asianwiki(s, y):
     return None
 
 def fetch_synopsis_from_mydramalist(s, y):
-    soup = get_soup_from_search(f'{s} {y} site:mydramalist.com');
+    soup = get_soup_from_search(f'"{s} {y}" site:mydramalist.com');
     if not soup: return None
-    div = soup.select_one('.show-synopsis, div[itemprop="description"]')
+    div = soup.select_one('div.show-synopsis, div[itemprop="description"] p')
     if not div: logd("Synopsis element not found on MyDramaList."); return None
     synopsis = div.get_text(strip=True).replace('(Source: MyDramaList)', '').strip()
     return f"{synopsis} (Source: MyDramaList)" if synopsis else None
 
 def fetch_image_from_mydramalist(s, y, sid):
-    soup = get_soup_from_search(f'{s} {y} poster site:mydramalist.com');
+    soup = get_soup_from_search(f'"{s} {y}" site:mydramalist.com');
     if not soup: return None
     img = soup.select_one('.film-cover img[src], .cover img[src]')
     if not img: logd("Image tag not found on MyDramaList."); return None
@@ -179,23 +183,24 @@ def fetch_image_from_mydramalist(s, y, sid):
     return None
 
 def fetch_othernames_from_mydramalist(s, y):
-    soup = get_soup_from_search(f'{s} {y} site:mydramalist.com');
+    soup = get_soup_from_search(f'"{s} {y}" site:mydramalist.com');
     if not soup: return []
-    b = soup.find('b', string=re.compile(r'Also Known As:'))
+    li = soup.find('li', class_='list-item p-a-0')
+    if not li: logd("Container for 'Also Known As' not found on MyDramaList."); return []
+    b = li.find('b', string=re.compile(r'Also Known As:'))
     if not b: logd("'Also Known As:' field not found on MyDramaList."); return []
-    text = b.next_sibling
-    return normalize_list(text) if text and isinstance(text, str) else []
+    return normalize_list(b.next_sibling)
 
 def fetch_duration_from_mydramalist(s, y):
-    soup = get_soup_from_search(f'{s} {y} site:mydramalist.com');
+    soup = get_soup_from_search(f'"{s} {y}" site:mydramalist.com');
     if not soup: return None
     li = soup.find(lambda t: 'Duration:' in t.get_text() and t.name == 'li');
     if not li: logd("'Duration:' field not found on MyDramaList."); return None
     duration_text = li.get_text().replace('Duration:', '').strip()
-    return f"{duration_text}s" if "min" in duration_text and "mins" not in duration_text else duration_text
+    return duration_text.replace("min.", "mins")
 
 def fetch_release_date_from_mydramalist(s, y):
-    soup = get_soup_from_search(f'{s} {y} site:mydramalist.com');
+    soup = get_soup_from_search(f'"{s} {y}" site:mydramalist.com');
     if not soup: return None
     li = soup.find(lambda t: 'Aired:' in t.get_text() and t.name == 'li');
     if not li: logd("'Aired:' field not found on MyDramaList."); return None
@@ -214,8 +219,9 @@ def fetch_and_populate_metadata(obj, site_priority, context):
                 result = FETCH_MAP[site][field](*args)
                 if result: used_site = site; break
         if result:
-            if field == 'image': obj['showImage'] = result; context['files_generated']['images'].append(os.path.join(IMAGES_DIR, f"{s_id}.jpg"))
-            else: obj[field] = result
+            target_key = "Duration" if field == "duration" else field
+            obj[target_key] = result
+            if field == 'image': context['files_generated']['images'].append(os.path.join(IMAGES_DIR, f"{s_id}.jpg"))
             spu[field] = used_site
     return obj
 
