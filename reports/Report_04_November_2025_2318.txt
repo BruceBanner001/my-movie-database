@@ -1,0 +1,61 @@
+✅ Workflow completed successfully
+🆔 Run ID: RUN_20251104_231732
+📅 Run Time: 04 November 2025 11:18 PM (IST)
+🕒 Duration: 0 min 40 sec
+⚙️ Script Version: v4.9.0 (Definitive Fix: Anti-Rate-Limiting & Surgical Parsers)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Sheet1 — 04 November 2025 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🆕 Data Created:
+- 102 - My Robot Boyfriend (2019) -> First Time Uploaded
+- 103 - Lie To Me (2011) -> First Time Uploaded
+
+🖼️ Fetched Data:
+- 102 - My Robot Boyfriend -> Fetched: image, Release Date, duration
+- 103 - Lie To Me -> Fetched: image, Release Date, duration
+
+🕳️ Value Not Found:
+- 102 - My Robot Boyfriend -> ⚠️ Missing: Other Names, Country, Synopsis
+- 103 - Lie To Me -> ⚠️ Missing: Other Names, Synopsis
+
+🚫 Skipped (Unchanged):
+- - 101 - Hotel King (2014)
+
+📊 Summary (Sheet: Sheet1)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Created: 2
+🔁 Updated: 0
+🚫 Skipped: 1
+⚠️ Warnings: 2
+  Total Rows: 3
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 Overall Summary
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Total Created: 2
+🔁 Total Updated: 0
+🖼️ Total Images Updated: 0
+🚫 Total Skipped: 1
+❌ Total Deleted: 0
+⚠️ Total Warnings: 2
+💾 Backup Files: 0
+  Grand Total Rows: 3
+
+💾 Metadata Backups: 2
+
+📦 Total Objects in seriesData.json: 3
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ Folders Generated:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+images/
+    102.jpg
+    103.jpg
+meta_backups/
+    META_04_November_2025_2318_102.json
+    META_04_November_2025_2318_103.json
+reports/
+    Report_04_November_2025_2318.txt
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🏁 Workflow finished successfully
