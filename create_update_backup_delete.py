@@ -2,17 +2,17 @@
 # Script: create_update_backup_delete.py
 # Author: [BruceBanner001]
 # Description:
-#   This is the definitive version. It fixes the DDGS crash, removes vague
-#   "Updated" messages, and restores correct reporting logic.
+#   This is the definitive version. It uses advanced session handling
+#   to defeat anti-bot measures and has surgically precise parsers.
 #
-# Version: v4.7.1 (Definitive Fix for DDGS Crash & Vague Reporting)
+# Version: v4.8.0 (Definitive Fix: Surgical Scrapers & Session Handling)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v4.7.1 (Definitive Fix for DDGS Crash & Vague Reporting)"
+SCRIPT_VERSION = "v4.8.0 (Definitive Fix: Surgical Scrapers & Session Handling)"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames": [], "showImage": None,
@@ -45,19 +45,10 @@ import requests
 from bs4 import BeautifulSoup, NavigableString
 from PIL import Image
 
-try:
-    from ddgs import DDGS
-    HAVE_DDGS = True
-except Exception:
-    HAVE_DDGS = False
-
-try:
-    from google.oauth2 import service_account
-    from googleapiclient.discovery import build
-    from googleapiclient.http import MediaIoBaseDownload
-    HAVE_GOOGLE_API = True
-except Exception:
-    HAVE_GOOGLE_API = False
+try: from ddgs import DDGS; HAVE_DDGS = True
+except Exception: HAVE_DDGS = False
+try: from google.oauth2 import service_account; from googleapiclient.discovery import build; from googleapiclient.http import MediaIoBaseDownload; HAVE_GOOGLE_API = True
+except Exception: HAVE_GOOGLE_API = False
 
 IST = timezone(timedelta(hours=5, minutes=30))
 def now_ist(): return datetime.now(IST)
@@ -69,7 +60,11 @@ DELETED_DATA_DIR, REPORTS_DIR, BACKUP_META_DIR = "deleted-data", "reports", "bac
 DEBUG_FETCH = os.environ.get("DEBUG_FETCH", "false").lower() == "true"
 GITHUB_PAGES_URL = os.environ.get("GITHUB_PAGES_URL", "").strip()
 SERVICE_ACCOUNT_FILE, EXCEL_FILE_ID_TXT = "GDRIVE_SERVICE_ACCOUNT.json", "EXCEL_FILE_ID.txt"
-HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"}
+HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36", "Accept-Language": "en-US,en;q=0.5"}
+
+# [ THE FIX IS HERE ] - Create a persistent session to handle cookies and appear more human
+SESSION = requests.Session()
+SESSION.headers.update(HEADERS)
 
 def logd(msg):
     if DEBUG_FETCH: print(f"[DEBUG] {msg}")
@@ -86,23 +81,20 @@ def normalize_list(val):
 def objects_differ(old, new):
     keys = set(old.keys()) | set(new.keys()) - LOCKED_FIELDS_AFTER_CREATION
     for k in keys:
-        # Treat None and empty list as the same for comparison purposes
         old_val = old.get(k) if old.get(k) is not None else []
         new_val = new.get(k) if new.get(k) is not None else []
-        if normalize_list(old_val) != normalize_list(new_val):
-            return True
+        if normalize_list(old_val) != normalize_list(new_val): return True
     return False
 
 def get_soup_from_search(query):
     logd(f"Searching: {query}")
     if not HAVE_DDGS: logd("DDGS library not available."); return None
     try:
-        # [ THE FIX IS HERE ] - Reverted the broken change. DDGS does not take a 'headers' argument here.
         with DDGS() as dd:
             results = list(dd.text(query, max_results=1))
             if not results or not results[0].get('href'): logd("No search results found."); return None
             url = results[0]['href']; logd(f"Found URL: {url}")
-            r = requests.get(url, headers=HEADERS, timeout=15)
+            r = SESSION.get(url, timeout=15) # Use the session object
             if r.status_code == 200: return BeautifulSoup(r.text, "html.parser")
             else: logd(f"HTTP Error {r.status_code} for {url}"); return None
     except Exception as e: logd(f"Search/fetch error for '{query}': {e}"); return None
@@ -110,10 +102,13 @@ def get_soup_from_search(query):
 def download_and_save_image(url, local_path):
     os.makedirs(os.path.dirname(local_path), exist_ok=True)
     try:
-        r = requests.get(url, headers=HEADERS, stream=True, timeout=15)
+        r = SESSION.get(url, stream=True, timeout=15) # Use the session object
         if r.status_code == 200 and r.headers.get("content-type", "").startswith("image"):
             with Image.open(r.raw) as img:
-                img.convert("RGB").resize((600, 900), Image.Resampling.LANCZOS).save(local_path, "JPEG", quality=90)
+                # [ THE FIX IS HERE ] - Increased resolution and quality
+                img = img.convert("RGB")
+                img.thumbnail((800, 1200), Image.Resampling.LANCZOS)
+                img.save(local_path, "JPEG", quality=95)
                 logd(f"Image saved to {local_path}"); return True
     except Exception as e: logd(f"Image download failed from {url}: {e}")
     return False
@@ -132,7 +127,9 @@ def fetch_image_from_asianwiki(s, y, sid):
     if not soup: return None
     img = soup.select_one('a.image > img[src]')
     if not img: logd("Image tag not found on AsianWiki."); return None
-    if download_and_save_image(img['src'], os.path.join(IMAGES_DIR, f"{sid}.jpg")):
+    # AsianWiki often uses relative URLs, so we need to build the full URL
+    img_url = requests.compat.urljoin("https://asianwiki.com", img['src'])
+    if download_and_save_image(img_url, os.path.join(IMAGES_DIR, f"{sid}.jpg")):
         return build_absolute_url(os.path.join(IMAGES_DIR, f"{sid}.jpg"))
     return None
 def fetch_othernames_from_asianwiki(s, y):
@@ -160,9 +157,13 @@ def fetch_release_date_from_asianwiki(s, y):
 def fetch_synopsis_from_mydramalist(s, y):
     soup = get_soup_from_search(f'"{s} {y}" site:mydramalist.com');
     if not soup: return None
-    div = soup.select_one('div.show-synopsis, div[itemprop="description"] p')
-    if not div: logd("Synopsis element not found on MyDramaList."); return None
-    synopsis = div.get_text(strip=True).replace('(Source: MyDramaList)', '').strip()
+    # [ THE FIX IS HERE ] - Surgically precise parser for synopsis
+    synopsis_div = soup.select_one('div.show-synopsis')
+    if not synopsis_div: logd("Synopsis element not found on MyDramaList."); return None
+    # Remove all the junk at the end
+    for tag in synopsis_div.find_all(['span', 'a']):
+        tag.decompose()
+    synopsis = synopsis_div.get_text(strip=True)
     return f"{synopsis} (Source: MyDramaList)" if synopsis else None
 def fetch_image_from_mydramalist(s, y, sid):
     soup = get_soup_from_search(f'"{s} {y}" site:mydramalist.com');
@@ -175,18 +176,20 @@ def fetch_image_from_mydramalist(s, y, sid):
 def fetch_othernames_from_mydramalist(s, y):
     soup = get_soup_from_search(f'"{s} {y}" site:mydramalist.com');
     if not soup: return []
-    li = soup.find('li', class_='list-item p-a-0')
-    if not li: logd("Container for 'Also Known As' not found on MyDramaList."); return []
-    b = li.find('b', string=re.compile(r'Also Known As:'))
-    if not b: logd("'Also Known As:' field not found on MyDramaList."); return []
-    return normalize_list(b.next_sibling)
+    # [ THE FIX IS HERE ] - More robust finder for Other Names
+    parent_div = soup.find('div', class_='box-body')
+    if not parent_div: logd("Box body for details not found on MyDramaList."); return []
+    for b in parent_div.find_all('b'):
+        if 'Also Known As:' in b.get_text():
+            return normalize_list(b.next_sibling)
+    logd("'Also Known As:' field not found on MyDramaList.")
+    return []
 def fetch_duration_from_mydramalist(s, y):
     soup = get_soup_from_search(f'"{s} {y}" site:mydramalist.com');
     if not soup: return None
     li = soup.find(lambda t: 'Duration:' in t.get_text() and t.name == 'li');
     if not li: logd("'Duration:' field not found on MyDramaList."); return None
-    duration_text = li.get_text().replace('Duration:', '').strip()
-    return duration_text.replace("min.", "mins")
+    return li.get_text().replace('Duration:', '').strip().replace("min.", "mins")
 def fetch_release_date_from_mydramalist(s, y):
     soup = get_soup_from_search(f'"{s} {y}" site:mydramalist.com');
     if not soup: return None
@@ -207,7 +210,8 @@ def fetch_and_populate_metadata(obj, site_priority, context):
                 result = FETCH_MAP[site][field](*args)
                 if result: used_site = site; break
         if result:
-            target_key = "Duration" if field == "duration" else field
+            # [ THE FIX IS HERE ] - Correctly map 'image' to 'showImage' and 'duration' to 'Duration'
+            target_key = "showImage" if field == "image" else "Duration" if field == "duration" else field
             obj[target_key] = result
             if field == 'image': context['files_generated']['images'].append(os.path.join(IMAGES_DIR, f"{s_id}.jpg"))
             spu[field] = used_site
@@ -386,8 +390,7 @@ def main():
                     if fetched: report['fetched_data'].append(f"- {sid} - {new_obj['showName']} -> Fetched: {', '.join(fetched)}")
                     if missing: report['fetch_warnings'].append(f"- {sid} - {new_obj['showName']} -> ⚠️ Missing: {', '.join(missing)}")
                 elif objects_differ(old_obj, new_obj):
-                    changes = [human_readable_field(k) for k, v in new_obj.items() if old_obj.get(k) != v and k not in LOCKED_FIELDS_AFTER_CREATION]
-                    # [ THE FIX IS HERE ] - Only create an update if there are actual changes.
+                    changes = [human_readable_field(k) for k, v in new_obj.items() if old_obj.get(k) != v and k not in LOCKED_FIELDS_AFTER_CREATION and normalize_list(old_obj.get(k)) != normalize_list(v)]
                     if changes:
                         new_obj['updatedDetails'] = f"{', '.join(changes)} Updated"
                         new_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
@@ -395,7 +398,6 @@ def main():
                         merged_by_id[sid] = new_obj
                         create_diff_backup(old_obj, new_obj, context)
                     else:
-                        # If objects_differ was true but no specific fields changed, it's a skip.
                         report['skipped'].append(f"- {sid} - {old_obj['showName']} ({old_obj.get('releasedYear')})")
                 else:
                     report['skipped'].append(f"- {sid} - {old_obj['showName']} ({old_obj.get('releasedYear')})")
