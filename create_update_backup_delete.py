@@ -3,16 +3,16 @@
 # Author: [BruceBanner001]
 # Description:
 #   Automates creation/update/backup of a JSON database from Excel.
-#   This version has rebuilt, robust scrapers and verbose debug logging.
+#   This version has the definitive fix for the DDGS import error.
 #
-# Version: v4.6.0 (Final: Rebuilt scrapers and added verbose logging)
+# Version: v4.6.1 (Final: Corrected DDGS import bug)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v4.6.0 (Final: Rebuilt scrapers and added verbose logging)"
+SCRIPT_VERSION = "v4.6.1 (Final: Corrected DDGS import bug)"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames": [], "showImage": None,
@@ -45,10 +45,20 @@ import requests
 from bs4 import BeautifulSoup, NavigableString
 from PIL import Image
 
-try: from ddgs import DDGS; HAVE_DDGS = True
-except Exception: HAVE_DDGS = False
-try: from google.oauth2 import service_account; from googleapiclient.discovery import build; from googleapiclient.http import MediaIoBaseDownload; HAVE_GOOGLE_API = True
-except Exception: HAVE_GOOGLE_API = False
+# [ THE DEFINITIVE FIX IS HERE ]
+try:
+    from duckduckgo_search import DDGS
+    HAVE_DDGS = True
+except Exception:
+    HAVE_DDGS = False
+
+try:
+    from google.oauth2 import service_account
+    from googleapiclient.discovery import build
+    from googleapiclient.http import MediaIoBaseDownload
+    HAVE_GOOGLE_API = True
+except Exception:
+    HAVE_GOOGLE_API = False
 
 IST = timezone(timedelta(hours=5, minutes=30))
 def now_ist(): return datetime.now(IST)
@@ -115,7 +125,7 @@ def fetch_synopsis_from_asianwiki(s, y):
     return f"{synopsis} (Source: AsianWiki)" if synopsis else None
 
 def fetch_image_from_asianwiki(s, y, sid):
-    soup = get_soup_from_search(f'{s} {y} site:asianwiki.com');
+    soup = get_soup_from_search(f'{s} {y} poster site:asianwiki.com');
     if not soup: return None
     img = soup.select_one('a.image > img[src]')
     if not img: logd("Image tag not found on AsianWiki."); return None
@@ -130,8 +140,9 @@ def fetch_othernames_from_asianwiki(s, y):
     if not div: logd("Main content div not found on AsianWiki."); return []
     ps = div.find_all('p', limit=5)
     for p in ps:
-        if 'Drama:' in p.get_text():
-            match = re.search(r"Drama:\s*(.*?)(?:\s*\(|$)", p.get_text())
+        text = p.get_text(" ", strip=True)
+        if 'Drama:' in text:
+            match = re.search(r"Drama:\s*([^/(\n\r]+)", text)
             if match: return normalize_list(match.group(1).strip())
     logd("'Drama:' field not found in initial paragraphs on AsianWiki.")
     return []
@@ -158,7 +169,7 @@ def fetch_synopsis_from_mydramalist(s, y):
     return f"{synopsis} (Source: MyDramaList)" if synopsis else None
 
 def fetch_image_from_mydramalist(s, y, sid):
-    soup = get_soup_from_search(f'{s} {y} site:mydramalist.com');
+    soup = get_soup_from_search(f'{s} {y} poster site:mydramalist.com');
     if not soup: return None
     img = soup.select_one('.film-cover img[src], .cover img[src]')
     if not img: logd("Image tag not found on MyDramaList."); return None
