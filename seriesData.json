@@ -8,7 +8,7 @@
         "watchEndedOn": "14-02-2023",
         "releasedYear": 2021,
         "releaseDate": null,
-        "totalEpisodes": 12,
+        "totalEpisodes": 16,
         "showType": "Drama",
         "nativeLanguage": "Korean",
         "watchedLanguage": "Korean",
@@ -23,7 +23,7 @@
         ],
         "againWatchedDates": [],
         "updatedOn": "04 November 2025",
-        "updatedDetails": "First Time Uploaded",
+        "updatedDetails": "Total Episodes Updated",
         "synopsis": null,
         "topRatings": 1000,
         "Duration": null,
@@ -38,20 +38,22 @@
         "watchEndedOn": "12-02-2023",
         "releasedYear": 2020,
         "releaseDate": null,
-        "totalEpisodes": 32,
+        "totalEpisodes": 30,
         "showType": "Drama",
         "nativeLanguage": "Korean",
         "watchedLanguage": "Korean",
         "country": "South Korea",
-        "comments": "Nice Drama. Ending Was Simple And Nice.",
-        "ratings": 9,
+        "comments": "Nice Drama. Ending Was Simple And Nice.NICEE",
+        "ratings": 10,
         "genres": [
             "Celebrity",
             "Melodrama",
+            "Rom",
             "Romance"
         ],
         "network": [
-            "MBC TV"
+            "MBC TV",
+            "Nice"
         ],
         "againWatchedDates": [
             "21-12-2023",
@@ -59,12 +61,13 @@
             "30-08-2024",
             "07-01-2025",
             "29-04-2025",
-            "28-08-2025"
+            "28-08-2025",
+            "07-05-2024"
         ],
         "updatedOn": "04 November 2025",
-        "updatedDetails": "First Time Uploaded",
+        "updatedDetails": "Total Episodes, Comments, Ratings, Category, Network, Again Watched Dates Updated",
         "synopsis": null,
-        "topRatings": 6300,
+        "topRatings": 8000,
         "Duration": null,
         "sitePriorityUsed": {}
     },
@@ -97,14 +100,75 @@
             "03-07-2024"
         ],
         "updatedOn": "04 November 2025",
-        "updatedDetails": "First Time Uploaded",
+        "updatedDetails": " Updated",
         "synopsis": null,
         "topRatings": 3000,
         "Duration": null,
         "sitePriorityUsed": {
             "releaseDate": "mydramalist",
             "duration": "mydramalist"
-        },
-        "duration": "60 min.s"
+        }
+    },
+    {
+        "showID": 104,
+        "showName": "Oh My Ghost",
+        "otherNames": [],
+        "showImage": null,
+        "watchStartedOn": "18-03-2023",
+        "watchEndedOn": "19-03-2023",
+        "releasedYear": 2015,
+        "releaseDate": null,
+        "totalEpisodes": 16,
+        "showType": "Drama",
+        "nativeLanguage": "Korean",
+        "watchedLanguage": "Korean",
+        "country": "South Korea",
+        "comments": "Not Bad. One Time Watchable",
+        "ratings": 6,
+        "genres": [
+            "Romance",
+            "Supernatural"
+        ],
+        "network": [
+            "tvN"
+        ],
+        "againWatchedDates": [],
+        "updatedOn": "04 November 2025",
+        "updatedDetails": "First Time Uploaded",
+        "synopsis": null,
+        "topRatings": 600,
+        "Duration": null,
+        "sitePriorityUsed": {}
+    },
+    {
+        "showID": 105,
+        "showName": "My Robot Boyfriend",
+        "otherNames": [],
+        "showImage": null,
+        "watchStartedOn": "19-03-2023",
+        "watchEndedOn": "20-03-2023",
+        "releasedYear": 2019,
+        "releaseDate": null,
+        "totalEpisodes": 42,
+        "showType": "Drama",
+        "nativeLanguage": "Chinese",
+        "watchedLanguage": "Chinese",
+        "country": null,
+        "comments": "Mokka. I Don't Like The Scenes Plot. It's Not Consistent And Irrelevent. Ending Is Very Bad.",
+        "ratings": 3,
+        "genres": [
+            "Romance",
+            "Technology"
+        ],
+        "network": [
+            "Tencent"
+        ],
+        "againWatchedDates": [],
+        "updatedOn": "04 November 2025",
+        "updatedDetails": "First Time Uploaded",
+        "synopsis": null,
+        "topRatings": 300,
+        "Duration": null,
+        "sitePriorityUsed": {}
     }
 ]
