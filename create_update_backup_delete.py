@@ -3,16 +3,16 @@
 # Author: [BruceBanner001]
 # Description:
 #   Automates creation/update/backup of a JSON database from Excel.
-#   Includes robust data validation and configurable sheet processing.
+#   Includes robust data validation and clear logging for missing sheets.
 #
-# Version: v4.5.1 (Final: Full-length, fixes silent fetching & reporting)
+# Version: v4.5.2 (Final: Added clear logging for missing sheets)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v4.5.1 (Final: Full-length, fixes silent fetching & reporting)"
+SCRIPT_VERSION = "v4.5.2 (Final: Added clear logging for missing sheets)"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames": [], "showImage": None,
@@ -190,14 +190,20 @@ def fetch_and_populate_metadata(obj, site_priority, context):
     return obj
 
 def process_deletions(excel, json_file, context):
-    try: df = pd.read_excel(excel, sheet_name='Deleting Records')
-    except ValueError: return {}, []
+    try:
+        df = pd.read_excel(excel, sheet_name='Deleting Records')
+    except ValueError:
+        # [ THE FIX IS HERE ] - Now prints a clear message instead of failing silently.
+        print("INFO: 'Deleting Records' sheet not found in the Excel file. Skipping deletion step.")
+        return {}, []
     try:
         with open(json_file, 'r', encoding='utf-8') as f: data = json.load(f)
     except (FileNotFoundError, json.JSONDecodeError): data = []
+
     by_id = {int(o['showID']): o for o in data if o.get('showID')}
     to_delete = set(pd.to_numeric(df.iloc[:, 0], errors='coerce').dropna().astype(int))
     deleted, report = set(), {}
+
     for sid in to_delete:
         if sid in by_id:
             obj = by_id.pop(sid); deleted.add(sid); ts = filename_timestamp()
@@ -215,8 +221,11 @@ def process_deletions(excel, json_file, context):
     return report, list(deleted)
 
 def apply_manual_updates(excel, by_id, context):
-    try: df = pd.read_excel(excel, sheet_name='Manual Updates', keep_default_na=False); df.columns = [c.strip().lower() for c in df.columns]
-    except ValueError: return {}
+    try:
+        df = pd.read_excel(excel, sheet_name='Manual Updates', keep_default_na=False); df.columns = [c.strip().lower() for c in df.columns]
+    except ValueError:
+        print("INFO: 'Manual Updates' sheet not found. Skipping manual updates.")
+        return {}
     MAP, report = {"no": "showID", "image": "showImage", "other names": "otherNames", "release date": "releaseDate", "synopsis": "synopsis", "duration": "Duration"}, {}
     for _, row in df.iterrows():
         sid = pd.to_numeric(row.get('no'), errors='coerce')
@@ -236,11 +245,16 @@ def apply_manual_updates(excel, by_id, context):
     return report
 
 def excel_to_objects(excel, sheet, by_id, context):
-    try: df = pd.read_excel(excel, sheet_name=sheet, keep_default_na=False); df.columns = [c.strip().lower() for c in df.columns]
-    except ValueError: return []
+    try:
+        df = pd.read_excel(excel, sheet_name=sheet, keep_default_na=False); df.columns = [c.strip().lower() for c in df.columns]
+    except ValueError:
+        print(f"INFO: Sheet '{sheet}' not found. Skipping.")
+        return []
     report = context['report_data'].setdefault(sheet, {}); report.setdefault('data_warnings', [])
-    try: again_idx = [i for i, c in enumerate(df.columns) if "again watched" in c][0]
-    except IndexError: print(f"ERROR: 'Again Watched' in '{sheet}' not found. Skipping."); return []
+    try:
+        again_idx = [i for i, c in enumerate(df.columns) if "again watched" in c][0]
+    except IndexError:
+        print(f"ERROR: 'Again Watched' in '{sheet}' not found. Skipping."); return []
     MAP = {"no": "showID", "series title": "showName", "started date": "watchStartedOn", "finished date": "watchEndedOn", "year": "releasedYear", "total episodes": "totalEpisodes", "original language": "nativeLanguage", "language": "watchedLanguage", "ratings": "ratings", "catagory": "genres", "category": "genres", "original network": "network", "comments": "comments"}
     base_id = {"sheet1": 100, "feb 7 2023 onwards": 1000, "sheet2": 3000}.get(sheet.lower(), 0)
     processed = []
@@ -272,7 +286,9 @@ def excel_to_objects(excel, sheet, by_id, context):
 
 def save_metadata_backup(obj, context):
     fetched = {k: {"value": obj.get(k), "source": s} for k, s in obj.get('sitePriorityUsed', {}).items() if s}
-    if not fetched: return
+    if not fetched:
+        logd(f"Skipping metadata backup for {obj['showID']} because no new data was fetched.")
+        return
     data = {"scriptVersion": SCRIPT_VERSION, "runID": context['run_id'], "timestamp": now_ist().strftime("%d %B %Y %I:%M %p (IST)"), "showID": obj['showID'], "showName": obj['showName'], "fetchedFields": fetched}
     path = os.path.join(BACKUP_META_DIR, f"META_{filename_timestamp()}_{obj['showID']}.json"); os.makedirs(BACKUP_META_DIR, exist_ok=True)
     with open(path, 'w', encoding='utf-8') as f: json.dump(data, f, indent=4)
