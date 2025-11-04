@@ -1,6 +1,6 @@
 # ==========================================
 # Excel → JSON Automation - Python Dependencies
-# Version 2.0 (Fix: Switched to the new 'ddgs' library)
+# Version 3.0 (Feat: Added cloudscraper to defeat anti-bot measures)
 # ==========================================
 
 # === Core Data Handling ===
@@ -10,11 +10,12 @@ openpyxl>=3.1.0
 # === Web Scraping & Networking ===
 requests>=2.31.0
 beautifulsoup4>=4.12.0
-
-# [ THE FINAL FIX IS HERE ]
-# The old 'duckduckgo-search' package is deprecated and broken.
-# We are now using the new, official 'ddgs' package as required.
 ddgs>=5.0.0
+
+# [ THE FINAL WEAPON IS HERE ]
+# This library is specifically designed to bypass anti-bot protections
+# like the one used by AsianWiki (Cloudflare).
+cloudscraper>=1.2.71
 
 # === Image Processing ===
 Pillow>=10.0.0

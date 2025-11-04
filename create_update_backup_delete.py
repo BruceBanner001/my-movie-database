@@ -3,16 +3,17 @@
 # Author: [BruceBanner001]
 # Description:
 #   This is the definitive version. It uses advanced session handling
-#   to defeat anti-bot measures and has surgically precise parsers.
+#   with cloudscraper to defeat anti-bot measures and has surgically
+#   precise parsers for all data points.
 #
-# Version: v4.8.0 (Definitive Fix: Surgical Scrapers & Session Handling)
+# Version: v4.8.0 (Definitive Fix: Surgical Scrapers & Anti-Bot)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v4.8.0 (Definitive Fix: Surgical Scrapers & Session Handling)"
+SCRIPT_VERSION = "v4.8.0 (Definitive Fix: Surgical Scrapers & Anti-Bot)"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames": [], "showImage": None,
@@ -47,6 +48,8 @@ from PIL import Image
 
 try: from ddgs import DDGS; HAVE_DDGS = True
 except Exception: HAVE_DDGS = False
+try: import cloudscraper; HAVE_SCRAPER = True
+except Exception: HAVE_SCRAPER = False
 try: from google.oauth2 import service_account; from googleapiclient.discovery import build; from googleapiclient.http import MediaIoBaseDownload; HAVE_GOOGLE_API = True
 except Exception: HAVE_GOOGLE_API = False
 
@@ -60,11 +63,9 @@ DELETED_DATA_DIR, REPORTS_DIR, BACKUP_META_DIR = "deleted-data", "reports", "bac
 DEBUG_FETCH = os.environ.get("DEBUG_FETCH", "false").lower() == "true"
 GITHUB_PAGES_URL = os.environ.get("GITHUB_PAGES_URL", "").strip()
 SERVICE_ACCOUNT_FILE, EXCEL_FILE_ID_TXT = "GDRIVE_SERVICE_ACCOUNT.json", "EXCEL_FILE_ID.txt"
-HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36", "Accept-Language": "en-US,en;q=0.5"}
 
-# [ THE FIX IS HERE ] - Create a persistent session to handle cookies and appear more human
-SESSION = requests.Session()
-SESSION.headers.update(HEADERS)
+# [ THE DEFINITIVE FIX HERE ] - Create a powerful scraper session to defeat anti-bot measures
+SCRAPER = cloudscraper.create_scraper() if HAVE_SCRAPER else requests.Session()
 
 def logd(msg):
     if DEBUG_FETCH: print(f"[DEBUG] {msg}")
@@ -94,7 +95,7 @@ def get_soup_from_search(query):
             results = list(dd.text(query, max_results=1))
             if not results or not results[0].get('href'): logd("No search results found."); return None
             url = results[0]['href']; logd(f"Found URL: {url}")
-            r = SESSION.get(url, timeout=15) # Use the session object
+            r = SCRAPER.get(url, timeout=20)
             if r.status_code == 200: return BeautifulSoup(r.text, "html.parser")
             else: logd(f"HTTP Error {r.status_code} for {url}"); return None
     except Exception as e: logd(f"Search/fetch error for '{query}': {e}"); return None
@@ -102,10 +103,12 @@ def get_soup_from_search(query):
 def download_and_save_image(url, local_path):
     os.makedirs(os.path.dirname(local_path), exist_ok=True)
     try:
-        r = SESSION.get(url, stream=True, timeout=15) # Use the session object
+        # [ THE FIX IS HERE ] - Get high-quality image URL
+        url = re.sub(r'_[24]c\.jpg$', '.jpg', url)
+        logd(f"Downloading high-quality image from: {url}")
+        r = SCRAPER.get(url, stream=True, timeout=20)
         if r.status_code == 200 and r.headers.get("content-type", "").startswith("image"):
             with Image.open(r.raw) as img:
-                # [ THE FIX IS HERE ] - Increased resolution and quality
                 img = img.convert("RGB")
                 img.thumbnail((800, 1200), Image.Resampling.LANCZOS)
                 img.save(local_path, "JPEG", quality=95)
@@ -127,7 +130,6 @@ def fetch_image_from_asianwiki(s, y, sid):
     if not soup: return None
     img = soup.select_one('a.image > img[src]')
     if not img: logd("Image tag not found on AsianWiki."); return None
-    # AsianWiki often uses relative URLs, so we need to build the full URL
     img_url = requests.compat.urljoin("https://asianwiki.com", img['src'])
     if download_and_save_image(img_url, os.path.join(IMAGES_DIR, f"{sid}.jpg")):
         return build_absolute_url(os.path.join(IMAGES_DIR, f"{sid}.jpg"))
@@ -157,12 +159,9 @@ def fetch_release_date_from_asianwiki(s, y):
 def fetch_synopsis_from_mydramalist(s, y):
     soup = get_soup_from_search(f'"{s} {y}" site:mydramalist.com');
     if not soup: return None
-    # [ THE FIX IS HERE ] - Surgically precise parser for synopsis
-    synopsis_div = soup.select_one('div.show-synopsis')
+    synopsis_div = soup.select_one('div.show-synopsis, div[itemprop="description"]')
     if not synopsis_div: logd("Synopsis element not found on MyDramaList."); return None
-    # Remove all the junk at the end
-    for tag in synopsis_div.find_all(['span', 'a']):
-        tag.decompose()
+    for tag in synopsis_div.find_all(['span', 'a']): tag.decompose()
     synopsis = synopsis_div.get_text(strip=True)
     return f"{synopsis} (Source: MyDramaList)" if synopsis else None
 def fetch_image_from_mydramalist(s, y, sid):
@@ -176,7 +175,6 @@ def fetch_image_from_mydramalist(s, y, sid):
 def fetch_othernames_from_mydramalist(s, y):
     soup = get_soup_from_search(f'"{s} {y}" site:mydramalist.com');
     if not soup: return []
-    # [ THE FIX IS HERE ] - More robust finder for Other Names
     parent_div = soup.find('div', class_='box-body')
     if not parent_div: logd("Box body for details not found on MyDramaList."); return []
     for b in parent_div.find_all('b'):
@@ -210,7 +208,6 @@ def fetch_and_populate_metadata(obj, site_priority, context):
                 result = FETCH_MAP[site][field](*args)
                 if result: used_site = site; break
         if result:
-            # [ THE FIX IS HERE ] - Correctly map 'image' to 'showImage' and 'duration' to 'Duration'
             target_key = "showImage" if field == "image" else "Duration" if field == "duration" else field
             obj[target_key] = result
             if field == 'image': context['files_generated']['images'].append(os.path.join(IMAGES_DIR, f"{s_id}.jpg"))
@@ -390,7 +387,7 @@ def main():
                     if fetched: report['fetched_data'].append(f"- {sid} - {new_obj['showName']} -> Fetched: {', '.join(fetched)}")
                     if missing: report['fetch_warnings'].append(f"- {sid} - {new_obj['showName']} -> ⚠️ Missing: {', '.join(missing)}")
                 elif objects_differ(old_obj, new_obj):
-                    changes = [human_readable_field(k) for k, v in new_obj.items() if old_obj.get(k) != v and k not in LOCKED_FIELDS_AFTER_CREATION and normalize_list(old_obj.get(k)) != normalize_list(v)]
+                    changes = [human_readable_field(k) for k, v in new_obj.items() if k not in LOCKED_FIELDS_AFTER_CREATION and normalize_list(old_obj.get(k)) != normalize_list(new_val)]
                     if changes:
                         new_obj['updatedDetails'] = f"{', '.join(changes)} Updated"
                         new_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
