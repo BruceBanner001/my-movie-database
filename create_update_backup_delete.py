@@ -3,16 +3,16 @@
 # Author: [BruceBanner001]
 # Description:
 #   Automates creation/update/backup of a JSON database from Excel.
-#   Includes robust data validation and verbose debugging for fetching.
+#   This version has rebuilt, robust scrapers and verbose debug logging.
 #
-# Version: v4.5.2 (Final: Added verbose fetching logs and improved search)
+# Version: v4.6.0 (Final: Rebuilt scrapers and added verbose logging)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v4.5.2 (Final: Added verbose fetching logs and improved search)"
+SCRIPT_VERSION = "v4.6.0 (Final: Rebuilt scrapers and added verbose logging)"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames": [], "showImage": None,
@@ -26,7 +26,7 @@ JSON_OBJECT_TEMPLATE = {
 }
 
 SITE_PRIORITY_BY_LANGUAGE = {
-    "korean": { "synopsis": "asianwiki", "image": "asianwiki", "otherNames": "mydramalist", "duration": "mydramalist", "releaseDate": "asianwiki" },
+    "korean": { "synopsis": "asianwiki", "image": "asianwiki", "otherNames": "mydramalist", "duration": "mydramalist", "releaseDate": "mydramalist" },
     "chinese": { "synopsis": "mydramalist", "image": "mydramalist", "otherNames": "mydramalist", "duration": "mydramalist", "releaseDate": "mydramalist" },
     "japanese": { "synopsis": "asianwiki", "image": "asianwiki", "otherNames": "mydramalist", "duration": "mydramalist", "releaseDate": "asianwiki" },
     "thai": { "synopsis": "mydramalist", "image": "asianwiki", "otherNames": "mydramalist", "duration": "mydramalist", "releaseDate": "mydramalist" },
@@ -34,14 +34,7 @@ SITE_PRIORITY_BY_LANGUAGE = {
     "default": { "synopsis": "mydramalist", "image": "asianwiki", "otherNames": "mydramalist", "duration": "mydramalist", "releaseDate": "asianwiki" }
 }
 
-FIELD_NAME_MAP = {
-    "showID": "Show ID", "showName": "Show Name", "otherNames": "Other Names", "showImage": "Show Image", "watchStartedOn": "Watch Started On",
-    "watchEndedOn": "Watch Ended On", "releasedYear": "Released Year", "releaseDate": "Release Date", "totalEpisodes": "Total Episodes",
-    "showType": "Show Type", "nativeLanguage": "Native Language", "watchedLanguage": "Watched Language", "country": "Country", "comments": "Comments",
-    "ratings": "Ratings", "genres": "Category", "network": "Network", "againWatchedDates": "Again Watched Dates", "updatedOn": "Updated On",
-    "updatedDetails": "Updated Details", "synopsis": "Synopsis", "topRatings": "Top Ratings", "Duration": "Duration", "sitePriorityUsed": "Site Priority Used"
-}
-
+FIELD_NAME_MAP = { "showID": "Show ID", "showName": "Show Name", "otherNames": "Other Names", "showImage": "Show Image", "watchStartedOn": "Watch Started On", "watchEndedOn": "Watch Ended On", "releasedYear": "Released Year", "releaseDate": "Release Date", "totalEpisodes": "Total Episodes", "showType": "Show Type", "nativeLanguage": "Native Language", "watchedLanguage": "Watched Language", "country": "Country", "comments": "Comments", "ratings": "Ratings", "genres": "Category", "network": "Network", "againWatchedDates": "Again Watched Dates", "updatedOn": "Updated On", "updatedDetails": "Updated Details", "synopsis": "Synopsis", "topRatings": "Top Ratings", "Duration": "Duration", "sitePriorityUsed": "Site Priority Used" }
 LOCKED_FIELDS_AFTER_CREATION = {'synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'updatedOn', 'updatedDetails', 'sitePriorityUsed', 'topRatings'}
 
 # ---------------------------- IMPORTS & GLOBALS ----------------------------
@@ -49,7 +42,7 @@ import os, re, sys, json, io, shutil, traceback, copy
 from datetime import datetime, timedelta, timezone
 import pandas as pd
 import requests
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, NavigableString
 from PIL import Image
 
 try: from ddgs import DDGS; HAVE_DDGS = True
@@ -113,63 +106,88 @@ def download_and_save_image(url, local_path):
 def build_absolute_url(local_path): return f"{GITHUB_PAGES_URL.rstrip('/')}/{local_path.replace(os.sep, '/')}"
 
 def fetch_synopsis_from_asianwiki(s, y):
-    soup = get_soup_from_search(f'{s} {y} site:asianwiki.com'); # Removed quotes for flexibility
+    soup = get_soup_from_search(f'{s} {y} site:asianwiki.com');
     if not soup: return None
     h2 = soup.find('h2', string='Synopsis');
     if not h2: logd("Synopsis heading not found on AsianWiki."); return None
     p_tags = h2.find_next_siblings('p')
-    return f"{' '.join([p.get_text(strip=True) for p in p_tags])} (Source: AsianWiki)" if p_tags else None
+    synopsis = " ".join([p.get_text(strip=True) for p in p_tags])
+    return f"{synopsis} (Source: AsianWiki)" if synopsis else None
+
 def fetch_image_from_asianwiki(s, y, sid):
-    soup = get_soup_from_search(f'{s} {y} poster site:asianwiki.com');
+    soup = get_soup_from_search(f'{s} {y} site:asianwiki.com');
     if not soup: return None
     img = soup.select_one('a.image > img[src]')
     if not img: logd("Image tag not found on AsianWiki."); return None
     if download_and_save_image(img['src'], os.path.join(IMAGES_DIR, f"{sid}.jpg")):
         return build_absolute_url(os.path.join(IMAGES_DIR, f"{sid}.jpg"))
     return None
+
 def fetch_othernames_from_asianwiki(s, y):
     soup = get_soup_from_search(f'{s} {y} site:asianwiki.com');
     if not soup: return []
-    div = soup.find('div', id='mw-content-text'); text = div.get_text(" ", strip=True) if div else ""
-    match = re.search(r"Drama:\s*([^(\n\r]+)", text);
-    return normalize_list(match.group(1).strip()) if match else []
+    div = soup.find('div', id='mw-content-text')
+    if not div: logd("Main content div not found on AsianWiki."); return []
+    ps = div.find_all('p', limit=5)
+    for p in ps:
+        if 'Drama:' in p.get_text():
+            match = re.search(r"Drama:\s*(.*?)(?:\s*\(|$)", p.get_text())
+            if match: return normalize_list(match.group(1).strip())
+    logd("'Drama:' field not found in initial paragraphs on AsianWiki.")
+    return []
+
 def fetch_duration_from_asianwiki(s, y): return None
+
 def fetch_release_date_from_asianwiki(s, y):
     soup = get_soup_from_search(f'{s} {y} site:asianwiki.com');
     if not soup: return None
-    match = re.search(r"Release Date:\s*([^\n\r]+)", soup.get_text(" ", strip=True));
-    return match.group(1).strip() if match else None
+    for b in soup.find_all('b'):
+        if 'Release Date:' in b.get_text():
+            release_text = b.next_sibling
+            if release_text and isinstance(release_text, NavigableString):
+                return release_text.strip()
+    logd("'Release Date:' field not found on AsianWiki.")
+    return None
 
 def fetch_synopsis_from_mydramalist(s, y):
     soup = get_soup_from_search(f'{s} {y} site:mydramalist.com');
     if not soup: return None
-    div = soup.select_one('.show-synopsis');
+    div = soup.select_one('.show-synopsis, div[itemprop="description"]')
     if not div: logd("Synopsis element not found on MyDramaList."); return None
     synopsis = div.get_text(strip=True).replace('(Source: MyDramaList)', '').strip()
     return f"{synopsis} (Source: MyDramaList)" if synopsis else None
+
 def fetch_image_from_mydramalist(s, y, sid):
-    soup = get_soup_from_search(f'{s} {y} poster site:mydramalist.com');
+    soup = get_soup_from_search(f'{s} {y} site:mydramalist.com');
     if not soup: return None
     img = soup.select_one('.film-cover img[src], .cover img[src]')
     if not img: logd("Image tag not found on MyDramaList."); return None
     if download_and_save_image(img['src'], os.path.join(IMAGES_DIR, f"{sid}.jpg")):
         return build_absolute_url(os.path.join(IMAGES_DIR, f"{sid}.jpg"))
     return None
+
 def fetch_othernames_from_mydramalist(s, y):
     soup = get_soup_from_search(f'{s} {y} site:mydramalist.com');
     if not soup: return []
-    b = soup.find('b', string=re.compile(r'Also Known As:')); text = b.next_sibling if b else ""
+    b = soup.find('b', string=re.compile(r'Also Known As:'))
+    if not b: logd("'Also Known As:' field not found on MyDramaList."); return []
+    text = b.next_sibling
     return normalize_list(text) if text and isinstance(text, str) else []
+
 def fetch_duration_from_mydramalist(s, y):
     soup = get_soup_from_search(f'{s} {y} site:mydramalist.com');
     if not soup: return None
     li = soup.find(lambda t: 'Duration:' in t.get_text() and t.name == 'li');
-    return li.get_text().replace('Duration:', '').strip() if li else None
+    if not li: logd("'Duration:' field not found on MyDramaList."); return None
+    duration_text = li.get_text().replace('Duration:', '').strip()
+    return f"{duration_text}s" if "min" in duration_text and "mins" not in duration_text else duration_text
+
 def fetch_release_date_from_mydramalist(s, y):
     soup = get_soup_from_search(f'{s} {y} site:mydramalist.com');
     if not soup: return None
     li = soup.find(lambda t: 'Aired:' in t.get_text() and t.name == 'li');
-    return li.get_text().replace('Aired:', '').strip() if li else None
+    if not li: logd("'Aired:' field not found on MyDramaList."); return None
+    return li.get_text().replace('Aired:', '').strip()
 
 FETCH_MAP = {'asianwiki': {'synopsis': fetch_synopsis_from_asianwiki, 'image': fetch_image_from_asianwiki, 'otherNames': fetch_othernames_from_asianwiki, 'duration': fetch_duration_from_asianwiki, 'releaseDate': fetch_release_date_from_asianwiki}, 'mydramalist': {'synopsis': fetch_synopsis_from_mydramalist, 'image': fetch_image_from_mydramalist, 'otherNames': fetch_othernames_from_mydramalist, 'duration': fetch_duration_from_mydramalist, 'releaseDate': fetch_release_date_from_mydramalist}}
 def fetch_and_populate_metadata(obj, site_priority, context):

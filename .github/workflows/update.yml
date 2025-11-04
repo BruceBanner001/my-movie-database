@@ -1,7 +1,7 @@
 # ============================================================================
 # Workflow: Excel → JSON Automation
 # Purpose : Automate scheduled and manual Excel-to-JSON updates.
-# Version : 4.5 (Final: Robust email and debugging support)
+# Version : 4.6 (Final: Added DEBUG_FETCH flag for diagnostics)
 # ============================================================================
 
 name: Excel → JSON Update
@@ -43,11 +43,14 @@ jobs:
       - name: 5. Run the Excel-to-JSON update script
         id: run_updater
         env:
-          SHEETS: "Sheet1"
+          SHEETS: "Sheet1;Feb 7 2023 Onwards;Sheet2"
           GITHUB_PAGES_URL: "https://brucebanner001.github.io/my-movie-database"
-          # [ IMPORTANT FOR DEBUGGING ]
-          # To see why fetching is failing, uncomment the next line by removing the "#"
-          # DEBUG_FETCH: "true"
+          
+          # [ THE MOST IMPORTANT DEBUGGING TOOL IS HERE ]
+          # To see exactly why fetching is failing, set this to "true"
+          # The workflow log will show a step-by-step of the scraping process.
+          DEBUG_FETCH: "true"
+          
         run: |
           python create_update_backup_delete.py 2>&1 | tee output.log
           script_exit_code=${PIPESTATUS[0]}
@@ -89,7 +92,7 @@ jobs:
             if [[ "${WORKFLOW_STATUS}" == "success" ]]; then
               echo "✅ Workflow completed successfully."
               echo ""
-              if [[ -f "$report_file" ]]; then cat "$report_file"; else echo "⚠️ Report file not found."; fi
+              if [[ -f "$report_file" ]]; then cat "$report_file"; else echo "⚠️ Report file was not found."; fi
             else
               echo "❌ Workflow FAILED."
               echo "Please check the Actions log on GitHub. Raw script output is below:"
