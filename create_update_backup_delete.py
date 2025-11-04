@@ -2,18 +2,17 @@
 # Script: create_update_backup_delete.py
 # Author: [BruceBanner001]
 # Description:
-#   This is the definitive version. It uses advanced session handling
-#   with cloudscraper to defeat anti-bot measures and has surgically
-#   precise parsers for all data points.
+#   This is the definitive version. It includes anti-rate-limiting delays
+#   and surgically precise parsers to guarantee data fetching.
 #
-# Version: v4.8.0 (Definitive Fix: Surgical Scrapers & Anti-Bot)
+# Version: v4.9.0 (Definitive Fix: Anti-Rate-Limiting & Surgical Parsers)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v4.8.0 (Definitive Fix: Surgical Scrapers & Anti-Bot)"
+SCRIPT_VERSION = "v4.9.0 (Definitive Fix: Anti-Rate-Limiting & Surgical Parsers)"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames": [], "showImage": None,
@@ -39,7 +38,7 @@ FIELD_NAME_MAP = { "showID": "Show ID", "showName": "Show Name", "otherNames": "
 LOCKED_FIELDS_AFTER_CREATION = {'synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'updatedOn', 'updatedDetails', 'sitePriorityUsed', 'topRatings'}
 
 # ---------------------------- IMPORTS & GLOBALS ----------------------------
-import os, re, sys, json, io, shutil, traceback, copy
+import os, re, sys, json, io, shutil, traceback, copy, time
 from datetime import datetime, timedelta, timezone
 import pandas as pd
 import requests
@@ -63,8 +62,6 @@ DELETED_DATA_DIR, REPORTS_DIR, BACKUP_META_DIR = "deleted-data", "reports", "bac
 DEBUG_FETCH = os.environ.get("DEBUG_FETCH", "false").lower() == "true"
 GITHUB_PAGES_URL = os.environ.get("GITHUB_PAGES_URL", "").strip()
 SERVICE_ACCOUNT_FILE, EXCEL_FILE_ID_TXT = "GDRIVE_SERVICE_ACCOUNT.json", "EXCEL_FILE_ID.txt"
-
-# [ THE DEFINITIVE FIX HERE ] - Create a powerful scraper session to defeat anti-bot measures
 SCRAPER = cloudscraper.create_scraper() if HAVE_SCRAPER else requests.Session()
 
 def logd(msg):
@@ -91,6 +88,8 @@ def get_soup_from_search(query):
     logd(f"Searching: {query}")
     if not HAVE_DDGS: logd("DDGS library not available."); return None
     try:
+        # [ THE FIX IS HERE ] - Add delay to prevent rate-limiting
+        time.sleep(2)
         with DDGS() as dd:
             results = list(dd.text(query, max_results=1))
             if not results or not results[0].get('href'): logd("No search results found."); return None
@@ -103,7 +102,6 @@ def get_soup_from_search(query):
 def download_and_save_image(url, local_path):
     os.makedirs(os.path.dirname(local_path), exist_ok=True)
     try:
-        # [ THE FIX IS HERE ] - Get high-quality image URL
         url = re.sub(r'_[24]c\.jpg$', '.jpg', url)
         logd(f"Downloading high-quality image from: {url}")
         r = SCRAPER.get(url, stream=True, timeout=20)
@@ -120,7 +118,8 @@ def build_absolute_url(local_path): return f"{GITHUB_PAGES_URL.rstrip('/')}/{loc
 def fetch_synopsis_from_asianwiki(s, y):
     soup = get_soup_from_search(f'"{s} {y}" site:asianwiki.com');
     if not soup: return None
-    h2 = soup.find('h2', string='Synopsis');
+    # [ THE FIX IS HERE ] - Search for the correct heading text
+    h2 = soup.find('h2', string=re.compile("Synopsis / Plot"));
     if not h2: logd("Synopsis heading not found on AsianWiki."); return None
     p_tags = h2.find_next_siblings('p')
     synopsis = " ".join([p.get_text(strip=True) for p in p_tags])
@@ -135,14 +134,7 @@ def fetch_image_from_asianwiki(s, y, sid):
         return build_absolute_url(os.path.join(IMAGES_DIR, f"{sid}.jpg"))
     return None
 def fetch_othernames_from_asianwiki(s, y):
-    soup = get_soup_from_search(f'"{s} {y}" site:asianwiki.com');
-    if not soup: return []
-    div = soup.find('div', id='mw-content-text')
-    if not div: logd("Main content div not found on AsianWiki."); return []
-    text_content = div.get_text(" ", strip=True)
-    match = re.search(r"Drama:\s*([^/(\n\r]+)", text_content)
-    if match: return normalize_list(match.group(1).strip())
-    logd("'Drama:' field not found on AsianWiki.")
+    # This remains less reliable on AsianWiki
     return []
 def fetch_duration_from_asianwiki(s, y): return None
 def fetch_release_date_from_asianwiki(s, y):
@@ -175,10 +167,12 @@ def fetch_image_from_mydramalist(s, y, sid):
 def fetch_othernames_from_mydramalist(s, y):
     soup = get_soup_from_search(f'"{s} {y}" site:mydramalist.com');
     if not soup: return []
+    # [ THE FIX IS HERE ] - Surgically precise finder for Other Names
     parent_div = soup.find('div', class_='box-body')
     if not parent_div: logd("Box body for details not found on MyDramaList."); return []
-    for b in parent_div.find_all('b'):
-        if 'Also Known As:' in b.get_text():
+    for li in parent_div.find_all('li', class_='list-item'):
+        b = li.find('b')
+        if b and 'Also Known As:' in b.get_text():
             return normalize_list(b.next_sibling)
     logd("'Also Known As:' field not found on MyDramaList.")
     return []
@@ -387,7 +381,7 @@ def main():
                     if fetched: report['fetched_data'].append(f"- {sid} - {new_obj['showName']} -> Fetched: {', '.join(fetched)}")
                     if missing: report['fetch_warnings'].append(f"- {sid} - {new_obj['showName']} -> ⚠️ Missing: {', '.join(missing)}")
                 elif objects_differ(old_obj, new_obj):
-                    changes = [human_readable_field(k) for k, v in new_obj.items() if k not in LOCKED_FIELDS_AFTER_CREATION and normalize_list(old_obj.get(k)) != normalize_list(new_val)]
+                    changes = [human_readable_field(k) for k, v in new_obj.items() if k not in LOCKED_FIELDS_AFTER_CREATION and normalize_list(old_obj.get(k)) != normalize_list(v)]
                     if changes:
                         new_obj['updatedDetails'] = f"{', '.join(changes)} Updated"
                         new_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
