@@ -3,16 +3,16 @@
 # Author: [BruceBanner001]
 # Description:
 #   Automates creation/update/backup of a JSON database from Excel.
-#   This version has the definitive fix for the DDGS import error.
+#   This version uses the new, correct 'ddgs' library for web scraping.
 #
-# Version: v4.6.1 (Final: Corrected DDGS import bug)
+# Version: v4.6.2 (Final: Switched to the new ddgs library)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v4.6.1 (Final: Corrected DDGS import bug)"
+SCRIPT_VERSION = "v4.6.2 (Final: Switched to the new ddgs library)"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames": [], "showImage": None,
@@ -45,9 +45,10 @@ import requests
 from bs4 import BeautifulSoup, NavigableString
 from PIL import Image
 
-# [ THE DEFINITIVE FIX IS HERE ]
+# [ THE FINAL FIX IS HERE ]
+# Import from the new, correct 'ddgs' library.
 try:
-    from duckduckgo_search import DDGS
+    from ddgs import DDGS
     HAVE_DDGS = True
 except Exception:
     HAVE_DDGS = False

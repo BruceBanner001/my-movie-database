@@ -1,28 +1,24 @@
 # ==========================================
 # Excel → JSON Automation - Python Dependencies
-# ==========================================
-# NOTE:
-# This file lists all the Python packages required to run the
-# 'create_update_backup_delete.py' script. The GitHub Actions
-# workflow uses this file to install the correct dependencies.
+# Version 2.0 (Fix: Switched to the new 'ddgs' library)
 # ==========================================
 
 # === Core Data Handling ===
-pandas>=2.0.0            # Essential for reading and processing data from Excel files (.xlsx).
-openpyxl>=3.1.0          # The engine that pandas uses under the hood to read/write modern Excel files.
+pandas>=2.0.0
+openpyxl>=3.1.0
 
 # === Web Scraping & Networking ===
-requests>=2.31.0         # The workhorse for making all HTTP requests to download web pages and images.
-beautifulsoup4>=4.12.0   # The primary library for parsing and navigating the HTML content of fetched web pages.
-duckduckgo-search>=4.0.0 # Used as the search engine to find the correct AsianWiki and MyDramaList pages for each show.
+requests>=2.31.0
+beautifulsoup4>=4.12.0
+
+# [ THE FINAL FIX IS HERE ]
+# The old 'duckduckgo-search' package is deprecated and broken.
+# We are now using the new, official 'ddgs' package as required.
+ddgs>=5.0.0
 
 # === Image Processing ===
-Pillow>=10.0.0           # Crucial for processing downloaded images: resizing, converting to RGB, and saving as optimized JPEGs.
+Pillow>=10.0.0
 
 # === Google Drive API Integration ===
-# These two packages are the only ones you need to specify directly. They handle the
-# entire process of authenticating with Google and interacting with the Drive API.
-# They will automatically install other required helper libraries (like google-auth-httplib2).
-
-google-api-python-client>=2.100.0  # The main Google client library to interact with services like Google Drive.
-google-auth>=2.23.0                # Handles all authentication, specifically the service account flow used in the script.
+google-api-python-client>=2.100.0
+google-auth>=2.23.0
