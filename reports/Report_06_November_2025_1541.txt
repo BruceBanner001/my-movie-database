@@ -1,0 +1,80 @@
+✅ Workflow completed successfully
+🆔 Run ID: RUN_20251106_153940
+📅 Run Time: 06 November 2025 03:41 PM (IST)
+🕒 Duration: 1 min 41 sec
+⚙️ Script Version: v13.0.0 (Definitive Fix: The v13 Engine - Last Stand)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Deleting Records — 06 November 2025 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+❌ Data Deleted:
+- 3001 -> Mr. Queen (2020) -> ✅ Deleted
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Sheet1 — 06 November 2025 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🆕 Data Created:
+- 111 - Another Miss Oh (2016) -> First Time Uploaded
+- 112 - Our Glamorous Time (2018) -> First Time Uploaded
+
+🖼️ Fetched Data:
+- 111 - Another Miss Oh -> Fetched: Synopsis, image, Release Date, Other Names
+- 112 - Our Glamorous Time -> Fetched: duration, Other Names
+
+🕳️ Value Not Found:
+- 111 - Another Miss Oh -> ⚠️ Missing: Duration
+- 112 - Our Glamorous Time -> ⚠️ Missing: Show Image, Release Date, Synopsis
+
+🚫 Skipped (Unchanged):
+- - 101 - Find Me in Your Memory (2020)
+- - 102 - Descendant of the Sun (2016)
+- - 103 - Boys Over Flowers (2009)
+- - 104 - Crash Course in Romance (2023)
+- - 105 - That Winter, the Wind Blows (2013)
+- - 106 - Her Private Life (2019)
+- - 107 - Because This Is My First Life (2017)
+- - 108 - You Are My Glory (2021)
+- - 109 - Hello Mr.Gu (2021)
+- - 110 - Oh My Venus (2015)
+
+📊 Summary (Sheet: Sheet1)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Created: 2
+🔁 Updated: 0
+🚫 Skipped: 10
+⚠️ Warnings: 2
+  Total Rows: 12
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 Overall Summary
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Total Created: 2
+🔁 Total Updated: 0
+🖼️ Total Images Updated: 0
+🚫 Total Skipped: 10
+❌ Total Deleted: 1
+⚠️ Total Warnings: 2
+💾 Backup Files: 0
+  Grand Total Rows: 12
+
+💾 Metadata Backups: 2
+
+📦 Total Objects in seriesData.json: 12
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ Folders Generated:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+images/
+    111.jpg
+deleted_data/
+    DELETED_06_November_2025_1539_3001.json
+deleted_images/
+    DELETED_06_November_2025_1539_3001.jpg
+meta_backups/
+    META_06_November_2025_1541_111.json
+    META_06_November_2025_1541_112.json
+reports/
+    Report_06_November_2025_1541.txt
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🏁 Workflow finished successfully
