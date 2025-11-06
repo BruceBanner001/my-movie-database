@@ -2,17 +2,17 @@
 # Script: create_update_backup_delete.py
 # Author: [BruceBanner001]
 # Description:
-#   This is the definitive version. It includes anti-rate-limiting delays
-#   and surgically precise parsers to guarantee data fetching.
+#   This is the definitive version. It contains the critical fix for the
+#   crash caused by an empty 'Deleting Records' sheet.
 #
-# Version: v4.9.0 (Definitive Fix: Anti-Rate-Limiting & Surgical Parsers)
+# Version: v4.9.1 (Definitive Fix: Handles empty Deleting Records sheet)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v4.9.0 (Definitive Fix: Anti-Rate-Limiting & Surgical Parsers)"
+SCRIPT_VERSION = "v4.9.1 (Definitive Fix: Handles empty Deleting Records sheet)"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames": [], "showImage": None,
@@ -88,8 +88,7 @@ def get_soup_from_search(query):
     logd(f"Searching: {query}")
     if not HAVE_DDGS: logd("DDGS library not available."); return None
     try:
-        # [ THE FIX IS HERE ] - Add delay to prevent rate-limiting
-        time.sleep(2)
+        time.sleep(2) # Anti-rate-limiting delay
         with DDGS() as dd:
             results = list(dd.text(query, max_results=1))
             if not results or not results[0].get('href'): logd("No search results found."); return None
@@ -118,7 +117,6 @@ def build_absolute_url(local_path): return f"{GITHUB_PAGES_URL.rstrip('/')}/{loc
 def fetch_synopsis_from_asianwiki(s, y):
     soup = get_soup_from_search(f'"{s} {y}" site:asianwiki.com');
     if not soup: return None
-    # [ THE FIX IS HERE ] - Search for the correct heading text
     h2 = soup.find('h2', string=re.compile("Synopsis / Plot"));
     if not h2: logd("Synopsis heading not found on AsianWiki."); return None
     p_tags = h2.find_next_siblings('p')
@@ -133,9 +131,7 @@ def fetch_image_from_asianwiki(s, y, sid):
     if download_and_save_image(img_url, os.path.join(IMAGES_DIR, f"{sid}.jpg")):
         return build_absolute_url(os.path.join(IMAGES_DIR, f"{sid}.jpg"))
     return None
-def fetch_othernames_from_asianwiki(s, y):
-    # This remains less reliable on AsianWiki
-    return []
+def fetch_othernames_from_asianwiki(s, y): return []
 def fetch_duration_from_asianwiki(s, y): return None
 def fetch_release_date_from_asianwiki(s, y):
     soup = get_soup_from_search(f'"{s} {y}" site:asianwiki.com');
@@ -143,10 +139,8 @@ def fetch_release_date_from_asianwiki(s, y):
     for b in soup.find_all('b'):
         if 'Release Date:' in b.get_text():
             release_text = b.next_sibling
-            if release_text and isinstance(release_text, NavigableString):
-                return release_text.strip()
-    logd("'Release Date:' field not found on AsianWiki.")
-    return None
+            if release_text and isinstance(release_text, NavigableString): return release_text.strip()
+    logd("'Release Date:' field not found on AsianWiki."); return None
 
 def fetch_synopsis_from_mydramalist(s, y):
     soup = get_soup_from_search(f'"{s} {y}" site:mydramalist.com');
@@ -167,15 +161,13 @@ def fetch_image_from_mydramalist(s, y, sid):
 def fetch_othernames_from_mydramalist(s, y):
     soup = get_soup_from_search(f'"{s} {y}" site:mydramalist.com');
     if not soup: return []
-    # [ THE FIX IS HERE ] - Surgically precise finder for Other Names
     parent_div = soup.find('div', class_='box-body')
     if not parent_div: logd("Box body for details not found on MyDramaList."); return []
     for li in parent_div.find_all('li', class_='list-item'):
         b = li.find('b')
         if b and 'Also Known As:' in b.get_text():
             return normalize_list(b.next_sibling)
-    logd("'Also Known As:' field not found on MyDramaList.")
-    return []
+    logd("'Also Known As:' field not found on MyDramaList."); return []
 def fetch_duration_from_mydramalist(s, y):
     soup = get_soup_from_search(f'"{s} {y}" site:mydramalist.com');
     if not soup: return None
@@ -209,8 +201,17 @@ def fetch_and_populate_metadata(obj, site_priority, context):
     return obj
 
 def process_deletions(excel, json_file, context):
-    try: df = pd.read_excel(excel, sheet_name='Deleting Records')
-    except ValueError: print("INFO: 'Deleting Records' sheet not found. Skipping deletion step."); return {}, []
+    try:
+        df = pd.read_excel(excel, sheet_name='Deleting Records')
+    except ValueError:
+        print("INFO: 'Deleting Records' sheet not found. Skipping deletion step.")
+        return {}, []
+    
+    # [ THE DEFINITIVE FIX IS HERE ]
+    if df.empty:
+        logd("'Deleting Records' sheet is empty. Nothing to delete.")
+        return {}, []
+
     try:
         with open(json_file, 'r', encoding='utf-8') as f: data = json.load(f)
     except (FileNotFoundError, json.JSONDecodeError): data = []
