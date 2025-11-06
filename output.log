@@ -1,38 +1,154 @@
-🚀 Running Script — Version v10.0.0 (Definitive Fix: The v10 Engine - Last Stand) | Run ID: RUN_20251106_135126
+🚀 Running Script — Version v11.0.0 (Definitive Fix: The v11 Engine) | Run ID: RUN_20251106_151017
 [DEBUG] 'Deleting Records' sheet is empty. Nothing to delete.
-[DEBUG] Initiating search for: Her Private Life 2019 on asianwiki.com
-[DEBUG] Executing search query: "Her Private Life 2019" site:asianwiki.com
-[DEBUG] Found candidate URL: https://asianwiki.com/Love_in_Contract
-[DEBUG] Successfully fetched page.
+[DEBUG] Initiating search for: Because This Is My First Life 2017 on asianwiki.com
+[DEBUG] Executing search query: "Because This Is My First Life 2017" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Because_This_Is_My_First_Life
+[DEBUG] Page title validated. This is the correct page.
 [DEBUG] Synopsis/Plot heading not found on AsianWiki.
-[DEBUG] Initiating search for: Her Private Life 2019 on mydramalist.com
-[DEBUG] Executing search query: "Her Private Life 2019" site:mydramalist.com
-[DEBUG] Found candidate URL: https://mydramalist.com/32293-her-private-life/photos?page=6
-[DEBUG] Successfully fetched page.
+[DEBUG] Initiating search for: Because This Is My First Life 2017 on mydramalist.com
+[DEBUG] Executing search query: "Because This Is My First Life 2017" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/people/5574-park-byung-eun
+[DEBUG] Page title 'park byung eun (박병은) - mydramalist' did not match query. Rejecting.
+[DEBUG] Found candidate URL: https://mydramalist.com/dramalist/9163339
+[DEBUG] Page title 'sya's drama list - mydramalist' did not match query. Rejecting.
+[DEBUG] Found candidate URL: https://mydramalist.com/dramalist/Mizuhira-san
+[DEBUG] Page title 'mizuhira-san's drama list - mydramalist' did not match query. Rejecting.
+[DEBUG] Executing search query: "Because This Is My First Life 2017" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/24678-because-this-is-my-first-life
+[DEBUG] Page title validated. This is the correct page.
+[DEBUG] Initiating search for: Because This Is My First Life 2017 on asianwiki.com
+[DEBUG] Executing search query: "Because This Is My First Life 2017" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Because_This_Is_My_First_Life
+[DEBUG] Page title validated. This is the correct page.
+[DEBUG] Downloading high-quality image from: https://asianwiki.com/images/5/5d/Because_This_Is_My_First_Life-P1.jpg
+[DEBUG] Image saved to images/107.jpg
+[DEBUG] Initiating search for: Because This Is My First Life 2017 on mydramalist.com
+[DEBUG] Executing search query: "Because This Is My First Life 2017" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/people/5574-park-byung-eun
+[DEBUG] Page title 'park byung eun (박병은) - mydramalist' did not match query. Rejecting.
+[DEBUG] Found candidate URL: https://mydramalist.com/dramalist/9163339
+[DEBUG] Page title 'sya's drama list - mydramalist' did not match query. Rejecting.
+[DEBUG] Found candidate URL: https://mydramalist.com/dramalist/Mizuhira-san
+[DEBUG] Page title 'mizuhira-san's drama list - mydramalist' did not match query. Rejecting.
+[DEBUG] Executing search query: "Because This Is My First Life 2017" site:mydramalist.com
+[DEBUG] Found candidate URL: 
+[DEBUG] Search attempt failed for query '"Because This Is My First Life 2017" site:mydramalist.com': Invalid URL '': No scheme supplied. Perhaps you meant https://?
+[DEBUG] All search attempts failed.
+[DEBUG] Initiating search for: Because This Is My First Life 2017 on asianwiki.com
+[DEBUG] Executing search query: "Because This Is My First Life 2017" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Search:_WWW
+[DEBUG] Page title 'search: www - asianwiki' did not match query. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Because_This_Is_My_First_Life
+[DEBUG] Page title validated. This is the correct page.
+[DEBUG] Initiating search for: Because This Is My First Life 2017 on mydramalist.com
+[DEBUG] Executing search query: "Because This Is My First Life 2017" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/24678-because-this-is-my-first-life/photos
+[DEBUG] Page title validated. This is the correct page.
+[DEBUG] 'Duration:' field not found on MyDramaList.
+[DEBUG] Initiating search for: Because This Is My First Life 2017 on mydramalist.com
+[DEBUG] Executing search query: "Because This Is My First Life 2017" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/people/5574-park-byung-eun
+[DEBUG] Page title 'park byung eun (박병은) - mydramalist' did not match query. Rejecting.
+[DEBUG] Found candidate URL: https://mydramalist.com/dramalist/9163339
+[DEBUG] Page title 'sya's drama list - mydramalist' did not match query. Rejecting.
+[DEBUG] Found candidate URL: https://mydramalist.com/dramalist/Mizuhira-san
+[DEBUG] Page title 'mizuhira-san's drama list - mydramalist' did not match query. Rejecting.
+[DEBUG] Executing search query: "Because This Is My First Life 2017" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/24678-because-this-is-my-first-life
+[DEBUG] Page title validated. This is the correct page.
+[DEBUG] Initiating search for: You Are My Glory 2021 on mydramalist.com
+[DEBUG] Executing search query: "You Are My Glory 2021" site:mydramalist.com
+[DEBUG] Executing search query: "You Are My Glory 2021" site:mydramalist.com
+[DEBUG] All search attempts failed.
+[DEBUG] Initiating search for: You Are My Glory 2021 on asianwiki.com
+[DEBUG] Executing search query: "You Are My Glory 2021" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Shin_Ye-Eun
+[DEBUG] Page title 'shin ye-eun - asianwiki' did not match query. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Bo-Jung
+[DEBUG] Page title 'kim bo-jung - asianwiki' did not match query. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Cha_Joo-Young
+[DEBUG] Page title 'cha joo-young - asianwiki' did not match query. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Jung_Sung-Il_(1980)
+[DEBUG] Page title 'jung sung-il (1980) - asianwiki' did not match query. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Gun-Woo_(1992)
+[DEBUG] Page title 'kim gun-woo (1992) - asianwiki' did not match query. Rejecting.
+[DEBUG] Executing search query: "You Are My Glory 2021" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Shin_Ye-Eun
+[DEBUG] Page title 'shin ye-eun - asianwiki' did not match query. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Bo-Jung
+[DEBUG] Page title 'kim bo-jung - asianwiki' did not match query. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Cha_Joo-Young
+[DEBUG] Page title 'cha joo-young - asianwiki' did not match query. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Jung_Sung-Il_(1980)
+[DEBUG] Page title 'jung sung-il (1980) - asianwiki' did not match query. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Gun-Woo_(1992)
+[DEBUG] Page title 'kim gun-woo (1992) - asianwiki' did not match query. Rejecting.
+[DEBUG] All search attempts failed.
+[DEBUG] Initiating search for: You Are My Glory 2021 on mydramalist.com
+[DEBUG] Executing search query: "You Are My Glory 2021" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/62337-you-are-my-glory
+[DEBUG] Page title validated. This is the correct page.
+[DEBUG] Downloading high-quality image from: https://i.mydramalist.com/jJVmO_4c.jpg?v=1
+[DEBUG] Image saved to images/108.jpg
+[DEBUG] Initiating search for: You Are My Glory 2021 on mydramalist.com
+[DEBUG] Executing search query: "You Are My Glory 2021" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/62337-you-are-my-glory
+[DEBUG] Page title validated. This is the correct page.
+[DEBUG] Initiating search for: You Are My Glory 2021 on mydramalist.com
+[DEBUG] Executing search query: "You Are My Glory 2021" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/62337-you-are-my-glory
+[DEBUG] Page title validated. This is the correct page.
+[DEBUG] Initiating search for: You Are My Glory 2021 on mydramalist.com
+[DEBUG] Executing search query: "You Are My Glory 2021" site:mydramalist.com
+[DEBUG] Executing search query: "You Are My Glory 2021" site:mydramalist.com
+[DEBUG] All search attempts failed.
+[DEBUG] Initiating search for: Mr. Queen 2020 on asianwiki.com
+[DEBUG] Executing search query: "Mr. Queen 2020" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Chae_Seo-Eun_(1998)
+[DEBUG] Page title 'chae seo-eun (1998) - asianwiki' did not match query. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Yoon_Jin-Ho
+[DEBUG] Page title 'yoon jin-ho - asianwiki' did not match query. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Jung-Hyun_(1990)
+[DEBUG] Page title 'kim jung-hyun (1990) - asianwiki' did not match query. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Seo_Eun-Sol_(2009)
+[DEBUG] Page title 'seo eun-sol (2009) - asianwiki' did not match query. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Chan-Oh_(1990)
+[DEBUG] Page title 'kim chan-oh (1990) - asianwiki' did not match query. Rejecting.
+[DEBUG] Executing search query: "Mr. Queen 2020" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Chae_Seo-Eun_(1998)
+[DEBUG] Page title 'chae seo-eun (1998) - asianwiki' did not match query. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Yoon_Jin-Ho
+[DEBUG] Page title 'yoon jin-ho - asianwiki' did not match query. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Jung-Hyun_(1990)
+[DEBUG] Page title 'kim jung-hyun (1990) - asianwiki' did not match query. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Seo_Eun-Sol_(2009)
+[DEBUG] Page title 'seo eun-sol (2009) - asianwiki' did not match query. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Chan-Oh_(1990)
+[DEBUG] Page title 'kim chan-oh (1990) - asianwiki' did not match query. Rejecting.
+[DEBUG] All search attempts failed.
+[DEBUG] Initiating search for: Mr. Queen 2020 on mydramalist.com
+[DEBUG] Executing search query: "Mr. Queen 2020" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/58365-queen-cheorin/photos?page=6
+[DEBUG] Page title validated. This is the correct page.
 [DEBUG] Synopsis element not found on MyDramaList.
-[DEBUG] Initiating search for: Her Private Life 2019 on asianwiki.com
-[DEBUG] Executing search query: "Her Private Life 2019" site:asianwiki.com
-[DEBUG] Found candidate URL: https://asianwiki.com/Her_Private_Life
-[DEBUG] Successfully fetched page.
-[DEBUG] Downloading high-quality image from: https://asianwiki.com/images/d/df/Her_Private_Life-P1.jpg
-[DEBUG] Image saved to images/106.jpg
-[DEBUG] Initiating search for: Her Private Life 2019 on mydramalist.com
-[DEBUG] Executing search query: "Her Private Life 2019" site:mydramalist.com
-[DEBUG] Found candidate URL: https://mydramalist.com/32293-her-private-life/photos?page=6
-[DEBUG] Successfully fetched page.
-[DEBUG] 'Aired:' field not found on MyDramaList.
-[DEBUG] Initiating search for: Her Private Life 2019 on asianwiki.com
-[DEBUG] Executing search query: "Her Private Life 2019" site:asianwiki.com
-[DEBUG] Found candidate URL: https://asianwiki.com/Her_Private_Life
-[DEBUG] Successfully fetched page.
-[DEBUG] Initiating search for: Her Private Life 2019 on mydramalist.com
-[DEBUG] Executing search query: "Her Private Life 2019" site:mydramalist.com
-[DEBUG] Found candidate URL: https://mydramalist.com/32293-her-private-life
-[DEBUG] Successfully fetched page.
-[DEBUG] Initiating search for: Her Private Life 2019 on mydramalist.com
-[DEBUG] Executing search query: "Her Private Life 2019" site:mydramalist.com
-[DEBUG] Found candidate URL: https://mydramalist.com/32293-her-private-life
-[DEBUG] Successfully fetched page.
-✅ Report written -> reports/Report_06_November_2025_1351.txt
+[DEBUG] Initiating search for: Mr. Queen 2020 on asianwiki.com
+[DEBUG] Executing search query: "Mr. Queen 2020" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Mr._Queen
+[DEBUG] Page title validated. This is the correct page.
+[DEBUG] Downloading high-quality image from: https://asianwiki.com/images/6/61/Mr._Queen-P1.jpg
+[DEBUG] Image saved to images/3001.jpg
+[DEBUG] Initiating search for: Mr. Queen 2020 on mydramalist.com
+[DEBUG] Executing search query: "Mr. Queen 2020" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/58365-queen-cheorin
+[DEBUG] Page title validated. This is the correct page.
+[DEBUG] Initiating search for: Mr. Queen 2020 on mydramalist.com
+[DEBUG] Executing search query: "Mr. Queen 2020" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/58365-queen-cheorin
+[DEBUG] Page title validated. This is the correct page.
+[DEBUG] Initiating search for: Mr. Queen 2020 on mydramalist.com
+[DEBUG] Executing search query: "Mr. Queen 2020" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/58365-queen-cheorin
+[DEBUG] Page title validated. This is the correct page.
+✅ Report written -> reports/Report_06_November_2025_1512.txt
 
 All done.

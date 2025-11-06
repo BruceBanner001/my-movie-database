@@ -1,0 +1,89 @@
+✅ Workflow completed successfully
+🆔 Run ID: RUN_20251106_151017
+📅 Run Time: 06 November 2025 03:12 PM (IST)
+🕒 Duration: 2 min 9 sec
+⚙️ Script Version: v11.0.0 (Definitive Fix: The v11 Engine)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Sheet1 — 06 November 2025 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🆕 Data Created:
+- 107 - Because This Is My First Life (2017) -> First Time Uploaded
+- 108 - You Are My Glory (2021) -> First Time Uploaded
+
+🖼️ Fetched Data:
+- 107 - Because This Is My First Life -> Fetched: Synopsis, image, Release Date, Other Names
+- 108 - You Are My Glory -> Fetched: image, Release Date, duration
+
+🕳️ Value Not Found:
+- 107 - Because This Is My First Life -> ⚠️ Missing: Duration
+- 108 - You Are My Glory -> ⚠️ Missing: Other Names, Synopsis
+
+🚫 Skipped (Unchanged):
+- - 101 - Find Me in Your Memory (2020)
+- - 102 - Descendant of the Sun (2016)
+- - 103 - Boys Over Flowers (2009)
+- - 104 - Crash Course in Romance (2023)
+- - 105 - That Winter, the Wind Blows (2013)
+- - 106 - Her Private Life (2019)
+
+📊 Summary (Sheet: Sheet1)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Created: 2
+🔁 Updated: 0
+🚫 Skipped: 6
+⚠️ Warnings: 2
+  Total Rows: 8
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Sheet2 — 06 November 2025 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🆕 Data Created:
+- 3001 - Mr. Queen (2020) -> First Time Uploaded
+
+🖼️ Fetched Data:
+- 3001 - Mr. Queen -> Fetched: image, Release Date, duration, Other Names
+
+🕳️ Value Not Found:
+- 3001 - Mr. Queen -> ⚠️ Missing: Synopsis
+
+📊 Summary (Sheet: Sheet2)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Created: 1
+🔁 Updated: 0
+🚫 Skipped: 0
+⚠️ Warnings: 1
+  Total Rows: 1
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 Overall Summary
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Total Created: 3
+🔁 Total Updated: 0
+🖼️ Total Images Updated: 0
+🚫 Total Skipped: 6
+❌ Total Deleted: 0
+⚠️ Total Warnings: 3
+💾 Backup Files: 0
+  Grand Total Rows: 9
+
+💾 Metadata Backups: 3
+
+📦 Total Objects in seriesData.json: 9
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ Folders Generated:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+images/
+    107.jpg
+    108.jpg
+    3001.jpg
+meta_backups/
+    META_06_November_2025_1511_107.json
+    META_06_November_2025_1511_108.json
+    META_06_November_2025_1512_3001.json
+reports/
+    Report_06_November_2025_1512.txt
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🏁 Workflow finished successfully
