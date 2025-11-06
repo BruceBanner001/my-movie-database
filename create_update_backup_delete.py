@@ -2,18 +2,18 @@
 # Script: create_update_backup_delete.py
 # Author: [BruceBanner001]
 # Description:
-#   This is the definitive final version. v15.0 Engine.
+#   This is the definitive final version. v16.0 Engine.
 #   It contains a completely rebuilt, landmark-validating search engine
 #   to guarantee the correct page is scraped every single time.
 #
-# Version: v15.0.0 (Definitive Fix: The v15 Engine - Last Stand)
+# Version: v16.0.0 (Definitive Fix: The v16 Engine - Final Stand)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v15.0.0 (Definitive Fix: The v15 Engine - Last Stand)"
+SCRIPT_VERSION = "v16.0.0 (Definitive Fix: The v16 Engine - Final Stand)"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames": [], "showImage": None,
@@ -110,7 +110,6 @@ def get_soup_from_search(query_base, site):
                     r = SCRAPER.get(url, timeout=20)
                     if r.status_code == 200:
                         soup = BeautifulSoup(r.text, "html.parser")
-                        # [ THE DEFINITIVE FIX HERE ] - Landmark Validation
                         if site == "asianwiki.com" and not soup.find('div', id='mw-content-text'):
                             logd("Validation failed: AsianWiki landmark missing. Rejecting."); continue
                         if site == "mydramalist.com" and not soup.find('div', class_='box-body'):

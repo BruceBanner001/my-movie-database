@@ -2,24 +2,12 @@
 # Excel → JSON Automation - Python Dependencies
 # Version 3.0 (Feat: Added cloudscraper to defeat anti-bot measures)
 # ==========================================
-
-# === Core Data Handling ===
 pandas>=2.0.0
 openpyxl>=3.1.0
-
-# === Web Scraping & Networking ===
 requests>=2.31.0
 beautifulsoup4>=4.12.0
 ddgs>=5.0.0
-
-# [ THE FINAL WEAPON IS HERE ]
-# This library is specifically designed to bypass anti-bot protections
-# like the one used by AsianWiki (Cloudflare).
 cloudscraper>=1.2.71
-
-# === Image Processing ===
 Pillow>=10.0.0
-
-# === Google Drive API Integration ===
 google-api-python-client>=2.100.0
 google-auth>=2.23.0
