@@ -2,18 +2,18 @@
 # Script: create_update_backup_delete.py
 # Author: [BruceBanner001]
 # Description:
-#   This is the definitive final version. v13.0 Engine.
-#   It contains a completely rebuilt, case-insensitive, punctuation-ignoring
-#   multi-stage validation search engine to guarantee success.
+#   This is the definitive final version. v14.0 Engine.
+#   It contains a completely rebuilt, multi-stage validation search engine
+#   with a fortress URL filter to guarantee the correct page is scraped.
 #
-# Version: v13.0.0 (Definitive Fix: The v13 Engine - Last Stand)
+# Version: v14.0.0 (Definitive Fix: The v14 Engine - Last Stand)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v13.0.0 (Definitive Fix: The v13 Engine - Last Stand)"
+SCRIPT_VERSION = "v14.0.0 (Definitive Fix: The v14 Engine - Last Stand)"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames": [], "showImage": None,
@@ -104,13 +104,12 @@ def get_soup_from_search(query_base, site):
 
                 for res in results:
                     url = res.get('href', '')
-                    if any(bad in url for bad in ['/reviews', '/episode', '/cast', '/recs', '?lang=']): continue
+                    if any(bad in url for bad in ['/reviews', '/episode', '/cast', '/recs', '?lang=', '/photos']): continue
                     
                     logd(f"Found candidate URL: {url}")
                     r = SCRAPER.get(url, timeout=20)
                     if r.status_code == 200:
                         soup = BeautifulSoup(r.text, "html.parser")
-                        # [ THE DEFINITIVE FIX HERE ] - Case-insensitive and punctuation-ignoring validation
                         title = soup.title.string.lower().translate(str.maketrans('', '', string.punctuation))
                         show_name_parts = query_base.lower().translate(str.maketrans('', '', string.punctuation)).split(' ')
                         if all(part in title for part in show_name_parts[:2]):
