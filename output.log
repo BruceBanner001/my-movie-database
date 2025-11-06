@@ -1,22 +1,41 @@
-🚀 Running Script — Version v4.9.1 (Definitive Fix: Handles empty Deleting Records sheet) | Run ID: RUN_20251106_101556
+🚀 Running Script — Version v5.0.0 (Definitive Fix: Rebuilt Scraping Engine) | Run ID: RUN_20251106_102628
 [DEBUG] 'Deleting Records' sheet is empty. Nothing to delete.
-[DEBUG] Searching: "It's Okay to Not be Okay 2020" site:asianwiki.com
-[DEBUG] Found URL: https://asianwiki.com/It's_Okay_to_Not_Be_Okay
+[DEBUG] Searching: "Descendant of the Sun 2016" site:asianwiki.com
+[DEBUG] Found URL: https://asianwiki.com/Descendants_of_the_Sun
 [DEBUG] Synopsis heading not found on AsianWiki.
-[DEBUG] Searching: "It's Okay to Not be Okay 2020" site:mydramalist.com
-[DEBUG] Found URL: https://mydramalist.com/49865-psycho-but-it-s-okay/cast
-[DEBUG] Synopsis element not found on MyDramaList.
-[DEBUG] Searching: "It's Okay to Not be Okay 2020" site:asianwiki.com
+[DEBUG] Searching: "Descendant of the Sun 2016" site:mydramalist.com
+[DEBUG] Found URL: https://mydramalist.com/10904-descendants-of-the-sun
+[DEBUG] Searching: "Descendant of the Sun 2016" site:asianwiki.com
+[DEBUG] Found URL: https://asianwiki.com/Kim_Eun-Sook_(screenwriter)
+[DEBUG] Downloading high-quality image from: https://asianwiki.com/images/9/95/Kim_Eun-Sook-SR-1973-p1.jpg
+[DEBUG] Image saved to images/102.jpg
+[DEBUG] Searching: "Descendant of the Sun 2016" site:mydramalist.com
+[DEBUG] Found URL: https://mydramalist.com/10904-descendants-of-the-sun
+[DEBUG] Searching: "Descendant of the Sun 2016" site:mydramalist.com
+[DEBUG] Found URL: https://mydramalist.com/10904-descendants-of-the-sun
+[DEBUG] Searching: "Descendant of the Sun 2016" site:mydramalist.com
 [DEBUG] No search results found.
-[DEBUG] Searching: "It's Okay to Not be Okay 2020" site:mydramalist.com
-[DEBUG] Found URL: https://mydramalist.com/49865-psycho-but-it-s-okay/cast
-[DEBUG] Downloading high-quality image from: https://i.mydramalist.com/mOrXA0.jpg
-[DEBUG] Searching: "It's Okay to Not be Okay 2020" site:mydramalist.com
-[DEBUG] Found URL: https://mydramalist.com/49865-psycho-but-it-s-okay
-[DEBUG] Searching: "It's Okay to Not be Okay 2020" site:mydramalist.com
-[DEBUG] Found URL: https://mydramalist.com/49865-psycho-but-it-s-okay
-[DEBUG] Searching: "It's Okay to Not be Okay 2020" site:mydramalist.com
-[DEBUG] Found URL: https://mydramalist.com/49865-psycho-but-it-s-okay
-✅ Report written -> reports/Report_06_November_2025_1016.txt
+[DEBUG] Searching: "Find Me in Your Memory 2020" site:asianwiki.com
+[DEBUG] Found URL: https://asianwiki.com/Find_Me_in_Your_Memory
+[DEBUG] Synopsis heading not found on AsianWiki.
+[DEBUG] Searching: "Find Me in Your Memory 2020" site:mydramalist.com
+[DEBUG] Found URL: https://mydramalist.com/50941-the-man-s-memory/reviews?page=2
+[DEBUG] Synopsis element not found on MyDramaList.
+[DEBUG] Searching: "Find Me in Your Memory 2020" site:asianwiki.com
+[DEBUG] No search results found.
+[DEBUG] Searching: "Find Me in Your Memory 2020" site:mydramalist.com
+[DEBUG] Found URL: https://mydramalist.com/50941-the-man-s-memory/reviews?page=2
+[DEBUG] Image tag not found on MyDramaList.
+[DEBUG] Searching: "Find Me in Your Memory 2020" site:mydramalist.com
+[DEBUG] Found URL: https://mydramalist.com/50941-the-man-s-memory/reviews?page=2
+[DEBUG] 'Aired:' field not found on MyDramaList.
+[DEBUG] Searching: "Find Me in Your Memory 2020" site:asianwiki.com
+[DEBUG] Found URL: https://asianwiki.com/Find_Me_in_Your_Memory
+[DEBUG] Searching: "Find Me in Your Memory 2020" site:mydramalist.com
+[DEBUG] Found URL: https://mydramalist.com/50941-the-man-s-memory
+[DEBUG] Searching: "Find Me in Your Memory 2020" site:mydramalist.com
+[DEBUG] Found URL: https://mydramalist.com/50941-the-man-s-memory/reviews?page=2
+[DEBUG] 'Also Known As:' field not found on MyDramaList.
+✅ Report written -> reports/Report_06_November_2025_1027.txt
 
 All done.
