@@ -3,17 +3,17 @@
 # Author: [BruceBanner001]
 # Description:
 #   This is the definitive final version. It contains a completely
-#   rebuilt v7.0.0 scraping engine with surgical multi-selectors,
+#   rebuilt v8.0 scraping engine with surgical multi-selectors,
 #   intelligent URL filtering, and all known bugs exterminated.
 #
-# Version: v7.0.0 (Definitive Fix: The v7 Engine)
+# Version: v8.0.0 (Definitive Fix: The v8 Engine)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v7.0.0 (Definitive Fix: The v7 Engine)"
+SCRIPT_VERSION = "v8.0.0 (Definitive Fix: The v8 Engine)"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames": [], "showImage": None,
@@ -125,8 +125,8 @@ def build_absolute_url(local_path): return f"{GITHUB_PAGES_URL.rstrip('/')}/{loc
 def fetch_synopsis_from_asianwiki(s, y):
     soup, url = get_soup_from_search(f'"{s} {y}" site:asianwiki.com');
     if not soup: return None
-    h2 = soup.find('h2', id=re.compile("Synopsis"));
-    if not h2: logd("Synopsis heading not found on AsianWiki."); return None
+    h2 = soup.find('h2', id=re.compile("Synopsis|Plot", re.IGNORECASE));
+    if not h2: logd("Synopsis/Plot heading not found on AsianWiki."); return None
     p_tags = h2.find_next_siblings('p')
     synopsis = " ".join([p.get_text(strip=True) for p in p_tags])
     return (f"{synopsis} (Source: AsianWiki)", url) if synopsis else None
@@ -139,8 +139,8 @@ def fetch_image_from_asianwiki(s, y, sid):
     if download_and_save_image(img_url, os.path.join(IMAGES_DIR, f"{sid}.jpg")):
         return (build_absolute_url(os.path.join(IMAGES_DIR, f"{sid}.jpg")), img_url)
     return None
-def fetch_othernames_from_asianwiki(s, y): return None
-def fetch_duration_from_asianwiki(s, y): return None
+def fetch_othernames_from_asianwiki(s, y): return None # AsianWiki is not reliable for this
+def fetch_duration_from_asianwiki(s, y): return None # AsianWiki is not reliable for this
 def fetch_release_date_from_asianwiki(s, y):
     soup, url = get_soup_from_search(f'"{s} {y}" site:asianwiki.com');
     if not soup: return None
@@ -175,7 +175,7 @@ def fetch_othernames_from_mydramalist(s, y):
     for li in parent_div.find_all('li', class_='list-item'):
         b = li.find('b')
         if b and 'Also Known As:' in b.get_text():
-            return (normalize_list(b.next_sibling), url)
+            return (normalize_list(li.get_text().replace("Also Known As:", "")), url)
     logd("'Also Known As:' field not found on MyDramaList."); return None
 def fetch_duration_from_mydramalist(s, y):
     soup, url = get_soup_from_search(f'"{s} {y}" site:mydramalist.com');
@@ -201,8 +201,8 @@ def fetch_and_populate_metadata(obj, site_priority, context):
             if site and site in FETCH_MAP and field in FETCH_MAP[site]:
                 args = (s_name, s_year, s_id) if field == 'image' else (s_name, s_year)
                 result_tuple = FETCH_MAP[site][field](*args)
-                if result_tuple and result_tuple[0]: used_site = site; break
-        if result_tuple and result_tuple[0]:
+                if result_tuple and (result_tuple[0] is not None and result_tuple[0] != []): used_site = site; break
+        if result_tuple and (result_tuple[0] is not None and result_tuple[0] != []):
             data, source_url = result_tuple
             target_key = "showImage" if field == "image" else "Duration" if field == "duration" else field
             obj[target_key] = data
@@ -300,7 +300,8 @@ def save_metadata_backup(obj, context):
     source_links = obj.get('source_links', {})
     for key, site in obj.get('sitePriorityUsed', {}).items():
         if site:
-            field_data = {"value": obj.get("showImage" if key == "image" else "Duration" if key == "duration" else key), "source": site}
+            target_key = "showImage" if key == "image" else "Duration" if key == "duration" else key
+            field_data = {"value": obj.get(target_key), "source": site}
             if key in source_links:
                 field_data["source_link"] = source_links[key]
             fetched[key] = field_data
@@ -389,7 +390,6 @@ def main():
                     report['created'].append(new_obj)
                     merged_by_id[sid] = new_obj
                     save_metadata_backup(new_obj, context)
-                    # [ THE FIX IS HERE ] - Correctly check for fetched image for the report
                     missing = [human_readable_field(k) for k,v in new_obj.items() if (v is None or v==[]) and k not in ['comments','againWatchedDates']]
                     fetched = [human_readable_field(k) for k,v in new_obj['sitePriorityUsed'].items() if v]
                     if fetched: report['fetched_data'].append(f"- {sid} - {new_obj['showName']} -> Fetched: {', '.join(fetched)}")
