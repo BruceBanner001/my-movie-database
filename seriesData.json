@@ -32,7 +32,7 @@
             "28-08-2025"
         ],
         "updatedOn": "06 November 2025",
-        "updatedDetails": "First Time Uploaded",
+        "updatedDetails": "source_links Updated",
         "synopsis": "English\ud55c\uad6d\uc5b4\u65e5\u672c\u8a9e\u0420\u0443\u0441\u0441\u043a\u0438\u0439 (Source: MyDramaList)",
         "topRatings": 6300,
         "Duration": null,
@@ -41,10 +41,51 @@
             "image": "asianwiki",
             "otherNames": "mydramalist"
         },
+        "source_links": {}
+    },
+    {
+        "showID": 102,
+        "showName": "Descendant of the Sun",
+        "otherNames": [],
+        "showImage": "https://brucebanner001.github.io/my-movie-database/images/102.jpg",
+        "watchStartedOn": "10-02-2023",
+        "watchEndedOn": "11-02-2023",
+        "releasedYear": 2016,
+        "releaseDate": "Feb 24, 2016 - Apr 14, 2016",
+        "totalEpisodes": 16,
+        "showType": "Drama",
+        "nativeLanguage": "Korean",
+        "watchedLanguage": "Korean",
+        "country": "South Korea",
+        "comments": "Not Bad. One Time Watchable",
+        "ratings": 6,
+        "genres": [
+            "Army",
+            "Medical",
+            "Romance"
+        ],
+        "network": [
+            "KBS2"
+        ],
+        "againWatchedDates": [
+            "24-03-2025"
+        ],
+        "updatedOn": "06 November 2025",
+        "updatedDetails": "First Time Uploaded",
+        "synopsis": "English\ud55c\uad6d\uc5b4\u0e20\u0e32\u0e29\u0e32\u0e44\u0e17\u0e22Arabic (Source: MyDramaList)",
+        "topRatings": 1200,
+        "Duration": "60 mins",
+        "sitePriorityUsed": {
+            "synopsis": "mydramalist",
+            "image": "asianwiki",
+            "releaseDate": "mydramalist",
+            "duration": "mydramalist"
+        },
         "source_links": {
-            "synopsis": "https://mydramalist.com/50941-the-man-s-memory",
-            "image": "https://asianwiki.com/images/e/e0/Find_Me_in_Your_Memory-P2.jpg",
-            "otherNames": "https://mydramalist.com/50941-the-man-s-memory"
+            "synopsis": "https://mydramalist.com/10904-descendants-of-the-sun",
+            "image": "https://asianwiki.com/images/e/e3/Descendants_of_the_Sun-p1.jpg",
+            "releaseDate": "https://mydramalist.com/10904-descendants-of-the-sun",
+            "duration": "https://mydramalist.com/10904-descendants-of-the-sun"
         }
     }
 ]
