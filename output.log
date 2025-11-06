@@ -1,20 +1,38 @@
-🚀 Running Script — Version v9.0.0 (Definitive Fix: The v9 Engine - Final Stand) | Run ID: RUN_20251106_132835
+🚀 Running Script — Version v10.0.0 (Definitive Fix: The v10 Engine - Last Stand) | Run ID: RUN_20251106_135126
 [DEBUG] 'Deleting Records' sheet is empty. Nothing to delete.
-[DEBUG] Searching: "That Winter, the Wind Blows 2013" site:asianwiki.com
-[DEBUG] Found URL: https://asianwiki.com/Song_Hye-Kyo
+[DEBUG] Initiating search for: Her Private Life 2019 on asianwiki.com
+[DEBUG] Executing search query: "Her Private Life 2019" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Love_in_Contract
+[DEBUG] Successfully fetched page.
 [DEBUG] Synopsis/Plot heading not found on AsianWiki.
-[DEBUG] Searching: "That Winter, the Wind Blows 2013" site:mydramalist.com
-[DEBUG] No suitable URL found after filtering.
-[DEBUG] Searching: "That Winter, the Wind Blows 2013" site:asianwiki.com
-[DEBUG] Found URL: https://asianwiki.com/Zo_In-Sung
-[DEBUG] Downloading high-quality image from: https://asianwiki.com/images/c/c7/Zo_In-Sung-p3.jpg
-[DEBUG] Image saved to images/105.jpg
-[DEBUG] Searching: "That Winter, the Wind Blows 2013" site:mydramalist.com
-[DEBUG] Found URL: https://mydramalist.com/5200-that-winter-the-wind-blows
-[DEBUG] Searching: "That Winter, the Wind Blows 2013" site:mydramalist.com
-[DEBUG] No suitable URL found after filtering.
-[DEBUG] Searching: "That Winter, the Wind Blows 2013" site:mydramalist.com
-[DEBUG] Found URL: https://mydramalist.com/5200-that-winter-the-wind-blows
-✅ Report written -> reports/Report_06_November_2025_1329.txt
+[DEBUG] Initiating search for: Her Private Life 2019 on mydramalist.com
+[DEBUG] Executing search query: "Her Private Life 2019" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/32293-her-private-life/photos?page=6
+[DEBUG] Successfully fetched page.
+[DEBUG] Synopsis element not found on MyDramaList.
+[DEBUG] Initiating search for: Her Private Life 2019 on asianwiki.com
+[DEBUG] Executing search query: "Her Private Life 2019" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Her_Private_Life
+[DEBUG] Successfully fetched page.
+[DEBUG] Downloading high-quality image from: https://asianwiki.com/images/d/df/Her_Private_Life-P1.jpg
+[DEBUG] Image saved to images/106.jpg
+[DEBUG] Initiating search for: Her Private Life 2019 on mydramalist.com
+[DEBUG] Executing search query: "Her Private Life 2019" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/32293-her-private-life/photos?page=6
+[DEBUG] Successfully fetched page.
+[DEBUG] 'Aired:' field not found on MyDramaList.
+[DEBUG] Initiating search for: Her Private Life 2019 on asianwiki.com
+[DEBUG] Executing search query: "Her Private Life 2019" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Her_Private_Life
+[DEBUG] Successfully fetched page.
+[DEBUG] Initiating search for: Her Private Life 2019 on mydramalist.com
+[DEBUG] Executing search query: "Her Private Life 2019" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/32293-her-private-life
+[DEBUG] Successfully fetched page.
+[DEBUG] Initiating search for: Her Private Life 2019 on mydramalist.com
+[DEBUG] Executing search query: "Her Private Life 2019" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/32293-her-private-life
+[DEBUG] Successfully fetched page.
+✅ Report written -> reports/Report_06_November_2025_1351.txt
 
 All done.
