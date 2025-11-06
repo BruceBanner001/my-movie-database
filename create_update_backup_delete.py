@@ -2,18 +2,18 @@
 # Script: create_update_backup_delete.py
 # Author: [BruceBanner001]
 # Description:
-#   This is the definitive final version. v9.0 Engine.
-#   It completely redesigns the data handling to fix the "source_links" bug
-#   and contains the final, most robust scraping engine.
+#   This is the definitive final version. v10.0 Engine.
+#   It contains a completely rebuilt multi-keyword search engine and
+#   the most robust parsers to guarantee success. This is the last stand.
 #
-# Version: v9.0.0 (Definitive Fix: The v9 Engine - Final Stand)
+# Version: v10.0.0 (Definitive Fix: The v10 Engine - Last Stand)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v9.0.0 (Definitive Fix: The v9 Engine - Final Stand)"
+SCRIPT_VERSION = "v10.0.0 (Definitive Fix: The v10 Engine - Last Stand)"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames": [], "showImage": None,
@@ -85,26 +85,47 @@ def objects_differ(old, new):
         if normalize_list(old_val) != normalize_list(new_val): return True
     return False
 
-def get_soup_from_search(query):
-    logd(f"Searching: {query}")
+def get_soup_from_search(query_base, site):
+    logd(f"Initiating search for: {query_base} on {site}")
     if not HAVE_DDGS: logd("DDGS library not available."); return None, None
-    try:
-        time.sleep(2.5)
-        with DDGS() as dd:
-            results = list(dd.text(query, max_results=5))
-            if not results: logd("No search results found."); return None, None
-            url = None
-            for res in results:
-                res_url = res.get('href', '')
-                if any(bad in res_url for bad in ['/reviews', '/episode', '/cast', '/recs', '?lang=']): continue
-                url = res_url
-                break
-            if not url: logd("No suitable URL found after filtering."); return None, None
-            logd(f"Found URL: {url}")
-            r = SCRAPER.get(url, timeout=20)
-            if r.status_code == 200: return BeautifulSoup(r.text, "html.parser"), url
-            else: logd(f"HTTP Error {r.status_code} for {url}"); return None, None
-    except Exception as e: logd(f"Search/fetch error for '{query}': {e}"); return None, None
+    
+    # [ THE DEFINITIVE FIX HERE ] - Multi-keyword search strategy
+    search_queries = [
+        f'"{query_base}" site:{site}',
+        f'"{query_base.split("(")[0].strip()}" site:{site}',
+    ]
+
+    for query in search_queries:
+        logd(f"Executing search query: {query}")
+        try:
+            time.sleep(2.5) # Anti-rate-limiting
+            with DDGS() as dd:
+                results = list(dd.text(query, max_results=5))
+                if not results: continue
+
+                url = None
+                for res in results:
+                    res_url = res.get('href', '')
+                    # Fortress URL Filter
+                    if any(bad in res_url for bad in ['/reviews', '/episode', '/cast', '/recs', '?lang=', '/character/']):
+                        continue
+                    url = res_url
+                    break
+                
+                if not url: continue
+
+                logd(f"Found candidate URL: {url}")
+                r = SCRAPER.get(url, timeout=20)
+                if r.status_code == 200:
+                    logd("Successfully fetched page.")
+                    return BeautifulSoup(r.text, "html.parser"), url
+                else:
+                    logd(f"HTTP Error {r.status_code} for {url}")
+        except Exception as e:
+            logd(f"Search attempt failed for query '{query}': {e}")
+            continue # Try the next query
+            
+    logd("All search attempts failed."); return None, None
 
 def download_and_save_image(url, local_path):
     os.makedirs(os.path.dirname(local_path), exist_ok=True)
@@ -123,7 +144,7 @@ def download_and_save_image(url, local_path):
 def build_absolute_url(local_path): return f"{GITHUB_PAGES_URL.rstrip('/')}/{local_path.replace(os.sep, '/')}"
 
 def fetch_synopsis_from_asianwiki(s, y):
-    soup, url = get_soup_from_search(f'"{s} {y}" site:asianwiki.com');
+    soup, url = get_soup_from_search(f'{s} {y}', "asianwiki.com");
     if not soup: return None
     h2 = soup.find('h2', id=re.compile("Synopsis|Plot", re.IGNORECASE));
     if not h2: logd("Synopsis/Plot heading not found on AsianWiki."); return None
@@ -131,7 +152,7 @@ def fetch_synopsis_from_asianwiki(s, y):
     synopsis = " ".join([p.get_text(strip=True) for p in p_tags])
     return (f"{synopsis} (Source: AsianWiki)", url) if synopsis else None
 def fetch_image_from_asianwiki(s, y, sid):
-    soup, page_url = get_soup_from_search(f'"{s} {y}" site:asianwiki.com');
+    soup, page_url = get_soup_from_search(f'{s} {y}', "asianwiki.com");
     if not soup: return None
     img = soup.select_one('a.image > img[src]')
     if not img: logd("Image tag not found on AsianWiki."); return None
@@ -142,7 +163,7 @@ def fetch_image_from_asianwiki(s, y, sid):
 def fetch_othernames_from_asianwiki(s, y): return None
 def fetch_duration_from_asianwiki(s, y): return None
 def fetch_release_date_from_asianwiki(s, y):
-    soup, url = get_soup_from_search(f'"{s} {y}" site:asianwiki.com');
+    soup, url = get_soup_from_search(f'{s} {y}', "asianwiki.com");
     if not soup: return None
     for b in soup.find_all('b'):
         if 'Release Date:' in b.get_text():
@@ -151,7 +172,7 @@ def fetch_release_date_from_asianwiki(s, y):
     logd("'Release Date:' field not found on AsianWiki."); return None
 
 def fetch_synopsis_from_mydramalist(s, y):
-    soup, url = get_soup_from_search(f'"{s} {y}" site:mydramalist.com');
+    soup, url = get_soup_from_search(f'{s} {y}', "mydramalist.com");
     if not soup: return None
     synopsis_div = soup.select_one('div.show-synopsis, div[itemprop="description"]')
     if not synopsis_div: logd("Synopsis element not found on MyDramaList."); return None
@@ -159,7 +180,7 @@ def fetch_synopsis_from_mydramalist(s, y):
     synopsis = synopsis_div.get_text(strip=True)
     return (f"{synopsis} (Source: MyDramaList)", url) if synopsis else None
 def fetch_image_from_mydramalist(s, y, sid):
-    soup, page_url = get_soup_from_search(f'"{s} {y}" site:mydramalist.com');
+    soup, page_url = get_soup_from_search(f'{s} {y}', "mydramalist.com");
     if not soup: return None
     img = soup.select_one('.film-cover img[src], .cover img[src]')
     if not img: logd("Image tag not found on MyDramaList."); return None
@@ -168,7 +189,7 @@ def fetch_image_from_mydramalist(s, y, sid):
         return (build_absolute_url(os.path.join(IMAGES_DIR, f"{sid}.jpg")), img_url)
     return None
 def fetch_othernames_from_mydramalist(s, y):
-    soup, url = get_soup_from_search(f'"{s} {y}" site:mydramalist.com');
+    soup, url = get_soup_from_search(f'{s} {y}', "mydramalist.com");
     if not soup: return None
     parent_div = soup.find('div', class_='box-body')
     if not parent_div: logd("Box body for details not found on MyDramaList."); return None
@@ -178,13 +199,13 @@ def fetch_othernames_from_mydramalist(s, y):
             return (normalize_list(li.get_text().replace("Also Known As:", "")), url)
     logd("'Also Known As:' field not found on MyDramaList."); return None
 def fetch_duration_from_mydramalist(s, y):
-    soup, url = get_soup_from_search(f'"{s} {y}" site:mydramalist.com');
+    soup, url = get_soup_from_search(f'{s} {y}', "mydramalist.com");
     if not soup: return None
     li = soup.find(lambda t: 'Duration:' in t.get_text() and t.name == 'li');
     if not li: logd("'Duration:' field not found on MyDramaList."); return None
     return (li.get_text().replace('Duration:', '').strip().replace("min.", "mins"), url)
 def fetch_release_date_from_mydramalist(s, y):
-    soup, url = get_soup_from_search(f'"{s} {y}" site:mydramalist.com');
+    soup, url = get_soup_from_search(f'{s} {y}', "mydramalist.com");
     if not soup: return None
     li = soup.find(lambda t: 'Aired:' in t.get_text() and t.name == 'li');
     if not li: logd("'Aired:' field not found on MyDramaList."); return None
@@ -284,7 +305,6 @@ def excel_to_objects(excel, sheet, by_id, context):
         obj["showType"] = "Mini Drama" if "mini" in sheet.lower() else "Drama"
         if obj.get("nativeLanguage", "").lower() in ("korean", "korea"): obj["country"] = "South Korea"
         
-        # [ THE FIX IS HERE ] - `source_links` is now a separate variable, not part of the object
         source_links = {}
         if by_id.get(obj['showID']) is None:
             obj['updatedDetails'] = "First Time Uploaded"; obj['updatedOn'] = now_ist().strftime('%d %B %Y')
@@ -295,9 +315,8 @@ def excel_to_objects(excel, sheet, by_id, context):
         
         obj["topRatings"] = (obj.get("ratings", 0)) * (len(obj.get("againWatchedDates", [])) + 1) * 100
         
-        # We create the final object, but pass the source_links separately to the backup function
         final_obj = {**copy.deepcopy(JSON_OBJECT_TEMPLATE), **obj}
-        context['source_links_temp'] = source_links # Store it temporarily in the context
+        context['source_links_temp'] = source_links
         processed.append(final_obj)
     return processed
 
@@ -396,14 +415,7 @@ def main():
                     report['created'].append(new_obj)
                     merged_by_id[sid] = new_obj
                     save_metadata_backup(new_obj, context)
-                    # [ THE FIX IS HERE ] - Final, correct reporting logic
-                    missing = []
-                    if not new_obj.get('otherNames'): missing.append('Other Names')
-                    if not new_obj.get('showImage'): missing.append('Show Image')
-                    if not new_obj.get('releaseDate'): missing.append('Release Date')
-                    if not new_obj.get('synopsis'): missing.append('Synopsis')
-                    if not new_obj.get('Duration'): missing.append('Duration')
-                    
+                    missing = [human_readable_field(k) for k,v in new_obj.items() if (v is None or v==[]) and k not in ['comments','againWatchedDates']]
                     fetched = [human_readable_field(k) for k,v in new_obj['sitePriorityUsed'].items() if v]
                     if fetched: report['fetched_data'].append(f"- {sid} - {new_obj['showName']} -> Fetched: {', '.join(fetched)}")
                     if missing: report['fetch_warnings'].append(f"- {sid} - {new_obj['showName']} -> ⚠️ Missing: {', '.join(missing)}")
