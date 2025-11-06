@@ -43,7 +43,7 @@ jobs:
       - name: 5. Run the Excel-to-JSON update script
         id: run_updater
         env:
-          SHEETS: "Sheet1;Sheet2"
+          SHEETS: "Sheet1"
           GITHUB_PAGES_URL: "https://brucebanner001.github.io/my-movie-database"
           
           # [ THE MOST IMPORTANT DEBUGGING TOOL IS HERE ]

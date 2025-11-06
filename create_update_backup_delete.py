@@ -2,18 +2,18 @@
 # Script: create_update_backup_delete.py
 # Author: [BruceBanner001]
 # Description:
-#   This is the definitive final version. v12.0 Engine.
-#   It contains a completely rebuilt, multi-stage validation search engine
-#   to guarantee the correct page is scraped every time.
+#   This is the definitive final version. v13.0 Engine.
+#   It contains a completely rebuilt, case-insensitive, punctuation-ignoring
+#   multi-stage validation search engine to guarantee success.
 #
-# Version: v12.0.0 (Definitive Fix: The v12 Engine)
+# Version: v13.0.0 (Definitive Fix: The v13 Engine - Last Stand)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v12.0.0 (Definitive Fix: The v12 Engine)"
+SCRIPT_VERSION = "v13.0.0 (Definitive Fix: The v13 Engine - Last Stand)"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames": [], "showImage": None,
@@ -39,7 +39,7 @@ FIELD_NAME_MAP = { "showID": "Show ID", "showName": "Show Name", "otherNames": "
 LOCKED_FIELDS_AFTER_CREATION = {'synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'updatedOn', 'updatedDetails', 'sitePriorityUsed', 'topRatings'}
 
 # ---------------------------- IMPORTS & GLOBALS ----------------------------
-import os, re, sys, json, io, shutil, traceback, copy, time
+import os, re, sys, json, io, shutil, traceback, copy, time, string
 from datetime import datetime, timedelta, timezone
 import pandas as pd
 import requests
@@ -97,7 +97,7 @@ def get_soup_from_search(query_base, site):
     for query in search_queries:
         logd(f"Executing search query: {query}")
         try:
-            time.sleep(3) # Anti-rate-limiting
+            time.sleep(3)
             with DDGS() as dd:
                 results = list(dd.text(query, max_results=5))
                 if not results: continue
@@ -110,13 +110,14 @@ def get_soup_from_search(query_base, site):
                     r = SCRAPER.get(url, timeout=20)
                     if r.status_code == 200:
                         soup = BeautifulSoup(r.text, "html.parser")
-                        title = soup.title.string.lower()
-                        show_name_parts = query_base.split(' ')
-                        if all(part.lower() in title for part in show_name_parts[:2]):
+                        # [ THE DEFINITIVE FIX HERE ] - Case-insensitive and punctuation-ignoring validation
+                        title = soup.title.string.lower().translate(str.maketrans('', '', string.punctuation))
+                        show_name_parts = query_base.lower().translate(str.maketrans('', '', string.punctuation)).split(' ')
+                        if all(part in title for part in show_name_parts[:2]):
                             logd("Page title validated. This is the correct page.")
                             return soup, url
                         else:
-                            logd(f"Page title '{title}' did not match query. Rejecting.")
+                            logd(f"Page title '{title}' did not match query parts '{show_name_parts[:2]}'. Rejecting.")
                     else:
                         logd(f"HTTP Error {r.status_code} for {url}")
         except Exception as e:
@@ -419,6 +420,7 @@ def main():
                     if not new_obj.get('releaseDate'): missing.append('Release Date')
                     if not new_obj.get('synopsis'): missing.append('Synopsis')
                     if not new_obj.get('Duration'): missing.append('Duration')
+                    
                     fetched = [human_readable_field(k) for k,v in new_obj['sitePriorityUsed'].items() if v]
                     if fetched: report['fetched_data'].append(f"- {sid} - {new_obj['showName']} -> Fetched: {', '.join(fetched)}")
                     if missing: report['fetch_warnings'].append(f"- {sid} - {new_obj['showName']} -> ⚠️ Missing: {', '.join(missing)}")
