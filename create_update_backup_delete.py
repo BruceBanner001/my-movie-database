@@ -2,18 +2,18 @@
 # Script: create_update_backup_delete.py
 # Author: [BruceBanner001]
 # Description:
-#   This is the definitive final version. v11.0 Engine.
+#   This is the definitive final version. v12.0 Engine.
 #   It contains a completely rebuilt, multi-stage validation search engine
 #   to guarantee the correct page is scraped every time.
 #
-# Version: v11.0.0 (Definitive Fix: The v11 Engine)
+# Version: v12.0.0 (Definitive Fix: The v12 Engine)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v11.0.0 (Definitive Fix: The v11 Engine)"
+SCRIPT_VERSION = "v12.0.0 (Definitive Fix: The v12 Engine)"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames": [], "showImage": None,
@@ -110,7 +110,6 @@ def get_soup_from_search(query_base, site):
                     r = SCRAPER.get(url, timeout=20)
                     if r.status_code == 200:
                         soup = BeautifulSoup(r.text, "html.parser")
-                        # [ THE DEFINITIVE FIX HERE ] - Validate the page title
                         title = soup.title.string.lower()
                         show_name_parts = query_base.split(' ')
                         if all(part.lower() in title for part in show_name_parts[:2]):
