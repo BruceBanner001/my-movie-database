@@ -2,18 +2,18 @@
 # Script: create_update_backup_delete.py
 # Author: [BruceBanner001]
 # Description:
-#   This is the definitive final version. It contains a completely
-#   rebuilt v8.0 scraping engine with surgical multi-selectors,
-#   intelligent URL filtering, and all known bugs exterminated.
+#   This is the definitive final version. v9.0 Engine.
+#   It completely redesigns the data handling to fix the "source_links" bug
+#   and contains the final, most robust scraping engine.
 #
-# Version: v8.0.0 (Definitive Fix: The v8 Engine)
+# Version: v9.0.0 (Definitive Fix: The v9 Engine - Final Stand)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v8.0.0 (Definitive Fix: The v8 Engine)"
+SCRIPT_VERSION = "v9.0.0 (Definitive Fix: The v9 Engine - Final Stand)"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames": [], "showImage": None,
@@ -139,8 +139,8 @@ def fetch_image_from_asianwiki(s, y, sid):
     if download_and_save_image(img_url, os.path.join(IMAGES_DIR, f"{sid}.jpg")):
         return (build_absolute_url(os.path.join(IMAGES_DIR, f"{sid}.jpg")), img_url)
     return None
-def fetch_othernames_from_asianwiki(s, y): return None # AsianWiki is not reliable for this
-def fetch_duration_from_asianwiki(s, y): return None # AsianWiki is not reliable for this
+def fetch_othernames_from_asianwiki(s, y): return None
+def fetch_duration_from_asianwiki(s, y): return None
 def fetch_release_date_from_asianwiki(s, y):
     soup, url = get_soup_from_search(f'"{s} {y}" site:asianwiki.com');
     if not soup: return None
@@ -283,21 +283,27 @@ def excel_to_objects(excel, sheet, by_id, context):
         obj["againWatchedDates"] = [ddmmyyyy(d) for d in row[again_idx:] if ddmmyyyy(d)]
         obj["showType"] = "Mini Drama" if "mini" in sheet.lower() else "Drama"
         if obj.get("nativeLanguage", "").lower() in ("korean", "korea"): obj["country"] = "South Korea"
-        obj['source_links'] = {} # Temporary holder
+        
+        # [ THE FIX IS HERE ] - `source_links` is now a separate variable, not part of the object
+        source_links = {}
         if by_id.get(obj['showID']) is None:
             obj['updatedDetails'] = "First Time Uploaded"; obj['updatedOn'] = now_ist().strftime('%d %B %Y')
             priority = SITE_PRIORITY_BY_LANGUAGE.get(obj.get('nativeLanguage','').lower(), SITE_PRIORITY_BY_LANGUAGE['default'])
             obj, source_links = fetch_and_populate_metadata(obj, priority, context)
-            obj['source_links'] = source_links
         else:
             for field in LOCKED_FIELDS_AFTER_CREATION: obj[field] = by_id[obj['showID']].get(field)
+        
         obj["topRatings"] = (obj.get("ratings", 0)) * (len(obj.get("againWatchedDates", [])) + 1) * 100
-        processed.append({**copy.deepcopy(JSON_OBJECT_TEMPLATE), **obj})
+        
+        # We create the final object, but pass the source_links separately to the backup function
+        final_obj = {**copy.deepcopy(JSON_OBJECT_TEMPLATE), **obj}
+        context['source_links_temp'] = source_links # Store it temporarily in the context
+        processed.append(final_obj)
     return processed
 
 def save_metadata_backup(obj, context):
     fetched = {}
-    source_links = obj.get('source_links', {})
+    source_links = context.get('source_links_temp', {})
     for key, site in obj.get('sitePriorityUsed', {}).items():
         if site:
             target_key = "showImage" if key == "image" else "Duration" if key == "duration" else key
@@ -390,7 +396,14 @@ def main():
                     report['created'].append(new_obj)
                     merged_by_id[sid] = new_obj
                     save_metadata_backup(new_obj, context)
-                    missing = [human_readable_field(k) for k,v in new_obj.items() if (v is None or v==[]) and k not in ['comments','againWatchedDates']]
+                    # [ THE FIX IS HERE ] - Final, correct reporting logic
+                    missing = []
+                    if not new_obj.get('otherNames'): missing.append('Other Names')
+                    if not new_obj.get('showImage'): missing.append('Show Image')
+                    if not new_obj.get('releaseDate'): missing.append('Release Date')
+                    if not new_obj.get('synopsis'): missing.append('Synopsis')
+                    if not new_obj.get('Duration'): missing.append('Duration')
+                    
                     fetched = [human_readable_field(k) for k,v in new_obj['sitePriorityUsed'].items() if v]
                     if fetched: report['fetched_data'].append(f"- {sid} - {new_obj['showName']} -> Fetched: {', '.join(fetched)}")
                     if missing: report['fetch_warnings'].append(f"- {sid} - {new_obj['showName']} -> ⚠️ Missing: {', '.join(missing)}")
