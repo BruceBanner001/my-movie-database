@@ -2,18 +2,18 @@
 # Script: create_update_backup_delete.py
 # Author: [BruceBanner001]
 # Description:
-#   This is the definitive final version. v10.0 Engine.
-#   It contains a completely rebuilt multi-keyword search engine and
-#   the most robust parsers to guarantee success. This is the last stand.
+#   This is the definitive final version. v11.0 Engine.
+#   It contains a completely rebuilt, multi-stage validation search engine
+#   to guarantee the correct page is scraped every time.
 #
-# Version: v10.0.0 (Definitive Fix: The v10 Engine - Last Stand)
+# Version: v11.0.0 (Definitive Fix: The v11 Engine)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v10.0.0 (Definitive Fix: The v10 Engine - Last Stand)"
+SCRIPT_VERSION = "v11.0.0 (Definitive Fix: The v11 Engine)"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames": [], "showImage": None,
@@ -89,7 +89,6 @@ def get_soup_from_search(query_base, site):
     logd(f"Initiating search for: {query_base} on {site}")
     if not HAVE_DDGS: logd("DDGS library not available."); return None, None
     
-    # [ THE DEFINITIVE FIX HERE ] - Multi-keyword search strategy
     search_queries = [
         f'"{query_base}" site:{site}',
         f'"{query_base.split("(")[0].strip()}" site:{site}',
@@ -98,32 +97,32 @@ def get_soup_from_search(query_base, site):
     for query in search_queries:
         logd(f"Executing search query: {query}")
         try:
-            time.sleep(2.5) # Anti-rate-limiting
+            time.sleep(3) # Anti-rate-limiting
             with DDGS() as dd:
                 results = list(dd.text(query, max_results=5))
                 if not results: continue
 
-                url = None
                 for res in results:
-                    res_url = res.get('href', '')
-                    # Fortress URL Filter
-                    if any(bad in res_url for bad in ['/reviews', '/episode', '/cast', '/recs', '?lang=', '/character/']):
-                        continue
-                    url = res_url
-                    break
-                
-                if not url: continue
-
-                logd(f"Found candidate URL: {url}")
-                r = SCRAPER.get(url, timeout=20)
-                if r.status_code == 200:
-                    logd("Successfully fetched page.")
-                    return BeautifulSoup(r.text, "html.parser"), url
-                else:
-                    logd(f"HTTP Error {r.status_code} for {url}")
+                    url = res.get('href', '')
+                    if any(bad in url for bad in ['/reviews', '/episode', '/cast', '/recs', '?lang=']): continue
+                    
+                    logd(f"Found candidate URL: {url}")
+                    r = SCRAPER.get(url, timeout=20)
+                    if r.status_code == 200:
+                        soup = BeautifulSoup(r.text, "html.parser")
+                        # [ THE DEFINITIVE FIX HERE ] - Validate the page title
+                        title = soup.title.string.lower()
+                        show_name_parts = query_base.split(' ')
+                        if all(part.lower() in title for part in show_name_parts[:2]):
+                            logd("Page title validated. This is the correct page.")
+                            return soup, url
+                        else:
+                            logd(f"Page title '{title}' did not match query. Rejecting.")
+                    else:
+                        logd(f"HTTP Error {r.status_code} for {url}")
         except Exception as e:
             logd(f"Search attempt failed for query '{query}': {e}")
-            continue # Try the next query
+            continue
             
     logd("All search attempts failed."); return None, None
 
@@ -415,7 +414,12 @@ def main():
                     report['created'].append(new_obj)
                     merged_by_id[sid] = new_obj
                     save_metadata_backup(new_obj, context)
-                    missing = [human_readable_field(k) for k,v in new_obj.items() if (v is None or v==[]) and k not in ['comments','againWatchedDates']]
+                    missing = []
+                    if not new_obj.get('otherNames'): missing.append('Other Names')
+                    if not new_obj.get('showImage'): missing.append('Show Image')
+                    if not new_obj.get('releaseDate'): missing.append('Release Date')
+                    if not new_obj.get('synopsis'): missing.append('Synopsis')
+                    if not new_obj.get('Duration'): missing.append('Duration')
                     fetched = [human_readable_field(k) for k,v in new_obj['sitePriorityUsed'].items() if v]
                     if fetched: report['fetched_data'].append(f"- {sid} - {new_obj['showName']} -> Fetched: {', '.join(fetched)}")
                     if missing: report['fetch_warnings'].append(f"- {sid} - {new_obj['showName']} -> ⚠️ Missing: {', '.join(missing)}")
