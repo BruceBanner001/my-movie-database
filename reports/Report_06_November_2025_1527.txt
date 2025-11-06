@@ -1,0 +1,79 @@
+✅ Workflow completed successfully
+🆔 Run ID: RUN_20251106_152520
+📅 Run Time: 06 November 2025 03:27 PM (IST)
+🕒 Duration: 1 min 48 sec
+⚙️ Script Version: v12.0.0 (Definitive Fix: The v12 Engine)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Sheet1 — 06 November 2025 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🆕 Data Created:
+- 109 - Hello Mr.Gu (2021) -> First Time Uploaded
+- 110 - Oh My Venus (2015) -> First Time Uploaded
+
+🖼️ Fetched Data:
+- 110 - Oh My Venus -> Fetched: Synopsis, image, Release Date, duration, Other Names
+
+🕳️ Value Not Found:
+- 109 - Hello Mr.Gu -> ⚠️ Missing: Other Names, Show Image, Release Date, Synopsis, Duration
+
+🚫 Skipped (Unchanged):
+- - 101 - Find Me in Your Memory (2020)
+- - 102 - Descendant of the Sun (2016)
+- - 103 - Boys Over Flowers (2009)
+- - 104 - Crash Course in Romance (2023)
+- - 105 - That Winter, the Wind Blows (2013)
+- - 106 - Her Private Life (2019)
+- - 107 - Because This Is My First Life (2017)
+- - 108 - You Are My Glory (2021)
+
+📊 Summary (Sheet: Sheet1)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Created: 2
+🔁 Updated: 0
+🚫 Skipped: 8
+⚠️ Warnings: 1
+  Total Rows: 10
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Sheet2 — 06 November 2025 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🚫 Skipped (Unchanged):
+- - 3001 - Mr. Queen (2020)
+
+📊 Summary (Sheet: Sheet2)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Created: 0
+🔁 Updated: 0
+🚫 Skipped: 1
+⚠️ Warnings: 0
+  Total Rows: 1
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 Overall Summary
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Total Created: 2
+🔁 Total Updated: 0
+🖼️ Total Images Updated: 0
+🚫 Total Skipped: 9
+❌ Total Deleted: 0
+⚠️ Total Warnings: 1
+💾 Backup Files: 0
+  Grand Total Rows: 11
+
+💾 Metadata Backups: 1
+
+📦 Total Objects in seriesData.json: 11
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ Folders Generated:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+images/
+    110.jpg
+meta_backups/
+    META_06_November_2025_1527_110.json
+reports/
+    Report_06_November_2025_1527.txt
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🏁 Workflow finished successfully
