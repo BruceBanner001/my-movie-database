@@ -3,17 +3,17 @@
 # Author: [BruceBanner001]
 # Description:
 #   This is the definitive final version. It contains a completely
-#   rebuilt v6.0.0 scraping engine with surgical multi-selectors,
+#   rebuilt v7.0.0 scraping engine with surgical multi-selectors,
 #   intelligent URL filtering, and all known bugs exterminated.
 #
-# Version: v6.0.0 (Definitive Fix: The v6 Engine)
+# Version: v7.0.0 (Definitive Fix: The v7 Engine)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v6.0.0 (Definitive Fix: The v6 Engine)"
+SCRIPT_VERSION = "v7.0.0 (Definitive Fix: The v7 Engine)"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames": [], "showImage": None,
@@ -389,6 +389,7 @@ def main():
                     report['created'].append(new_obj)
                     merged_by_id[sid] = new_obj
                     save_metadata_backup(new_obj, context)
+                    # [ THE FIX IS HERE ] - Correctly check for fetched image for the report
                     missing = [human_readable_field(k) for k,v in new_obj.items() if (v is None or v==[]) and k not in ['comments','againWatchedDates']]
                     fetched = [human_readable_field(k) for k,v in new_obj['sitePriorityUsed'].items() if v]
                     if fetched: report['fetched_data'].append(f"- {sid} - {new_obj['showName']} -> Fetched: {', '.join(fetched)}")
