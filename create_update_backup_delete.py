@@ -6,14 +6,14 @@
 #   It contains a completely rebuilt, landmark-validating search engine
 #   to guarantee the correct page is scraped every single time.
 #
-# Version: v16.3.0 (Final Gemini Durability Patch)
+# Version: v16.4.0 (Final Gemini Polish & Durability Patch)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v16.3.0 (Final Gemini Durability Patch)"
+SCRIPT_VERSION = "v16.4.0 (Final Gemini Polish & Durability Patch)"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames": [], "showImage": None,
@@ -215,9 +215,7 @@ def fetch_synopsis_from_mydramalist(s, y):
     synopsis = synopsis_div.get_text(separator='\n\n', strip=True)
     
     # Aggressively clean junk from the end of the synopsis.
-    # This regex finds "(Source:...)Edit Translation..." and removes it.
-    synopsis = re.sub(r'\(Source:.*?\).*?Edit Translation.*$', '', synopsis, flags=re.DOTALL).strip()
-    # A second pass to clean any orphaned source tags.
+    synopsis = re.sub(r'(~~.*?~~|Edit Translation).*$', '', synopsis, flags=re.DOTALL).strip()
     synopsis = re.sub(r'\s*\(\s*Source:.*?\)\s*$', '', synopsis, flags=re.IGNORECASE).strip()
     
     return (synopsis, url) if synopsis else None
@@ -225,7 +223,8 @@ def fetch_synopsis_from_mydramalist(s, y):
 def fetch_image_from_mydramalist(s, y, sid):
     soup, page_url = get_soup_from_search(f'{s} {y}', "mydramalist.com");
     if not soup: return None
-    img = soup.select_one('.film-cover img[src], .cover img[src]')
+    # More robust selectors to find the main poster image
+    img = soup.select_one('.film-cover img[src], .cover img[src], div.cover img[src]')
     if not img: logd("Image tag not found on MyDramaList."); return None
     img_url = img['src']
     if download_and_save_image(img_url, os.path.join(IMAGES_DIR, f"{sid}.jpg")):
@@ -371,12 +370,18 @@ def excel_to_objects(excel, sheet, by_id, context):
         if not obj.get("showID") or not obj.get("showName"): continue
         obj["againWatchedDates"] = [ddmmyyyy(d) for d in row[again_idx:] if ddmmyyyy(d)]
         obj["showType"] = "Mini Drama" if "mini" in sheet.lower() else "Drama"
-        if obj.get("nativeLanguage", "").lower() in ("korean", "korea"): obj["country"] = "South Korea"
+        
+        # Add country based on native language
+        lang = obj.get("nativeLanguage", "").lower()
+        if lang in ("korean", "korea"):
+            obj["country"] = "South Korea"
+        elif lang in ("chinese", "china"):
+            obj["country"] = "China"
         
         source_links = {}
         if by_id.get(obj['showID']) is None:
             obj['updatedDetails'] = "First Time Uploaded"; obj['updatedOn'] = now_ist().strftime('%d %B %Y')
-            priority = SITE_PRIORITY_BY_LANGUAGE.get(obj.get('nativeLanguage','').lower(), SITE_PRIORITY_BY_LANGUAGE['default'])
+            priority = SITE_PRIORITY_BY_LANGUAGE.get(lang, SITE_PRIORITY_BY_LANGUAGE['default'])
             obj, source_links = fetch_and_populate_metadata(obj, priority, context)
         else:
             for field in LOCKED_FIELDS_AFTER_CREATION: obj[field] = by_id[obj['showID']].get(field)
@@ -472,6 +477,12 @@ def main():
     
     sheets_to_process = [s.strip() for s in os.environ.get("SHEETS", "Sheet1").split(';') if s.strip()]
     
+    # Map for correctly formatting the fetched fields in the report
+    fetched_display_map = {
+        "synopsis": "Synopsis", "image": "Image", "releaseDate": "Release Date",
+        "duration": "Duration", "otherNames": "Other Names"
+    }
+
     for sheet in sheets_to_process:
         try:
             report = context['report_data'].setdefault(sheet, {'created': [], 'updated': [], 'skipped': [], 'fetched_data': [], 'fetch_warnings': [], 'data_warnings': []})
@@ -485,14 +496,14 @@ def main():
                     save_metadata_backup(new_obj, context)
                     missing = []
                     if not new_obj.get('otherNames'): missing.append('Other Names')
-                    if not new_obj.get('showImage'): missing.append('Show Image')
+                    if not new_obj.get('showImage'): missing.append('Image')
                     if not new_obj.get('releaseDate'): missing.append('Release Date')
                     if not new_obj.get('synopsis'): missing.append('Synopsis')
                     if not new_obj.get('Duration'): missing.append('Duration')
                     
-                    fetched = [human_readable_field(k) for k,v in new_obj['sitePriorityUsed'].items() if v]
+                    fetched = sorted([fetched_display_map.get(k, k) for k,v in new_obj['sitePriorityUsed'].items() if v])
                     if fetched: report['fetched_data'].append(f"- {sid} - {new_obj['showName']} -> Fetched: {', '.join(fetched)}")
-                    if missing: report['fetch_warnings'].append(f"- {sid} - {new_obj['showName']} -> ⚠️ Missing: {', '.join(missing)}")
+                    if missing: report['fetch_warnings'].append(f"- {sid} - {new_obj['showName']} -> ⚠️ Missing: {', '.join(sorted(missing))}")
                 elif objects_differ(old_obj, new_obj):
                     changes = [human_readable_field(k) for k, v in new_obj.items() if k not in LOCKED_FIELDS_AFTER_CREATION and normalize_list(old_obj.get(k)) != normalize_list(v)]
                     if changes:
