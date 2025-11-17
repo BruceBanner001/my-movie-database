@@ -6,14 +6,14 @@
 #   It contains a completely rebuilt, landmark-validating search engine
 #   to guarantee the correct page is scraped every single time.
 #
-# Version: v16.5.0 (Final Gemini Battle-Hardened Patch)
+# Version: v16.6.0 (Final Gemini Root Cause Patch)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v16.5.0 (Final Gemini Battle-Hardened Patch)"
+SCRIPT_VERSION = "v16.6.0 (Final Gemini Root Cause Patch)"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames": [], "showImage": None,
@@ -89,10 +89,7 @@ def get_soup_from_search(query_base, site):
     logd(f"Initiating search for: {query_base} on {site}")
     if not HAVE_DDGS: logd("DDGS library not available."); return None, None
     
-    search_queries = [
-        f'"{query_base}" site:{site}',
-        f'"{query_base.split("(")[0].strip()}" site:{site}',
-    ]
+    search_queries = [ f'"{query_base}" site:{site}', f'"{query_base.split("(")[0].strip()}" site:{site}', ]
 
     for query in search_queries:
         logd(f"Executing search query: {query}")
@@ -110,12 +107,28 @@ def get_soup_from_search(query_base, site):
                     r = SCRAPER.get(url, timeout=20)
                     if r.status_code == 200:
                         soup = BeautifulSoup(r.text, "html.parser")
-                        if site == "asianwiki.com" and not soup.find('div', id='mw-content-text'):
-                            logd("Validation failed: AsianWiki landmark missing. Rejecting."); continue
-                        if site == "mydramalist.com" and not soup.find('div', class_='box-body'):
-                            logd("Validation failed: MyDramaList landmark missing. Rejecting."); continue
-                        logd("Landmark validation passed. This is the correct page.")
-                        return soup, url
+                        
+                        # --- NEW ROBUST LANDMARK VALIDATION ---
+                        is_valid = False
+                        if site == "asianwiki.com":
+                            # A real drama/movie page will have an infobox with "Network" or "Episodes".
+                            # An actor's page will not. This prevents false positives.
+                            infobox = soup.find('table', class_='infobox')
+                            if infobox and ('Network:' in infobox.get_text() or 'Episodes:' in infobox.get_text()):
+                                is_valid = True
+                            else:
+                                logd("Validation failed: AsianWiki page is not a drama/movie page. Rejecting.")
+                        elif site == "mydramalist.com":
+                            # This check remains effective for MDL.
+                            if soup.find('div', class_='box-body'):
+                                is_valid = True
+                            else:
+                                logd("Validation failed: MyDramaList landmark missing. Rejecting.")
+                        # --- END OF NEW VALIDATION ---
+                        
+                        if is_valid:
+                            logd("Landmark validation passed. This is the correct page.")
+                            return soup, url
                     else:
                         logd(f"HTTP Error {r.status_code} for {url}")
         except Exception as e:
