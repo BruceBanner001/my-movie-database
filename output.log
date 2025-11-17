@@ -6,35 +6,35 @@
   li_tag = soup.find('li', class_='list-item', text=re.compile(r"Also Known As:"))
 /home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:236: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
   b_tag = soup.find('b', text=re.compile(r"Also Known As:"))
-🚀 Running Script — Version v16.1.1 (Patched by Gemini) | Run ID: RUN_20251117_160759
+🚀 Running Script — Version v16.2.0 (Final Patch) | Run ID: RUN_20251117_162859
 [DEBUG] 'Deleting Records' sheet is empty. Nothing to delete.
-[DEBUG] Initiating search for: It's Okay to Not be Okay 2020 on asianwiki.com
-[DEBUG] Executing search query: "It's Okay to Not be Okay 2020" site:asianwiki.com
-[DEBUG] Found candidate URL: https://asianwiki.com/It's_Okay_to_Not_Be_Okay
+[DEBUG] Initiating search for: Find Me in Your Memory 2020 on asianwiki.com
+[DEBUG] Executing search query: "Find Me in Your Memory 2020" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Find_Me_in_Your_Memory
 [DEBUG] Landmark validation passed. This is the correct page.
 [DEBUG] Synopsis/Plot heading not found on AsianWiki.
-[DEBUG] Initiating search for: It's Okay to Not be Okay 2020 on mydramalist.com
-[DEBUG] Executing search query: "It's Okay to Not be Okay 2020" site:mydramalist.com
-[DEBUG] Found candidate URL: https://mydramalist.com/49865-psycho-but-it-s-okay
+[DEBUG] Initiating search for: Find Me in Your Memory 2020 on mydramalist.com
+[DEBUG] Executing search query: "Find Me in Your Memory 2020" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/50941-the-man-s-memory
 [DEBUG] Landmark validation passed. This is the correct page.
-[DEBUG] Initiating search for: It's Okay to Not be Okay 2020 on asianwiki.com
-[DEBUG] Executing search query: "It's Okay to Not be Okay 2020" site:asianwiki.com
-[DEBUG] Found candidate URL: https://asianwiki.com/It's_Okay_to_Not_Be_Okay
+[DEBUG] Initiating search for: Find Me in Your Memory 2020 on asianwiki.com
+[DEBUG] Executing search query: "Find Me in Your Memory 2020" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Find_Me_in_Your_Memory
 [DEBUG] Landmark validation passed. This is the correct page.
-[DEBUG] Downloading high-quality image from: https://asianwiki.com/images/d/d5/It%27s_Okay_to_Not_Be_Okay-CPsm1.jpg
-[DEBUG] Image saved to images/102.jpg
-[DEBUG] Initiating search for: It's Okay to Not be Okay 2020 on mydramalist.com
-[DEBUG] Executing search query: "It's Okay to Not be Okay 2020" site:mydramalist.com
-[DEBUG] Found candidate URL: https://mydramalist.com/49865-psycho-but-it-s-okay
+[DEBUG] Downloading high-quality image from: https://asianwiki.com/images/e/e0/Find_Me_in_Your_Memory-P2.jpg
+[DEBUG] Image saved to images/103.jpg
+[DEBUG] Initiating search for: Find Me in Your Memory 2020 on mydramalist.com
+[DEBUG] Executing search query: "Find Me in Your Memory 2020" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/50941-the-man-s-memory
 [DEBUG] Landmark validation passed. This is the correct page.
-[DEBUG] Initiating search for: It's Okay to Not be Okay 2020 on mydramalist.com
-[DEBUG] Executing search query: "It's Okay to Not be Okay 2020" site:mydramalist.com
-[DEBUG] Found candidate URL: https://mydramalist.com/49865-psycho-but-it-s-okay
+[DEBUG] Initiating search for: Find Me in Your Memory 2020 on mydramalist.com
+[DEBUG] Executing search query: "Find Me in Your Memory 2020" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/50941-the-man-s-memory/statistics
 [DEBUG] Landmark validation passed. This is the correct page.
-[DEBUG] Initiating search for: It's Okay to Not be Okay 2020 on mydramalist.com
-[DEBUG] Executing search query: "It's Okay to Not be Okay 2020" site:mydramalist.com
-[DEBUG] Found candidate URL: https://mydramalist.com/49865-psycho-but-it-s-okay
+[DEBUG] Initiating search for: Find Me in Your Memory 2020 on mydramalist.com
+[DEBUG] Executing search query: "Find Me in Your Memory 2020" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/50941-the-man-s-memory
 [DEBUG] Landmark validation passed. This is the correct page.
-✅ Report written -> reports/Report_17_November_2025_1608.txt
+✅ Report written -> reports/Report_17_November_2025_1629.txt
 
 All done.
