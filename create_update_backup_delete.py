@@ -6,14 +6,14 @@
 #   It contains a completely rebuilt, landmark-validating search engine
 #   to guarantee the correct page is scraped every single time.
 #
-# Version: v16.2.0 (Final Patch)
+# Version: v16.3.0 (Final Gemini Durability Patch)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v16.2.0 (Final Patch)"
+SCRIPT_VERSION = "v16.3.0 (Final Gemini Durability Patch)"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames": [], "showImage": None,
@@ -148,12 +148,16 @@ def fetch_synopsis_from_asianwiki(s, y):
         logd("Synopsis/Plot heading not found on AsianWiki.")
         return None
     
-    synopsis_parts = []
+    paragraphs = []
     for sibling in h2.find_next_siblings():
-        if sibling.name == 'h2': break
-        if sibling.name == 'p': synopsis_parts.append(sibling.get_text(strip=True))
+        # Stop if we hit the next section's header
+        if sibling.name == 'h2':
+            break
+        # Collect text from paragraph tags
+        if sibling.name == 'p':
+            paragraphs.append(sibling.get_text(strip=True))
     
-    synopsis = " ".join(synopsis_parts)
+    synopsis = "\n\n".join(paragraphs)
     return (synopsis, url) if synopsis else None
 
 def fetch_image_from_asianwiki(s, y, sid):
@@ -207,14 +211,15 @@ def fetch_synopsis_from_mydramalist(s, y):
         logd("Synopsis element not found on MyDramaList.")
         return None
     
-    # Remove "read more" links or other unwanted elements specifically
-    for tag in synopsis_div.find_all(['span', 'a']):
-        if "read more" in tag.get_text(strip=True).lower():
-            tag.decompose()
-
-    synopsis = synopsis_div.get_text(strip=True)
-    # Clean up common artifacts
+    # Use separator to preserve paragraph breaks.
+    synopsis = synopsis_div.get_text(separator='\n\n', strip=True)
+    
+    # Aggressively clean junk from the end of the synopsis.
+    # This regex finds "(Source:...)Edit Translation..." and removes it.
+    synopsis = re.sub(r'\(Source:.*?\).*?Edit Translation.*$', '', synopsis, flags=re.DOTALL).strip()
+    # A second pass to clean any orphaned source tags.
     synopsis = re.sub(r'\s*\(\s*Source:.*?\)\s*$', '', synopsis, flags=re.IGNORECASE).strip()
+    
     return (synopsis, url) if synopsis else None
 
 def fetch_image_from_mydramalist(s, y, sid):
