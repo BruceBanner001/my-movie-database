@@ -1,108 +1,230 @@
-/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:275: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
-  li_tag = soup.find('li', class_='list-item', text=re.compile(r"Duration:"))
-/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:277: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
-  b_tag = soup.find('b', text=re.compile(r"Duration:"))
-/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:254: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
-  li_tag = soup.find('li', class_='list-item', text=re.compile(r"Also Known As:"))
-/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:256: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
-  b_tag = soup.find('b', text=re.compile(r"Also Known As:"))
-🚀 Running Script — Version v16.6.0 (Final Gemini Root Cause Patch) | Run ID: RUN_20251117_190127
+🚀 Running Script — Version v16.7.0 (Final Gemini Core Engine Patch) | Run ID: RUN_20251117_191609
 [DEBUG] 'Deleting Records' sheet is empty. Nothing to delete.
-[DEBUG] Initiating search for: Again My Life 2022 on asianwiki.com
-[DEBUG] Executing search query: "Again My Life 2022" site:asianwiki.com
-[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/teaser-trailer-for-sbs-drama-again-my-life
+[DEBUG] Initiating search for: Fight for My Way 2017 on asianwiki.com
+[DEBUG] Executing search query: "Fight for My Way 2017" site:asianwiki.com
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/first-script-reading-for-kbs2-drama-series-fight-for-my-way
 [DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
-[DEBUG] Found candidate URL: https://asianwiki.com/Lee_Joon-Gi
+[DEBUG] Found candidate URL: https://asianwiki.com/index.php?title=Fight_for_My_Way
 [DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
-[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Jae-Kyung
+[DEBUG] Found candidate URL: https://asianwiki.com/Ahn_Jae-Hong_(1986)
 [DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
-[DEBUG] Found candidate URL: https://asianwiki.com/Again_My_life
+[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Sung-Oh_(1978)
 [DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
-[DEBUG] Found candidate URL: https://asianwiki.com/index.php?title=Lee_Joon-Gi
+[DEBUG] Found candidate URL: https://asianwiki.com/Song_Ha-Yoon
 [DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
-[DEBUG] Executing search query: "Again My Life 2022" site:asianwiki.com
-[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/teaser-trailer-for-sbs-drama-again-my-life
+[DEBUG] Found candidate URL: https://asianwiki.com/Fight_for_My_Way
 [DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
-[DEBUG] Found candidate URL: https://asianwiki.com/Lee_Joon-Gi
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:2017_Drama_Series
 [DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
-[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Jae-Kyung
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:2017_South_Korean_Drama_Series
 [DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
-[DEBUG] Found candidate URL: https://asianwiki.com/Again_My_life
+[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Dong-Hwi_(director)
 [DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
-[DEBUG] Found candidate URL: https://asianwiki.com/index.php?title=Lee_Joon-Gi
+[DEBUG] Found candidate URL: https://asianwiki.com/Hwang_Sun-Hwa
 [DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
-[DEBUG] All search attempts failed.
-[DEBUG] Initiating search for: Again My Life 2022 on mydramalist.com
-[DEBUG] Executing search query: "Again My Life 2022" site:mydramalist.com
-[DEBUG] Found candidate URL: https://mydramalist.com/692043-again-my-life
-[DEBUG] Landmark validation passed. This is the correct page.
-[DEBUG] Initiating search for: Again My Life 2022 on asianwiki.com
-[DEBUG] Executing search query: "Again My Life 2022" site:asianwiki.com
-[DEBUG] Found candidate URL: https://asianwiki.com/Choi_Sang
+[DEBUG] Executing search query: "Fight for My Way 2017" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Song_Ha-Yoon
 [DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
-[DEBUG] Found candidate URL: https://asianwiki.com/Again_My_Life
+[DEBUG] Found candidate URL: https://asianwiki.com/Choi_Woo-Sik
 [DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
-[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/teaser-trailer-for-sbs-drama-again-my-life
+[DEBUG] Found candidate URL: https://asianwiki.com/Fight_for_My_Way
 [DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
-[DEBUG] Found candidate URL: https://asianwiki.com/Heo_Hyeon-Do
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/first-script-reading-for-kbs2-drama-series-fight-for-my-way
 [DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
-[DEBUG] Found candidate URL: https://asianwiki.com/Lee_Joon-Gi
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:2017_Drama_Series
 [DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
-[DEBUG] Executing search query: "Again My Life 2022" site:asianwiki.com
-[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/teaser-trailer-for-sbs-drama-again-my-life
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:2017_South_Korean_Drama_Series
 [DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
-[DEBUG] Found candidate URL: https://asianwiki.com/Lee_Joon-Gi
+[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Dong-Hwi_(director)
 [DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
-[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Jae-Kyung
+[DEBUG] Found candidate URL: https://asianwiki.com/Hwang_Sun-Hwa
 [DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
-[DEBUG] Found candidate URL: https://asianwiki.com/Again_My_life
+[DEBUG] Found candidate URL: https://asianwiki.com/Kwon_Soon-Joon
 [DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
-[DEBUG] Found candidate URL: https://asianwiki.com/index.php?title=Lee_Joon-Gi
+[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Sung-Bum
 [DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
-[DEBUG] All search attempts failed.
-[DEBUG] Initiating search for: Again My Life 2022 on mydramalist.com
-[DEBUG] Executing search query: "Again My Life 2022" site:mydramalist.com
-[DEBUG] Found candidate URL: https://pt.mydramalist.com/692043-again-my-life
-[DEBUG] Landmark validation passed. This is the correct page.
-[DEBUG] Downloading high-quality image from: https://i.mydramalist.com/XDKww_4c.jpg?v=1
-[DEBUG] Image saved to images/107.jpg
-[DEBUG] Initiating search for: Again My Life 2022 on mydramalist.com
-[DEBUG] Executing search query: "Again My Life 2022" site:mydramalist.com
-[DEBUG] Found candidate URL: https://pt.mydramalist.com/692043-again-my-life
-[DEBUG] Landmark validation passed. This is the correct page.
-[DEBUG] 'Aired:' field not found on MyDramaList.
-[DEBUG] Initiating search for: Again My Life 2022 on asianwiki.com
-[DEBUG] Executing search query: "Again My Life 2022" site:asianwiki.com
-[DEBUG] Found candidate URL: https://asianwiki.com/Choi_Sang
+[DEBUG] Executing search query: "Fight for My Way 2017 drama" site:asianwiki.com
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/first-script-reading-for-kbs2-drama-series-fight-for-my-way
 [DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
-[DEBUG] Found candidate URL: https://asianwiki.com/Again_My_Life
+[DEBUG] Found candidate URL: https://asianwiki.com/Fight_for_My_Way
 [DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
-[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/teaser-trailer-for-sbs-drama-again-my-life
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:2017_South_Korean_Drama_Series
 [DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
-[DEBUG] Found candidate URL: https://asianwiki.com/Heo_Hyeon-Do
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/first-still-image-from-kbs2-drama-series-fight-for-my-way
 [DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
-[DEBUG] Found candidate URL: https://asianwiki.com/Lee_Joon-Gi
+[DEBUG] Found candidate URL: https://asianwiki.com/Kwon_Soon-Joon
 [DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
-[DEBUG] Executing search query: "Again My Life 2022" site:asianwiki.com
-[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/teaser-trailer-for-sbs-drama-again-my-life
+[DEBUG] Found candidate URL: https://asianwiki.com/Hwang_Sun-Hwa
 [DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
-[DEBUG] Found candidate URL: https://asianwiki.com/Lee_Joon-Gi
+[DEBUG] Found candidate URL: https://asianwiki.com/Song_Ha-Yoon
 [DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
-[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Jae-Kyung
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:2017_Drama_Series
 [DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
-[DEBUG] Found candidate URL: https://asianwiki.com/Again_My_life
+[DEBUG] Found candidate URL: https://asianwiki.com/2017_(1st)_The_Seoul_Awards
 [DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
-[DEBUG] Found candidate URL: https://asianwiki.com/index.php?title=Lee_Joon-Gi
+[DEBUG] Found candidate URL: https://asianwiki.com/2017_(10th)_Korea_Drama_Awards
 [DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
 [DEBUG] All search attempts failed.
-[DEBUG] Initiating search for: Again My Life 2022 on mydramalist.com
-[DEBUG] Executing search query: "Again My Life 2022" site:mydramalist.com
-[DEBUG] Found candidate URL: https://mydramalist.com/692043-again-my-life
+[DEBUG] Initiating search for: Fight for My Way 2017 on mydramalist.com
+[DEBUG] Executing search query: "Fight for My Way 2017" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/22472-fight-for-my-way
 [DEBUG] Landmark validation passed. This is the correct page.
-[DEBUG] Initiating search for: Again My Life 2022 on mydramalist.com
-[DEBUG] Executing search query: "Again My Life 2022" site:mydramalist.com
-[DEBUG] Found candidate URL: https://mydramalist.com/692043-again-my-life
+[DEBUG] Initiating search for: Fight for My Way 2017 on asianwiki.com
+[DEBUG] Executing search query: "Fight for My Way 2017" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Song_Ha-Yoon
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Fight_for_My_Way
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/first-script-reading-for-kbs2-drama-series-fight-for-my-way
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:2017_Drama_Series
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:2017_South_Korean_Drama_Series
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Dong-Hwi_(director)
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Hwang_Sun-Hwa
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Kwon_Soon-Joon
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Sung-Bum
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Hwang_Bo-Mi_(1989)
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Executing search query: "Fight for My Way 2017" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Song_Ha-Yoon
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/first-script-reading-for-kbs2-drama-series-fight-for-my-way
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Choi_Woo-Sik
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/index.php?title=Fight_for_My_Way
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Ahn_Jae-Hong_(1986)
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Sung-Oh_(1978)
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Fight_for_My_Way
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:2017_Drama_Series
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:2017_South_Korean_Drama_Series
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Dong-Hwi_(director)
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Executing search query: "Fight for My Way 2017 drama" site:asianwiki.com
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/first-script-reading-for-kbs2-drama-series-fight-for-my-way
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Fight_for_My_Way
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:2017_South_Korean_Drama_Series
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/first-still-image-from-kbs2-drama-series-fight-for-my-way
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Kwon_Soon-Joon
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Hwang_Sun-Hwa
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Song_Ha-Yoon
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:2017_Drama_Series
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/2017_(1st)_The_Seoul_Awards
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/2017_(10th)_Korea_Drama_Awards
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] All search attempts failed.
+[DEBUG] Initiating search for: Fight for My Way 2017 on mydramalist.com
+[DEBUG] Executing search query: "Fight for My Way 2017" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/22472-fight-for-my-way
 [DEBUG] Landmark validation passed. This is the correct page.
-✅ Report written -> reports/Report_17_November_2025_1902.txt
+[DEBUG] Downloading high-quality image from: https://i.mydramalist.com/nv0kQc.jpg?v=1
+[DEBUG] Image saved to images/108.jpg
+[DEBUG] Initiating search for: Fight for My Way 2017 on asianwiki.com
+[DEBUG] Executing search query: "Fight for My Way 2017" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Song_Ha-Yoon
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Fight_for_My_Way
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/first-script-reading-for-kbs2-drama-series-fight-for-my-way
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:2017_Drama_Series
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:2017_South_Korean_Drama_Series
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Dong-Hwi_(director)
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Hwang_Sun-Hwa
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Kwon_Soon-Joon
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Sung-Bum
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Hwang_Bo-Mi_(1989)
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Executing search query: "Fight for My Way 2017" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Song_Ha-Yoon
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Choi_Woo-Sik
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Fight_for_My_Way
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/first-script-reading-for-kbs2-drama-series-fight-for-my-way
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:2017_Drama_Series
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:2017_South_Korean_Drama_Series
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Dong-Hwi_(director)
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Hwang_Sun-Hwa
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Kwon_Soon-Joon
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Sung-Bum
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Executing search query: "Fight for My Way 2017 drama" site:asianwiki.com
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/first-script-reading-for-kbs2-drama-series-fight-for-my-way
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Fight_for_My_Way
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:2017_South_Korean_Drama_Series
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/first-still-image-from-kbs2-drama-series-fight-for-my-way
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Kwon_Soon-Joon
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Hwang_Sun-Hwa
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Song_Ha-Yoon
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:2017_Drama_Series
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/2017_(1st)_The_Seoul_Awards
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/2017_(10th)_Korea_Drama_Awards
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] All search attempts failed.
+[DEBUG] Initiating search for: Fight for My Way 2017 on mydramalist.com
+[DEBUG] Executing search query: "Fight for My Way 2017" site:mydramalist.com/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:286: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
+  b_tag = soup.find('b', text=re.compile(r"Aired:"))
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:272: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
+  b_tag = soup.find('b', text=re.compile(r"Duration:"))
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:252: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
+  li_tag = soup.find('li', class_='list-item', text=re.compile(r"Also Known As:"))
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:254: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
+  b_tag = soup.find('b', text=re.compile(r"Also Known As:"))
+
+[DEBUG] Found candidate URL: https://mydramalist.com/22472-fight-for-my-way
+[DEBUG] Landmark validation passed. This is the correct page.
+[DEBUG] Initiating search for: Fight for My Way 2017 on mydramalist.com
+[DEBUG] Executing search query: "Fight for My Way 2017" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/22472-fight-for-my-way
+[DEBUG] Landmark validation passed. This is the correct page.
+[DEBUG] Initiating search for: Fight for My Way 2017 on mydramalist.com
+[DEBUG] Executing search query: "Fight for My Way 2017" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/22472-fight-for-my-way
+[DEBUG] Landmark validation passed. This is the correct page.
+✅ Report written -> reports/Report_17_November_2025_1917.txt
 
 All done.
