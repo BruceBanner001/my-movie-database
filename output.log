@@ -1,40 +1,40 @@
-/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:255: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:260: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
   li_tag = soup.find('li', class_='list-item', text=re.compile(r"Duration:"))
-/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:257: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:262: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
   b_tag = soup.find('b', text=re.compile(r"Duration:"))
-/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:234: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:239: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
   li_tag = soup.find('li', class_='list-item', text=re.compile(r"Also Known As:"))
-/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:236: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:241: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
   b_tag = soup.find('b', text=re.compile(r"Also Known As:"))
-🚀 Running Script — Version v16.2.0 (Final Patch) | Run ID: RUN_20251117_162859
+🚀 Running Script — Version v16.3.0 (Final Gemini Durability Patch) | Run ID: RUN_20251117_165022
 [DEBUG] 'Deleting Records' sheet is empty. Nothing to delete.
-[DEBUG] Initiating search for: Find Me in Your Memory 2020 on asianwiki.com
-[DEBUG] Executing search query: "Find Me in Your Memory 2020" site:asianwiki.com
-[DEBUG] Found candidate URL: https://asianwiki.com/Find_Me_in_Your_Memory
+[DEBUG] Initiating search for: Our Glamorous Time 2018 on mydramalist.com
+[DEBUG] Executing search query: "Our Glamorous Time 2018" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/24203-our-glamorous-times
 [DEBUG] Landmark validation passed. This is the correct page.
-[DEBUG] Synopsis/Plot heading not found on AsianWiki.
-[DEBUG] Initiating search for: Find Me in Your Memory 2020 on mydramalist.com
-[DEBUG] Executing search query: "Find Me in Your Memory 2020" site:mydramalist.com
-[DEBUG] Found candidate URL: https://mydramalist.com/50941-the-man-s-memory
+[DEBUG] Initiating search for: Our Glamorous Time 2018 on mydramalist.com
+[DEBUG] Executing search query: "Our Glamorous Time 2018" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/profile/tarrysmile2121/review/255157
 [DEBUG] Landmark validation passed. This is the correct page.
-[DEBUG] Initiating search for: Find Me in Your Memory 2020 on asianwiki.com
-[DEBUG] Executing search query: "Find Me in Your Memory 2020" site:asianwiki.com
-[DEBUG] Found candidate URL: https://asianwiki.com/Find_Me_in_Your_Memory
+[DEBUG] Image tag not found on MyDramaList.
+[DEBUG] Initiating search for: Our Glamorous Time 2018 on asianwiki.com
+[DEBUG] Executing search query: "Our Glamorous Time 2018" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Our_Golden_Days
 [DEBUG] Landmark validation passed. This is the correct page.
-[DEBUG] Downloading high-quality image from: https://asianwiki.com/images/e/e0/Find_Me_in_Your_Memory-P2.jpg
-[DEBUG] Image saved to images/103.jpg
-[DEBUG] Initiating search for: Find Me in Your Memory 2020 on mydramalist.com
-[DEBUG] Executing search query: "Find Me in Your Memory 2020" site:mydramalist.com
-[DEBUG] Found candidate URL: https://mydramalist.com/50941-the-man-s-memory
+[DEBUG] Downloading high-quality image from: https://asianwiki.com/images/7/72/Our_Golden_Days-p1.jpg
+[DEBUG] Image saved to images/104.jpg
+[DEBUG] Initiating search for: Our Glamorous Time 2018 on mydramalist.com
+[DEBUG] Executing search query: "Our Glamorous Time 2018" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/24203-our-glamorous-times
 [DEBUG] Landmark validation passed. This is the correct page.
-[DEBUG] Initiating search for: Find Me in Your Memory 2020 on mydramalist.com
-[DEBUG] Executing search query: "Find Me in Your Memory 2020" site:mydramalist.com
-[DEBUG] Found candidate URL: https://mydramalist.com/50941-the-man-s-memory/statistics
+[DEBUG] Initiating search for: Our Glamorous Time 2018 on mydramalist.com
+[DEBUG] Executing search query: "Our Glamorous Time 2018" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/24203-our-glamorous-times
 [DEBUG] Landmark validation passed. This is the correct page.
-[DEBUG] Initiating search for: Find Me in Your Memory 2020 on mydramalist.com
-[DEBUG] Executing search query: "Find Me in Your Memory 2020" site:mydramalist.com
-[DEBUG] Found candidate URL: https://mydramalist.com/50941-the-man-s-memory
+[DEBUG] Initiating search for: Our Glamorous Time 2018 on mydramalist.com
+[DEBUG] Executing search query: "Our Glamorous Time 2018" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/24203-our-glamorous-times
 [DEBUG] Landmark validation passed. This is the correct page.
-✅ Report written -> reports/Report_17_November_2025_1629.txt
+✅ Report written -> reports/Report_17_November_2025_1650.txt
 
 All done.
