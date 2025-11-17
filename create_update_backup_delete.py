@@ -6,14 +6,14 @@
 #   It contains a completely rebuilt, landmark-validating search engine
 #   to guarantee the correct page is scraped every single time.
 #
-# Version: v16.6.0 (Final Gemini Root Cause Patch)
+# Version: v16.7.0 (Final Gemini Core Engine Patch)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v16.6.0 (Final Gemini Root Cause Patch)"
+SCRIPT_VERSION = "v16.7.0 (Final Gemini Core Engine Patch)"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames": [], "showImage": None,
@@ -27,7 +27,7 @@ JSON_OBJECT_TEMPLATE = {
 }
 
 SITE_PRIORITY_BY_LANGUAGE = {
-    "korean": { "synopsis": "asianwiki", "image": "asianwiki", "otherNames": "mydramalist", "duration": "mydramalist", "releaseDate": "mydramalist" },
+    "korean": { "synopsis": "asianwiki", "image": "asianwiki", "otherNames": "mydramalist", "duration": "mydramalist", "releaseDate": "asianwiki" },
     "chinese": { "synopsis": "mydramalist", "image": "mydramalist", "otherNames": "mydramalist", "duration": "mydramalist", "releaseDate": "mydramalist" },
     "japanese": { "synopsis": "asianwiki", "image": "asianwiki", "otherNames": "mydramalist", "duration": "mydramalist", "releaseDate": "asianwiki" },
     "thai": { "synopsis": "mydramalist", "image": "asianwiki", "otherNames": "mydramalist", "duration": "mydramalist", "releaseDate": "mydramalist" },
@@ -89,14 +89,20 @@ def get_soup_from_search(query_base, site):
     logd(f"Initiating search for: {query_base} on {site}")
     if not HAVE_DDGS: logd("DDGS library not available."); return None, None
     
-    search_queries = [ f'"{query_base}" site:{site}', f'"{query_base.split("(")[0].strip()}" site:{site}', ]
+    clean_query = query_base.split("(")[0].strip()
+    search_queries = [
+        f'"{query_base}" site:{site}',
+        f'"{clean_query}" site:{site}',
+        f'"{clean_query} drama" site:{site}' # New aggressive search query
+    ]
 
     for query in search_queries:
         logd(f"Executing search query: {query}")
         try:
             time.sleep(3)
             with DDGS() as dd:
-                results = list(dd.text(query, max_results=5))
+                # Increased result count to improve chances of finding the right page
+                results = list(dd.text(query, max_results=10))
                 if not results: continue
 
                 for res in results:
@@ -108,23 +114,18 @@ def get_soup_from_search(query_base, site):
                     if r.status_code == 200:
                         soup = BeautifulSoup(r.text, "html.parser")
                         
-                        # --- NEW ROBUST LANDMARK VALIDATION ---
                         is_valid = False
                         if site == "asianwiki.com":
-                            # A real drama/movie page will have an infobox with "Network" or "Episodes".
-                            # An actor's page will not. This prevents false positives.
                             infobox = soup.find('table', class_='infobox')
                             if infobox and ('Network:' in infobox.get_text() or 'Episodes:' in infobox.get_text()):
                                 is_valid = True
                             else:
                                 logd("Validation failed: AsianWiki page is not a drama/movie page. Rejecting.")
                         elif site == "mydramalist.com":
-                            # This check remains effective for MDL.
                             if soup.find('div', class_='box-body'):
                                 is_valid = True
                             else:
                                 logd("Validation failed: MyDramaList landmark missing. Rejecting.")
-                        # --- END OF NEW VALIDATION ---
                         
                         if is_valid:
                             logd("Landmark validation passed. This is the correct page.")
@@ -161,12 +162,10 @@ def fetch_synopsis_from_asianwiki(s, y):
         logd("Synopsis/Plot heading not found on AsianWiki.")
         return None
     
-    # Robustly collect all text between the synopsis heading and the next heading.
     content = []
     for sibling in h2.find_next_siblings():
         if sibling.name == 'h2':
             break
-        # Skip NavigableString objects that are only whitespace
         if isinstance(sibling, NavigableString) and sibling.strip():
             content.append(sibling.strip())
         elif sibling.name == 'p':
@@ -196,11 +195,9 @@ def fetch_othernames_from_asianwiki(s, y):
     
     if p_tag:
         full_text = p_tag.get_text(strip=True)
-        # Extract text between the first colon and the first opening parenthesis of "Revised romanization" or similar
         match = re.search(r':(.*?)(?=\(Revised romanization:|\(literal title\))', full_text, re.DOTALL)
         if match:
             names_text = match.group(1).strip()
-            # Split by "/" and clean up each part
             other_names = [name.strip() for name in names_text.split('/') if name.strip()]
             if other_names:
                 return (other_names, url)
@@ -210,12 +207,16 @@ def fetch_othernames_from_asianwiki(s, y):
 def fetch_duration_from_asianwiki(s, y): return None
 
 def fetch_release_date_from_asianwiki(s, y):
-    soup, url = get_soup_from_search(f'{s} {y}', "asianwiki.com");
+    soup, url = get_soup_from_search(f'{s} {y}', "asianwiki.com")
     if not soup: return None
-    for b in soup.find_all('b'):
-        if 'Release Date:' in b.get_text():
-            release_text = b.next_sibling
-            if release_text and isinstance(release_text, NavigableString): return (release_text.strip(), url)
+    # This logic is more robust than just checking next_sibling
+    b_tag = soup.find('b', text=re.compile(r"Release Date:"))
+    if b_tag:
+        parent = b_tag.parent
+        b_tag.decompose()
+        release_text = parent.get_text(strip=True)
+        if release_text:
+            return (release_text, url)
     logd("'Release Date:' field not found on AsianWiki."); return None
 
 def fetch_synopsis_from_mydramalist(s, y):
@@ -226,10 +227,8 @@ def fetch_synopsis_from_mydramalist(s, y):
         logd("Synopsis element not found on MyDramaList.")
         return None
     
-    # Use separator to preserve paragraph breaks.
     synopsis = synopsis_div.get_text(separator='\n\n', strip=True)
     
-    # Final cleaning pass for all known junk text patterns.
     synopsis = re.sub(r'^Remove ads\n\n', '', synopsis, flags=re.IGNORECASE)
     synopsis = re.sub(r'(~~.*?~~|Edit Translation).*$', '', synopsis, flags=re.DOTALL).strip()
     synopsis = re.sub(r'\s*\(\s*Source:.*?\)\s*$', '', synopsis, flags=re.IGNORECASE).strip()
@@ -239,7 +238,6 @@ def fetch_synopsis_from_mydramalist(s, y):
 def fetch_image_from_mydramalist(s, y, sid):
     soup, page_url = get_soup_from_search(f'{s} {y}', "mydramalist.com");
     if not soup: return None
-    # More robust selectors to find the main poster image
     img = soup.select_one('.film-cover img[src], .cover img[src], div.cover img[src]')
     if not img: logd("Image tag not found on MyDramaList."); return None
     img_url = img['src']
@@ -261,7 +259,6 @@ def fetch_othernames_from_mydramalist(s, y):
         if b_tag: b_tag.decompose()
         
         names_text = li_tag.get_text(strip=True)
-        # Split by comma, then strip whitespace from each item. This is more robust.
         other_names = [name.strip() for name in names_text.split(',') if name.strip()]
         if other_names:
             return (other_names, url)
@@ -272,15 +269,11 @@ def fetch_duration_from_mydramalist(s, y):
     soup, url = get_soup_from_search(f'{s} {y}', "mydramalist.com");
     if not soup: return None
     
-    li_tag = soup.find('li', class_='list-item', text=re.compile(r"Duration:"))
-    if not li_tag:
-        b_tag = soup.find('b', text=re.compile(r"Duration:"))
-        if b_tag: li_tag = b_tag.find_parent('li')
-
-    if li_tag:
-        duration_text = li_tag.get_text(strip=True).replace('Duration:', '').strip()
-        
-        # Only add an 's' to 'min.' if 'hr' is NOT present in the string.
+    b_tag = soup.find('b', text=re.compile(r"Duration:"))
+    if b_tag:
+        li_tag = b_tag.find_parent('li')
+        b_tag.decompose()
+        duration_text = li_tag.get_text(strip=True)
         if "hr" not in duration_text and duration_text.endswith(" min."):
             duration_text = duration_text.replace(" min.", " mins")
         return (duration_text, url)
@@ -288,11 +281,16 @@ def fetch_duration_from_mydramalist(s, y):
     logd("'Duration:' field not found on MyDramaList."); return None
 
 def fetch_release_date_from_mydramalist(s, y):
-    soup, url = get_soup_from_search(f'{s} {y}', "mydramalist.com");
+    soup, url = get_soup_from_search(f'{s} {y}', "mydramalist.com")
     if not soup: return None
-    li = soup.find(lambda t: 'Aired:' in t.get_text() and t.name == 'li');
-    if not li: logd("'Aired:' field not found on MyDramaList."); return None
-    return (li.get_text().replace('Aired:', '').strip(), url)
+    b_tag = soup.find('b', text=re.compile(r"Aired:"))
+    if b_tag:
+        li_tag = b_tag.find_parent('li')
+        b_tag.decompose()
+        release_text = li_tag.get_text(strip=True)
+        if release_text:
+            return (release_text, url)
+    logd("'Aired:' field not found on MyDramaList."); return None
 
 FETCH_MAP = {'asianwiki': {'synopsis': fetch_synopsis_from_asianwiki, 'image': fetch_image_from_asianwiki, 'otherNames': fetch_othernames_from_asianwiki, 'duration': fetch_duration_from_asianwiki, 'releaseDate': fetch_release_date_from_asianwiki}, 'mydramalist': {'synopsis': fetch_synopsis_from_mydramalist, 'image': fetch_image_from_mydramalist, 'otherNames': fetch_othernames_from_mydramalist, 'duration': fetch_duration_from_mydramalist, 'releaseDate': fetch_release_date_from_mydramalist}}
 def fetch_and_populate_metadata(obj, site_priority, context):
@@ -387,7 +385,6 @@ def excel_to_objects(excel, sheet, by_id, context):
         obj["againWatchedDates"] = [ddmmyyyy(d) for d in row[again_idx:] if ddmmyyyy(d)]
         obj["showType"] = "Mini Drama" if "mini" in sheet.lower() else "Drama"
         
-        # Add country based on native language
         lang = obj.get("nativeLanguage", "").lower()
         if lang in ("korean", "korea"):
             obj["country"] = "South Korea"
@@ -493,7 +490,6 @@ def main():
     
     sheets_to_process = [s.strip() for s in os.environ.get("SHEETS", "Sheet1").split(';') if s.strip()]
     
-    # Map for correctly formatting the fetched fields in the report
     fetched_display_map = {
         "synopsis": "Synopsis", "image": "Image", "releaseDate": "Release Date",
         "duration": "Duration", "otherNames": "Other Names"
