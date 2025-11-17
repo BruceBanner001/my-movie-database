@@ -1,33 +1,40 @@
-🚀 Running Script — Version v16.0.0 (Definitive Fix: The v16 Engine - Final Stand) | Run ID: RUN_20251117_154024
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:255: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
+  li_tag = soup.find('li', class_='list-item', text=re.compile(r"Duration:"))
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:257: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
+  b_tag = soup.find('b', text=re.compile(r"Duration:"))
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:234: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
+  li_tag = soup.find('li', class_='list-item', text=re.compile(r"Also Known As:"))
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:236: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
+  b_tag = soup.find('b', text=re.compile(r"Also Known As:"))
+🚀 Running Script — Version v16.1.1 (Patched by Gemini) | Run ID: RUN_20251117_160759
 [DEBUG] 'Deleting Records' sheet is empty. Nothing to delete.
-[DEBUG] Initiating search for: It's Okay That's Love 2014 on asianwiki.com
-[DEBUG] Executing search query: "It's Okay That's Love 2014" site:asianwiki.com
-[DEBUG] Found candidate URL: https://asianwiki.com/It's_Alright,_This_Is_Love
+[DEBUG] Initiating search for: It's Okay to Not be Okay 2020 on asianwiki.com
+[DEBUG] Executing search query: "It's Okay to Not be Okay 2020" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/It's_Okay_to_Not_Be_Okay
 [DEBUG] Landmark validation passed. This is the correct page.
 [DEBUG] Synopsis/Plot heading not found on AsianWiki.
-[DEBUG] Initiating search for: It's Okay That's Love 2014 on mydramalist.com
-[DEBUG] Executing search query: "It's Okay That's Love 2014" site:mydramalist.com
-[DEBUG] Found candidate URL: https://mydramalist.com/9289-its-okay-thats-love
+[DEBUG] Initiating search for: It's Okay to Not be Okay 2020 on mydramalist.com
+[DEBUG] Executing search query: "It's Okay to Not be Okay 2020" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/49865-psycho-but-it-s-okay
 [DEBUG] Landmark validation passed. This is the correct page.
-[DEBUG] Initiating search for: It's Okay That's Love 2014 on asianwiki.com
-[DEBUG] Executing search query: "It's Okay That's Love 2014" site:asianwiki.com
-[DEBUG] Found candidate URL: https://asianwiki.com/It's_Alright,_This_Is_Love
+[DEBUG] Initiating search for: It's Okay to Not be Okay 2020 on asianwiki.com
+[DEBUG] Executing search query: "It's Okay to Not be Okay 2020" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/It's_Okay_to_Not_Be_Okay
 [DEBUG] Landmark validation passed. This is the correct page.
-[DEBUG] Downloading high-quality image from: https://asianwiki.com/images/5/53/It%27s_Okay%2C_That%27s_Love-p3.jpg
-[DEBUG] Image saved to images/101.jpg
-[DEBUG] Initiating search for: It's Okay That's Love 2014 on mydramalist.com
-[DEBUG] Executing search query: "It's Okay That's Love 2014" site:mydramalist.com
-[DEBUG] Found candidate URL: https://mydramalist.com/9289-its-okay-thats-love
+[DEBUG] Downloading high-quality image from: https://asianwiki.com/images/d/d5/It%27s_Okay_to_Not_Be_Okay-CPsm1.jpg
+[DEBUG] Image saved to images/102.jpg
+[DEBUG] Initiating search for: It's Okay to Not be Okay 2020 on mydramalist.com
+[DEBUG] Executing search query: "It's Okay to Not be Okay 2020" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/49865-psycho-but-it-s-okay
 [DEBUG] Landmark validation passed. This is the correct page.
-[DEBUG] Initiating search for: It's Okay That's Love 2014 on mydramalist.com
-[DEBUG] Executing search query: "It's Okay That's Love 2014" site:mydramalist.com
-[DEBUG] Executing search query: "It's Okay That's Love 2014" site:mydramalist.com
-[DEBUG] All search attempts failed.
-[DEBUG] Initiating search for: It's Okay That's Love 2014 on mydramalist.com
-[DEBUG] Executing search query: "It's Okay That's Love 2014" site:mydramalist.com
-[DEBUG] Executing search query: "It's Okay That's Love 2014" site:mydramalist.com
-[DEBUG] Found candidate URL: https://mydramalist.com/9289-its-okay-thats-love
+[DEBUG] Initiating search for: It's Okay to Not be Okay 2020 on mydramalist.com
+[DEBUG] Executing search query: "It's Okay to Not be Okay 2020" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/49865-psycho-but-it-s-okay
 [DEBUG] Landmark validation passed. This is the correct page.
-✅ Report written -> reports/Report_17_November_2025_1541.txt
+[DEBUG] Initiating search for: It's Okay to Not be Okay 2020 on mydramalist.com
+[DEBUG] Executing search query: "It's Okay to Not be Okay 2020" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/49865-psycho-but-it-s-okay
+[DEBUG] Landmark validation passed. This is the correct page.
+✅ Report written -> reports/Report_17_November_2025_1608.txt
 
 All done.
