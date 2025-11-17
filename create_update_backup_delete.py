@@ -6,14 +6,14 @@
 #   It contains a completely rebuilt, landmark-validating search engine
 #   to guarantee the correct page is scraped every single time.
 #
-# Version: v16.1.1 (Patched by Gemini)
+# Version: v16.2.0 (Final Patch)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v16.1.1 (Patched by Gemini)"
+SCRIPT_VERSION = "v16.2.0 (Final Patch)"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames": [], "showImage": None,
@@ -238,10 +238,10 @@ def fetch_othernames_from_mydramalist(s, y):
 
     if li_tag:
         b_tag = li_tag.find('b')
-        if b_tag: b_tag.decompose() # Remove the "Also Known As:" bold tag
+        if b_tag: b_tag.decompose()
         
-        # Split by comma, but be mindful of spaces. MDL uses " , " as a separator
         names_text = li_tag.get_text(strip=True)
+        # Split by comma, then strip whitespace from each item. This is more robust.
         other_names = [name.strip() for name in names_text.split(',') if name.strip()]
         if other_names:
             return (other_names, url)
@@ -259,8 +259,9 @@ def fetch_duration_from_mydramalist(s, y):
 
     if li_tag:
         duration_text = li_tag.get_text(strip=True).replace('Duration:', '').strip()
-        # Handle the specific "min." -> "mins" replacement request
-        if duration_text.endswith(" min."):
+        
+        # Only add an 's' to 'min.' if 'hr' is NOT present in the string.
+        if "hr" not in duration_text and duration_text.endswith(" min."):
             duration_text = duration_text.replace(" min.", " mins")
         return (duration_text, url)
         
@@ -308,7 +309,7 @@ def process_deletions(excel, json_file, context):
         if sid in by_id:
             obj = by_id.pop(sid); deleted.add(sid); ts = filename_timestamp()
             path = os.path.join(DELETED_DATA_DIR, f"DELETED_{ts}_{sid}.json"); os.makedirs(DELETED_DATA_DIR, exist_ok=True)
-            with open(path, 'w', encoding='utf-8') as f: json.dump(obj, f, indent=4)
+            with open(path, 'w', encoding='utf-8') as f: json.dump(obj, f, indent=4, ensure_ascii=False)
             context['files_generated']['deleted_data'].append(path)
             report.setdefault('data_deleted', []).append(f"- {sid} -> {obj.get('showName')} ({obj.get('releasedYear')}) -> ✅ Deleted")
             if obj.get('showImage'):
@@ -317,7 +318,7 @@ def process_deletions(excel, json_file, context):
                     dest = os.path.join(DELETE_IMAGES_DIR, f"DELETED_{ts}_{sid}.jpg"); os.makedirs(DELETE_IMAGES_DIR, exist_ok=True); shutil.move(src, dest)
                     context['files_generated']['deleted_images'].append(dest)
     if deleted:
-        with open(json_file, 'w', encoding='utf-8') as f: json.dump(sorted(list(by_id.values()), key=lambda x: x.get('showID', 0)), f, indent=4)
+        with open(json_file, 'w', encoding='utf-8') as f: json.dump(sorted(list(by_id.values()), key=lambda x: x.get('showID', 0)), f, indent=4, ensure_ascii=False)
     return report, list(deleted)
 
 def apply_manual_updates(excel, by_id, context):
@@ -395,7 +396,7 @@ def save_metadata_backup(obj, context):
     if not fetched: logd(f"Skipping metadata backup for {obj['showID']}: no new data fetched."); return
     data = {"scriptVersion": SCRIPT_VERSION, "runID": context['run_id'], "timestamp": now_ist().strftime("%d %B %Y %I:%M %p (IST)"), "showID": obj['showID'], "showName": obj['showName'], "fetchedFields": fetched}
     path = os.path.join(BACKUP_META_DIR, f"META_{filename_timestamp()}_{obj['showID']}.json"); os.makedirs(BACKUP_META_DIR, exist_ok=True)
-    with open(path, 'w', encoding='utf-8') as f: json.dump(data, f, indent=4)
+    with open(path, 'w', encoding='utf-8') as f: json.dump(data, f, indent=4, ensure_ascii=False)
     context['files_generated']['meta_backups'].append(path)
 
 def create_diff_backup(old, new, context):
@@ -408,7 +409,7 @@ def create_diff_backup(old, new, context):
     if not changed_fields: return
     data = {"scriptVersion": SCRIPT_VERSION, "runID": context['run_id'], "timestamp": now_ist().strftime("%d %B %Y %I:%M %p (IST)"), "backupType": "partial_diff", "showID": new['showID'], "showName": new['showName'], "releasedYear": new.get('releasedYear'), "updatedDetails": new.get('updatedDetails', 'Record Updated'), "changedFields": changed_fields}
     path = os.path.join(BACKUP_DIR, f"BACKUP_{filename_timestamp()}_{new['showID']}.json"); os.makedirs(BACKUP_DIR, exist_ok=True)
-    with open(path, 'w', encoding='utf-8') as f: json.dump(data, f, indent=4)
+    with open(path, 'w', encoding='utf-8') as f: json.dump(data, f, indent=4, ensure_ascii=False)
     context['files_generated']['backups'].append(path)
 
 def write_report(context):
@@ -503,7 +504,7 @@ def main():
             print(f"❌ UNEXPECTED FATAL ERROR processing sheet '{sheet}': {e}")
             logd(traceback.format_exc())
             
-    with open(JSON_FILE, 'w', encoding='utf-8') as f: json.dump(sorted(merged_by_id.values(), key=lambda x: x.get('showID', 0)), f, indent=4)
+    with open(JSON_FILE, 'w', encoding='utf-8') as f: json.dump(sorted(merged_by_id.values(), key=lambda x: x.get('showID', 0)), f, indent=4, ensure_ascii=False)
     
     end_time = now_ist()
     duration = end_time - datetime.fromisoformat(context['start_time_iso'])
