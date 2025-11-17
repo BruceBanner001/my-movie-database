@@ -6,14 +6,14 @@
 #   It contains a completely rebuilt, landmark-validating search engine
 #   to guarantee the correct page is scraped every single time.
 #
-# Version: v16.4.0 (Final Gemini Polish & Durability Patch)
+# Version: v16.5.0 (Final Gemini Battle-Hardened Patch)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v16.4.0 (Final Gemini Polish & Durability Patch)"
+SCRIPT_VERSION = "v16.5.0 (Final Gemini Battle-Hardened Patch)"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames": [], "showImage": None,
@@ -148,16 +148,18 @@ def fetch_synopsis_from_asianwiki(s, y):
         logd("Synopsis/Plot heading not found on AsianWiki.")
         return None
     
-    paragraphs = []
+    # Robustly collect all text between the synopsis heading and the next heading.
+    content = []
     for sibling in h2.find_next_siblings():
-        # Stop if we hit the next section's header
         if sibling.name == 'h2':
             break
-        # Collect text from paragraph tags
-        if sibling.name == 'p':
-            paragraphs.append(sibling.get_text(strip=True))
+        # Skip NavigableString objects that are only whitespace
+        if isinstance(sibling, NavigableString) and sibling.strip():
+            content.append(sibling.strip())
+        elif sibling.name == 'p':
+            content.append(sibling.get_text(strip=True))
     
-    synopsis = "\n\n".join(paragraphs)
+    synopsis = "\n\n".join(p for p in content if p)
     return (synopsis, url) if synopsis else None
 
 def fetch_image_from_asianwiki(s, y, sid):
@@ -214,7 +216,8 @@ def fetch_synopsis_from_mydramalist(s, y):
     # Use separator to preserve paragraph breaks.
     synopsis = synopsis_div.get_text(separator='\n\n', strip=True)
     
-    # Aggressively clean junk from the end of the synopsis.
+    # Final cleaning pass for all known junk text patterns.
+    synopsis = re.sub(r'^Remove ads\n\n', '', synopsis, flags=re.IGNORECASE)
     synopsis = re.sub(r'(~~.*?~~|Edit Translation).*$', '', synopsis, flags=re.DOTALL).strip()
     synopsis = re.sub(r'\s*\(\s*Source:.*?\)\s*$', '', synopsis, flags=re.IGNORECASE).strip()
     
