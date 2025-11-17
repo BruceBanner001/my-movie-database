@@ -6,14 +6,14 @@
 #   It contains a completely rebuilt, landmark-validating search engine
 #   to guarantee the correct page is scraped every single time.
 #
-# Version: v16.0.0 (Definitive Fix: The v16 Engine - Final Stand)
+# Version: v16.1.1 (Patched by Gemini)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v16.0.0 (Definitive Fix: The v16 Engine - Final Stand)"
+SCRIPT_VERSION = "v16.1.1 (Patched by Gemini)"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames": [], "showImage": None,
@@ -141,13 +141,21 @@ def download_and_save_image(url, local_path):
 def build_absolute_url(local_path): return f"{GITHUB_PAGES_URL.rstrip('/')}/{local_path.replace(os.sep, '/')}"
 
 def fetch_synopsis_from_asianwiki(s, y):
-    soup, url = get_soup_from_search(f'{s} {y}', "asianwiki.com");
+    soup, url = get_soup_from_search(f'{s} {y}', "asianwiki.com")
     if not soup: return None
-    h2 = soup.find('h2', id=re.compile("Synopsis|Plot", re.IGNORECASE));
-    if not h2: logd("Synopsis/Plot heading not found on AsianWiki."); return None
-    p_tags = h2.find_next_siblings('p')
-    synopsis = " ".join([p.get_text(strip=True) for p in p_tags])
-    return (f"{synopsis} (Source: AsianWiki)", url) if synopsis else None
+    h2 = soup.find('h2', id=re.compile(r"Synopsis|Plot", re.IGNORECASE))
+    if not h2:
+        logd("Synopsis/Plot heading not found on AsianWiki.")
+        return None
+    
+    synopsis_parts = []
+    for sibling in h2.find_next_siblings():
+        if sibling.name == 'h2': break
+        if sibling.name == 'p': synopsis_parts.append(sibling.get_text(strip=True))
+    
+    synopsis = " ".join(synopsis_parts)
+    return (synopsis, url) if synopsis else None
+
 def fetch_image_from_asianwiki(s, y, sid):
     soup, page_url = get_soup_from_search(f'{s} {y}', "asianwiki.com");
     if not soup: return None
@@ -157,8 +165,31 @@ def fetch_image_from_asianwiki(s, y, sid):
     if download_and_save_image(img_url, os.path.join(IMAGES_DIR, f"{sid}.jpg")):
         return (build_absolute_url(os.path.join(IMAGES_DIR, f"{sid}.jpg")), img_url)
     return None
-def fetch_othernames_from_asianwiki(s, y): return None
+
+def fetch_othernames_from_asianwiki(s, y):
+    soup, url = get_soup_from_search(f'{s} {y}', "asianwiki.com")
+    if not soup: return None
+    
+    p_tag = soup.find('p', text=re.compile(r"^(Drama:|Movie:)"))
+    if not p_tag:
+        b_tag = soup.find('b', text=re.compile(r"^(Drama:|Movie:)"))
+        if b_tag: p_tag = b_tag.find_parent('p')
+    
+    if p_tag:
+        full_text = p_tag.get_text(strip=True)
+        # Extract text between the first colon and the first opening parenthesis of "Revised romanization" or similar
+        match = re.search(r':(.*?)(?=\(Revised romanization:|\(literal title\))', full_text, re.DOTALL)
+        if match:
+            names_text = match.group(1).strip()
+            # Split by "/" and clean up each part
+            other_names = [name.strip() for name in names_text.split('/') if name.strip()]
+            if other_names:
+                return (other_names, url)
+
+    logd("'Other Names' from 'Drama:' field not found on AsianWiki."); return None
+
 def fetch_duration_from_asianwiki(s, y): return None
+
 def fetch_release_date_from_asianwiki(s, y):
     soup, url = get_soup_from_search(f'{s} {y}', "asianwiki.com");
     if not soup: return None
@@ -169,13 +200,23 @@ def fetch_release_date_from_asianwiki(s, y):
     logd("'Release Date:' field not found on AsianWiki."); return None
 
 def fetch_synopsis_from_mydramalist(s, y):
-    soup, url = get_soup_from_search(f'{s} {y}', "mydramalist.com");
+    soup, url = get_soup_from_search(f'{s} {y}', "mydramalist.com")
     if not soup: return None
     synopsis_div = soup.select_one('div.show-synopsis, div[itemprop="description"]')
-    if not synopsis_div: logd("Synopsis element not found on MyDramaList."); return None
-    for tag in synopsis_div.find_all(['span', 'a']): tag.decompose()
+    if not synopsis_div:
+        logd("Synopsis element not found on MyDramaList.")
+        return None
+    
+    # Remove "read more" links or other unwanted elements specifically
+    for tag in synopsis_div.find_all(['span', 'a']):
+        if "read more" in tag.get_text(strip=True).lower():
+            tag.decompose()
+
     synopsis = synopsis_div.get_text(strip=True)
-    return (f"{synopsis} (Source: MyDramaList)", url) if synopsis else None
+    # Clean up common artifacts
+    synopsis = re.sub(r'\s*\(\s*Source:.*?\)\s*$', '', synopsis, flags=re.IGNORECASE).strip()
+    return (synopsis, url) if synopsis else None
+
 def fetch_image_from_mydramalist(s, y, sid):
     soup, page_url = get_soup_from_search(f'{s} {y}', "mydramalist.com");
     if not soup: return None
@@ -185,22 +226,46 @@ def fetch_image_from_mydramalist(s, y, sid):
     if download_and_save_image(img_url, os.path.join(IMAGES_DIR, f"{sid}.jpg")):
         return (build_absolute_url(os.path.join(IMAGES_DIR, f"{sid}.jpg")), img_url)
     return None
+
 def fetch_othernames_from_mydramalist(s, y):
-    soup, url = get_soup_from_search(f'{s} {y}', "mydramalist.com");
+    soup, url = get_soup_from_search(f'{s} {y}', "mydramalist.com")
     if not soup: return None
-    parent_div = soup.find('div', class_='box-body')
-    if not parent_div: logd("Box body for details not found on MyDramaList."); return None
-    for li in parent_div.find_all('li', class_='list-item'):
-        b = li.find('b')
-        if b and 'Also Known As:' in b.get_text():
-            return (normalize_list(li.get_text().replace("Also Known As:", "")), url)
+    
+    li_tag = soup.find('li', class_='list-item', text=re.compile(r"Also Known As:"))
+    if not li_tag:
+        b_tag = soup.find('b', text=re.compile(r"Also Known As:"))
+        if b_tag: li_tag = b_tag.find_parent('li')
+
+    if li_tag:
+        b_tag = li_tag.find('b')
+        if b_tag: b_tag.decompose() # Remove the "Also Known As:" bold tag
+        
+        # Split by comma, but be mindful of spaces. MDL uses " , " as a separator
+        names_text = li_tag.get_text(strip=True)
+        other_names = [name.strip() for name in names_text.split(',') if name.strip()]
+        if other_names:
+            return (other_names, url)
+            
     logd("'Also Known As:' field not found on MyDramaList."); return None
+
 def fetch_duration_from_mydramalist(s, y):
     soup, url = get_soup_from_search(f'{s} {y}', "mydramalist.com");
     if not soup: return None
-    li = soup.find(lambda t: 'Duration:' in t.get_text() and t.name == 'li');
-    if not li: logd("'Duration:' field not found on MyDramaList."); return None
-    return (li.get_text().replace('Duration:', '').strip().replace("min.", "mins"), url)
+    
+    li_tag = soup.find('li', class_='list-item', text=re.compile(r"Duration:"))
+    if not li_tag:
+        b_tag = soup.find('b', text=re.compile(r"Duration:"))
+        if b_tag: li_tag = b_tag.find_parent('li')
+
+    if li_tag:
+        duration_text = li_tag.get_text(strip=True).replace('Duration:', '').strip()
+        # Handle the specific "min." -> "mins" replacement request
+        if duration_text.endswith(" min."):
+            duration_text = duration_text.replace(" min.", " mins")
+        return (duration_text, url)
+        
+    logd("'Duration:' field not found on MyDramaList."); return None
+
 def fetch_release_date_from_mydramalist(s, y):
     soup, url = get_soup_from_search(f'{s} {y}', "mydramalist.com");
     if not soup: return None
@@ -440,10 +505,14 @@ def main():
             
     with open(JSON_FILE, 'w', encoding='utf-8') as f: json.dump(sorted(merged_by_id.values(), key=lambda x: x.get('showID', 0)), f, indent=4)
     
-    end_time = now_ist(); duration = end_time - datetime.fromisoformat(context['start_time_iso'])
+    end_time = now_ist()
+    duration = end_time - datetime.fromisoformat(context['start_time_iso'])
     context['duration_str'] = f"{duration.seconds // 60} min {duration.seconds % 60} sec"
-    report_path = os.path.join(REPORTS_DIR, f"Report_{filename_timestamp()}.txt"); os.makedirs(REPORTS_DIR, exist_ok=True)
-    context['report_file_path'] = report_path; context['files_generated']['reports'].append(report_path)
+    
+    report_path = os.path.join(REPORTS_DIR, f"Report_{filename_timestamp()}.txt")
+    os.makedirs(REPORTS_DIR, exist_ok=True)
+    context['report_file_path'] = report_path
+    context['files_generated']['reports'].append(report_path)
     
     write_report(context)
     print(f"✅ Report written -> {report_path}")
