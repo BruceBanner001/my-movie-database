@@ -1,40 +1,108 @@
-/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:262: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:275: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
   li_tag = soup.find('li', class_='list-item', text=re.compile(r"Duration:"))
-/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:264: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:277: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
   b_tag = soup.find('b', text=re.compile(r"Duration:"))
-/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:241: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:254: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
   li_tag = soup.find('li', class_='list-item', text=re.compile(r"Also Known As:"))
-/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:243: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:256: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
   b_tag = soup.find('b', text=re.compile(r"Also Known As:"))
-🚀 Running Script — Version v16.5.0 (Final Gemini Battle-Hardened Patch) | Run ID: RUN_20251117_184626
+🚀 Running Script — Version v16.6.0 (Final Gemini Root Cause Patch) | Run ID: RUN_20251117_190127
 [DEBUG] 'Deleting Records' sheet is empty. Nothing to delete.
-[DEBUG] Initiating search for: Wedding Impossible 2024 on asianwiki.com
-[DEBUG] Executing search query: "Wedding Impossible 2024" site:asianwiki.com
-[DEBUG] Found candidate URL: https://asianwiki.com/Wedding_Impossible
+[DEBUG] Initiating search for: Again My Life 2022 on asianwiki.com
+[DEBUG] Executing search query: "Again My Life 2022" site:asianwiki.com
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/teaser-trailer-for-sbs-drama-again-my-life
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Lee_Joon-Gi
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Jae-Kyung
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Again_My_life
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/index.php?title=Lee_Joon-Gi
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Executing search query: "Again My Life 2022" site:asianwiki.com
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/teaser-trailer-for-sbs-drama-again-my-life
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Lee_Joon-Gi
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Jae-Kyung
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Again_My_life
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/index.php?title=Lee_Joon-Gi
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] All search attempts failed.
+[DEBUG] Initiating search for: Again My Life 2022 on mydramalist.com
+[DEBUG] Executing search query: "Again My Life 2022" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/692043-again-my-life
 [DEBUG] Landmark validation passed. This is the correct page.
-[DEBUG] Synopsis/Plot heading not found on AsianWiki.
-[DEBUG] Initiating search for: Wedding Impossible 2024 on mydramalist.com
-[DEBUG] Executing search query: "Wedding Impossible 2024" site:mydramalist.com
-[DEBUG] Found candidate URL: https://mydramalist.com/744809-wedding-impossible
+[DEBUG] Initiating search for: Again My Life 2022 on asianwiki.com
+[DEBUG] Executing search query: "Again My Life 2022" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Choi_Sang
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Again_My_Life
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/teaser-trailer-for-sbs-drama-again-my-life
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Heo_Hyeon-Do
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Lee_Joon-Gi
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Executing search query: "Again My Life 2022" site:asianwiki.com
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/teaser-trailer-for-sbs-drama-again-my-life
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Lee_Joon-Gi
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Jae-Kyung
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Again_My_life
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/index.php?title=Lee_Joon-Gi
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] All search attempts failed.
+[DEBUG] Initiating search for: Again My Life 2022 on mydramalist.com
+[DEBUG] Executing search query: "Again My Life 2022" site:mydramalist.com
+[DEBUG] Found candidate URL: https://pt.mydramalist.com/692043-again-my-life
 [DEBUG] Landmark validation passed. This is the correct page.
-[DEBUG] Initiating search for: Wedding Impossible 2024 on asianwiki.com
-[DEBUG] Executing search query: "Wedding Impossible 2024" site:asianwiki.com
-[DEBUG] Found candidate URL: https://asianwiki.com/Wedding_Impossible
+[DEBUG] Downloading high-quality image from: https://i.mydramalist.com/XDKww_4c.jpg?v=1
+[DEBUG] Image saved to images/107.jpg
+[DEBUG] Initiating search for: Again My Life 2022 on mydramalist.com
+[DEBUG] Executing search query: "Again My Life 2022" site:mydramalist.com
+[DEBUG] Found candidate URL: https://pt.mydramalist.com/692043-again-my-life
 [DEBUG] Landmark validation passed. This is the correct page.
-[DEBUG] Downloading high-quality image from: https://asianwiki.com/images/9/93/Wedding_Impossible-p1.jpg
-[DEBUG] Image saved to images/106.jpg
-[DEBUG] Initiating search for: Wedding Impossible 2024 on mydramalist.com
-[DEBUG] Executing search query: "Wedding Impossible 2024" site:mydramalist.com
-[DEBUG] Found candidate URL: https://mydramalist.com/744809-wedding-impossible
+[DEBUG] 'Aired:' field not found on MyDramaList.
+[DEBUG] Initiating search for: Again My Life 2022 on asianwiki.com
+[DEBUG] Executing search query: "Again My Life 2022" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Choi_Sang
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Again_My_Life
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/teaser-trailer-for-sbs-drama-again-my-life
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Heo_Hyeon-Do
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Lee_Joon-Gi
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Executing search query: "Again My Life 2022" site:asianwiki.com
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/teaser-trailer-for-sbs-drama-again-my-life
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Lee_Joon-Gi
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Jae-Kyung
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Again_My_life
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/index.php?title=Lee_Joon-Gi
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] All search attempts failed.
+[DEBUG] Initiating search for: Again My Life 2022 on mydramalist.com
+[DEBUG] Executing search query: "Again My Life 2022" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/692043-again-my-life
 [DEBUG] Landmark validation passed. This is the correct page.
-[DEBUG] Initiating search for: Wedding Impossible 2024 on mydramalist.com
-[DEBUG] Executing search query: "Wedding Impossible 2024" site:mydramalist.com
-[DEBUG] Found candidate URL: https://mydramalist.com/744809-wedding-impossible
+[DEBUG] Initiating search for: Again My Life 2022 on mydramalist.com
+[DEBUG] Executing search query: "Again My Life 2022" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/692043-again-my-life
 [DEBUG] Landmark validation passed. This is the correct page.
-[DEBUG] Initiating search for: Wedding Impossible 2024 on mydramalist.com
-[DEBUG] Executing search query: "Wedding Impossible 2024" site:mydramalist.com
-[DEBUG] Found candidate URL: https://mydramalist.com/744809-wedding-impossible
-[DEBUG] Landmark validation passed. This is the correct page.
-✅ Report written -> reports/Report_17_November_2025_1846.txt
+✅ Report written -> reports/Report_17_November_2025_1902.txt
 
 All done.
