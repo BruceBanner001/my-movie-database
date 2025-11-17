@@ -1,40 +1,40 @@
-/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:259: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:262: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
   li_tag = soup.find('li', class_='list-item', text=re.compile(r"Duration:"))
-/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:261: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:264: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
   b_tag = soup.find('b', text=re.compile(r"Duration:"))
-/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:238: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:241: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
   li_tag = soup.find('li', class_='list-item', text=re.compile(r"Also Known As:"))
-/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:240: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:243: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
   b_tag = soup.find('b', text=re.compile(r"Also Known As:"))
-🚀 Running Script — Version v16.4.0 (Final Gemini Polish & Durability Patch) | Run ID: RUN_20251117_170753
+🚀 Running Script — Version v16.5.0 (Final Gemini Battle-Hardened Patch) | Run ID: RUN_20251117_184626
 [DEBUG] 'Deleting Records' sheet is empty. Nothing to delete.
-[DEBUG] Initiating search for: Queen of Tears 2024 on asianwiki.com
-[DEBUG] Executing search query: "Queen of Tears 2024" site:asianwiki.com
-[DEBUG] Found candidate URL: https://asianwiki.com/Queen_Of_Tears
+[DEBUG] Initiating search for: Wedding Impossible 2024 on asianwiki.com
+[DEBUG] Executing search query: "Wedding Impossible 2024" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Wedding_Impossible
 [DEBUG] Landmark validation passed. This is the correct page.
 [DEBUG] Synopsis/Plot heading not found on AsianWiki.
-[DEBUG] Initiating search for: Queen of Tears 2024 on mydramalist.com
-[DEBUG] Executing search query: "Queen of Tears 2024" site:mydramalist.com
-[DEBUG] Found candidate URL: https://mydramalist.com/725367-untitled-park-ji-eun-project
+[DEBUG] Initiating search for: Wedding Impossible 2024 on mydramalist.com
+[DEBUG] Executing search query: "Wedding Impossible 2024" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/744809-wedding-impossible
 [DEBUG] Landmark validation passed. This is the correct page.
-[DEBUG] Initiating search for: Queen of Tears 2024 on asianwiki.com
-[DEBUG] Executing search query: "Queen of Tears 2024" site:asianwiki.com
-[DEBUG] Found candidate URL: https://asianwiki.com/Queen_Of_Tears
+[DEBUG] Initiating search for: Wedding Impossible 2024 on asianwiki.com
+[DEBUG] Executing search query: "Wedding Impossible 2024" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Wedding_Impossible
 [DEBUG] Landmark validation passed. This is the correct page.
-[DEBUG] Downloading high-quality image from: https://asianwiki.com/images/5/53/Queen_Of_Tears-p.jpg
-[DEBUG] Image saved to images/105.jpg
-[DEBUG] Initiating search for: Queen of Tears 2024 on mydramalist.com
-[DEBUG] Executing search query: "Queen of Tears 2024" site:mydramalist.com
-[DEBUG] Found candidate URL: https://mydramalist.com/725367-untitled-park-ji-eun-project
+[DEBUG] Downloading high-quality image from: https://asianwiki.com/images/9/93/Wedding_Impossible-p1.jpg
+[DEBUG] Image saved to images/106.jpg
+[DEBUG] Initiating search for: Wedding Impossible 2024 on mydramalist.com
+[DEBUG] Executing search query: "Wedding Impossible 2024" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/744809-wedding-impossible
 [DEBUG] Landmark validation passed. This is the correct page.
-[DEBUG] Initiating search for: Queen of Tears 2024 on mydramalist.com
-[DEBUG] Executing search query: "Queen of Tears 2024" site:mydramalist.com
-[DEBUG] Found candidate URL: https://mydramalist.com/725367-untitled-park-ji-eun-project
+[DEBUG] Initiating search for: Wedding Impossible 2024 on mydramalist.com
+[DEBUG] Executing search query: "Wedding Impossible 2024" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/744809-wedding-impossible
 [DEBUG] Landmark validation passed. This is the correct page.
-[DEBUG] Initiating search for: Queen of Tears 2024 on mydramalist.com
-[DEBUG] Executing search query: "Queen of Tears 2024" site:mydramalist.com
-[DEBUG] Found candidate URL: https://mydramalist.com/725367-untitled-park-ji-eun-project
+[DEBUG] Initiating search for: Wedding Impossible 2024 on mydramalist.com
+[DEBUG] Executing search query: "Wedding Impossible 2024" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/744809-wedding-impossible
 [DEBUG] Landmark validation passed. This is the correct page.
-✅ Report written -> reports/Report_17_November_2025_1708.txt
+✅ Report written -> reports/Report_17_November_2025_1846.txt
 
 All done.
