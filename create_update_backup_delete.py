@@ -16,7 +16,7 @@
 SCRIPT_VERSION = "v3.0"
 
 JSON_OBJECT_TEMPLATE = {
-    "showID": None, "showName": None, "otherNames": None, "showImage": None,
+    "showID": None, "showName": None, "otherNames": [], "showImage": None,
     "watchStartedOn": None, "watchEndedOn": None, "releasedYear": 0,
     "releaseDate": None, "totalEpisodes": 0, "showType": None,
     "nativeLanguage": None, "watchedLanguage": None, "country": None,
@@ -64,6 +64,8 @@ DEBUG_FETCH = os.environ.get("DEBUG_FETCH", "false").lower() == "true"
 GITHUB_PAGES_URL = os.environ.get("GITHUB_PAGES_URL", "").strip()
 SERVICE_ACCOUNT_FILE, EXCEL_FILE_ID_TXT = "GDRIVE_SERVICE_ACCOUNT.json", "EXCEL_FILE_ID.txt"
 SCRAPER = cloudscraper.create_scraper() if HAVE_SCRAPER else requests.Session()
+# FIX: Language to Country mapping for validation
+LANG_TO_COUNTRY_MAP = {"korean": "South Korea", "chinese": "China", "japanese": "Japan", "thai": "Thailand", "taiwanese": "Taiwan"}
 
 def logd(msg):
     if DEBUG_FETCH: print(f"[DEBUG] {msg}")
@@ -82,18 +84,28 @@ def normalize_list(val):
 def objects_differ(old, new):
     excel_fields = set(FIELD_NAME_MAP.keys()) - LOCKED_FIELDS_AFTER_CREATION
     for k in excel_fields:
-        old_val = old.get(k)
-        new_val = new.get(k)
-        if k == 'otherNames':
-            if str(old_val or "") != str(new_val or ""): return True
-        elif normalize_list(old_val) != normalize_list(new_val): return True
+        if normalize_list(old.get(k)) != normalize_list(new.get(k)): return True
     return False
 
-def get_soup_from_search(query_base, site):
-    logd(f"Initiating search for: {query_base} on {site}.com")
+def _scrape_country(soup, site):
+    """Helper function to scrape the country from a validated soup object."""
+    try:
+        if site == 'asianwiki':
+            tag = soup.find('b', string='Country:')
+            if tag: return tag.parent.get_text(strip=True).replace('Country:', '').strip()
+        elif site == 'mydramalist':
+            tag = soup.find('b', string='Country:')
+            if tag: return tag.parent.get_text(strip=True).replace('Country:', '').strip()
+    except Exception: pass
+    return None
+
+def get_soup_from_search(query_base, site, language):
+    expected_country = LANG_TO_COUNTRY_MAP.get(language.lower())
+    logd(f"Initiating search for: '{query_base}' on {site}.com (Expected Country: {expected_country})")
     if not HAVE_DDGS: logd("DDGS library not available."); return None, None
     clean_query = query_base.split("(")[0].strip()
-    search_queries = [ f'"{query_base}" site:{site}.com', f'"{clean_query}" site:{site}.com' ]
+    # FIX: Use language in search query for better results
+    search_queries = [ f'"{query_base}" {language} site:{site}.com', f'"{clean_query}" {language} drama site:{site}.com' ]
     for query in search_queries:
         logd(f"Executing search query: {query}")
         try:
@@ -110,21 +122,24 @@ def get_soup_from_search(query_base, site):
                     r = SCRAPER.get(url, timeout=15)
                     if r.status_code == 200:
                         soup = BeautifulSoup(r.text, "html.parser")
-                        is_valid = False
-                        # FIX: Bulletproof AsianWiki Validator
+                        is_valid_landmark = False
                         if site == "asianwiki":
-                            profile_header = soup.find('h2', string='Profile')
-                            if profile_header and profile_header.find_next_sibling('table', class_='infobox'):
-                                is_valid = True
-                            else:
-                                logd("Validation failed: AsianWiki 'Profile' header and infobox landmark missing.")
+                            if soup.find(id='Profile'): is_valid_landmark = True
+                            else: logd("Landmark validation failed: AsianWiki 'Profile' ID landmark missing.")
                         elif site == "mydramalist":
-                            if soup.find('div', class_='box-body'):
-                                is_valid = True
-                            else:
-                                logd("Validation failed: MyDramaList landmark missing.")
-                        if is_valid:
-                            logd("Landmark validation passed. This is the correct page.")
+                            if soup.find('div', class_='box-body'): is_valid_landmark = True
+                            else: logd("Landmark validation failed: MyDramaList landmark missing.")
+                        
+                        if is_valid_landmark:
+                            # FIX: Two-Factor Validation - Country Check
+                            if expected_country:
+                                scraped_country = _scrape_country(soup, site)
+                                if scraped_country and expected_country in scraped_country:
+                                    logd(f"Country validation passed (Expected: {expected_country}, Found: {scraped_country}).")
+                                else:
+                                    logd(f"Country validation FAILED (Expected: {expected_country}, Found: {scraped_country}). Rejecting page.")
+                                    continue # Reject page and continue to next search result
+                            logd("Validation passed. This is the correct page.")
                             return soup, url
                     else: logd(f"HTTP Error {r.status_code} for {url}")
         except Exception as e: logd(f"Search attempt failed for query '{query}': {e}")
@@ -146,8 +161,11 @@ def download_and_save_image(url, local_path):
     return False
 def build_absolute_url(local_path): return f"{GITHUB_PAGES_URL.rstrip('/')}/{local_path.replace(os.sep, '/')}"
 
-def fetch_synopsis_from_asianwiki(s, y):
-    soup, url = get_soup_from_search(f'{s} {y}', "asianwiki")
+# --- FETCH FUNCTIONS ---
+# All now accept 'language' to pass to the validator
+
+def fetch_synopsis_from_asianwiki(s, y, language):
+    soup, url = get_soup_from_search(f'{s} {y}', "asianwiki", language)
     if not soup: return None, None
     h2 = soup.find('h2', id=re.compile(r"Synopsis|Plot", re.IGNORECASE))
     if not h2: logd("Synopsis/Plot heading not found on AsianWiki."); return None, None
@@ -155,8 +173,8 @@ def fetch_synopsis_from_asianwiki(s, y):
     synopsis = "\n\n".join(p for p in content if p)
     return (synopsis, url) if synopsis else (None, None)
 
-def fetch_image_from_asianwiki(s, y, sid):
-    soup, url = get_soup_from_search(f'{s} {y}', "asianwiki")
+def fetch_image_from_asianwiki(s, y, sid, language):
+    soup, url = get_soup_from_search(f'{s} {y}', "asianwiki", language)
     if not soup: return None, None
     img = soup.select_one('a.image > img[src]')
     if not img: logd("Image tag not found on AsianWiki."); return None, None
@@ -165,8 +183,8 @@ def fetch_image_from_asianwiki(s, y, sid):
         return (build_absolute_url(os.path.join(IMAGES_DIR, f"{sid}.jpg")), url)
     return None, None
 
-def fetch_othernames_from_asianwiki(s, y):
-    soup, url = get_soup_from_search(f'{s} {y}', "asianwiki")
+def fetch_othernames_from_asianwiki(s, y, language):
+    soup, url = get_soup_from_search(f'{s} {y}', "asianwiki", language)
     if not soup: return None, None
     p_tag = soup.find('p', string=re.compile(r"^(Drama:|Movie:)"))
     if p_tag:
@@ -174,13 +192,13 @@ def fetch_othernames_from_asianwiki(s, y):
         match = re.search(r':(.*?)(?=\(Revised romanization:|\(literal title\)|$)', full_text, re.DOTALL)
         if match:
             names_text = match.group(1).strip()
-            return (names_text, url) if names_text else (None, None)
+            return ([name.strip() for name in names_text.split('/') if name.strip()], url) if names_text else (None, None)
     logd("'Other Names' from 'Drama:' field not found on AsianWiki."); return None, None
 
-def fetch_duration_from_asianwiki(s, y): return None, None
+def fetch_duration_from_asianwiki(s, y, language): return None, None
 
-def fetch_release_date_from_asianwiki(s, y):
-    soup, url = get_soup_from_search(f'{s} {y}', "asianwiki")
+def fetch_release_date_from_asianwiki(s, y, language):
+    soup, url = get_soup_from_search(f'{s} {y}', "asianwiki", language)
     if not soup: return None, None
     b_tag = soup.find('b', string=re.compile(r"Release Date:"))
     if b_tag and b_tag.parent:
@@ -189,8 +207,8 @@ def fetch_release_date_from_asianwiki(s, y):
         return (release_text, url) if release_text else (None, None)
     logd("'Release Date:' field not found on AsianWiki."); return None, None
 
-def fetch_synopsis_from_mydramalist(s, y):
-    soup, url = get_soup_from_search(f'{s} {y}', "mydramalist")
+def fetch_synopsis_from_mydramalist(s, y, language):
+    soup, url = get_soup_from_search(f'{s} {y}', "mydramalist", language)
     if not soup: return None, None
     synopsis_div = soup.select_one('div.show-synopsis, div[itemprop="description"]')
     if not synopsis_div: logd("Synopsis element not found on MyDramaList."); return None, None
@@ -198,8 +216,8 @@ def fetch_synopsis_from_mydramalist(s, y):
     synopsis = re.sub(r'(^Remove ads\n\n)|((~~.*?~~|Edit Translation).*$)|(\s*\(\s*Source:.*?\)\s*$)', '', synopsis, flags=re.DOTALL | re.IGNORECASE).strip()
     return (synopsis, url) if synopsis else (None, None)
 
-def fetch_image_from_mydramalist(s, y, sid):
-    soup, url = get_soup_from_search(f'{s} {y}', "mydramalist")
+def fetch_image_from_mydramalist(s, y, sid, language):
+    soup, url = get_soup_from_search(f'{s} {y}', "mydramalist", language)
     if not soup: return None, None
     img = soup.select_one('.film-cover img[src], .cover img[src], div.cover img[src]')
     if not img: logd("Image tag not found on MyDramaList."); return None, None
@@ -207,19 +225,18 @@ def fetch_image_from_mydramalist(s, y, sid):
         return (build_absolute_url(os.path.join(IMAGES_DIR, f"{sid}.jpg")), url)
     return None, None
 
-def fetch_othernames_from_mydramalist(s, y):
-    soup, url = get_soup_from_search(f'{s} {y}', "mydramalist")
+def fetch_othernames_from_mydramalist(s, y, language):
+    soup, url = get_soup_from_search(f'{s} {y}', "mydramalist", language)
     if not soup: return None, None
-    # FIX: Bulletproof "Other Names" Scraper
     b_tag = soup.find('b', string="Also Known As:")
     if b_tag and (li_tag := b_tag.find_parent('li')):
         b_tag.decompose()
         names_text = li_tag.get_text(strip=True)
-        return (names_text, url) if names_text else (None, None)
+        return ([name.strip() for name in names_text.split(',') if name.strip()], url) if names_text else (None, None)
     logd("'Also Known As:' field not found on MyDramaList."); return None, None
 
-def fetch_duration_from_mydramalist(s, y):
-    soup, url = get_soup_from_search(f'{s} {y}', "mydramalist")
+def fetch_duration_from_mydramalist(s, y, language):
+    soup, url = get_soup_from_search(f'{s} {y}', "mydramalist", language)
     if not soup: return None, None
     b_tag = soup.find('b', string=re.compile(r"Duration:"))
     if b_tag and (li_tag := b_tag.find_parent('li')):
@@ -230,8 +247,8 @@ def fetch_duration_from_mydramalist(s, y):
         return (duration_text, url) if duration_text else (None, None)
     logd("'Duration:' field not found on MyDramaList."); return None, None
 
-def fetch_release_date_from_mydramalist(s, y):
-    soup, url = get_soup_from_search(f'{s} {y}', "mydramalist")
+def fetch_release_date_from_mydramalist(s, y, language):
+    soup, url = get_soup_from_search(f'{s} {y}', "mydramalist", language)
     if not soup: return None, None
     b_tag = soup.find('b', string=re.compile(r"Aired:"))
     if b_tag and (li_tag := b_tag.find_parent('li')):
@@ -281,9 +298,11 @@ def apply_manual_updates(excel, by_id, context):
         sid = int(sid); obj, old, changed = by_id[sid], copy.deepcopy(by_id[sid]), {}
         for col, key in MAP.items():
             if col in row and row[col]:
-                val = str(row[col]).strip()
+                val = row[col]
                 if key == 'showImage' and download_and_save_image(val, os.path.join(IMAGES_DIR, f"{sid}.jpg")):
                     val = build_absolute_url(os.path.join(IMAGES_DIR, f"{sid}.jpg")); context['files_generated']['images'].append(os.path.join(IMAGES_DIR, f"{sid}.jpg"))
+                elif key == 'otherNames': val = normalize_list(val)
+                else: val = str(val).strip()
                 if obj.get(key) != val: changed[key] = {'old': obj.get(key), 'new': val}; obj[key] = val; obj.setdefault('sitePriorityUsed', {})[key] = "Manual"
         if changed:
             obj['updatedDetails'] = f"{', '.join([human_readable_field(f) for f in changed])} Updated Manually"; obj['updatedOn'] = now_ist().strftime('%d %B %Y')
@@ -316,6 +335,7 @@ def excel_to_objects(excel, sheet):
         if not obj.get("showID") or not obj.get("showName"): continue
         obj["againWatchedDates"] = [ddmmyyyy(d) for d in row[again_idx:] if ddmmyyyy(d)]
         obj["showType"] = "Mini Drama" if "mini" in sheet.lower() else "Drama"
+        obj["nativeLanguage"] = obj.get("nativeLanguage", "").strip().capitalize()
         lang = obj.get("nativeLanguage", "").lower()
         if lang in ("korean", "korea"): obj["country"] = "South Korea"
         elif lang in ("chinese", "china"): obj["country"] = "China"
@@ -327,7 +347,7 @@ def save_metadata_backup(obj, context):
     source_links = context.get('source_links_temp', {})
     for key, site in obj.get('sitePriorityUsed', {}).items():
         if site and site != "Manual":
-            target_key = "showImage" if key == "image" else "Duration" if key == "duration" else key
+            target_key = "showImage" if key == "image" else "Duration" if key == "duration" else "otherNames" if key == "otherNames" else key
             field_data = {"value": obj.get(target_key), "source": site}
             if key in source_links: field_data["source_link"] = source_links[key]
             fetched[key] = field_data
@@ -340,10 +360,8 @@ def save_metadata_backup(obj, context):
 def create_diff_backup(old, new, context):
     changed_fields = {}
     for key, new_val in new.items():
-        if key not in LOCKED_FIELDS_AFTER_CREATION:
-             old_val = old.get(key)
-             if normalize_list(old_val) != normalize_list(new_val):
-                 changed_fields[key] = {"old": old_val, "new": new_val}
+        if key not in LOCKED_FIELDS_AFTER_CREATION and normalize_list(old.get(key)) != normalize_list(new_val):
+            changed_fields[key] = {"old": old.get(key), "new": new_val}
     if not changed_fields: return
     data = {"scriptVersion": SCRIPT_VERSION, "runID": context['run_id'], "timestamp": now_ist().strftime("%d %B %Y %I:%M %p (IST)"), "backupType": "partial_diff", "showID": new['showID'], "showName": new['showName'], "releasedYear": new.get('releasedYear'), "updatedDetails": new.get('updatedDetails', 'Record Updated'), "changedFields": changed_fields}
     path = os.path.join(BACKUP_DIR, f"BACKUP_{filename_timestamp()}_{new['showID']}.json"); os.makedirs(BACKUP_DIR, exist_ok=True)
@@ -358,7 +376,10 @@ def write_report(context):
         display_sheet = sheet.replace("sheet", "Sheet ").title(); lines.extend([sep, f"🗂️ === {display_sheet} — {now_ist().strftime('%d %B %Y')} ==="]); lines.append(sep)
         if changes.get('created'): lines.append("\n🆕 Data Created:"); [lines.append(f"- {o['showID']} - {o['showName']} ({o.get('releasedYear')}) -> {o.get('updatedDetails', '')}") for o in changes['created']]
         if changes.get('updated'): lines.append("\n🔁 Data Updated:"); [lines.append(f"✍️ {p['new']['showID']} - {p['new']['showName']} -> {p['new']['updatedDetails']}") for p in changes['updated']]
-        if changes.get('refetched'): lines.append("\n🔍 Refetched Data:"); [lines.append(f"✨ {o['showID']} - {o['showName']} -> Metadata Refreshed") for o in changes['refetched']]; stats['refetched'] += len(changes.get('refetched', []))
+        if changes.get('refetched'):
+            lines.append("\n🔍 Refetched Data:")
+            for o in changes['refetched']: lines.append(f"✨ {o['id']} - {o['name']} -> Fetched: {', '.join(o['fields'])}")
+            stats['refetched'] += len(changes.get('refetched', []))
         if changes.get('data_warnings'): lines.append("\n⚠️ Data Validation Warnings:"); [lines.append(i) for i in changes['data_warnings']]; stats['warnings'] += len(changes['data_warnings'])
         if changes.get('fetched_data'): lines.append("\n🖼️ Fetched Data Details:"); [lines.append(i) for i in sorted(changes['fetched_data'])]
         if changes.get('fetch_warnings'): lines.append("\n🕳️ Value Not Found:"); [lines.append(i) for i in sorted(changes['fetch_warnings'])]; stats['warnings'] += len(changes['fetch_warnings'])
@@ -431,7 +452,7 @@ def main():
                     primary_site, fallback_site = priority.get(fetch_key), 'mydramalist' if priority.get(fetch_key) == 'asianwiki' else 'asianwiki'
                     for site in [primary_site, fallback_site]:
                         if site:
-                            args = (s_name, s_year, sid) if fetch_key == 'image' else (s_name, s_year)
+                            args = (s_name, s_year, sid, lang) if fetch_key == 'image' else (s_name, s_year, lang)
                             data, url = FETCH_MAP[site][fetch_key](*args)
                             if data:
                                 final_obj[obj_key] = data
@@ -442,13 +463,15 @@ def main():
             
             final_obj['topRatings'] = (final_obj.get("ratings", 0)) * (len(final_obj.get("againWatchedDates", [])) + 1) * 100
             
-            excel_data_has_changed = not is_new and objects_differ(old_obj_from_json, final_obj)
+            excel_data_has_changed = not is_new and objects_differ(old_obj_from_json, excel_obj)
             metadata_was_fetched = any(final_obj.get(k) != initial_metadata_state.get(k) for k, _ in fields_to_check)
+            newly_fetched_fields = sorted([fetch_key.capitalize() for obj_key, fetch_key in fields_to_check if final_obj.get(obj_key) and not initial_metadata_state.get(obj_key)])
 
             if is_new:
                 final_obj['updatedDetails'] = "First Time Uploaded"
                 final_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
                 report['created'].append(final_obj)
+                if newly_fetched_fields: report['fetched_data'].append(f"- {sid} - {final_obj['showName']} -> Fetched: {', '.join(newly_fetched_fields)}")
             elif excel_data_has_changed:
                 changes = [human_readable_field(k) for k, v in excel_obj.items() if normalize_list(old_obj_from_json.get(k)) != normalize_list(v)]
                 final_obj['updatedDetails'] = f"{', '.join(changes)} Updated"
@@ -456,7 +479,7 @@ def main():
                 report['updated'].append({'old': old_obj_from_json, 'new': final_obj})
                 create_diff_backup(old_obj_from_json, final_obj, context)
             elif metadata_was_fetched:
-                report['refetched'].append(final_obj)
+                report['refetched'].append({'id': sid, 'name': final_obj['showName'], 'fields': newly_fetched_fields})
             else:
                 report['skipped'].append(f"{sid} - {final_obj['showName']} ({final_obj.get('releasedYear')})")
             
@@ -466,8 +489,6 @@ def main():
                  save_metadata_backup(final_obj, context)
 
             missing = [FIELD_NAME_MAP[k] for k, _ in fields_to_check if not final_obj.get(k)]
-            newly_fetched = [fetch_key.capitalize() for obj_key, fetch_key in fields_to_check if final_obj.get(obj_key) and not initial_metadata_state.get(obj_key)]
-            if newly_fetched: report['fetched_data'].append(f"- {sid} - {final_obj['showName']} -> Fetched: {', '.join(sorted(newly_fetched))}")
             if missing: report['fetch_warnings'].append(f"- {sid} - {final_obj['showName']} -> ⚠️ Missing: {', '.join(sorted(missing))}")
 
     with open(JSON_FILE, 'w', encoding='utf-8') as f: json.dump(sorted(merged_by_id.values(), key=lambda x: x.get('showID', 0)), f, indent=4, ensure_ascii=False)
@@ -487,7 +508,6 @@ def fetch_excel_from_gdrive_bytes(file_id, creds_path):
     try:
         creds = service_account.Credentials.from_service_account_file(creds_path, scopes=['https://www.googleapis.com/auth/drive.readonly'])
         service = build('drive', 'v3', credentials=creds)
-        # FIX: Try direct download first (for .xlsx), then export (for GSheets)
         try:
             request = service.files().get_media(fileId=file_id)
             logd("Attempting direct media download...")
