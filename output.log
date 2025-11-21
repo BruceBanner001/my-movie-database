@@ -1,54 +1,81 @@
-/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:229: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
-  b_tag = soup.find('b', text=re.compile(r"Duration:"))
-/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:237: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
-  b_tag = soup.find('b', text=re.compile(r"Aired:"))
-/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:219: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
-  li_tag = soup.find('li', class_='list-item', text=re.compile(r"Also Known As:"))
-/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:221: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
-  b_tag = soup.find('b', text=re.compile(r"Also Known As:"))
-🚀 Running Script — Version v3.0 | Run ID: RUN_20251121_134425
+🚀 Running Script — Version v3.0 | Run ID: RUN_20251121_135556
+[DEBUG] Google Drive export failed, trying download: <HttpError 403 when requesting https://www.googleapis.com/drive/v3/files/1rD9zX-kpSd4AZ9Gb62IkHv0oDOIZxRkP/export?mimeType=application%2Fvnd.openxmlformats-officedocument.spreadsheetml.sheet&alt=media returned "Export only supports Docs Editors files.". Details: "[{'message': 'Export only supports Docs Editors files.', 'domain': 'global', 'reason': 'fileNotExportable'}]">
 [DEBUG] 'Deleting Records' sheet is empty. Nothing to delete.
+[DEBUG] Initiating search for: Find Me in Your Memory 2020 on asianwiki.com
+[DEBUG] Executing search query: "Find Me in Your Memory 2020" site:asianwiki.com
+[DEBUG] Executing search query: "Find Me in Your Memory 2020" site:asianwiki.com
+[DEBUG] Executing search query: "Find Me in Your Memory 2020 drama" site:asianwiki.com
+[DEBUG] All search attempts failed.
+[DEBUG] Initiating search for: Find Me in Your Memory 2020 on mydramalist.com
+[DEBUG] Executing search query: "Find Me in Your Memory 2020" site:mydramalist.com
+[DEBUG] Executing search query: "Find Me in Your Memory 2020" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/50941-the-man-s-memory
+[DEBUG] Landmark validation passed. This is the correct page.
 [DEBUG] Initiating search for: Find Me in Your Memory 2020 on mydramalist.com
 [DEBUG] Executing search query: "Find Me in Your Memory 2020" site:mydramalist.com
 [DEBUG] Found candidate URL: https://mydramalist.com/50941-the-man-s-memory
 [DEBUG] Landmark validation passed. This is the correct page.
-[DEBUG] Initiating search for: Find Me in Your Memory 2020 on asianwiki.com
-[DEBUG] Executing search query: "Find Me in Your Memory 2020" site:asianwiki.com
-[DEBUG] Found candidate URL: https://asianwiki.com/Find_Me_in_Your_Memory
-[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Seul-Gi
-[DEBUG] Found candidate URL: https://asianwiki.com/Memory_(Korean_Drama)
-[DEBUG] Executing search query: "Find Me in Your Memory 2020" site:asianwiki.com
-[DEBUG] Executing search query: "Find Me in Your Memory 2020 drama" site:asianwiki.com
-[DEBUG] Found candidate URL: https://www.bing.com/aclick?ld=e84Wg4gvG8CjzpWqZBPyqUMjVUCUws1HbKz2XBhSs5HYJJDeymEc-V5qRgAE5R8wc61kAXu0lixGM236P4oNIqTNmywinIMBY4cdIFubKYdvoTiGxdUAeP6oFuhW0UWLW4InOIsJ5pWfEeO7wvRXij4_MI_tERzUEPDC7VqeLPloSTxT0VVwDzAjw-HL0oF_IPmvf19-dRCt-TO4iv8eChAtuhRCs&u=aHR0cHMlM2ElMmYlMmZ3d3cuYW1hem9uLmNvbSUyZmdwJTJmdmlkZW8lMmZnZW5yZSUyZmRyYW1hJTNmcmVmJTNkZHZtX3VzX2RsX3NsX2JpX21mX21mZ2VuX21rd19wNDAxLWt3OTUwLWNyMTAxOC1jJTI2bXJudHJrJTNkYmlfY21wLTU1NTEzNjk4MF9hZGctMTI0MDI1MDE4NTk3Mzc3NF9hZC03NzUxNTc2OTk1NzE5NV9rd2QtNzc1MTU5Nzg3MjA1MDAlM2Fsb2MtMTkwX2Rldi1jX2V4dC0lMjZtc2Nsa2lkJTNkNTM3ZWFiM2JkZTVlMThkZWUxZjhjMjFiYzEyZmE2MjY&rlid=537eab3bde5e18dee1f8c21bc12fa626
-[DEBUG] All search attempts failed.
-[DEBUG] Found soup in cache for Find Me in Your Memory 2020 on mydramalist.
 [DEBUG] Initiating search for: Unforgettable Love 2021 on mydramalist.com
 [DEBUG] Executing search query: "Unforgettable Love 2021" site:mydramalist.com
-[DEBUG] Found candidate URL: https://mydramalist.com/696973-unforgettable-love
+[DEBUG] Found candidate URL: https://mydramalist.com/66371-unforgettable-love
 [DEBUG] Landmark validation passed. This is the correct page.
-[DEBUG] 'Duration:' field not found on MyDramaList.
-[DEBUG] Initiating search for: Unforgettable Love 2021 on asianwiki.com
-[DEBUG] Executing search query: "Unforgettable Love 2021" site:asianwiki.com
-[DEBUG] Executing search query: "Unforgettable Love 2021" site:asianwiki.com
-[DEBUG] Search attempt failed for query '"Unforgettable Love 2021" site:asianwiki.com': No results found.
-[DEBUG] Executing search query: "Unforgettable Love 2021 drama" site:asianwiki.com
-[DEBUG] Search attempt failed for query '"Unforgettable Love 2021 drama" site:asianwiki.com': No results found.
-[DEBUG] All search attempts failed.
-[DEBUG] Found soup in cache for Unforgettable Love 2021 on mydramalist.
-[DEBUG] Found soup in cache for Unforgettable Love 2021 on asianwiki.
+[DEBUG] Initiating search for: Unforgettable Love 2021 on mydramalist.com
+[DEBUG] Executing search query: "Unforgettable Love 2021" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/66371-unforgettable-love
+[DEBUG] Landmark validation passed. This is the correct page.
 [DEBUG] Initiating search for: Boys Over Flowers 2009 on asianwiki.com
 [DEBUG] Executing search query: "Boys Over Flowers 2009" site:asianwiki.com
 [DEBUG] Found candidate URL: https://asianwiki.com/Boys_Over_Flowers_-_Korean_Drama
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
 [DEBUG] Found candidate URL: https://asianwiki.com/File:Boys_Over_Flowers_(2009-South_Korea-KBS2)-33.jpg
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
 [DEBUG] Found candidate URL: https://asianwiki.com/File:Boys_Over_Flowers_(2009-South_Korea-KBS2)-09.jpg
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
 [DEBUG] Found candidate URL: https://asianwiki.com/File:Boys_Over_Flowers_(2009-South_Korea-KBS2)-11.jpg
-[DEBUG] Found candidate URL: https://asianwiki.com/File:Boys_Over_Flowers_(2009-South_Korea-KBS2)-06.jpg
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/File:Boys_Over_Flowers_(2009-South_Korea-KBS2)-05.jpg
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
 [DEBUG] Executing search query: "Boys Over Flowers 2009" site:asianwiki.com
 [DEBUG] Found candidate URL: https://asianwiki.com/Boys_Over_Flowers_-_Korean_Drama
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
 [DEBUG] Found candidate URL: https://asianwiki.com/File:Boys_Over_Flowers_(2009-South_Korea-KBS2)-33.jpg
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
 [DEBUG] Found candidate URL: https://asianwiki.com/File:Boys_Over_Flowers_(2009-South_Korea-KBS2)-11.jpg
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
 [DEBUG] Found candidate URL: https://asianwiki.com/File:Boys_Over_Flowers_(2009-South_Korea-KBS2)-09.jpg
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
 [DEBUG] Found candidate URL: https://asianwiki.com/File:Boys_Over_Flowers_(2009-South_Korea-KBS2)-06.jpg
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Executing search query: "Boys Over Flowers 2009 drama" site:asianwiki.com
+[DEBUG] Search attempt failed for query '"Boys Over Flowers 2009 drama" site:asianwiki.com': No results found.
+[DEBUG] All search attempts failed.
+[DEBUG] Initiating search for: Boys Over Flowers 2009 on mydramalist.com
+[DEBUG] Executing search query: "Boys Over Flowers 2009" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/2987-boys-over-flowers
+[DEBUG] Landmark validation passed. This is the correct page.
+[DEBUG] Initiating search for: Boys Over Flowers 2009 on asianwiki.com
+[DEBUG] Executing search query: "Boys Over Flowers 2009" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Boys_Over_Flowers_-_Korean_Drama
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Boys_Over_Flowers
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/index.php?title=File:Boys_Over_Flowers_(2009-South_Korea-KBS2)-09.jpg
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Boys_Over_Flowers_Season_2
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/index.php?title=File:Boys_Over_Flowers_(2009-South_Korea-KBS2)-15.jpg
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Executing search query: "Boys Over Flowers 2009" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Boys_Over_Flowers_-_Korean_Drama
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Boys_Over_Flowers
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/index.php?title=File:Boys_Over_Flowers_(2009-South_Korea-KBS2)-09.jpg
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Boys_Over_Flowers_Season_2
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/File:Boys_Over_Flowers_(2009-South_Korea-KBS2)-17.jpg
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
 [DEBUG] Executing search query: "Boys Over Flowers 2009 drama" site:asianwiki.com
 [DEBUG] Search attempt failed for query '"Boys Over Flowers 2009 drama" site:asianwiki.com': No results found.
 [DEBUG] All search attempts failed.
@@ -58,17 +85,78 @@
 [DEBUG] Landmark validation passed. This is the correct page.
 [DEBUG] Downloading high-quality image from: https://i.mydramalist.com/peoVE_4c.jpg?v=1
 [DEBUG] Image saved to images/104.jpg
-[DEBUG] Found soup in cache for Boys Over Flowers 2009 on mydramalist.
-[DEBUG] Found soup in cache for Boys Over Flowers 2009 on asianwiki.
-[DEBUG] Found soup in cache for Boys Over Flowers 2009 on mydramalist.
-[DEBUG] Found soup in cache for Boys Over Flowers 2009 on asianwiki.
-[DEBUG] Found soup in cache for Boys Over Flowers 2009 on mydramalist.
-[DEBUG] Found soup in cache for Boys Over Flowers 2009 on mydramalist.
+[DEBUG] Initiating search for: Boys Over Flowers 2009 on mydramalist.com
+[DEBUG] Executing search query: "Boys Over Flowers 2009" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/2987-boys-over-flowers
+[DEBUG] Landmark validation passed. This is the correct page.
+[DEBUG] 'Also Known As:' field not found on MyDramaList.
+[DEBUG] Initiating search for: Boys Over Flowers 2009 on asianwiki.com
+[DEBUG] Executing search query: "Boys Over Flowers 2009" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Boys_Over_Flowers_-_Korean_Drama
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/File:Boys_Over_Flowers_(2009-South_Korea-KBS2)-33.jpg
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/File:Boys_Over_Flowers_(2009-South_Korea-KBS2)-09.jpg
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/File:Boys_Over_Flowers_(2009-South_Korea-KBS2)-11.jpg
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/File:Boys_Over_Flowers_(2009-South_Korea-KBS2)-06.jpg
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Executing search query: "Boys Over Flowers 2009" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Boys_Over_Flowers_-_Korean_Drama
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Boys_Over_Flowers
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/index.php?title=File:Boys_Over_Flowers_(2009-South_Korea-KBS2)-09.jpg
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Boys_Over_Flowers_Season_2
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/index.php?title=File:Boys_Over_Flowers_(2009-South_Korea-KBS2)-15.jpg
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Executing search query: "Boys Over Flowers 2009 drama" site:asianwiki.com
+[DEBUG] Search attempt failed for query '"Boys Over Flowers 2009 drama" site:asianwiki.com': No results found.
+[DEBUG] All search attempts failed.
+[DEBUG] Initiating search for: Boys Over Flowers 2009 on asianwiki.com
+[DEBUG] Executing search query: "Boys Over Flowers 2009" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Boys_Over_Flowers_-_Korean_Drama
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/File:Boys_Over_Flowers_(2009-South_Korea-KBS2)-33.jpg
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/File:Boys_Over_Flowers_(2009-South_Korea-KBS2)-11.jpg
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/File:Boys_Over_Flowers_(2009-South_Korea-KBS2)-09.jpg
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/File:Boys_Over_Flowers_(2009-South_Korea-KBS2)-06.jpg
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Executing search query: "Boys Over Flowers 2009" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Boys_Over_Flowers_-_Korean_Drama
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Boys_Over_Flowers
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/index.php?title=File:Boys_Over_Flowers_(2009-South_Korea-KBS2)-09.jpg
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Boys_Over_Flowers_Season_2
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/index.php?title=File:Boys_Over_Flowers_(2009-South_Korea-KBS2)-15.jpg
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Executing search query: "Boys Over Flowers 2009 drama" site:asianwiki.com
+[DEBUG] Search attempt failed for query '"Boys Over Flowers 2009 drama" site:asianwiki.com': No results found.
+[DEBUG] All search attempts failed.
+[DEBUG] Initiating search for: Boys Over Flowers 2009 on mydramalist.com
+[DEBUG] Executing search query: "Boys Over Flowers 2009" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/2987-boys-over-flowers
+[DEBUG] Landmark validation passed. This is the correct page.
+[DEBUG] Initiating search for: Boys Over Flowers 2009 on mydramalist.com
+[DEBUG] Executing search query: "Boys Over Flowers 2009" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/2987-boys-over-flowers
+[DEBUG] Landmark validation passed. This is the correct page.
 [DEBUG] Initiating search for: Uncontrollably Fond 2016 on asianwiki.com
 [DEBUG] Executing search query: "Uncontrollably Fond 2016" site:asianwiki.com
 [DEBUG] Found candidate URL: https://asianwiki.com/Uncontrollably_Fond
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
 [DEBUG] Executing search query: "Uncontrollably Fond 2016" site:asianwiki.com
 [DEBUG] Found candidate URL: https://asianwiki.com/Uncontrollably_Fond
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
 [DEBUG] Executing search query: "Uncontrollably Fond 2016 drama" site:asianwiki.com
 [DEBUG] Search attempt failed for query '"Uncontrollably Fond 2016 drama" site:asianwiki.com': No results found.
 [DEBUG] All search attempts failed.
@@ -78,15 +166,190 @@
 [DEBUG] Executing search query: "Uncontrollably Fond 2016 drama" site:mydramalist.com
 [DEBUG] Search attempt failed for query '"Uncontrollably Fond 2016 drama" site:mydramalist.com': No results found.
 [DEBUG] All search attempts failed.
-[DEBUG] Found soup in cache for Uncontrollably Fond 2016 on asianwiki.
-[DEBUG] Found soup in cache for Uncontrollably Fond 2016 on mydramalist.
-[DEBUG] Found soup in cache for Uncontrollably Fond 2016 on asianwiki.
-[DEBUG] Found soup in cache for Uncontrollably Fond 2016 on mydramalist.
-[DEBUG] Found soup in cache for Uncontrollably Fond 2016 on mydramalist.
-[DEBUG] Found soup in cache for Uncontrollably Fond 2016 on asianwiki.
-[DEBUG] Found soup in cache for Uncontrollably Fond 2016 on mydramalist.
-[DEBUG] Found soup in cache for Uncontrollably Fond 2016 on asianwiki.
-[DEBUG] Skipping metadata backup for 105: no new data fetched.
-✅ Report written -> reports/Report_21_November_2025_1345.txt
+[DEBUG] Initiating search for: Uncontrollably Fond 2016 on asianwiki.com
+[DEBUG] Executing search query: "Uncontrollably Fond 2016" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Uncontrollably_Fond
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Executing search query: "Uncontrollably Fond 2016" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Uncontrollably_Fond
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Executing search query: "Uncontrollably Fond 2016 drama" site:asianwiki.com
+[DEBUG] Search attempt failed for query '"Uncontrollably Fond 2016 drama" site:asianwiki.com': No results found.
+[DEBUG] All search attempts failed.
+[DEBUG] Initiating search for: Uncontrollably Fond 2016 on mydramalist.com
+[DEBUG] Executing search query: "Uncontrollably Fond 2016" site:mydramalist.com
+[DEBUG] Executing search query: "Uncontrollably Fond 2016" site:mydramalist.com
+[DEBUG] Executing search query: "Uncontrollably Fond 2016 drama" site:mydramalist.com
+[DEBUG] Search attempt failed for query '"Uncontrollably Fond 2016 drama" site:mydramalist.com': No results found.
+[DEBUG] All search attempts failed.
+[DEBUG] Initiating search for: Uncontrollably Fond 2016 on mydramalist.com
+[DEBUG] Executing search query: "Uncontrollably Fond 2016" site:mydramalist.com
+[DEBUG] Found candidate URL: https://www.bing.com/aclick?ld=e8cka5_5Q2rBMbllGld0XrFjVUCUzEru1FE-S-NN1LoS112UKlDrwDKo6dDlGyiHV71ge8cYRrI-mEYCEXtv4fp5vHwJDabGBQLA79rOAMnw7-uCaCqox1cJAljZbuecCTkps3zWIAWffWhLSr_G4F-QoAzDOy9n-5mwh-Q_hes8Zdo8EO-1c24E8EbSl51WSA9fJOg7xuC01pWBFPCzM1zSZVn1k&u=aHR0cHMlM2ElMmYlMmZ3d3cuYW1hem9uLmNvbSUyZnMlMmYlM2ZpZSUzZFVURjglMjZrZXl3b3JkcyUzZHVuY29udHJvbGxhYmx5JTJiZm9uZCUyYmR2ZCUyNmluZGV4JTNkYXBzJTI2dGFnJTNkbWgwYi0yMCUyNnJlZiUzZHBkX3NsXzFtZGYyYjQwNXJfcCUyNmFkZ3JwaWQlM2QxMzQ1ODAzNDM5MDg1MzEwJTI2aHZhZGlkJTNkODQxMTMwMTc3NTczMzMlMjZodm5ldHclM2RvJTI2aHZxbXQlM2RwJTI2aHZibXQlM2RicCUyNmh2ZGV2JTNkYyUyNmh2bG9jaW50JTNkJTI2aHZsb2NwaHklM2Q0ODc5MiUyNmh2dGFyZ2lkJTNka3dkLTg0MTEzNTE1ODcxNDQ5JTNhbG9jLTE5MCUyNmh5ZGFkY3IlM2Q3ODg1XzEzNTg0MDU1JTI2bWNpZCUzZDhjNDE0ODVlZmEwYTNhNzViMThjODc3MDJjMTM2ZTU5JTI2bXNjbGtpZCUzZDFlZDUwODkxNDhhNDExYWNiZWE1NjFiMTZhMjQ0NDY5&rlid=1ed5089148a411acbea561b16a244469
+[DEBUG] HTTP Error 503 for https://www.bing.com/aclick?ld=e8cka5_5Q2rBMbllGld0XrFjVUCUzEru1FE-S-NN1LoS112UKlDrwDKo6dDlGyiHV71ge8cYRrI-mEYCEXtv4fp5vHwJDabGBQLA79rOAMnw7-uCaCqox1cJAljZbuecCTkps3zWIAWffWhLSr_G4F-QoAzDOy9n-5mwh-Q_hes8Zdo8EO-1c24E8EbSl51WSA9fJOg7xuC01pWBFPCzM1zSZVn1k&u=aHR0cHMlM2ElMmYlMmZ3d3cuYW1hem9uLmNvbSUyZnMlMmYlM2ZpZSUzZFVURjglMjZrZXl3b3JkcyUzZHVuY29udHJvbGxhYmx5JTJiZm9uZCUyYmR2ZCUyNmluZGV4JTNkYXBzJTI2dGFnJTNkbWgwYi0yMCUyNnJlZiUzZHBkX3NsXzFtZGYyYjQwNXJfcCUyNmFkZ3JwaWQlM2QxMzQ1ODAzNDM5MDg1MzEwJTI2aHZhZGlkJTNkODQxMTMwMTc3NTczMzMlMjZodm5ldHclM2RvJTI2aHZxbXQlM2RwJTI2aHZibXQlM2RicCUyNmh2ZGV2JTNkYyUyNmh2bG9jaW50JTNkJTI2aHZsb2NwaHklM2Q0ODc5MiUyNmh2dGFyZ2lkJTNka3dkLTg0MTEzNTE1ODcxNDQ5JTNhbG9jLTE5MCUyNmh5ZGFkY3IlM2Q3ODg1XzEzNTg0MDU1JTI2bWNpZCUzZDhjNDE0ODVlZmEwYTNhNzViMThjODc3MDJjMTM2ZTU5JTI2bXNjbGtpZCUzZDFlZDUwODkxNDhhNDExYWNiZWE1NjFiMTZhMjQ0NDY5&rlid=1ed5089148a411acbea561b16a244469
+[DEBUG] Found candidate URL: https://mydramalist.com/15320-uncontrollably-fond
+[DEBUG] Landmark validation passed. This is the correct page.
+[DEBUG] 'Also Known As:' field not found on MyDramaList.
+[DEBUG] Initiating search for: Uncontrollably Fond 2016 on asianwiki.com
+[DEBUG] Executing search query: "Uncontrollably Fond 2016" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Uncontrollably_Fond
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Executing search query: "Uncontrollably Fond 2016" site:asianwiki.com
+[DEBUG] Found candidate URL: https://www.bing.com/aclick?ld=e84V1b9VsLopwgI-cLJT_rtjVUCUwsZeWdThCtchN9EQyah-YBclS5e3JFWW0Rv_jCMf4mFiYxv_ihVuUxVVhl1YPyNRt5PhAsKQ85zGmFK6EGuO0Rv9H6pL_eHkREQTQlA6CYjyExp9riXXuHYzulJU6S75uJlgbNuCpm4W-Qoc-9Wtiayimzo8-t6i7A-S0OkyMyLdFhbEcxk9FvhgQLOkyW8ww&u=aHR0cHMlM2ElMmYlMmZ3d3cuYW1hem9uLmNvbSUyZnMlMmYlM2ZpZSUzZFVURjglMjZrZXl3b3JkcyUzZHVuY29udHJvbGxhYmx5JTJiZm9uZCUyYmR2ZCUyNmluZGV4JTNkYXBzJTI2dGFnJTNkbWgwYi0yMCUyNnJlZiUzZHBkX3NsXzFtZGYyYjQwNXJfcCUyNmFkZ3JwaWQlM2QxMzQ1ODAzNDM5MDg1MzEwJTI2aHZhZGlkJTNkODQxMTI4OTA2OTAzNTIlMjZodm5ldHclM2RvJTI2aHZxbXQlM2RwJTI2aHZibXQlM2RicCUyNmh2ZGV2JTNkYyUyNmh2bG9jaW50JTNkJTI2aHZsb2NwaHklM2Q0ODc5MiUyNmh2dGFyZ2lkJTNka3dkLTg0MTEzNTE1ODcxNDQ5JTNhbG9jLTE5MCUyNmh5ZGFkY3IlM2Q3ODg1XzEzNDY3NjAyJTI2bWNpZCUzZDhjNDE0ODVlZmEwYTNhNzViMThjODc3MDJjMTM2ZTU5JTI2bXNjbGtpZCUzZGU2NTk5MGM2OTM4ZDFkNTc0MmRjZjllNmIxMGIzOWYw&rlid=e65990c6938d1d5742dcf9e6b10b39f0
+[DEBUG] HTTP Error 503 for https://www.bing.com/aclick?ld=e84V1b9VsLopwgI-cLJT_rtjVUCUwsZeWdThCtchN9EQyah-YBclS5e3JFWW0Rv_jCMf4mFiYxv_ihVuUxVVhl1YPyNRt5PhAsKQ85zGmFK6EGuO0Rv9H6pL_eHkREQTQlA6CYjyExp9riXXuHYzulJU6S75uJlgbNuCpm4W-Qoc-9Wtiayimzo8-t6i7A-S0OkyMyLdFhbEcxk9FvhgQLOkyW8ww&u=aHR0cHMlM2ElMmYlMmZ3d3cuYW1hem9uLmNvbSUyZnMlMmYlM2ZpZSUzZFVURjglMjZrZXl3b3JkcyUzZHVuY29udHJvbGxhYmx5JTJiZm9uZCUyYmR2ZCUyNmluZGV4JTNkYXBzJTI2dGFnJTNkbWgwYi0yMCUyNnJlZiUzZHBkX3NsXzFtZGYyYjQwNXJfcCUyNmFkZ3JwaWQlM2QxMzQ1ODAzNDM5MDg1MzEwJTI2aHZhZGlkJTNkODQxMTI4OTA2OTAzNTIlMjZodm5ldHclM2RvJTI2aHZxbXQlM2RwJTI2aHZibXQlM2RicCUyNmh2ZGV2JTNkYyUyNmh2bG9jaW50JTNkJTI2aHZsb2NwaHklM2Q0ODc5MiUyNmh2dGFyZ2lkJTNka3dkLTg0MTEzNTE1ODcxNDQ5JTNhbG9jLTE5MCUyNmh5ZGFkY3IlM2Q3ODg1XzEzNDY3NjAyJTI2bWNpZCUzZDhjNDE0ODVlZmEwYTNhNzViMThjODc3MDJjMTM2ZTU5JTI2bXNjbGtpZCUzZGU2NTk5MGM2OTM4ZDFkNTc0MmRjZjllNmIxMGIzOWYw&rlid=e65990c6938d1d5742dcf9e6b10b39f0
+[DEBUG] Found candidate URL: https://asianwiki.com/Uncontrollably_Fond
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Executing search query: "Uncontrollably Fond 2016 drama" site:asianwiki.com
+[DEBUG] Search attempt failed for query '"Uncontrollably Fond 2016 drama" site:asianwiki.com': No results found.
+[DEBUG] All search attempts failed.
+[DEBUG] Initiating search for: Uncontrollably Fond 2016 on asianwiki.com
+[DEBUG] Executing search query: "Uncontrollably Fond 2016" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Uncontrollably_Fond
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Executing search query: "Uncontrollably Fond 2016" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Uncontrollably_Fond
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Executing search query: "Uncontrollably Fond 2016 drama" site:asianwiki.com
+[DEBUG] Search attempt failed for query '"Uncontrollably Fond 2016 drama" site:asianwiki.com': No results found.
+[DEBUG] All search attempts failed.
+[DEBUG] Initiating search for: Uncontrollably Fond 2016 on mydramalist.com
+[DEBUG] Executing search query: "Uncontrollably Fond 2016" site:mydramalist.com
+[DEBUG] Executing search query: "Uncontrollably Fond 2016" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/15320-uncontrollably-fond
+[DEBUG] Landmark validation passed. This is the correct page.
+[DEBUG] Initiating search for: Uncontrollably Fond 2016 on mydramalist.com
+[DEBUG] Executing search query: "Uncontrollably Fond 2016" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/15320-uncontrollably-fond
+[DEBUG] Landmark validation passed. This is the correct page.
+[DEBUG] Initiating search for: Crash Landing On You 2019 on asianwiki.com
+[DEBUG] Executing search query: "Crash Landing On You 2019" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Crash_Landing_on_You
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/main-poster-for-tvn-drama-series-crash-landing-on-you-netflix-to-also-stream
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/first-teaser-trailer-for-crash-landing-on-you
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/teaser-trailer-3-for-tvn-drama-series-crash-landing-on-you
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/teaser-trailer-4-for-tvn-drama-series-crash-landing-on-you
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Executing search query: "Crash Landing On You 2019" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Crash_Landing_on_You
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/main-poster-for-tvn-drama-series-crash-landing-on-you-netflix-to-also-stream
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/first-teaser-trailer-for-crash-landing-on-you
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/teaser-trailer-3-for-tvn-drama-series-crash-landing-on-you
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/teaser-trailer-4-for-tvn-drama-series-crash-landing-on-you
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Executing search query: "Crash Landing On You 2019 drama" site:asianwiki.com
+[DEBUG] Search attempt failed for query '"Crash Landing On You 2019 drama" site:asianwiki.com': No results found.
+[DEBUG] All search attempts failed.
+[DEBUG] Initiating search for: Crash Landing On You 2019 on mydramalist.com
+[DEBUG] Executing search query: "Crash Landing On You 2019" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/35729-emergency-lands-of-love
+[DEBUG] Landmark validation passed. This is the correct page.
+[DEBUG] Initiating search for: Crash Landing On You 2019 on asianwiki.com
+[DEBUG] Executing search query: "Crash Landing On You 2019" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Crash_Landing_on_You
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/main-poster-for-tvn-drama-series-crash-landing-on-you-netflix-to-also-stream
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/first-teaser-trailer-for-crash-landing-on-you
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/teaser-trailer-3-for-tvn-drama-series-crash-landing-on-you
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/teaser-trailer-4-for-tvn-drama-series-crash-landing-on-you
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Executing search query: "Crash Landing On You 2019" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Crash_Landing_on_You
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/main-poster-for-tvn-drama-series-crash-landing-on-you-netflix-to-also-stream
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/first-teaser-trailer-for-crash-landing-on-you
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/teaser-trailer-3-for-tvn-drama-series-crash-landing-on-you
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/teaser-trailer-4-for-tvn-drama-series-crash-landing-on-you
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Executing search query: "Crash Landing On You 2019 drama" site:asianwiki.com
+[DEBUG] Search attempt failed for query '"Crash Landing On You 2019 drama" site:asianwiki.com': No results found.
+[DEBUG] All search attempts failed.
+[DEBUG] Initiating search for: Crash Landing On You 2019 on mydramalist.com
+[DEBUG] Executing search query: "Crash Landing On You 2019" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/35729-emergency-lands-of-love
+[DEBUG] Landmark validation passed. This is the correct page.
+[DEBUG] Downloading high-quality image from: https://i.mydramalist.com/g0wylo_4c.jpg?v=1
+[DEBUG] Image saved to images/106.jpg
+[DEBUG] Initiating search for: Crash Landing On You 2019 on mydramalist.com
+[DEBUG] Executing search query: "Crash Landing On You 2019" site:mydramalist.com
+[DEBUG] Executing search query: "Crash Landing On You 2019" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/35729-emergency-lands-of-love
+[DEBUG] Landmark validation passed. This is the correct page.
+[DEBUG] 'Also Known As:' field not found on MyDramaList.
+[DEBUG] Initiating search for: Crash Landing On You 2019 on asianwiki.com
+[DEBUG] Executing search query: "Crash Landing On You 2019" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Crash_Landing_on_You
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/main-poster-for-tvn-drama-series-crash-landing-on-you-netflix-to-also-stream
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/first-teaser-trailer-for-crash-landing-on-you
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/teaser-trailer-3-for-tvn-drama-series-crash-landing-on-you
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/teaser-trailer-4-for-tvn-drama-series-crash-landing-on-you
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Executing search query: "Crash Landing On You 2019" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Crash_Landing_on_You
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/main-poster-for-tvn-drama-series-crash-landing-on-you-netflix-to-also-stream
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/first-teaser-trailer-for-crash-landing-on-you
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/teaser-trailer-3-for-tvn-drama-series-crash-landing-on-you
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/teaser-trailer-4-for-tvn-drama-series-crash-landing-on-you
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Executing search query: "Crash Landing On You 2019 drama" site:asianwiki.com
+[DEBUG] Search attempt failed for query '"Crash Landing On You 2019 drama" site:asianwiki.com': No results found.
+[DEBUG] All search attempts failed.
+[DEBUG] Initiating search for: Crash Landing On You 2019 on asianwiki.com
+[DEBUG] Executing search query: "Crash Landing On You 2019" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Crash_Landing_on_You
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/main-poster-for-tvn-drama-series-crash-landing-on-you-netflix-to-also-stream
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/first-teaser-trailer-for-crash-landing-on-you
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/teaser-trailer-3-for-tvn-drama-series-crash-landing-on-you
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/teaser-trailer-4-for-tvn-drama-series-crash-landing-on-you
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Executing search query: "Crash Landing On You 2019" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Crash_Landing_on_You
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/main-poster-for-tvn-drama-series-crash-landing-on-you-netflix-to-also-stream
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/first-teaser-trailer-for-crash-landing-on-you
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/teaser-trailer-3-for-tvn-drama-series-crash-landing-on-you
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/teaser-trailer-4-for-tvn-drama-series-crash-landing-on-you
+[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Executing search query: "Crash Landing On You 2019 drama" site:asianwiki.com
+[DEBUG] Search attempt failed for query '"Crash Landing On You 2019 drama" site:asianwiki.com': No results found.
+[DEBUG] All search attempts failed.
+[DEBUG] Initiating search for: Crash Landing On You 2019 on mydramalist.com
+[DEBUG] Executing search query: "Crash Landing On You 2019" site:mydramalist.com
+[DEBUG] Executing search query: "Crash Landing On You 2019" site:mydramalist.com
+[DEBUG] Executing search query: "Crash Landing On You 2019 drama" site:mydramalist.com
+[DEBUG] Search attempt failed for query '"Crash Landing On You 2019 drama" site:mydramalist.com': No results found.
+[DEBUG] All search attempts failed.
+[DEBUG] Initiating search for: Crash Landing On You 2019 on mydramalist.com
+[DEBUG] Executing search query: "Crash Landing On You 2019" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/35729-emergency-lands-of-love
+[DEBUG] Landmark validation passed. This is the correct page.
+✅ Report written -> reports/Report_21_November_2025_1359.txt
 
 All done.

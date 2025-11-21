@@ -1,0 +1,74 @@
+✅ Workflow completed successfully
+🆔 Run ID: RUN_20251121_135556
+📅 Run Time: 21 November 2025 01:59 PM (IST)
+🕒 Duration: 3 min 11 sec
+⚙️ Script Version: v3.0
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Sheet1 — 21 November 2025 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🆕 Data Created:
+- 106 - Crash Landing On You (2019) -> First Time Uploaded
+
+🔁 Data Updated:
+✍️ 102 - Find Me in Your Memory -> Metadata Updated
+✍️ 103 - Unforgettable Love -> Metadata Updated
+✍️ 104 - Boys Over Flowers -> Metadata Updated
+✍️ 105 - Uncontrollably Fond -> Metadata Updated
+
+🖼️ Fetched Data:
+- 101 - It's Okay That's Love -> Fetched: Duration, Image, Othernames, Releasedate, Synopsis
+- 102 - Find Me in Your Memory -> Fetched: Duration, Image, Othernames, Releasedate, Synopsis
+- 103 - Unforgettable Love -> Fetched: Duration, Image, Othernames, Releasedate, Synopsis
+- 104 - Boys Over Flowers -> Fetched: Duration, Image, Othernames, Releasedate, Synopsis
+- 105 - Uncontrollably Fond -> Fetched: Duration, Releasedate
+- 106 - Crash Landing On You -> Fetched: Duration, Image, Synopsis
+
+🕳️ Value Not Found:
+- 104 - Boys Over Flowers -> ⚠️ Missing: Other Names
+- 105 - Uncontrollably Fond -> ⚠️ Missing: Other Names, Show Image, Synopsis
+- 106 - Crash Landing On You -> ⚠️ Missing: Other Names, Release Date
+
+🚫 Skipped (Unchanged):
+- 101 - It's Okay That's Love (2013)
+
+📊 Summary (Sheet: Sheet1)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Created: 1
+🔁 Updated: 4
+🚫 Skipped: 1
+⚠️ Warnings: 3
+  Total Rows: 6
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 Overall Summary
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Total Created: 1
+🔁 Total Updated: 4
+🖼️ Total Images Updated: 5
+🚫 Total Skipped: 1
+❌ Total Deleted: 0
+⚠️ Total Warnings: 3
+💾 Backup Files: 0
+  Grand Total Rows: 6
+
+💾 Metadata Backups: 5
+
+📦 Total Objects in seriesData.json: 6
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ Folders Generated:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+images/
+    104.jpg
+    106.jpg
+meta_backups/
+    META_21_November_2025_1356_102.json
+    META_21_November_2025_1356_103.json
+    META_21_November_2025_1357_104.json
+    META_21_November_2025_1358_105.json
+    META_21_November_2025_1359_106.json
+reports/
+    Report_21_November_2025_1359.txt
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🏁 Workflow finished successfully
