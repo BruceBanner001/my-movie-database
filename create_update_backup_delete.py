@@ -59,8 +59,11 @@ def now_ist(): return datetime.now(IST)
 def filename_timestamp(): return now_ist().strftime("%d_%B_%Y_%H%M")
 def run_id_timestamp(): return now_ist().strftime("RUN_%Y%m%d_%H%M%S")
 
+# FIX: Added new archive directories
 JSON_FILE, BACKUP_DIR, IMAGES_DIR, DELETE_IMAGES_DIR = "seriesData.json", "backups", "images", "deleted-images"
 DELETED_DATA_DIR, REPORTS_DIR, BACKUP_META_DIR = "deleted-data", "reports", "backup-meta-data"
+ARCHIVED_BACKUPS_DIR, ARCHIVED_META_DIR = "archived-backups", "archived-backup-meta-data"
+
 DEBUG_FETCH = os.environ.get("DEBUG_FETCH", "false").lower() == "true"
 GITHUB_PAGES_URL = os.environ.get("GITHUB_PAGES_URL", "").strip()
 SERVICE_ACCOUNT_FILE, EXCEL_FILE_ID_TXT = "GDRIVE_SERVICE_ACCOUNT.json", "EXCEL_FILE_ID.txt"
@@ -107,8 +110,7 @@ def get_soup_from_search(query_base, site, language, soup_cache):
     expected_country = LANG_TO_COUNTRY_MAP.get(language.lower())
     logd(f"Initiating search for: '{query_base}' on {site}.com (Expected Country: {expected_country})")
     if not HAVE_DDGS: logd("DDGS library not available."); return None, None
-    clean_query = query_base.split("(")[0].strip()
-    search_queries = [ f'"{query_base}" {language} site:{site}.com', f'"{clean_query}" {language} drama site:{site}.com' ]
+    search_queries = [ f'"{query_base}" {language} site:{site}.com', f'"{query_base}" site:{site}.com' ]
     for query in search_queries:
         logd(f"Executing search query: {query}")
         try:
@@ -167,7 +169,6 @@ def download_and_save_image(url, local_path):
     return False
 def build_absolute_url(local_path): return f"{GITHUB_PAGES_URL.rstrip('/')}/{local_path.replace(os.sep, '/')}"
 
-# --- Scraper Functions (all now accept soup, sid and have defensive try/except blocks) ---
 def _scrape_synopsis_from_asianwiki(soup, sid):
     try:
         plot_element = soup.find('span', id=re.compile(r"Synopsis|Plot", re.IGNORECASE))
@@ -268,9 +269,17 @@ def fetch_and_populate_metadata(obj, context):
             primary_site, fallback_site = priority.get(fetch_key), 'mydramalist' if priority.get(fetch_key) == 'asianwiki' else 'asianwiki'
             for site in [primary_site, fallback_site]:
                 if site:
-                    soup, url = get_soup_from_search(f'{s_name} {s_year}', site, lang, soup_cache)
+                    search_terms = [s_name]
+                    general_name = re.sub(r'\s*\(?Season\s*\d+\)?', '', s_name, flags=re.IGNORECASE).strip()
+                    if general_name != s_name:
+                        search_terms.append(general_name)
+                    
+                    soup, url = None, None
+                    for term in search_terms:
+                        soup, url = get_soup_from_search(f'{term} {s_year}', site, lang, soup_cache)
+                        if soup: break
+
                     if soup:
-                        # FIX: Always pass both soup and sid for consistency
                         args = (soup, s_id)
                         data = SCRAPE_MAP[site][fetch_key](*args)
                         if data:
@@ -282,6 +291,7 @@ def fetch_and_populate_metadata(obj, context):
     context['source_links_temp'] = source_links
     return obj
 
+# FIX: The complete, robust deletion and archiving function
 def process_deletions(excel, json_file, context):
     try: df = pd.read_excel(excel, sheet_name='Deleting Records')
     except ValueError: print("INFO: 'Deleting Records' sheet not found. Skipping deletion step."); return {}, []
@@ -292,18 +302,42 @@ def process_deletions(excel, json_file, context):
     by_id = {int(o['showID']): o for o in data if o.get('showID')}
     to_delete = set(pd.to_numeric(df.iloc[:, 0], errors='coerce').dropna().astype(int))
     deleted, report = set(), {}
+    
+    # Get initial file lists
+    backup_files = os.listdir(BACKUP_DIR) if os.path.exists(BACKUP_DIR) else []
+    meta_files = os.listdir(BACKUP_META_DIR) if os.path.exists(BACKUP_META_DIR) else []
+
     for sid in to_delete:
         if sid in by_id:
             obj = by_id.pop(sid); deleted.add(sid); ts = filename_timestamp()
+            
+            # 1. Archive JSON data
             path = os.path.join(DELETED_DATA_DIR, f"DELETED_{ts}_{sid}.json"); os.makedirs(DELETED_DATA_DIR, exist_ok=True)
             with open(path, 'w', encoding='utf-8') as f: json.dump(obj, f, indent=4, ensure_ascii=False)
             context['files_generated']['deleted_data'].append(path)
             report.setdefault('data_deleted', []).append(f"- {sid} -> {obj.get('showName')} ({obj.get('releasedYear')}) -> ✅ Deleted")
+            
+            # 2. Archive Image
             if obj.get('showImage'):
                 src = os.path.join(IMAGES_DIR, os.path.basename(obj['showImage']))
                 if os.path.exists(src):
                     dest = os.path.join(DELETE_IMAGES_DIR, f"DELETED_{ts}_{sid}.jpg"); os.makedirs(DELETE_IMAGES_DIR, exist_ok=True); shutil.move(src, dest)
                     context['files_generated']['deleted_images'].append(dest)
+            
+            # 3. Archive associated backup files
+            archive_backup_dest_dir = os.path.join(ARCHIVED_BACKUPS_DIR, str(sid)); os.makedirs(archive_backup_dest_dir, exist_ok=True)
+            for f in backup_files:
+                if f.endswith(f"_{sid}.json"):
+                    src = os.path.join(BACKUP_DIR, f); dest = os.path.join(archive_backup_dest_dir, f); shutil.move(src, dest)
+                    context['files_generated']['archived_backups'].append(dest)
+            
+            # 4. Archive associated meta-data files
+            archive_meta_dest_dir = os.path.join(ARCHIVED_META_DIR, str(sid)); os.makedirs(archive_meta_dest_dir, exist_ok=True)
+            for f in meta_files:
+                if f.endswith(f"_{sid}.json"):
+                    src = os.path.join(BACKUP_META_DIR, f); dest = os.path.join(archive_meta_dest_dir, f); shutil.move(src, dest)
+                    context['files_generated']['archived_meta_backups'].append(dest)
+
     if deleted:
         with open(json_file, 'w', encoding='utf-8') as f: json.dump(sorted(list(by_id.values()), key=lambda x: x.get('showID', 0)), f, indent=4, ensure_ascii=False)
     return report, list(deleted)
@@ -390,7 +424,8 @@ def create_diff_backup(old, new, context):
 
 def write_report(context):
     lines = [f"✅ Workflow completed successfully", f"🆔 Run ID: {context['run_id']}", f"📅 Run Time: {now_ist().strftime('%d %B %Y %I:%M %p (IST)')}", f"🕒 Duration: {context['duration_str']}", f"⚙️ Script Version: {SCRIPT_VERSION}", ""]
-    sep, stats = "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", {'created': 0, 'updated': 0, 'skipped': 0, 'deleted': 0, 'warnings': 0, 'images': 0, 'rows': 0, 'refetched': 0}
+    # FIX: Added 'archived' stat
+    sep, stats = "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", {'created': 0, 'updated': 0, 'skipped': 0, 'deleted': 0, 'warnings': 0, 'images': 0, 'rows': 0, 'refetched': 0, 'archived': 0}
     for sheet, changes in context['report_data'].items():
         if not any(v for k, v in changes.items()): continue
         display_sheet = sheet.replace("sheet", "Sheet ").title(); lines.extend([sep, f"🗂️ === {display_sheet} — {now_ist().strftime('%d %B %Y')} ==="]); lines.append(sep)
@@ -412,7 +447,8 @@ def write_report(context):
             lines.extend([f"\n📊 Summary (Sheet: {display_sheet})", sep, f"🆕 Created: {s.get('created', 0)}", f"🔁 Updated: {s.get('updated', 0)}", f"🔍 Refetched: {s.get('refetched', 0)}", f"🚫 Skipped: {s.get('skipped', 0)}", f"⚠️ Warnings: {len(changes.get('data_warnings',[])) + len(changes.get('fetch_warnings',[]))}", f"  Total Rows: {total}"])
         lines.append("")
     stats['deleted'] = len(context['files_generated']['deleted_data'])
-    lines.extend([sep, "📊 Overall Summary", sep, f"🆕 Total Created: {stats['created']}", f"🔁 Total Updated: {stats['updated']}", f"🔍 Total Refetched: {stats['refetched']}", f"🖼️ Total Images Updated: {stats['images']}", f"🚫 Total Skipped: {stats['skipped']}", f"❌ Total Deleted: {stats['deleted']}", f"⚠️ Total Warnings: {stats['warnings']}", f"💾 Backup Files: {len(context['files_generated']['backups'])}", f"  Grand Total Rows: {stats['rows']}", "", f"💾 Metadata Backups: {len(context['files_generated']['meta_backups'])}", ""])
+    stats['archived'] = len(context['files_generated']['archived_backups']) + len(context['files_generated']['archived_meta_backups'])
+    lines.extend([sep, "📊 Overall Summary", sep, f"🆕 Total Created: {stats['created']}", f"🔁 Total Updated: {stats['updated']}", f"🔍 Total Refetched: {stats['refetched']}", f"🖼️ Total Images Updated: {stats['images']}", f"🚫 Total Skipped: {stats['skipped']}", f"❌ Total Deleted: {stats['deleted']}", f"🗄️ Total Archived Backups: {stats['archived']}", f"⚠️ Total Warnings: {stats['warnings']}", f"💾 Backup Files: {len(context['files_generated']['backups'])}", f"  Grand Total Rows: {stats['rows']}", "", f"💾 Metadata Backups: {len(context['files_generated']['meta_backups'])}", ""])
     try:
         with open(JSON_FILE, 'r', encoding='utf-8') as f: lines.append(f"📦 Total Objects in {JSON_FILE}: {len(json.load(f))}")
     except Exception: lines.append(f"📦 Total Objects in {JSON_FILE}: Unknown")
@@ -423,8 +459,11 @@ def write_report(context):
     with open(context['report_file_path'], 'w', encoding='utf-8') as f: f.write("\n".join(lines))
 
 def main():
+    # FIX: Added new archive folders to context
     start_time = now_ist()
-    context = {'run_id': run_id_timestamp(), 'start_time_iso': start_time.isoformat(), 'report_data': {}, 'files_generated': {'backups': [], 'images': [], 'deleted_data': [], 'deleted_images': [], 'meta_backups': [], 'reports': []}}
+    context = {'run_id': run_id_timestamp(), 'start_time_iso': start_time.isoformat(), 'report_data': {}, 
+               'files_generated': {'backups': [], 'images': [], 'deleted_data': [], 'deleted_images': [], 
+                                   'meta_backups': [], 'reports': [], 'archived_backups': [], 'archived_meta_backups': []}}
     if not (os.path.exists(EXCEL_FILE_ID_TXT) and os.path.exists(SERVICE_ACCOUNT_FILE)): print("❌ Missing GDrive credentials."); sys.exit(1)
     try:
         with open(EXCEL_FILE_ID_TXT, 'r') as f: excel_id = f.read().strip()
