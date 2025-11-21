@@ -75,20 +75,17 @@ def ddmmyyyy(val):
     except Exception: return None
 def normalize_list(val):
     if val is None: return []
-    # FIX: Handle both list and string inputs for comparison
     if isinstance(val, list): items = val
     else: items = [p.strip() for p in str(val).split(',') if p.strip()]
     return sorted([item for item in items if item])
 
 def objects_differ(old, new):
-    keys = set(old.keys()) | set(new.keys()) - LOCKED_FIELDS_AFTER_CREATION
-    for k in keys:
+    excel_fields = set(FIELD_NAME_MAP.keys()) - LOCKED_FIELDS_AFTER_CREATION
+    for k in excel_fields:
         old_val = old.get(k)
         new_val = new.get(k)
-        # Special handling for otherNames which can be a string
         if k == 'otherNames':
             if str(old_val or "") != str(new_val or ""): return True
-        # Original list comparison for other fields
         elif normalize_list(old_val) != normalize_list(new_val): return True
     return False
 
@@ -96,11 +93,7 @@ def get_soup_from_search(query_base, site):
     logd(f"Initiating search for: {query_base} on {site}.com")
     if not HAVE_DDGS: logd("DDGS library not available."); return None, None
     clean_query = query_base.split("(")[0].strip()
-    search_queries = [
-        f'"{query_base}" site:{site}.com',
-        f'"{clean_query}" site:{site}.com',
-        f'"{clean_query} drama" site:{site}.com'
-    ]
+    search_queries = [ f'"{query_base}" site:{site}.com', f'"{clean_query}" site:{site}.com' ]
     for query in search_queries:
         logd(f"Executing search query: {query}")
         try:
@@ -110,7 +103,14 @@ def get_soup_from_search(query_base, site):
                 if not results: continue
                 for res in results:
                     url = res.get('href', '')
-                    if not url or any(bad in url for bad in ['/reviews', '/episode', '/cast', '/recs', '?lang=', '/photos']): continue
+                    # FIX: Stricter URL validation to ignore invalid links
+                    if not url or 'bing.com' in url or any(bad in url for bad in ['/reviews', '/episode', '/cast', '/recs', '?lang=', '/photos']): continue
+                    
+                    # FIX: The Root Cause Fix - Never validate image file pages
+                    if site == "asianwiki" and ("/File:" in url or "/index.php?title=File:" in url):
+                        logd(f"Rejecting invalid AsianWiki file URL: {url}")
+                        continue
+
                     logd(f"Found candidate URL: {url}")
                     r = SCRAPER.get(url, timeout=15)
                     if r.status_code == 200:
@@ -324,7 +324,7 @@ def save_metadata_backup(obj, context):
     fetched = {}
     source_links = context.get('source_links_temp', {})
     for key, site in obj.get('sitePriorityUsed', {}).items():
-        if site and site != "Manual": # Don't backup manual entries as fetched
+        if site and site != "Manual":
             target_key = "showImage" if key == "image" else "Duration" if key == "duration" else key
             field_data = {"value": obj.get(target_key), "source": site}
             if key in source_links: field_data["source_link"] = source_links[key]
@@ -350,25 +350,27 @@ def create_diff_backup(old, new, context):
 
 def write_report(context):
     lines = [f"✅ Workflow completed successfully", f"🆔 Run ID: {context['run_id']}", f"📅 Run Time: {now_ist().strftime('%d %B %Y %I:%M %p (IST)')}", f"🕒 Duration: {context['duration_str']}", f"⚙️ Script Version: {SCRIPT_VERSION}", ""]
-    sep, stats = "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", {'created': 0, 'updated': 0, 'skipped': 0, 'deleted': 0, 'warnings': 0, 'images': 0, 'rows': 0}
+    sep, stats = "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", {'created': 0, 'updated': 0, 'skipped': 0, 'deleted': 0, 'warnings': 0, 'images': 0, 'rows': 0, 'refetched': 0}
     for sheet, changes in context['report_data'].items():
         if not any(v for k, v in changes.items()): continue
         display_sheet = sheet.replace("sheet", "Sheet ").title(); lines.extend([sep, f"🗂️ === {display_sheet} — {now_ist().strftime('%d %B %Y')} ==="]); lines.append(sep)
         if changes.get('created'): lines.append("\n🆕 Data Created:"); [lines.append(f"- {o['showID']} - {o['showName']} ({o.get('releasedYear')}) -> {o.get('updatedDetails', '')}") for o in changes['created']]
         if changes.get('updated'): lines.append("\n🔁 Data Updated:"); [lines.append(f"✍️ {p['new']['showID']} - {p['new']['showName']} -> {p['new']['updatedDetails']}") for p in changes['updated']]
+        # FIX: New Reporting Section
+        if changes.get('refetched'): lines.append("\n🔍 Refetched Data:"); [lines.append(f"✨ {o['showID']} - {o['showName']} -> Metadata Refreshed") for o in changes['refetched']]; stats['refetched'] += len(changes.get('refetched', []))
         if changes.get('data_warnings'): lines.append("\n⚠️ Data Validation Warnings:"); [lines.append(i) for i in changes['data_warnings']]; stats['warnings'] += len(changes['data_warnings'])
-        if changes.get('fetched_data'): lines.append("\n🖼️ Fetched Data:"); [lines.append(i) for i in sorted(changes['fetched_data'])]
+        if changes.get('fetched_data'): lines.append("\n🖼️ Fetched Data Details:"); [lines.append(i) for i in sorted(changes['fetched_data'])]
         if changes.get('fetch_warnings'): lines.append("\n🕳️ Value Not Found:"); [lines.append(i) for i in sorted(changes['fetch_warnings'])]; stats['warnings'] += len(changes['fetch_warnings'])
         if changes.get('skipped'): lines.append("\n🚫 Skipped (Unchanged):"); [lines.append(f"- {i}") for i in sorted(changes['skipped'])]
         if changes.get('data_deleted'): lines.append("\n❌ Data Deleted:"); [lines.append(i) for i in changes['data_deleted']]
         if sheet not in ["Deleting Records", "Manual Updates"]:
-            s = {k: len(v) for k, v in changes.items()}; total = sum(s.get(k, 0) for k in ['created', 'updated', 'skipped'])
+            s = {k: len(v) for k, v in changes.items()}; total = sum(s.get(k, 0) for k in ['created', 'updated', 'skipped', 'refetched'])
             stats['created'] += s.get('created', 0); stats['updated'] += s.get('updated', 0); stats['skipped'] += s.get('skipped', 0)
             stats['images'] += sum(1 for i in changes.get('fetched_data', []) if "Image" in i); stats['rows'] += total
-            lines.extend([f"\n📊 Summary (Sheet: {display_sheet})", sep, f"🆕 Created: {s.get('created', 0)}", f"🔁 Updated: {s.get('updated', 0)}", f"🚫 Skipped: {s.get('skipped', 0)}", f"⚠️ Warnings: {len(changes.get('data_warnings',[])) + len(changes.get('fetch_warnings',[]))}", f"  Total Rows: {total}"])
+            lines.extend([f"\n📊 Summary (Sheet: {display_sheet})", sep, f"🆕 Created: {s.get('created', 0)}", f"🔁 Updated: {s.get('updated', 0)}", f"🔍 Refetched: {s.get('refetched', 0)}", f"🚫 Skipped: {s.get('skipped', 0)}", f"⚠️ Warnings: {len(changes.get('data_warnings',[])) + len(changes.get('fetch_warnings',[]))}", f"  Total Rows: {total}"])
         lines.append("")
     stats['deleted'] = len(context['files_generated']['deleted_data'])
-    lines.extend([sep, "📊 Overall Summary", sep, f"🆕 Total Created: {stats['created']}", f"🔁 Total Updated: {stats['updated']}", f"🖼️ Total Images Updated: {stats['images']}", f"🚫 Total Skipped: {stats['skipped']}", f"❌ Total Deleted: {stats['deleted']}", f"⚠️ Total Warnings: {stats['warnings']}", f"💾 Backup Files: {len(context['files_generated']['backups'])}", f"  Grand Total Rows: {stats['rows']}", "", f"💾 Metadata Backups: {len(context['files_generated']['meta_backups'])}", ""])
+    lines.extend([sep, "📊 Overall Summary", sep, f"🆕 Total Created: {stats['created']}", f"🔁 Total Updated: {stats['updated']}", f"🔍 Total Refetched: {stats['refetched']}", f"🖼️ Total Images Updated: {stats['images']}", f"🚫 Total Skipped: {stats['skipped']}", f"❌ Total Deleted: {stats['deleted']}", f"⚠️ Total Warnings: {stats['warnings']}", f"💾 Backup Files: {len(context['files_generated']['backups'])}", f"  Grand Total Rows: {stats['rows']}", "", f"💾 Metadata Backups: {len(context['files_generated']['meta_backups'])}", ""])
     try:
         with open(JSON_FILE, 'r', encoding='utf-8') as f: lines.append(f"📦 Total Objects in {JSON_FILE}: {len(json.load(f))}")
     except Exception: lines.append(f"📦 Total Objects in {JSON_FILE}: Unknown")
@@ -402,7 +404,8 @@ def main():
 
     sheets_to_process = [s.strip() for s in os.environ.get("SHEETS", "Sheet1").split(';') if s.strip()]
     for sheet in sheets_to_process:
-        report = context['report_data'].setdefault(sheet, {'created': [], 'updated': [], 'skipped': [], 'fetched_data': [], 'fetch_warnings': [], 'data_warnings': []})
+        # FIX: Added 'refetched' to report structure
+        report = context['report_data'].setdefault(sheet, {'created': [], 'updated': [], 'refetched': [], 'skipped': [], 'fetched_data': [], 'fetch_warnings': [], 'data_warnings': []})
         excel_rows, warnings = excel_to_objects(io.BytesIO(excel_bytes.getvalue()), sheet)
         if warnings: report['data_warnings'].extend(warnings)
 
@@ -411,10 +414,8 @@ def main():
             old_obj_from_json = merged_by_id.get(sid)
             is_new = old_obj_from_json is None
             
-            # Create the base object: start with template, add existing json data, then add excel data
             final_obj = {**JSON_OBJECT_TEMPLATE, **(old_obj_from_json or {}), **excel_obj}
             
-            # --- FETCHING LOGIC ---
             lang = final_obj.get("nativeLanguage", "").lower()
             priority = SITE_PRIORITY_BY_LANGUAGE.get(lang, SITE_PRIORITY_BY_LANGUAGE['default'])
             s_name, s_year = final_obj['showName'], final_obj['releasedYear']
@@ -423,12 +424,11 @@ def main():
             
             fields_to_check = [('synopsis', 'synopsis'), ('showImage', 'image'), ('otherNames', 'otherNames'), ('releaseDate', 'releaseDate'), ('Duration', 'duration')]
             
-            data_was_fetched = False
+            initial_metadata = {k: final_obj.get(k) for k, _ in fields_to_check}
+            
             for obj_key, fetch_key in fields_to_check:
                 if not final_obj.get(obj_key):
-                    primary_site = priority.get(fetch_key)
-                    fallback_site = 'mydramalist' if primary_site == 'asianwiki' else 'asianwiki'
-                    
+                    primary_site, fallback_site = priority.get(fetch_key), 'mydramalist' if priority.get(fetch_key) == 'asianwiki' else 'asianwiki'
                     for site in [primary_site, fallback_site]:
                         if site:
                             args = (s_name, s_year, sid) if fetch_key == 'image' else (s_name, s_year)
@@ -437,38 +437,39 @@ def main():
                                 final_obj[obj_key] = data
                                 spu[fetch_key] = site
                                 source_links[fetch_key] = url
-                                data_was_fetched = True
                                 if fetch_key == 'image': context['files_generated']['images'].append(os.path.join(IMAGES_DIR, f"{sid}.jpg"))
-                                break # Success, move to next field
-
+                                break
+            
             final_obj['topRatings'] = (final_obj.get("ratings", 0)) * (len(final_obj.get("againWatchedDates", [])) + 1) * 100
             
-            # --- CLASSIFY AND REPORT ---
+            # FIX: Rewritten Classification Logic
+            excel_data_has_changed = not is_new and objects_differ(old_obj_from_json, final_obj)
+            metadata_was_fetched = any(final_obj.get(k) != initial_metadata.get(k) for k, _ in fields_to_check)
+
             if is_new:
                 final_obj['updatedDetails'] = "First Time Uploaded"
                 final_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
                 report['created'].append(final_obj)
-                merged_by_id[sid] = final_obj
-                context['source_links_temp'] = source_links
-                save_metadata_backup(final_obj, context)
+            elif excel_data_has_changed:
+                changes = [human_readable_field(k) for k, v in excel_obj.items() if normalize_list(old_obj_from_json.get(k)) != normalize_list(v)]
+                final_obj['updatedDetails'] = f"{', '.join(changes)} Updated"
+                final_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
+                report['updated'].append({'old': old_obj_from_json, 'new': final_obj})
+                create_diff_backup(old_obj_from_json, final_obj, context)
+            elif metadata_was_fetched:
+                report['refetched'].append(final_obj)
             else:
-                is_different = objects_differ(old_obj_from_json, final_obj)
-                if is_different or data_was_fetched:
-                    changes = [human_readable_field(k) for k, v in excel_obj.items() if normalize_list(old_obj_from_json.get(k)) != normalize_list(v)]
-                    final_obj['updatedDetails'] = f"{', '.join(changes)} Updated" if changes else "Metadata Updated"
-                    final_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
-                    report['updated'].append({'old': old_obj_from_json, 'new': final_obj})
-                    merged_by_id[sid] = final_obj
-                    create_diff_backup(old_obj_from_json, final_obj, context)
-                    context['source_links_temp'] = source_links
-                    save_metadata_backup(final_obj, context)
-                else:
-                    report['skipped'].append(f"{sid} - {final_obj['showName']} ({final_obj.get('releasedYear')})")
+                report['skipped'].append(f"{sid} - {final_obj['showName']} ({final_obj.get('releasedYear')})")
             
+            if is_new or excel_data_has_changed or metadata_was_fetched:
+                 merged_by_id[sid] = final_obj
+                 context['source_links_temp'] = source_links
+                 save_metadata_backup(final_obj, context)
+
             # Unified Reporting
             missing = [FIELD_NAME_MAP[k] for k, v in final_obj.items() if k in FIELD_NAME_MAP and not v and k in {'synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration'}]
-            fetched = sorted([k.capitalize() for k,v in spu.items() if v and v != "Manual"])
-            if fetched: report['fetched_data'].append(f"- {sid} - {final_obj['showName']} -> Fetched: {', '.join(fetched)}")
+            newly_fetched = [k.capitalize() for k,v in spu.items() if v and v != "Manual" and not initial_metadata.get("showImage" if k=="image" else "Duration" if k=="duration" else k)]
+            if newly_fetched: report['fetched_data'].append(f"- {sid} - {final_obj['showName']} -> Fetched: {', '.join(sorted(newly_fetched))}")
             if missing: report['fetch_warnings'].append(f"- {sid} - {final_obj['showName']} -> ⚠️ Missing: {', '.join(sorted(missing))}")
 
     with open(JSON_FILE, 'w', encoding='utf-8') as f: json.dump(sorted(merged_by_id.values(), key=lambda x: x.get('showID', 0)), f, indent=4, ensure_ascii=False)
@@ -488,19 +489,18 @@ def fetch_excel_from_gdrive_bytes(file_id, creds_path):
     try:
         creds = service_account.Credentials.from_service_account_file(creds_path, scopes=['https://www.googleapis.com/auth/drive.readonly'])
         service = build('drive', 'v3', credentials=creds)
-        request = service.files().export_media(fileId=file_id, mimeType='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        # FIX: Try direct download first (for .xlsx), then export (for GSheets)
+        try:
+            request = service.files().get_media(fileId=file_id)
+            logd("Attempting direct media download...")
+        except Exception:
+            logd("Direct download failed, attempting GSheet export...")
+            request = service.files().export_media(fileId=file_id, mimeType='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
         fh = io.BytesIO(); downloader = MediaIoBaseDownload(fh, request); done = False
         while not done: _, done = downloader.next_chunk()
         fh.seek(0); return fh
     except Exception as e:
-        logd(f"Google Drive export failed, trying download: {e}");
-        try:
-            request = service.files().get_media(fileId=file_id)
-            fh = io.BytesIO(); downloader = MediaIoBaseDownload(fh, request); done = False
-            while not done: _, done = downloader.next_chunk()
-            fh.seek(0); return fh
-        except Exception as e2:
-            logd(f"Google Drive download also failed: {e2}\n{traceback.format_exc()}"); return None
+        logd(f"Google Drive fetch failed: {e}\n{traceback.format_exc()}"); return None
 
 if __name__ == '__main__':
     try:
