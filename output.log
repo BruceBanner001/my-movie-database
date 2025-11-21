@@ -1,294 +1,239 @@
-🚀 Running Script — Version v3.0 | Run ID: RUN_20251121_141317
+🚀 Running Script — Version v3.0 | Run ID: RUN_20251121_142746
 [DEBUG] Attempting direct media download...
 [DEBUG] 'Deleting Records' sheet is empty. Nothing to delete.
 [DEBUG] Initiating search for: Boys Over Flowers 2009 on mydramalist.com
 [DEBUG] Executing search query: "Boys Over Flowers 2009" site:mydramalist.com
 [DEBUG] Found candidate URL: https://mydramalist.com/2987-boys-over-flowers
 [DEBUG] Landmark validation passed. This is the correct page.
-[DEBUG] 'Also Known As:' field not found on MyDramaList.
-[DEBUG] Initiating search for: Boys Over Flowers 2009 on asianwiki.com
-[DEBUG] Executing search query: "Boys Over Flowers 2009" site:asianwiki.com
-[DEBUG] Found candidate URL: https://asianwiki.com/Boys_Over_Flowers_-_Korean_Drama
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Boys_Over_Flowers
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Rejecting invalid AsianWiki file URL: https://asianwiki.com/index.php?title=File:Boys_Over_Flowers_(2009-South_Korea-KBS2)-09.jpg
-[DEBUG] Found candidate URL: https://asianwiki.com/Boys_Over_Flowers_Season_2
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Rejecting invalid AsianWiki file URL: https://asianwiki.com/File:Boys_Over_Flowers_(2009-South_Korea-KBS2)-30.jpg
-[DEBUG] Executing search query: "Boys Over Flowers 2009" site:asianwiki.com
-[DEBUG] Found candidate URL: https://asianwiki.com/Boys_Over_Flowers_Season_2
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Boys_Over_Flowers_-_Korean_Drama
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Boys_Over_Flowers
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Boys_Over_Flowers_2
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Boys_Over_Flowers:_Final
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] All search attempts failed.
-[DEBUG] Initiating search for: Uncontrollably Fond 2016 on asianwiki.com
-[DEBUG] Executing search query: "Uncontrollably Fond 2016" site:asianwiki.com
-[DEBUG] Found candidate URL: https://asianwiki.com/Kang_Chul-Sung_(1973)
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Lee_Jae-Ik
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Jin-Goo
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Park_Hyun-Woo_(1982)
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Jung_Sun-Kyung
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Executing search query: "Uncontrollably Fond 2016" site:asianwiki.com
-[DEBUG] Found candidate URL: https://asianwiki.com/Kang_Chul-Sung_(1973)
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Lee_Jae-Ik
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Jin-Goo
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Park_Hyun-Woo_(1982)
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Jung_Sun-Kyung
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] All search attempts failed.
 [DEBUG] Initiating search for: Uncontrollably Fond 2016 on mydramalist.com
 [DEBUG] Executing search query: "Uncontrollably Fond 2016" site:mydramalist.com
 [DEBUG] Found candidate URL: https://mydramalist.com/15320-uncontrollably-fond
 [DEBUG] Landmark validation passed. This is the correct page.
-[DEBUG] Initiating search for: Uncontrollably Fond 2016 on asianwiki.com
-[DEBUG] Executing search query: "Uncontrollably Fond 2016" site:asianwiki.com
-[DEBUG] Found candidate URL: https://asianwiki.com/Uncontrollably_Fond
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Kang_Chul-Sung_(1973)
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Lee_Jae-Ik
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Jin-Goo
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Park_Hyun-Woo_(1982)
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Executing search query: "Uncontrollably Fond 2016" site:asianwiki.com
-[DEBUG] Found candidate URL: https://asianwiki.com/Kang_Chul-Sung_(1973)
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Lee_Jae-Ik
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Jin-Goo
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Park_Hyun-Woo_(1982)
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Jung_Sun-Kyung
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] All search attempts failed.
-[DEBUG] Initiating search for: Uncontrollably Fond 2016 on mydramalist.com
-[DEBUG] Executing search query: "Uncontrollably Fond 2016" site:mydramalist.com
-[DEBUG] Found candidate URL: https://mydramalist.com/15320-uncontrollably-fond
-[DEBUG] Landmark validation passed. This is the correct page.
-[DEBUG] Downloading high-quality image from: https://i.mydramalist.com/1oRBdc.jpg?v=1
-[DEBUG] Image saved to images/105.jpg
-[DEBUG] Initiating search for: Uncontrollably Fond 2016 on mydramalist.com
-[DEBUG] Executing search query: "Uncontrollably Fond 2016" site:mydramalist.com
-[DEBUG] Found candidate URL: https://mydramalist.com/15320-uncontrollably-fond
-[DEBUG] Landmark validation passed. This is the correct page.
-[DEBUG] 'Also Known As:' field not found on MyDramaList.
-[DEBUG] Initiating search for: Uncontrollably Fond 2016 on asianwiki.com
-[DEBUG] Executing search query: "Uncontrollably Fond 2016" site:asianwiki.com
-[DEBUG] Found candidate URL: https://asianwiki.com/Kang_Chul-Sung_(1973)
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Lee_Jae-Ik
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Jin-Goo
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Park_Hyun-Woo_(1982)
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Jung_Sun-Kyung
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Executing search query: "Uncontrollably Fond 2016" site:asianwiki.com
-[DEBUG] Found candidate URL: https://asianwiki.com/Uncontrollably_Fond
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Kang_Chul-Sung_(1973)
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Lee_Jae-Ik
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Jin-Goo
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Park_Hyun-Woo_(1982)
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] All search attempts failed.
 [DEBUG] Initiating search for: Crash Landing On You 2019 on mydramalist.com
 [DEBUG] Executing search query: "Crash Landing On You 2019" site:mydramalist.com
-[DEBUG] Executing search query: "Crash Landing On You 2019" site:mydramalist.com
-[DEBUG] All search attempts failed.
-[DEBUG] Initiating search for: Crash Landing On You 2019 on asianwiki.com
-[DEBUG] Executing search query: "Crash Landing On You 2019" site:asianwiki.com
-[DEBUG] Found candidate URL: https://asianwiki.com/Crash_Landing_on_You
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/main-poster-for-tvn-drama-series-crash-landing-on-you-netflix-to-also-stream
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/first-teaser-trailer-for-crash-landing-on-you
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/teaser-trailer-3-for-tvn-drama-series-crash-landing-on-you
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/teaser-trailer-4-for-tvn-drama-series-crash-landing-on-you
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Executing search query: "Crash Landing On You 2019" site:asianwiki.com
-[DEBUG] Found candidate URL: https://asianwiki.com/Crash_Landing_on_You
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Park_Ji-Eun_(screenwriter)
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Lee_Jung-Hyo_(director)
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Jang_Woo-Jun_(2012)
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Kim_A-Ra_(1991)
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] All search attempts failed.
-[DEBUG] Initiating search for: Crash Landing On You 2019 on asianwiki.com
-[DEBUG] Executing search query: "Crash Landing On You 2019" site:asianwiki.com
-[DEBUG] Found candidate URL: https://asianwiki.com/Crash_Landing_on_You
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Park_Ji-Eun_(screenwriter)
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Lee_Jung-Hyo_(director)
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Jang_Woo-Jun_(2012)
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Kim_A-Ra_(1991)
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Executing search query: "Crash Landing On You 2019" site:asianwiki.com
-[DEBUG] Found candidate URL: https://asianwiki.com/Crash_Landing_on_You
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Park_Ji-Eun_(screenwriter)
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Lee_Jung-Hyo_(director)
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Jang_Woo-Jun_(2012)
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Kim_A-Ra_(1991)
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] All search attempts failed.
-[DEBUG] Initiating search for: Crash Landing On You 2019 on mydramalist.com
 [DEBUG] Executing search query: "Crash Landing On You 2019" site:mydramalist.com
 [DEBUG] Found candidate URL: https://mydramalist.com/35729-emergency-lands-of-love
 [DEBUG] Landmark validation passed. This is the correct page.
-[DEBUG] Initiating search for: My Princess 2011 on asianwiki.com
-[DEBUG] Executing search query: "My Princess 2011" site:asianwiki.com
-[DEBUG] Found candidate URL: https://asianwiki.com/Lee_Gi-Kwang
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/My_Princess
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Kang_Ye-Sol
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Heo_Tae-Hee
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Hibiki_Uemura
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Executing search query: "My Princess 2011" site:asianwiki.com
-[DEBUG] Found candidate URL: https://asianwiki.com/Lee_Gi-Kwang
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/My_Princess
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Kang_Ye-Sol
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Heo_Tae-Hee
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Hibiki_Uemura
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] All search attempts failed.
 [DEBUG] Initiating search for: My Princess 2011 on mydramalist.com
 [DEBUG] Executing search query: "My Princess 2011" site:mydramalist.com
-[DEBUG] Executing search query: "My Princess 2011" site:mydramalist.com
-[DEBUG] Found candidate URL: https://mydramalist.com/72-my-princess
+[DEBUG] Found candidate URL: https://mydramalist.com/2591-the-princess-man
 [DEBUG] Landmark validation passed. This is the correct page.
 [DEBUG] Initiating search for: My Princess 2011 on asianwiki.com
 [DEBUG] Executing search query: "My Princess 2011" site:asianwiki.com
 [DEBUG] Found candidate URL: https://asianwiki.com/My_Princess
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Lee_Gi-Kwang
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Kang_Ye-Sol
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Heo_Tae-Hee
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Hibiki_Uemura
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Executing search query: "My Princess 2011" site:asianwiki.com
-[DEBUG] Found candidate URL: https://asianwiki.com/My_Princess
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Lee_Gi-Kwang
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Kang_Ye-Sol
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Heo_Tae-Hee
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Hibiki_Uemura
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] All search attempts failed.
-[DEBUG] Initiating search for: My Princess 2011 on mydramalist.com
-[DEBUG] Executing search query: "My Princess 2011" site:mydramalist.com
-[DEBUG] Found candidate URL: https://mydramalist.com/72-my-princess
-[DEBUG] Landmark validation passed. This is the correct page.
-[DEBUG] Downloading high-quality image from: https://i.mydramalist.com/QJXj4c.jpg?v=1
-[DEBUG] Image saved to images/107.jpg
-[DEBUG] Initiating search for: My Princess 2011 on mydramalist.com
-[DEBUG] Executing search query: "My Princess 2011" site:mydramalist.com
-[DEBUG] Found candidate URL: https://mydramalist.com/72-my-princess
-[DEBUG] Landmark validation passed. This is the correct page.
-[DEBUG] 'Also Known As:' field not found on MyDramaList.
-[DEBUG] Initiating search for: My Princess 2011 on asianwiki.com
-[DEBUG] Executing search query: "My Princess 2011" site:asianwiki.com
-[DEBUG] Found candidate URL: https://asianwiki.com/My_Princess
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
 [DEBUG] Found candidate URL: https://asianwiki.com/Kim_Tae-Hee
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
 [DEBUG] Found candidate URL: https://asianwiki.com/Son_Sung-Yoon
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
 [DEBUG] Found candidate URL: https://asianwiki.com/Lee_Gi-Kwang
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Rejecting invalid AsianWiki file URL: https://asianwiki.com/index.php?title=File:My_Princess_(2011-Korean_Drama)-Son_Seong-Yun.jpg
-[DEBUG] Executing search query: "My Princess 2011" site:asianwiki.com
-[DEBUG] Found candidate URL: https://asianwiki.com/My_Princess
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Lee_Gi-Kwang
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
 [DEBUG] Found candidate URL: https://asianwiki.com/Kang_Ye-Sol
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Heo_Tae-Hee
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Hibiki_Uemura
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] All search attempts failed.
-[DEBUG] Initiating search for: My Princess 2011 on asianwiki.com
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
 [DEBUG] Executing search query: "My Princess 2011" site:asianwiki.com
 [DEBUG] Found candidate URL: https://asianwiki.com/My_Princess
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Lee_Gi-Kwang
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
 [DEBUG] Found candidate URL: https://asianwiki.com/Kim_Tae-Hee
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
 [DEBUG] Found candidate URL: https://asianwiki.com/Son_Sung-Yoon
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
 [DEBUG] Rejecting invalid AsianWiki file URL: https://asianwiki.com/index.php?title=File:My_Princess_(2011-Korean_Drama)-Son_Seong-Yun.jpg
-[DEBUG] Executing search query: "My Princess 2011" site:asianwiki.com
 [DEBUG] Found candidate URL: https://asianwiki.com/Lee_Gi-Kwang
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/My_Princess
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Kang_Ye-Sol
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Heo_Tae-Hee
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] Found candidate URL: https://asianwiki.com/Hibiki_Uemura
-[DEBUG] Validation failed: AsianWiki infobox landmark missing.
-[DEBUG] All search attempts failed.
-[DEBUG] Initiating search for: My Princess 2011 on mydramalist.com
-[DEBUG] Executing search query: "My Princess 2011" site:mydramalist.com
-[DEBUG] Executing search query: "My Princess 2011" site:mydramalist.com
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
 [DEBUG] All search attempts failed.
 [DEBUG] Initiating search for: My Princess 2011 on mydramalist.com
 [DEBUG] Executing search query: "My Princess 2011" site:mydramalist.com
 [DEBUG] Found candidate URL: https://mydramalist.com/72-my-princess
 [DEBUG] Landmark validation passed. This is the correct page.
-✅ Report written -> reports/Report_21_November_2025_1414.txt
+[DEBUG] Initiating search for: So I Married an Anti-Fan 2021 on asianwiki.com
+[DEBUG] Executing search query: "So I Married an Anti-Fan 2021" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Choi_Tae-Joon_(1991)
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/So_I_Married_The_Anti-Fan
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Jeon_So-Min
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Jung_In-Tae_(1989)
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Chansung
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Executing search query: "So I Married an Anti-Fan 2021" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/So_I_Married_The_Anti-Fan
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Jeon_So-Min
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Choi_Tae-Joon_(1991)
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Jung_In-Tae_(1989)
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Chansung
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] All search attempts failed.
+[DEBUG] Initiating search for: So I Married an Anti-Fan 2021 on mydramalist.com
+[DEBUG] Executing search query: "So I Married an Anti-Fan 2021" site:mydramalist.com
+[DEBUG] Executing search query: "So I Married an Anti-Fan 2021" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/30519-so-i-married-an-anti-fan
+[DEBUG] Landmark validation passed. This is the correct page.
+[DEBUG] Initiating search for: So I Married an Anti-Fan 2021 on asianwiki.com
+[DEBUG] Executing search query: "So I Married an Anti-Fan 2021" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/So_I_Married_The_Anti-Fan
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/index.php?title=So_I_Married_The_Anti-Fan&cui-Fan=
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/teaser-posters-and-teaser-trailer-3-for-drama-so-i-married-an-anti-fan
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/teaser-poster-ep-1-air-date-for-drama-so-i-married-an-anti-fan
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Choi_Tae-Joon_(1991)
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Executing search query: "So I Married an Anti-Fan 2021" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/So_I_Married_The_Anti-Fan
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Jeon_So-Min
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Choi_Tae-Joon_(1991)
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Jung_In-Tae_(1989)
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Chansung
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] All search attempts failed.
+[DEBUG] Initiating search for: So I Married an Anti-Fan 2021 on mydramalist.com
+[DEBUG] Executing search query: "So I Married an Anti-Fan 2021" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/30519-so-i-married-an-anti-fan
+[DEBUG] Landmark validation passed. This is the correct page.
+[DEBUG] Downloading high-quality image from: https://i.mydramalist.com/ABR884_4c.jpg?v=1
+[DEBUG] Image saved to images/108.jpg
+[DEBUG] Initiating search for: So I Married an Anti-Fan 2021 on mydramalist.com
+[DEBUG] Executing search query: "So I Married an Anti-Fan 2021" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/30519-so-i-married-an-anti-fan
+[DEBUG] Landmark validation passed. This is the correct page.
+[DEBUG] Initiating search for: So I Married an Anti-Fan 2021 on asianwiki.com
+[DEBUG] Executing search query: "So I Married an Anti-Fan 2021" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/So_I_Married_The_Anti-Fan
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/index.php?title=So_I_Married_The_Anti-Fan&cui-Fan=
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/teaser-posters-and-teaser-trailer-3-for-drama-so-i-married-an-anti-fan
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/teaser-poster-ep-1-air-date-for-drama-so-i-married-an-anti-fan
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Choi_Tae-Joon_(1991)
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Executing search query: "So I Married an Anti-Fan 2021" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Choi_Tae-Joon_(1991)
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/So_I_Married_The_Anti-Fan
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/index.php?title=So_I_Married_The_Anti-Fan&cui-Fan=
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/teaser-posters-and-teaser-trailer-3-for-drama-so-i-married-an-anti-fan
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/teaser-poster-ep-1-air-date-for-drama-so-i-married-an-anti-fan
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] All search attempts failed.
+[DEBUG] Initiating search for: So I Married an Anti-Fan 2021 on mydramalist.com
+[DEBUG] Executing search query: "So I Married an Anti-Fan 2021" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/30519-so-i-married-an-anti-fan
+[DEBUG] Landmark validation passed. This is the correct page.
+[DEBUG] Initiating search for: So I Married an Anti-Fan 2021 on mydramalist.com
+[DEBUG] Executing search query: "So I Married an Anti-Fan 2021" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/30519-so-i-married-an-anti-fan
+[DEBUG] Landmark validation passed. This is the correct page.
+[DEBUG] Initiating search for: Mr. Queen 2020 on asianwiki.com
+[DEBUG] Executing search query: "Mr. Queen 2020" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/index.php?title=Mr._Queen
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Mr._Queen
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Yoo_Young-Jae
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Yoon_Jin-Ho
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Jung-Hyun_(1990)
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Executing search query: "Mr. Queen 2020" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Yoo_Young-Jae
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Yoon_Jin-Ho
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Jung-Hyun_(1990)
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Seo_Eun-Sol_(2009)
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Chan-Oh_(1990)
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] All search attempts failed.
+[DEBUG] Initiating search for: Mr. Queen 2020 on mydramalist.com
+[DEBUG] Executing search query: "Mr. Queen 2020" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/58365-queen-cheorin
+[DEBUG] Landmark validation passed. This is the correct page.
+[DEBUG] Initiating search for: Mr. Queen 2020 on asianwiki.com
+[DEBUG] Executing search query: "Mr. Queen 2020" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Yoo_Young-Jae
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Yoon_Jin-Ho
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Jung-Hyun_(1990)
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Seo_Eun-Sol_(2009)
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Chan-Oh_(1990)
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Executing search query: "Mr. Queen 2020" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Yoo_Young-Jae
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Yoon_Jin-Ho
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Jung-Hyun_(1990)
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Seo_Eun-Sol_(2009)
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Chan-Oh_(1990)
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] All search attempts failed.
+[DEBUG] Initiating search for: Mr. Queen 2020 on mydramalist.com
+[DEBUG] Executing search query: "Mr. Queen 2020" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/58365-queen-cheorin
+[DEBUG] Landmark validation passed. This is the correct page.
+[DEBUG] Downloading high-quality image from: https://i.mydramalist.com/b3RmlV_4c.jpg?v=1
+[DEBUG] Image saved to images/3001.jpg
+[DEBUG] Initiating search for: Mr. Queen 2020 on mydramalist.com
+[DEBUG] Executing search query: "Mr. Queen 2020" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/58365-queen-cheorin
+[DEBUG] Landmark validation passed. This is the correct page.
+[DEBUG] Initiating search for: Mr. Queen 2020 on asianwiki.com
+[DEBUG] Executing search query: "Mr. Queen 2020" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Yoo_Young-Jae
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Yoon_Jin-Ho
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Jung-Hyun_(1990)
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Seo_Eun-Sol_(2009)
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Chan-Oh_(1990)
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Executing search query: "Mr. Queen 2020" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/index.php?title=Mr._Queen
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Mr._Queen
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Yoo_Young-Jae
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Yoon_Jin-Ho
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Jung-Hyun_(1990)
+[DEBUG] Validation failed: AsianWiki 'Profile' header and infobox landmark missing.
+[DEBUG] All search attempts failed.
+[DEBUG] Initiating search for: Mr. Queen 2020 on mydramalist.com
+[DEBUG] Executing search query: "Mr. Queen 2020" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/58365-queen-cheorin
+[DEBUG] Landmark validation passed. This is the correct page.
+[DEBUG] Initiating search for: Mr. Queen 2020 on mydramalist.com
+[DEBUG] Executing search query: "Mr. Queen 2020" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/58365-queen-cheorin
+[DEBUG] Landmark validation passed. This is the correct page.
+✅ Report written -> reports/Report_21_November_2025_1429.txt
 
 All done.

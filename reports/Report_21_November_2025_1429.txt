@@ -1,0 +1,92 @@
+✅ Workflow completed successfully
+🆔 Run ID: RUN_20251121_142746
+📅 Run Time: 21 November 2025 02:29 PM (IST)
+🕒 Duration: 1 min 33 sec
+⚙️ Script Version: v3.0
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Sheet1 — 21 November 2025 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🆕 Data Created:
+- 108 - So I Married an Anti-Fan (2021) -> First Time Uploaded
+
+🔍 Refetched Data:
+✨ 104 - Boys Over Flowers -> Metadata Refreshed
+✨ 105 - Uncontrollably Fond -> Metadata Refreshed
+✨ 106 - Crash Landing On You -> Metadata Refreshed
+✨ 107 - My Princess -> Metadata Refreshed
+
+🖼️ Fetched Data Details:
+- 104 - Boys Over Flowers -> Fetched: Othernames
+- 105 - Uncontrollably Fond -> Fetched: Othernames
+- 106 - Crash Landing On You -> Fetched: Othernames
+- 107 - My Princess -> Fetched: Othernames, Releasedate
+- 108 - So I Married an Anti-Fan -> Fetched: Duration, Image, Othernames, Releasedate, Synopsis
+
+🚫 Skipped (Unchanged):
+- 101 - It's Okay That's Love (2013)
+- 102 - Find Me in Your Memory (2020)
+- 103 - Unforgettable Love (2021)
+
+📊 Summary (Sheet: Sheet1)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Created: 1
+🔁 Updated: 0
+🔍 Refetched: 4
+🚫 Skipped: 3
+⚠️ Warnings: 0
+  Total Rows: 8
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Sheet2 — 21 November 2025 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🆕 Data Created:
+- 3001 - Mr. Queen (2020) -> First Time Uploaded
+
+🖼️ Fetched Data Details:
+- 3001 - Mr. Queen -> Fetched: Duration, Image, Othernames, Releasedate, Synopsis
+
+📊 Summary (Sheet: Sheet2)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Created: 1
+🔁 Updated: 0
+🔍 Refetched: 0
+🚫 Skipped: 0
+⚠️ Warnings: 0
+  Total Rows: 1
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 Overall Summary
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Total Created: 2
+🔁 Total Updated: 0
+🔍 Total Refetched: 4
+🖼️ Total Images Updated: 2
+🚫 Total Skipped: 3
+❌ Total Deleted: 0
+⚠️ Total Warnings: 0
+💾 Backup Files: 0
+  Grand Total Rows: 9
+
+💾 Metadata Backups: 6
+
+📦 Total Objects in seriesData.json: 9
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ Folders Generated:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+images/
+    108.jpg
+    3001.jpg
+meta_backups/
+    META_21_November_2025_1427_104.json
+    META_21_November_2025_1427_105.json
+    META_21_November_2025_1428_106.json
+    META_21_November_2025_1428_107.json
+    META_21_November_2025_1428_108.json
+    META_21_November_2025_1429_3001.json
+reports/
+    Report_21_November_2025_1429.txt
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🏁 Workflow finished successfully
