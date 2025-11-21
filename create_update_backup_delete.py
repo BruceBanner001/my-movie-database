@@ -43,8 +43,7 @@ import os, re, sys, json, io, shutil, traceback, copy, time, string
 from datetime import datetime, timedelta, timezone
 import pandas as pd
 import requests
-from bs4 import BeautifulSoup, NavigableString
-from PIL import Image
+from bs4 import BeautifulSoup
 
 try: from ddgs import DDGS; HAVE_DDGS = True
 except Exception: HAVE_DDGS = False
@@ -64,7 +63,6 @@ DEBUG_FETCH = os.environ.get("DEBUG_FETCH", "false").lower() == "true"
 GITHUB_PAGES_URL = os.environ.get("GITHUB_PAGES_URL", "").strip()
 SERVICE_ACCOUNT_FILE, EXCEL_FILE_ID_TXT = "GDRIVE_SERVICE_ACCOUNT.json", "EXCEL_FILE_ID.txt"
 SCRAPER = cloudscraper.create_scraper() if HAVE_SCRAPER else requests.Session()
-# FIX: Language to Country mapping for validation
 LANG_TO_COUNTRY_MAP = {"korean": "South Korea", "chinese": "China", "japanese": "Japan", "thai": "Thailand", "taiwanese": "Taiwan"}
 
 def logd(msg):
@@ -88,23 +86,26 @@ def objects_differ(old, new):
     return False
 
 def _scrape_country(soup, site):
-    """Helper function to scrape the country from a validated soup object."""
     try:
         if site == 'asianwiki':
             tag = soup.find('b', string='Country:')
-            if tag: return tag.parent.get_text(strip=True).replace('Country:', '').strip()
+            if tag and tag.parent: return tag.parent.get_text(strip=True).replace('Country:', '').strip()
         elif site == 'mydramalist':
             tag = soup.find('b', string='Country:')
-            if tag: return tag.parent.get_text(strip=True).replace('Country:', '').strip()
+            if tag and tag.parent: return tag.parent.get_text(strip=True).replace('Country:', '').strip()
     except Exception: pass
     return None
 
-def get_soup_from_search(query_base, site, language):
+def get_soup_from_search(query_base, site, language, soup_cache):
+    cache_key = f"{query_base}_{site}_{language}"
+    if cache_key in soup_cache:
+        logd(f"Found soup in cache for '{query_base}' on {site}.com")
+        return soup_cache[cache_key]
+
     expected_country = LANG_TO_COUNTRY_MAP.get(language.lower())
     logd(f"Initiating search for: '{query_base}' on {site}.com (Expected Country: {expected_country})")
     if not HAVE_DDGS: logd("DDGS library not available."); return None, None
     clean_query = query_base.split("(")[0].strip()
-    # FIX: Use language in search query for better results
     search_queries = [ f'"{query_base}" {language} site:{site}.com', f'"{clean_query}" {language} drama site:{site}.com' ]
     for query in search_queries:
         logd(f"Executing search query: {query}")
@@ -131,19 +132,21 @@ def get_soup_from_search(query_base, site, language):
                             else: logd("Landmark validation failed: MyDramaList landmark missing.")
                         
                         if is_valid_landmark:
-                            # FIX: Two-Factor Validation - Country Check
                             if expected_country:
                                 scraped_country = _scrape_country(soup, site)
                                 if scraped_country and expected_country in scraped_country:
                                     logd(f"Country validation passed (Expected: {expected_country}, Found: {scraped_country}).")
                                 else:
                                     logd(f"Country validation FAILED (Expected: {expected_country}, Found: {scraped_country}). Rejecting page.")
-                                    continue # Reject page and continue to next search result
+                                    continue
                             logd("Validation passed. This is the correct page.")
+                            soup_cache[cache_key] = (soup, url) # Cache success
                             return soup, url
                     else: logd(f"HTTP Error {r.status_code} for {url}")
         except Exception as e: logd(f"Search attempt failed for query '{query}': {e}")
-    logd("All search attempts failed."); return None, None
+    logd("All search attempts failed.")
+    soup_cache[cache_key] = (None, None) # Cache failure
+    return None, None
 
 def download_and_save_image(url, local_path):
     os.makedirs(os.path.dirname(local_path), exist_ok=True)
@@ -161,106 +164,104 @@ def download_and_save_image(url, local_path):
     return False
 def build_absolute_url(local_path): return f"{GITHUB_PAGES_URL.rstrip('/')}/{local_path.replace(os.sep, '/')}"
 
-# --- FETCH FUNCTIONS ---
-# All now accept 'language' to pass to the validator
-
-def fetch_synopsis_from_asianwiki(s, y, language):
-    soup, url = get_soup_from_search(f'{s} {y}', "asianwiki", language)
-    if not soup: return None, None
+# --- Scraper Functions (take soup, don't search) ---
+def _scrape_synopsis_from_asianwiki(soup):
     h2 = soup.find('h2', id=re.compile(r"Synopsis|Plot", re.IGNORECASE))
-    if not h2: logd("Synopsis/Plot heading not found on AsianWiki."); return None, None
+    if not h2: logd("Synopsis/Plot heading not found on AsianWiki."); return None
     content = [p.get_text(strip=True) for p in h2.find_next_siblings('p')]
-    synopsis = "\n\n".join(p for p in content if p)
-    return (synopsis, url) if synopsis else (None, None)
+    return "\n\n".join(p for p in content if p)
 
-def fetch_image_from_asianwiki(s, y, sid, language):
-    soup, url = get_soup_from_search(f'{s} {y}', "asianwiki", language)
-    if not soup: return None, None
+def _scrape_image_from_asianwiki(soup, sid):
     img = soup.select_one('a.image > img[src]')
-    if not img: logd("Image tag not found on AsianWiki."); return None, None
+    if not img: logd("Image tag not found on AsianWiki."); return None
     img_url = requests.compat.urljoin("https://asianwiki.com", img['src'])
     if download_and_save_image(img_url, os.path.join(IMAGES_DIR, f"{sid}.jpg")):
-        return (build_absolute_url(os.path.join(IMAGES_DIR, f"{sid}.jpg")), url)
-    return None, None
+        return build_absolute_url(os.path.join(IMAGES_DIR, f"{sid}.jpg"))
 
-def fetch_othernames_from_asianwiki(s, y, language):
-    soup, url = get_soup_from_search(f'{s} {y}', "asianwiki", language)
-    if not soup: return None, None
+def _scrape_othernames_from_asianwiki(soup):
     p_tag = soup.find('p', string=re.compile(r"^(Drama:|Movie:)"))
     if p_tag:
         full_text = p_tag.get_text(strip=True).replace(" Hangul:", " (Hangul:")
         match = re.search(r':(.*?)(?=\(Revised romanization:|\(literal title\)|$)', full_text, re.DOTALL)
         if match:
             names_text = match.group(1).strip()
-            return ([name.strip() for name in names_text.split('/') if name.strip()], url) if names_text else (None, None)
-    logd("'Other Names' from 'Drama:' field not found on AsianWiki."); return None, None
+            return [name.strip() for name in names_text.split('/') if name.strip()]
+    logd("'Other Names' from 'Drama:' field not found on AsianWiki."); return None
 
-def fetch_duration_from_asianwiki(s, y, language): return None, None
-
-def fetch_release_date_from_asianwiki(s, y, language):
-    soup, url = get_soup_from_search(f'{s} {y}', "asianwiki", language)
-    if not soup: return None, None
+def _scrape_release_date_from_asianwiki(soup):
     b_tag = soup.find('b', string=re.compile(r"Release Date:"))
-    if b_tag and b_tag.parent:
+    # FIX: Corrected crash-causing logic
+    if b_tag and (parent := b_tag.parent):
         b_tag.decompose()
-        release_text = b_tag.parent.get_text(strip=True)
-        return (release_text, url) if release_text else (None, None)
-    logd("'Release Date:' field not found on AsianWiki."); return None, None
+        return parent.get_text(strip=True)
+    logd("'Release Date:' field not found on AsianWiki."); return None
 
-def fetch_synopsis_from_mydramalist(s, y, language):
-    soup, url = get_soup_from_search(f'{s} {y}', "mydramalist", language)
-    if not soup: return None, None
+def _scrape_synopsis_from_mydramalist(soup):
     synopsis_div = soup.select_one('div.show-synopsis, div[itemprop="description"]')
-    if not synopsis_div: logd("Synopsis element not found on MyDramaList."); return None, None
+    if not synopsis_div: logd("Synopsis element not found on MyDramaList."); return None
     synopsis = synopsis_div.get_text(separator='\n\n', strip=True)
-    synopsis = re.sub(r'(^Remove ads\n\n)|((~~.*?~~|Edit Translation).*$)|(\s*\(\s*Source:.*?\)\s*$)', '', synopsis, flags=re.DOTALL | re.IGNORECASE).strip()
-    return (synopsis, url) if synopsis else (None, None)
+    return re.sub(r'(^Remove ads\n\n)|((~~.*?~~|Edit Translation).*$)|(\s*\(\s*Source:.*?\)\s*$)', '', synopsis, flags=re.DOTALL | re.IGNORECASE).strip()
 
-def fetch_image_from_mydramalist(s, y, sid, language):
-    soup, url = get_soup_from_search(f'{s} {y}', "mydramalist", language)
-    if not soup: return None, None
+def _scrape_image_from_mydramalist(soup, sid):
     img = soup.select_one('.film-cover img[src], .cover img[src], div.cover img[src]')
-    if not img: logd("Image tag not found on MyDramaList."); return None, None
+    if not img: logd("Image tag not found on MyDramaList."); return None
     if download_and_save_image(img['src'], os.path.join(IMAGES_DIR, f"{sid}.jpg")):
-        return (build_absolute_url(os.path.join(IMAGES_DIR, f"{sid}.jpg")), url)
-    return None, None
+        return build_absolute_url(os.path.join(IMAGES_DIR, f"{sid}.jpg"))
 
-def fetch_othernames_from_mydramalist(s, y, language):
-    soup, url = get_soup_from_search(f'{s} {y}', "mydramalist", language)
-    if not soup: return None, None
+def _scrape_othernames_from_mydramalist(soup):
     b_tag = soup.find('b', string="Also Known As:")
     if b_tag and (li_tag := b_tag.find_parent('li')):
         b_tag.decompose()
         names_text = li_tag.get_text(strip=True)
-        return ([name.strip() for name in names_text.split(',') if name.strip()], url) if names_text else (None, None)
-    logd("'Also Known As:' field not found on MyDramaList."); return None, None
+        return [name.strip() for name in names_text.split(',') if name.strip()]
+    logd("'Also Known As:' field not found on MyDramaList."); return None
 
-def fetch_duration_from_mydramalist(s, y, language):
-    soup, url = get_soup_from_search(f'{s} {y}', "mydramalist", language)
-    if not soup: return None, None
+def _scrape_duration_from_mydramalist(soup):
     b_tag = soup.find('b', string=re.compile(r"Duration:"))
     if b_tag and (li_tag := b_tag.find_parent('li')):
         b_tag.decompose()
         duration_text = li_tag.get_text(strip=True)
-        if "hr" not in duration_text and duration_text.endswith(" min."):
-            duration_text = duration_text.replace(" min.", " mins")
-        return (duration_text, url) if duration_text else (None, None)
-    logd("'Duration:' field not found on MyDramaList."); return None, None
+        return duration_text.replace(" min.", " mins") if "hr" not in duration_text else duration_text
+    logd("'Duration:' field not found on MyDramaList."); return None
 
-def fetch_release_date_from_mydramalist(s, y, language):
-    soup, url = get_soup_from_search(f'{s} {y}', "mydramalist", language)
-    if not soup: return None, None
+def _scrape_release_date_from_mydramalist(soup):
     b_tag = soup.find('b', string=re.compile(r"Aired:"))
     if b_tag and (li_tag := b_tag.find_parent('li')):
         b_tag.decompose()
-        release_text = li_tag.get_text(strip=True)
-        return (release_text, url) if release_text else (None, None)
-    logd("'Aired:' field not found on MyDramaList."); return None, None
+        return li_tag.get_text(strip=True)
+    logd("'Aired:' field not found on MyDramaList."); return None
 
-FETCH_MAP = {
-    'asianwiki': {'synopsis': fetch_synopsis_from_asianwiki, 'image': fetch_image_from_asianwiki, 'otherNames': fetch_othernames_from_asianwiki, 'duration': fetch_duration_from_asianwiki, 'releaseDate': fetch_release_date_from_asianwiki},
-    'mydramalist': {'synopsis': fetch_synopsis_from_mydramalist, 'image': fetch_image_from_mydramalist, 'otherNames': fetch_othernames_from_mydramalist, 'duration': fetch_duration_from_mydramalist, 'releaseDate': fetch_release_date_from_mydramalist}
+SCRAPE_MAP = {
+    'asianwiki': {'synopsis': _scrape_synopsis_from_asianwiki, 'image': _scrape_image_from_asianwiki, 'otherNames': _scrape_othernames_from_asianwiki, 'duration': lambda s, sid: None, 'releaseDate': _scrape_release_date_from_asianwiki},
+    'mydramalist': {'synopsis': _scrape_synopsis_from_mydramalist, 'image': _scrape_image_from_mydramalist, 'otherNames': _scrape_othernames_from_mydramalist, 'duration': _scrape_duration_from_mydramalist, 'releaseDate': _scrape_release_date_from_mydramalist}
 }
+
+# FIX: Performance-boosting Coordinator Function
+def fetch_and_populate_metadata(obj, context):
+    s_id, s_name, s_year, lang = obj['showID'], obj['showName'], obj['releasedYear'], obj.get("nativeLanguage", "")
+    priority = SITE_PRIORITY_BY_LANGUAGE.get(lang.lower(), SITE_PRIORITY_BY_LANGUAGE['default'])
+    spu, source_links = obj.setdefault('sitePriorityUsed', {}), {}
+    soup_cache = {}
+
+    fields_to_check = [('synopsis', 'synopsis'), ('showImage', 'image'), ('otherNames', 'otherNames'), ('releaseDate', 'releaseDate'), ('Duration', 'duration')]
+    
+    for obj_key, fetch_key in fields_to_check:
+        if not obj.get(obj_key):
+            primary_site, fallback_site = priority.get(fetch_key), 'mydramalist' if priority.get(fetch_key) == 'asianwiki' else 'asianwiki'
+            for site in [primary_site, fallback_site]:
+                if site:
+                    soup, url = get_soup_from_search(f'{s_name} {s_year}', site, lang, soup_cache)
+                    if soup:
+                        args = (soup, s_id) if fetch_key == 'image' else (soup,)
+                        data = SCRAPE_MAP[site][fetch_key](*args)
+                        if data:
+                            obj[obj_key] = data
+                            spu[fetch_key] = site
+                            source_links[fetch_key] = url
+                            if fetch_key == 'image': context['files_generated']['images'].append(os.path.join(IMAGES_DIR, f"{s_id}.jpg"))
+                            break # Success, move to next field
+    context['source_links_temp'] = source_links
+    return obj
 
 def process_deletions(excel, json_file, context):
     try: df = pd.read_excel(excel, sheet_name='Deleting Records')
@@ -437,35 +438,18 @@ def main():
             
             final_obj = {**JSON_OBJECT_TEMPLATE, **(old_obj_from_json or {}), **excel_obj}
             
-            lang = final_obj.get("nativeLanguage", "").lower()
-            priority = SITE_PRIORITY_BY_LANGUAGE.get(lang, SITE_PRIORITY_BY_LANGUAGE['default'])
-            s_name, s_year = final_obj['showName'], final_obj['releasedYear']
-            spu = final_obj.setdefault('sitePriorityUsed', {})
-            source_links = {}
+            initial_metadata_state = {k: final_obj.get(k) for k, _ in [('synopsis', 'synopsis'), ('showImage', 'image'), ('otherNames', 'otherNames'), ('releaseDate', 'releaseDate'), ('Duration', 'duration')]}
             
-            fields_to_check = [('synopsis', 'synopsis'), ('showImage', 'image'), ('otherNames', 'otherNames'), ('releaseDate', 'releaseDate'), ('Duration', 'duration')]
-            
-            initial_metadata_state = {k: final_obj.get(k) for k, _ in fields_to_check}
-            
-            for obj_key, fetch_key in fields_to_check:
-                if not final_obj.get(obj_key):
-                    primary_site, fallback_site = priority.get(fetch_key), 'mydramalist' if priority.get(fetch_key) == 'asianwiki' else 'asianwiki'
-                    for site in [primary_site, fallback_site]:
-                        if site:
-                            args = (s_name, s_year, sid, lang) if fetch_key == 'image' else (s_name, s_year, lang)
-                            data, url = FETCH_MAP[site][fetch_key](*args)
-                            if data:
-                                final_obj[obj_key] = data
-                                spu[fetch_key] = site
-                                source_links[fetch_key] = url
-                                if fetch_key == 'image': context['files_generated']['images'].append(os.path.join(IMAGES_DIR, f"{sid}.jpg"))
-                                break
+            # Use the coordinator function to fetch all missing data efficiently
+            final_obj = fetch_and_populate_metadata(final_obj, context)
             
             final_obj['topRatings'] = (final_obj.get("ratings", 0)) * (len(final_obj.get("againWatchedDates", [])) + 1) * 100
             
             excel_data_has_changed = not is_new and objects_differ(old_obj_from_json, excel_obj)
-            metadata_was_fetched = any(final_obj.get(k) != initial_metadata_state.get(k) for k, _ in fields_to_check)
-            newly_fetched_fields = sorted([fetch_key.capitalize() for obj_key, fetch_key in fields_to_check if final_obj.get(obj_key) and not initial_metadata_state.get(obj_key)])
+            metadata_was_fetched = any(final_obj.get(k) != v for k, v in initial_metadata_state.items())
+            
+            key_map = {'synopsis': 'Synopsis', 'showImage': 'Image', 'otherNames': 'Othernames', 'releaseDate': 'Releasedate', 'Duration': 'Duration'}
+            newly_fetched_fields = sorted([key_map[k] for k, v in initial_metadata_state.items() if not v and final_obj.get(k)])
 
             if is_new:
                 final_obj['updatedDetails'] = "First Time Uploaded"
@@ -485,10 +469,9 @@ def main():
             
             if is_new or excel_data_has_changed or metadata_was_fetched:
                  merged_by_id[sid] = final_obj
-                 context['source_links_temp'] = source_links
                  save_metadata_backup(final_obj, context)
 
-            missing = [FIELD_NAME_MAP[k] for k, _ in fields_to_check if not final_obj.get(k)]
+            missing = [human_readable_field(k) for k, v in final_obj.items() if k in {'synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration'} and not v]
             if missing: report['fetch_warnings'].append(f"- {sid} - {final_obj['showName']} -> ⚠️ Missing: {', '.join(sorted(missing))}")
 
     with open(JSON_FILE, 'w', encoding='utf-8') as f: json.dump(sorted(merged_by_id.values(), key=lambda x: x.get('showID', 0)), f, indent=4, ensure_ascii=False)
