@@ -1,0 +1,81 @@
+✅ Workflow completed successfully
+🆔 Run ID: RUN_20251121_181037
+📅 Run Time: 21 November 2025 06:11 PM (IST)
+🕒 Duration: 0 min 26 sec
+⚙️ Script Version: v3.0
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Sheet1 — 21 November 2025 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🆕 Data Created:
+- 101 - Why Women Love (2022) -> First Time Uploaded
+- 102 - Abyss (2019) -> First Time Uploaded
+
+🖼️ Fetched Data Details:
+- 101 - Why Women Love -> Fetched: Duration, Image, Othernames, Releasedate, Synopsis
+- 102 - Abyss -> Fetched: Duration, Image, Othernames, Releasedate, Synopsis
+
+📊 Summary (Sheet: Sheet1)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Created: 2
+🔁 Updated: 0
+🔍 Refetched: 0
+🚫 Skipped: 0
+⚠️ Warnings: 0
+  Total Rows: 2
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Sheet2 — 21 November 2025 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🆕 Data Created:
+- 3001 - Island Season 1 (2023) -> First Time Uploaded
+
+🖼️ Fetched Data Details:
+- 3001 - Island Season 1 -> Fetched: Duration, Image, Releasedate, Synopsis
+
+🕳️ Value Not Found:
+- 3001 - Island Season 1 -> ⚠️ Missing: Other Names
+
+📊 Summary (Sheet: Sheet2)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Created: 1
+🔁 Updated: 0
+🔍 Refetched: 0
+🚫 Skipped: 0
+⚠️ Warnings: 1
+  Total Rows: 1
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 Overall Summary
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Total Created: 3
+🔁 Total Updated: 0
+🔍 Total Refetched: 0
+🖼️ Total Images Updated: 3
+🚫 Total Skipped: 0
+❌ Total Deleted: 0
+🗄️ Total Archived Backups: 0
+⚠️ Total Warnings: 1
+💾 Backup Files: 0
+  Grand Total Rows: 3
+
+💾 Metadata Backups: 3
+
+📦 Total Objects in seriesData.json: 3
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ Folders Generated:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+images/
+    101.jpg
+    102.jpg
+    3001.jpg
+meta_backups/
+    META_21_November_2025_1810_101.json
+    META_21_November_2025_1810_102.json
+    META_21_November_2025_1811_3001.json
+reports/
+    Report_21_November_2025_1811.txt
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🏁 Workflow finished successfully
