@@ -1,0 +1,61 @@
+✅ Workflow completed successfully
+🆔 Run ID: RUN_20251121_131448
+📅 Run Time: 21 November 2025 01:17 PM (IST)
+🕒 Duration: 2 min 32 sec
+⚙️ Script Version: v3.0
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Sheet1 — 21 November 2025 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🆕 Data Created:
+- 102 - Find Me in Your Memory (2020) -> First Time Uploaded
+- 103 - Unforgettable Love (2021) -> First Time Uploaded
+
+🖼️ Fetched Data:
+- 102 - Find Me in Your Memory -> Fetched: Image, Other Names, Synopsis
+- 103 - Unforgettable Love -> Fetched: Image, Other Names, Release Date
+
+🕳️ Value Not Found:
+- 102 - Find Me in Your Memory -> ⚠️ Missing: Duration, Release Date
+- 103 - Unforgettable Love -> ⚠️ Missing: Duration, Synopsis
+
+🚫 Skipped (Unchanged):
+- - 101 - It's Okay That's Love (2014)
+
+📊 Summary (Sheet: Sheet1)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Created: 2
+🔁 Updated: 0
+🚫 Skipped: 1
+⚠️ Warnings: 2
+  Total Rows: 3
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 Overall Summary
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Total Created: 2
+🔁 Total Updated: 0
+🖼️ Total Images Updated: 2
+🚫 Total Skipped: 1
+❌ Total Deleted: 0
+⚠️ Total Warnings: 2
+💾 Backup Files: 0
+  Grand Total Rows: 3
+
+💾 Metadata Backups: 2
+
+📦 Total Objects in seriesData.json: 3
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ Folders Generated:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+images/
+    102.jpg
+    103.jpg
+meta_backups/
+    META_21_November_2025_1317_102.json
+    META_21_November_2025_1317_103.json
+reports/
+    Report_21_November_2025_1317.txt
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🏁 Workflow finished successfully
