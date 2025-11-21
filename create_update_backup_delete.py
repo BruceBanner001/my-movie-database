@@ -39,7 +39,7 @@ FIELD_NAME_MAP = { "showID": "Show ID", "showName": "Show Name", "otherNames": "
 LOCKED_FIELDS_AFTER_CREATION = {'synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'updatedOn', 'updatedDetails', 'sitePriorityUsed', 'topRatings'}
 
 # ---------------------------- IMPORTS & GLOBALS ----------------------------
-import os, re, sys, json, io, shutil, traceback, copy, time, string
+import os, re, sys, json, io, shutil, traceback, copy, time
 from datetime import datetime, timedelta, timezone
 import pandas as pd
 import requests
@@ -49,6 +49,9 @@ try: from ddgs import DDGS; HAVE_DDGS = True
 except Exception: HAVE_DDGS = False
 try: import cloudscraper; HAVE_SCRAPER = True
 except Exception: HAVE_SCRAPER = False
+# FIX: Correctly handle Image import
+try: from PIL import Image; HAVE_PIL = True
+except Exception: HAVE_PIL = False
 try: from google.oauth2 import service_account; from googleapiclient.discovery import build; from googleapiclient.http import MediaIoBaseDownload; HAVE_GOOGLE_API = True
 except Exception: HAVE_GOOGLE_API = False
 
@@ -140,15 +143,16 @@ def get_soup_from_search(query_base, site, language, soup_cache):
                                     logd(f"Country validation FAILED (Expected: {expected_country}, Found: {scraped_country}). Rejecting page.")
                                     continue
                             logd("Validation passed. This is the correct page.")
-                            soup_cache[cache_key] = (soup, url) # Cache success
+                            soup_cache[cache_key] = (soup, url)
                             return soup, url
                     else: logd(f"HTTP Error {r.status_code} for {url}")
         except Exception as e: logd(f"Search attempt failed for query '{query}': {e}")
     logd("All search attempts failed.")
-    soup_cache[cache_key] = (None, None) # Cache failure
+    soup_cache[cache_key] = (None, None)
     return None, None
 
 def download_and_save_image(url, local_path):
+    if not HAVE_PIL: logd("Pillow library not installed, cannot process images."); return False
     os.makedirs(os.path.dirname(local_path), exist_ok=True)
     try:
         url = re.sub(r'_[24]c\.jpg$', '.jpg', url)
@@ -157,17 +161,19 @@ def download_and_save_image(url, local_path):
         if r.status_code == 200 and r.headers.get("content-type", "").startswith("image"):
             with Image.open(r.raw) as img:
                 img = img.convert("RGB")
-                img.thumbnail((800, 1200), Image.Resampling.LANCZOS)
+                # FIX: Use the universally compatible Image.LANCZOS constant
+                img.thumbnail((800, 1200), Image.LANCZOS)
                 img.save(local_path, "JPEG", quality=95)
                 logd(f"Image saved to {local_path}"); return True
     except Exception as e: logd(f"Image download failed from {url}: {e}")
     return False
 def build_absolute_url(local_path): return f"{GITHUB_PAGES_URL.rstrip('/')}/{local_path.replace(os.sep, '/')}"
 
-# --- Scraper Functions (take soup, don't search) ---
 def _scrape_synopsis_from_asianwiki(soup):
-    h2 = soup.find('h2', id=re.compile(r"Synopsis|Plot", re.IGNORECASE))
-    if not h2: logd("Synopsis/Plot heading not found on AsianWiki."); return None
+    # FIX: Bulletproof synopsis scraper
+    plot_element = soup.find('span', id=re.compile(r"Synopsis|Plot", re.IGNORECASE))
+    if not plot_element or not (h2 := plot_element.find_parent('h2')):
+        logd("Synopsis/Plot heading not found on AsianWiki."); return None
     content = [p.get_text(strip=True) for p in h2.find_next_siblings('p')]
     return "\n\n".join(p for p in content if p)
 
@@ -190,7 +196,6 @@ def _scrape_othernames_from_asianwiki(soup):
 
 def _scrape_release_date_from_asianwiki(soup):
     b_tag = soup.find('b', string=re.compile(r"Release Date:"))
-    # FIX: Corrected crash-causing logic
     if b_tag and (parent := b_tag.parent):
         b_tag.decompose()
         return parent.get_text(strip=True)
@@ -236,15 +241,12 @@ SCRAPE_MAP = {
     'mydramalist': {'synopsis': _scrape_synopsis_from_mydramalist, 'image': _scrape_image_from_mydramalist, 'otherNames': _scrape_othernames_from_mydramalist, 'duration': _scrape_duration_from_mydramalist, 'releaseDate': _scrape_release_date_from_mydramalist}
 }
 
-# FIX: Performance-boosting Coordinator Function
 def fetch_and_populate_metadata(obj, context):
     s_id, s_name, s_year, lang = obj['showID'], obj['showName'], obj['releasedYear'], obj.get("nativeLanguage", "")
     priority = SITE_PRIORITY_BY_LANGUAGE.get(lang.lower(), SITE_PRIORITY_BY_LANGUAGE['default'])
     spu, source_links = obj.setdefault('sitePriorityUsed', {}), {}
     soup_cache = {}
-
     fields_to_check = [('synopsis', 'synopsis'), ('showImage', 'image'), ('otherNames', 'otherNames'), ('releaseDate', 'releaseDate'), ('Duration', 'duration')]
-    
     for obj_key, fetch_key in fields_to_check:
         if not obj.get(obj_key):
             primary_site, fallback_site = priority.get(fetch_key), 'mydramalist' if priority.get(fetch_key) == 'asianwiki' else 'asianwiki'
@@ -259,7 +261,7 @@ def fetch_and_populate_metadata(obj, context):
                             spu[fetch_key] = site
                             source_links[fetch_key] = url
                             if fetch_key == 'image': context['files_generated']['images'].append(os.path.join(IMAGES_DIR, f"{s_id}.jpg"))
-                            break # Success, move to next field
+                            break
     context['source_links_temp'] = source_links
     return obj
 
@@ -438,9 +440,8 @@ def main():
             
             final_obj = {**JSON_OBJECT_TEMPLATE, **(old_obj_from_json or {}), **excel_obj}
             
-            initial_metadata_state = {k: final_obj.get(k) for k, _ in [('synopsis', 'synopsis'), ('showImage', 'image'), ('otherNames', 'otherNames'), ('releaseDate', 'releaseDate'), ('Duration', 'duration')]}
+            initial_metadata_state = {k: final_obj.get(k) for k in ['synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration']}
             
-            # Use the coordinator function to fetch all missing data efficiently
             final_obj = fetch_and_populate_metadata(final_obj, context)
             
             final_obj['topRatings'] = (final_obj.get("ratings", 0)) * (len(final_obj.get("againWatchedDates", [])) + 1) * 100
