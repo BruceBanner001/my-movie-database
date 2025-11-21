@@ -1,4 +1,4 @@
-🚀 Running Script — Version v3.0 | Run ID: RUN_20251121_155229
+🚀 Running Script — Version v3.0 | Run ID: RUN_20251121_161549
 [DEBUG] Attempting direct media download...
 [DEBUG] 'Deleting Records' sheet is empty. Nothing to delete.
 [DEBUG] Initiating search for: 'My Roomate Is A Gumiho 2021' on asianwiki.com (Expected Country: South Korea)
@@ -6,21 +6,39 @@
 [DEBUG] Found candidate URL: https://asianwiki.com/My_Roommate_Is_A_Gumiho
 [DEBUG] Country validation passed (Expected: South Korea, Found: South Korea).
 [DEBUG] Validation passed. This is the correct page.
-[DEBUG] Synopsis/Plot heading not found on AsianWiki.
-[DEBUG] Initiating search for: 'My Roomate Is A Gumiho 2021' on mydramalist.com (Expected Country: South Korea)
-[DEBUG] Executing search query: "My Roomate Is A Gumiho 2021" Korean site:mydramalist.com
-[DEBUG] Found candidate URL: https://mydramalist.com/62151-frightening-cohabitation
+[DEBUG] Downloading high-quality image from: https://asianwiki.com/images/a/ad/My_Roommate_Is_A_Gumiho-MP001.jpeg
+[DEBUG] Image saved to images/109.jpg
+[DEBUG] Initiating search for: 'Abyss 2019' on asianwiki.com (Expected Country: South Korea)
+[DEBUG] Executing search query: "Abyss 2019" Korean site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Abyss_(Korean_Drama)
 [DEBUG] Country validation passed (Expected: South Korea, Found: South Korea).
 [DEBUG] Validation passed. This is the correct page.
-[DEBUG] Found soup in cache for 'My Roomate Is A Gumiho 2021' on asianwiki.com
-[DEBUG] Downloading high-quality image from: https://asianwiki.com/images/a/ad/My_Roommate_Is_A_Gumiho-MP001.jpeg
-[DEBUG] Image download failed from https://asianwiki.com/images/a/ad/My_Roommate_Is_A_Gumiho-MP001.jpeg: name 'Image' is not defined
-[DEBUG] Found soup in cache for 'My Roomate Is A Gumiho 2021' on mydramalist.com
-[DEBUG] Downloading high-quality image from: https://i.mydramalist.com/xJdOy_4c.jpg?v=1
-[DEBUG] Image download failed from https://i.mydramalist.com/xJdOy_4c.jpg?v=1: name 'Image' is not defined
-[DEBUG] Found soup in cache for 'My Roomate Is A Gumiho 2021' on mydramalist.com
-[DEBUG] Found soup in cache for 'My Roomate Is A Gumiho 2021' on asianwiki.com
-[DEBUG] Found soup in cache for 'My Roomate Is A Gumiho 2021' on mydramalist.com
-✅ Report written -> reports/Report_21_November_2025_1552.txt
+[DEBUG] Found soup in cache for 'Abyss 2019' on asianwiki.com
+[DEBUG] Downloading high-quality image from: https://asianwiki.com/images/5/5a/Abyss_%28Korean_Drama%29-p01.jpg
+[DEBUG] Image saved to images/110.jpg
+[DEBUG] Initiating search for: 'Abyss 2019' on mydramalist.com (Expected Country: South Korea)
+[DEBUG] Executing search query: "Abyss 2019" Korean site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/30554-abyss
+[DEBUG] Country validation passed (Expected: South Korea, Found: South Korea).
+[DEBUG] Validation passed. This is the correct page.
+[DEBUG] Found soup in cache for 'Abyss 2019' on asianwiki.com
+[DEBUG] Found soup in cache for 'Abyss 2019' on mydramalist.com
+[DEBUG] Initiating search for: 'Island Season 1 2023' on asianwiki.com (Expected Country: South Korea)
+[DEBUG] Executing search query: "Island Season 1 2023" Korean site:asianwiki.com
+[DEBUG] Executing search query: "Island Season 1 2023" Korean drama site:asianwiki.com
+[DEBUG] All search attempts failed.
+[DEBUG] Initiating search for: 'Island Season 1 2023' on mydramalist.com (Expected Country: South Korea)
+[DEBUG] Executing search query: "Island Season 1 2023" Korean site:mydramalist.com
+[DEBUG] Executing search query: "Island Season 1 2023" Korean drama site:mydramalist.com
+[DEBUG] All search attempts failed.
+[DEBUG] Found soup in cache for 'Island Season 1 2023' on asianwiki.com
+[DEBUG] Found soup in cache for 'Island Season 1 2023' on mydramalist.com
+[DEBUG] Found soup in cache for 'Island Season 1 2023' on mydramalist.com
+[DEBUG] Found soup in cache for 'Island Season 1 2023' on asianwiki.com
+[DEBUG] Found soup in cache for 'Island Season 1 2023' on asianwiki.com
+[DEBUG] Found soup in cache for 'Island Season 1 2023' on mydramalist.com
+[DEBUG] Found soup in cache for 'Island Season 1 2023' on mydramalist.com
+[DEBUG] Found soup in cache for 'Island Season 1 2023' on asianwiki.com
+✅ Report written -> reports/Report_21_November_2025_1616.txt
 
 All done.
