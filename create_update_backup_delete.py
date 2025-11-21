@@ -16,7 +16,7 @@
 SCRIPT_VERSION = "v3.0"
 
 JSON_OBJECT_TEMPLATE = {
-    "showID": None, "showName": None, "otherNames": [], "showImage": None,
+    "showID": None, "showName": None, "otherNames": None, "showImage": None,
     "watchStartedOn": None, "watchEndedOn": None, "releasedYear": 0,
     "releaseDate": None, "totalEpisodes": 0, "showType": None,
     "nativeLanguage": None, "watchedLanguage": None, "country": None,
@@ -75,33 +75,32 @@ def ddmmyyyy(val):
     except Exception: return None
 def normalize_list(val):
     if val is None: return []
-    items = [p.strip() for p in str(val).split(',') if p.strip()]
+    # FIX: Handle both list and string inputs for comparison
+    if isinstance(val, list): items = val
+    else: items = [p.strip() for p in str(val).split(',') if p.strip()]
     return sorted([item for item in items if item])
+
 def objects_differ(old, new):
     keys = set(old.keys()) | set(new.keys()) - LOCKED_FIELDS_AFTER_CREATION
     for k in keys:
-        old_val = old.get(k) if old.get(k) is not None else []
-        new_val = new.get(k) if new.get(k) is not None else []
-        if normalize_list(old_val) != normalize_list(new_val): return True
+        old_val = old.get(k)
+        new_val = new.get(k)
+        # Special handling for otherNames which can be a string
+        if k == 'otherNames':
+            if str(old_val or "") != str(new_val or ""): return True
+        # Original list comparison for other fields
+        elif normalize_list(old_val) != normalize_list(new_val): return True
     return False
 
-def get_soup_from_search(query_base, site, soup_cache):
-    cache_key = f"{query_base}_{site}"
-    if cache_key in soup_cache:
-        logd(f"Found soup in cache for {query_base} on {site}.")
-        return soup_cache[cache_key]
-
+def get_soup_from_search(query_base, site):
     logd(f"Initiating search for: {query_base} on {site}.com")
     if not HAVE_DDGS: logd("DDGS library not available."); return None, None
-
     clean_query = query_base.split("(")[0].strip()
-    # FIX: Add .com to the site in the search query
     search_queries = [
         f'"{query_base}" site:{site}.com',
         f'"{clean_query}" site:{site}.com',
         f'"{clean_query} drama" site:{site}.com'
     ]
-
     for query in search_queries:
         logd(f"Executing search query: {query}")
         try:
@@ -109,43 +108,25 @@ def get_soup_from_search(query_base, site, soup_cache):
             with DDGS() as dd:
                 results = list(dd.text(query, max_results=5))
                 if not results: continue
-
                 for res in results:
                     url = res.get('href', '')
-                    if not url: continue # FIX: Skip if URL is empty
-                    if any(bad in url for bad in ['/reviews', '/episode', '/cast', '/recs', '?lang=', '/photos']): continue
-
+                    if not url or any(bad in url for bad in ['/reviews', '/episode', '/cast', '/recs', '?lang=', '/photos']): continue
                     logd(f"Found candidate URL: {url}")
                     r = SCRAPER.get(url, timeout=15)
                     if r.status_code == 200:
                         soup = BeautifulSoup(r.text, "html.parser")
                         is_valid = False
-                        
                         if site == "asianwiki":
-                            infobox = soup.find('table', class_='infobox')
-                            if infobox:
-                                text = infobox.get_text()
-                                if any(kw in text for kw in ['Network:', 'Episodes:', 'Release Date:', 'Runtime:', 'Director:', 'Writer:']):
-                                    is_valid = True
-                                else:
-                                    logd("Validation failed: AsianWiki infobox is missing key drama fields. Rejecting.")
+                            if soup.find('table', class_='infobox'): is_valid = True
+                            else: logd("Validation failed: AsianWiki infobox landmark missing.")
                         elif site == "mydramalist":
-                            if soup.find('div', class_='box-body'):
-                                is_valid = True
-                            else:
-                                logd("Validation failed: MyDramaList landmark missing. Rejecting.")
-
+                            if soup.find('div', class_='box-body'): is_valid = True
+                            else: logd("Validation failed: MyDramaList landmark missing.")
                         if is_valid:
                             logd("Landmark validation passed. This is the correct page.")
-                            soup_cache[cache_key] = (soup, url)
                             return soup, url
-                    else:
-                        logd(f"HTTP Error {r.status_code} for {url}")
-        except Exception as e:
-            logd(f"Search attempt failed for query '{query}': {e}")
-            continue
-    
-    soup_cache[cache_key] = (None, None)
+                    else: logd(f"HTTP Error {r.status_code} for {url}")
+        except Exception as e: logd(f"Search attempt failed for query '{query}': {e}")
     logd("All search attempts failed."); return None, None
 
 def download_and_save_image(url, local_path):
@@ -164,85 +145,102 @@ def download_and_save_image(url, local_path):
     return False
 def build_absolute_url(local_path): return f"{GITHUB_PAGES_URL.rstrip('/')}/{local_path.replace(os.sep, '/')}"
 
-def scrape_synopsis_from_asianwiki(soup):
+def fetch_synopsis_from_asianwiki(s, y):
+    soup, url = get_soup_from_search(f'{s} {y}', "asianwiki")
+    if not soup: return None, None
     h2 = soup.find('h2', id=re.compile(r"Synopsis|Plot", re.IGNORECASE))
-    if not h2: logd("Synopsis/Plot heading not found on AsianWiki."); return None
-    content = []
-    for sibling in h2.find_next_siblings():
-        if sibling.name == 'h2': break
-        if sibling.name == 'p': content.append(sibling.get_text(strip=True))
+    if not h2: logd("Synopsis/Plot heading not found on AsianWiki."); return None, None
+    content = [p.get_text(strip=True) for p in h2.find_next_siblings('p')]
     synopsis = "\n\n".join(p for p in content if p)
-    return synopsis if synopsis else None
+    return (synopsis, url) if synopsis else (None, None)
 
-def scrape_image_from_asianwiki(soup, sid):
+def fetch_image_from_asianwiki(s, y, sid):
+    soup, url = get_soup_from_search(f'{s} {y}', "asianwiki")
+    if not soup: return None, None
     img = soup.select_one('a.image > img[src]')
-    if not img: logd("Image tag not found on AsianWiki."); return None
+    if not img: logd("Image tag not found on AsianWiki."); return None, None
     img_url = requests.compat.urljoin("https://asianwiki.com", img['src'])
     if download_and_save_image(img_url, os.path.join(IMAGES_DIR, f"{sid}.jpg")):
-        return build_absolute_url(os.path.join(IMAGES_DIR, f"{sid}.jpg"))
-    return None
+        return (build_absolute_url(os.path.join(IMAGES_DIR, f"{sid}.jpg")), url)
+    return None, None
 
-def scrape_othernames_from_asianwiki(soup):
-    p_tag = soup.find('p', text=re.compile(r"^(Drama:|Movie:)"))
-    if not p_tag:
-        b_tag = soup.find('b', text=re.compile(r"^(Drama:|Movie:)"))
-        if b_tag: p_tag = b_tag.find_parent('p')
+def fetch_othernames_from_asianwiki(s, y):
+    soup, url = get_soup_from_search(f'{s} {y}', "asianwiki")
+    if not soup: return None, None
+    p_tag = soup.find('p', string=re.compile(r"^(Drama:|Movie:)"))
     if p_tag:
-        match = re.search(r':(.*?)(?=\(Revised romanization:|\(literal title\))', p_tag.get_text(strip=True), re.DOTALL)
+        full_text = p_tag.get_text(strip=True).replace(" Hangul:", " (Hangul:")
+        match = re.search(r':(.*?)(?=\(Revised romanization:|\(literal title\)|$)', full_text, re.DOTALL)
         if match:
-            return [name.strip() for name in match.group(1).strip().split('/') if name.strip()]
-    logd("'Other Names' from 'Drama:' field not found on AsianWiki."); return None
+            names_text = match.group(1).strip()
+            return (names_text, url) if names_text else (None, None)
+    logd("'Other Names' from 'Drama:' field not found on AsianWiki."); return None, None
 
-def scrape_release_date_from_asianwiki(soup):
-    b_tag = soup.find('b', text=re.compile(r"Release Date:"))
-    if b_tag:
-        parent = b_tag.parent
+def fetch_duration_from_asianwiki(s, y): return None, None
+
+def fetch_release_date_from_asianwiki(s, y):
+    soup, url = get_soup_from_search(f'{s} {y}', "asianwiki")
+    if not soup: return None, None
+    b_tag = soup.find('b', string=re.compile(r"Release Date:"))
+    if b_tag and b_tag.parent:
         b_tag.decompose()
-        return parent.get_text(strip=True)
-    logd("'Release Date:' field not found on AsianWiki."); return None
+        release_text = b_tag.parent.get_text(strip=True)
+        return (release_text, url) if release_text else (None, None)
+    logd("'Release Date:' field not found on AsianWiki."); return None, None
 
-def scrape_synopsis_from_mydramalist(soup):
+def fetch_synopsis_from_mydramalist(s, y):
+    soup, url = get_soup_from_search(f'{s} {y}', "mydramalist")
+    if not soup: return None, None
     synopsis_div = soup.select_one('div.show-synopsis, div[itemprop="description"]')
-    if not synopsis_div: logd("Synopsis element not found on MyDramaList."); return None
+    if not synopsis_div: logd("Synopsis element not found on MyDramaList."); return None, None
     synopsis = synopsis_div.get_text(separator='\n\n', strip=True)
     synopsis = re.sub(r'(^Remove ads\n\n)|((~~.*?~~|Edit Translation).*$)|(\s*\(\s*Source:.*?\)\s*$)', '', synopsis, flags=re.DOTALL | re.IGNORECASE).strip()
-    return synopsis if synopsis else None
+    return (synopsis, url) if synopsis else (None, None)
 
-def scrape_image_from_mydramalist(soup, sid):
+def fetch_image_from_mydramalist(s, y, sid):
+    soup, url = get_soup_from_search(f'{s} {y}', "mydramalist")
+    if not soup: return None, None
     img = soup.select_one('.film-cover img[src], .cover img[src], div.cover img[src]')
-    if not img: logd("Image tag not found on MyDramaList."); return None
+    if not img: logd("Image tag not found on MyDramaList."); return None, None
     if download_and_save_image(img['src'], os.path.join(IMAGES_DIR, f"{sid}.jpg")):
-        return build_absolute_url(os.path.join(IMAGES_DIR, f"{sid}.jpg"))
-    return None
+        return (build_absolute_url(os.path.join(IMAGES_DIR, f"{sid}.jpg")), url)
+    return None, None
 
-def scrape_othernames_from_mydramalist(soup):
-    li_tag = soup.find('li', class_='list-item', text=re.compile(r"Also Known As:"))
-    if not li_tag:
-        b_tag = soup.find('b', text=re.compile(r"Also Known As:"))
-        if b_tag: li_tag = b_tag.find_parent('li')
+def fetch_othernames_from_mydramalist(s, y):
+    soup, url = get_soup_from_search(f'{s} {y}', "mydramalist")
+    if not soup: return None, None
+    li_tag = soup.find('li', string=re.compile(r"Also Known As:"))
     if li_tag:
         if b_tag := li_tag.find('b'): b_tag.decompose()
-        return [name.strip() for name in li_tag.get_text(strip=True).split(',') if name.strip()]
-    logd("'Also Known As:' field not found on MyDramaList."); return None
+        names_text = li_tag.get_text(strip=True)
+        return (names_text, url) if names_text else (None, None)
+    logd("'Also Known As:' field not found on MyDramaList."); return None, None
 
-def scrape_duration_from_mydramalist(soup):
-    b_tag = soup.find('b', text=re.compile(r"Duration:"))
+def fetch_duration_from_mydramalist(s, y):
+    soup, url = get_soup_from_search(f'{s} {y}', "mydramalist")
+    if not soup: return None, None
+    b_tag = soup.find('b', string=re.compile(r"Duration:"))
     if b_tag and (li_tag := b_tag.find_parent('li')):
         b_tag.decompose()
         duration_text = li_tag.get_text(strip=True)
-        return duration_text.replace(" min.", " mins") if "hr" not in duration_text else duration_text
-    logd("'Duration:' field not found on MyDramaList."); return None
+        if "hr" not in duration_text and duration_text.endswith(" min."):
+            duration_text = duration_text.replace(" min.", " mins")
+        return (duration_text, url) if duration_text else (None, None)
+    logd("'Duration:' field not found on MyDramaList."); return None, None
 
-def scrape_release_date_from_mydramalist(soup):
-    b_tag = soup.find('b', text=re.compile(r"Aired:"))
+def fetch_release_date_from_mydramalist(s, y):
+    soup, url = get_soup_from_search(f'{s} {y}', "mydramalist")
+    if not soup: return None, None
+    b_tag = soup.find('b', string=re.compile(r"Aired:"))
     if b_tag and (li_tag := b_tag.find_parent('li')):
         b_tag.decompose()
-        return li_tag.get_text(strip=True)
-    logd("'Aired:' field not found on MyDramaList."); return None
+        release_text = li_tag.get_text(strip=True)
+        return (release_text, url) if release_text else (None, None)
+    logd("'Aired:' field not found on MyDramaList."); return None, None
 
-SCRAPE_MAP = {
-    'asianwiki': {'synopsis': scrape_synopsis_from_asianwiki, 'image': scrape_image_from_asianwiki, 'otherNames': scrape_othernames_from_asianwiki, 'duration': lambda s, sid=None: None, 'releaseDate': scrape_release_date_from_asianwiki},
-    'mydramalist': {'synopsis': scrape_synopsis_from_mydramalist, 'image': scrape_image_from_mydramalist, 'otherNames': scrape_othernames_from_mydramalist, 'duration': scrape_duration_from_mydramalist, 'releaseDate': scrape_release_date_from_mydramalist}
+FETCH_MAP = {
+    'asianwiki': {'synopsis': fetch_synopsis_from_asianwiki, 'image': fetch_image_from_asianwiki, 'otherNames': fetch_othernames_from_asianwiki, 'duration': fetch_duration_from_asianwiki, 'releaseDate': fetch_release_date_from_asianwiki},
+    'mydramalist': {'synopsis': fetch_synopsis_from_mydramalist, 'image': fetch_image_from_mydramalist, 'otherNames': fetch_othernames_from_mydramalist, 'duration': fetch_duration_from_mydramalist, 'releaseDate': fetch_release_date_from_mydramalist}
 }
 
 def process_deletions(excel, json_file, context):
@@ -281,28 +279,26 @@ def apply_manual_updates(excel, by_id, context):
         sid = int(sid); obj, old, changed = by_id[sid], copy.deepcopy(by_id[sid]), {}
         for col, key in MAP.items():
             if col in row and row[col]:
-                val = row[col]
+                val = str(row[col]).strip()
                 if key == 'showImage' and download_and_save_image(val, os.path.join(IMAGES_DIR, f"{sid}.jpg")):
                     val = build_absolute_url(os.path.join(IMAGES_DIR, f"{sid}.jpg")); context['files_generated']['images'].append(os.path.join(IMAGES_DIR, f"{sid}.jpg"))
-                elif key == 'otherNames': val = normalize_list(val)
-                else: val = str(val).strip()
                 if obj.get(key) != val: changed[key] = {'old': obj.get(key), 'new': val}; obj[key] = val; obj.setdefault('sitePriorityUsed', {})[key] = "Manual"
         if changed:
             obj['updatedDetails'] = f"{', '.join([human_readable_field(f) for f in changed])} Updated Manually"; obj['updatedOn'] = now_ist().strftime('%d %B %Y')
             report.setdefault('updated', []).append({'old': old, 'new': obj}); create_diff_backup(old, obj, context)
     return report
-    
-def excel_to_objects(excel, sheet, by_id, context):
+
+def excel_to_objects(excel, sheet):
     try:
         df = pd.read_excel(excel, sheet_name=sheet, keep_default_na=False); df.columns = [c.strip().lower() for c in df.columns]
-    except ValueError: print(f"INFO: Sheet '{sheet}' not found. Skipping."); return []
-    report = context['report_data'].setdefault(sheet, {}); report.setdefault('data_warnings', [])
+    except ValueError:
+        print(f"INFO: Sheet '{sheet}' not found. Skipping."); return [], []
+    warnings = []
     try: again_idx = [i for i, c in enumerate(df.columns) if "again watched" in c][0]
-    except IndexError: print(f"ERROR: 'Again Watched' in '{sheet}' not found. Skipping."); return []
+    except IndexError: print(f"ERROR: 'Again Watched' in '{sheet}' not found. Skipping."); return [], []
     MAP = {"no": "showID", "series title": "showName", "started date": "watchStartedOn", "finished date": "watchEndedOn", "year": "releasedYear", "total episodes": "totalEpisodes", "original language": "nativeLanguage", "language": "watchedLanguage", "ratings": "ratings", "catagory": "genres", "category": "genres", "original network": "network", "comments": "comments"}
     base_id = {"sheet1": 100, "feb 7 2023 onwards": 1000, "sheet2": 3000}.get(sheet.lower(), 0)
-    processed, soup_cache = [], {}
-
+    processed = []
     for index, row in df.iterrows():
         obj, row_num = {}, index + 2
         for col in df.columns[:again_idx]:
@@ -310,7 +306,7 @@ def excel_to_objects(excel, sheet, by_id, context):
             if key in ("showID", "releasedYear", "totalEpisodes", "ratings"):
                 num_val = pd.to_numeric(val, errors='coerce')
                 if pd.isna(num_val):
-                    if val and str(val).strip(): report['data_warnings'].append(f"- Row {row_num}: Invalid value '{val}' in '{col}'. Using 0.")
+                    if val and str(val).strip(): warnings.append(f"- Row {row_num}: Invalid value '{val}' in '{col}'. Using 0.")
                     obj[key] = 0
                 else: obj[key] = int(num_val)
             else: obj[key] = ddmmyyyy(val) if key in ("watchStartedOn", "watchEndedOn") else normalize_list(val) if key in ("genres", "network") else str(val).strip() if val else None
@@ -321,58 +317,17 @@ def excel_to_objects(excel, sheet, by_id, context):
         lang = obj.get("nativeLanguage", "").lower()
         if lang in ("korean", "korea"): obj["country"] = "South Korea"
         elif lang in ("chinese", "china"): obj["country"] = "China"
-        
-        source_links = {}
-        priority = SITE_PRIORITY_BY_LANGUAGE.get(lang, SITE_PRIORITY_BY_LANGUAGE['default'])
-        s_name, s_year, s_id = obj['showName'], obj['releasedYear'], obj['showID']
-
-        is_new_object = by_id.get(s_id) is None
-        if is_new_object:
-            obj['updatedDetails'] = "First Time Uploaded"; obj['updatedOn'] = now_ist().strftime('%d %B %Y')
-            fields_to_fetch_keys = ['synopsis', 'image', 'releaseDate', 'duration', 'otherNames']
-        else:
-            existing_object = by_id[s_id]
-            for field in LOCKED_FIELDS_AFTER_CREATION: obj[field] = existing_object.get(field)
-            key_map = {'synopsis': 'synopsis', 'showImage': 'image', 'releaseDate': 'releaseDate', 'Duration': 'duration', 'otherNames': 'otherNames'}
-            fields_to_fetch_keys = [key_map[k] for k, v in obj.items() if k in key_map and not v]
-
-        if fields_to_fetch_keys:
-            spu = obj.setdefault('sitePriorityUsed', {})
-            for field in fields_to_fetch_keys:
-                primary_site, fallback_site = priority.get(field), 'mydramalist' if priority.get(field) == 'asianwiki' else 'asianwiki'
-                
-                for site in [primary_site, fallback_site]:
-                    if not site: continue
-                    
-                    soup, url = get_soup_from_search(f'{s_name} {s_year}', site, soup_cache)
-                    if not soup: continue
-
-                    args = (soup, s_id) if field == 'image' else (soup,)
-                    data = SCRAPE_MAP[site][field](*args)
-                    
-                    if data is not None and data != []:
-                        target_key = "showImage" if field == "image" else "Duration" if field == "duration" else field
-                        obj[target_key] = data
-                        spu[field] = site
-                        source_links[field] = url
-                        if field == 'image': context['files_generated']['images'].append(os.path.join(IMAGES_DIR, f"{s_id}.jpg"))
-                        break
-        
-        obj["topRatings"] = (obj.get("ratings", 0)) * (len(obj.get("againWatchedDates", [])) + 1) * 100
-        final_obj = {**copy.deepcopy(JSON_OBJECT_TEMPLATE), **obj}
-        context['source_links_temp'] = source_links
-        processed.append(final_obj)
-    return processed
+        processed.append(obj)
+    return processed, warnings
 
 def save_metadata_backup(obj, context):
     fetched = {}
     source_links = context.get('source_links_temp', {})
     for key, site in obj.get('sitePriorityUsed', {}).items():
-        if site:
+        if site and site != "Manual": # Don't backup manual entries as fetched
             target_key = "showImage" if key == "image" else "Duration" if key == "duration" else key
             field_data = {"value": obj.get(target_key), "source": site}
-            if key in source_links:
-                field_data["source_link"] = source_links[key]
+            if key in source_links: field_data["source_link"] = source_links[key]
             fetched[key] = field_data
     if not fetched: logd(f"Skipping metadata backup for {obj['showID']}: no new data fetched."); return
     data = {"scriptVersion": SCRIPT_VERSION, "runID": context['run_id'], "timestamp": now_ist().strftime("%d %B %Y %I:%M %p (IST)"), "showID": obj['showID'], "showName": obj['showName'], "fetchedFields": fetched}
@@ -402,9 +357,9 @@ def write_report(context):
         if changes.get('created'): lines.append("\n🆕 Data Created:"); [lines.append(f"- {o['showID']} - {o['showName']} ({o.get('releasedYear')}) -> {o.get('updatedDetails', '')}") for o in changes['created']]
         if changes.get('updated'): lines.append("\n🔁 Data Updated:"); [lines.append(f"✍️ {p['new']['showID']} - {p['new']['showName']} -> {p['new']['updatedDetails']}") for p in changes['updated']]
         if changes.get('data_warnings'): lines.append("\n⚠️ Data Validation Warnings:"); [lines.append(i) for i in changes['data_warnings']]; stats['warnings'] += len(changes['data_warnings'])
-        if changes.get('fetched_data'): lines.append("\n🖼️ Fetched Data:"); [lines.append(i) for i in changes['fetched_data']]
-        if changes.get('fetch_warnings'): lines.append("\n🕳️ Value Not Found:"); [lines.append(i) for i in changes['fetch_warnings']]; stats['warnings'] += len(changes['fetch_warnings'])
-        if changes.get('skipped'): lines.append("\n🚫 Skipped (Unchanged):"); [lines.append(f"- {i}") for i in changes['skipped']]
+        if changes.get('fetched_data'): lines.append("\n🖼️ Fetched Data:"); [lines.append(i) for i in sorted(changes['fetched_data'])]
+        if changes.get('fetch_warnings'): lines.append("\n🕳️ Value Not Found:"); [lines.append(i) for i in sorted(changes['fetch_warnings'])]; stats['warnings'] += len(changes['fetch_warnings'])
+        if changes.get('skipped'): lines.append("\n🚫 Skipped (Unchanged):"); [lines.append(f"- {i}") for i in sorted(changes['skipped'])]
         if changes.get('data_deleted'): lines.append("\n❌ Data Deleted:"); [lines.append(i) for i in changes['data_deleted']]
         if sheet not in ["Deleting Records", "Manual Updates"]:
             s = {k: len(v) for k, v in changes.items()}; total = sum(s.get(k, 0) for k in ['created', 'updated', 'skipped'])
@@ -429,7 +384,6 @@ def main():
     if not (os.path.exists(EXCEL_FILE_ID_TXT) and os.path.exists(SERVICE_ACCOUNT_FILE)): print("❌ Missing GDrive credentials."); sys.exit(1)
     try:
         with open(EXCEL_FILE_ID_TXT, 'r') as f: excel_id = f.read().strip()
-        if not excel_id: raise ValueError("EXCEL_FILE_ID.txt is empty.")
     except Exception as e: print(f"❌ Error with Excel ID file: {e}"); sys.exit(1)
     print(f"🚀 Running Script — Version {SCRIPT_VERSION} | Run ID: {context['run_id']}")
     excel_bytes = fetch_excel_from_gdrive_bytes(excel_id, SERVICE_ACCOUNT_FILE)
@@ -441,71 +395,90 @@ def main():
     try:
         with open(JSON_FILE, 'r', encoding='utf-8') as f: current_objects = json.load(f)
     except (FileNotFoundError, json.JSONDecodeError): current_objects = []
-
     merged_by_id = {o['showID']: o for o in current_objects if o.get('showID')}
+    
     manual_report = apply_manual_updates(io.BytesIO(excel_bytes.getvalue()), merged_by_id, context)
     if manual_report: context['report_data']['Manual Updates'] = manual_report
 
     sheets_to_process = [s.strip() for s in os.environ.get("SHEETS", "Sheet1").split(';') if s.strip()]
-
-    fetched_display_map = {
-        "synopsis": "Synopsis", "image": "Image", "releaseDate": "Release Date",
-        "duration": "Duration", "otherNames": "Other Names"
-    }
-
     for sheet in sheets_to_process:
-        try:
-            report = context['report_data'].setdefault(sheet, {'created': [], 'updated': [], 'skipped': [], 'fetched_data': [], 'fetch_warnings': [], 'data_warnings': []})
-            processed_objects = excel_to_objects(io.BytesIO(excel_bytes.getvalue()), sheet, merged_by_id, context)
+        report = context['report_data'].setdefault(sheet, {'created': [], 'updated': [], 'skipped': [], 'fetched_data': [], 'fetch_warnings': [], 'data_warnings': []})
+        excel_rows, warnings = excel_to_objects(io.BytesIO(excel_bytes.getvalue()), sheet)
+        if warnings: report['data_warnings'].extend(warnings)
 
-            for new_obj in processed_objects:
-                sid, old_obj = new_obj['showID'], merged_by_id.get(new_obj['showID'])
+        for excel_obj in excel_rows:
+            sid = excel_obj['showID']
+            old_obj_from_json = merged_by_id.get(sid)
+            is_new = old_obj_from_json is None
+            
+            # Create the base object: start with template, add existing json data, then add excel data
+            final_obj = {**JSON_OBJECT_TEMPLATE, **(old_obj_from_json or {}), **excel_obj}
+            
+            # --- FETCHING LOGIC ---
+            lang = final_obj.get("nativeLanguage", "").lower()
+            priority = SITE_PRIORITY_BY_LANGUAGE.get(lang, SITE_PRIORITY_BY_LANGUAGE['default'])
+            s_name, s_year = final_obj['showName'], final_obj['releasedYear']
+            spu = final_obj.setdefault('sitePriorityUsed', {})
+            source_links = {}
+            
+            fields_to_check = [('synopsis', 'synopsis'), ('showImage', 'image'), ('otherNames', 'otherNames'), ('releaseDate', 'releaseDate'), ('Duration', 'duration')]
+            
+            data_was_fetched = False
+            for obj_key, fetch_key in fields_to_check:
+                if not final_obj.get(obj_key):
+                    primary_site = priority.get(fetch_key)
+                    fallback_site = 'mydramalist' if primary_site == 'asianwiki' else 'asianwiki'
+                    
+                    for site in [primary_site, fallback_site]:
+                        if site:
+                            args = (s_name, s_year, sid) if fetch_key == 'image' else (s_name, s_year)
+                            data, url = FETCH_MAP[site][fetch_key](*args)
+                            if data:
+                                final_obj[obj_key] = data
+                                spu[fetch_key] = site
+                                source_links[fetch_key] = url
+                                data_was_fetched = True
+                                if fetch_key == 'image': context['files_generated']['images'].append(os.path.join(IMAGES_DIR, f"{sid}.jpg"))
+                                break # Success, move to next field
 
-                # --- Processing Logic (Create, Update, Skip) ---
-                if old_obj is None:
-                    report['created'].append(new_obj)
-                    merged_by_id[sid] = new_obj
-                    save_metadata_backup(new_obj, context)
-                elif objects_differ(old_obj, new_obj):
-                    changes = [human_readable_field(k) for k, v in new_obj.items() if k not in LOCKED_FIELDS_AFTER_CREATION and normalize_list(old_obj.get(k)) != normalize_list(v)]
-                    if changes:
-                        new_obj['updatedDetails'] = f"{', '.join(changes)} Updated"
-                        new_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
-                        report['updated'].append({'old': old_obj, 'new': new_obj})
-                        merged_by_id[sid] = new_obj
-                        create_diff_backup(old_obj, new_obj, context)
-                    else:
-                        report['skipped'].append(f"{sid} - {old_obj['showName']} ({old_obj.get('releasedYear')})")
+            final_obj['topRatings'] = (final_obj.get("ratings", 0)) * (len(final_obj.get("againWatchedDates", [])) + 1) * 100
+            
+            # --- CLASSIFY AND REPORT ---
+            if is_new:
+                final_obj['updatedDetails'] = "First Time Uploaded"
+                final_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
+                report['created'].append(final_obj)
+                merged_by_id[sid] = final_obj
+                context['source_links_temp'] = source_links
+                save_metadata_backup(final_obj, context)
+            else:
+                is_different = objects_differ(old_obj_from_json, final_obj)
+                if is_different or data_was_fetched:
+                    changes = [human_readable_field(k) for k, v in excel_obj.items() if normalize_list(old_obj_from_json.get(k)) != normalize_list(v)]
+                    final_obj['updatedDetails'] = f"{', '.join(changes)} Updated" if changes else "Metadata Updated"
+                    final_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
+                    report['updated'].append({'old': old_obj_from_json, 'new': final_obj})
+                    merged_by_id[sid] = final_obj
+                    create_diff_backup(old_obj_from_json, final_obj, context)
+                    context['source_links_temp'] = source_links
+                    save_metadata_backup(final_obj, context)
                 else:
-                    report['skipped'].append(f"{sid} - {old_obj['showName']} ({old_obj.get('releasedYear')})")
-
-                # FIX: UNIFIED REPORTING LOGIC RUNS FOR EVERY OBJECT
-                missing = []
-                if not new_obj.get('otherNames'): missing.append('Other Names')
-                if not new_obj.get('showImage'): missing.append('Image')
-                if not new_obj.get('releaseDate'): missing.append('Release Date')
-                if not new_obj.get('synopsis'): missing.append('Synopsis')
-                if not new_obj.get('Duration'): missing.append('Duration')
-
-                fetched = sorted([fetched_display_map.get(k, k) for k,v in new_obj.get('sitePriorityUsed', {}).items() if v])
-                if fetched: report['fetched_data'].append(f"- {sid} - {new_obj['showName']} -> Fetched: {', '.join(fetched)}")
-                if missing: report['fetch_warnings'].append(f"- {sid} - {new_obj['showName']} -> ⚠️ Missing: {', '.join(sorted(missing))}")
-
-        except Exception as e:
-            print(f"❌ UNEXPECTED FATAL ERROR processing sheet '{sheet}': {e}")
-            logd(traceback.format_exc())
+                    report['skipped'].append(f"{sid} - {final_obj['showName']} ({final_obj.get('releasedYear')})")
+            
+            # Unified Reporting
+            missing = [FIELD_NAME_MAP[k] for k, v in final_obj.items() if k in FIELD_NAME_MAP and not v and k in {'synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration'}]
+            fetched = sorted([k.capitalize() for k,v in spu.items() if v and v != "Manual"])
+            if fetched: report['fetched_data'].append(f"- {sid} - {final_obj['showName']} -> Fetched: {', '.join(fetched)}")
+            if missing: report['fetch_warnings'].append(f"- {sid} - {final_obj['showName']} -> ⚠️ Missing: {', '.join(sorted(missing))}")
 
     with open(JSON_FILE, 'w', encoding='utf-8') as f: json.dump(sorted(merged_by_id.values(), key=lambda x: x.get('showID', 0)), f, indent=4, ensure_ascii=False)
-
+    
     end_time = now_ist()
     duration = end_time - datetime.fromisoformat(context['start_time_iso'])
     context['duration_str'] = f"{duration.seconds // 60} min {duration.seconds % 60} sec"
-
-    report_path = os.path.join(REPORTS_DIR, f"Report_{filename_timestamp()}.txt")
-    os.makedirs(REPORTS_DIR, exist_ok=True)
+    report_path = os.path.join(REPORTS_DIR, f"Report_{filename_timestamp()}.txt"); os.makedirs(REPORTS_DIR, exist_ok=True)
     context['report_file_path'] = report_path
     context['files_generated']['reports'].append(report_path)
-
     write_report(context)
     print(f"✅ Report written -> {report_path}")
     print("\nAll done.")
@@ -515,12 +488,19 @@ def fetch_excel_from_gdrive_bytes(file_id, creds_path):
     try:
         creds = service_account.Credentials.from_service_account_file(creds_path, scopes=['https://www.googleapis.com/auth/drive.readonly'])
         service = build('drive', 'v3', credentials=creds)
-        try: request = service.files().get_media(fileId=file_id)
-        except Exception: request = service.files().export_media(fileId=file_id, mimeType='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        request = service.files().export_media(fileId=file_id, mimeType='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
         fh = io.BytesIO(); downloader = MediaIoBaseDownload(fh, request); done = False
         while not done: _, done = downloader.next_chunk()
         fh.seek(0); return fh
-    except Exception as e: logd(f"Google Drive fetch failed: {e}\n{traceback.format_exc()}"); return None
+    except Exception as e:
+        logd(f"Google Drive export failed, trying download: {e}");
+        try:
+            request = service.files().get_media(fileId=file_id)
+            fh = io.BytesIO(); downloader = MediaIoBaseDownload(fh, request); done = False
+            while not done: _, done = downloader.next_chunk()
+            fh.seek(0); return fh
+        except Exception as e2:
+            logd(f"Google Drive download also failed: {e2}\n{traceback.format_exc()}"); return None
 
 if __name__ == '__main__':
     try:
