@@ -1,4 +1,86 @@
-🚀 Running Script — Version v16.7.0 (Final Gemini Core Engine Patch) | Run ID: RUN_20251121_124728
-✅ Report written -> reports/Report_21_November_2025_1247.txt
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:286: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
+  b_tag = soup.find('b', text=re.compile(r"Aired:"))
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:272: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
+  b_tag = soup.find('b', text=re.compile(r"Duration:"))
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:252: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
+  li_tag = soup.find('li', class_='list-item', text=re.compile(r"Also Known As:"))
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:254: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
+  b_tag = soup.find('b', text=re.compile(r"Also Known As:"))
+🚀 Running Script — Version v16.7.0 (Final Gemini Core Engine Patch) | Run ID: RUN_20251121_125153
+[DEBUG] 'Deleting Records' sheet is empty. Nothing to delete.
+[DEBUG] Initiating search for: It's Okay That's Love 2014 on asianwiki.com
+[DEBUG] Executing search query: "It's Okay That's Love 2014" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Behind_Your_Touch
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: 
+[DEBUG] Search attempt failed for query '"It's Okay That's Love 2014" site:asianwiki.com': Invalid URL '': No scheme supplied. Perhaps you meant https://?
+[DEBUG] Executing search query: "It's Okay That's Love 2014" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Behind_Your_Touch
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: 
+[DEBUG] Search attempt failed for query '"It's Okay That's Love 2014" site:asianwiki.com': Invalid URL '': No scheme supplied. Perhaps you meant https://?
+[DEBUG] Executing search query: "It's Okay That's Love 2014 drama" site:asianwiki.com
+[DEBUG] Found candidate URL: 
+[DEBUG] Search attempt failed for query '"It's Okay That's Love 2014 drama" site:asianwiki.com': Invalid URL '': No scheme supplied. Perhaps you meant https://?
+[DEBUG] All search attempts failed.
+[DEBUG] Initiating search for: It's Okay That's Love 2014 on mydramalist.com
+[DEBUG] Executing search query: "It's Okay That's Love 2014" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/9289-its-okay-thats-love
+[DEBUG] Landmark validation passed. This is the correct page.
+[DEBUG] Initiating search for: It's Okay That's Love 2014 on asianwiki.com
+[DEBUG] Executing search query: "It's Okay That's Love 2014" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Behind_Your_Touch
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/It's_Alright,_This_Is_Love
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Do_Sang-Woo
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Executing search query: "It's Okay That's Love 2014" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Behind_Your_Touch
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/It's_Alright,_This_Is_Love
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Do_Sang-Woo
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Executing search query: "It's Okay That's Love 2014 drama" site:asianwiki.com
+[DEBUG] Search attempt failed for query '"It's Okay That's Love 2014 drama" site:asianwiki.com': No results found.
+[DEBUG] All search attempts failed.
+[DEBUG] Initiating search for: It's Okay That's Love 2014 on mydramalist.com
+[DEBUG] Executing search query: "It's Okay That's Love 2014" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/9289-its-okay-thats-love
+[DEBUG] Landmark validation passed. This is the correct page.
+[DEBUG] Downloading high-quality image from: https://i.mydramalist.com/XB5ex_4c.jpg?v=1
+[DEBUG] Image saved to images/101.jpg
+[DEBUG] Initiating search for: It's Okay That's Love 2014 on asianwiki.com
+[DEBUG] Executing search query: "It's Okay That's Love 2014" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Behind_Your_Touch
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/It's_Alright,_This_Is_Love
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Do_Sang-Woo
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Executing search query: "It's Okay That's Love 2014" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Behind_Your_Touch
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/It's_Alright,_This_Is_Love
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Found candidate URL: https://asianwiki.com/Do_Sang-Woo
+[DEBUG] Validation failed: AsianWiki page is not a drama/movie page. Rejecting.
+[DEBUG] Executing search query: "It's Okay That's Love 2014 drama" site:asianwiki.com
+[DEBUG] Search attempt failed for query '"It's Okay That's Love 2014 drama" site:asianwiki.com': No results found.
+[DEBUG] All search attempts failed.
+[DEBUG] Initiating search for: It's Okay That's Love 2014 on mydramalist.com
+[DEBUG] Executing search query: "It's Okay That's Love 2014" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/9289-its-okay-thats-love
+[DEBUG] Landmark validation passed. This is the correct page.
+[DEBUG] Initiating search for: It's Okay That's Love 2014 on mydramalist.com
+[DEBUG] Executing search query: "It's Okay That's Love 2014" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/9289-its-okay-thats-love
+[DEBUG] Landmark validation passed. This is the correct page.
+[DEBUG] Initiating search for: It's Okay That's Love 2014 on mydramalist.com
+[DEBUG] Executing search query: "It's Okay That's Love 2014" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/9289-its-okay-thats-love
+[DEBUG] Landmark validation passed. This is the correct page.
+✅ Report written -> reports/Report_21_November_2025_1253.txt
 
 All done.
