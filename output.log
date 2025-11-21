@@ -1,68 +1,92 @@
-🚀 Running Script — Version v3.0 | Run ID: RUN_20251121_133012
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:229: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
+  b_tag = soup.find('b', text=re.compile(r"Duration:"))
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:237: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
+  b_tag = soup.find('b', text=re.compile(r"Aired:"))
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:219: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
+  li_tag = soup.find('li', class_='list-item', text=re.compile(r"Also Known As:"))
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:221: DeprecationWarning: The 'text' argument to find()-type methods is deprecated. Use 'string' instead.
+  b_tag = soup.find('b', text=re.compile(r"Also Known As:"))
+🚀 Running Script — Version v3.0 | Run ID: RUN_20251121_134425
 [DEBUG] 'Deleting Records' sheet is empty. Nothing to delete.
-[DEBUG] Initiating search for: Find Me in Your Memory 2020 on asianwiki
-[DEBUG] Executing search query: "Find Me in Your Memory 2020" site:asianwiki
-[DEBUG] Found candidate URL: 
-[DEBUG] Search attempt failed for query '"Find Me in Your Memory 2020" site:asianwiki': Invalid URL '': No scheme supplied. Perhaps you meant https://?
-[DEBUG] Executing search query: "Find Me in Your Memory 2020" site:asianwiki
-[DEBUG] Found candidate URL: 
-[DEBUG] Search attempt failed for query '"Find Me in Your Memory 2020" site:asianwiki': Invalid URL '': No scheme supplied. Perhaps you meant https://?
-[DEBUG] Executing search query: "Find Me in Your Memory 2020 drama" site:asianwiki
-[DEBUG] Search attempt failed for query '"Find Me in Your Memory 2020 drama" site:asianwiki': No results found.
-[DEBUG] All search attempts failed.
-[DEBUG] Initiating search for: Find Me in Your Memory 2020 on mydramalist
-[DEBUG] Executing search query: "Find Me in Your Memory 2020" site:mydramalist
-[DEBUG] Search attempt failed for query '"Find Me in Your Memory 2020" site:mydramalist': No results found.
-[DEBUG] Executing search query: "Find Me in Your Memory 2020" site:mydramalist
-[DEBUG] Search attempt failed for query '"Find Me in Your Memory 2020" site:mydramalist': No results found.
-[DEBUG] Executing search query: "Find Me in Your Memory 2020 drama" site:mydramalist
-[DEBUG] Search attempt failed for query '"Find Me in Your Memory 2020 drama" site:mydramalist': No results found.
+[DEBUG] Initiating search for: Find Me in Your Memory 2020 on mydramalist.com
+[DEBUG] Executing search query: "Find Me in Your Memory 2020" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/50941-the-man-s-memory
+[DEBUG] Landmark validation passed. This is the correct page.
+[DEBUG] Initiating search for: Find Me in Your Memory 2020 on asianwiki.com
+[DEBUG] Executing search query: "Find Me in Your Memory 2020" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Find_Me_in_Your_Memory
+[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Seul-Gi
+[DEBUG] Found candidate URL: https://asianwiki.com/Memory_(Korean_Drama)
+[DEBUG] Executing search query: "Find Me in Your Memory 2020" site:asianwiki.com
+[DEBUG] Executing search query: "Find Me in Your Memory 2020 drama" site:asianwiki.com
+[DEBUG] Found candidate URL: https://www.bing.com/aclick?ld=e84Wg4gvG8CjzpWqZBPyqUMjVUCUws1HbKz2XBhSs5HYJJDeymEc-V5qRgAE5R8wc61kAXu0lixGM236P4oNIqTNmywinIMBY4cdIFubKYdvoTiGxdUAeP6oFuhW0UWLW4InOIsJ5pWfEeO7wvRXij4_MI_tERzUEPDC7VqeLPloSTxT0VVwDzAjw-HL0oF_IPmvf19-dRCt-TO4iv8eChAtuhRCs&u=aHR0cHMlM2ElMmYlMmZ3d3cuYW1hem9uLmNvbSUyZmdwJTJmdmlkZW8lMmZnZW5yZSUyZmRyYW1hJTNmcmVmJTNkZHZtX3VzX2RsX3NsX2JpX21mX21mZ2VuX21rd19wNDAxLWt3OTUwLWNyMTAxOC1jJTI2bXJudHJrJTNkYmlfY21wLTU1NTEzNjk4MF9hZGctMTI0MDI1MDE4NTk3Mzc3NF9hZC03NzUxNTc2OTk1NzE5NV9rd2QtNzc1MTU5Nzg3MjA1MDAlM2Fsb2MtMTkwX2Rldi1jX2V4dC0lMjZtc2Nsa2lkJTNkNTM3ZWFiM2JkZTVlMThkZWUxZjhjMjFiYzEyZmE2MjY&rlid=537eab3bde5e18dee1f8c21bc12fa626
 [DEBUG] All search attempts failed.
 [DEBUG] Found soup in cache for Find Me in Your Memory 2020 on mydramalist.
-[DEBUG] Found soup in cache for Find Me in Your Memory 2020 on asianwiki.
-[DEBUG] Initiating search for: Unforgettable Love 2021 on mydramalist
-[DEBUG] Executing search query: "Unforgettable Love 2021" site:mydramalist
-[DEBUG] Search attempt failed for query '"Unforgettable Love 2021" site:mydramalist': No results found.
-[DEBUG] Executing search query: "Unforgettable Love 2021" site:mydramalist
-[DEBUG] Search attempt failed for query '"Unforgettable Love 2021" site:mydramalist': No results found.
-[DEBUG] Executing search query: "Unforgettable Love 2021 drama" site:mydramalist
-[DEBUG] Search attempt failed for query '"Unforgettable Love 2021 drama" site:mydramalist': No results found.
-[DEBUG] All search attempts failed.
-[DEBUG] Initiating search for: Unforgettable Love 2021 on asianwiki
-[DEBUG] Executing search query: "Unforgettable Love 2021" site:asianwiki
-[DEBUG] Search attempt failed for query '"Unforgettable Love 2021" site:asianwiki': No results found.
-[DEBUG] Executing search query: "Unforgettable Love 2021" site:asianwiki
-[DEBUG] Search attempt failed for query '"Unforgettable Love 2021" site:asianwiki': No results found.
-[DEBUG] Executing search query: "Unforgettable Love 2021 drama" site:asianwiki
-[DEBUG] Search attempt failed for query '"Unforgettable Love 2021 drama" site:asianwiki': No results found.
+[DEBUG] Initiating search for: Unforgettable Love 2021 on mydramalist.com
+[DEBUG] Executing search query: "Unforgettable Love 2021" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/696973-unforgettable-love
+[DEBUG] Landmark validation passed. This is the correct page.
+[DEBUG] 'Duration:' field not found on MyDramaList.
+[DEBUG] Initiating search for: Unforgettable Love 2021 on asianwiki.com
+[DEBUG] Executing search query: "Unforgettable Love 2021" site:asianwiki.com
+[DEBUG] Executing search query: "Unforgettable Love 2021" site:asianwiki.com
+[DEBUG] Search attempt failed for query '"Unforgettable Love 2021" site:asianwiki.com': No results found.
+[DEBUG] Executing search query: "Unforgettable Love 2021 drama" site:asianwiki.com
+[DEBUG] Search attempt failed for query '"Unforgettable Love 2021 drama" site:asianwiki.com': No results found.
 [DEBUG] All search attempts failed.
 [DEBUG] Found soup in cache for Unforgettable Love 2021 on mydramalist.
 [DEBUG] Found soup in cache for Unforgettable Love 2021 on asianwiki.
-[DEBUG] Initiating search for: Boys Over Flowers 2009 on asianwiki
-[DEBUG] Executing search query: "Boys Over Flowers 2009" site:asianwiki
-[DEBUG] Search attempt failed for query '"Boys Over Flowers 2009" site:asianwiki': No results found.
-[DEBUG] Executing search query: "Boys Over Flowers 2009" site:asianwiki
-[DEBUG] Search attempt failed for query '"Boys Over Flowers 2009" site:asianwiki': No results found.
-[DEBUG] Executing search query: "Boys Over Flowers 2009 drama" site:asianwiki
-[DEBUG] Search attempt failed for query '"Boys Over Flowers 2009 drama" site:asianwiki': No results found.
+[DEBUG] Initiating search for: Boys Over Flowers 2009 on asianwiki.com
+[DEBUG] Executing search query: "Boys Over Flowers 2009" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Boys_Over_Flowers_-_Korean_Drama
+[DEBUG] Found candidate URL: https://asianwiki.com/File:Boys_Over_Flowers_(2009-South_Korea-KBS2)-33.jpg
+[DEBUG] Found candidate URL: https://asianwiki.com/File:Boys_Over_Flowers_(2009-South_Korea-KBS2)-09.jpg
+[DEBUG] Found candidate URL: https://asianwiki.com/File:Boys_Over_Flowers_(2009-South_Korea-KBS2)-11.jpg
+[DEBUG] Found candidate URL: https://asianwiki.com/File:Boys_Over_Flowers_(2009-South_Korea-KBS2)-06.jpg
+[DEBUG] Executing search query: "Boys Over Flowers 2009" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Boys_Over_Flowers_-_Korean_Drama
+[DEBUG] Found candidate URL: https://asianwiki.com/File:Boys_Over_Flowers_(2009-South_Korea-KBS2)-33.jpg
+[DEBUG] Found candidate URL: https://asianwiki.com/File:Boys_Over_Flowers_(2009-South_Korea-KBS2)-11.jpg
+[DEBUG] Found candidate URL: https://asianwiki.com/File:Boys_Over_Flowers_(2009-South_Korea-KBS2)-09.jpg
+[DEBUG] Found candidate URL: https://asianwiki.com/File:Boys_Over_Flowers_(2009-South_Korea-KBS2)-06.jpg
+[DEBUG] Executing search query: "Boys Over Flowers 2009 drama" site:asianwiki.com
+[DEBUG] Search attempt failed for query '"Boys Over Flowers 2009 drama" site:asianwiki.com': No results found.
 [DEBUG] All search attempts failed.
-[DEBUG] Initiating search for: Boys Over Flowers 2009 on mydramalist
-[DEBUG] Executing search query: "Boys Over Flowers 2009" site:mydramalist
-[DEBUG] Search attempt failed for query '"Boys Over Flowers 2009" site:mydramalist': No results found.
-[DEBUG] Executing search query: "Boys Over Flowers 2009" site:mydramalist
-[DEBUG] Search attempt failed for query '"Boys Over Flowers 2009" site:mydramalist': No results found.
-[DEBUG] Executing search query: "Boys Over Flowers 2009 drama" site:mydramalist
-[DEBUG] Search attempt failed for query '"Boys Over Flowers 2009 drama" site:mydramalist': No results found.
+[DEBUG] Initiating search for: Boys Over Flowers 2009 on mydramalist.com
+[DEBUG] Executing search query: "Boys Over Flowers 2009" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/2987-boys-over-flowers
+[DEBUG] Landmark validation passed. This is the correct page.
+[DEBUG] Downloading high-quality image from: https://i.mydramalist.com/peoVE_4c.jpg?v=1
+[DEBUG] Image saved to images/104.jpg
+[DEBUG] Found soup in cache for Boys Over Flowers 2009 on mydramalist.
+[DEBUG] Found soup in cache for Boys Over Flowers 2009 on asianwiki.
+[DEBUG] Found soup in cache for Boys Over Flowers 2009 on mydramalist.
+[DEBUG] Found soup in cache for Boys Over Flowers 2009 on asianwiki.
+[DEBUG] Found soup in cache for Boys Over Flowers 2009 on mydramalist.
+[DEBUG] Found soup in cache for Boys Over Flowers 2009 on mydramalist.
+[DEBUG] Initiating search for: Uncontrollably Fond 2016 on asianwiki.com
+[DEBUG] Executing search query: "Uncontrollably Fond 2016" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Uncontrollably_Fond
+[DEBUG] Executing search query: "Uncontrollably Fond 2016" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Uncontrollably_Fond
+[DEBUG] Executing search query: "Uncontrollably Fond 2016 drama" site:asianwiki.com
+[DEBUG] Search attempt failed for query '"Uncontrollably Fond 2016 drama" site:asianwiki.com': No results found.
 [DEBUG] All search attempts failed.
-[DEBUG] Found soup in cache for Boys Over Flowers 2009 on asianwiki.
-[DEBUG] Found soup in cache for Boys Over Flowers 2009 on mydramalist.
-[DEBUG] Found soup in cache for Boys Over Flowers 2009 on asianwiki.
-[DEBUG] Found soup in cache for Boys Over Flowers 2009 on mydramalist.
-[DEBUG] Found soup in cache for Boys Over Flowers 2009 on mydramalist.
-[DEBUG] Found soup in cache for Boys Over Flowers 2009 on asianwiki.
-[DEBUG] Found soup in cache for Boys Over Flowers 2009 on mydramalist.
-[DEBUG] Found soup in cache for Boys Over Flowers 2009 on asianwiki.
-[DEBUG] Skipping metadata backup for 104: no new data fetched.
-✅ Report written -> reports/Report_21_November_2025_1331.txt
+[DEBUG] Initiating search for: Uncontrollably Fond 2016 on mydramalist.com
+[DEBUG] Executing search query: "Uncontrollably Fond 2016" site:mydramalist.com
+[DEBUG] Executing search query: "Uncontrollably Fond 2016" site:mydramalist.com
+[DEBUG] Executing search query: "Uncontrollably Fond 2016 drama" site:mydramalist.com
+[DEBUG] Search attempt failed for query '"Uncontrollably Fond 2016 drama" site:mydramalist.com': No results found.
+[DEBUG] All search attempts failed.
+[DEBUG] Found soup in cache for Uncontrollably Fond 2016 on asianwiki.
+[DEBUG] Found soup in cache for Uncontrollably Fond 2016 on mydramalist.
+[DEBUG] Found soup in cache for Uncontrollably Fond 2016 on asianwiki.
+[DEBUG] Found soup in cache for Uncontrollably Fond 2016 on mydramalist.
+[DEBUG] Found soup in cache for Uncontrollably Fond 2016 on mydramalist.
+[DEBUG] Found soup in cache for Uncontrollably Fond 2016 on asianwiki.
+[DEBUG] Found soup in cache for Uncontrollably Fond 2016 on mydramalist.
+[DEBUG] Found soup in cache for Uncontrollably Fond 2016 on asianwiki.
+[DEBUG] Skipping metadata backup for 105: no new data fetched.
+✅ Report written -> reports/Report_21_November_2025_1345.txt
 
 All done.

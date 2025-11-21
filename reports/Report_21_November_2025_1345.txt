@@ -1,0 +1,61 @@
+✅ Workflow completed successfully
+🆔 Run ID: RUN_20251121_134425
+📅 Run Time: 21 November 2025 01:45 PM (IST)
+🕒 Duration: 1 min 0 sec
+⚙️ Script Version: v3.0
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Sheet1 — 21 November 2025 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🆕 Data Created:
+- 105 - Uncontrollably Fond (2016) -> First Time Uploaded
+
+🖼️ Fetched Data:
+- 101 - It's Okay That's Love -> Fetched: Duration, Image, Other Names, Release Date, Synopsis
+- 102 - Find Me in Your Memory -> Fetched: Duration, Image, Other Names, Release Date, Synopsis
+- 103 - Unforgettable Love -> Fetched: Image, Other Names, Release Date
+- 104 - Boys Over Flowers -> Fetched: Duration, Image, Other Names, Release Date, Synopsis
+
+🕳️ Value Not Found:
+- 103 - Unforgettable Love -> ⚠️ Missing: Duration, Synopsis
+- 105 - Uncontrollably Fond -> ⚠️ Missing: Duration, Image, Other Names, Release Date, Synopsis
+
+🚫 Skipped (Unchanged):
+- 101 - It's Okay That's Love (2013)
+- 102 - Find Me in Your Memory (2020)
+- 103 - Unforgettable Love (2021)
+- 104 - Boys Over Flowers (2009)
+
+📊 Summary (Sheet: Sheet1)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Created: 1
+🔁 Updated: 0
+🚫 Skipped: 4
+⚠️ Warnings: 2
+  Total Rows: 5
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 Overall Summary
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Total Created: 1
+🔁 Total Updated: 0
+🖼️ Total Images Updated: 4
+🚫 Total Skipped: 4
+❌ Total Deleted: 0
+⚠️ Total Warnings: 2
+💾 Backup Files: 0
+  Grand Total Rows: 5
+
+💾 Metadata Backups: 0
+
+📦 Total Objects in seriesData.json: 5
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ Folders Generated:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+images/
+    104.jpg
+reports/
+    Report_21_November_2025_1345.txt
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🏁 Workflow finished successfully
