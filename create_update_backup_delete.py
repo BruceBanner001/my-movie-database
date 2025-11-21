@@ -103,25 +103,26 @@ def get_soup_from_search(query_base, site):
                 if not results: continue
                 for res in results:
                     url = res.get('href', '')
-                    # FIX: Stricter URL validation to ignore invalid links
                     if not url or 'bing.com' in url or any(bad in url for bad in ['/reviews', '/episode', '/cast', '/recs', '?lang=', '/photos']): continue
-                    
-                    # FIX: The Root Cause Fix - Never validate image file pages
                     if site == "asianwiki" and ("/File:" in url or "/index.php?title=File:" in url):
-                        logd(f"Rejecting invalid AsianWiki file URL: {url}")
-                        continue
-
+                        logd(f"Rejecting invalid AsianWiki file URL: {url}"); continue
                     logd(f"Found candidate URL: {url}")
                     r = SCRAPER.get(url, timeout=15)
                     if r.status_code == 200:
                         soup = BeautifulSoup(r.text, "html.parser")
                         is_valid = False
+                        # FIX: Bulletproof AsianWiki Validator
                         if site == "asianwiki":
-                            if soup.find('table', class_='infobox'): is_valid = True
-                            else: logd("Validation failed: AsianWiki infobox landmark missing.")
+                            profile_header = soup.find('h2', string='Profile')
+                            if profile_header and profile_header.find_next_sibling('table', class_='infobox'):
+                                is_valid = True
+                            else:
+                                logd("Validation failed: AsianWiki 'Profile' header and infobox landmark missing.")
                         elif site == "mydramalist":
-                            if soup.find('div', class_='box-body'): is_valid = True
-                            else: logd("Validation failed: MyDramaList landmark missing.")
+                            if soup.find('div', class_='box-body'):
+                                is_valid = True
+                            else:
+                                logd("Validation failed: MyDramaList landmark missing.")
                         if is_valid:
                             logd("Landmark validation passed. This is the correct page.")
                             return soup, url
@@ -209,9 +210,10 @@ def fetch_image_from_mydramalist(s, y, sid):
 def fetch_othernames_from_mydramalist(s, y):
     soup, url = get_soup_from_search(f'{s} {y}', "mydramalist")
     if not soup: return None, None
-    li_tag = soup.find('li', string=re.compile(r"Also Known As:"))
-    if li_tag:
-        if b_tag := li_tag.find('b'): b_tag.decompose()
+    # FIX: Bulletproof "Other Names" Scraper
+    b_tag = soup.find('b', string="Also Known As:")
+    if b_tag and (li_tag := b_tag.find_parent('li')):
+        b_tag.decompose()
         names_text = li_tag.get_text(strip=True)
         return (names_text, url) if names_text else (None, None)
     logd("'Also Known As:' field not found on MyDramaList."); return None, None
@@ -356,7 +358,6 @@ def write_report(context):
         display_sheet = sheet.replace("sheet", "Sheet ").title(); lines.extend([sep, f"🗂️ === {display_sheet} — {now_ist().strftime('%d %B %Y')} ==="]); lines.append(sep)
         if changes.get('created'): lines.append("\n🆕 Data Created:"); [lines.append(f"- {o['showID']} - {o['showName']} ({o.get('releasedYear')}) -> {o.get('updatedDetails', '')}") for o in changes['created']]
         if changes.get('updated'): lines.append("\n🔁 Data Updated:"); [lines.append(f"✍️ {p['new']['showID']} - {p['new']['showName']} -> {p['new']['updatedDetails']}") for p in changes['updated']]
-        # FIX: New Reporting Section
         if changes.get('refetched'): lines.append("\n🔍 Refetched Data:"); [lines.append(f"✨ {o['showID']} - {o['showName']} -> Metadata Refreshed") for o in changes['refetched']]; stats['refetched'] += len(changes.get('refetched', []))
         if changes.get('data_warnings'): lines.append("\n⚠️ Data Validation Warnings:"); [lines.append(i) for i in changes['data_warnings']]; stats['warnings'] += len(changes['data_warnings'])
         if changes.get('fetched_data'): lines.append("\n🖼️ Fetched Data Details:"); [lines.append(i) for i in sorted(changes['fetched_data'])]
@@ -404,7 +405,6 @@ def main():
 
     sheets_to_process = [s.strip() for s in os.environ.get("SHEETS", "Sheet1").split(';') if s.strip()]
     for sheet in sheets_to_process:
-        # FIX: Added 'refetched' to report structure
         report = context['report_data'].setdefault(sheet, {'created': [], 'updated': [], 'refetched': [], 'skipped': [], 'fetched_data': [], 'fetch_warnings': [], 'data_warnings': []})
         excel_rows, warnings = excel_to_objects(io.BytesIO(excel_bytes.getvalue()), sheet)
         if warnings: report['data_warnings'].extend(warnings)
@@ -424,7 +424,7 @@ def main():
             
             fields_to_check = [('synopsis', 'synopsis'), ('showImage', 'image'), ('otherNames', 'otherNames'), ('releaseDate', 'releaseDate'), ('Duration', 'duration')]
             
-            initial_metadata = {k: final_obj.get(k) for k, _ in fields_to_check}
+            initial_metadata_state = {k: final_obj.get(k) for k, _ in fields_to_check}
             
             for obj_key, fetch_key in fields_to_check:
                 if not final_obj.get(obj_key):
@@ -442,9 +442,8 @@ def main():
             
             final_obj['topRatings'] = (final_obj.get("ratings", 0)) * (len(final_obj.get("againWatchedDates", [])) + 1) * 100
             
-            # FIX: Rewritten Classification Logic
             excel_data_has_changed = not is_new and objects_differ(old_obj_from_json, final_obj)
-            metadata_was_fetched = any(final_obj.get(k) != initial_metadata.get(k) for k, _ in fields_to_check)
+            metadata_was_fetched = any(final_obj.get(k) != initial_metadata_state.get(k) for k, _ in fields_to_check)
 
             if is_new:
                 final_obj['updatedDetails'] = "First Time Uploaded"
@@ -466,9 +465,8 @@ def main():
                  context['source_links_temp'] = source_links
                  save_metadata_backup(final_obj, context)
 
-            # Unified Reporting
-            missing = [FIELD_NAME_MAP[k] for k, v in final_obj.items() if k in FIELD_NAME_MAP and not v and k in {'synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration'}]
-            newly_fetched = [k.capitalize() for k,v in spu.items() if v and v != "Manual" and not initial_metadata.get("showImage" if k=="image" else "Duration" if k=="duration" else k)]
+            missing = [FIELD_NAME_MAP[k] for k, _ in fields_to_check if not final_obj.get(k)]
+            newly_fetched = [fetch_key.capitalize() for obj_key, fetch_key in fields_to_check if final_obj.get(obj_key) and not initial_metadata_state.get(obj_key)]
             if newly_fetched: report['fetched_data'].append(f"- {sid} - {final_obj['showName']} -> Fetched: {', '.join(sorted(newly_fetched))}")
             if missing: report['fetch_warnings'].append(f"- {sid} - {final_obj['showName']} -> ⚠️ Missing: {', '.join(sorted(missing))}")
 
