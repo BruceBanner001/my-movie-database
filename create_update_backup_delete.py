@@ -49,7 +49,6 @@ try: from ddgs import DDGS; HAVE_DDGS = True
 except Exception: HAVE_DDGS = False
 try: import cloudscraper; HAVE_SCRAPER = True
 except Exception: HAVE_SCRAPER = False
-# FIX: Correctly handle Image import
 try: from PIL import Image; HAVE_PIL = True
 except Exception: HAVE_PIL = False
 try: from google.oauth2 import service_account; from googleapiclient.discovery import build; from googleapiclient.http import MediaIoBaseDownload; HAVE_GOOGLE_API = True
@@ -161,7 +160,6 @@ def download_and_save_image(url, local_path):
         if r.status_code == 200 and r.headers.get("content-type", "").startswith("image"):
             with Image.open(r.raw) as img:
                 img = img.convert("RGB")
-                # FIX: Use the universally compatible Image.LANCZOS constant
                 img.thumbnail((800, 1200), Image.LANCZOS)
                 img.save(local_path, "JPEG", quality=95)
                 logd(f"Image saved to {local_path}"); return True
@@ -169,75 +167,93 @@ def download_and_save_image(url, local_path):
     return False
 def build_absolute_url(local_path): return f"{GITHUB_PAGES_URL.rstrip('/')}/{local_path.replace(os.sep, '/')}"
 
-def _scrape_synopsis_from_asianwiki(soup):
-    # FIX: Bulletproof synopsis scraper
-    plot_element = soup.find('span', id=re.compile(r"Synopsis|Plot", re.IGNORECASE))
-    if not plot_element or not (h2 := plot_element.find_parent('h2')):
-        logd("Synopsis/Plot heading not found on AsianWiki."); return None
-    content = [p.get_text(strip=True) for p in h2.find_next_siblings('p')]
-    return "\n\n".join(p for p in content if p)
+# --- Scraper Functions (all now accept soup, sid and have defensive try/except blocks) ---
+def _scrape_synopsis_from_asianwiki(soup, sid):
+    try:
+        plot_element = soup.find('span', id=re.compile(r"Synopsis|Plot", re.IGNORECASE))
+        if not plot_element or not (h2 := plot_element.find_parent('h2')):
+            logd("Synopsis/Plot heading not found on AsianWiki."); return None
+        content = [p.get_text(strip=True) for p in h2.find_next_siblings('p')]
+        return "\n\n".join(p for p in content if p)
+    except Exception as e: logd(f"Error scraping synopsis from AsianWiki: {e}"); return None
 
 def _scrape_image_from_asianwiki(soup, sid):
-    img = soup.select_one('a.image > img[src]')
-    if not img: logd("Image tag not found on AsianWiki."); return None
-    img_url = requests.compat.urljoin("https://asianwiki.com", img['src'])
-    if download_and_save_image(img_url, os.path.join(IMAGES_DIR, f"{sid}.jpg")):
-        return build_absolute_url(os.path.join(IMAGES_DIR, f"{sid}.jpg"))
+    try:
+        img = soup.select_one('a.image > img[src]')
+        if not img: logd("Image tag not found on AsianWiki."); return None
+        img_url = requests.compat.urljoin("https://asianwiki.com", img['src'])
+        if download_and_save_image(img_url, os.path.join(IMAGES_DIR, f"{sid}.jpg")):
+            return build_absolute_url(os.path.join(IMAGES_DIR, f"{sid}.jpg"))
+    except Exception as e: logd(f"Error scraping image from AsianWiki: {e}"); return None
 
-def _scrape_othernames_from_asianwiki(soup):
-    p_tag = soup.find('p', string=re.compile(r"^(Drama:|Movie:)"))
-    if p_tag:
-        full_text = p_tag.get_text(strip=True).replace(" Hangul:", " (Hangul:")
-        match = re.search(r':(.*?)(?=\(Revised romanization:|\(literal title\)|$)', full_text, re.DOTALL)
-        if match:
-            names_text = match.group(1).strip()
-            return [name.strip() for name in names_text.split('/') if name.strip()]
-    logd("'Other Names' from 'Drama:' field not found on AsianWiki."); return None
+def _scrape_othernames_from_asianwiki(soup, sid):
+    try:
+        p_tag = soup.find('p', string=re.compile(r"^(Drama:|Movie:)"))
+        if p_tag:
+            full_text = p_tag.get_text(strip=True).replace(" Hangul:", " (Hangul:")
+            match = re.search(r':(.*?)(?=\(Revised romanization:|\(literal title\)|$)', full_text, re.DOTALL)
+            if match:
+                names_text = match.group(1).strip()
+                return [name.strip() for name in names_text.split('/') if name.strip()]
+        logd("'Other Names' from 'Drama:' field not found on AsianWiki."); return None
+    except Exception as e: logd(f"Error scraping other names from AsianWiki: {e}"); return None
 
-def _scrape_release_date_from_asianwiki(soup):
-    b_tag = soup.find('b', string=re.compile(r"Release Date:"))
-    if b_tag and (parent := b_tag.parent):
-        b_tag.decompose()
-        return parent.get_text(strip=True)
-    logd("'Release Date:' field not found on AsianWiki."); return None
+def _scrape_release_date_from_asianwiki(soup, sid):
+    try:
+        b_tag = soup.find('b', string=re.compile(r"Release Date:"))
+        if b_tag and (parent := b_tag.parent):
+            b_tag.decompose()
+            return parent.get_text(strip=True)
+        logd("'Release Date:' field not found on AsianWiki."); return None
+    except Exception as e: logd(f"Error scraping release date from AsianWiki: {e}"); return None
 
-def _scrape_synopsis_from_mydramalist(soup):
-    synopsis_div = soup.select_one('div.show-synopsis, div[itemprop="description"]')
-    if not synopsis_div: logd("Synopsis element not found on MyDramaList."); return None
-    synopsis = synopsis_div.get_text(separator='\n\n', strip=True)
-    return re.sub(r'(^Remove ads\n\n)|((~~.*?~~|Edit Translation).*$)|(\s*\(\s*Source:.*?\)\s*$)', '', synopsis, flags=re.DOTALL | re.IGNORECASE).strip()
+def _scrape_synopsis_from_mydramalist(soup, sid):
+    try:
+        synopsis_div = soup.select_one('div.show-synopsis, div[itemprop="description"]')
+        if not synopsis_div: logd("Synopsis element not found on MyDramaList."); return None
+        synopsis = synopsis_div.get_text(separator='\n\n', strip=True)
+        return re.sub(r'(^Remove ads\n\n)|((~~.*?~~|Edit Translation).*$)|(\s*\(\s*Source:.*?\)\s*$)', '', synopsis, flags=re.DOTALL | re.IGNORECASE).strip()
+    except Exception as e: logd(f"Error scraping synopsis from MyDramaList: {e}"); return None
 
 def _scrape_image_from_mydramalist(soup, sid):
-    img = soup.select_one('.film-cover img[src], .cover img[src], div.cover img[src]')
-    if not img: logd("Image tag not found on MyDramaList."); return None
-    if download_and_save_image(img['src'], os.path.join(IMAGES_DIR, f"{sid}.jpg")):
-        return build_absolute_url(os.path.join(IMAGES_DIR, f"{sid}.jpg"))
+    try:
+        img = soup.select_one('.film-cover img[src], .cover img[src], div.cover img[src]')
+        if not img: logd("Image tag not found on MyDramaList."); return None
+        if download_and_save_image(img['src'], os.path.join(IMAGES_DIR, f"{sid}.jpg")):
+            return build_absolute_url(os.path.join(IMAGES_DIR, f"{sid}.jpg"))
+    except Exception as e: logd(f"Error scraping image from MyDramaList: {e}"); return None
 
-def _scrape_othernames_from_mydramalist(soup):
-    b_tag = soup.find('b', string="Also Known As:")
-    if b_tag and (li_tag := b_tag.find_parent('li')):
-        b_tag.decompose()
-        names_text = li_tag.get_text(strip=True)
-        return [name.strip() for name in names_text.split(',') if name.strip()]
-    logd("'Also Known As:' field not found on MyDramaList."); return None
+def _scrape_othernames_from_mydramalist(soup, sid):
+    try:
+        b_tag = soup.find('b', string="Also Known As:")
+        if b_tag and (li_tag := b_tag.find_parent('li')):
+            b_tag.decompose()
+            names_text = li_tag.get_text(strip=True)
+            return [name.strip() for name in names_text.split(',') if name.strip()]
+        logd("'Also Known As:' field not found on MyDramaList."); return None
+    except Exception as e: logd(f"Error scraping other names from MyDramaList: {e}"); return None
 
-def _scrape_duration_from_mydramalist(soup):
-    b_tag = soup.find('b', string=re.compile(r"Duration:"))
-    if b_tag and (li_tag := b_tag.find_parent('li')):
-        b_tag.decompose()
-        duration_text = li_tag.get_text(strip=True)
-        return duration_text.replace(" min.", " mins") if "hr" not in duration_text else duration_text
-    logd("'Duration:' field not found on MyDramaList."); return None
+def _scrape_duration_from_mydramalist(soup, sid):
+    try:
+        b_tag = soup.find('b', string=re.compile(r"Duration:"))
+        if b_tag and (li_tag := b_tag.find_parent('li')):
+            b_tag.decompose()
+            duration_text = li_tag.get_text(strip=True)
+            return duration_text.replace(" min.", " mins") if "hr" not in duration_text else duration_text
+        logd("'Duration:' field not found on MyDramaList."); return None
+    except Exception as e: logd(f"Error scraping duration from MyDramaList: {e}"); return None
 
-def _scrape_release_date_from_mydramalist(soup):
-    b_tag = soup.find('b', string=re.compile(r"Aired:"))
-    if b_tag and (li_tag := b_tag.find_parent('li')):
-        b_tag.decompose()
-        return li_tag.get_text(strip=True)
-    logd("'Aired:' field not found on MyDramaList."); return None
+def _scrape_release_date_from_mydramalist(soup, sid):
+    try:
+        b_tag = soup.find('b', string=re.compile(r"Aired:"))
+        if b_tag and (li_tag := b_tag.find_parent('li')):
+            b_tag.decompose()
+            return li_tag.get_text(strip=True)
+        logd("'Aired:' field not found on MyDramaList."); return None
+    except Exception as e: logd(f"Error scraping release date from MyDramaList: {e}"); return None
 
 SCRAPE_MAP = {
-    'asianwiki': {'synopsis': _scrape_synopsis_from_asianwiki, 'image': _scrape_image_from_asianwiki, 'otherNames': _scrape_othernames_from_asianwiki, 'duration': lambda s, sid: None, 'releaseDate': _scrape_release_date_from_asianwiki},
+    'asianwiki': {'synopsis': _scrape_synopsis_from_asianwiki, 'image': _scrape_image_from_asianwiki, 'otherNames': _scrape_othernames_from_asianwiki, 'duration': lambda soup, sid: None, 'releaseDate': _scrape_release_date_from_asianwiki},
     'mydramalist': {'synopsis': _scrape_synopsis_from_mydramalist, 'image': _scrape_image_from_mydramalist, 'otherNames': _scrape_othernames_from_mydramalist, 'duration': _scrape_duration_from_mydramalist, 'releaseDate': _scrape_release_date_from_mydramalist}
 }
 
@@ -254,7 +270,8 @@ def fetch_and_populate_metadata(obj, context):
                 if site:
                     soup, url = get_soup_from_search(f'{s_name} {s_year}', site, lang, soup_cache)
                     if soup:
-                        args = (soup, s_id) if fetch_key == 'image' else (soup,)
+                        # FIX: Always pass both soup and sid for consistency
+                        args = (soup, s_id)
                         data = SCRAPE_MAP[site][fetch_key](*args)
                         if data:
                             obj[obj_key] = data
