@@ -1,51 +1,18 @@
-🚀 Running Script — Version v3.0 | Run ID: RUN_20251121_181037
+🚀 Running Script — Version v3.0 | Run ID: RUN_20251123_001828
 [DEBUG] Attempting direct media download...
 [DEBUG] 'Deleting Records' sheet is empty. Nothing to delete.
-[DEBUG] Initiating search for: 'Why Women Love 2022' on mydramalist.com (Expected Country: China)
-[DEBUG] Executing search query: "Why Women Love 2022" Chinese site:mydramalist.com
-[DEBUG] Found candidate URL: https://mydramalist.com/79563-bu-hui-lian-ai-de-wo-men
-[DEBUG] Country validation passed (Expected: China, Found: China).
-[DEBUG] Validation passed. This is the correct page.
-[DEBUG] Found soup in cache for 'Why Women Love 2022' on mydramalist.com
-[DEBUG] Downloading high-quality image from: https://i.mydramalist.com/0D5jE_4c.jpg?v=1
-[DEBUG] Image saved to images/101.jpg
-[DEBUG] Found soup in cache for 'Why Women Love 2022' on mydramalist.com
-[DEBUG] Found soup in cache for 'Why Women Love 2022' on mydramalist.com
-[DEBUG] Found soup in cache for 'Why Women Love 2022' on mydramalist.com
-[DEBUG] Initiating search for: 'Abyss 2019' on asianwiki.com (Expected Country: South Korea)
-[DEBUG] Executing search query: "Abyss 2019" Korean site:asianwiki.com
-[DEBUG] Found candidate URL: https://asianwiki.com/Abyss_(Korean_Drama)
-[DEBUG] Country validation passed (Expected: South Korea, Found: South Korea).
-[DEBUG] Validation passed. This is the correct page.
-[DEBUG] Found soup in cache for 'Abyss 2019' on asianwiki.com
-[DEBUG] Downloading high-quality image from: https://asianwiki.com/images/5/5a/Abyss_%28Korean_Drama%29-p01.jpg
-[DEBUG] Image saved to images/102.jpg
-[DEBUG] Initiating search for: 'Abyss 2019' on mydramalist.com (Expected Country: South Korea)
-[DEBUG] Executing search query: "Abyss 2019" Korean site:mydramalist.com
-[DEBUG] Executing search query: "Abyss 2019" site:mydramalist.com
-[DEBUG] Found candidate URL: https://mydramalist.com/30554-abyss
-[DEBUG] Country validation passed (Expected: South Korea, Found: South Korea).
-[DEBUG] Validation passed. This is the correct page.
-[DEBUG] Found soup in cache for 'Abyss 2019' on asianwiki.com
-[DEBUG] Found soup in cache for 'Abyss 2019' on mydramalist.com
-[DEBUG] Initiating search for: 'Island Season 1 2023' on asianwiki.com (Expected Country: South Korea)
-[DEBUG] Executing search query: "Island Season 1 2023" Korean site:asianwiki.com
-[DEBUG] Found candidate URL: https://asianwiki.com/Island_(Korean_Drama)
-[DEBUG] Country validation passed (Expected: South Korea, Found: South Korea).
-[DEBUG] Validation passed. This is the correct page.
-[DEBUG] Found soup in cache for 'Island Season 1 2023' on asianwiki.com
-[DEBUG] Downloading high-quality image from: https://asianwiki.com/images/0/03/Island_Korean_Drama-p2.jpg
-[DEBUG] Image saved to images/3001.jpg
 [DEBUG] Initiating search for: 'Island Season 1 2023' on mydramalist.com (Expected Country: South Korea)
 [DEBUG] Executing search query: "Island Season 1 2023" Korean site:mydramalist.com
 [DEBUG] Found candidate URL: https://mydramalist.com/725837-single-s-inferno-season-2/statistics
 [DEBUG] Country validation passed (Expected: South Korea, Found: South Korea).
 [DEBUG] Validation passed. This is the correct page.
 [DEBUG] 'Also Known As:' field not found on MyDramaList.
-[DEBUG] Found soup in cache for 'Island Season 1 2023' on asianwiki.com
+[DEBUG] Initiating search for: 'Island Season 1 2023' on asianwiki.com (Expected Country: South Korea)
+[DEBUG] Executing search query: "Island Season 1 2023" Korean site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Island_(Korean_Drama)
+[DEBUG] Country validation passed (Expected: South Korea, Found: South Korea).
+[DEBUG] Validation passed. This is the correct page.
 [DEBUG] 'Other Names' from 'Drama:' field not found on AsianWiki.
-[DEBUG] Found soup in cache for 'Island Season 1 2023' on asianwiki.com
-[DEBUG] Found soup in cache for 'Island Season 1 2023' on mydramalist.com
-✅ Report written -> reports/Report_21_November_2025_1811.txt
+✅ Report written -> reports/Report_23_November_2025_0018.txt
 
 All done.
