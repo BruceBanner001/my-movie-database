@@ -6,14 +6,14 @@
 #   It contains a completely rebuilt, landmark-validating search engine
 #   to guarantee the correct page is scraped every single time.
 #
-# Version: v3.1 (Patched)
+# Version: v3.2 (Patched by Gemini)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v3.1"
+SCRIPT_VERSION = "v3.2"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames": [], "showImage": None,
@@ -100,28 +100,42 @@ def _scrape_country(soup, site):
     except Exception: pass
     return None
 
-def get_soup_from_search(query_base, site, language, soup_cache):
-    cache_key = f"{query_base}_{site}_{language}"
+def get_soup_from_search(show_name, show_year, site, language, soup_cache):
+    cache_key = f"{show_name}_{show_year}_{site}_{language}"
     if cache_key in soup_cache:
-        logd(f"Found soup in cache for '{query_base}' on {site}.com")
+        logd(f"Found soup in cache for '{show_name}' on {site}.com")
         return soup_cache[cache_key]
 
     expected_country = LANG_TO_COUNTRY_MAP.get(language.lower())
-    logd(f"Initiating search for: '{query_base}' on {site}.com (Expected Country: {expected_country})")
-    if not HAVE_DDGS: logd("DDGS library not available."); return None, None
-    search_queries = [ f'"{query_base}" {language} site:{site}.com', f'"{query_base}" site:{site}.com' ]
+    logd(f"Initiating search for: '{show_name} ({show_year})' on {site}.com (Expected Country: {expected_country})")
+    
+    if not HAVE_DDGS:
+        logd("DDGS library not available."); return None, None
+
+    search_queries = [
+        f'"{show_name}" {show_year} {language} drama site:{site}.com',
+        f'"{show_name}" ({show_year}) {language} site:{site}.com',
+        f'"{show_name}" {show_year} site:{site}.com',
+        f'"{show_name}" {language} site:{site}.com',
+        f'"{show_name}" site:{site}.com'
+    ]
+
     for query in search_queries:
         logd(f"Executing search query: {query}")
         try:
             time.sleep(1)
             with DDGS() as dd:
                 results = list(dd.text(query, max_results=5))
-                if not results: continue
+                if not results:
+                    continue
+
                 for res in results:
                     url = res.get('href', '')
-                    if not url or 'bing.com' in url or any(bad in url for bad in ['/reviews', '/episode', '/cast', '/recs', '?lang=', '/photos']): continue
+                    if not url or 'bing.com' in url or any(bad in url for bad in ['/reviews', '/episode', '/cast', '/recs', '?lang=', '/photos']):
+                        continue
                     if site == "asianwiki" and ("/File:" in url or "/index.php?title=File:" in url):
                         logd(f"Rejecting invalid AsianWiki file URL: {url}"); continue
+                    
                     logd(f"Found candidate URL: {url}")
                     r = SCRAPER.get(url, timeout=15)
                     if r.status_code == 200:
@@ -145,8 +159,11 @@ def get_soup_from_search(query_base, site, language, soup_cache):
                             logd("Validation passed. This is the correct page.")
                             soup_cache[cache_key] = (soup, url)
                             return soup, url
-                    else: logd(f"HTTP Error {r.status_code} for {url}")
-        except Exception as e: logd(f"Search attempt failed for query '{query}': {e}")
+                    else:
+                        logd(f"HTTP Error {r.status_code} for {url}")
+        except Exception as e:
+            logd(f"Search attempt failed for query '{query}': {e}")
+
     logd("All search attempts failed.")
     soup_cache[cache_key] = (None, None)
     return None, None
@@ -175,10 +192,9 @@ def _scrape_synopsis_from_asianwiki(soup, sid):
             logd("Synopsis/Plot heading not found on AsianWiki."); return None
         
         content = []
-        # Traverse siblings until the next h2 tag (new section) or end of tags
         for sibling in h2.find_next_siblings():
             if sibling.name == 'h2':
-                break  # Stop when we hit the next section (e.g., "Notes", "Cast")
+                break
             if sibling.name == 'p':
                 text = sibling.get_text(strip=True)
                 if text:
@@ -224,37 +240,37 @@ def _scrape_synopsis_from_mydramalist(soup, sid):
         if not synopsis_div:
             logd("Synopsis element not found on MyDramaList."); return None
 
-        # Stage 1: Intelligent paragraph extraction
         paragraphs = []
-        # Find all direct text content or paragraphs to preserve structure
         for element in synopsis_div.find_all(['p', 'br'], recursive=False):
-            if element.name == 'br': # Treat <br> as a paragraph break
+            if element.name == 'br':
                 if paragraphs and paragraphs[-1] != "": paragraphs.append("")
             else:
                 text = element.get_text(strip=True)
                 if text: paragraphs.append(text)
         
-        # Fallback if no <p> tags are used
         if not paragraphs:
             text = synopsis_div.get_text(separator='\n', strip=True)
             paragraphs = [line.strip() for line in text.split('\n') if line.strip()]
 
         synopsis = "\n\n".join(paragraphs)
 
-        # Stage 2: Advanced cleaning with a more robust regex
-        # Remove multiple unwanted patterns from the end of the text
         patterns_to_remove = [
-            r'\s*\(Source:.*?\)\s*$',      # (Source: Viki)
-            r'\s*Source:.*$',              # Source: AGB Nielson
-            r'~~.*?~~',                    # Strikethrough text for translations
-            r'\s*Edit Translation\s*$',    # "Edit Translation" links
-            r'\s*Additional Cast Members:.*$', # "Additional Cast Members:" section
-            r'^\s*Remove ads\s*'           # "Remove ads" at the beginning
+            r'\s*\(Source:.*?\)\s*$',
+            r'\s*Source:.*$',
+            r'~~.*?~~',
+            r'\s*Edit Translation\s*$',
+            r'\s*(Additional Cast Members|Native title|Also Known As):.*$',
+            r'^\s*Remove ads\s*'
         ]
         
         cleaned_synopsis = synopsis
         for pattern in patterns_to_remove:
             cleaned_synopsis = re.sub(pattern, '', cleaned_synopsis, flags=re.IGNORECASE | re.DOTALL).strip()
+            
+        # --- FINAL CLEANUP STAGE ---
+        # After removing main blocks, clean up any trailing garbage like leftover
+        # parentheses, colons, or other punctuation from incomplete removals.
+        cleaned_synopsis = re.sub(r'[\s,.:;("]*$', '', cleaned_synopsis).strip()
             
         return cleaned_synopsis if cleaned_synopsis else None
     except Exception as e:
@@ -321,7 +337,7 @@ def fetch_and_populate_metadata(obj, context):
                     
                     soup, url = None, None
                     for term in search_terms:
-                        soup, url = get_soup_from_search(f'{term} {s_year}', site, lang, soup_cache)
+                        soup, url = get_soup_from_search(term, s_year, site, lang, soup_cache)
                         if soup: break
 
                     if soup:
@@ -329,8 +345,6 @@ def fetch_and_populate_metadata(obj, context):
                         data = SCRAPE_MAP[site][fetch_key](*args)
                         if data:
                             obj[obj_key] = data
-                            # --- THIS IS THE FIX ---
-                            # Use obj_key ('showImage') instead of fetch_key ('image') for consistency.
                             spu[obj_key] = site 
                             source_links[fetch_key] = url
                             if fetch_key == 'image': context['files_generated']['images'].append(os.path.join(IMAGES_DIR, f"{s_id}.jpg"))
@@ -443,7 +457,6 @@ def save_metadata_backup(obj, context):
     source_links = context.get('source_links_temp', {})
     for key, site in obj.get('sitePriorityUsed', {}).items():
         if site and site != "Manual":
-            # Map the internal key to the final object key for consistency
             internal_key = 'image' if key == 'showImage' else 'duration' if key == 'Duration' else key
             field_data = {"value": obj.get(key), "source": site}
             if internal_key in source_links:
