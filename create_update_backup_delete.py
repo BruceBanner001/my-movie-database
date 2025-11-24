@@ -6,14 +6,14 @@
 #   It contains a completely rebuilt, landmark-validating search engine
 #   to guarantee the correct page is scraped every single time.
 #
-# Version: v3.0
+# Version: v3.1 (Patched)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v3.0"
+SCRIPT_VERSION = "v3.1"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames": [], "showImage": None,
@@ -59,7 +59,6 @@ def now_ist(): return datetime.now(IST)
 def filename_timestamp(): return now_ist().strftime("%d_%B_%Y_%H%M")
 def run_id_timestamp(): return now_ist().strftime("RUN_%Y%m%d_%H%M%S")
 
-# FIX: Added new archive directories
 JSON_FILE, BACKUP_DIR, IMAGES_DIR, DELETE_IMAGES_DIR = "seriesData.json", "backups", "images", "deleted-images"
 DELETED_DATA_DIR, REPORTS_DIR, BACKUP_META_DIR = "deleted-data", "reports", "backup-meta-data"
 ARCHIVED_BACKUPS_DIR, ARCHIVED_META_DIR = "archived-backups", "archived-backup-meta-data"
@@ -171,12 +170,23 @@ def build_absolute_url(local_path): return f"{GITHUB_PAGES_URL.rstrip('/')}/{loc
 
 def _scrape_synopsis_from_asianwiki(soup, sid):
     try:
-        plot_element = soup.find('span', id=re.compile(r"Synopsis|Plot", re.IGNORECASE))
+        plot_element = soup.find('span', id=re.compile(r"^(Synopsis|Plot)$", re.IGNORECASE))
         if not plot_element or not (h2 := plot_element.find_parent('h2')):
             logd("Synopsis/Plot heading not found on AsianWiki."); return None
-        content = [p.get_text(strip=True) for p in h2.find_next_siblings('p')]
-        return "\n\n".join(p for p in content if p)
-    except Exception as e: logd(f"Error scraping synopsis from AsianWiki: {e}"); return None
+        
+        content = []
+        # Traverse siblings until the next h2 tag (new section) or end of tags
+        for sibling in h2.find_next_siblings():
+            if sibling.name == 'h2':
+                break  # Stop when we hit the next section (e.g., "Notes", "Cast")
+            if sibling.name == 'p':
+                text = sibling.get_text(strip=True)
+                if text:
+                    content.append(text)
+        
+        return "\n\n".join(content) if content else None
+    except Exception as e:
+        logd(f"Error scraping synopsis from AsianWiki: {e}"); return None
 
 def _scrape_image_from_asianwiki(soup, sid):
     try:
@@ -211,10 +221,44 @@ def _scrape_release_date_from_asianwiki(soup, sid):
 def _scrape_synopsis_from_mydramalist(soup, sid):
     try:
         synopsis_div = soup.select_one('div.show-synopsis, div[itemprop="description"]')
-        if not synopsis_div: logd("Synopsis element not found on MyDramaList."); return None
-        synopsis = synopsis_div.get_text(separator='\n\n', strip=True)
-        return re.sub(r'(^Remove ads\n\n)|((~~.*?~~|Edit Translation).*$)|(\s*\(\s*Source:.*?\)\s*$)', '', synopsis, flags=re.DOTALL | re.IGNORECASE).strip()
-    except Exception as e: logd(f"Error scraping synopsis from MyDramaList: {e}"); return None
+        if not synopsis_div:
+            logd("Synopsis element not found on MyDramaList."); return None
+
+        # Stage 1: Intelligent paragraph extraction
+        paragraphs = []
+        # Find all direct text content or paragraphs to preserve structure
+        for element in synopsis_div.find_all(['p', 'br'], recursive=False):
+            if element.name == 'br': # Treat <br> as a paragraph break
+                if paragraphs and paragraphs[-1] != "": paragraphs.append("")
+            else:
+                text = element.get_text(strip=True)
+                if text: paragraphs.append(text)
+        
+        # Fallback if no <p> tags are used
+        if not paragraphs:
+            text = synopsis_div.get_text(separator='\n', strip=True)
+            paragraphs = [line.strip() for line in text.split('\n') if line.strip()]
+
+        synopsis = "\n\n".join(paragraphs)
+
+        # Stage 2: Advanced cleaning with a more robust regex
+        # Remove multiple unwanted patterns from the end of the text
+        patterns_to_remove = [
+            r'\s*\(Source:.*?\)\s*$',      # (Source: Viki)
+            r'\s*Source:.*$',              # Source: AGB Nielson
+            r'~~.*?~~',                    # Strikethrough text for translations
+            r'\s*Edit Translation\s*$',    # "Edit Translation" links
+            r'\s*Additional Cast Members:.*$', # "Additional Cast Members:" section
+            r'^\s*Remove ads\s*'           # "Remove ads" at the beginning
+        ]
+        
+        cleaned_synopsis = synopsis
+        for pattern in patterns_to_remove:
+            cleaned_synopsis = re.sub(pattern, '', cleaned_synopsis, flags=re.IGNORECASE | re.DOTALL).strip()
+            
+        return cleaned_synopsis if cleaned_synopsis else None
+    except Exception as e:
+        logd(f"Error scraping synopsis from MyDramaList: {e}"); return None
 
 def _scrape_image_from_mydramalist(soup, sid):
     try:
@@ -264,6 +308,7 @@ def fetch_and_populate_metadata(obj, context):
     spu, source_links = obj.setdefault('sitePriorityUsed', {}), {}
     soup_cache = {}
     fields_to_check = [('synopsis', 'synopsis'), ('showImage', 'image'), ('otherNames', 'otherNames'), ('releaseDate', 'releaseDate'), ('Duration', 'duration')]
+    
     for obj_key, fetch_key in fields_to_check:
         if not obj.get(obj_key):
             primary_site, fallback_site = priority.get(fetch_key), 'mydramalist' if priority.get(fetch_key) == 'asianwiki' else 'asianwiki'
@@ -284,14 +329,16 @@ def fetch_and_populate_metadata(obj, context):
                         data = SCRAPE_MAP[site][fetch_key](*args)
                         if data:
                             obj[obj_key] = data
-                            spu[fetch_key] = site
+                            # --- THIS IS THE FIX ---
+                            # Use obj_key ('showImage') instead of fetch_key ('image') for consistency.
+                            spu[obj_key] = site 
                             source_links[fetch_key] = url
                             if fetch_key == 'image': context['files_generated']['images'].append(os.path.join(IMAGES_DIR, f"{s_id}.jpg"))
                             break
+                            
     context['source_links_temp'] = source_links
     return obj
 
-# FIX: The complete, robust deletion and archiving function
 def process_deletions(excel, json_file, context):
     try: df = pd.read_excel(excel, sheet_name='Deleting Records')
     except ValueError: print("INFO: 'Deleting Records' sheet not found. Skipping deletion step."); return {}, []
@@ -303,7 +350,6 @@ def process_deletions(excel, json_file, context):
     to_delete = set(pd.to_numeric(df.iloc[:, 0], errors='coerce').dropna().astype(int))
     deleted, report = set(), {}
     
-    # Get initial file lists
     backup_files = os.listdir(BACKUP_DIR) if os.path.exists(BACKUP_DIR) else []
     meta_files = os.listdir(BACKUP_META_DIR) if os.path.exists(BACKUP_META_DIR) else []
 
@@ -311,27 +357,23 @@ def process_deletions(excel, json_file, context):
         if sid in by_id:
             obj = by_id.pop(sid); deleted.add(sid); ts = filename_timestamp()
             
-            # 1. Archive JSON data
             path = os.path.join(DELETED_DATA_DIR, f"DELETED_{ts}_{sid}.json"); os.makedirs(DELETED_DATA_DIR, exist_ok=True)
             with open(path, 'w', encoding='utf-8') as f: json.dump(obj, f, indent=4, ensure_ascii=False)
             context['files_generated']['deleted_data'].append(path)
             report.setdefault('data_deleted', []).append(f"- {sid} -> {obj.get('showName')} ({obj.get('releasedYear')}) -> ✅ Deleted")
             
-            # 2. Archive Image
             if obj.get('showImage'):
                 src = os.path.join(IMAGES_DIR, os.path.basename(obj['showImage']))
                 if os.path.exists(src):
                     dest = os.path.join(DELETE_IMAGES_DIR, f"DELETED_{ts}_{sid}.jpg"); os.makedirs(DELETE_IMAGES_DIR, exist_ok=True); shutil.move(src, dest)
                     context['files_generated']['deleted_images'].append(dest)
             
-            # 3. Archive associated backup files
             archive_backup_dest_dir = os.path.join(ARCHIVED_BACKUPS_DIR, str(sid)); os.makedirs(archive_backup_dest_dir, exist_ok=True)
             for f in backup_files:
                 if f.endswith(f"_{sid}.json"):
                     src = os.path.join(BACKUP_DIR, f); dest = os.path.join(archive_backup_dest_dir, f); shutil.move(src, dest)
                     context['files_generated']['archived_backups'].append(dest)
             
-            # 4. Archive associated meta-data files
             archive_meta_dest_dir = os.path.join(ARCHIVED_META_DIR, str(sid)); os.makedirs(archive_meta_dest_dir, exist_ok=True)
             for f in meta_files:
                 if f.endswith(f"_{sid}.json"):
@@ -401,10 +443,12 @@ def save_metadata_backup(obj, context):
     source_links = context.get('source_links_temp', {})
     for key, site in obj.get('sitePriorityUsed', {}).items():
         if site and site != "Manual":
-            target_key = "showImage" if key == "image" else "Duration" if key == "duration" else "otherNames" if key == "otherNames" else key
-            field_data = {"value": obj.get(target_key), "source": site}
-            if key in source_links: field_data["source_link"] = source_links[key]
-            fetched[key] = field_data
+            # Map the internal key to the final object key for consistency
+            internal_key = 'image' if key == 'showImage' else 'duration' if key == 'Duration' else key
+            field_data = {"value": obj.get(key), "source": site}
+            if internal_key in source_links:
+                field_data["source_link"] = source_links[internal_key]
+            fetched[internal_key] = field_data
     if not fetched: logd(f"Skipping metadata backup for {obj['showID']}: no new data fetched."); return
     data = {"scriptVersion": SCRIPT_VERSION, "runID": context['run_id'], "timestamp": now_ist().strftime("%d %B %Y %I:%M %p (IST)"), "showID": obj['showID'], "showName": obj['showName'], "fetchedFields": fetched}
     path = os.path.join(BACKUP_META_DIR, f"META_{filename_timestamp()}_{obj['showID']}.json"); os.makedirs(BACKUP_META_DIR, exist_ok=True)
@@ -424,7 +468,6 @@ def create_diff_backup(old, new, context):
 
 def write_report(context):
     lines = [f"✅ Workflow completed successfully", f"🆔 Run ID: {context['run_id']}", f"📅 Run Time: {now_ist().strftime('%d %B %Y %I:%M %p (IST)')}", f"🕒 Duration: {context['duration_str']}", f"⚙️ Script Version: {SCRIPT_VERSION}", ""]
-    # FIX: Added 'archived' stat
     sep, stats = "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", {'created': 0, 'updated': 0, 'skipped': 0, 'deleted': 0, 'warnings': 0, 'images': 0, 'rows': 0, 'refetched': 0, 'archived': 0}
     for sheet, changes in context['report_data'].items():
         if not any(v for k, v in changes.items()): continue
@@ -459,7 +502,6 @@ def write_report(context):
     with open(context['report_file_path'], 'w', encoding='utf-8') as f: f.write("\n".join(lines))
 
 def main():
-    # FIX: Added new archive folders to context
     start_time = now_ist()
     context = {'run_id': run_id_timestamp(), 'start_time_iso': start_time.isoformat(), 'report_data': {}, 
                'files_generated': {'backups': [], 'images': [], 'deleted_data': [], 'deleted_images': [], 
