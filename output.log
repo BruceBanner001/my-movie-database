@@ -1,23 +1,30 @@
-🚀 Running Script — Version v3.1 | Run ID: RUN_20251124_143656
+🚀 Running Script — Version v3.2 | Run ID: RUN_20251124_145034
 [DEBUG] Attempting direct media download...
 [DEBUG] 'Deleting Records' sheet is empty. Nothing to delete.
-[DEBUG] Initiating search for: 'Abyss 2019' on asianwiki.com (Expected Country: South Korea)
-[DEBUG] Executing search query: "Abyss 2019" Korean site:asianwiki.com
-[DEBUG] Found candidate URL: https://asianwiki.com/Abyss_(Korean_Drama)
+[DEBUG] Initiating search for: 'Queen of Tears (2024)' on asianwiki.com (Expected Country: South Korea)
+[DEBUG] Executing search query: "Queen of Tears" 2024 Korean drama site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Queen_Of_Tears
 [DEBUG] Country validation passed (Expected: South Korea, Found: South Korea).
 [DEBUG] Validation passed. This is the correct page.
 [DEBUG] Synopsis/Plot heading not found on AsianWiki.
-[DEBUG] Initiating search for: 'Abyss 2019' on mydramalist.com (Expected Country: South Korea)
-[DEBUG] Executing search query: "Abyss 2019" Korean site:mydramalist.com
-[DEBUG] Found candidate URL: https://mydramalist.com/30554-abyss
+[DEBUG] Initiating search for: 'Queen of Tears (2024)' on mydramalist.com (Expected Country: South Korea)
+[DEBUG] Executing search query: "Queen of Tears" 2024 Korean drama site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/people/21894-kim-hee-won
+[DEBUG] Country validation FAILED (Expected: South Korea, Found: None). Rejecting page.
+[DEBUG] Found candidate URL: https://mydramalist.com/article/kim-shin-rok-to-make-a-special-appearance-in-queen-of-tears
+[DEBUG] Search attempt failed for query '"Queen of Tears" 2024 Korean drama site:mydramalist.com': Exceeded 30 redirects.
+[DEBUG] Executing search query: "Queen of Tears" (2024) Korean site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/people/21894-kim-hee-won
+[DEBUG] Country validation FAILED (Expected: South Korea, Found: None). Rejecting page.
+[DEBUG] Found candidate URL: https://mydramalist.com/725367-untitled-park-ji-eun-project
 [DEBUG] Country validation passed (Expected: South Korea, Found: South Korea).
 [DEBUG] Validation passed. This is the correct page.
-[DEBUG] Found soup in cache for 'Abyss 2019' on asianwiki.com
-[DEBUG] Downloading high-quality image from: https://asianwiki.com/images/5/5a/Abyss_%28Korean_Drama%29-p01.jpg
-[DEBUG] Image saved to images/102.jpg
-[DEBUG] Found soup in cache for 'Abyss 2019' on mydramalist.com
-[DEBUG] Found soup in cache for 'Abyss 2019' on asianwiki.com
-[DEBUG] Found soup in cache for 'Abyss 2019' on mydramalist.com
-✅ Report written -> reports/Report_24_November_2025_1437.txt
+[DEBUG] Found soup in cache for 'Queen of Tears' on asianwiki.com
+[DEBUG] Downloading high-quality image from: https://asianwiki.com/images/5/53/Queen_Of_Tears-p.jpg
+[DEBUG] Image saved to images/103.jpg
+[DEBUG] Found soup in cache for 'Queen of Tears' on mydramalist.com
+[DEBUG] Found soup in cache for 'Queen of Tears' on asianwiki.com
+[DEBUG] Found soup in cache for 'Queen of Tears' on mydramalist.com
+✅ Report written -> reports/Report_24_November_2025_1450.txt
 
 All done.
