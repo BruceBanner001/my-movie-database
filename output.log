@@ -1,18 +1,22 @@
-🚀 Running Script — Version v3.0 | Run ID: RUN_20251123_001828
+🚀 Running Script — Version v3.0 | Run ID: RUN_20251124_125211
 [DEBUG] Attempting direct media download...
 [DEBUG] 'Deleting Records' sheet is empty. Nothing to delete.
 [DEBUG] Initiating search for: 'Island Season 1 2023' on mydramalist.com (Expected Country: South Korea)
 [DEBUG] Executing search query: "Island Season 1 2023" Korean site:mydramalist.com
 [DEBUG] Found candidate URL: https://mydramalist.com/725837-single-s-inferno-season-2/statistics
+[DEBUG] Country validation FAILED (Expected: South Korea, Found: None). Rejecting page.
+[DEBUG] Found candidate URL: https://mydramalist.com/dramalist/ravenchaser
+[DEBUG] Landmark validation failed: MyDramaList landmark missing.
+[DEBUG] Found candidate URL: https://mydramalist.com/dramalist/SnapDrag0n
+[DEBUG] Landmark validation failed: MyDramaList landmark missing.
+[DEBUG] Found candidate URL: https://mydramalist.com/dramalist/9651359
+[DEBUG] Landmark validation failed: MyDramaList landmark missing.
+[DEBUG] Found candidate URL: https://mydramalist.com/dramalist/Tammie18
+[DEBUG] Landmark validation failed: MyDramaList landmark missing.
+[DEBUG] Executing search query: "Island Season 1 2023" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/51327-island
 [DEBUG] Country validation passed (Expected: South Korea, Found: South Korea).
 [DEBUG] Validation passed. This is the correct page.
-[DEBUG] 'Also Known As:' field not found on MyDramaList.
-[DEBUG] Initiating search for: 'Island Season 1 2023' on asianwiki.com (Expected Country: South Korea)
-[DEBUG] Executing search query: "Island Season 1 2023" Korean site:asianwiki.com
-[DEBUG] Found candidate URL: https://asianwiki.com/Island_(Korean_Drama)
-[DEBUG] Country validation passed (Expected: South Korea, Found: South Korea).
-[DEBUG] Validation passed. This is the correct page.
-[DEBUG] 'Other Names' from 'Drama:' field not found on AsianWiki.
-✅ Report written -> reports/Report_23_November_2025_0018.txt
+✅ Report written -> reports/Report_24_November_2025_1252.txt
 
 All done.
