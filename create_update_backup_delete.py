@@ -6,14 +6,14 @@
 #   It contains a completely rebuilt, landmark-validating search engine
 #   to guarantee the correct page is scraped every single time.
 #
-# Version: v3.2 (Patched by Gemini)
+# Version: v3.3 (Patched by Gemini)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v3.2"
+SCRIPT_VERSION = "v3.3"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames": [], "showImage": None,
@@ -23,7 +23,8 @@ JSON_OBJECT_TEMPLATE = {
     "comments": None, "ratings": 0, "genres": [], "network": [],
     "againWatchedDates": [], "updatedOn": None, "updatedDetails": None,
     "synopsis": None, "topRatings": 0, "Duration": None,
-    "sitePriorityUsed": {"showImage": None, "releaseDate": None, "otherNames": None, "duration": None, "synopsis": None}
+    "director": [], "tags": [], "mainCast": [], # <-- NEW FIELDS
+    "sitePriorityUsed": {"showImage": None, "releaseDate": None, "otherNames": None, "duration": None, "synopsis": None, "director": None, "tags": None, "mainCast": None}
 }
 
 SITE_PRIORITY_BY_LANGUAGE = {
@@ -35,8 +36,8 @@ SITE_PRIORITY_BY_LANGUAGE = {
     "default": { "synopsis": "mydramalist", "image": "asianwiki", "otherNames": "mydramalist", "duration": "mydramalist", "releaseDate": "asianwiki" }
 }
 
-FIELD_NAME_MAP = { "showID": "Show ID", "showName": "Show Name", "otherNames": "Other Names", "showImage": "Show Image", "watchStartedOn": "Watch Started On", "watchEndedOn": "Watch Ended On", "releasedYear": "Released Year", "releaseDate": "Release Date", "totalEpisodes": "Total Episodes", "showType": "Show Type", "nativeLanguage": "Native Language", "watchedLanguage": "Watched Language", "country": "Country", "comments": "Comments", "ratings": "Ratings", "genres": "Category", "network": "Network", "againWatchedDates": "Again Watched Dates", "updatedOn": "Updated On", "updatedDetails": "Updated Details", "synopsis": "Synopsis", "topRatings": "Top Ratings", "Duration": "Duration", "sitePriorityUsed": "Site Priority Used" }
-LOCKED_FIELDS_AFTER_CREATION = {'synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'updatedOn', 'updatedDetails', 'sitePriorityUsed', 'topRatings'}
+FIELD_NAME_MAP = { "showID": "Show ID", "showName": "Show Name", "otherNames": "Other Names", "showImage": "Show Image", "watchStartedOn": "Watch Started On", "watchEndedOn": "Watch Ended On", "releasedYear": "Released Year", "releaseDate": "Release Date", "totalEpisodes": "Total Episodes", "showType": "Show Type", "nativeLanguage": "Native Language", "watchedLanguage": "Watched Language", "country": "Country", "comments": "Comments", "ratings": "Ratings", "genres": "Category", "network": "Network", "againWatchedDates": "Again Watched Dates", "updatedOn": "Updated On", "updatedDetails": "Updated Details", "synopsis": "Synopsis", "topRatings": "Top Ratings", "Duration": "Duration", "director": "Director", "tags": "Tags", "mainCast": "Main Cast", "sitePriorityUsed": "Site Priority Used" }
+LOCKED_FIELDS_AFTER_CREATION = {'synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'mainCast', 'updatedOn', 'updatedDetails', 'sitePriorityUsed', 'topRatings'}
 
 # ---------------------------- IMPORTS & GLOBALS ----------------------------
 import os, re, sys, json, io, shutil, traceback, copy, time
@@ -267,9 +268,6 @@ def _scrape_synopsis_from_mydramalist(soup, sid):
         for pattern in patterns_to_remove:
             cleaned_synopsis = re.sub(pattern, '', cleaned_synopsis, flags=re.IGNORECASE | re.DOTALL).strip()
             
-        # --- FINAL CLEANUP STAGE ---
-        # After removing main blocks, clean up any trailing garbage like leftover
-        # parentheses, colons, or other punctuation from incomplete removals.
         cleaned_synopsis = re.sub(r'[\s,.:;("]*$', '', cleaned_synopsis).strip()
             
         return cleaned_synopsis if cleaned_synopsis else None
@@ -313,9 +311,53 @@ def _scrape_release_date_from_mydramalist(soup, sid):
         logd("'Aired:' field not found on MyDramaList."); return None
     except Exception as e: logd(f"Error scraping release date from MyDramaList: {e}"); return None
 
+def _scrape_director_from_mydramalist(soup, sid):
+    try:
+        b_tag = soup.find('b', string="Director:")
+        if b_tag and (li_tag := b_tag.find_parent('li')):
+            b_tag.decompose() # Remove the "Director:" label
+            names_text = li_tag.get_text(strip=True)
+            return [name.strip() for name in names_text.split(',') if name.strip()]
+        logd("'Director:' field not found on MyDramaList."); return None
+    except Exception as e: logd(f"Error scraping director from MyDramaList: {e}"); return None
+
+def _scrape_tags_from_mydramalist(soup, sid):
+    try:
+        tags_li = soup.select_one('li.show-tags')
+        if tags_li:
+            return [a.get_text(strip=True) for a in tags_li.find_all('a')]
+        logd("'Tags' field not found on MyDramaList."); return None
+    except Exception as e: logd(f"Error scraping tags from MyDramaList: {e}"); return None
+
+def _scrape_cast_from_mydramalist(soup, sid):
+    try:
+        main_role_heading = soup.find('h2', string="Main Role")
+        if not main_role_heading: 
+            logd("Main Role section not found on MyDramaList."); return None
+        
+        cast_list_container = main_role_heading.find_next_sibling('div', class_='cast-list')
+        if not cast_list_container:
+            logd("Cast list container not found after Main Role heading."); return None
+        
+        cast = []
+        actors = cast_list_container.select('div.col-sm-6.col-lg-3.col-md-4')
+        for actor_div in actors:
+            actor_name_tag = actor_div.select_one('b > a') or actor_div.select_one('b')
+            actor_name = actor_name_tag.get_text(strip=True) if actor_name_tag else None
+            
+            character_name_tag = actor_div.select_one('small')
+            character_name = character_name_tag.get_text(strip=True) if character_name_tag else None
+            
+            if actor_name and character_name:
+                cast.append({"actor": actor_name, "character": character_name})
+        
+        return cast if cast else None
+    except Exception as e: logd(f"Error scraping cast from MyDramaList: {e}"); return None
+
+
 SCRAPE_MAP = {
-    'asianwiki': {'synopsis': _scrape_synopsis_from_asianwiki, 'image': _scrape_image_from_asianwiki, 'otherNames': _scrape_othernames_from_asianwiki, 'duration': lambda soup, sid: None, 'releaseDate': _scrape_release_date_from_asianwiki},
-    'mydramalist': {'synopsis': _scrape_synopsis_from_mydramalist, 'image': _scrape_image_from_mydramalist, 'otherNames': _scrape_othernames_from_mydramalist, 'duration': _scrape_duration_from_mydramalist, 'releaseDate': _scrape_release_date_from_mydramalist}
+    'asianwiki': {'synopsis': _scrape_synopsis_from_asianwiki, 'image': _scrape_image_from_asianwiki, 'otherNames': _scrape_othernames_from_asianwiki, 'duration': lambda soup, sid: None, 'releaseDate': _scrape_release_date_from_asianwiki, 'director': lambda soup, sid: None, 'tags': lambda soup, sid: None, 'mainCast': lambda soup, sid: None},
+    'mydramalist': {'synopsis': _scrape_synopsis_from_mydramalist, 'image': _scrape_image_from_mydramalist, 'otherNames': _scrape_othernames_from_mydramalist, 'duration': _scrape_duration_from_mydramalist, 'releaseDate': _scrape_release_date_from_mydramalist, 'director': _scrape_director_from_mydramalist, 'tags': _scrape_tags_from_mydramalist, 'mainCast': _scrape_cast_from_mydramalist}
 }
 
 def fetch_and_populate_metadata(obj, context):
@@ -323,32 +365,45 @@ def fetch_and_populate_metadata(obj, context):
     priority = SITE_PRIORITY_BY_LANGUAGE.get(lang.lower(), SITE_PRIORITY_BY_LANGUAGE['default'])
     spu, source_links = obj.setdefault('sitePriorityUsed', {}), {}
     soup_cache = {}
-    fields_to_check = [('synopsis', 'synopsis'), ('showImage', 'image'), ('otherNames', 'otherNames'), ('releaseDate', 'releaseDate'), ('Duration', 'duration')]
     
+    # Define which fields to check and their internal keys
+    fields_to_check = [
+        ('synopsis', 'synopsis'), ('showImage', 'image'), ('otherNames', 'otherNames'), 
+        ('releaseDate', 'releaseDate'), ('Duration', 'duration'), ('director', 'director'), 
+        ('tags', 'tags'), ('mainCast', 'mainCast')
+    ]
+    MDL_ONLY_FIELDS = {'director', 'tags', 'mainCast'}
+
     for obj_key, fetch_key in fields_to_check:
         if not obj.get(obj_key):
-            primary_site, fallback_site = priority.get(fetch_key), 'mydramalist' if priority.get(fetch_key) == 'asianwiki' else 'asianwiki'
-            for site in [primary_site, fallback_site]:
-                if site:
-                    search_terms = [s_name]
-                    general_name = re.sub(r'\s*\(?Season\s*\d+\)?', '', s_name, flags=re.IGNORECASE).strip()
-                    if general_name != s_name:
-                        search_terms.append(general_name)
-                    
-                    soup, url = None, None
-                    for term in search_terms:
-                        soup, url = get_soup_from_search(term, s_year, site, lang, soup_cache)
-                        if soup: break
+            sites_to_try = []
+            if obj_key in MDL_ONLY_FIELDS:
+                sites_to_try = ['mydramalist']
+            else:
+                primary_site = priority.get(fetch_key)
+                fallback_site = 'mydramalist' if primary_site == 'asianwiki' else 'asianwiki'
+                sites_to_try = [s for s in [primary_site, fallback_site] if s]
 
-                    if soup:
-                        args = (soup, s_id)
-                        data = SCRAPE_MAP[site][fetch_key](*args)
-                        if data:
-                            obj[obj_key] = data
-                            spu[obj_key] = site 
-                            source_links[fetch_key] = url
-                            if fetch_key == 'image': context['files_generated']['images'].append(os.path.join(IMAGES_DIR, f"{s_id}.jpg"))
-                            break
+            for site in sites_to_try:
+                search_terms = [s_name]
+                general_name = re.sub(r'\s*\(?Season\s*\d+\)?', '', s_name, flags=re.IGNORECASE).strip()
+                if general_name != s_name:
+                    search_terms.append(general_name)
+                
+                soup, url = None, None
+                for term in search_terms:
+                    soup, url = get_soup_from_search(term, s_year, site, lang, soup_cache)
+                    if soup: break
+
+                if soup:
+                    args = (soup, s_id)
+                    data = SCRAPE_MAP[site][fetch_key](*args)
+                    if data:
+                        obj[obj_key] = data
+                        spu[obj_key] = site 
+                        source_links[fetch_key] = url
+                        if fetch_key == 'image': context['files_generated']['images'].append(os.path.join(IMAGES_DIR, f"{s_id}.jpg"))
+                        break
                             
     context['source_links_temp'] = source_links
     return obj
@@ -457,7 +512,8 @@ def save_metadata_backup(obj, context):
     source_links = context.get('source_links_temp', {})
     for key, site in obj.get('sitePriorityUsed', {}).items():
         if site and site != "Manual":
-            internal_key = 'image' if key == 'showImage' else 'duration' if key == 'Duration' else key
+            internal_key_map = {'showImage': 'image', 'Duration': 'duration', 'otherNames': 'otherNames', 'releaseDate': 'releaseDate', 'synopsis': 'synopsis', 'director': 'director', 'tags': 'tags', 'mainCast': 'mainCast'}
+            internal_key = internal_key_map.get(key, key)
             field_data = {"value": obj.get(key), "source": site}
             if internal_key in source_links:
                 field_data["source_link"] = source_links[internal_key]
@@ -551,7 +607,7 @@ def main():
             
             final_obj = {**JSON_OBJECT_TEMPLATE, **(old_obj_from_json or {}), **excel_obj}
             
-            initial_metadata_state = {k: final_obj.get(k) for k in ['synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration']}
+            initial_metadata_state = {k: final_obj.get(k) for k in ['synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'mainCast']}
             
             final_obj = fetch_and_populate_metadata(final_obj, context)
             
@@ -560,7 +616,7 @@ def main():
             excel_data_has_changed = not is_new and objects_differ(old_obj_from_json, excel_obj)
             metadata_was_fetched = any(final_obj.get(k) != v for k, v in initial_metadata_state.items())
             
-            key_map = {'synopsis': 'Synopsis', 'showImage': 'Image', 'otherNames': 'Othernames', 'releaseDate': 'Releasedate', 'Duration': 'Duration'}
+            key_map = {'synopsis': 'Synopsis', 'showImage': 'Image', 'otherNames': 'Othernames', 'releaseDate': 'Releasedate', 'Duration': 'Duration', 'director': 'Director', 'tags': 'Tags', 'mainCast': 'Main Cast'}
             newly_fetched_fields = sorted([key_map[k] for k, v in initial_metadata_state.items() if not v and final_obj.get(k)])
 
             if is_new:
@@ -583,7 +639,8 @@ def main():
                  merged_by_id[sid] = final_obj
                  save_metadata_backup(final_obj, context)
 
-            missing = [human_readable_field(k) for k, v in final_obj.items() if k in {'synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration'} and not v]
+            missing_fields = {'synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'mainCast'}
+            missing = [human_readable_field(k) for k, v in final_obj.items() if k in missing_fields and not v]
             if missing: report['fetch_warnings'].append(f"- {sid} - {final_obj['showName']} -> ⚠️ Missing: {', '.join(sorted(missing))}")
 
     with open(JSON_FILE, 'w', encoding='utf-8') as f: json.dump(sorted(merged_by_id.values(), key=lambda x: x.get('showID', 0)), f, indent=4, ensure_ascii=False)
