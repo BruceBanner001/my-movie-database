@@ -1,30 +1,100 @@
-🚀 Running Script — Version v3.2 | Run ID: RUN_20251124_145034
+🚀 Running Script — Version v3.3 | Run ID: RUN_20251127_143706
 [DEBUG] Attempting direct media download...
 [DEBUG] 'Deleting Records' sheet is empty. Nothing to delete.
-[DEBUG] Initiating search for: 'Queen of Tears (2024)' on asianwiki.com (Expected Country: South Korea)
-[DEBUG] Executing search query: "Queen of Tears" 2024 Korean drama site:asianwiki.com
-[DEBUG] Found candidate URL: https://asianwiki.com/Queen_Of_Tears
+[DEBUG] Initiating search for: 'Why Women Love (2022)' on mydramalist.com (Expected Country: China)
+[DEBUG] Executing search query: "Why Women Love" 2022 Chinese drama site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/79563-bu-hui-lian-ai-de-wo-men
+[DEBUG] Country validation passed (Expected: China, Found: China).
+[DEBUG] Validation passed. This is the correct page.
+[DEBUG] Found soup in cache for 'Why Women Love' on mydramalist.com
+[DEBUG] Found soup in cache for 'Why Women Love' on mydramalist.com
+[DEBUG] Main Role section not found on MyDramaList.
+[DEBUG] Initiating search for: 'Abyss (2019)' on mydramalist.com (Expected Country: South Korea)
+[DEBUG] Executing search query: "Abyss" 2019 Korean drama site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/30554-abyss
 [DEBUG] Country validation passed (Expected: South Korea, Found: South Korea).
 [DEBUG] Validation passed. This is the correct page.
-[DEBUG] Synopsis/Plot heading not found on AsianWiki.
+[DEBUG] Found soup in cache for 'Abyss' on mydramalist.com
+[DEBUG] Found soup in cache for 'Abyss' on mydramalist.com
+[DEBUG] Main Role section not found on MyDramaList.
 [DEBUG] Initiating search for: 'Queen of Tears (2024)' on mydramalist.com (Expected Country: South Korea)
 [DEBUG] Executing search query: "Queen of Tears" 2024 Korean drama site:mydramalist.com
-[DEBUG] Found candidate URL: https://mydramalist.com/people/21894-kim-hee-won
-[DEBUG] Country validation FAILED (Expected: South Korea, Found: None). Rejecting page.
-[DEBUG] Found candidate URL: https://mydramalist.com/article/kim-shin-rok-to-make-a-special-appearance-in-queen-of-tears
-[DEBUG] Search attempt failed for query '"Queen of Tears" 2024 Korean drama site:mydramalist.com': Exceeded 30 redirects.
-[DEBUG] Executing search query: "Queen of Tears" (2024) Korean site:mydramalist.com
-[DEBUG] Found candidate URL: https://mydramalist.com/people/21894-kim-hee-won
-[DEBUG] Country validation FAILED (Expected: South Korea, Found: None). Rejecting page.
 [DEBUG] Found candidate URL: https://mydramalist.com/725367-untitled-park-ji-eun-project
 [DEBUG] Country validation passed (Expected: South Korea, Found: South Korea).
 [DEBUG] Validation passed. This is the correct page.
-[DEBUG] Found soup in cache for 'Queen of Tears' on asianwiki.com
-[DEBUG] Downloading high-quality image from: https://asianwiki.com/images/5/53/Queen_Of_Tears-p.jpg
-[DEBUG] Image saved to images/103.jpg
 [DEBUG] Found soup in cache for 'Queen of Tears' on mydramalist.com
-[DEBUG] Found soup in cache for 'Queen of Tears' on asianwiki.com
 [DEBUG] Found soup in cache for 'Queen of Tears' on mydramalist.com
-✅ Report written -> reports/Report_24_November_2025_1450.txt
+[DEBUG] Main Role section not found on MyDramaList.
+[DEBUG] Initiating search for: 'Still 17 (2018)' on asianwiki.com (Expected Country: South Korea)
+[DEBUG] Executing search query: "Still 17" 2018 Korean drama site:asianwiki.com
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/teaser-trailer-3-for-sbs-drama-series-still-17
+[DEBUG] Landmark validation failed: AsianWiki 'Profile' ID landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:2018_SBS_Drama_Series
+[DEBUG] Landmark validation failed: AsianWiki 'Profile' ID landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:2018_South_Korean_Drama_Series
+[DEBUG] Landmark validation failed: AsianWiki 'Profile' ID landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/2018_SBS_Drama_Awards
+[DEBUG] Country validation FAILED (Expected: South Korea, Found: None). Rejecting page.
+[DEBUG] Rejecting invalid AsianWiki file URL: https://asianwiki.com/File:Still_17-P1.jpg
+[DEBUG] Executing search query: "Still 17" (2018) Korean site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:2018_South_Korean_Drama_Series
+[DEBUG] Landmark validation failed: AsianWiki 'Profile' ID landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:2018_South_Korean_Drama_Series?ref=driverlayer.com
+[DEBUG] Landmark validation failed: AsianWiki 'Profile' ID landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:2018_SBS_Drama_Series
+[DEBUG] Landmark validation failed: AsianWiki 'Profile' ID landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/2018_SBS_Drama_Awards
+[DEBUG] Country validation FAILED (Expected: South Korea, Found: None). Rejecting page.
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/korean-dramas/ep-1-trailer-for-sbs-drama-series-still-17
+[DEBUG] Landmark validation failed: AsianWiki 'Profile' ID landmark missing.
+[DEBUG] Executing search query: "Still 17" 2018 site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Still_17
+[DEBUG] Country validation passed (Expected: South Korea, Found: South Korea).
+[DEBUG] Validation passed. This is the correct page.
+[DEBUG] Synopsis/Plot heading not found on AsianWiki.
+[DEBUG] Initiating search for: 'Still 17 (2018)' on mydramalist.com (Expected Country: South Korea)
+[DEBUG] Executing search query: "Still 17" 2018 Korean drama site:mydramalist.com
+[DEBUG] Found candidate URL: https://pt.mydramalist.com/28327-thirty-but-seventeen
+[DEBUG] Country validation FAILED (Expected: South Korea, Found: None). Rejecting page.
+[DEBUG] Found candidate URL: https://mydramalist.com/list/45GlmWgL
+[DEBUG] Country validation FAILED (Expected: South Korea, Found: None). Rejecting page.
+[DEBUG] Found candidate URL: https://mydramalist.com/list/4vGgQe91
+[DEBUG] Country validation FAILED (Expected: South Korea, Found: None). Rejecting page.
+[DEBUG] Executing search query: "Still 17" (2018) Korean site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/28327-thirty-but-seventeen
+[DEBUG] Country validation passed (Expected: South Korea, Found: South Korea).
+[DEBUG] Validation passed. This is the correct page.
+[DEBUG] Found soup in cache for 'Still 17' on asianwiki.com
+[DEBUG] Downloading high-quality image from: https://asianwiki.com/images/1/11/Still_17-P1.jpg
+[DEBUG] Image saved to images/104.jpg
+[DEBUG] Found soup in cache for 'Still 17' on mydramalist.com
+[DEBUG] Found soup in cache for 'Still 17' on asianwiki.com
+[DEBUG] Found soup in cache for 'Still 17' on mydramalist.com
+[DEBUG] Found soup in cache for 'Still 17' on mydramalist.com
+[DEBUG] Found soup in cache for 'Still 17' on mydramalist.com
+[DEBUG] Found soup in cache for 'Still 17' on mydramalist.com
+[DEBUG] Main Role section not found on MyDramaList.
+[DEBUG] Initiating search for: 'True Beauty (2020)' on asianwiki.com (Expected Country: South Korea)
+[DEBUG] Executing search query: "True Beauty" 2020 Korean drama site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/True_Beauty
+[DEBUG] Country validation passed (Expected: South Korea, Found: South Korea).
+[DEBUG] Validation passed. This is the correct page.
+[DEBUG] Synopsis/Plot heading not found on AsianWiki.
+[DEBUG] Initiating search for: 'True Beauty (2020)' on mydramalist.com (Expected Country: South Korea)
+[DEBUG] Executing search query: "True Beauty" 2020 Korean drama site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/38627-true-beauty
+[DEBUG] Country validation passed (Expected: South Korea, Found: South Korea).
+[DEBUG] Validation passed. This is the correct page.
+[DEBUG] Found soup in cache for 'True Beauty' on asianwiki.com
+[DEBUG] Downloading high-quality image from: https://asianwiki.com/images/e/ee/True_Beauty-P1.jpg
+[DEBUG] Image saved to images/3001.jpg
+[DEBUG] Found soup in cache for 'True Beauty' on mydramalist.com
+[DEBUG] Found soup in cache for 'True Beauty' on asianwiki.com
+[DEBUG] Found soup in cache for 'True Beauty' on mydramalist.com
+[DEBUG] Found soup in cache for 'True Beauty' on mydramalist.com
+[DEBUG] Found soup in cache for 'True Beauty' on mydramalist.com
+[DEBUG] Found soup in cache for 'True Beauty' on mydramalist.com
+[DEBUG] Main Role section not found on MyDramaList.
+✅ Report written -> reports/Report_27_November_2025_1437.txt
 
 All done.
