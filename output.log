@@ -1,4 +1,4 @@
-🚀 Running Script — Version v3.6 | Run ID: RUN_20251128_122906
+🚀 Running Script — Version v3.7 | Run ID: RUN_20251128_123930
 [DEBUG] Attempting direct media download...
 [DEBUG] 'Deleting Records' sheet is empty. Nothing to delete.
 [DEBUG] Initiating search for: 'Queen of Tears (2024)' on asianwiki.com (Expected Country: South Korea)
@@ -6,63 +6,124 @@
 [DEBUG] Found candidate URL: https://asianwiki.com/Queen_Of_Tears
 [DEBUG] Country validation passed (Expected: South Korea, Found: South Korea).
 [DEBUG] Validation passed. This is the correct page.
-[DEBUG] Synopsis/Plot heading not found on AsianWiki.
 [DEBUG] Initiating search for: 'Queen of Tears (2024)' on mydramalist.com (Expected Country: South Korea)
 [DEBUG] Executing search query: "Queen of Tears" 2024 Korean drama site:mydramalist.com
 [DEBUG] Found candidate URL: https://mydramalist.com/725367-untitled-park-ji-eun-project
 [DEBUG] Country validation passed (Expected: South Korea, Found: South Korea).
 [DEBUG] Validation passed. This is the correct page.
-[DEBUG] Error scraping cast from MyDramaList: 'src'
+[DEBUG] Error scraping cast from MyDramaList: 'source_links_temp'
 [DEBUG] Initiating search for: 'Mr. Queen (2020)' on asianwiki.com (Expected Country: South Korea)
 [DEBUG] Executing search query: "Mr. Queen" 2020 Korean drama site:asianwiki.com
 [DEBUG] Found candidate URL: https://asianwiki.com/Mr._Queen
 [DEBUG] Country validation passed (Expected: South Korea, Found: South Korea).
 [DEBUG] Validation passed. This is the correct page.
-[DEBUG] Synopsis/Plot heading not found on AsianWiki.
 [DEBUG] Initiating search for: 'Mr. Queen (2020)' on mydramalist.com (Expected Country: South Korea)
 [DEBUG] Executing search query: "Mr. Queen" 2020 Korean drama site:mydramalist.com
 [DEBUG] Found candidate URL: https://mydramalist.com/58365-queen-cheorin
 [DEBUG] Country validation passed (Expected: South Korea, Found: South Korea).
 [DEBUG] Validation passed. This is the correct page.
-[DEBUG] Error scraping cast from MyDramaList: 'src'
+[DEBUG] Downloading image from: https://i.mydramalist.com/O8J8kk_5s.jpg
+[DEBUG] Image saved to artist-images/7194.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/QVKxv_5s.jpg
+[DEBUG] Image saved to artist-images/11840.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/Qxym5_5s.jpg
+[DEBUG] Image saved to artist-images/2016.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/47PO1_5s.jpg
+[DEBUG] Image saved to artist-images/4473.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/2EQRP_5s.jpg
+[DEBUG] Image saved to artist-images/35765.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/NdnRoE_5s.jpg
+[DEBUG] Image saved to artist-images/14261.jpg
 [DEBUG] Initiating search for: 'She Would Never Know (2021)' on asianwiki.com (Expected Country: South Korea)
 [DEBUG] Executing search query: "She Would Never Know" 2021 Korean drama site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:2021_South_Korean_Drama_Series
+[DEBUG] Landmark validation failed: AsianWiki 'Profile' ID landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:2021_JTBC_Drama_Series
+[DEBUG] Landmark validation failed: AsianWiki 'Profile' ID landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:JTBC_Drama_Series
+[DEBUG] Landmark validation failed: AsianWiki 'Profile' ID landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:2021_Unclassified_Drama_Series
+[DEBUG] Landmark validation failed: AsianWiki 'Profile' ID landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/An_Se-Ha
+[DEBUG] Country validation FAILED (Expected: South Korea, Found: None). Rejecting page.
+[DEBUG] Executing search query: "She Would Never Know" (2021) Korean site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:2021_South_Korean_Drama_Series
+[DEBUG] Landmark validation failed: AsianWiki 'Profile' ID landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:JTBC_Drama_Series
+[DEBUG] Landmark validation failed: AsianWiki 'Profile' ID landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:2021_JTBC_Drama_Series
+[DEBUG] Landmark validation failed: AsianWiki 'Profile' ID landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:2021_Unclassified_Drama_Series
+[DEBUG] Landmark validation failed: AsianWiki 'Profile' ID landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/An_Se-Ha
+[DEBUG] Country validation FAILED (Expected: South Korea, Found: None). Rejecting page.
+[DEBUG] Executing search query: "She Would Never Know" 2021 site:asianwiki.com
 [DEBUG] Found candidate URL: https://asianwiki.com/She_Would_Never_Know
 [DEBUG] Country validation passed (Expected: South Korea, Found: South Korea).
 [DEBUG] Validation passed. This is the correct page.
-[DEBUG] Synopsis/Plot heading not found on AsianWiki.
-[DEBUG] Found soup in cache for 'She Would Never Know' on asianwiki.com
-[DEBUG] Downloading image from: https://asianwiki.com/images/7/79/She_Would_Never_Know-tp01.jpg
-[DEBUG] Image saved to show-images/3002.jpg
 [DEBUG] Initiating search for: 'She Would Never Know (2021)' on mydramalist.com (Expected Country: South Korea)
 [DEBUG] Executing search query: "She Would Never Know" 2021 Korean drama site:mydramalist.com
-[DEBUG] Found candidate URL: https://mydramalist.com/people/9536-ha-yoon-kyung
+[DEBUG] Found candidate URL: https://mydramalist.com/profile/9876335/review/295803
 [DEBUG] Country validation FAILED (Expected: South Korea, Found: None). Rejecting page.
-[DEBUG] Found candidate URL: https://mydramalist.com/people/1693-kim-mi-kyung
+[DEBUG] Found candidate URL: https://mydramalist.com/list/389xarA4
 [DEBUG] Country validation FAILED (Expected: South Korea, Found: None). Rejecting page.
-[DEBUG] Found candidate URL: https://mydramalist.com/people/19472-lee-joo-bin
-[DEBUG] Country validation FAILED (Expected: South Korea, Found: None). Rejecting page.
-[DEBUG] Found candidate URL: https://mydramalist.com/dramalist/koreannatic
-[DEBUG] Landmark validation failed: MyDramaList landmark missing.
 [DEBUG] Executing search query: "She Would Never Know" (2021) Korean site:mydramalist.com
-[DEBUG] Found candidate URL: https://mydramalist.com/people/9536-ha-yoon-kyung
+[DEBUG] Found candidate URL: https://mydramalist.com/profile/mglrondon93/review/305839
 [DEBUG] Country validation FAILED (Expected: South Korea, Found: None). Rejecting page.
-[DEBUG] Found candidate URL: https://mydramalist.com/people/1693-kim-mi-kyung
-[DEBUG] Country validation FAILED (Expected: South Korea, Found: None). Rejecting page.
-[DEBUG] Found candidate URL: https://mydramalist.com/dramalist/koreannatic
-[DEBUG] Landmark validation failed: MyDramaList landmark missing.
-[DEBUG] Found candidate URL: https://mydramalist.com/dramalist/9366535
-[DEBUG] Landmark validation failed: MyDramaList landmark missing.
 [DEBUG] Executing search query: "She Would Never Know" 2021 site:mydramalist.com
 [DEBUG] Found candidate URL: https://mydramalist.com/58511-sunbae-don-t-put-on-that-lipstick
 [DEBUG] Country validation passed (Expected: South Korea, Found: South Korea).
 [DEBUG] Validation passed. This is the correct page.
-[DEBUG] Found soup in cache for 'She Would Never Know' on asianwiki.com
-[DEBUG] Found soup in cache for 'She Would Never Know' on mydramalist.com
-[DEBUG] Found soup in cache for 'She Would Never Know' on mydramalist.com
-[DEBUG] Found soup in cache for 'She Would Never Know' on mydramalist.com
-[DEBUG] Found soup in cache for 'She Would Never Know' on mydramalist.com
-[DEBUG] Error scraping cast from MyDramaList: 'src'
-✅ Report written -> reports/Report_28_November_2025_1229.txt
+[DEBUG] Downloading image from: https://i.mydramalist.com/735P6y_5s.jpg
+[DEBUG] Image saved to artist-images/15721.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/2wDww2_5s.jpg
+[DEBUG] Image saved to artist-images/11629.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/4Aq5K_5s.jpg
+[DEBUG] Image saved to artist-images/9597.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/d0vP10_5s.jpg
+[DEBUG] Image saved to artist-images/19472.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/rNYnLE_5s.jpg
+[DEBUG] Image saved to artist-images/1190.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/xxPwj_5s.jpg
+[DEBUG] Image saved to artist-images/1429.jpg
+[DEBUG] Initiating search for: 'True Beauty (2020)' on asianwiki.com (Expected Country: South Korea)
+[DEBUG] Executing search query: "True Beauty" 2020 Korean drama site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:2020_South_Korean_Drama_Series
+[DEBUG] Landmark validation failed: AsianWiki 'Profile' ID landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:2020_tvN_Drama_Series
+[DEBUG] Landmark validation failed: AsianWiki 'Profile' ID landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Cha_Eun-Woo
+[DEBUG] Country validation FAILED (Expected: South Korea, Found: None). Rejecting page.
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:2020_Unclassified_Drama_Series
+[DEBUG] Landmark validation failed: AsianWiki 'Profile' ID landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Awaken_(Korean_Drama)
+[DEBUG] Country validation passed (Expected: South Korea, Found: South Korea).
+[DEBUG] Validation passed. This is the correct page.
+[DEBUG] Found soup in cache for 'True Beauty' on asianwiki.com
+[DEBUG] Downloading image from: https://asianwiki.com/images/d/de/Awaken-P1.jpg
+[DEBUG] Image saved to show-images/3003.jpg
+[DEBUG] Initiating search for: 'True Beauty (2020)' on mydramalist.com (Expected Country: South Korea)
+[DEBUG] Executing search query: "True Beauty" 2020 Korean drama site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/38627-true-beauty
+[DEBUG] Country validation passed (Expected: South Korea, Found: South Korea).
+[DEBUG] Validation passed. This is the correct page.
+[DEBUG] Found soup in cache for 'True Beauty' on asianwiki.com
+[DEBUG] Found soup in cache for 'True Beauty' on mydramalist.com
+[DEBUG] Found soup in cache for 'True Beauty' on mydramalist.com
+[DEBUG] Found soup in cache for 'True Beauty' on mydramalist.com
+[DEBUG] Found soup in cache for 'True Beauty' on mydramalist.com
+[DEBUG] Downloading image from: https://i.mydramalist.com/O8JKLk_5s.jpg
+[DEBUG] Image saved to artist-images/5346.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/JBLjqX_5s.jpg
+[DEBUG] Image saved to artist-images/10399.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/XJDnn_5s.jpg
+[DEBUG] Image saved to artist-images/22277.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/eYVX7Y_5s.jpg
+[DEBUG] Image saved to artist-images/10748.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/2OnqEs.jpg
+[DEBUG] Image saved to artist-images/5529.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/Rnb0z_5s.jpg
+[DEBUG] Image saved to artist-images/10727.jpg
+✅ Report written -> reports/Report_28_November_2025_1240.txt
 
 All done.
