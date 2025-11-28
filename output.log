@@ -1,5 +1,68 @@
-🚀 Running Script — Version v3.3 | Run ID: RUN_20251128_115815
+🚀 Running Script — Version v3.5 | Run ID: RUN_20251128_121714
 [DEBUG] Attempting direct media download...
-✅ Report written -> reports/Report_28_November_2025_1158.txt
+[DEBUG] 'Deleting Records' sheet is empty. Nothing to delete.
+[DEBUG] Initiating search for: 'Queen of Tears (2024)' on asianwiki.com (Expected Country: South Korea)
+[DEBUG] Executing search query: "Queen of Tears" 2024 Korean drama site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:2024_South_Korean_Drama_Series
+[DEBUG] Landmark validation failed: AsianWiki 'Profile' ID landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:2024_Drama_Series
+[DEBUG] Landmark validation failed: AsianWiki 'Profile' ID landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:2024_tvN_Drama_Series
+[DEBUG] Landmark validation failed: AsianWiki 'Profile' ID landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:2024_Unclassified_Drama_Series
+[DEBUG] Landmark validation failed: AsianWiki 'Profile' ID landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/2024_(60th)_BaekSang_Arts_Awards
+[DEBUG] Country validation FAILED (Expected: South Korea, Found: None). Rejecting page.
+[DEBUG] Executing search query: "Queen of Tears" (2024) Korean site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Queen_Of_Tears
+[DEBUG] Country validation passed (Expected: South Korea, Found: South Korea).
+[DEBUG] Validation passed. This is the correct page.
+[DEBUG] Synopsis/Plot heading not found on AsianWiki.
+[DEBUG] Found soup in cache for 'Queen of Tears' on asianwiki.com
+[DEBUG] Downloading image from: https://asianwiki.com/images/5/53/Queen_Of_Tears-p.jpg
+[DEBUG] Image saved to show-images/101.jpg
+[DEBUG] Initiating search for: 'Queen of Tears (2024)' on mydramalist.com (Expected Country: South Korea)
+[DEBUG] Executing search query: "Queen of Tears" 2024 Korean drama site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/725367-untitled-park-ji-eun-project
+[DEBUG] Country validation passed (Expected: South Korea, Found: South Korea).
+[DEBUG] Validation passed. This is the correct page.
+[DEBUG] Found soup in cache for 'Queen of Tears' on asianwiki.com
+[DEBUG] Found soup in cache for 'Queen of Tears' on mydramalist.com
+[DEBUG] Found soup in cache for 'Queen of Tears' on mydramalist.com
+[DEBUG] Found soup in cache for 'Queen of Tears' on mydramalist.com
+[DEBUG] Found soup in cache for 'Queen of Tears' on mydramalist.com
+[DEBUG] No cast sections found on MyDramaList.
+[DEBUG] Initiating search for: 'Mr. Queen (2020)' on asianwiki.com (Expected Country: South Korea)
+[DEBUG] Executing search query: "Mr. Queen" 2020 Korean drama site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:2020_South_Korean_Drama_Series
+[DEBUG] Landmark validation failed: AsianWiki 'Profile' ID landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:2020_tvN_Drama_Series
+[DEBUG] Landmark validation failed: AsianWiki 'Profile' ID landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:2020_Drama_Series
+[DEBUG] Landmark validation failed: AsianWiki 'Profile' ID landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:TvN_Drama_Series
+[DEBUG] Landmark validation failed: AsianWiki 'Profile' ID landmark missing.
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:2020_Comedy_Drama_Series
+[DEBUG] Landmark validation failed: AsianWiki 'Profile' ID landmark missing.
+[DEBUG] Executing search query: "Mr. Queen" (2020) Korean site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Mr._Queen
+[DEBUG] Country validation passed (Expected: South Korea, Found: South Korea).
+[DEBUG] Validation passed. This is the correct page.
+[DEBUG] Synopsis/Plot heading not found on AsianWiki.
+[DEBUG] Found soup in cache for 'Mr. Queen' on asianwiki.com
+[DEBUG] Downloading image from: https://asianwiki.com/images/6/61/Mr._Queen-P1.jpg
+[DEBUG] Image saved to show-images/3001.jpg
+[DEBUG] Initiating search for: 'Mr. Queen (2020)' on mydramalist.com (Expected Country: South Korea)
+[DEBUG] Executing search query: "Mr. Queen" 2020 Korean drama site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/58365-queen-cheorin
+[DEBUG] Country validation passed (Expected: South Korea, Found: South Korea).
+[DEBUG] Validation passed. This is the correct page.
+[DEBUG] Found soup in cache for 'Mr. Queen' on asianwiki.com
+[DEBUG] Found soup in cache for 'Mr. Queen' on mydramalist.com
+[DEBUG] Found soup in cache for 'Mr. Queen' on mydramalist.com
+[DEBUG] Found soup in cache for 'Mr. Queen' on mydramalist.com
+[DEBUG] Found soup in cache for 'Mr. Queen' on mydramalist.com
+[DEBUG] No cast sections found on MyDramaList.
+✅ Report written -> reports/Report_28_November_2025_1217.txt
 
 All done.
