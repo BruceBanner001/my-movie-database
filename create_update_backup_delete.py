@@ -6,14 +6,14 @@
 #   Features a professional-grade, multi-file database system for shows,
 #   artists, and extended cast, with intelligent scraping and caching.
 #
-# Version: v3.6 (Fixed Cast & Synopsis)
+# Version: v3.7 (Robust Cast & Lazy Load Fix)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v3.6"
+SCRIPT_VERSION = "v3.7"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames": [], "showImage": None,
@@ -66,7 +66,7 @@ BACKUP_DIR, SHOW_IMAGES_DIR, ARTIST_IMAGES_DIR, DELETE_IMAGES_DIR = "backups", "
 DELETED_DATA_DIR, REPORTS_DIR, BACKUP_META_DIR = "deleted-data", "reports", "backup-meta-data"
 ARCHIVED_BACKUPS_DIR, ARCHIVED_META_DIR = "archived-backups", "archived-backup-meta-data"
 
-DEBUG_FETCH = os.environ.get("DEBUG_FETCH", "true").lower() == "true" # Default true for debugging
+DEBUG_FETCH = os.environ.get("DEBUG_FETCH", "true").lower() == "true" 
 GITHUB_PAGES_URL = os.environ.get("GITHUB_PAGES_URL", "").strip()
 SERVICE_ACCOUNT_FILE, EXCEL_FILE_ID_TXT = "GDRIVE_SERVICE_ACCOUNT.json", "EXCEL_FILE_ID.txt"
 SCRAPER = cloudscraper.create_scraper() if HAVE_SCRAPER else requests.Session()
@@ -177,24 +177,38 @@ def build_absolute_url(local_path): return f"{GITHUB_PAGES_URL.rstrip('/')}/{loc
 
 def _scrape_synopsis_from_asianwiki(soup, **kwargs):
     try:
-        # Improved: Look for h2 with text "Plot" or "Synopsis" regardless of ID
-        h2 = soup.find('h2', string=re.compile(r"^(Synopsis|Plot)$", re.IGNORECASE))
+        # Robust search: Find ANY header with 'Plot' or 'Synopsis' text
+        headers = soup.find_all(['h2', 'h3', 'h4'], string=re.compile(r"Synopsis|Plot", re.IGNORECASE))
         
-        # Fallback: Look for any element with ID if h2 text match failed
-        if not h2:
-            elm = soup.find(id=re.compile(r"^(Synopsis|Plot)$", re.IGNORECASE))
-            if elm:
-                h2 = elm if elm.name == 'h2' else elm.find_parent('h2')
+        target_header = None
+        for h in headers:
+            if h.name == 'h2': target_header = h; break # Prefer h2
+            if not target_header: target_header = h # Fallback to others
 
-        if not h2: 
+        # ID based fallback
+        if not target_header:
+            elm = soup.find(id=re.compile(r"Synopsis|Plot", re.IGNORECASE))
+            if elm: target_header = elm
+
+        if not target_header: 
             logd("Synopsis/Plot heading not found on AsianWiki."); return None
             
         content = []
-        for sibling in h2.find_next_siblings():
-            if sibling.name == 'h2': break
+        # Robust sibling iteration: Skip empty text, look for P tags or raw text
+        for sibling in target_header.next_siblings:
+            if sibling.name in ['h2', 'h3', 'div', 'br'] and sibling.get_text(strip=True): 
+                # Stop if we hit the next major section
+                if sibling.name == 'h2': break
+                # Some asianwiki pages put plot in a div? Rare but possible.
+            
             if sibling.name == 'p':
                 text = sibling.get_text(strip=True)
                 if text: content.append(text)
+            elif isinstance(sibling, str):
+                text = sibling.strip()
+                if text and len(text) > 20: # Heuristic: Plot text is usually long
+                    content.append(text)
+                    
         return "\n\n".join(content) if content else None
     except Exception as e: logd(f"Error scraping synopsis from AsianWiki: {e}"); return None
 
@@ -255,10 +269,14 @@ def _scrape_synopsis_from_mydramalist(soup, **kwargs):
 
 def _scrape_image_from_mydramalist(soup, **kwargs):
     try:
-        img = soup.select_one('.film-cover img[src], .cover img[src], div.cover img[src]')
+        img = soup.select_one('.film-cover img, .cover img')
         if not img: logd("Image tag not found on MyDramaList."); return None
+        # Robust lazy loading check
+        url = img.get('src') or img.get('data-src') or img.get('data-original')
+        if not url: return None
+        
         image_path = os.path.join(SHOW_IMAGES_DIR, f"{kwargs['sid']}.jpg")
-        if download_and_save_image(img['src'], image_path):
+        if download_and_save_image(url, image_path):
             return build_absolute_url(image_path)
     except Exception as e: logd(f"Error scraping image from MyDramaList: {e}"); return None
 
@@ -313,7 +331,7 @@ def _scrape_tags_from_mydramalist(soup, **kwargs):
 def _scrape_cast_from_mydramalist(soup, **kwargs):
     try:
         full_cast_raw = []
-        # Improved: Find the Cast & Credits box first
+        # Strategy 1: Find the "Cast & Credits" header and container
         cast_box = soup.find('h3', string=re.compile(r'Cast & Credits', re.IGNORECASE))
         cast_container = None
         
@@ -322,57 +340,62 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
             box = cast_box.find_parent('div', class_='box')
             if box: cast_container = box
         
-        # If specific box not found, try finding any list with cast items
-        if not cast_container:
-            cast_container = soup
+        # Strategy 2: Default to soup if box not found
+        if not cast_container: cast_container = soup
         
-        # Find all list items that look like cast members
-        # MDL cast usually are in 'li' with class 'list-item' inside a 'ul'
-        cast_items = cast_container.select('li.list-item, div.cast-list div.col-xs-8')
+        # Strategy 3: Loose selector for cast items
+        cast_items = cast_container.select('li.list-item')
+        if not cast_items: cast_items = cast_container.select('div.cast-list div.col-xs-8, div.cast-list div.col-sm-6')
+        if not cast_items: cast_items = cast_container.select('.p-a-0 li') # Common in mobile view/redesign
         
-        if not cast_items:
-             # Fallback to finding by class if list-item class is missing
-             cast_items = cast_container.select('.p-a-0 li')
-
         if not cast_items:
             logd("No cast items found on MyDramaList."); return None
 
         for item in cast_items:
-            # Extract Artist Name
-            artist_name_tag = item.select_one('a.text-primary, b > a')
-            if not artist_name_tag: continue # Skip if no name
-            
-            artist_name = artist_name_tag.get_text(strip=True)
-            artist_link = artist_name_tag['href']
-            artist_id = re.search(r'/(\d+)-', artist_link).group(1) if artist_link else None
-            
-            # Extract Image
-            img_tag = item.select_one('img')
-            artist_image_url = img_tag['src'] if img_tag else None
-            
-            # Extract Role & Character
-            role = "Support Role" # Default
-            character_name = "Unknown"
-            
-            # MDL often puts Role/Character in <small> tags
-            small_text = item.select_one('small')
-            if small_text:
-                text_content = small_text.get_text(strip=True)
-                if "Main Role" in text_content: role = "Main Role"
-                elif "Guest Role" in text_content: role = "Guest Role"
-                elif "Support Role" in text_content: role = "Support Role"
-                elif "Screenwriter" in text_content or "Director" in text_content: continue # Skip crew
+            try:
+                # Extract Artist Name
+                artist_name_tag = item.select_one('a.text-primary, b > a, a[href*="/people/"]')
+                if not artist_name_tag: continue 
                 
-                # Try to clean character name from the text (remove 'Main Role', etc)
-                char_text = re.sub(r'\s*(Main Role|Support Role|Guest Role)\s*', '', text_content).strip()
-                if char_text: character_name = char_text
-            
-            if artist_name and artist_id:
+                artist_name = artist_name_tag.get_text(strip=True)
+                artist_link = artist_name_tag['href']
+                
+                # Robust ID extraction
+                id_match = re.search(r'/people/(\d+)-', artist_link)
+                if not id_match: continue
+                artist_id = id_match.group(1)
+                
+                # Extract Image (Safe with Lazy Load Check)
+                img_tag = item.select_one('img')
+                artist_image_url = None
+                if img_tag:
+                    artist_image_url = img_tag.get('src') or img_tag.get('data-src') or img_tag.get('data-original')
+                    # If it's a default/placeholder, ignore it
+                    if artist_image_url and ('avatar' in artist_image_url or 'default' in artist_image_url):
+                        artist_image_url = None
+                
+                # Extract Role & Character
+                role = "Support Role"
+                character_name = "Unknown"
+                
+                small_text = item.select_one('small')
+                if small_text:
+                    text_content = small_text.get_text(strip=True)
+                    if "Main Role" in text_content: role = "Main Role"
+                    elif "Guest Role" in text_content: role = "Guest Role"
+                    elif "Support Role" in text_content: role = "Support Role"
+                    elif any(c in text_content for c in ["Screenwriter", "Director", "Producer"]): continue 
+                    
+                    char_text = re.sub(r'\s*(Main Role|Support Role|Guest Role)\s*', '', text_content).strip()
+                    if char_text: character_name = char_text
+                
                 full_cast_raw.append({"artistID": artist_id, "artistName": artist_name, "artistImageURL": artist_image_url, "characterName": character_name, "role": role})
+            except Exception as inner_e:
+                logd(f"Skipping one cast member due to error: {inner_e}")
+                continue
         
         if not full_cast_raw: logd("Cast list found but could not extract data."); return None
         
-        # Pass raw data to context for metadata backup
         kwargs['context']['source_links_temp']['raw_cast'] = full_cast_raw
         return full_cast_raw
     except Exception as e: logd(f"Error scraping cast from MyDramaList: {e}"); return None
