@@ -6,14 +6,14 @@
 #   Features a professional-grade, multi-file database system for shows,
 #   artists, and extended cast, with intelligent scraping and caching.
 #
-# Version: v3.7 (Robust Cast & Lazy Load Fix)
+# Version: v3.9 (Title Validator, Deduplication, Artist Fix)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v3.7"
+SCRIPT_VERSION = "v3.9"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames": [], "showImage": None,
@@ -42,6 +42,7 @@ LOCKED_FIELDS_AFTER_CREATION = {'synopsis', 'showImage', 'otherNames', 'releaseD
 # ---------------------------- IMPORTS & GLOBALS ----------------------------
 import os, re, sys, json, io, shutil, traceback, copy, time
 from datetime import datetime, timedelta, timezone
+from difflib import SequenceMatcher
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
@@ -91,6 +92,65 @@ def objects_differ(old, new):
     for k in excel_fields:
         if normalize_list(old.get(k)) != normalize_list(new.get(k)): return True
     return False
+
+def _clean_other_names(names_list):
+    """
+    Cleans up the 'Other Names' list:
+    1. Removes duplicates (case-insensitive).
+    2. Keeps foreign scripts (Hangul, Russian, Thai, etc.).
+    3. Removes short junk words (len < 2).
+    """
+    if not names_list: return []
+    
+    unique_names = []
+    seen = set()
+    
+    for name in names_list:
+        clean = name.strip()
+        # Skip if too short
+        if len(clean) < 2: continue
+        
+        # Deduplicate (Case Insensitive)
+        if clean.lower() not in seen:
+            seen.add(clean.lower())
+            unique_names.append(clean)
+            
+    return unique_names
+
+def _validate_page_title(soup, expected_name, site):
+    """
+    Checks if the scraped page title roughly matches the expected show name.
+    Returns True if valid, False if it seems to be a wrong page.
+    """
+    try:
+        page_title = ""
+        if site == "asianwiki":
+            h1 = soup.find('h1', class_='firstHeading') or soup.find('h1')
+            if h1: page_title = h1.get_text(strip=True)
+        elif site == "mydramalist":
+            h1 = soup.find('h1', class_='film-title') or soup.find('h1')
+            if h1: page_title = h1.get_text(strip=True)
+        
+        if not page_title: return True # Could not find title, assume safe
+        
+        # Normalize for comparison
+        t1 = re.sub(r'\(\d{4}\)', '', page_title).lower().strip()
+        t2 = re.sub(r'\(\d{4}\)', '', expected_name).lower().strip()
+        
+        # Check similarity
+        ratio = SequenceMatcher(None, t1, t2).ratio()
+        
+        # If very different (e.g. "True Beauty" vs "Awaken" -> ratio < 0.3)
+        # We allow it if one is a substring of the other
+        if ratio < 0.4 and t2 not in t1 and t1 not in t2:
+            logd(f"Title Validation FAILED: Page Title '{page_title}' vs Expected '{expected_name}' (Ratio: {ratio:.2f})")
+            return False
+        
+        logd(f"Title Validation PASSED: '{page_title}' matches '{expected_name}'")
+        return True
+    except Exception as e:
+        logd(f"Title validation error: {e}")
+        return True
 
 def _scrape_country(soup, site):
     try:
@@ -142,10 +202,17 @@ def get_soup_from_search(show_name, show_year, site, language, soup_cache):
                             else: logd("Landmark validation failed: MyDramaList landmark missing.")
                         
                         if is_valid_landmark:
+                            # 1. Country Validation
                             if expected_country:
                                 scraped_country = _scrape_country(soup, site)
                                 if scraped_country and expected_country in scraped_country: logd(f"Country validation passed (Expected: {expected_country}, Found: {scraped_country}).")
                                 else: logd(f"Country validation FAILED (Expected: {expected_country}, Found: {scraped_country}). Rejecting page."); continue
+                            
+                            # 2. Title Validation (New in v3.9)
+                            if not _validate_page_title(soup, show_name, site):
+                                logd("Rejecting page due to title mismatch.")
+                                continue
+
                             logd("Validation passed. This is the correct page.")
                             soup_cache[cache_key] = (soup, url)
                             return soup, url
@@ -177,15 +244,12 @@ def build_absolute_url(local_path): return f"{GITHUB_PAGES_URL.rstrip('/')}/{loc
 
 def _scrape_synopsis_from_asianwiki(soup, **kwargs):
     try:
-        # Robust search: Find ANY header with 'Plot' or 'Synopsis' text
         headers = soup.find_all(['h2', 'h3', 'h4'], string=re.compile(r"Synopsis|Plot", re.IGNORECASE))
-        
         target_header = None
         for h in headers:
-            if h.name == 'h2': target_header = h; break # Prefer h2
-            if not target_header: target_header = h # Fallback to others
+            if h.name == 'h2': target_header = h; break 
+            if not target_header: target_header = h 
 
-        # ID based fallback
         if not target_header:
             elm = soup.find(id=re.compile(r"Synopsis|Plot", re.IGNORECASE))
             if elm: target_header = elm
@@ -194,19 +258,15 @@ def _scrape_synopsis_from_asianwiki(soup, **kwargs):
             logd("Synopsis/Plot heading not found on AsianWiki."); return None
             
         content = []
-        # Robust sibling iteration: Skip empty text, look for P tags or raw text
         for sibling in target_header.next_siblings:
             if sibling.name in ['h2', 'h3', 'div', 'br'] and sibling.get_text(strip=True): 
-                # Stop if we hit the next major section
                 if sibling.name == 'h2': break
-                # Some asianwiki pages put plot in a div? Rare but possible.
-            
             if sibling.name == 'p':
                 text = sibling.get_text(strip=True)
                 if text: content.append(text)
             elif isinstance(sibling, str):
                 text = sibling.strip()
-                if text and len(text) > 20: # Heuristic: Plot text is usually long
+                if text and len(text) > 20: 
                     content.append(text)
                     
         return "\n\n".join(content) if content else None
@@ -230,8 +290,10 @@ def _scrape_othernames_from_asianwiki(soup, **kwargs):
             match = re.search(r':(.*?)(?=\(Revised romanization:|\(literal title\)|$)', full_text, re.DOTALL)
             if match:
                 names_text = match.group(1).strip()
-                other_names = [name.strip() for name in names_text.split('/') if name.strip()]
-                return [name for name in other_names if name.lower() != kwargs['show_name'].lower()]
+                raw_names = [name.strip() for name in names_text.split('/') if name.strip()]
+                # Filter out the show name itself
+                filtered = [name for name in raw_names if name.lower() != kwargs['show_name'].lower()]
+                return _clean_other_names(filtered)
         logd("'Other Names' from 'Drama:' field not found on AsianWiki."); return None
     except Exception as e: logd(f"Error scraping other names from AsianWiki: {e}"); return None
 
@@ -271,7 +333,6 @@ def _scrape_image_from_mydramalist(soup, **kwargs):
     try:
         img = soup.select_one('.film-cover img, .cover img')
         if not img: logd("Image tag not found on MyDramaList."); return None
-        # Robust lazy loading check
         url = img.get('src') or img.get('data-src') or img.get('data-original')
         if not url: return None
         
@@ -286,8 +347,9 @@ def _scrape_othernames_from_mydramalist(soup, **kwargs):
         if b_tag and (li_tag := b_tag.find_parent('li')):
             b_tag.decompose()
             names_text = li_tag.get_text(strip=True)
-            other_names = [name.strip() for name in names_text.split(',') if name.strip()]
-            return [name for name in other_names if name.lower() != kwargs['show_name'].lower()]
+            raw_names = [name.strip() for name in names_text.split(',') if name.strip()]
+            filtered = [name for name in raw_names if name.lower() != kwargs['show_name'].lower()]
+            return _clean_other_names(filtered)
         logd("'Also Known As:' field not found on MyDramaList."); return None
     except Exception as e: logd(f"Error scraping other names from MyDramaList: {e}"); return None
 
@@ -331,53 +393,49 @@ def _scrape_tags_from_mydramalist(soup, **kwargs):
 def _scrape_cast_from_mydramalist(soup, **kwargs):
     try:
         full_cast_raw = []
-        # Strategy 1: Find the "Cast & Credits" header and container
         cast_box = soup.find('h3', string=re.compile(r'Cast & Credits', re.IGNORECASE))
         cast_container = None
-        
         if cast_box:
-            # Navigate up to the box container
             box = cast_box.find_parent('div', class_='box')
             if box: cast_container = box
-        
-        # Strategy 2: Default to soup if box not found
         if not cast_container: cast_container = soup
         
-        # Strategy 3: Loose selector for cast items
         cast_items = cast_container.select('li.list-item')
         if not cast_items: cast_items = cast_container.select('div.cast-list div.col-xs-8, div.cast-list div.col-sm-6')
-        if not cast_items: cast_items = cast_container.select('.p-a-0 li') # Common in mobile view/redesign
+        if not cast_items: cast_items = cast_container.select('.p-a-0 li')
         
         if not cast_items:
             logd("No cast items found on MyDramaList."); return None
 
         for item in cast_items:
             try:
-                # Extract Artist Name
-                artist_name_tag = item.select_one('a.text-primary, b > a, a[href*="/people/"]')
-                if not artist_name_tag: continue 
+                # Find the text link specifically to avoid empty image links
+                artist_name = None
+                artist_link = None
                 
-                artist_name = artist_name_tag.get_text(strip=True)
-                artist_link = artist_name_tag['href']
+                anchors = item.select('a')
+                for a in anchors:
+                    # Check if link points to a person and HAS text content
+                    if '/people/' in a.get('href', '') and a.get_text(strip=True):
+                        artist_name = a.get_text(strip=True)
+                        artist_link = a['href']
+                        break 
                 
-                # Robust ID extraction
+                if not artist_name: continue 
+                
                 id_match = re.search(r'/people/(\d+)-', artist_link)
                 if not id_match: continue
                 artist_id = id_match.group(1)
                 
-                # Extract Image (Safe with Lazy Load Check)
                 img_tag = item.select_one('img')
                 artist_image_url = None
                 if img_tag:
                     artist_image_url = img_tag.get('src') or img_tag.get('data-src') or img_tag.get('data-original')
-                    # If it's a default/placeholder, ignore it
                     if artist_image_url and ('avatar' in artist_image_url or 'default' in artist_image_url):
                         artist_image_url = None
                 
-                # Extract Role & Character
                 role = "Support Role"
                 character_name = "Unknown"
-                
                 small_text = item.select_one('small')
                 if small_text:
                     text_content = small_text.get_text(strip=True)
@@ -385,7 +443,6 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
                     elif "Guest Role" in text_content: role = "Guest Role"
                     elif "Support Role" in text_content: role = "Support Role"
                     elif any(c in text_content for c in ["Screenwriter", "Director", "Producer"]): continue 
-                    
                     char_text = re.sub(r'\s*(Main Role|Support Role|Guest Role)\s*', '', text_content).strip()
                     if char_text: character_name = char_text
                 
