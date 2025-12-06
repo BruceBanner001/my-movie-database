@@ -1,5 +1,35 @@
-🚀 Running Script — Version v4.1 | Run ID: RUN_20251206_162338
+🚀 Running Script — Version v4.1 | Run ID: RUN_20251206_162729
 [DEBUG] Attempting direct media download...
-✅ Report written -> reports/Report_06_December_2025_1623.txt
+[DEBUG] 'Deleting Records' sheet is empty. Nothing to delete.
+[DEBUG] Initiating search for: 'Queen of Divorce (2024)' on asianwiki.com (Expected Country: South Korea)
+[DEBUG] Executing search query: "Queen of Divorce" 2024 Korean drama site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:2024_South_Korean_Drama_Series
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:2024_JTBC_Drama_Series
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:JTBC_Drama_Series
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:2024_Drama_Series
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:2024_Unclassified_Drama_Series
+[DEBUG] Executing search query: "Queen of Divorce" (2024) Korean site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Queen_of_Divorce
+[DEBUG] Country validation passed.
+[DEBUG] Title Validation PASSED: 'Queen of Divorce' matches 'Queen of Divorce'
+[DEBUG] Found soup in cache for 'Queen of Divorce' on asianwiki.com
+[DEBUG] Downloading image from: https://asianwiki.com/images/0/0b/Queen_of_Divorce-p.jpg
+[DEBUG] Image saved to show-images/101.jpg
+[DEBUG] Initiating search for: 'Queen of Divorce (2024)' on mydramalist.com (Expected Country: South Korea)
+[DEBUG] Executing search query: "Queen of Divorce" 2024 Korean drama site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/742727-persist-until-the-end/statistics
+[DEBUG] Country validation FAILED. Rejecting page.
+[DEBUG] Found candidate URL: https://mydramalist.com/search?adv=titles&th=19797&so=popular&or=desc&page=3
+[DEBUG] Country validation FAILED. Rejecting page.
+[DEBUG] Found candidate URL: https://mydramalist.com/742727-persist-until-the-end
+[DEBUG] Country validation passed.
+[DEBUG] Title Validation PASSED: 'Queen of Divorce' matches 'Queen of Divorce'
+[DEBUG] Found soup in cache for 'Queen of Divorce' on asianwiki.com
+[DEBUG] Found soup in cache for 'Queen of Divorce' on mydramalist.com
+[DEBUG] Found soup in cache for 'Queen of Divorce' on mydramalist.com
+[DEBUG] Found soup in cache for 'Queen of Divorce' on mydramalist.com
+[DEBUG] Found soup in cache for 'Queen of Divorce' on mydramalist.com
+[DEBUG] Cast Scrape Error: 'source_links_temp'
+✅ Report written -> reports/Report_06_December_2025_1627.txt
 
 All done.
