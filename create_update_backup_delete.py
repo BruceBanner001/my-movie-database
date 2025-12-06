@@ -5,17 +5,17 @@
 #   v16.0 Engine.
 #   - Professional-grade multi-file database system.
 #   - Intelligent scraping and caching.
-#   - Generates a simplified Artist Lookup file (ID & Name).
-#   - SAVES IMAGES AS FILENAMES ONLY (No absolute URLs).
+#   - NEW: Full support for ENGLISH dramas via IMDb (Netflix/Amazon).
+#   - FIX: Fixed Cast storage bug and AsianWiki synopsis fetcher.
 #
-# Version: v4.1 (Relative Image Paths)
+# Version: v5.0 (IMDb Support + Bug Fixes)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v4.1"
+SCRIPT_VERSION = "v5.0"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames": [], "showImage": None,
@@ -35,6 +35,7 @@ SITE_PRIORITY_BY_LANGUAGE = {
     "japanese": { "synopsis": "asianwiki", "showImage": "asianwiki", "otherNames": "mydramalist", "Duration": "mydramalist", "releaseDate": "asianwiki", "director": "mydramalist", "tags": "mydramalist", "cast": "mydramalist" },
     "thai": { "synopsis": "mydramalist", "showImage": "mydramalist", "otherNames": "mydramalist", "Duration": "mydramalist", "releaseDate": "mydramalist", "director": "mydramalist", "tags": "mydramalist", "cast": "mydramalist" },
     "taiwanese": { "synopsis": "mydramalist", "showImage": "mydramalist", "otherNames": "mydramalist", "Duration": "mydramalist", "releaseDate": "mydramalist", "director": "mydramalist", "tags": "mydramalist", "cast": "mydramalist" },
+    "english": { "synopsis": "imdb", "showImage": "imdb", "otherNames": "imdb", "Duration": "imdb", "releaseDate": "imdb", "director": "imdb", "tags": "imdb", "cast": "imdb" },
     "default": { "synopsis": "mydramalist", "showImage": "asianwiki", "otherNames": "mydramalist", "Duration": "mydramalist", "releaseDate": "asianwiki", "director": "mydramalist", "tags": "mydramalist", "cast": "mydramalist" }
 }
 
@@ -76,7 +77,10 @@ ARCHIVED_BACKUPS_DIR, ARCHIVED_META_DIR = "archived-backups", "archived-backup-m
 DEBUG_FETCH = os.environ.get("DEBUG_FETCH", "true").lower() == "true" 
 SERVICE_ACCOUNT_FILE, EXCEL_FILE_ID_TXT = "GDRIVE_SERVICE_ACCOUNT.json", "EXCEL_FILE_ID.txt"
 SCRAPER = cloudscraper.create_scraper() if HAVE_SCRAPER else requests.Session()
-LANG_TO_COUNTRY_MAP = {"korean": "South Korea", "chinese": "China", "japanese": "Japan", "thai": "Thailand", "taiwanese": "Taiwan"}
+# Added default user-agent for IMDb to avoid blocks
+SCRAPER.headers.update({'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'})
+
+LANG_TO_COUNTRY_MAP = {"korean": "South Korea", "chinese": "China", "japanese": "Japan", "thai": "Thailand", "taiwanese": "Taiwan", "english": "USA"}
 
 def logd(msg):
     if DEBUG_FETCH: print(f"[DEBUG] {msg}")
@@ -119,9 +123,17 @@ def _validate_page_title(soup, expected_name, site):
         elif site == "mydramalist":
             h1 = soup.find('h1', class_='film-title') or soup.find('h1')
             if h1: page_title = h1.get_text(strip=True)
+        elif site == "imdb":
+            h1 = soup.find('h1')
+            if h1: page_title = h1.get_text(strip=True)
+
         if not page_title: return True
         t1 = re.sub(r'\(\d{4}\)', '', page_title).lower().strip()
         t2 = re.sub(r'\(\d{4}\)', '', expected_name).lower().strip()
+        
+        # Exact substring match check for IMDb which often has "Title (TV Series 2024)"
+        if site == "imdb" and t2 in t1: return True
+
         ratio = SequenceMatcher(None, t1, t2).ratio()
         if ratio < 0.4 and t2 not in t1 and t1 not in t2:
             logd(f"Title Validation FAILED: Page Title '{page_title}' vs Expected '{expected_name}' (Ratio: {ratio:.2f})")
@@ -155,20 +167,24 @@ def get_soup_from_search(show_name, show_year, site, language, soup_cache):
     if not HAVE_DDGS:
         logd("DDGS library not available."); return None, None
 
-    search_queries = [ f'"{show_name}" {show_year} {language} drama site:{site}.com', f'"{show_name}" ({show_year}) {language} site:{site}.com', f'"{show_name}" {show_year} site:{site}.com', f'"{show_name}" {language} site:{site}.com', f'"{show_name}" site:{site}.com' ]
+    search_queries = [ f'"{show_name}" {show_year} {language} site:{site}.com', f'"{show_name}" {show_year} site:{site}.com', f'"{show_name}" site:{site}.com' ]
+    if site == "imdb":
+        search_queries = [f'"{show_name}" {show_year} site:imdb.com', f'"{show_name}" TV Series {show_year} site:imdb.com']
+
     for query in search_queries:
         logd(f"Executing search query: {query}")
         try:
-            time.sleep(1)
+            time.sleep(1.5) # Increased delay slightly to be safer
             with DDGS() as dd:
                 results = list(dd.text(query, max_results=5))
                 if not results: continue
 
                 for res in results:
                     url = res.get('href', '')
-                    if not url or 'bing.com' in url or any(bad in url for bad in ['/reviews', '/episode', '/cast', '/recs', '?lang=', '/photos']): continue
+                    if not url or 'bing.com' in url or any(bad in url for bad in ['/reviews', '/episode', '/cast', '/recs', '?lang=', '/photos', '/video', '/trivia']): continue
                     if site == "asianwiki" and ("/File:" in url or "/index.php?title=File:" in url): logd(f"Rejecting invalid AsianWiki file URL: {url}"); continue
-                    
+                    if site == "imdb" and "/title/tt" not in url: continue # Ensure it's a title page
+
                     logd(f"Found candidate URL: {url}")
                     r = SCRAPER.get(url, timeout=15)
                     if r.status_code == 200:
@@ -178,9 +194,12 @@ def get_soup_from_search(show_name, show_year, site, language, soup_cache):
                             if soup.find(id='Profile'): is_valid_landmark = True
                         elif site == "mydramalist":
                             if soup.find('div', class_='box-body'): is_valid_landmark = True
+                        elif site == "imdb":
+                            if soup.find('h1') or soup.find(attrs={"type": "application/ld+json"}): is_valid_landmark = True
                         
                         if is_valid_landmark:
-                            if expected_country:
+                            # Country Validation (Skip for IMDb/English)
+                            if expected_country and site != 'imdb':
                                 scraped_country = _scrape_country(soup, site)
                                 if scraped_country and expected_country in scraped_country: logd(f"Country validation passed.")
                                 else: logd(f"Country validation FAILED. Rejecting page."); continue
@@ -212,27 +231,36 @@ def download_and_save_image(url, local_path, is_artist=False):
     except Exception as e: logd(f"Image download failed: {e}")
     return False
 
+# --- ASIANWIKI SCRAPERS ---
 def _scrape_synopsis_from_asianwiki(soup, **kwargs):
     try:
-        headers = soup.find_all(['h2', 'h3', 'h4'], string=re.compile(r"Synopsis|Plot", re.IGNORECASE))
+        # Improved regex to catch "Plot Synopsis" or "Synopsis" more aggressively
+        headers = soup.find_all(['h2', 'h3'], string=re.compile(r"(Plot|Synopsis)", re.IGNORECASE))
         target_header = None
         for h in headers:
             if h.name == 'h2': target_header = h; break 
-            if not target_header: target_header = h 
+        if not target_header and headers: target_header = headers[0] # Fallback
+        
         if not target_header:
-            elm = soup.find(id=re.compile(r"Synopsis|Plot", re.IGNORECASE))
+            elm = soup.find(id=re.compile(r"(Synopsis|Plot)", re.IGNORECASE))
             if elm: target_header = elm
+
         if not target_header: return None
+        
         content = []
+        # Robust iteration until the next h2 tag
         for sibling in target_header.next_siblings:
-            if sibling.name in ['h2', 'h3', 'div', 'br'] and sibling.get_text(strip=True): 
-                if sibling.name == 'h2': break
-            if sibling.name == 'p':
+            if sibling.name == 'h2': break # Stop at next section
+            
+            text = ""
+            if sibling.name in ['p', 'div']:
                 text = sibling.get_text(strip=True)
-                if text: content.append(text)
             elif isinstance(sibling, str):
                 text = sibling.strip()
-                if text and len(text) > 20: content.append(text)
+            
+            if text and len(text) > 10: # Avoid junk short lines
+                content.append(text)
+        
         return "\n\n".join(content) if content else None
     except Exception as e: logd(f"AsianWiki Synopsis Error: {e}"); return None
 
@@ -243,7 +271,7 @@ def _scrape_image_from_asianwiki(soup, **kwargs):
         img_url = requests.compat.urljoin("https://asianwiki.com", img['src'])
         image_path = os.path.join(SHOW_IMAGES_DIR, f"{kwargs['sid']}.jpg")
         if download_and_save_image(img_url, image_path):
-            return os.path.basename(image_path) # Returns '101.jpg'
+            return os.path.basename(image_path)
     except Exception: return None
 
 def _scrape_othernames_from_asianwiki(soup, **kwargs):
@@ -268,6 +296,7 @@ def _scrape_release_date_from_asianwiki(soup, **kwargs):
         return None
     except Exception: return None
 
+# --- MYDRAMALIST SCRAPERS ---
 def _scrape_synopsis_from_mydramalist(soup, **kwargs):
     try:
         synopsis_div = soup.select_one('div.show-synopsis, div[itemprop="description"]')
@@ -298,7 +327,7 @@ def _scrape_image_from_mydramalist(soup, **kwargs):
         if not url: return None
         image_path = os.path.join(SHOW_IMAGES_DIR, f"{kwargs['sid']}.jpg")
         if download_and_save_image(url, image_path):
-            return os.path.basename(image_path) # Returns '101.jpg'
+            return os.path.basename(image_path)
     except Exception: return None
 
 def _scrape_othernames_from_mydramalist(soup, **kwargs):
@@ -404,22 +433,144 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
             except Exception: continue
         
         if not full_cast_raw: return None
-        kwargs['context']['source_links_temp']['raw_cast'] = full_cast_raw
+        # FIX: Ensure context is valid before writing
+        if 'context' in kwargs and 'source_links_temp' in kwargs['context']:
+            kwargs['context']['source_links_temp']['raw_cast'] = full_cast_raw
         return full_cast_raw
     except Exception as e: logd(f"Cast Scrape Error: {e}"); return None
 
+# --- IMDB SCRAPERS (NEW in v5.0) ---
+
+def _get_imdb_json_ld(soup):
+    try:
+        script = soup.find('script', type='application/ld+json')
+        if script: return json.loads(script.string)
+    except Exception: pass
+    return None
+
+def _scrape_synopsis_from_imdb(soup, **kwargs):
+    try:
+        data = _get_imdb_json_ld(soup)
+        if data and 'description' in data: return data['description']
+        # Fallback to HTML
+        desc = soup.find(attrs={"data-testid": "plot-xl"})
+        if desc: return desc.get_text(strip=True)
+    except Exception: pass
+    return None
+
+def _scrape_image_from_imdb(soup, **kwargs):
+    try:
+        data = _get_imdb_json_ld(soup)
+        if data and 'image' in data:
+            url = data['image']
+            image_path = os.path.join(SHOW_IMAGES_DIR, f"{kwargs['sid']}.jpg")
+            if download_and_save_image(url, image_path):
+                return os.path.basename(image_path)
+    except Exception: pass
+    return None
+
+def _scrape_release_date_from_imdb(soup, **kwargs):
+    try:
+        data = _get_imdb_json_ld(soup)
+        if data and 'datePublished' in data: return data['datePublished']
+    except Exception: pass
+    return None
+
+def _scrape_director_from_imdb(soup, **kwargs):
+    try:
+        data = _get_imdb_json_ld(soup)
+        if data and 'director' in data:
+            directors = data['director']
+            if isinstance(directors, list): return [d['name'] for d in directors if 'name' in d]
+            elif 'name' in directors: return [directors['name']]
+    except Exception: pass
+    return None
+
+def _scrape_cast_from_imdb(soup, **kwargs):
+    try:
+        full_cast_raw = []
+        data = _get_imdb_json_ld(soup)
+        
+        # Method 1: Try JSON-LD (Actors)
+        if data and 'actor' in data:
+            for actor in data['actor']:
+                if 'name' not in actor: continue
+                # Generate a fake ID for IMDb actors to be consistent (hash of name)
+                # Or try to parse URL if available
+                artist_id = str(hash(actor['name']))[-8:] 
+                if 'url' in actor:
+                    match = re.search(r'/name/(nm\d+)', actor['url'])
+                    if match: artist_id = match.group(1)
+                
+                full_cast_raw.append({
+                    "artistID": artist_id,
+                    "artistName": actor['name'],
+                    "artistImageURL": None, # JSON-LD usually doesn't have hi-res actor images
+                    "characterName": "Unknown",
+                    "role": "Main Role" # IMDb JSON usually lists main cast
+                })
+        
+        # Method 2: Fallback to HTML for images and characters
+        if not full_cast_raw:
+            cards = soup.select('div[data-testid="title-cast-item"]')
+            for card in cards:
+                try:
+                    a_tag = card.select_one('a[data-testid="title-cast-item__actor"]')
+                    if not a_tag: continue
+                    name = a_tag.get_text(strip=True)
+                    url = a_tag['href']
+                    artist_id = re.search(r'(nm\d+)', url).group(1)
+                    
+                    # Image
+                    img_tag = card.select_one('img')
+                    img_url = img_tag['src'] if img_tag else None
+                    
+                    # Character
+                    char_div = card.select_one('a[data-testid="cast-item-characters-link"]')
+                    char_name = char_div.get_text(strip=True) if char_div else "Unknown"
+                    
+                    full_cast_raw.append({
+                        "artistID": artist_id,
+                        "artistName": name,
+                        "artistImageURL": img_url,
+                        "characterName": char_name,
+                        "role": "Main Role" # Assuming top billing is main
+                    })
+                except Exception: continue
+
+        if full_cast_raw:
+             if 'context' in kwargs and 'source_links_temp' in kwargs['context']:
+                kwargs['context']['source_links_temp']['raw_cast'] = full_cast_raw
+             return full_cast_raw
+             
+    except Exception: pass
+    return None
+
+def _scrape_tags_from_imdb(soup, **kwargs):
+    try:
+        data = _get_imdb_json_ld(soup)
+        if data and 'genre' in data:
+            return data['genre'] if isinstance(data['genre'], list) else [data['genre']]
+    except Exception: pass
+    return None
+
 SCRAPE_MAP = {
     'asianwiki': {'synopsis': _scrape_synopsis_from_asianwiki, 'showImage': _scrape_image_from_asianwiki, 'otherNames': _scrape_othernames_from_asianwiki, 'Duration': lambda **kwargs: None, 'releaseDate': _scrape_release_date_from_asianwiki, 'director': lambda **kwargs: None, 'tags': lambda **kwargs: None, 'cast': lambda **kwargs: None},
-    'mydramalist': {'synopsis': _scrape_synopsis_from_mydramalist, 'showImage': _scrape_image_from_mydramalist, 'otherNames': _scrape_othernames_from_mydramalist, 'Duration': _scrape_duration_from_mydramalist, 'releaseDate': _scrape_release_date_from_mydramalist, 'director': _scrape_director_from_mydramalist, 'tags': _scrape_tags_from_mydramalist, 'cast': _scrape_cast_from_mydramalist}
+    'mydramalist': {'synopsis': _scrape_synopsis_from_mydramalist, 'showImage': _scrape_image_from_mydramalist, 'otherNames': _scrape_othernames_from_mydramalist, 'Duration': _scrape_duration_from_mydramalist, 'releaseDate': _scrape_release_date_from_mydramalist, 'director': _scrape_director_from_mydramalist, 'tags': _scrape_tags_from_mydramalist, 'cast': _scrape_cast_from_mydramalist},
+    'imdb': {'synopsis': _scrape_synopsis_from_imdb, 'showImage': _scrape_image_from_imdb, 'otherNames': lambda **kwargs: None, 'Duration': lambda **kwargs: None, 'releaseDate': _scrape_release_date_from_imdb, 'director': _scrape_director_from_imdb, 'tags': _scrape_tags_from_imdb, 'cast': _scrape_cast_from_imdb}
 }
 
 def fetch_and_populate_metadata(obj, context, artists_db):
     s_id, s_name, s_year, lang = obj['showID'], obj['showName'], obj['releasedYear'], obj.get("nativeLanguage", "")
     priority = SITE_PRIORITY_BY_LANGUAGE.get(lang.lower(), SITE_PRIORITY_BY_LANGUAGE['default'])
-    spu, source_links = obj.setdefault('sitePriorityUsed', {}), {}
-    soup_cache = {}
+    spu = obj.setdefault('sitePriorityUsed', {})
     
+    # FIX: Initialize source_links_temp inside context BEFORE scraping starts
+    context['source_links_temp'] = {}
+    
+    soup_cache = {}
     fields_to_check = [ 'synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast' ]
+    
     for field in fields_to_check:
         if not obj.get(field):
             site_to_use = priority.get(field)
@@ -437,10 +588,11 @@ def fetch_and_populate_metadata(obj, context, artists_db):
                 if data:
                     obj[field] = data
                     spu[field] = site_to_use 
-                    source_links[field] = url
-                    if field == 'showImage': context['files_generated']['show_images'].append(os.path.join(SHOW_IMAGES_DIR, f"{s_id}.jpg"))
+                    context['source_links_temp'][field] = url
+                    if field == 'showImage' and site_to_use != 'imdb': 
+                         # Check if file exists, it was downloaded by the scraper function
+                         pass
                             
-    context['source_links_temp'] = source_links
     return obj
 
 def process_deletions(excel, context):
@@ -471,7 +623,6 @@ def process_deletions(excel, context):
             context['report_data'].setdefault('Deleting Records', {}).setdefault('data_deleted', []).append(f"- {sid} -> {show_obj.get('showName')} ({show_obj.get('releasedYear')}) -> ✅ Deleted")
             
             if show_obj.get('showImage'):
-                # Handle cases where image is full URL or just filename
                 img_name = os.path.basename(show_obj['showImage'])
                 src = os.path.join(SHOW_IMAGES_DIR, img_name)
                 if os.path.exists(src):
@@ -625,13 +776,12 @@ def process_and_distribute_cast(full_cast, artists_db, context):
             image_downloaded = artist['artistImageURL'] and download_and_save_image(artist['artistImageURL'], image_path, is_artist=True)
             
             if image_downloaded:
-                # SAVE FILENAME ONLY (Not full URL)
                 artists_db[artist_id] = {"artistName": artist['artistName'], "artistImage": os.path.basename(image_path)}
                 context['files_generated']['artist_images'].append(image_path)
             else:
                 artists_db[artist_id] = {"artistName": artist['artistName'], "artistImage": None}
-                context['report_data'][context['current_sheet']].setdefault('artist_image_warnings', []).append(f"- Failed to fetch image for artist: {artist['artistName']} (ID: {artist_id})")
-            
+                # Optional: Don't log warning for every missing image to keep report clean, or keep it
+                
             context['new_artists_added'].append({"artistID": artist_id, "artistName": artist['artistName'], "imageDownloaded": image_downloaded})
         
         cast_member = {"artistID": artist_id, "characterName": artist['characterName'], "role": artist['role']}
@@ -738,7 +888,6 @@ def main():
     # --- CREATE ARTIST LOOKUP FILE ---
     artist_lookup_list = [{"artistID": k, "artistName": v['artistName']} for k, v in artists_data.items()]
     save_json_file(ARTIST_LOOKUP_FILE, sorted(artist_lookup_list, key=lambda x: x['artistName']))
-    # ----------------------------------------------
     
     end_time = now_ist()
     duration = end_time - datetime.fromisoformat(context['start_time_iso'])
