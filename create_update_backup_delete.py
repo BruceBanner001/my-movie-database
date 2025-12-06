@@ -2,18 +2,20 @@
 # Script: create_update_backup_delete.py
 # Author: [BruceBanner001]
 # Description:
-#   This is the definitive final version. v16.0 Engine.
-#   Features a professional-grade, multi-file database system for shows,
-#   artists, and extended cast, with intelligent scraping and caching.
+#   v16.0 Engine.
+#   - Professional-grade multi-file database system.
+#   - Intelligent scraping and caching.
+#   - Generates a simplified Artist Lookup file (ID & Name).
+#   - SAVES IMAGES AS FILENAMES ONLY (No absolute URLs).
 #
-# Version: v3.9 (Title Validator, Deduplication, Artist Fix)
+# Version: v4.1 (Relative Image Paths)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v3.9"
+SCRIPT_VERSION = "v4.1"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames": [], "showImage": None,
@@ -61,14 +63,17 @@ def now_ist(): return datetime.now(IST)
 def filename_timestamp(): return now_ist().strftime("%d_%B_%Y_%H%M")
 def run_id_timestamp(): return now_ist().strftime("RUN_%Y%m%d_%H%M%S")
 
-# --- NEW FILE & FOLDER STRUCTURE ---
-SERIES_JSON_FILE, ARTISTS_JSON_FILE, EXTENDED_CAST_JSON_FILE = "seriesData.json", "artists.json", "extendedCast.json"
+# --- FILE & FOLDER STRUCTURE ---
+SERIES_JSON_FILE = "seriesData.json"
+ARTISTS_JSON_FILE = "artists.json"
+EXTENDED_CAST_JSON_FILE = "extendedCast.json"
+ARTIST_LOOKUP_FILE = "artists_lookup.json"
+
 BACKUP_DIR, SHOW_IMAGES_DIR, ARTIST_IMAGES_DIR, DELETE_IMAGES_DIR = "backups", "show-images", "artist-images", "deleted-images"
 DELETED_DATA_DIR, REPORTS_DIR, BACKUP_META_DIR = "deleted-data", "reports", "backup-meta-data"
 ARCHIVED_BACKUPS_DIR, ARCHIVED_META_DIR = "archived-backups", "archived-backup-meta-data"
 
 DEBUG_FETCH = os.environ.get("DEBUG_FETCH", "true").lower() == "true" 
-GITHUB_PAGES_URL = os.environ.get("GITHUB_PAGES_URL", "").strip()
 SERVICE_ACCOUNT_FILE, EXCEL_FILE_ID_TXT = "GDRIVE_SERVICE_ACCOUNT.json", "EXCEL_FILE_ID.txt"
 SCRAPER = cloudscraper.create_scraper() if HAVE_SCRAPER else requests.Session()
 LANG_TO_COUNTRY_MAP = {"korean": "South Korea", "chinese": "China", "japanese": "Japan", "thai": "Thailand", "taiwanese": "Taiwan"}
@@ -94,34 +99,18 @@ def objects_differ(old, new):
     return False
 
 def _clean_other_names(names_list):
-    """
-    Cleans up the 'Other Names' list:
-    1. Removes duplicates (case-insensitive).
-    2. Keeps foreign scripts (Hangul, Russian, Thai, etc.).
-    3. Removes short junk words (len < 2).
-    """
     if not names_list: return []
-    
     unique_names = []
     seen = set()
-    
     for name in names_list:
         clean = name.strip()
-        # Skip if too short
         if len(clean) < 2: continue
-        
-        # Deduplicate (Case Insensitive)
         if clean.lower() not in seen:
             seen.add(clean.lower())
             unique_names.append(clean)
-            
     return unique_names
 
 def _validate_page_title(soup, expected_name, site):
-    """
-    Checks if the scraped page title roughly matches the expected show name.
-    Returns True if valid, False if it seems to be a wrong page.
-    """
     try:
         page_title = ""
         if site == "asianwiki":
@@ -130,22 +119,13 @@ def _validate_page_title(soup, expected_name, site):
         elif site == "mydramalist":
             h1 = soup.find('h1', class_='film-title') or soup.find('h1')
             if h1: page_title = h1.get_text(strip=True)
-        
-        if not page_title: return True # Could not find title, assume safe
-        
-        # Normalize for comparison
+        if not page_title: return True
         t1 = re.sub(r'\(\d{4}\)', '', page_title).lower().strip()
         t2 = re.sub(r'\(\d{4}\)', '', expected_name).lower().strip()
-        
-        # Check similarity
         ratio = SequenceMatcher(None, t1, t2).ratio()
-        
-        # If very different (e.g. "True Beauty" vs "Awaken" -> ratio < 0.3)
-        # We allow it if one is a substring of the other
         if ratio < 0.4 and t2 not in t1 and t1 not in t2:
             logd(f"Title Validation FAILED: Page Title '{page_title}' vs Expected '{expected_name}' (Ratio: {ratio:.2f})")
             return False
-        
         logd(f"Title Validation PASSED: '{page_title}' matches '{expected_name}'")
         return True
     except Exception as e:
@@ -196,35 +176,27 @@ def get_soup_from_search(show_name, show_year, site, language, soup_cache):
                         is_valid_landmark = False
                         if site == "asianwiki":
                             if soup.find(id='Profile'): is_valid_landmark = True
-                            else: logd("Landmark validation failed: AsianWiki 'Profile' ID landmark missing.")
                         elif site == "mydramalist":
                             if soup.find('div', class_='box-body'): is_valid_landmark = True
-                            else: logd("Landmark validation failed: MyDramaList landmark missing.")
                         
                         if is_valid_landmark:
-                            # 1. Country Validation
                             if expected_country:
                                 scraped_country = _scrape_country(soup, site)
-                                if scraped_country and expected_country in scraped_country: logd(f"Country validation passed (Expected: {expected_country}, Found: {scraped_country}).")
-                                else: logd(f"Country validation FAILED (Expected: {expected_country}, Found: {scraped_country}). Rejecting page."); continue
+                                if scraped_country and expected_country in scraped_country: logd(f"Country validation passed.")
+                                else: logd(f"Country validation FAILED. Rejecting page."); continue
                             
-                            # 2. Title Validation (New in v3.9)
-                            if not _validate_page_title(soup, show_name, site):
-                                logd("Rejecting page due to title mismatch.")
-                                continue
+                            if not _validate_page_title(soup, show_name, site): continue
 
-                            logd("Validation passed. This is the correct page.")
                             soup_cache[cache_key] = (soup, url)
                             return soup, url
                     else: logd(f"HTTP Error {r.status_code} for {url}")
         except Exception as e: logd(f"Search attempt failed for query '{query}': {e}")
 
-    logd("All search attempts failed.")
     soup_cache[cache_key] = (None, None)
     return None, None
 
 def download_and_save_image(url, local_path, is_artist=False):
-    if not HAVE_PIL: logd("Pillow library not installed, cannot process images."); return False
+    if not HAVE_PIL: logd("Pillow library not installed."); return False
     os.makedirs(os.path.dirname(local_path), exist_ok=True)
     try:
         url = re.sub(r'_[24]c\.jpg$', '.jpg', url) if not is_artist else url
@@ -237,10 +209,8 @@ def download_and_save_image(url, local_path, is_artist=False):
                 img.thumbnail(size, Image.LANCZOS)
                 img.save(local_path, "JPEG", quality=90)
                 logd(f"Image saved to {local_path}"); return True
-    except Exception as e: logd(f"Image download failed from {url}: {e}")
+    except Exception as e: logd(f"Image download failed: {e}")
     return False
-
-def build_absolute_url(local_path): return f"{GITHUB_PAGES_URL.rstrip('/')}/{local_path.replace(os.sep, '/')}"
 
 def _scrape_synopsis_from_asianwiki(soup, **kwargs):
     try:
@@ -249,14 +219,10 @@ def _scrape_synopsis_from_asianwiki(soup, **kwargs):
         for h in headers:
             if h.name == 'h2': target_header = h; break 
             if not target_header: target_header = h 
-
         if not target_header:
             elm = soup.find(id=re.compile(r"Synopsis|Plot", re.IGNORECASE))
             if elm: target_header = elm
-
-        if not target_header: 
-            logd("Synopsis/Plot heading not found on AsianWiki."); return None
-            
+        if not target_header: return None
         content = []
         for sibling in target_header.next_siblings:
             if sibling.name in ['h2', 'h3', 'div', 'br'] and sibling.get_text(strip=True): 
@@ -266,21 +232,19 @@ def _scrape_synopsis_from_asianwiki(soup, **kwargs):
                 if text: content.append(text)
             elif isinstance(sibling, str):
                 text = sibling.strip()
-                if text and len(text) > 20: 
-                    content.append(text)
-                    
+                if text and len(text) > 20: content.append(text)
         return "\n\n".join(content) if content else None
-    except Exception as e: logd(f"Error scraping synopsis from AsianWiki: {e}"); return None
+    except Exception as e: logd(f"AsianWiki Synopsis Error: {e}"); return None
 
 def _scrape_image_from_asianwiki(soup, **kwargs):
     try:
         img = soup.select_one('a.image > img[src]')
-        if not img: logd("Image tag not found on AsianWiki."); return None
+        if not img: return None
         img_url = requests.compat.urljoin("https://asianwiki.com", img['src'])
         image_path = os.path.join(SHOW_IMAGES_DIR, f"{kwargs['sid']}.jpg")
         if download_and_save_image(img_url, image_path):
-            return build_absolute_url(image_path)
-    except Exception as e: logd(f"Error scraping image from AsianWiki: {e}"); return None
+            return os.path.basename(image_path) # Returns '101.jpg'
+    except Exception: return None
 
 def _scrape_othernames_from_asianwiki(soup, **kwargs):
     try:
@@ -291,25 +255,23 @@ def _scrape_othernames_from_asianwiki(soup, **kwargs):
             if match:
                 names_text = match.group(1).strip()
                 raw_names = [name.strip() for name in names_text.split('/') if name.strip()]
-                # Filter out the show name itself
                 filtered = [name for name in raw_names if name.lower() != kwargs['show_name'].lower()]
                 return _clean_other_names(filtered)
-        logd("'Other Names' from 'Drama:' field not found on AsianWiki."); return None
-    except Exception as e: logd(f"Error scraping other names from AsianWiki: {e}"); return None
+        return None
+    except Exception: return None
 
 def _scrape_release_date_from_asianwiki(soup, **kwargs):
     try:
         b_tag = soup.find('b', string=re.compile(r"Release Date:"))
         if b_tag and (parent := b_tag.parent):
-            b_tag.decompose()
-            return parent.get_text(strip=True)
-        logd("'Release Date:' field not found on AsianWiki."); return None
-    except Exception as e: logd(f"Error scraping release date from AsianWiki: {e}"); return None
+            b_tag.decompose(); return parent.get_text(strip=True)
+        return None
+    except Exception: return None
 
 def _scrape_synopsis_from_mydramalist(soup, **kwargs):
     try:
         synopsis_div = soup.select_one('div.show-synopsis, div[itemprop="description"]')
-        if not synopsis_div: logd("Synopsis element not found on MyDramaList."); return None
+        if not synopsis_div: return None
         paragraphs = []
         for element in synopsis_div.find_all(['p', 'br'], recursive=False):
             if element.name == 'br':
@@ -325,21 +287,19 @@ def _scrape_synopsis_from_mydramalist(soup, **kwargs):
         cleaned_synopsis = synopsis
         for pattern in patterns_to_remove:
             cleaned_synopsis = re.sub(pattern, '', cleaned_synopsis, flags=re.IGNORECASE | re.DOTALL).strip()
-        cleaned_synopsis = re.sub(r'[\s,.:;("]*$', '', cleaned_synopsis).strip()
         return cleaned_synopsis if cleaned_synopsis else None
-    except Exception as e: logd(f"Error scraping synopsis from MyDramaList: {e}"); return None
+    except Exception as e: logd(f"MDL Synopsis Error: {e}"); return None
 
 def _scrape_image_from_mydramalist(soup, **kwargs):
     try:
         img = soup.select_one('.film-cover img, .cover img')
-        if not img: logd("Image tag not found on MyDramaList."); return None
+        if not img: return None
         url = img.get('src') or img.get('data-src') or img.get('data-original')
         if not url: return None
-        
         image_path = os.path.join(SHOW_IMAGES_DIR, f"{kwargs['sid']}.jpg")
         if download_and_save_image(url, image_path):
-            return build_absolute_url(image_path)
-    except Exception as e: logd(f"Error scraping image from MyDramaList: {e}"); return None
+            return os.path.basename(image_path) # Returns '101.jpg'
+    except Exception: return None
 
 def _scrape_othernames_from_mydramalist(soup, **kwargs):
     try:
@@ -350,8 +310,8 @@ def _scrape_othernames_from_mydramalist(soup, **kwargs):
             raw_names = [name.strip() for name in names_text.split(',') if name.strip()]
             filtered = [name for name in raw_names if name.lower() != kwargs['show_name'].lower()]
             return _clean_other_names(filtered)
-        logd("'Also Known As:' field not found on MyDramaList."); return None
-    except Exception as e: logd(f"Error scraping other names from MyDramaList: {e}"); return None
+        return None
+    except Exception: return None
 
 def _scrape_duration_from_mydramalist(soup, **kwargs):
     try:
@@ -360,17 +320,16 @@ def _scrape_duration_from_mydramalist(soup, **kwargs):
             b_tag.decompose()
             duration_text = li_tag.get_text(strip=True)
             return duration_text.replace(" min.", " mins") if "hr" not in duration_text else duration_text
-        logd("'Duration:' field not found on MyDramaList."); return None
-    except Exception as e: logd(f"Error scraping duration from MyDramaList: {e}"); return None
+        return None
+    except Exception: return None
 
 def _scrape_release_date_from_mydramalist(soup, **kwargs):
     try:
         b_tag = soup.find('b', string=re.compile(r"Aired:"))
         if b_tag and (li_tag := b_tag.find_parent('li')):
-            b_tag.decompose()
-            return li_tag.get_text(strip=True)
-        logd("'Aired:' field not found on MyDramaList."); return None
-    except Exception as e: logd(f"Error scraping release date from MyDramaList: {e}"); return None
+            b_tag.decompose(); return li_tag.get_text(strip=True)
+        return None
+    except Exception: return None
 
 def _scrape_director_from_mydramalist(soup, **kwargs):
     try:
@@ -379,16 +338,16 @@ def _scrape_director_from_mydramalist(soup, **kwargs):
             b_tag.decompose()
             names_text = li_tag.get_text(strip=True)
             return [name.strip() for name in names_text.split(',') if name.strip()]
-        logd("'Director:' field not found on MyDramaList."); return None
-    except Exception as e: logd(f"Error scraping director from MyDramaList: {e}"); return None
+        return None
+    except Exception: return None
 
 def _scrape_tags_from_mydramalist(soup, **kwargs):
     try:
         tags_li = soup.select_one('li.show-tags')
         if tags_li:
             return [a.get_text(strip=True) for a in tags_li.find_all('a') if "(Vote tags)" not in a.get_text()]
-        logd("'Tags' field not found on MyDramaList."); return None
-    except Exception as e: logd(f"Error scraping tags from MyDramaList: {e}"); return None
+        return None
+    except Exception: return None
 
 def _scrape_cast_from_mydramalist(soup, **kwargs):
     try:
@@ -404,25 +363,20 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
         if not cast_items: cast_items = cast_container.select('div.cast-list div.col-xs-8, div.cast-list div.col-sm-6')
         if not cast_items: cast_items = cast_container.select('.p-a-0 li')
         
-        if not cast_items:
-            logd("No cast items found on MyDramaList."); return None
+        if not cast_items: return None
 
         for item in cast_items:
             try:
-                # Find the text link specifically to avoid empty image links
                 artist_name = None
                 artist_link = None
-                
                 anchors = item.select('a')
                 for a in anchors:
-                    # Check if link points to a person and HAS text content
                     if '/people/' in a.get('href', '') and a.get_text(strip=True):
                         artist_name = a.get_text(strip=True)
                         artist_link = a['href']
                         break 
                 
                 if not artist_name: continue 
-                
                 id_match = re.search(r'/people/(\d+)-', artist_link)
                 if not id_match: continue
                 artist_id = id_match.group(1)
@@ -447,15 +401,12 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
                     if char_text: character_name = char_text
                 
                 full_cast_raw.append({"artistID": artist_id, "artistName": artist_name, "artistImageURL": artist_image_url, "characterName": character_name, "role": role})
-            except Exception as inner_e:
-                logd(f"Skipping one cast member due to error: {inner_e}")
-                continue
+            except Exception: continue
         
-        if not full_cast_raw: logd("Cast list found but could not extract data."); return None
-        
+        if not full_cast_raw: return None
         kwargs['context']['source_links_temp']['raw_cast'] = full_cast_raw
         return full_cast_raw
-    except Exception as e: logd(f"Error scraping cast from MyDramaList: {e}"); return None
+    except Exception as e: logd(f"Cast Scrape Error: {e}"); return None
 
 SCRAPE_MAP = {
     'asianwiki': {'synopsis': _scrape_synopsis_from_asianwiki, 'showImage': _scrape_image_from_asianwiki, 'otherNames': _scrape_othernames_from_asianwiki, 'Duration': lambda **kwargs: None, 'releaseDate': _scrape_release_date_from_asianwiki, 'director': lambda **kwargs: None, 'tags': lambda **kwargs: None, 'cast': lambda **kwargs: None},
@@ -472,7 +423,7 @@ def fetch_and_populate_metadata(obj, context, artists_db):
     for field in fields_to_check:
         if not obj.get(field):
             site_to_use = priority.get(field)
-            if not site_to_use: logd(f"No priority site configured for field '{field}'. Skipping."); continue
+            if not site_to_use: continue
             
             search_terms = [s_name, re.sub(r'\s*\(?Season\s*\d+\)?', '', s_name, flags=re.IGNORECASE).strip()]
             soup, url = None, None
@@ -520,7 +471,9 @@ def process_deletions(excel, context):
             context['report_data'].setdefault('Deleting Records', {}).setdefault('data_deleted', []).append(f"- {sid} -> {show_obj.get('showName')} ({show_obj.get('releasedYear')}) -> ✅ Deleted")
             
             if show_obj.get('showImage'):
-                src = os.path.join(SHOW_IMAGES_DIR, os.path.basename(show_obj['showImage']))
+                # Handle cases where image is full URL or just filename
+                img_name = os.path.basename(show_obj['showImage'])
+                src = os.path.join(SHOW_IMAGES_DIR, img_name)
                 if os.path.exists(src):
                     dest = os.path.join(DELETE_IMAGES_DIR, f"DELETED_{ts}_{sid}.jpg"); os.makedirs(DELETE_IMAGES_DIR, exist_ok=True); shutil.move(src, dest)
                     context['files_generated']['deleted_images'].append(dest)
@@ -550,7 +503,7 @@ def apply_manual_updates(excel, by_id, context):
                 val = row[col]
                 image_path = os.path.join(SHOW_IMAGES_DIR, f"{sid}.jpg")
                 if key == 'showImage' and download_and_save_image(val, image_path):
-                    val = build_absolute_url(image_path); context['files_generated']['show_images'].append(image_path)
+                    val = os.path.basename(image_path); context['files_generated']['show_images'].append(image_path)
                 elif key == 'otherNames': val = normalize_list(val)
                 else: val = str(val).strip()
                 if obj.get(key) != val: changed[key] = {'old': obj.get(key), 'new': val}; obj[key] = val; obj.setdefault('sitePriorityUsed', {})[key] = "Manual"
@@ -604,8 +557,7 @@ def save_metadata_backup(obj, context):
     if fetched: data["fetchedFields"] = fetched
     if context.get('new_artists_added'): data["newArtistsAdded"] = context.get('new_artists_added')
     
-    if not fetched and not context.get('new_artists_added'):
-        logd(f"Skipping metadata backup for {obj['showID']}: no new data fetched or artists added."); return
+    if not fetched and not context.get('new_artists_added'): return
 
     path = os.path.join(BACKUP_META_DIR, f"META_{filename_timestamp()}_{obj['showID']}.json"); os.makedirs(BACKUP_META_DIR, exist_ok=True)
     save_json_file(path, data)
@@ -650,7 +602,7 @@ def write_report(context):
     stats['deleted'] = len(context['files_generated']['deleted_data']); stats['artist_images'] = len(context['files_generated']['artist_images'])
     stats['archived'] = len(context['files_generated']['archived_backups']) + len(context['files_generated']['archived_meta_backups'])
     lines.extend([sep, "📊 Overall Summary", sep, f"🆕 Total Created: {stats['created']}", f"🔁 Total Updated: {stats['updated']}", f"🔍 Total Refetched: {stats['refetched']}", f"🖼️ Show Images Updated: {stats['show_images']}", f"🧑‍🎨 New Artist Images Added: {stats['artist_images']}", f"🚫 Total Skipped: {stats['skipped']}", f"❌ Total Deleted: {stats['deleted']}", f"🗄️ Total Archived Backups: {stats['archived']}", f"⚠️ Total Warnings: {stats['warnings']}", f"💾 Backup Files: {len(context['files_generated']['backups'])}", f"  Grand Total Rows: {stats['rows']}", "", f"💾 Metadata Backups: {len(context['files_generated']['meta_backups'])}", ""])
-    for file, name in [(SERIES_JSON_FILE, "Series"), (ARTISTS_JSON_FILE, "Artists"), (EXTENDED_CAST_JSON_FILE, "Extended Cast")]:
+    for file in [SERIES_JSON_FILE, ARTISTS_JSON_FILE, EXTENDED_CAST_JSON_FILE, ARTIST_LOOKUP_FILE]:
         try:
             with open(file, 'r', encoding='utf-8') as f: lines.append(f"📦 Total Objects in {file}: {len(json.load(f))}")
         except Exception: lines.append(f"📦 Total Objects in {file}: 0")
@@ -673,7 +625,8 @@ def process_and_distribute_cast(full_cast, artists_db, context):
             image_downloaded = artist['artistImageURL'] and download_and_save_image(artist['artistImageURL'], image_path, is_artist=True)
             
             if image_downloaded:
-                artists_db[artist_id] = {"artistName": artist['artistName'], "artistImage": build_absolute_url(image_path)}
+                # SAVE FILENAME ONLY (Not full URL)
+                artists_db[artist_id] = {"artistName": artist['artistName'], "artistImage": os.path.basename(image_path)}
                 context['files_generated']['artist_images'].append(image_path)
             else:
                 artists_db[artist_id] = {"artistName": artist['artistName'], "artistImage": None}
@@ -739,7 +692,7 @@ def main():
             
             final_obj = {**JSON_OBJECT_TEMPLATE, **(old_obj_from_json or {}), **excel_obj}
             initial_metadata_state = {k: final_obj.get(k) for k in ['synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast']}
-            context['new_artists_added'] = [] # Reset for each show
+            context['new_artists_added'] = [] 
             
             final_obj = fetch_and_populate_metadata(final_obj, context, artists_data)
             
@@ -781,6 +734,11 @@ def main():
     save_json_file(SERIES_JSON_FILE, sorted(merged_by_id.values(), key=lambda x: x.get('showID', 0)))
     save_json_file(ARTISTS_JSON_FILE, artists_data)
     save_json_file(EXTENDED_CAST_JSON_FILE, extended_cast_data)
+
+    # --- CREATE ARTIST LOOKUP FILE ---
+    artist_lookup_list = [{"artistID": k, "artistName": v['artistName']} for k, v in artists_data.items()]
+    save_json_file(ARTIST_LOOKUP_FILE, sorted(artist_lookup_list, key=lambda x: x['artistName']))
+    # ----------------------------------------------
     
     end_time = now_ist()
     duration = end_time - datetime.fromisoformat(context['start_time_iso'])
