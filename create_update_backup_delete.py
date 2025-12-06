@@ -5,17 +5,17 @@
 #   v16.0 Engine.
 #   - Professional-grade multi-file database system.
 #   - Intelligent scraping and caching.
-#   - NEW: Full support for ENGLISH dramas via IMDb (Netflix/Amazon).
-#   - FIX: Fixed Cast storage bug and AsianWiki synopsis fetcher.
+#   - Full support for ENGLISH dramas via IMDb.
+#   - FIX: Added detailed error logging for library imports.
 #
-# Version: v5.0 (IMDb Support + Bug Fixes)
+# Version: v5.2 (Import Debugging)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v5.0"
+SCRIPT_VERSION = "v5.2"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames": [], "showImage": None,
@@ -50,8 +50,22 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
-try: from ddgs import DDGS; HAVE_DDGS = True
-except Exception: HAVE_DDGS = False
+DEBUG_FETCH = os.environ.get("DEBUG_FETCH", "true").lower() == "true" 
+
+# --- ROBUST IMPORT FOR DUCKDUCKGO ---
+HAVE_DDGS = False
+DDGS_ERROR = None
+try: 
+    from duckduckgo_search import DDGS
+    HAVE_DDGS = True
+except ImportError as e: 
+    DDGS_ERROR = str(e)
+    try:
+        from ddgs import DDGS
+        HAVE_DDGS = True
+    except ImportError:
+        HAVE_DDGS = False
+
 try: import cloudscraper; HAVE_SCRAPER = True
 except Exception: HAVE_SCRAPER = False
 try: from PIL import Image; HAVE_PIL = True
@@ -74,10 +88,8 @@ BACKUP_DIR, SHOW_IMAGES_DIR, ARTIST_IMAGES_DIR, DELETE_IMAGES_DIR = "backups", "
 DELETED_DATA_DIR, REPORTS_DIR, BACKUP_META_DIR = "deleted-data", "reports", "backup-meta-data"
 ARCHIVED_BACKUPS_DIR, ARCHIVED_META_DIR = "archived-backups", "archived-backup-meta-data"
 
-DEBUG_FETCH = os.environ.get("DEBUG_FETCH", "true").lower() == "true" 
 SERVICE_ACCOUNT_FILE, EXCEL_FILE_ID_TXT = "GDRIVE_SERVICE_ACCOUNT.json", "EXCEL_FILE_ID.txt"
 SCRAPER = cloudscraper.create_scraper() if HAVE_SCRAPER else requests.Session()
-# Added default user-agent for IMDb to avoid blocks
 SCRAPER.headers.update({'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'})
 
 LANG_TO_COUNTRY_MAP = {"korean": "South Korea", "chinese": "China", "japanese": "Japan", "thai": "Thailand", "taiwanese": "Taiwan", "english": "USA"}
@@ -130,8 +142,6 @@ def _validate_page_title(soup, expected_name, site):
         if not page_title: return True
         t1 = re.sub(r'\(\d{4}\)', '', page_title).lower().strip()
         t2 = re.sub(r'\(\d{4}\)', '', expected_name).lower().strip()
-        
-        # Exact substring match check for IMDb which often has "Title (TV Series 2024)"
         if site == "imdb" and t2 in t1: return True
 
         ratio = SequenceMatcher(None, t1, t2).ratio()
@@ -165,7 +175,8 @@ def get_soup_from_search(show_name, show_year, site, language, soup_cache):
     logd(f"Initiating search for: '{show_name} ({show_year})' on {site}.com (Expected Country: {expected_country})")
     
     if not HAVE_DDGS:
-        logd("DDGS library not available."); return None, None
+        logd(f"DDGS library not available. Import Error: {DDGS_ERROR}")
+        return None, None
 
     search_queries = [ f'"{show_name}" {show_year} {language} site:{site}.com', f'"{show_name}" {show_year} site:{site}.com', f'"{show_name}" site:{site}.com' ]
     if site == "imdb":
@@ -174,7 +185,7 @@ def get_soup_from_search(show_name, show_year, site, language, soup_cache):
     for query in search_queries:
         logd(f"Executing search query: {query}")
         try:
-            time.sleep(1.5) # Increased delay slightly to be safer
+            time.sleep(1.5)
             with DDGS() as dd:
                 results = list(dd.text(query, max_results=5))
                 if not results: continue
@@ -183,7 +194,7 @@ def get_soup_from_search(show_name, show_year, site, language, soup_cache):
                     url = res.get('href', '')
                     if not url or 'bing.com' in url or any(bad in url for bad in ['/reviews', '/episode', '/cast', '/recs', '?lang=', '/photos', '/video', '/trivia']): continue
                     if site == "asianwiki" and ("/File:" in url or "/index.php?title=File:" in url): logd(f"Rejecting invalid AsianWiki file URL: {url}"); continue
-                    if site == "imdb" and "/title/tt" not in url: continue # Ensure it's a title page
+                    if site == "imdb" and "/title/tt" not in url: continue 
 
                     logd(f"Found candidate URL: {url}")
                     r = SCRAPER.get(url, timeout=15)
@@ -198,7 +209,6 @@ def get_soup_from_search(show_name, show_year, site, language, soup_cache):
                             if soup.find('h1') or soup.find(attrs={"type": "application/ld+json"}): is_valid_landmark = True
                         
                         if is_valid_landmark:
-                            # Country Validation (Skip for IMDb/English)
                             if expected_country and site != 'imdb':
                                 scraped_country = _scrape_country(soup, site)
                                 if scraped_country and expected_country in scraped_country: logd(f"Country validation passed.")
@@ -234,33 +244,27 @@ def download_and_save_image(url, local_path, is_artist=False):
 # --- ASIANWIKI SCRAPERS ---
 def _scrape_synopsis_from_asianwiki(soup, **kwargs):
     try:
-        # Improved regex to catch "Plot Synopsis" or "Synopsis" more aggressively
         headers = soup.find_all(['h2', 'h3'], string=re.compile(r"(Plot|Synopsis)", re.IGNORECASE))
         target_header = None
         for h in headers:
             if h.name == 'h2': target_header = h; break 
-        if not target_header and headers: target_header = headers[0] # Fallback
+        if not target_header and headers: target_header = headers[0] 
         
         if not target_header:
             elm = soup.find(id=re.compile(r"(Synopsis|Plot)", re.IGNORECASE))
             if elm: target_header = elm
 
         if not target_header: return None
-        
         content = []
-        # Robust iteration until the next h2 tag
         for sibling in target_header.next_siblings:
-            if sibling.name == 'h2': break # Stop at next section
-            
+            if sibling.name == 'h2': break 
             text = ""
             if sibling.name in ['p', 'div']:
                 text = sibling.get_text(strip=True)
             elif isinstance(sibling, str):
                 text = sibling.strip()
-            
-            if text and len(text) > 10: # Avoid junk short lines
+            if text and len(text) > 10: 
                 content.append(text)
-        
         return "\n\n".join(content) if content else None
     except Exception as e: logd(f"AsianWiki Synopsis Error: {e}"); return None
 
@@ -433,14 +437,12 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
             except Exception: continue
         
         if not full_cast_raw: return None
-        # FIX: Ensure context is valid before writing
         if 'context' in kwargs and 'source_links_temp' in kwargs['context']:
             kwargs['context']['source_links_temp']['raw_cast'] = full_cast_raw
         return full_cast_raw
     except Exception as e: logd(f"Cast Scrape Error: {e}"); return None
 
-# --- IMDB SCRAPERS (NEW in v5.0) ---
-
+# --- IMDB SCRAPERS ---
 def _get_imdb_json_ld(soup):
     try:
         script = soup.find('script', type='application/ld+json')
@@ -452,7 +454,6 @@ def _scrape_synopsis_from_imdb(soup, **kwargs):
     try:
         data = _get_imdb_json_ld(soup)
         if data and 'description' in data: return data['description']
-        # Fallback to HTML
         desc = soup.find(attrs={"data-testid": "plot-xl"})
         if desc: return desc.get_text(strip=True)
     except Exception: pass
@@ -491,12 +492,9 @@ def _scrape_cast_from_imdb(soup, **kwargs):
         full_cast_raw = []
         data = _get_imdb_json_ld(soup)
         
-        # Method 1: Try JSON-LD (Actors)
         if data and 'actor' in data:
             for actor in data['actor']:
                 if 'name' not in actor: continue
-                # Generate a fake ID for IMDb actors to be consistent (hash of name)
-                # Or try to parse URL if available
                 artist_id = str(hash(actor['name']))[-8:] 
                 if 'url' in actor:
                     match = re.search(r'/name/(nm\d+)', actor['url'])
@@ -505,12 +503,11 @@ def _scrape_cast_from_imdb(soup, **kwargs):
                 full_cast_raw.append({
                     "artistID": artist_id,
                     "artistName": actor['name'],
-                    "artistImageURL": None, # JSON-LD usually doesn't have hi-res actor images
+                    "artistImageURL": None,
                     "characterName": "Unknown",
-                    "role": "Main Role" # IMDb JSON usually lists main cast
+                    "role": "Main Role"
                 })
         
-        # Method 2: Fallback to HTML for images and characters
         if not full_cast_raw:
             cards = soup.select('div[data-testid="title-cast-item"]')
             for card in cards:
@@ -520,12 +517,8 @@ def _scrape_cast_from_imdb(soup, **kwargs):
                     name = a_tag.get_text(strip=True)
                     url = a_tag['href']
                     artist_id = re.search(r'(nm\d+)', url).group(1)
-                    
-                    # Image
                     img_tag = card.select_one('img')
                     img_url = img_tag['src'] if img_tag else None
-                    
-                    # Character
                     char_div = card.select_one('a[data-testid="cast-item-characters-link"]')
                     char_name = char_div.get_text(strip=True) if char_div else "Unknown"
                     
@@ -534,7 +527,7 @@ def _scrape_cast_from_imdb(soup, **kwargs):
                         "artistName": name,
                         "artistImageURL": img_url,
                         "characterName": char_name,
-                        "role": "Main Role" # Assuming top billing is main
+                        "role": "Main Role"
                     })
                 except Exception: continue
 
@@ -565,7 +558,6 @@ def fetch_and_populate_metadata(obj, context, artists_db):
     priority = SITE_PRIORITY_BY_LANGUAGE.get(lang.lower(), SITE_PRIORITY_BY_LANGUAGE['default'])
     spu = obj.setdefault('sitePriorityUsed', {})
     
-    # FIX: Initialize source_links_temp inside context BEFORE scraping starts
     context['source_links_temp'] = {}
     
     soup_cache = {}
@@ -589,9 +581,6 @@ def fetch_and_populate_metadata(obj, context, artists_db):
                     obj[field] = data
                     spu[field] = site_to_use 
                     context['source_links_temp'][field] = url
-                    if field == 'showImage' and site_to_use != 'imdb': 
-                         # Check if file exists, it was downloaded by the scraper function
-                         pass
                             
     return obj
 
@@ -762,142 +751,6 @@ def write_report(context):
         if files: lines.append(f"{folder}/"); [lines.append(f"    {os.path.basename(p)}") for p in files]
     lines.extend([sep, "🏁 Workflow finished successfully"])
     with open(context['report_file_path'], 'w', encoding='utf-8') as f: f.write("\n".join(lines))
-
-def process_and_distribute_cast(full_cast, artists_db, context):
-    main_cast, support_cast, guest_cast = [], [], []
-    context['new_artists_added'] = []
-    
-    if not full_cast: return [], {}, {}
-
-    for artist in full_cast:
-        artist_id = artist['artistID']
-        if artist_id not in artists_db:
-            image_path = os.path.join(ARTIST_IMAGES_DIR, f"{artist_id}.jpg")
-            image_downloaded = artist['artistImageURL'] and download_and_save_image(artist['artistImageURL'], image_path, is_artist=True)
-            
-            if image_downloaded:
-                artists_db[artist_id] = {"artistName": artist['artistName'], "artistImage": os.path.basename(image_path)}
-                context['files_generated']['artist_images'].append(image_path)
-            else:
-                artists_db[artist_id] = {"artistName": artist['artistName'], "artistImage": None}
-                # Optional: Don't log warning for every missing image to keep report clean, or keep it
-                
-            context['new_artists_added'].append({"artistID": artist_id, "artistName": artist['artistName'], "imageDownloaded": image_downloaded})
-        
-        cast_member = {"artistID": artist_id, "characterName": artist['characterName'], "role": artist['role']}
-        if artist['role'] == 'Main Role': main_cast.append(cast_member)
-        elif artist['role'] == 'Support Role': support_cast.append(cast_member)
-        elif artist['role'] == 'Guest Role': guest_cast.append(cast_member)
-
-    extended_cast = {}
-    if support_cast: extended_cast['supportRoles'] = support_cast
-    if guest_cast: extended_cast['guestRoles'] = guest_cast
-    
-    extended_info = { "hasSupportRoles": bool(support_cast), "supportRoleCount": len(support_cast), "hasGuestRoles": bool(guest_cast), "guestRoleCount": len(guest_cast) }
-    
-    return main_cast, extended_cast, extended_info
-
-def load_json_file(file_path):
-    try:
-        with open(file_path, 'r', encoding='utf-8') as f: return json.load(f)
-    except (FileNotFoundError, json.JSONDecodeError): return {} if file_path in [ARTISTS_JSON_FILE, EXTENDED_CAST_JSON_FILE] else []
-
-def save_json_file(file_path, data):
-    with open(file_path, 'w', encoding='utf-8') as f: json.dump(data, f, indent=4, ensure_ascii=False)
-
-def main():
-    start_time = now_ist()
-    context = {'run_id': run_id_timestamp(), 'start_time_iso': start_time.isoformat(), 'report_data': {}, 'current_sheet': None,
-               'files_generated': {'backups': [], 'show_images': [], 'artist_images': [], 'deleted_data': [], 'deleted_images': [], 'meta_backups': [], 'reports': [], 'archived_backups': [], 'archived_meta_backups': []}}
-    if not (os.path.exists(EXCEL_FILE_ID_TXT) and os.path.exists(SERVICE_ACCOUNT_FILE)): print("❌ Missing GDrive credentials."); sys.exit(1)
-    try:
-        with open(EXCEL_FILE_ID_TXT, 'r') as f: excel_id = f.read().strip()
-    except Exception as e: print(f"❌ Error with Excel ID file: {e}"); sys.exit(1)
-    
-    print(f"🚀 Running Script — Version {SCRIPT_VERSION} | Run ID: {context['run_id']}")
-    excel_bytes = fetch_excel_from_gdrive_bytes(excel_id, SERVICE_ACCOUNT_FILE)
-    if not excel_bytes: print("❌ Could not fetch Excel file."); sys.exit(1)
-
-    process_deletions(io.BytesIO(excel_bytes.getvalue()), context)
-
-    series_data = load_json_file(SERIES_JSON_FILE)
-    artists_data = load_json_file(ARTISTS_JSON_FILE)
-    extended_cast_data = load_json_file(EXTENDED_CAST_JSON_FILE)
-    merged_by_id = {o['showID']: o for o in series_data if o.get('showID')}
-    
-    manual_report = apply_manual_updates(io.BytesIO(excel_bytes.getvalue()), merged_by_id, context)
-    if manual_report: context['report_data']['Manual Updates'] = manual_report
-
-    sheets_to_process = [s.strip() for s in os.environ.get("SHEETS", "Sheet1").split(';') if s.strip()]
-    for sheet in sheets_to_process:
-        context['current_sheet'] = sheet
-        report = context['report_data'].setdefault(sheet, {})
-        excel_rows, warnings = excel_to_objects(io.BytesIO(excel_bytes.getvalue()), sheet)
-        if warnings: report.setdefault('data_warnings', []).extend(warnings)
-
-        for excel_obj in excel_rows:
-            sid = excel_obj['showID']
-            old_obj_from_json = merged_by_id.get(sid)
-            is_new = old_obj_from_json is None
-            
-            final_obj = {**JSON_OBJECT_TEMPLATE, **(old_obj_from_json or {}), **excel_obj}
-            initial_metadata_state = {k: final_obj.get(k) for k in ['synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast']}
-            context['new_artists_added'] = [] 
-            
-            final_obj = fetch_and_populate_metadata(final_obj, context, artists_data)
-            
-            if 'cast' in final_obj and isinstance(final_obj['cast'], list):
-                main_cast, extended_cast, extended_info = process_and_distribute_cast(final_obj['cast'], artists_data, context)
-                final_obj['cast'] = main_cast
-                final_obj['extendedCastInfo'] = extended_info
-                if extended_cast: extended_cast_data[str(sid)] = extended_cast
-            
-            final_obj['topRatings'] = (final_obj.get("ratings", 0)) * (len(final_obj.get("againWatchedDates", [])) + 1) * 100
-            
-            excel_data_has_changed = not is_new and objects_differ(old_obj_from_json, excel_obj)
-            metadata_was_fetched = any(final_obj.get(k) != v for k, v in initial_metadata_state.items())
-            
-            key_map = {'synopsis': 'Synopsis', 'showImage': 'Show Image', 'otherNames': 'Other Names', 'releaseDate': 'Release Date', 'Duration': 'Duration', 'director': 'Director', 'tags': 'Tags', 'cast': 'Cast'}
-            newly_fetched_fields = sorted([key_map[k] for k, v in initial_metadata_state.items() if not v and (isinstance(final_obj.get(k), list) and final_obj.get(k) or isinstance(final_obj.get(k), str) and final_obj.get(k))])
-
-            if is_new:
-                final_obj['updatedDetails'] = "First Time Uploaded"; final_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
-                report.setdefault('created', []).append(final_obj)
-                if newly_fetched_fields: report.setdefault('fetched_data', []).append(f"- {sid} - {final_obj['showName']} -> Fetched: {', '.join(newly_fetched_fields)}")
-            elif excel_data_has_changed:
-                changes = [human_readable_field(k) for k, v in excel_obj.items() if normalize_list(old_obj_from_json.get(k)) != normalize_list(v)]
-                final_obj['updatedDetails'] = f"{', '.join(changes)} Updated"; final_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
-                report.setdefault('updated', []).append({'old': old_obj_from_json, 'new': final_obj}); create_diff_backup(old_obj_from_json, final_obj, context)
-            elif metadata_was_fetched:
-                report.setdefault('refetched', []).append({'id': sid, 'name': final_obj['showName'], 'fields': newly_fetched_fields})
-            else:
-                report.setdefault('skipped', []).append(f"{sid} - {final_obj['showName']} ({final_obj.get('releasedYear')})")
-            
-            if is_new or excel_data_has_changed or metadata_was_fetched:
-                 merged_by_id[sid] = final_obj
-                 save_metadata_backup(final_obj, context)
-
-            missing_fields = {'synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast'}
-            missing = [human_readable_field(k) for k, v in final_obj.items() if k in missing_fields and not v]
-            if missing: report.setdefault('fetch_warnings', []).append(f"- {sid} - {final_obj['showName']} -> ⚠️ Missing: {', '.join(sorted(missing))}")
-
-    save_json_file(SERIES_JSON_FILE, sorted(merged_by_id.values(), key=lambda x: x.get('showID', 0)))
-    save_json_file(ARTISTS_JSON_FILE, artists_data)
-    save_json_file(EXTENDED_CAST_JSON_FILE, extended_cast_data)
-
-    # --- CREATE ARTIST LOOKUP FILE ---
-    artist_lookup_list = [{"artistID": k, "artistName": v['artistName']} for k, v in artists_data.items()]
-    save_json_file(ARTIST_LOOKUP_FILE, sorted(artist_lookup_list, key=lambda x: x['artistName']))
-    
-    end_time = now_ist()
-    duration = end_time - datetime.fromisoformat(context['start_time_iso'])
-    context['duration_str'] = f"{duration.seconds // 60} min {duration.seconds % 60} sec"
-    report_path = os.path.join(REPORTS_DIR, f"Report_{filename_timestamp()}.txt"); os.makedirs(REPORTS_DIR, exist_ok=True)
-    context['report_file_path'] = report_path
-    context['files_generated']['reports'].append(report_path)
-    write_report(context)
-    print(f"✅ Report written -> {report_path}")
-    print("\nAll done.")
 
 def fetch_excel_from_gdrive_bytes(file_id, creds_path):
     if not HAVE_GOOGLE_API: print("ℹ️ Google API packages not installed."); return None
