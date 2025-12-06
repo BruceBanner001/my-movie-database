@@ -1,19 +1,5 @@
-🚀 Running Script — Version v3.9 | Run ID: RUN_20251201_132330
+🚀 Running Script — Version v3.9 | Run ID: RUN_20251206_155154
 [DEBUG] Attempting direct media download...
-[DEBUG] 'Deleting Records' sheet is empty. Nothing to delete.
-[DEBUG] Initiating search for: 'Queen of Tears (2024)' on asianwiki.com (Expected Country: South Korea)
-[DEBUG] Executing search query: "Queen of Tears" 2024 Korean drama site:asianwiki.com
-[DEBUG] Found candidate URL: https://asianwiki.com/Queen_Of_Tears
-[DEBUG] Country validation passed (Expected: South Korea, Found: South Korea).
-[DEBUG] Title Validation PASSED: 'Queen Of Tears' matches 'Queen of Tears'
-[DEBUG] Validation passed. This is the correct page.
-[DEBUG] Initiating search for: 'Queen of Tears (2024)' on mydramalist.com (Expected Country: South Korea)
-[DEBUG] Executing search query: "Queen of Tears" 2024 Korean drama site:mydramalist.com
-[DEBUG] Found candidate URL: https://mydramalist.com/725367-untitled-park-ji-eun-project
-[DEBUG] Country validation passed (Expected: South Korea, Found: South Korea).
-[DEBUG] Title Validation PASSED: 'Queen of Tears' matches 'Queen of Tears'
-[DEBUG] Validation passed. This is the correct page.
-[DEBUG] Error scraping cast from MyDramaList: 'source_links_temp'
-✅ Report written -> reports/Report_01_December_2025_1323.txt
+✅ Report written -> reports/Report_06_December_2025_1551.txt
 
 All done.
