@@ -1,0 +1,59 @@
+✅ Workflow completed successfully
+🆔 Run ID: RUN_20260213_155624
+📅 Run Time: 13 February 2026 03:57 PM (IST)
+🕒 Duration: 0 min 45 sec
+⚙️ Script Version: v5.3
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Sheet1 — 13 February 2026 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🆕 Data Created:
+- 102 - Descendant of the Sun (2016) -> First Time Uploaded
+
+🔁 Data Updated:
+✍️ 101 - It's Okay to Not be Okay -> Show Name, Released Year, Watch Started On, Watch Ended On, Comments, Ratings, Category, Again Watched Dates Updated
+
+🕳️ Value Not Found:
+- 101 - It's Okay to Not be Okay -> ⚠️ Missing: Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 102 - Descendant of the Sun -> ⚠️ Missing: Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+
+📊 Summary (Sheet: Sheet1)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Created: 1
+🔁 Updated: 1
+🔍 Refetched: 0
+🚫 Skipped: 0
+⚠️ Warnings: 2
+  Total Rows: 2
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 Overall Summary
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Total Created: 1
+🔁 Total Updated: 1
+🔍 Total Refetched: 0
+🖼️ Show Images Updated: 0
+🧑‍🎨 New Artist Images Added: 0
+🚫 Total Skipped: 0
+❌ Total Deleted: 0
+🗄️ Total Archived Backups: 0
+⚠️ Total Warnings: 2
+💾 Backup Files: 1
+  Grand Total Rows: 2
+
+💾 Metadata Backups: 0
+
+📦 Total Objects in seriesData.json: 2
+📦 Total Objects in artists.json: 0
+📦 Total Objects in extendedCast.json: 0
+📦 Total Objects in artists_lookup.json: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ Folders Generated:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+backups/
+    BACKUP_13_February_2026_1556_101.json
+reports/
+    Report_13_February_2026_1557.txt
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🏁 Workflow finished successfully

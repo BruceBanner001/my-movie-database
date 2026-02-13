@@ -1,22 +1,60 @@
-🚀 Running Script — Version v5.0 | Run ID: RUN_20251206_165217
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:189: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS() as dd:
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:189: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS() as dd:
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:189: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS() as dd:
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:189: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS() as dd:
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:189: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS() as dd:
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:189: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS() as dd:
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:189: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS() as dd:
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:189: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS() as dd:
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:189: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS() as dd:
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:189: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS() as dd:
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:189: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS() as dd:
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:189: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS() as dd:
+🚀 Running Script — Version v5.3 | Run ID: RUN_20260213_155624
 [DEBUG] Attempting direct media download...
 [DEBUG] 'Deleting Records' sheet is empty. Nothing to delete.
-[DEBUG] Initiating search for: 'Queen of Tears (2024)' on asianwiki.com (Expected Country: South Korea)
-[DEBUG] DDGS library not available.
-[DEBUG] Initiating search for: 'Queen of Tears (2024)' on asianwiki.com (Expected Country: South Korea)
-[DEBUG] DDGS library not available.
-[DEBUG] Initiating search for: 'Queen of Tears (2024)' on mydramalist.com (Expected Country: South Korea)
-[DEBUG] DDGS library not available.
-[DEBUG] Initiating search for: 'Queen of Tears (2024)' on asianwiki.com (Expected Country: South Korea)
-[DEBUG] DDGS library not available.
-[DEBUG] Initiating search for: 'Queen of Tears (2024)' on mydramalist.com (Expected Country: South Korea)
-[DEBUG] DDGS library not available.
-[DEBUG] Initiating search for: 'Queen of Tears (2024)' on mydramalist.com (Expected Country: South Korea)
-[DEBUG] DDGS library not available.
-[DEBUG] Initiating search for: 'Queen of Tears (2024)' on mydramalist.com (Expected Country: South Korea)
-[DEBUG] DDGS library not available.
-[DEBUG] Initiating search for: 'Queen of Tears (2024)' on mydramalist.com (Expected Country: South Korea)
-[DEBUG] DDGS library not available.
-✅ Report written -> reports/Report_06_December_2025_1652.txt
+INFO: 'Manual Updates' sheet not found. Skipping.
+[DEBUG] Initiating search for: 'It's Okay to Not be Okay (2020)' on asianwiki.com (Expected Country: South Korea)
+[DEBUG] Executing search query: "It's Okay to Not be Okay" 2020 Korean site:asianwiki.com
+[DEBUG] Executing search query: "It's Okay to Not be Okay" 2020 site:asianwiki.com
+[DEBUG] Executing search query: "It's Okay to Not be Okay" site:asianwiki.com
+[DEBUG] Found soup in cache for 'It's Okay to Not be Okay' on asianwiki.com
+[DEBUG] Initiating search for: 'It's Okay to Not be Okay (2020)' on mydramalist.com (Expected Country: South Korea)
+[DEBUG] Executing search query: "It's Okay to Not be Okay" 2020 Korean site:mydramalist.com
+[DEBUG] Executing search query: "It's Okay to Not be Okay" 2020 site:mydramalist.com
+[DEBUG] Executing search query: "It's Okay to Not be Okay" site:mydramalist.com
+[DEBUG] Found soup in cache for 'It's Okay to Not be Okay' on asianwiki.com
+[DEBUG] Found soup in cache for 'It's Okay to Not be Okay' on mydramalist.com
+[DEBUG] Found soup in cache for 'It's Okay to Not be Okay' on mydramalist.com
+[DEBUG] Found soup in cache for 'It's Okay to Not be Okay' on mydramalist.com
+[DEBUG] Found soup in cache for 'It's Okay to Not be Okay' on mydramalist.com
+[DEBUG] Initiating search for: 'Descendant of the Sun (2016)' on asianwiki.com (Expected Country: South Korea)
+[DEBUG] Executing search query: "Descendant of the Sun" 2016 Korean site:asianwiki.com
+[DEBUG] Executing search query: "Descendant of the Sun" 2016 site:asianwiki.com
+[DEBUG] Executing search query: "Descendant of the Sun" site:asianwiki.com
+[DEBUG] Found soup in cache for 'Descendant of the Sun' on asianwiki.com
+[DEBUG] Initiating search for: 'Descendant of the Sun (2016)' on mydramalist.com (Expected Country: South Korea)
+[DEBUG] Executing search query: "Descendant of the Sun" 2016 Korean site:mydramalist.com
+[DEBUG] Executing search query: "Descendant of the Sun" 2016 site:mydramalist.com
+[DEBUG] Executing search query: "Descendant of the Sun" site:mydramalist.com
+[DEBUG] Found soup in cache for 'Descendant of the Sun' on asianwiki.com
+[DEBUG] Found soup in cache for 'Descendant of the Sun' on mydramalist.com
+[DEBUG] Found soup in cache for 'Descendant of the Sun' on mydramalist.com
+[DEBUG] Found soup in cache for 'Descendant of the Sun' on mydramalist.com
+[DEBUG] Found soup in cache for 'Descendant of the Sun' on mydramalist.com
+INFO: Sheet 'Sheet2' not found. Skipping.
+✅ Report written -> reports/Report_13_February_2026_1557.txt
 
 All done.

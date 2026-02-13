@@ -1,0 +1,64 @@
+{
+    "scriptVersion": "v5.3",
+    "runID": "RUN_20260213_155624",
+    "timestamp": "13 February 2026 03:56 PM (IST)",
+    "backupType": "partial_diff",
+    "showID": 101,
+    "showName": "It's Okay to Not be Okay",
+    "releasedYear": 2020,
+    "updatedDetails": "Show Name, Released Year, Watch Started On, Watch Ended On, Comments, Ratings, Category, Again Watched Dates Updated",
+    "changedFields": {
+        "showName": {
+            "old": "Queen of Tears",
+            "new": "It's Okay to Not be Okay"
+        },
+        "watchStartedOn": {
+            "old": "26-04-2024",
+            "new": "07-02-2023"
+        },
+        "watchEndedOn": {
+            "old": "29-04-2024",
+            "new": "08-02-2023"
+        },
+        "releasedYear": {
+            "old": 2024,
+            "new": 2020
+        },
+        "comments": {
+            "old": "Not Much As I Expected. That Was Disappointing. Ending Was Simple And Nice.",
+            "new": "Very Nice Psychological Series I Ever Watched.And The Ending Is Fabulous. It Touched My Heart"
+        },
+        "ratings": {
+            "old": 8,
+            "new": 10
+        },
+        "genres": {
+            "old": [
+                "Business",
+                "CEO",
+                "Revenge",
+                "Rich Girl",
+                "Romance"
+            ],
+            "new": [
+                "Comedy",
+                "Psychological",
+                "Romance"
+            ]
+        },
+        "againWatchedDates": {
+            "old": [
+                "29-04-2024",
+                "01-05-2024",
+                "22-03-2025",
+                "30-07-2025"
+            ],
+            "new": [
+                "14-09-2023",
+                "02-05-2024",
+                "26-08-2024",
+                "19-08-2025"
+            ]
+        }
+    }
+}
