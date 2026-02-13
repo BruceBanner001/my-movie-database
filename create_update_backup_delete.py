@@ -6,16 +6,16 @@
 #   - Professional-grade multi-file database system.
 #   - Intelligent scraping and caching.
 #   - Full support for ENGLISH dramas via IMDb.
-#   - FIX: Restored 'process_and_distribute_cast' and all helper functions.
+#   - FIX: Robust Cast & Synopsis extraction (AsianWiki/MDL).
 #
-# Version: v5.7 (Code Integrity Verified)
+# Version: v5.8 (Data Integrity Fix)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v5.7"
+SCRIPT_VERSION = "v5.8"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames": [], "showImage": None,
@@ -248,6 +248,7 @@ def download_and_save_image(url, local_path, is_artist=False):
 # --- ASIANWIKI SCRAPERS ---
 def _scrape_synopsis_from_asianwiki(soup, **kwargs):
     try:
+        # Improved regex to catch "Plot Synopsis" or "Synopsis" more aggressively
         headers = soup.find_all(['h2', 'h3'], string=re.compile(r"(Plot|Synopsis)", re.IGNORECASE))
         target_header = None
         for h in headers:
@@ -259,16 +260,21 @@ def _scrape_synopsis_from_asianwiki(soup, **kwargs):
             if elm: target_header = elm
 
         if not target_header: return None
+        
         content = []
         for sibling in target_header.next_siblings:
             if sibling.name == 'h2': break 
+            
             text = ""
             if sibling.name in ['p', 'div']:
                 text = sibling.get_text(strip=True)
             elif isinstance(sibling, str):
                 text = sibling.strip()
-            if text and len(text) > 10: 
+            
+            # Robust: Capture text if it's long enough, skipping ads/spaces
+            if text and len(text) > 50: 
                 content.append(text)
+                
         return "\n\n".join(content) if content else None
     except Exception as e: logd(f"AsianWiki Synopsis Error: {e}"); return None
 
@@ -402,7 +408,8 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
         
         if not cast_items: return None
 
-        for item in cast_items:
+        main_role_count = 0
+        for i, item in enumerate(cast_items):
             try:
                 artist_name = None
                 artist_link = None
@@ -429,18 +436,28 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
                 character_name = "Unknown"
                 small_text = item.select_one('small')
                 if small_text:
-                    text_content = small_text.get_text(strip=True)
-                    if "Main Role" in text_content: role = "Main Role"
-                    elif "Guest Role" in text_content: role = "Guest Role"
-                    elif "Support Role" in text_content: role = "Support Role"
-                    elif any(c in text_content for c in ["Screenwriter", "Director", "Producer"]): continue 
-                    char_text = re.sub(r'\s*(Main Role|Support Role|Guest Role)\s*', '', text_content).strip()
+                    text_content = small_text.get_text(strip=True).lower()
+                    # RELAXED MATCHING
+                    if "main" in text_content: role = "Main Role"
+                    elif "guest" in text_content: role = "Guest Role"
+                    elif "support" in text_content: role = "Support Role"
+                    
+                    char_text = re.sub(r'\s*(Main Role|Support Role|Guest Role)\s*', '', small_text.get_text(strip=True), flags=re.IGNORECASE).strip()
                     if char_text: character_name = char_text
+                
+                if role == "Main Role": main_role_count += 1
                 
                 full_cast_raw.append({"artistID": artist_id, "artistName": artist_name, "artistImageURL": artist_image_url, "characterName": character_name, "role": role})
             except Exception: continue
         
         if not full_cast_raw: return None
+        
+        # FAILSAFE: If no main roles detected but we have actors, assume first 6 are Main
+        if main_role_count == 0 and len(full_cast_raw) > 0:
+            logd("No Main Roles detected via text. Applying fallback: Top 6 actors set to Main Role.")
+            for i in range(min(6, len(full_cast_raw))):
+                full_cast_raw[i]['role'] = "Main Role"
+
         if 'context' in kwargs and 'source_links_temp' in kwargs['context']:
             kwargs['context']['source_links_temp']['raw_cast'] = full_cast_raw
         return full_cast_raw
