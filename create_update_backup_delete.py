@@ -6,16 +6,16 @@
 #   - Professional-grade multi-file database system.
 #   - Intelligent scraping and caching.
 #   - Full support for ENGLISH dramas via IMDb.
-#   - FIX: Restored missing 'load_json_file' function.
+#   - FIX: Restored 'process_and_distribute_cast' and all helper functions.
 #
-# Version: v5.6 (Complete & Verified)
+# Version: v5.7 (Code Integrity Verified)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v5.6"
+SCRIPT_VERSION = "v5.7"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames": [], "showImage": None,
@@ -755,6 +755,39 @@ def write_report(context):
         if files: lines.append(f"{folder}/"); [lines.append(f"    {os.path.basename(p)}") for p in files]
     lines.extend([sep, "🏁 Workflow finished successfully"])
     with open(context['report_file_path'], 'w', encoding='utf-8') as f: f.write("\n".join(lines))
+
+def process_and_distribute_cast(full_cast, artists_db, context):
+    main_cast, support_cast, guest_cast = [], [], []
+    context['new_artists_added'] = []
+    
+    if not full_cast: return [], {}, {}
+
+    for artist in full_cast:
+        artist_id = artist['artistID']
+        if artist_id not in artists_db:
+            image_path = os.path.join(ARTIST_IMAGES_DIR, f"{artist_id}.jpg")
+            image_downloaded = artist['artistImageURL'] and download_and_save_image(artist['artistImageURL'], image_path, is_artist=True)
+            
+            if image_downloaded:
+                artists_db[artist_id] = {"artistName": artist['artistName'], "artistImage": os.path.basename(image_path)}
+                context['files_generated']['artist_images'].append(image_path)
+            else:
+                artists_db[artist_id] = {"artistName": artist['artistName'], "artistImage": None}
+            
+            context['new_artists_added'].append({"artistID": artist_id, "artistName": artist['artistName'], "imageDownloaded": image_downloaded})
+        
+        cast_member = {"artistID": artist_id, "characterName": artist['characterName'], "role": artist['role']}
+        if artist['role'] == 'Main Role': main_cast.append(cast_member)
+        elif artist['role'] == 'Support Role': support_cast.append(cast_member)
+        elif artist['role'] == 'Guest Role': guest_cast.append(cast_member)
+
+    extended_cast = {}
+    if support_cast: extended_cast['supportRoles'] = support_cast
+    if guest_cast: extended_cast['guestRoles'] = guest_cast
+    
+    extended_info = { "hasSupportRoles": bool(support_cast), "supportRoleCount": len(support_cast), "hasGuestRoles": bool(guest_cast), "guestRoleCount": len(guest_cast) }
+    
+    return main_cast, extended_cast, extended_info
 
 def fetch_excel_from_gdrive_bytes(file_id, creds_path):
     if not HAVE_GOOGLE_API: print("ℹ️ Google API packages not installed."); return None
