@@ -6,16 +6,16 @@
 #   - Professional-grade multi-file database system.
 #   - Intelligent scraping and caching.
 #   - Full support for ENGLISH dramas via IMDb.
-#   - FIX: Fixed missing main() function definition.
+#   - FIX: Restored missing 'load_json_file' function.
 #
-# Version: v5.5 (Main Function Restoration)
+# Version: v5.6 (Complete & Verified)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v5.5"
+SCRIPT_VERSION = "v5.6"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames": [], "showImage": None,
@@ -772,6 +772,14 @@ def fetch_excel_from_gdrive_bytes(file_id, creds_path):
         fh.seek(0); return fh
     except Exception as e:
         logd(f"Google Drive fetch failed: {e}\n{traceback.format_exc()}"); return None
+
+def load_json_file(file_path):
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f: return json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError): return {} if file_path in [ARTISTS_JSON_FILE, EXTENDED_CAST_JSON_FILE] else []
+
+def save_json_file(file_path, data):
+    with open(file_path, 'w', encoding='utf-8') as f: json.dump(data, f, indent=4, ensure_ascii=False)
 
 def main():
     start_time = now_ist()
