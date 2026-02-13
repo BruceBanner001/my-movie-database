@@ -1,7 +1,34 @@
-🚀 Running Script — Version v5.3 | Run ID: RUN_20260213_160135
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:189: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS() as dd:
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:189: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS() as dd:
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:189: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS() as dd:
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:189: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS() as dd:
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:189: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS() as dd:
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:189: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
+  with DDGS() as dd:
+🚀 Running Script — Version v5.3 | Run ID: RUN_20260213_160816
 [DEBUG] Attempting direct media download...
+[DEBUG] 'Deleting Records' sheet is empty. Nothing to delete.
 INFO: 'Manual Updates' sheet not found. Skipping.
+[DEBUG] Initiating search for: 'Find Me in Your Memory (2020)' on asianwiki.com (Expected Country: South Korea)
+[DEBUG] Executing search query: "Find Me in Your Memory" 2020 Korean site:asianwiki.com
+[DEBUG] Executing search query: "Find Me in Your Memory" 2020 site:asianwiki.com
+[DEBUG] Executing search query: "Find Me in Your Memory" site:asianwiki.com
+[DEBUG] Found soup in cache for 'Find Me in Your Memory' on asianwiki.com
+[DEBUG] Initiating search for: 'Find Me in Your Memory (2020)' on mydramalist.com (Expected Country: South Korea)
+[DEBUG] Executing search query: "Find Me in Your Memory" 2020 Korean site:mydramalist.com
+[DEBUG] Executing search query: "Find Me in Your Memory" 2020 site:mydramalist.com
+[DEBUG] Executing search query: "Find Me in Your Memory" site:mydramalist.com
+[DEBUG] Found soup in cache for 'Find Me in Your Memory' on asianwiki.com
+[DEBUG] Found soup in cache for 'Find Me in Your Memory' on mydramalist.com
+[DEBUG] Found soup in cache for 'Find Me in Your Memory' on mydramalist.com
+[DEBUG] Found soup in cache for 'Find Me in Your Memory' on mydramalist.com
+[DEBUG] Found soup in cache for 'Find Me in Your Memory' on mydramalist.com
 INFO: Sheet 'Sheet2' not found. Skipping.
-✅ Report written -> reports/Report_13_February_2026_1601.txt
+✅ Report written -> reports/Report_13_February_2026_1608.txt
 
 All done.
