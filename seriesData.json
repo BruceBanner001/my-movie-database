@@ -67,10 +67,41 @@
             "Death",
             "Heartbreak"
         ],
-        "cast": [],
+        "cast": [
+            {
+                "artistID": "1465",
+                "characterName": "Lee Jung Hoon",
+                "role": "Main Role"
+            },
+            {
+                "artistID": "5346",
+                "characterName": "Yeo Ha Jin",
+                "role": "Main Role"
+            },
+            {
+                "artistID": "4837",
+                "characterName": "Yeo Ha Kyung",
+                "role": "Main Role"
+            },
+            {
+                "artistID": "5325",
+                "characterName": "Yoo Tae Eun",
+                "role": "Main Role"
+            },
+            {
+                "artistID": "1316",
+                "characterName": "Choi Hee Sang",
+                "role": "Main Role"
+            },
+            {
+                "artistID": "16803",
+                "characterName": "Jo Il Kwon",
+                "role": "Main Role"
+            }
+        ],
         "extendedCastInfo": {
-            "hasSupportRoles": true,
-            "supportRoleCount": 6,
+            "hasSupportRoles": false,
+            "supportRoleCount": 0,
             "hasGuestRoles": false,
             "guestRoleCount": 0
         },
