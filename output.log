@@ -1,34 +1,38 @@
-/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:189: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
-  with DDGS() as dd:
-/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:189: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
-  with DDGS() as dd:
-/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:189: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
-  with DDGS() as dd:
-/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:189: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
-  with DDGS() as dd:
-/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:189: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
-  with DDGS() as dd:
-/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:189: RuntimeWarning: This package (`duckduckgo_search`) has been renamed to `ddgs`! Use `pip install ddgs` instead.
-  with DDGS() as dd:
-🚀 Running Script — Version v5.3 | Run ID: RUN_20260213_160816
+🚀 Running Script — Version v5.7 | Run ID: RUN_20260213_164443
 [DEBUG] Attempting direct media download...
 [DEBUG] 'Deleting Records' sheet is empty. Nothing to delete.
 INFO: 'Manual Updates' sheet not found. Skipping.
 [DEBUG] Initiating search for: 'Find Me in Your Memory (2020)' on asianwiki.com (Expected Country: South Korea)
 [DEBUG] Executing search query: "Find Me in Your Memory" 2020 Korean site:asianwiki.com
-[DEBUG] Executing search query: "Find Me in Your Memory" 2020 site:asianwiki.com
-[DEBUG] Executing search query: "Find Me in Your Memory" site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Find_Me_in_Your_Memory
+[DEBUG] Country validation passed.
+[DEBUG] Title Validation PASSED: 'Find Me in Your Memory' matches 'Find Me in Your Memory'
 [DEBUG] Found soup in cache for 'Find Me in Your Memory' on asianwiki.com
+[DEBUG] Downloading image from: https://asianwiki.com/images/e/e0/Find_Me_in_Your_Memory-P2.jpg
+[DEBUG] Image saved to show-images/101.jpg
 [DEBUG] Initiating search for: 'Find Me in Your Memory (2020)' on mydramalist.com (Expected Country: South Korea)
 [DEBUG] Executing search query: "Find Me in Your Memory" 2020 Korean site:mydramalist.com
-[DEBUG] Executing search query: "Find Me in Your Memory" 2020 site:mydramalist.com
-[DEBUG] Executing search query: "Find Me in Your Memory" site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/50941-the-man-s-memory
+[DEBUG] Country validation passed.
+[DEBUG] Title Validation PASSED: 'Find Me in Your Memory' matches 'Find Me in Your Memory'
 [DEBUG] Found soup in cache for 'Find Me in Your Memory' on asianwiki.com
 [DEBUG] Found soup in cache for 'Find Me in Your Memory' on mydramalist.com
 [DEBUG] Found soup in cache for 'Find Me in Your Memory' on mydramalist.com
 [DEBUG] Found soup in cache for 'Find Me in Your Memory' on mydramalist.com
 [DEBUG] Found soup in cache for 'Find Me in Your Memory' on mydramalist.com
+[DEBUG] Downloading image from: https://i.mydramalist.com/0wKYq4_5s.jpg
+[DEBUG] Image saved to artist-images/1465.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/O8JKLk_5s.jpg
+[DEBUG] Image saved to artist-images/5346.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/73jLVj_5s.jpg
+[DEBUG] Image saved to artist-images/4837.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/WZNNO_5s.jpg
+[DEBUG] Image saved to artist-images/5325.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/x7ZR3_5s.jpg
+[DEBUG] Image saved to artist-images/1316.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/qYVOKD_5s.jpg
+[DEBUG] Image saved to artist-images/16803.jpg
 INFO: Sheet 'Sheet2' not found. Skipping.
-✅ Report written -> reports/Report_13_February_2026_1608.txt
+✅ Report written -> reports/Report_13_February_2026_1644.txt
 
 All done.

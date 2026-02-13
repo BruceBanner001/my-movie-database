@@ -2,12 +2,27 @@
     {
         "showID": 101,
         "showName": "Find Me in Your Memory",
-        "otherNames": [],
-        "showImage": null,
+        "otherNames": [
+            "As Memórias do Homem",
+            "Encuéntrame en Tu Memoria",
+            "Geu Namjaui Gieokbeop",
+            "Geu Namjaui Kieokbeop",
+            "His Memorization Method",
+            "Memoir of the Man",
+            "Memoirs of a Man",
+            "Memoirs of the Man",
+            "That Man's Mnemonics",
+            "The Man's Memory",
+            "The Man's Memory Method",
+            "The Way He Remembers",
+            "Отыщи меня в своей памяти",
+            "その男のギオクボプ"
+        ],
+        "showImage": "101.jpg",
         "watchStartedOn": "11-02-2023",
         "watchEndedOn": "12-02-2023",
         "releasedYear": 2020,
-        "releaseDate": null,
+        "releaseDate": "March 18 - May 13, 2020",
         "totalEpisodes": 32,
         "showType": "Drama",
         "nativeLanguage": "Korean",
@@ -35,20 +50,39 @@
         "updatedDetails": "First Time Uploaded",
         "synopsis": null,
         "topRatings": 7000,
-        "Duration": null,
-        "director": [],
-        "tags": [],
+        "Duration": "35 mins",
+        "director": [
+            "Oh Hyun Jong",
+            "Lee Soo Hyun"
+        ],
+        "tags": [
+            "Hyperthymesia",
+            "Female Chases Male First",
+            "Nice Female Lead",
+            "Healing",
+            "Smart Male Lead",
+            "Trauma",
+            "Nice Male Lead",
+            "Entertainment Industry",
+            "Death",
+            "Heartbreak"
+        ],
         "cast": [],
-        "extendedCastInfo": {},
+        "extendedCastInfo": {
+            "hasSupportRoles": true,
+            "supportRoleCount": 6,
+            "hasGuestRoles": false,
+            "guestRoleCount": 0
+        },
         "sitePriorityUsed": {
-            "showImage": null,
-            "releaseDate": null,
-            "otherNames": null,
-            "Duration": null,
+            "showImage": "asianwiki",
+            "releaseDate": "asianwiki",
+            "otherNames": "mydramalist",
+            "Duration": "mydramalist",
             "synopsis": null,
-            "director": null,
-            "tags": null,
-            "cast": null
+            "director": "mydramalist",
+            "tags": "mydramalist",
+            "cast": "mydramalist"
         }
     }
 ]
