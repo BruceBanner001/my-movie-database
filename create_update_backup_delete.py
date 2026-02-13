@@ -6,16 +6,16 @@
 #   - Professional-grade multi-file database system.
 #   - Intelligent scraping and caching.
 #   - Full support for ENGLISH dramas via IMDb.
-#   - FIX: Switched to 'ddgs' library to fix zero-result searches.
+#   - FIX: Fixed missing main() function definition.
 #
-# Version: v5.4 (DDGS Library Fix)
+# Version: v5.5 (Main Function Restoration)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v5.4"
+SCRIPT_VERSION = "v5.5"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames": [], "showImage": None,
@@ -60,7 +60,6 @@ try:
     HAVE_DDGS = True
 except ImportError as e:
     DDGS_ERROR = str(e)
-    # Fallback just in case environment has old package
     try:
         from duckduckgo_search import DDGS
         HAVE_DDGS = True
@@ -190,7 +189,7 @@ def get_soup_from_search(show_name, show_year, site, language, soup_cache):
     for query in search_queries:
         logd(f"Executing search query: {query}")
         try:
-            time.sleep(2.0) # Increased delay to avoid GitHub Runner IP blocks
+            time.sleep(2.0)
             with DDGS() as dd:
                 results = list(dd.text(query, max_results=5))
                 if not results: continue
@@ -773,6 +772,100 @@ def fetch_excel_from_gdrive_bytes(file_id, creds_path):
         fh.seek(0); return fh
     except Exception as e:
         logd(f"Google Drive fetch failed: {e}\n{traceback.format_exc()}"); return None
+
+def main():
+    start_time = now_ist()
+    context = {'run_id': run_id_timestamp(), 'start_time_iso': start_time.isoformat(), 'report_data': {}, 'current_sheet': None,
+               'files_generated': {'backups': [], 'show_images': [], 'artist_images': [], 'deleted_data': [], 'deleted_images': [], 'meta_backups': [], 'reports': [], 'archived_backups': [], 'archived_meta_backups': []}}
+    if not (os.path.exists(EXCEL_FILE_ID_TXT) and os.path.exists(SERVICE_ACCOUNT_FILE)): print("❌ Missing GDrive credentials."); sys.exit(1)
+    try:
+        with open(EXCEL_FILE_ID_TXT, 'r') as f: excel_id = f.read().strip()
+    except Exception as e: print(f"❌ Error with Excel ID file: {e}"); sys.exit(1)
+    
+    print(f"🚀 Running Script — Version {SCRIPT_VERSION} | Run ID: {context['run_id']}")
+    excel_bytes = fetch_excel_from_gdrive_bytes(excel_id, SERVICE_ACCOUNT_FILE)
+    if not excel_bytes: print("❌ Could not fetch Excel file."); sys.exit(1)
+
+    process_deletions(io.BytesIO(excel_bytes.getvalue()), context)
+
+    series_data = load_json_file(SERIES_JSON_FILE)
+    artists_data = load_json_file(ARTISTS_JSON_FILE)
+    extended_cast_data = load_json_file(EXTENDED_CAST_JSON_FILE)
+    merged_by_id = {o['showID']: o for o in series_data if o.get('showID')}
+    
+    manual_report = apply_manual_updates(io.BytesIO(excel_bytes.getvalue()), merged_by_id, context)
+    if manual_report: context['report_data']['Manual Updates'] = manual_report
+
+    sheets_to_process = [s.strip() for s in os.environ.get("SHEETS", "Sheet1").split(';') if s.strip()]
+    for sheet in sheets_to_process:
+        context['current_sheet'] = sheet
+        report = context['report_data'].setdefault(sheet, {})
+        excel_rows, warnings = excel_to_objects(io.BytesIO(excel_bytes.getvalue()), sheet)
+        if warnings: report.setdefault('data_warnings', []).extend(warnings)
+
+        for excel_obj in excel_rows:
+            sid = excel_obj['showID']
+            old_obj_from_json = merged_by_id.get(sid)
+            is_new = old_obj_from_json is None
+            
+            final_obj = {**JSON_OBJECT_TEMPLATE, **(old_obj_from_json or {}), **excel_obj}
+            initial_metadata_state = {k: final_obj.get(k) for k in ['synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast']}
+            context['new_artists_added'] = [] 
+            
+            final_obj = fetch_and_populate_metadata(final_obj, context, artists_data)
+            
+            if 'cast' in final_obj and isinstance(final_obj['cast'], list):
+                main_cast, extended_cast, extended_info = process_and_distribute_cast(final_obj['cast'], artists_data, context)
+                final_obj['cast'] = main_cast
+                final_obj['extendedCastInfo'] = extended_info
+                if extended_cast: extended_cast_data[str(sid)] = extended_cast
+            
+            final_obj['topRatings'] = (final_obj.get("ratings", 0)) * (len(final_obj.get("againWatchedDates", [])) + 1) * 100
+            
+            excel_data_has_changed = not is_new and objects_differ(old_obj_from_json, excel_obj)
+            metadata_was_fetched = any(final_obj.get(k) != v for k, v in initial_metadata_state.items())
+            
+            key_map = {'synopsis': 'Synopsis', 'showImage': 'Show Image', 'otherNames': 'Other Names', 'releaseDate': 'Release Date', 'Duration': 'Duration', 'director': 'Director', 'tags': 'Tags', 'cast': 'Cast'}
+            newly_fetched_fields = sorted([key_map[k] for k, v in initial_metadata_state.items() if not v and (isinstance(final_obj.get(k), list) and final_obj.get(k) or isinstance(final_obj.get(k), str) and final_obj.get(k))])
+
+            if is_new:
+                final_obj['updatedDetails'] = "First Time Uploaded"; final_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
+                report.setdefault('created', []).append(final_obj)
+                if newly_fetched_fields: report.setdefault('fetched_data', []).append(f"- {sid} - {final_obj['showName']} -> Fetched: {', '.join(newly_fetched_fields)}")
+            elif excel_data_has_changed:
+                changes = [human_readable_field(k) for k, v in excel_obj.items() if normalize_list(old_obj_from_json.get(k)) != normalize_list(v)]
+                final_obj['updatedDetails'] = f"{', '.join(changes)} Updated"; final_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
+                report.setdefault('updated', []).append({'old': old_obj_from_json, 'new': final_obj}); create_diff_backup(old_obj_from_json, final_obj, context)
+            elif metadata_was_fetched:
+                report.setdefault('refetched', []).append({'id': sid, 'name': final_obj['showName'], 'fields': newly_fetched_fields})
+            else:
+                report.setdefault('skipped', []).append(f"{sid} - {final_obj['showName']} ({final_obj.get('releasedYear')})")
+            
+            if is_new or excel_data_has_changed or metadata_was_fetched:
+                 merged_by_id[sid] = final_obj
+                 save_metadata_backup(final_obj, context)
+
+            missing_fields = {'synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast'}
+            missing = [human_readable_field(k) for k, v in final_obj.items() if k in missing_fields and not v]
+            if missing: report.setdefault('fetch_warnings', []).append(f"- {sid} - {final_obj['showName']} -> ⚠️ Missing: {', '.join(sorted(missing))}")
+
+    save_json_file(SERIES_JSON_FILE, sorted(merged_by_id.values(), key=lambda x: x.get('showID', 0)))
+    save_json_file(ARTISTS_JSON_FILE, artists_data)
+    save_json_file(EXTENDED_CAST_JSON_FILE, extended_cast_data)
+
+    # --- CREATE ARTIST LOOKUP FILE ---
+    artist_lookup_list = [{"artistID": k, "artistName": v['artistName']} for k, v in artists_data.items()]
+    save_json_file(ARTIST_LOOKUP_FILE, sorted(artist_lookup_list, key=lambda x: x['artistName']))
+    
+    end_time = now_ist()
+    duration = end_time - datetime.fromisoformat(context['start_time_iso'])
+    context['duration_str'] = f"{duration.seconds // 60} min {duration.seconds % 60} sec"
+    report_path = os.path.join(REPORTS_DIR, f"Report_{filename_timestamp()}.txt"); os.makedirs(REPORTS_DIR, exist_ok=True)
+    context['report_file_path'] = report_path
+    context['files_generated']['reports'].append(report_path)
+    write_report(context)
+    print(f"✅ Report written -> {report_path}")
+    print("\nAll done.")
 
 if __name__ == '__main__':
     try:
