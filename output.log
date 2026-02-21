@@ -1,22 +1,14 @@
 Impersonate 'chrome_106' does not exist, using 'random'
-🚀 Running Script — Version v5.8 | Run ID: RUN_20260215_002937
+🚀 Running Script — Version v5.8 | Run ID: RUN_20260222_002932
 [DEBUG] Attempting direct media download...
 [DEBUG] 'Deleting Records' sheet is empty. Nothing to delete.
 INFO: 'Manual Updates' sheet not found. Skipping.
 [DEBUG] Initiating search for: 'Find Me in Your Memory (2020)' on asianwiki.com (Expected Country: South Korea)
 [DEBUG] Executing search query: "Find Me in Your Memory" 2020 Korean site:asianwiki.com
-[DEBUG] Found candidate URL: https://asianwiki.com/Category:2020_South_Korean_Drama_Series
-[DEBUG] Found candidate URL: https://asianwiki.com/2020_MBC_Drama_Awards
-[DEBUG] Country validation FAILED. Rejecting page.
-[DEBUG] Found candidate URL: https://asianwiki.com/Category:2020_Drama_Series
-[DEBUG] Found candidate URL: https://asianwiki.com/Category:2020_MBC_Drama_Series
-[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Seul-Gi
-[DEBUG] Country validation FAILED. Rejecting page.
-[DEBUG] Executing search query: "Find Me in Your Memory" 2020 site:asianwiki.com
 [DEBUG] Found candidate URL: https://asianwiki.com/Find_Me_in_Your_Memory
 [DEBUG] Country validation passed.
 [DEBUG] Title Validation PASSED: 'Find Me in Your Memory' matches 'Find Me in Your Memory'
 INFO: Sheet 'Sheet2' not found. Skipping.
-✅ Report written -> reports/Report_15_February_2026_0029.txt
+✅ Report written -> reports/Report_22_February_2026_0029.txt
 
 All done.
