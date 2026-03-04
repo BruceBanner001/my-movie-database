@@ -1,31 +1,33 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Drama</title>
   </head>
   <body>
     <div>
-        <h1 id="showName"></h1>
-        <h2 id="showID"></h2>
-        <img src="" alt="Not found" id="showImage" />
-        <h2>Other Names :</h2>
-        <ol id="otherNames"></ol>
-        <p id="releaseDate"></p>
-        <h2>Synopsis</h2>
-        <p id="synopsis"></p>
-        <p id="duration"></p>
+      <h1 id="showName"></h1>
+      <h2 id="showID"></h2>
+      <img src="" alt="Not found" id="showImage" />
+      <h2>Other Names :</h2>
+      <ol id="otherNames"></ol>
+      <p id="releaseDate"></p>
+      <h2>Synopsis</h2>
+      <p id="synopsis"></p>
+      <p id="duration"></p>
+      <h2>Tags :</h2>
+      <ol id="tags"></ol>
     </div>
     <script>
       async function fetchData(id) {
         try {
           const requestData = await fetch(
-            "https://brucebanner001.github.io/my-movie-database/seriesData.json"
+            "https://brucebanner001.github.io/my-movie-database/seriesData.json",
           );
           const data = await requestData.json();
           console.log(data); //Logging Fetched Data
-          const fetched = data.find(item => item.showID === id);
+          const fetched = data.find((item) => item.showID === id);
           console.log(fetched); //Getting the Particular Array
           const showNameElement = document.getElementById("showName");
           const showIDElement = document.getElementById("showID");
@@ -34,24 +36,31 @@
           const releaseDateElement = document.getElementById("releaseDate");
           const synopsisElement = document.getElementById("synopsis");
           const durationElement = document.getElementById("duration");
+          const tagsElement = document.getElementById("tags");
           showNameElement.textContent = fetched.showName;
           showIDElement.textContent = `Show ID: ${fetched.showID}`;
-        //   https://brucebanner001.github.io/my-movie-database/images/101.jpg
-          showImageElement.src = fetched.showImage;
+          //   https://brucebanner001.github.io/my-movie-database/show-images/101.jpg
+          // showImageElement.src = fetched.showImage;
+          showImageElement.src = `https://brucebanner001.github.io/my-movie-database/show-images/{fetched.showImage}`;
           releaseDateElement.textContent = `Release Date : ${fetched.releaseDate}`;
           synopsisElement.textContent = fetched.synopsis;
-          synopsisElement.style.whiteSpace = "pre-line"
+          synopsisElement.style.whiteSpace = "pre-line";
           durationElement.textContent = `Duration : ${fetched.Duration}`;
-          fetched.otherNames.forEach(item => {
-            const listItem = document.createElement('li');
+          fetched.otherNames.forEach((item) => {
+            const listItem = document.createElement("li");
             listItem.textContent = item;
             otherNamesElement.appendChild(listItem);
-          })
+          });
+          fetched.tags.forEach((item) => {
+            const listItem = document.createElement("li");
+            listItem.textContent = item;
+            tagsElement.appendChild(listItem);
+          });
         } catch (err) {
           console.error("Fetch Error:", err);
         }
       }
-      fetchData(101);
+      fetchData(102);
     </script>
   </body>
 </html>

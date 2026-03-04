@@ -5,16 +5,16 @@
 #   v16.0 Engine.
 #   - Professional-grade multi-file database system.
 #   - Intelligent scraping (AsianWiki/MDL/IMDb).
-#   - FIX: Consolidated all fixes (Cast Distribution, Synopsis, Imports).
+#   - FIX: Deep Cast Scanning (Finds Main/Support/Guest correctly).
 #
-# Version: v6.0 (Definitive Release)
+# Version: v6.1 (Cast Classification Fix)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v6.0"
+SCRIPT_VERSION = "v6.1"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames": [], "showImage": None,
@@ -247,37 +247,27 @@ def download_and_save_image(url, local_path, is_artist=False):
 # --- ASIANWIKI SCRAPERS ---
 def _scrape_synopsis_from_asianwiki(soup, **kwargs):
     try:
-        # Strategy 1: Look for ID (Most accurate)
         target_element = soup.find(id=re.compile(r"(Plot|Synopsis)", re.IGNORECASE))
-        
-        # Strategy 2: Look for Header Text
         if not target_element:
             headers = soup.find_all(['h2', 'h3'])
             for h in headers:
                 if re.search(r"(Plot|Synopsis)", h.get_text(strip=True), re.IGNORECASE):
                     target_element = h
                     break
-        
         if not target_element: return None
-        
-        # Ensure we start from the main block element (jump up if inside a span)
         if target_element.name not in ['h2', 'h3']:
             parent = target_element.find_parent(['h2', 'h3'])
             if parent: target_element = parent
-
         content = []
         for sibling in target_element.next_siblings:
             if sibling.name in ['h2', 'h3']: break 
-            
             text = ""
             if sibling.name in ['p', 'div']:
                 text = sibling.get_text(strip=True)
             elif isinstance(sibling, str):
                 text = sibling.strip()
-            
             if text and len(text) > 30: 
                 content.append(text)
-                
         return "\n\n".join(content) if content else None
     except Exception as e: logd(f"AsianWiki Synopsis Error: {e}"); return None
 
@@ -412,7 +402,7 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
         if not cast_items: return None
 
         main_role_count = 0
-        for i, item in enumerate(cast_items):
+        for item in cast_items:
             try:
                 artist_name = None
                 artist_link = None
@@ -435,25 +425,39 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
                     if artist_image_url and ('avatar' in artist_image_url or 'default' in artist_image_url):
                         artist_image_url = None
                 
+                # --- NEW DEEP SCAN LOGIC ---
                 role = "Support Role"
                 character_name = "Unknown"
-                small_text = item.select_one('small')
-                if small_text:
-                    text_content = small_text.get_text(strip=True).lower()
-                    if "main" in text_content: role = "Main Role"
-                    elif "guest" in text_content: role = "Guest Role"
-                    elif "support" in text_content: role = "Support Role"
-                    
-                    char_text = re.sub(r'\s*(Main Role|Support Role|Guest Role)\s*', '', small_text.get_text(strip=True), flags=re.IGNORECASE).strip()
-                    if char_text: character_name = char_text
                 
+                # 1. Get ALL text in this item
+                full_text = item.get_text(" ", strip=True)
+                
+                # 2. Determine Role based on text existence
+                if re.search(r'\b(Main Role|Main Cast)\b', full_text, re.IGNORECASE):
+                    role = "Main Role"
+                elif re.search(r'\b(Guest Role|Guest Cast|Cameo)\b', full_text, re.IGNORECASE):
+                    role = "Guest Role"
+                elif re.search(r'\b(Support Role|Supporting Cast)\b', full_text, re.IGNORECASE):
+                    role = "Support Role"
+                elif re.search(r'(Screenwriter|Director|Producer)', full_text, re.IGNORECASE):
+                    continue # Skip crew members
+                
+                # 3. Extract Character Name (Everything that is NOT the role or the actor name)
+                # Look for the <small> tag that doesn't say "Role"
+                small_tags = item.select('small')
+                for s in small_tags:
+                    s_txt = s.get_text(strip=True)
+                    if "Role" not in s_txt and "Cast" not in s_txt:
+                        character_name = s_txt
+                        break
+
                 if role == "Main Role": main_role_count += 1
-                
                 full_cast_raw.append({"artistID": artist_id, "artistName": artist_name, "artistImageURL": artist_image_url, "characterName": character_name, "role": role})
             except Exception: continue
         
         if not full_cast_raw: return None
         
+        # FAILSAFE: Only if absolutely 0 main roles found (very rare now)
         if main_role_count == 0 and len(full_cast_raw) > 0:
             logd("No Main Roles detected via text. Applying fallback: Top 6 actors set to Main Role.")
             for i in range(min(6, len(full_cast_raw))):
