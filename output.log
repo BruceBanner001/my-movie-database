@@ -1,7 +1,22 @@
-🚀 Running Script — Version v6.1 | Run ID: RUN_20260304_122326
+🚀 Running Script — Version v6.1 | Run ID: RUN_20260304_123035
 [DEBUG] Attempting direct media download...
+[DEBUG] 'Deleting Records' sheet is empty. Nothing to delete.
 INFO: 'Manual Updates' sheet not found. Skipping.
+[DEBUG] Initiating search for: 'Our Glamorous Time (2018)' on mydramalist.com (Expected Country: China)
+[DEBUG] Executing search query: "Our Glamorous Time" 2018 Chinese site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/24203-our-glamorous-times
+[DEBUG] Country validation passed.
+[DEBUG] Title Validation PASSED: 'Our Glamorous Time' matches 'Our Glamorous Time'
+[DEBUG] Found soup in cache for 'Our Glamorous Time' on mydramalist.com
+[DEBUG] Downloading image from: https://i.mydramalist.com/2x3ZVc.jpg?v=1
+[DEBUG] Image saved to show-images/102.jpg
+[DEBUG] Found soup in cache for 'Our Glamorous Time' on mydramalist.com
+[DEBUG] Found soup in cache for 'Our Glamorous Time' on mydramalist.com
+[DEBUG] Found soup in cache for 'Our Glamorous Time' on mydramalist.com
+[DEBUG] Found soup in cache for 'Our Glamorous Time' on mydramalist.com
+[DEBUG] Found soup in cache for 'Our Glamorous Time' on mydramalist.com
+[DEBUG] Found soup in cache for 'Our Glamorous Time' on mydramalist.com
 INFO: Sheet 'Sheet2' not found. Skipping.
-✅ Report written -> reports/Report_04_March_2026_1223.txt
+✅ Report written -> reports/Report_04_March_2026_1230.txt
 
 All done.
