@@ -1,72 +1,7 @@
-🚀 Running Script — Version v6.2.1 | Run ID: RUN_20260309_142643
+🚀 Running Script — Version v6.3 | Run ID: RUN_20260309_145547
 [DEBUG] Attempting direct media download...
-[DEBUG] 'Deleting Records' sheet is empty. Nothing to delete.
 INFO: 'Manual Updates' sheet not found. Skipping.
-[DEBUG] Initiating search for: 'Find Me in Your Memory (2020)' on asianwiki.com (Expected Country: South Korea)
-[DEBUG] Executing search query: "Find Me in Your Memory" 2020 Korean site:asianwiki.com
-[DEBUG] Found candidate URL: https://asianwiki.com/Category:2020_South_Korean_Drama_Series
-[DEBUG] Found candidate URL: https://asianwiki.com/2020_MBC_Drama_Awards
-[DEBUG] Country validation FAILED. Rejecting page.
-[DEBUG] Found candidate URL: https://asianwiki.com/Category:2020_MBC_Drama_Series
-[DEBUG] Found candidate URL: https://asianwiki.com/Kim_Seul-Gi
-[DEBUG] Country validation FAILED. Rejecting page.
-[DEBUG] Found candidate URL: https://asianwiki.com/Category:2020_Unclassified_Drama_Series
-[DEBUG] Executing search query: "Find Me in Your Memory" 2020 site:asianwiki.com
-[DEBUG] Found candidate URL: https://asianwiki.com/Find_Me_in_Your_Memory
-[DEBUG] Country validation passed.
-[DEBUG] Title Validation PASSED: 'Find Me in Your Memory' matches 'Find Me in Your Memory'
-[DEBUG] Found soup in cache for 'Find Me in Your Memory' on asianwiki.com
-[DEBUG] Downloading image from: https://asianwiki.com/images/e/e0/Find_Me_in_Your_Memory-P2.jpg
-[DEBUG] Image saved to show-images/101.jpg
-[DEBUG] Initiating search for: 'Find Me in Your Memory (2020)' on mydramalist.com (Expected Country: South Korea)
-[DEBUG] Executing search query: "Find Me in Your Memory" 2020 Korean site:mydramalist.com
-[DEBUG] Found candidate URL: https://mydramalist.com/50941-the-man-s-memory
-[DEBUG] Country validation passed.
-[DEBUG] Title Validation PASSED: 'Find Me in Your Memory' matches 'Find Me in Your Memory'
-[DEBUG] Found soup in cache for 'Find Me in Your Memory' on asianwiki.com
-[DEBUG] Found soup in cache for 'Find Me in Your Memory' on mydramalist.com
-[DEBUG] Found soup in cache for 'Find Me in Your Memory' on mydramalist.com
-[DEBUG] Found soup in cache for 'Find Me in Your Memory' on mydramalist.com
-[DEBUG] Found soup in cache for 'Find Me in Your Memory' on mydramalist.com
-[DEBUG] Downloading image from: https://i.mydramalist.com/0wKYq4_5s.jpg
-[DEBUG] Image saved to artist-images/1465.jpg
-[DEBUG] Downloading image from: https://i.mydramalist.com/O8JKLk_5s.jpg
-[DEBUG] Image saved to artist-images/5346.jpg
-[DEBUG] Downloading image from: https://i.mydramalist.com/73jLVj_5s.jpg
-[DEBUG] Image saved to artist-images/4837.jpg
-[DEBUG] Downloading image from: https://i.mydramalist.com/WZNNO_5s.jpg
-[DEBUG] Image saved to artist-images/5325.jpg
-[DEBUG] Downloading image from: https://i.mydramalist.com/x7ZR3_5s.jpg
-[DEBUG] Image saved to artist-images/1316.jpg
-[DEBUG] Downloading image from: https://i.mydramalist.com/qYVOKD_5s.jpg
-[DEBUG] Image saved to artist-images/16803.jpg
-[DEBUG] Initiating search for: 'Our Glamorous Time (2018)' on mydramalist.com (Expected Country: China)
-[DEBUG] Executing search query: "Our Glamorous Time" 2018 Chinese site:mydramalist.com
-[DEBUG] Found candidate URL: https://mydramalist.com/24203-our-glamorous-times
-[DEBUG] Country validation passed.
-[DEBUG] Title Validation PASSED: 'Our Glamorous Time' matches 'Our Glamorous Time'
-[DEBUG] Found soup in cache for 'Our Glamorous Time' on mydramalist.com
-[DEBUG] Downloading image from: https://i.mydramalist.com/2x3ZVc.jpg?v=1
-[DEBUG] Image saved to show-images/102.jpg
-[DEBUG] Found soup in cache for 'Our Glamorous Time' on mydramalist.com
-[DEBUG] Found soup in cache for 'Our Glamorous Time' on mydramalist.com
-[DEBUG] Found soup in cache for 'Our Glamorous Time' on mydramalist.com
-[DEBUG] Found soup in cache for 'Our Glamorous Time' on mydramalist.com
-[DEBUG] Found soup in cache for 'Our Glamorous Time' on mydramalist.com
-[DEBUG] Found soup in cache for 'Our Glamorous Time' on mydramalist.com
-[DEBUG] Downloading image from: https://i.mydramalist.com/Z80bgW_5s.jpg
-[DEBUG] Image saved to artist-images/2321.jpg
-[DEBUG] Downloading image from: https://i.mydramalist.com/81ObbA_5s.jpg
-[DEBUG] Image saved to artist-images/13787.jpg
-[DEBUG] Downloading image from: https://i.mydramalist.com/JBOzYj_5s.jpg
-[DEBUG] Image saved to artist-images/1625.jpg
-[DEBUG] Downloading image from: https://i.mydramalist.com/6p38js.jpg
-[DEBUG] Image saved to artist-images/12428.jpg
-[DEBUG] Downloading image from: https://i.mydramalist.com/yWrWbk_5s.jpg
-[DEBUG] Image saved to artist-images/3649.jpg
-[DEBUG] Downloading image from: https://i.mydramalist.com/eABwe_5s.jpg
-[DEBUG] Image saved to artist-images/13108.jpg
 INFO: Sheet 'Sheet2' not found. Skipping.
-✅ Report written -> reports/Report_09_March_2026_1426.txt
+✅ Report written -> reports/Report_09_March_2026_1455.txt
 
 All done.
