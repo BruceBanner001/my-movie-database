@@ -7,14 +7,14 @@
 #   - Intelligent scraping (AsianWiki/MDL/IMDb).
 #   - FIX: Deep Cast Scanning (Finds Main/Support/Guest correctly).
 #
-# Version: v6.2 (Bugfixes: Reporting, MDL Tilde, Cast Retention)
+# Version: v6.2.1 (Bugfixes: Tuple Unpacking Fix, Reporting, MDL Tilde)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v6.2"
+SCRIPT_VERSION = "v6.2.1"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames":[], "showImage": None,
@@ -267,7 +267,7 @@ def _scrape_synopsis_from_asianwiki(soup, **kwargs):
             if parent: target_element = parent
         content =[]
         for sibling in target_element.next_siblings:
-            if sibling.name in ['h2', 'h3']: break 
+            if sibling.name in['h2', 'h3']: break 
             text = ""
             if sibling.name in['p', 'div']:
                 text = sibling.get_text(strip=True)
@@ -324,7 +324,7 @@ def _scrape_synopsis_from_mydramalist(soup, **kwargs):
                 if text: paragraphs.append(text)
         if not paragraphs:
             text = synopsis_div.get_text(separator='\n', strip=True)
-            paragraphs = [line.strip() for line in text.split('\n') if line.strip()]
+            paragraphs =[line.strip() for line in text.split('\n') if line.strip()]
         synopsis = "\n\n".join(paragraphs)
         
         # Regex updated to gracefully handle and remove trailing Tilde notes
@@ -687,16 +687,16 @@ def apply_manual_updates(excel, by_id, context):
     return report
 
 def excel_to_objects(excel, sheet):
-    try: df = pd.read_excel(excel, sheet_name=sheet, keep_default_na=False); df.columns = [c.strip().lower() for c in df.columns]
+    try: df = pd.read_excel(excel, sheet_name=sheet, keep_default_na=False); df.columns =[c.strip().lower() for c in df.columns]
     except ValueError: print(f"INFO: Sheet '{sheet}' not found. Skipping."); return [], []
     warnings =[]
-    try: again_idx = [i for i, c in enumerate(df.columns) if "again watched" in c][0]
+    try: again_idx =[i for i, c in enumerate(df.columns) if "again watched" in c][0]
     except IndexError: print(f"ERROR: 'Again Watched' in '{sheet}' not found. Skipping."); return [],[]
     MAP = {"no": "showID", "series title": "showName", "started date": "watchStartedOn", "finished date": "watchEndedOn", "year": "releasedYear", "total episodes": "totalEpisodes", "original language": "nativeLanguage", "language": "watchedLanguage", "ratings": "ratings", "catagory": "genres", "category": "genres", "original network": "network", "comments": "comments"}
     base_id = {"sheet1": 100, "feb 7 2023 onwards": 1000, "sheet2": 3000}.get(sheet.lower(), 0)
     processed =[]
     for index, row in df.iterrows():
-        obj, row_num = index + 2, {}
+        obj, row_num = {}, index + 2 # <------ FIXED TYPO HERE
         for col in df.columns[:again_idx]:
             key, val = MAP.get(col, col.strip()), row[col]
             if key in ("showID", "releasedYear", "totalEpisodes", "ratings"):
@@ -749,7 +749,7 @@ def create_diff_backup(old, new, context):
     context['files_generated']['backups'].append(path)
 
 def write_report(context):
-    lines = [f"✅ Workflow completed successfully", f"🆔 Run ID: {context['run_id']}", f"📅 Run Time: {now_ist().strftime('%d %B %Y %I:%M %p (IST)')}", f"🕒 Duration: {context['duration_str']}", f"⚙️ Script Version: {SCRIPT_VERSION}", ""]
+    lines =[f"✅ Workflow completed successfully", f"🆔 Run ID: {context['run_id']}", f"📅 Run Time: {now_ist().strftime('%d %B %Y %I:%M %p (IST)')}", f"🕒 Duration: {context['duration_str']}", f"⚙️ Script Version: {SCRIPT_VERSION}", ""]
     sep, stats = "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", {'created': 0, 'updated': 0, 'skipped': 0, 'deleted': 0, 'warnings': 0, 'show_images': 0, 'artist_images': 0, 'rows': 0, 'refetched': 0, 'archived': 0, 'artist_img_warn': 0}
     for sheet, changes in context['report_data'].items():
         if not any(v for k, v in changes.items()): continue
@@ -848,10 +848,10 @@ def main():
     start_time = now_ist()
     context = {
         'run_id': run_id_timestamp(), 
-        'file_ts': filename_timestamp(), # Fixed Timestamp generated once globally
+        'file_ts': filename_timestamp(),
         'start_time_iso': start_time.isoformat(), 
         'report_data': {}, 'current_sheet': None,
-        'files_generated': {'backups': [], 'show_images':[], 'artist_images': [], 'deleted_data': [], 'deleted_images':[], 'meta_backups': [], 'reports': [], 'archived_backups': [], 'archived_meta_backups':[]}
+        'files_generated': {'backups': [], 'show_images':[], 'artist_images': [], 'deleted_data': [], 'deleted_images':[], 'meta_backups':[], 'reports': [], 'archived_backups': [], 'archived_meta_backups':[]}
     }
     if not (os.path.exists(EXCEL_FILE_ID_TXT) and os.path.exists(SERVICE_ACCOUNT_FILE)): print("❌ Missing GDrive credentials."); sys.exit(1)
     try:
@@ -916,7 +916,7 @@ def main():
                 final_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
                 report.setdefault('created',[]).append(final_obj)
                 if newly_fetched_fields: 
-                    report.setdefault('fetched_data', []).append(f"- {sid} - {final_obj['showName']} -> Fetched: {', '.join(newly_fetched_fields)}")
+                    report.setdefault('fetched_data',[]).append(f"- {sid} - {final_obj['showName']} -> Fetched: {', '.join(newly_fetched_fields)}")
             else:
                 if excel_data_has_changed:
                     changes =[human_readable_field(k) for k, v in excel_obj.items() if normalize_list(old_obj_from_json.get(k)) != normalize_list(v)]
@@ -929,7 +929,7 @@ def main():
                     report.setdefault('refetched', []).append({'id': sid, 'name': final_obj['showName'], 'fields': newly_fetched_fields})
                 
                 if not excel_data_has_changed and not metadata_was_fetched:
-                    report.setdefault('skipped', []).append(f"{sid} - {final_obj['showName']} ({final_obj.get('releasedYear')})")
+                    report.setdefault('skipped',[]).append(f"{sid} - {final_obj['showName']} ({final_obj.get('releasedYear')})")
             
             if is_new or excel_data_has_changed or metadata_was_fetched:
                  merged_by_id[sid] = final_obj
