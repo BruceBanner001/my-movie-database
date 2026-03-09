@@ -1,7 +1,298 @@
-🚀 Running Script — Version v6.3 | Run ID: RUN_20260309_145547
+🚀 Running Script — Version v6.3 | Run ID: RUN_20260309_145911
 [DEBUG] Attempting direct media download...
+[DEBUG] 'Deleting Records' sheet is empty. Nothing to delete.
 INFO: 'Manual Updates' sheet not found. Skipping.
+[DEBUG] Initiating search for: 'Find Me in Your Memory (2020)' on asianwiki.com (Expected Country: South Korea)
+[DEBUG] Executing search query: "Find Me in Your Memory" 2020 Korean site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Find_Me_in_Your_Memory
+[DEBUG] Country validation passed.
+[DEBUG] Title Validation PASSED: 'Find Me in Your Memory' matches 'Find Me in Your Memory'
+[DEBUG] Found soup in cache for 'Find Me in Your Memory' on asianwiki.com
+[DEBUG] Downloading image from: https://asianwiki.com/images/e/e0/Find_Me_in_Your_Memory-P2.jpg
+[DEBUG] Image saved to show-images/101.jpg
+[DEBUG] Initiating search for: 'Find Me in Your Memory (2020)' on mydramalist.com (Expected Country: South Korea)
+[DEBUG] Executing search query: "Find Me in Your Memory" 2020 Korean site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/50941-the-man-s-memory
+[DEBUG] Country validation passed.
+[DEBUG] Title Validation PASSED: 'Find Me in Your Memory' matches 'Find Me in Your Memory'
+[DEBUG] Found soup in cache for 'Find Me in Your Memory' on asianwiki.com
+[DEBUG] Found soup in cache for 'Find Me in Your Memory' on mydramalist.com
+[DEBUG] Found soup in cache for 'Find Me in Your Memory' on mydramalist.com
+[DEBUG] Found soup in cache for 'Find Me in Your Memory' on mydramalist.com
+[DEBUG] Found soup in cache for 'Find Me in Your Memory' on mydramalist.com
+[DEBUG] Deep scraping full cast from: https://mydramalist.com/50941-the-man-s-memory/cast
+[DEBUG] Successfully loaded full cast page.
+[DEBUG] Downloading image from: https://i.mydramalist.com/BD2Db_5m.jpg
+[DEBUG] Image saved to artist-images/48927.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/xdQyj_5m.jpg
+[DEBUG] Image saved to artist-images/83153.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/w0RmJm.jpg
+[DEBUG] Image saved to artist-images/15983.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/d0W7Bb_5m.jpg
+[DEBUG] Image saved to artist-images/80159.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/pX7wn_5m.jpg
+[DEBUG] Image saved to artist-images/20948.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/0wKYq4_5s.jpg
+[DEBUG] Image saved to artist-images/1465.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/O8JKLk_5s.jpg
+[DEBUG] Image saved to artist-images/5346.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/73jLVj_5s.jpg
+[DEBUG] Image saved to artist-images/4837.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/WZNNO_5s.jpg
+[DEBUG] Image saved to artist-images/5325.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/x7ZR3_5s.jpg
+[DEBUG] Image saved to artist-images/1316.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/qYVOKD_5s.jpg
+[DEBUG] Image saved to artist-images/16803.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/RR0LV_5s.jpg
+[DEBUG] Image saved to artist-images/6240.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/d0vP10_5s.jpg
+[DEBUG] Image saved to artist-images/19472.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/6xQPg_5s.jpg
+[DEBUG] Image saved to artist-images/1905.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/RkYXxs.jpg
+[DEBUG] Image saved to artist-images/40665.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/p0ml8s.jpg
+[DEBUG] Image saved to artist-images/19494.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/BdmxrV_5s.jpg
+[DEBUG] Image saved to artist-images/40647.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/WPvJ6P_5s.jpg
+[DEBUG] Image saved to artist-images/24075.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/6bKNd_5s.jpg
+[DEBUG] Image saved to artist-images/4576.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/rXLzD_5s.jpg
+[DEBUG] Image saved to artist-images/9522.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/6qLYd_5s.jpg
+[DEBUG] Image saved to artist-images/2541.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/pgqpV_5s.jpg
+[DEBUG] Image saved to artist-images/9604.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/2533V_5s.jpg
+[DEBUG] Image saved to artist-images/16529.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/4307rs.jpg
+[DEBUG] Image saved to artist-images/37799.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/O84oLg_5s.jpg
+[DEBUG] Image saved to artist-images/17485.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/73EK4b_5s.jpg
+[DEBUG] Image saved to artist-images/49925.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/qEzXB_5s.jpg
+[DEBUG] Image saved to artist-images/63227.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/X66PZ_5s.jpg
+[DEBUG] Image saved to artist-images/57409.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/O87dpk_5s.jpg
+[DEBUG] Image saved to artist-images/40583.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/05ERO_5s.jpg
+[DEBUG] Image saved to artist-images/22616.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/w3lXJ_5s.jpg
+[DEBUG] Image saved to artist-images/35723.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/mOE622_5s.jpg
+[DEBUG] Image saved to artist-images/15244.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/2wDww2_5s.jpg
+[DEBUG] Image saved to artist-images/11629.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/RkKnYs.jpg
+[DEBUG] Image saved to artist-images/42161.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/k3JNm_5s.jpg
+[DEBUG] Image saved to artist-images/10853.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/jNlmz_5s.jpg
+[DEBUG] Image saved to artist-images/28261.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/rzNQZ_5s.jpg
+[DEBUG] Image saved to artist-images/20701.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/jwrrb_5s.jpg
+[DEBUG] Image saved to artist-images/67085.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/yWPJvk_5s.jpg
+[DEBUG] Image saved to artist-images/8092.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/oQ1DYk_5s.jpg
+[DEBUG] Image saved to artist-images/38555.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/ZwNKL_5s.jpg
+[DEBUG] Image saved to artist-images/17467.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/E578WW_5s.jpg
+[DEBUG] Image saved to artist-images/3535.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/RRZpR_5s.jpg
+[DEBUG] Image saved to artist-images/44149.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/x4QevX_5s.jpg
+[DEBUG] Image saved to artist-images/10253.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/RRBrrs.jpg
+[DEBUG] Image saved to artist-images/17997.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/ex2zE_5s.jpg
+[DEBUG] Image saved to artist-images/47305.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/l0b7gv_5s.jpg
+[DEBUG] Image saved to artist-images/2683.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/4VWRK_5s.jpg
+[DEBUG] Image saved to artist-images/18879.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/RQlbY_5s.jpg
+[DEBUG] Image saved to artist-images/4358.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/KpL1RR_5s.jpg
+[DEBUG] Image saved to artist-images/19916.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/0NDB6s.jpg
+[DEBUG] Image saved to artist-images/12704.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/BLVg6_5s.jpg
+[DEBUG] Image saved to artist-images/44153.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/4emj8Y_5s.jpg
+[DEBUG] Image saved to artist-images/42431.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/MB0Y1s.jpg
+[DEBUG] Image saved to artist-images/3168.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/wmvR1s.jpg
+[DEBUG] Image saved to artist-images/20009.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/2AOOO_5s.jpg
+[DEBUG] Image saved to artist-images/36045.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/eB8oq_5s.jpg
+[DEBUG] Image saved to artist-images/44155.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/QmDmYs.jpg
+[DEBUG] Image saved to artist-images/42433.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/ZQrKq_5s.jpg
+[DEBUG] Image saved to artist-images/20474.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/XBXRp_5s.jpg
+[DEBUG] Image saved to artist-images/40977.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/xJ8YN_5s.jpg
+[DEBUG] Image saved to artist-images/54703.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/x5W0z_5s.jpg
+[DEBUG] Image saved to artist-images/17135.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/ejr1n_5s.jpg
+[DEBUG] Image saved to artist-images/41407.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/WXzRP_5s.jpg
+[DEBUG] Image saved to artist-images/5862.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/rzXb7_5s.jpg
+[DEBUG] Image saved to artist-images/5554.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/4LY8K_5s.jpg
+[DEBUG] Image saved to artist-images/5645.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/eWD6n_5s.jpg
+[DEBUG] Image saved to artist-images/5863.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/QJmzJg_5s.jpg
+[DEBUG] Image saved to artist-images/44229.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/E0OLp_5s.jpg
+[DEBUG] Image saved to artist-images/63109.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/BdxQBb_5s.jpg
+[DEBUG] Image saved to artist-images/128475.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/l0DP16_5s.jpg
+[DEBUG] Image saved to artist-images/89937.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/r820p_5s.jpg
+[DEBUG] Image saved to artist-images/76687.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/Pxjqmz_5s.jpg
+[DEBUG] Image saved to artist-images/63875.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/vBVBg_5s.jpg
+[DEBUG] Image saved to artist-images/44469.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/WWq0O_5s.jpg
+[DEBUG] Image saved to artist-images/34743.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/RDPnY_5s.jpg
+[DEBUG] Image saved to artist-images/34139.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/x5g0r_5s.jpg
+[DEBUG] Image saved to artist-images/61755.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/qQzOzs.jpg
+[DEBUG] Image saved to artist-images/11685.jpg
+[DEBUG] Initiating search for: 'Our Glamorous Time (2018)' on mydramalist.com (Expected Country: China)
+[DEBUG] Executing search query: "Our Glamorous Time" 2018 Chinese site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/24203-our-glamorous-times
+[DEBUG] Country validation passed.
+[DEBUG] Title Validation PASSED: 'Our Glamorous Time' matches 'Our Glamorous Time'
+[DEBUG] Found soup in cache for 'Our Glamorous Time' on mydramalist.com
+[DEBUG] Downloading image from: https://i.mydramalist.com/2x3ZVc.jpg?v=1
+[DEBUG] Image saved to show-images/102.jpg
+[DEBUG] Found soup in cache for 'Our Glamorous Time' on mydramalist.com
+[DEBUG] Found soup in cache for 'Our Glamorous Time' on mydramalist.com
+[DEBUG] Found soup in cache for 'Our Glamorous Time' on mydramalist.com
+[DEBUG] Found soup in cache for 'Our Glamorous Time' on mydramalist.com
+[DEBUG] Found soup in cache for 'Our Glamorous Time' on mydramalist.com
+[DEBUG] Found soup in cache for 'Our Glamorous Time' on mydramalist.com
+[DEBUG] Deep scraping full cast from: https://mydramalist.com/24203-our-glamorous-times/cast
+[DEBUG] Successfully loaded full cast page.
+[DEBUG] Downloading image from: https://i.mydramalist.com/xoJKy_5m.jpg
+[DEBUG] Image saved to artist-images/102061.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/wyEQJ_5m.jpg
+[DEBUG] Image saved to artist-images/98939.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/0RAYY_5m.jpg
+[DEBUG] Image saved to artist-images/46477.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/PWydXm.jpg
+[DEBUG] Image saved to artist-images/18857.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/ENjDm_5m.jpg
+[DEBUG] Image saved to artist-images/54039.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/d1NL0_5m.jpg
+[DEBUG] Image saved to artist-images/54057.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/ZZLK7_5m.jpg
+[DEBUG] Image saved to artist-images/86281.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/Z80bgW_5s.jpg
+[DEBUG] Image saved to artist-images/2321.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/81ObbA_5s.jpg
+[DEBUG] Image saved to artist-images/13787.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/JBOzYj_5s.jpg
+[DEBUG] Image saved to artist-images/1625.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/6p38js.jpg
+[DEBUG] Image saved to artist-images/12428.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/yWrWbk_5s.jpg
+[DEBUG] Image saved to artist-images/3649.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/eABwe_5s.jpg
+[DEBUG] Image saved to artist-images/13108.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/ddRoKs.jpg
+[DEBUG] Image saved to artist-images/22916.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/vP51X_5s.jpg
+[DEBUG] Image saved to artist-images/4912.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/WmbYps.jpg
+[DEBUG] Image saved to artist-images/26707.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/vWQy2s.jpg
+[DEBUG] Image saved to artist-images/21847.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/Rl6KR_5s.jpg
+[DEBUG] Image saved to artist-images/16514.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/rmqRps.jpg
+[DEBUG] Image saved to artist-images/26709.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/j3d8z_5s.jpg
+[DEBUG] Image saved to artist-images/55197.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/1WDv6_5s.jpg
+[DEBUG] Image saved to artist-images/27047.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/22e3P_5s.jpg
+[DEBUG] Image saved to artist-images/27045.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/6pnLPs.jpg
+[DEBUG] Image saved to artist-images/26767.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/WVZkl_5s.jpg
+[DEBUG] Image saved to artist-images/10679.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/ZbKv8_5s.jpg
+[DEBUG] Image saved to artist-images/10995.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/qEYDK_5s.jpg
+[DEBUG] Image saved to artist-images/7743.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/jNx5O_5s.jpg
+[DEBUG] Image saved to artist-images/21911.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/ABONvL_5s.jpg
+[DEBUG] Image saved to artist-images/157822.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/Xqxnx_5s.jpg
+[DEBUG] Image saved to artist-images/93587.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/4d561_5s.jpg
+[DEBUG] Image saved to artist-images/67115.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/jneRJ_5s.jpg
+[DEBUG] Image saved to artist-images/26925.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/RAWrgs.jpg
+[DEBUG] Image saved to artist-images/26751.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/4e34qk_5s.jpg
+[DEBUG] Image saved to artist-images/2063.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/x22PXs.jpg
+[DEBUG] Image saved to artist-images/26851.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/knNrm_5s.jpg
+[DEBUG] Image saved to artist-images/4928.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/mOdKrb_5s.jpg
+[DEBUG] Image saved to artist-images/2458.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/wqlyA_5s.jpg
+[DEBUG] Image saved to artist-images/55199.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/2wQ1vO_5s.jpg
+[DEBUG] Image saved to artist-images/39423.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/4PdLr_5s.jpg
+[DEBUG] Image saved to artist-images/14348.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/EoLA7_5s.jpg
+[DEBUG] Image saved to artist-images/40065.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/0p0ANs.jpg
+[DEBUG] Image saved to artist-images/26753.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/1wqqVd_5s.jpg
+[DEBUG] Image saved to artist-images/14891.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/WmmEps.jpg
+[DEBUG] Image saved to artist-images/26941.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/kNxEj_5s.jpg
+[DEBUG] Image saved to artist-images/18933.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/xezyr_5s.jpg
+[DEBUG] Image saved to artist-images/56753.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/BdqPr1_5s.jpg
+[DEBUG] Image saved to artist-images/80659.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/O8DqEL_5s.jpg
+[DEBUG] Image saved to artist-images/55819.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/nOpWX6_5s.jpg
+[DEBUG] Image saved to artist-images/55817.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/mOPeRJ_5s.jpg
+[DEBUG] Image saved to artist-images/139757.jpg
 INFO: Sheet 'Sheet2' not found. Skipping.
-✅ Report written -> reports/Report_09_March_2026_1455.txt
+✅ Report written -> reports/Report_09_March_2026_1459.txt
 
 All done.
