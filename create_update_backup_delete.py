@@ -1,20 +1,20 @@
 # ============================================================
 # Script: create_update_backup_delete.py
-# Author:[BruceBanner001]
+# Author: [BruceBanner001]
 # Description:
 #   v16.0 Engine.
 #   - Professional-grade multi-file database system.
 #   - Intelligent scraping (AsianWiki/MDL/IMDb).
 #   - FIX: Deep Cast Scanning (Finds Main/Support/Guest correctly).
 #
-# Version: v6.2.1 (Bugfixes: Tuple Unpacking Fix, Reporting, MDL Tilde)
+# Version: v6.3 (Deep MDL /cast scraping, Deepcopy Fix, Meta Updates)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v6.2.1"
+SCRIPT_VERSION = "v6.3"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames":[], "showImage": None,
@@ -189,13 +189,12 @@ def get_soup_from_search(show_name, show_year, site, language, soup_cache):
         logd(f"Executing search query: {query}")
         results = None
         
-        # Built-in Retry Loop to prevent DuckDuckGo 429 Errors
         for attempt in range(3):
             try:
                 time.sleep(2.0 + attempt * 2.0)
                 with DDGS() as dd:
                     results = list(dd.text(query, max_results=5))
-                break # Success! Break out of the retry loop.
+                break 
             except Exception as e:
                 logd(f"DDGS attempt {attempt + 1} failed for '{query}': {e}")
                 
@@ -327,7 +326,6 @@ def _scrape_synopsis_from_mydramalist(soup, **kwargs):
             paragraphs =[line.strip() for line in text.split('\n') if line.strip()]
         synopsis = "\n\n".join(paragraphs)
         
-        # Regex updated to gracefully handle and remove trailing Tilde notes
         patterns_to_remove =[ 
             r'\s*\(Source:.*?\)\s*$', r'\s*Source:.*$', r'~~.*', 
             r'\s*Edit Translation\s*$', r'\s*(Additional Cast Members|Native title|Also Known As):.*$', 
@@ -402,16 +400,25 @@ def _scrape_tags_from_mydramalist(soup, **kwargs):
 def _scrape_cast_from_mydramalist(soup, **kwargs):
     try:
         full_cast_raw =[]
-        cast_box = soup.find('h3', string=re.compile(r'Cast & Credits', re.IGNORECASE))
-        cast_container = None
-        if cast_box:
-            box = cast_box.find_parent('div', class_='box')
-            if box: cast_container = box
-        if not cast_container: cast_container = soup
         
-        cast_items = cast_container.select('li.list-item')
-        if not cast_items: cast_items = cast_container.select('div.cast-list div.col-xs-8, div.cast-list div.col-sm-6')
-        if not cast_items: cast_items = cast_container.select('.p-a-0 li')
+        # --- NEW: DEEP /CAST PAGE FETCH ---
+        url = kwargs.get('url', '')
+        if url:
+            cast_url = url.split('?')[0].rstrip('/') + '/cast'
+            logd(f"Deep scraping full cast from: {cast_url}")
+            try:
+                r = SCRAPER.get(cast_url, timeout=15)
+                if r.status_code == 200:
+                    cast_soup = BeautifulSoup(r.text, "html.parser")
+                    if cast_soup.select('li.list-item, div.col-xs-8'):
+                        soup = cast_soup
+                        logd("Successfully loaded full cast page.")
+            except Exception as e:
+                logd(f"Failed to fetch /cast page, falling back to main page: {e}")
+
+        cast_items = soup.select('li.list-item')
+        if not cast_items: cast_items = soup.select('div.cast-list div.col-xs-8, div.cast-list div.col-sm-6')
+        if not cast_items: cast_items = soup.select('.p-a-0 li')
         
         if not cast_items: return None
 
@@ -527,7 +534,7 @@ def _scrape_cast_from_imdb(soup, **kwargs):
         data = _get_imdb_json_ld(soup)
         
         if data and 'actor' in data:
-            for actor in data['actor'][:15]: # Fixed: Limited to top 15 actors to prevent bloating
+            for actor in data['actor'][:15]: 
                 if 'name' not in actor: continue
                 artist_id = str(hash(actor['name']))[-8:] 
                 if 'url' in actor:
@@ -544,7 +551,7 @@ def _scrape_cast_from_imdb(soup, **kwargs):
         
         if not full_cast_raw:
             cards = soup.select('div[data-testid="title-cast-item"]')
-            for card in cards[:15]: # Fixed: Limited to top 15 actors to prevent bloating
+            for card in cards[:15]: 
                 try:
                     a_tag = card.select_one('a[data-testid="title-cast-item__actor"]')
                     if not a_tag: continue
@@ -609,7 +616,7 @@ def fetch_and_populate_metadata(obj, context, artists_db):
                 if soup: break
             
             if soup:
-                scrape_args = {'soup': soup, 'sid': s_id, 'show_name': s_name, 'context': context, 'artists_db': artists_db}
+                scrape_args = {'soup': soup, 'url': url, 'sid': s_id, 'show_name': s_name, 'context': context, 'artists_db': artists_db}
                 data = SCRAPE_MAP[site_to_use][field](**scrape_args)
                 if data:
                     obj[field] = data
@@ -665,7 +672,7 @@ def process_deletions(excel, context):
         save_json_file(EXTENDED_CAST_JSON_FILE, extended_cast_data)
 
 def apply_manual_updates(excel, by_id, context):
-    try: df = pd.read_excel(excel, sheet_name='Manual Updates', keep_default_na=False); df.columns = [c.strip().lower() for c in df.columns]
+    try: df = pd.read_excel(excel, sheet_name='Manual Updates', keep_default_na=False); df.columns =[c.strip().lower() for c in df.columns]
     except ValueError: print("INFO: 'Manual Updates' sheet not found. Skipping."); return {}
     MAP, report = {"no": "showID", "image": "showImage", "other names": "otherNames", "release date": "releaseDate", "synopsis": "synopsis", "duration": "Duration"}, {}
     for _, row in df.iterrows():
@@ -696,7 +703,7 @@ def excel_to_objects(excel, sheet):
     base_id = {"sheet1": 100, "feb 7 2023 onwards": 1000, "sheet2": 3000}.get(sheet.lower(), 0)
     processed =[]
     for index, row in df.iterrows():
-        obj, row_num = {}, index + 2 # <------ FIXED TYPO HERE
+        obj, row_num = {}, index + 2
         for col in df.columns[:again_idx]:
             key, val = MAP.get(col, col.strip()), row[col]
             if key in ("showID", "releasedYear", "totalEpisodes", "ratings"):
@@ -731,6 +738,9 @@ def save_metadata_backup(obj, context):
     if fetched: data["fetchedFields"] = fetched
     if context.get('new_artists_added'): data["newArtistsAdded"] = context.get('new_artists_added')
     
+    # NEW: Include sitePriorityUsed strictly as requested
+    data["sitePriorityUsed"] = obj.get("sitePriorityUsed", {})
+    
     if not fetched and not context.get('new_artists_added'): return
 
     path = os.path.join(BACKUP_META_DIR, f"META_{context['file_ts']}_{obj['showID']}.json"); os.makedirs(BACKUP_META_DIR, exist_ok=True)
@@ -759,12 +769,12 @@ def write_report(context):
         if changes.get('refetched'): lines.append("\n🔍 Refetched Data:"); [lines.append(f"✨ {o['id']} - {o['name']} -> Fetched: {', '.join(o['fields'])}") for o in changes['refetched']]
         if changes.get('data_warnings'): lines.append("\n⚠️ Data Validation Warnings:");[lines.append(i) for i in changes['data_warnings']]
         if changes.get('fetched_data'): lines.append("\n🖼️ Fetched Data Details:");[lines.append(i) for i in sorted(changes['fetched_data'])]
-        if changes.get('fetch_warnings'): lines.append("\n🕳️ Value Not Found:"); [lines.append(i) for i in sorted(changes['fetch_warnings'])]
+        if changes.get('fetch_warnings'): lines.append("\n🕳️ Value Not Found:");[lines.append(i) for i in sorted(changes['fetch_warnings'])]
         if changes.get('artist_image_warnings'): lines.append("\n🧑‍🎨 Artist Image Warnings:"); [lines.append(i) for i in sorted(changes['artist_image_warnings'])]
         if changes.get('skipped'): lines.append("\n🚫 Skipped (Unchanged):");[lines.append(f"- {i}") for i in sorted(changes['skipped'])]
-        if changes.get('data_deleted'): lines.append("\n❌ Data Deleted:"); [lines.append(i) for i in changes['data_deleted']]
+        if changes.get('data_deleted'): lines.append("\n❌ Data Deleted:");[lines.append(i) for i in changes['data_deleted']]
         
-        if sheet not in ["Deleting Records", "Manual Updates"]:
+        if sheet not in["Deleting Records", "Manual Updates"]:
             s = {k: len(v) for k, v in changes.items() if isinstance(v, list)}; total = sum(s.get(k, 0) for k in['created', 'updated', 'skipped', 'refetched'])
             stats['created'] += s.get('created', 0); stats['updated'] += s.get('updated', 0); stats['skipped'] += s.get('skipped', 0); stats['refetched'] += s.get('refetched', 0)
             stats['show_images'] += sum(1 for i in changes.get('fetched_data',[]) if "Show Image" in i); stats['rows'] += total
@@ -851,7 +861,7 @@ def main():
         'file_ts': filename_timestamp(),
         'start_time_iso': start_time.isoformat(), 
         'report_data': {}, 'current_sheet': None,
-        'files_generated': {'backups': [], 'show_images':[], 'artist_images': [], 'deleted_data': [], 'deleted_images':[], 'meta_backups':[], 'reports': [], 'archived_backups': [], 'archived_meta_backups':[]}
+        'files_generated': {'backups':[], 'show_images':[], 'artist_images': [], 'deleted_data': [], 'deleted_images':[], 'meta_backups':[], 'reports': [], 'archived_backups':[], 'archived_meta_backups':[]}
     }
     if not (os.path.exists(EXCEL_FILE_ID_TXT) and os.path.exists(SERVICE_ACCOUNT_FILE)): print("❌ Missing GDrive credentials."); sys.exit(1)
     try:
@@ -884,17 +894,22 @@ def main():
             old_obj_from_json = merged_by_id.get(sid)
             is_new = old_obj_from_json is None
             
-            final_obj = {**JSON_OBJECT_TEMPLATE, **(old_obj_from_json or {}), **excel_obj}
+            # --- FIXED SHALLOW COPY BUG ---
+            base_template = copy.deepcopy(JSON_OBJECT_TEMPLATE)
+            old_data = copy.deepcopy(old_obj_from_json) if old_obj_from_json else {}
+            final_obj = {**base_template, **old_data, **excel_obj}
+            
+            # Absolute failsafe isolated priority dictionary 
+            final_obj['sitePriorityUsed'] = copy.deepcopy(final_obj.get('sitePriorityUsed') or JSON_OBJECT_TEMPLATE['sitePriorityUsed'])
+            
             initial_metadata_state = {k: final_obj.get(k) for k in['synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast']}
             context['new_artists_added'] =[] 
             
             final_obj = fetch_and_populate_metadata(final_obj, context, artists_data)
             
-            # Fixed Cast Modification Block 
             if 'cast' in final_obj and isinstance(final_obj['cast'], list):
                 main_cast, extended_cast, extended_info = process_and_distribute_cast(final_obj['cast'], artists_data, context)
                 
-                # Combine them safely to keep all roles right in your primary JSON file
                 full_standardized_cast = main_cast + extended_cast.get('supportRoles', []) + extended_cast.get('guestRoles',[])
                 
                 final_obj['cast'] = full_standardized_cast
@@ -910,7 +925,6 @@ def main():
             key_map = {'synopsis': 'Synopsis', 'showImage': 'Show Image', 'otherNames': 'Other Names', 'releaseDate': 'Release Date', 'Duration': 'Duration', 'director': 'Director', 'tags': 'Tags', 'cast': 'Cast'}
             newly_fetched_fields = sorted([key_map[k] for k, v in initial_metadata_state.items() if not v and (isinstance(final_obj.get(k), list) and final_obj.get(k) or isinstance(final_obj.get(k), str) and final_obj.get(k))])
 
-            # Fixed Logging Collision
             if is_new:
                 final_obj['updatedDetails'] = "First Time Uploaded"
                 final_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
@@ -937,7 +951,7 @@ def main():
 
             missing_fields = {'synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast'}
             missing =[human_readable_field(k) for k, v in final_obj.items() if k in missing_fields and not v]
-            if missing: report.setdefault('fetch_warnings', []).append(f"- {sid} - {final_obj['showName']} -> ⚠️ Missing: {', '.join(sorted(missing))}")
+            if missing: report.setdefault('fetch_warnings',[]).append(f"- {sid} - {final_obj['showName']} -> ⚠️ Missing: {', '.join(sorted(missing))}")
 
     save_json_file(SERIES_JSON_FILE, sorted(merged_by_id.values(), key=lambda x: x.get('showID', 0)))
     save_json_file(ARTISTS_JSON_FILE, artists_data)
