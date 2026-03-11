@@ -1,46 +1,118 @@
 /home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:102: UserWarning: Parsing dates in %d-%m-%Y format when dayfirst=False (the default) was specified. Pass `dayfirst=True` or specify a format to silence this warning.
   try: dt = pd.to_datetime(str(val).strip(), errors='coerce'); return None if pd.isna(dt) else dt.strftime("%d-%m-%Y")
-🚀 Running Script — Version v6.8 | Run ID: RUN_20260311_133116
+🚀 Running Script — Version v6.9 | Run ID: RUN_20260311_134505
 [DEBUG] Attempting direct media download...
 [DEBUG] 'Deleting Records' sheet is empty. Nothing to delete.
 INFO: 'Manual Updates' sheet not found. Skipping.
-[DEBUG] Initiating search for: 'Find Me in Your Memory (2020)' on asianwiki.com (Expected Country: South Korea)
-[DEBUG] Executing search query: "Find Me in Your Memory" 2020 Korean site:asianwiki.com
-[DEBUG] Found candidate URL: https://asianwiki.com/Find_Me_in_Your_Memory
+[DEBUG] Initiating search for: 'It's Okay That's Love (2014)' on asianwiki.com (Expected Country: South Korea)
+[DEBUG] Executing search query: "It's Okay That's Love" 2014 Korean site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/It's_Alright,_This_Is_Love
 [DEBUG] Country validation passed.
-[DEBUG] Title Validation PASSED: 'Find Me in Your Memory' matches 'Find Me in Your Memory'
-[DEBUG] Found soup in cache for 'Find Me in Your Memory' on asianwiki.com
-[DEBUG] Downloading image from: https://asianwiki.com/images/e/e0/Find_Me_in_Your_Memory-P2.jpg
-[DEBUG] Image saved to show-images/101.jpg
-[DEBUG] Initiating search for: 'Find Me in Your Memory (2020)' on mydramalist.com (Expected Country: South Korea)
-[DEBUG] Executing search query: "Find Me in Your Memory" 2020 Korean site:mydramalist.com
-[DEBUG] Found candidate URL: https://mydramalist.com/50941-the-man-s-memory
+[DEBUG] Title Validation PASSED: 'It's Alright, This Is Love' matches 'It's Okay That's Love'
+[DEBUG] Found soup in cache for 'It's Okay That's Love' on asianwiki.com
+[DEBUG] Downloading image from: https://asianwiki.com/images/5/53/It%27s_Okay%2C_That%27s_Love-p3.jpg
+[DEBUG] Image saved to show-images/103.jpg
+[DEBUG] Initiating search for: 'It's Okay That's Love (2014)' on mydramalist.com (Expected Country: South Korea)
+[DEBUG] Executing search query: "It's Okay That's Love" 2014 Korean site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/9289-its-okay-thats-love
 [DEBUG] Country validation passed.
-[DEBUG] Title Validation PASSED: 'Find Me in Your Memory' matches 'Find Me in Your Memory'
-[DEBUG] Found soup in cache for 'Find Me in Your Memory' on asianwiki.com
-[DEBUG] Found soup in cache for 'Find Me in Your Memory' on mydramalist.com
-[DEBUG] Found soup in cache for 'Find Me in Your Memory' on mydramalist.com
-[DEBUG] Found soup in cache for 'Find Me in Your Memory' on mydramalist.com
-[DEBUG] Found soup in cache for 'Find Me in Your Memory' on mydramalist.com
-[DEBUG] Deep scraping full cast & crew from: https://mydramalist.com/50941-the-man-s-memory/cast
+[DEBUG] Title Validation PASSED: 'It's Okay, That's Love' matches 'It's Okay That's Love'
+[DEBUG] Found soup in cache for 'It's Okay That's Love' on asianwiki.com
+[DEBUG] Found soup in cache for 'It's Okay That's Love' on mydramalist.com
+[DEBUG] Found soup in cache for 'It's Okay That's Love' on mydramalist.com
+[DEBUG] Found soup in cache for 'It's Okay That's Love' on mydramalist.com
+[DEBUG] Found soup in cache for 'It's Okay That's Love' on mydramalist.com
+[DEBUG] Deep scraping full cast & crew from: https://mydramalist.com/9289-its-okay-thats-love/cast
 [DEBUG] Successfully loaded the /cast page.
-[DEBUG] Initiating search for: 'Our Glamorous Time (2018)' on mydramalist.com (Expected Country: China)
-[DEBUG] Executing search query: "Our Glamorous Time" 2018 Chinese site:mydramalist.com
-[DEBUG] Found candidate URL: https://mydramalist.com/24203-our-glamorous-times
-[DEBUG] Country validation passed.
-[DEBUG] Title Validation PASSED: 'Our Glamorous Time' matches 'Our Glamorous Time'
-[DEBUG] Found soup in cache for 'Our Glamorous Time' on mydramalist.com
-[DEBUG] Downloading image from: https://i.mydramalist.com/2x3ZVc.jpg?v=1
-[DEBUG] Image saved to show-images/102.jpg
-[DEBUG] Found soup in cache for 'Our Glamorous Time' on mydramalist.com
-[DEBUG] Found soup in cache for 'Our Glamorous Time' on mydramalist.com
-[DEBUG] Found soup in cache for 'Our Glamorous Time' on mydramalist.com
-[DEBUG] Found soup in cache for 'Our Glamorous Time' on mydramalist.com
-[DEBUG] Found soup in cache for 'Our Glamorous Time' on mydramalist.com
-[DEBUG] Found soup in cache for 'Our Glamorous Time' on mydramalist.com
-[DEBUG] Deep scraping full cast & crew from: https://mydramalist.com/24203-our-glamorous-times/cast
-[DEBUG] Successfully loaded the /cast page.
+[DEBUG] Downloading image from: https://i.mydramalist.com/d1R8b_5m.jpg
+[DEBUG] Image saved to artist-images/64131.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/e11EQ_5m.jpg
+[DEBUG] Image saved to artist-images/74267.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/gWk4rm.jpg
+[DEBUG] Image saved to artist-images/15913.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/w0Qebm.jpg
+[DEBUG] Image saved to artist-images/15904.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/w8eqAs.jpg
+[DEBUG] Image saved to artist-images/433.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/4k0oZs.jpg
+[DEBUG] Image saved to artist-images/807.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/XOo6p_5s.jpg
+[DEBUG] Image saved to artist-images/1113.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/w6PLY_5s.jpg
+[DEBUG] Image saved to artist-images/1817.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/Xe7vJs.jpg
+[DEBUG] Image saved to artist-images/3174.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/6q6Z2_5s.jpg
+[DEBUG] Image saved to artist-images/7660.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/43e46s.jpg
+[DEBUG] Image saved to artist-images/6535.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/XV3xJ_5s.jpg
+[DEBUG] Image saved to artist-images/4622.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/ROpgY_5s.jpg
+[DEBUG] Image saved to artist-images/1193.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/VXdOeJ_5s.jpg
+[DEBUG] Image saved to artist-images/6007.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/E2PZ5s.jpg
+[DEBUG] Image saved to artist-images/5719.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/xw1DX_5s.jpg
+[DEBUG] Image saved to artist-images/1693.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/yW8b3s.jpg
+[DEBUG] Image saved to artist-images/7663.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/2w4EE2_5s.jpg
+[DEBUG] Image saved to artist-images/3642.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/pV1QB_5s.jpg
+[DEBUG] Image saved to artist-images/7662.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/Xd8krw_5s.jpg
+[DEBUG] Image saved to artist-images/7661.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/jxE3b_5s.jpg
+[DEBUG] Image saved to artist-images/32763.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/PxDyys.jpg
+[DEBUG] Image saved to artist-images/7664.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/BwgA5s.jpg
+[DEBUG] Image saved to artist-images/3581.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/xpLOy_5s.jpg
+[DEBUG] Image saved to artist-images/3211.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/EDXRps.jpg
+[DEBUG] Image saved to artist-images/3112.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/v344D_5s.jpg
+[DEBUG] Image saved to artist-images/3785.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/0w1Jg4_5s.jpg
+[DEBUG] Image saved to artist-images/3021.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/0wxVyE_5s.jpg
+[DEBUG] Image saved to artist-images/19096.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/RvAL6_5s.jpg
+[DEBUG] Image saved to artist-images/5610.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/xgqxEs.jpg
+[DEBUG] Image saved to artist-images/9299.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/2gDvWs.jpg
+[DEBUG] Image saved to artist-images/1205.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/KpZRx8_5s.jpg
+[DEBUG] Image saved to artist-images/39605.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/gl2los.jpg
+[DEBUG] Image saved to artist-images/10900.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/2OnqVs.jpg
+[DEBUG] Image saved to artist-images/5393.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/Ndoqgo_5s.jpg
+[DEBUG] Image saved to artist-images/3279.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/Wk3NW_5s.jpg
+[DEBUG] Image saved to artist-images/4592.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/QJXW6Y_5s.jpg
+[DEBUG] Image saved to artist-images/9697.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/lJO5Ls.jpg
+[DEBUG] Image saved to artist-images/21366.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/eYgEOW_5s.jpg
+[DEBUG] Image saved to artist-images/8226.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/5vbrnB_5s.jpg
+[DEBUG] Image saved to artist-images/4495.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/WWLoP_5s.jpg
+[DEBUG] Image saved to artist-images/21016.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/eoZmQs.jpg
+[DEBUG] Image saved to artist-images/21053.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/wK0xns.jpg
+[DEBUG] Image saved to artist-images/20028.jpg
+[DEBUG] Downloading image from: https://i.mydramalist.com/Q53d4s.jpg
+[DEBUG] Image saved to artist-images/20149.jpg
 INFO: Sheet 'Sheet2' not found. Skipping.
-✅ Report written -> reports/Report_11_March_2026_1331.txt
+✅ Report written -> reports/Report_11_March_2026_1345.txt
 
 All done.
