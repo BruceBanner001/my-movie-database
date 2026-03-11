@@ -7,24 +7,24 @@
 #   - Intelligent scraping (AsianWiki/MDL/IMDb).
 #   - FIX: Deep Cast Scanning (Finds Main/Support/Guest correctly).
 #
-# Version: v6.3 (Deep MDL /cast scraping, Deepcopy Fix, Meta Updates)
+# Version: v6.5 (Crew Isolation, Auto-Sync Directors, Mini-Receipt Reports)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v6.3"
+SCRIPT_VERSION = "v6.5"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames":[], "showImage": None,
     "watchStartedOn": None, "watchEndedOn": None, "releasedYear": 0,
     "releaseDate": None, "totalEpisodes": 0, "showType": None,
     "nativeLanguage": None, "watchedLanguage": None, "country": None,
-    "comments": None, "ratings": 0, "genres": [], "network": [],
+    "comments": None, "ratings": 0, "genres": [], "network":[],
     "againWatchedDates":[], "updatedOn": None, "updatedDetails": None,
     "synopsis": None, "topRatings": 0, "Duration": None,
-    "director": [], "tags": [], "cast":[], "extendedCastInfo": {},
+    "director": [], "tags":[], "cast": {}, 
     "sitePriorityUsed": {"showImage": None, "releaseDate": None, "otherNames": None, "Duration": None, "synopsis": None, "director": None, "tags": None, "cast": None}
 }
 
@@ -38,8 +38,8 @@ SITE_PRIORITY_BY_LANGUAGE = {
     "default": { "synopsis": "mydramalist", "showImage": "asianwiki", "otherNames": "mydramalist", "Duration": "mydramalist", "releaseDate": "asianwiki", "director": "mydramalist", "tags": "mydramalist", "cast": "mydramalist" }
 }
 
-FIELD_NAME_MAP = { "showID": "Show ID", "showName": "Show Name", "otherNames": "Other Names", "showImage": "Show Image", "watchStartedOn": "Watch Started On", "watchEndedOn": "Watch Ended On", "releasedYear": "Released Year", "releaseDate": "Release Date", "totalEpisodes": "Total Episodes", "showType": "Show Type", "nativeLanguage": "Native Language", "watchedLanguage": "Watched Language", "country": "Country", "comments": "Comments", "ratings": "Ratings", "genres": "Category", "network": "Network", "againWatchedDates": "Again Watched Dates", "updatedOn": "Updated On", "updatedDetails": "Updated Details", "synopsis": "Synopsis", "topRatings": "Top Ratings", "Duration": "Duration", "director": "Director", "tags": "Tags", "cast": "Cast", "extendedCastInfo": "Extended Cast Info", "sitePriorityUsed": "Site Priority Used" }
-LOCKED_FIELDS_AFTER_CREATION = {'synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast', 'extendedCastInfo', 'updatedOn', 'updatedDetails', 'sitePriorityUsed', 'topRatings'}
+FIELD_NAME_MAP = { "showID": "Show ID", "showName": "Show Name", "otherNames": "Other Names", "showImage": "Show Image", "watchStartedOn": "Watch Started On", "watchEndedOn": "Watch Ended On", "releasedYear": "Released Year", "releaseDate": "Release Date", "totalEpisodes": "Total Episodes", "showType": "Show Type", "nativeLanguage": "Native Language", "watchedLanguage": "Watched Language", "country": "Country", "comments": "Comments", "ratings": "Ratings", "genres": "Category", "network": "Network", "againWatchedDates": "Again Watched Dates", "updatedOn": "Updated On", "updatedDetails": "Updated Details", "synopsis": "Synopsis", "topRatings": "Top Ratings", "Duration": "Duration", "director": "Director", "tags": "Tags", "cast": "Cast", "sitePriorityUsed": "Site Priority Used" }
+LOCKED_FIELDS_AFTER_CREATION = {'synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast', 'updatedOn', 'updatedDetails', 'sitePriorityUsed', 'topRatings'}
 
 # ---------------------------- IMPORTS & GLOBALS ----------------------------
 import os, re, sys, json, io, shutil, traceback, copy, time
@@ -80,7 +80,7 @@ def run_id_timestamp(): return now_ist().strftime("RUN_%Y%m%d_%H%M%S")
 # --- FILE & FOLDER STRUCTURE ---
 SERIES_JSON_FILE = "seriesData.json"
 ARTISTS_JSON_FILE = "artists.json"
-EXTENDED_CAST_JSON_FILE = "extendedCast.json"
+CAST_JSON_FILE = "cast.json"
 ARTIST_LOOKUP_FILE = "artists_lookup.json"
 
 BACKUP_DIR, SHOW_IMAGES_DIR, ARTIST_IMAGES_DIR, DELETE_IMAGES_DIR = "backups", "show-images", "artist-images", "deleted-images"
@@ -103,6 +103,7 @@ def ddmmyyyy(val):
     except Exception: return None
 def normalize_list(val):
     if val is None: return[]
+    if isinstance(val, dict): return val
     if isinstance(val, list): items = val
     else: items =[p.strip() for p in str(val).split(',') if p.strip()]
     return sorted([item for item in items if item])
@@ -114,7 +115,7 @@ def objects_differ(old, new):
     return False
 
 def _clean_other_names(names_list):
-    if not names_list: return []
+    if not names_list: return[]
     unique_names =[]
     seen = set()
     for name in names_list:
@@ -401,26 +402,78 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
     try:
         full_cast_raw =[]
         
-        # --- NEW: DEEP /CAST PAGE FETCH ---
+        # --- FIXED: V6.5 DEEP CREW & CAST FETCH ISOLATION ---
         url = kwargs.get('url', '')
         if url:
             cast_url = url.split('?')[0].rstrip('/') + '/cast'
-            logd(f"Deep scraping full cast from: {cast_url}")
+            logd(f"Deep scraping full cast & crew from: {cast_url}")
             try:
                 r = SCRAPER.get(cast_url, timeout=15)
                 if r.status_code == 200:
                     cast_soup = BeautifulSoup(r.text, "html.parser")
-                    if cast_soup.select('li.list-item, div.col-xs-8'):
+                    
+                    # 1. Isolate the CREW section explicitly to grab Directors and Screenwriters
+                    crew_header = cast_soup.find(['h2', 'h3'], string=re.compile(r'Crew', re.IGNORECASE))
+                    if crew_header:
+                        crew_box = crew_header.find_parent('div', class_='box')
+                        if crew_box:
+                            crew_items = crew_box.select('li.list-item, div.col-xs-8, div.col-sm-6')
+                            for item in crew_items:
+                                try:
+                                    artist_name, artist_link = None, None
+                                    anchors = item.select('a')
+                                    for a in anchors:
+                                        if '/people/' in a.get('href', '') and a.get_text(strip=True):
+                                            artist_name = a.get_text(strip=True)
+                                            artist_link = a['href']
+                                            break 
+                                    if not artist_name: continue
+                                    
+                                    id_match = re.search(r'/people/(\d+)-', artist_link)
+                                    if not id_match: continue
+                                    artist_id = id_match.group(1)
+                                    
+                                    img_tag = item.select_one('img')
+                                    artist_image_url = img_tag.get('src') or img_tag.get('data-src') or img_tag.get('data-original') if img_tag else None
+                                    if artist_image_url and ('avatar' in artist_image_url or 'default' in artist_image_url):
+                                        artist_image_url = None
+                                        
+                                    small_tags = item.select('small')
+                                    role = None
+                                    for s in small_tags:
+                                        s_txt = s.get_text(strip=True)
+                                        # Strict regex matching to avoid "Art Director" or "Executive Producer"
+                                        if re.match(r'^(Director)$', s_txt, re.IGNORECASE):
+                                            role = 'Director'
+                                            break
+                                        elif re.match(r'^(Screenwriter|Writer)$', s_txt, re.IGNORECASE):
+                                            role = 'Screenwriter'
+                                            break
+                                    
+                                    if role:
+                                        full_cast_raw.append({"artistID": artist_id, "artistName": artist_name, "artistImageURL": artist_image_url, "characterName": role, "role": role})
+                                except Exception: continue
+
+                    # 2. Isolate the CAST section explicitly to grab Actors
+                    cast_header = cast_soup.find(['h2', 'h3'], string=re.compile(r'Cast', re.IGNORECASE))
+                    if cast_header:
+                        box = cast_header.find_parent('div', class_='box')
+                        if box:
+                            soup = box
+                            logd("Successfully isolated the Cast and Crew sections.")
+                        else:
+                            soup = cast_soup
+                    else:
                         soup = cast_soup
-                        logd("Successfully loaded full cast page.")
             except Exception as e:
                 logd(f"Failed to fetch /cast page, falling back to main page: {e}")
 
+        # Scan the Cast box for the actors
         cast_items = soup.select('li.list-item')
         if not cast_items: cast_items = soup.select('div.cast-list div.col-xs-8, div.cast-list div.col-sm-6')
         if not cast_items: cast_items = soup.select('.p-a-0 li')
         
-        if not cast_items: return None
+        if not cast_items and not full_cast_raw: return None
 
         main_role_count = 0
         for item in cast_items:
@@ -440,11 +493,9 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
                 artist_id = id_match.group(1)
                 
                 img_tag = item.select_one('img')
-                artist_image_url = None
-                if img_tag:
-                    artist_image_url = img_tag.get('src') or img_tag.get('data-src') or img_tag.get('data-original')
-                    if artist_image_url and ('avatar' in artist_image_url or 'default' in artist_image_url):
-                        artist_image_url = None
+                artist_image_url = img_tag.get('src') or img_tag.get('data-src') or img_tag.get('data-original') if img_tag else None
+                if artist_image_url and ('avatar' in artist_image_url or 'default' in artist_image_url):
+                    artist_image_url = None
                 
                 role = "Support Role"
                 character_name = "Unknown"
@@ -458,7 +509,7 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
                 elif re.search(r'\b(Support Role|Supporting Cast)\b', full_text, re.IGNORECASE):
                     role = "Support Role"
                 elif re.search(r'(Screenwriter|Director|Producer)', full_text, re.IGNORECASE):
-                    continue 
+                    continue # Failsafe against stray crew strings
                 
                 small_tags = item.select('small')
                 for s in small_tags:
@@ -474,9 +525,10 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
         if not full_cast_raw: return None
         
         if main_role_count == 0 and len(full_cast_raw) > 0:
-            logd("No Main Roles detected via text. Applying fallback: Top 6 actors set to Main Role.")
+            logd("No Main Roles detected via text. Applying fallback.")
             for i in range(min(6, len(full_cast_raw))):
-                full_cast_raw[i]['role'] = "Main Role"
+                if full_cast_raw[i]['role'] not in ['Director', 'Screenwriter']:
+                    full_cast_raw[i]['role'] = "Main Role"
 
         if 'context' in kwargs and 'source_links_temp' in kwargs['context']:
             kwargs['context']['source_links_temp']['raw_cast'] = full_cast_raw
@@ -523,7 +575,7 @@ def _scrape_director_from_imdb(soup, **kwargs):
         data = _get_imdb_json_ld(soup)
         if data and 'director' in data:
             directors = data['director']
-            if isinstance(directors, list): return [d['name'] for d in directors if 'name' in d]
+            if isinstance(directors, list): return[d['name'] for d in directors if 'name' in d]
             elif 'name' in directors: return [directors['name']]
     except Exception: pass
     return None
@@ -631,7 +683,7 @@ def process_deletions(excel, context):
     if df.empty: logd("'Deleting Records' sheet is empty. Nothing to delete."); return
     
     series_data = load_json_file(SERIES_JSON_FILE)
-    extended_cast_data = load_json_file(EXTENDED_CAST_JSON_FILE)
+    cast_data = load_json_file(CAST_JSON_FILE)
     
     series_by_id = {int(o['showID']): o for o in series_data if o.get('showID')}
     to_delete = set(pd.to_numeric(df.iloc[:, 0], errors='coerce').dropna().astype(int))
@@ -641,11 +693,11 @@ def process_deletions(excel, context):
         sid_str = str(sid)
         if sid in series_by_id:
             show_obj = series_by_id.pop(sid)
-            extended_cast_obj = extended_cast_data.pop(sid_str, None)
+            cast_obj = cast_data.pop(sid_str, None)
             
             ts = context['file_ts']
             archive_bundle = { "deletedOn": ts, "showData": show_obj }
-            if extended_cast_obj: archive_bundle["extendedCastData"] = extended_cast_obj
+            if cast_obj: archive_bundle["castData"] = cast_obj
 
             path = os.path.join(DELETED_DATA_DIR, f"DELETED_{ts}_{sid}.json"); os.makedirs(DELETED_DATA_DIR, exist_ok=True)
             save_json_file(path, archive_bundle)
@@ -659,7 +711,7 @@ def process_deletions(excel, context):
                     dest = os.path.join(DELETE_IMAGES_DIR, f"DELETED_{ts}_{sid}.jpg"); os.makedirs(DELETE_IMAGES_DIR, exist_ok=True); shutil.move(src, dest)
                     context['files_generated']['deleted_images'].append(dest)
             
-            for d in [BACKUP_DIR, BACKUP_META_DIR]:
+            for d in[BACKUP_DIR, BACKUP_META_DIR]:
                 for f in os.listdir(d) if os.path.exists(d) else[]:
                     if f.endswith(f"_{sid}.json"):
                         archive_dir = os.path.join(ARCHIVED_BACKUPS_DIR if d == BACKUP_DIR else ARCHIVED_META_DIR, sid_str); os.makedirs(archive_dir, exist_ok=True)
@@ -669,7 +721,7 @@ def process_deletions(excel, context):
 
     if deleted_count > 0:
         save_json_file(SERIES_JSON_FILE, sorted(list(series_by_id.values()), key=lambda x: x.get('showID', 0)))
-        save_json_file(EXTENDED_CAST_JSON_FILE, extended_cast_data)
+        save_json_file(CAST_JSON_FILE, cast_data)
 
 def apply_manual_updates(excel, by_id, context):
     try: df = pd.read_excel(excel, sheet_name='Manual Updates', keep_default_na=False); df.columns =[c.strip().lower() for c in df.columns]
@@ -715,7 +767,7 @@ def excel_to_objects(excel, sheet):
             else: obj[key] = ddmmyyyy(val) if key in ("watchStartedOn", "watchEndedOn") else normalize_list(val) if key in ("genres", "network") else str(val).strip() if val else None
         if obj.get("showID", 0) != 0: obj['showID'] += base_id
         if not obj.get("showID") or not obj.get("showName"): continue
-        obj["againWatchedDates"] = [ddmmyyyy(d) for d in row[again_idx:] if ddmmyyyy(d)]
+        obj["againWatchedDates"] =[ddmmyyyy(d) for d in row[again_idx:] if ddmmyyyy(d)]
         obj["showType"] = "Mini Drama" if "mini" in sheet.lower() else "Drama"
         obj["nativeLanguage"] = obj.get("nativeLanguage", "").strip().capitalize()
         lang = obj.get("nativeLanguage", "").lower()
@@ -738,7 +790,6 @@ def save_metadata_backup(obj, context):
     if fetched: data["fetchedFields"] = fetched
     if context.get('new_artists_added'): data["newArtistsAdded"] = context.get('new_artists_added')
     
-    # NEW: Include sitePriorityUsed strictly as requested
     data["sitePriorityUsed"] = obj.get("sitePriorityUsed", {})
     
     if not fetched and not context.get('new_artists_added'): return
@@ -766,11 +817,11 @@ def write_report(context):
         display_sheet = sheet.replace("sheet", "Sheet ").title(); lines.extend([sep, f"🗂️ === {display_sheet} — {now_ist().strftime('%d %B %Y')} ==="]); lines.append(sep)
         if changes.get('created'): lines.append("\n🆕 Data Created:");[lines.append(f"- {o['showID']} - {o['showName']} ({o.get('releasedYear')}) -> {o.get('updatedDetails', '')}") for o in changes['created']]
         if changes.get('updated'): lines.append("\n🔁 Data Updated:");[lines.append(f"✍️ {p['new']['showID']} - {p['new']['showName']} -> {p['new']['updatedDetails']}") for p in changes['updated']]
-        if changes.get('refetched'): lines.append("\n🔍 Refetched Data:"); [lines.append(f"✨ {o['id']} - {o['name']} -> Fetched: {', '.join(o['fields'])}") for o in changes['refetched']]
+        if changes.get('refetched'): lines.append("\n🔍 Refetched Data:");[lines.append(f"✨ {o['id']} - {o['name']} -> Fetched: {', '.join(o['fields'])}") for o in changes['refetched']]
         if changes.get('data_warnings'): lines.append("\n⚠️ Data Validation Warnings:");[lines.append(i) for i in changes['data_warnings']]
         if changes.get('fetched_data'): lines.append("\n🖼️ Fetched Data Details:");[lines.append(i) for i in sorted(changes['fetched_data'])]
         if changes.get('fetch_warnings'): lines.append("\n🕳️ Value Not Found:");[lines.append(i) for i in sorted(changes['fetch_warnings'])]
-        if changes.get('artist_image_warnings'): lines.append("\n🧑‍🎨 Artist Image Warnings:"); [lines.append(i) for i in sorted(changes['artist_image_warnings'])]
+        if changes.get('artist_image_warnings'): lines.append("\n🧑‍🎨 Artist Image Warnings:");[lines.append(i) for i in sorted(changes['artist_image_warnings'])]
         if changes.get('skipped'): lines.append("\n🚫 Skipped (Unchanged):");[lines.append(f"- {i}") for i in sorted(changes['skipped'])]
         if changes.get('data_deleted'): lines.append("\n❌ Data Deleted:");[lines.append(i) for i in changes['data_deleted']]
         
@@ -778,29 +829,41 @@ def write_report(context):
             s = {k: len(v) for k, v in changes.items() if isinstance(v, list)}; total = sum(s.get(k, 0) for k in['created', 'updated', 'skipped', 'refetched'])
             stats['created'] += s.get('created', 0); stats['updated'] += s.get('updated', 0); stats['skipped'] += s.get('skipped', 0); stats['refetched'] += s.get('refetched', 0)
             stats['show_images'] += sum(1 for i in changes.get('fetched_data',[]) if "Show Image" in i); stats['rows'] += total
-            stats['warnings'] += len(changes.get('data_warnings', [])) + len(changes.get('fetch_warnings',[])) + len(changes.get('artist_image_warnings', []))
-            stats['artist_img_warn'] += len(changes.get('artist_image_warnings', []))
+            stats['warnings'] += len(changes.get('data_warnings',[])) + len(changes.get('fetch_warnings',[])) + len(changes.get('artist_image_warnings',[]))
+            stats['artist_img_warn'] += len(changes.get('artist_image_warnings',[]))
             lines.extend([f"\n📊 Summary (Sheet: {display_sheet})", sep, f"🆕 Created: {s.get('created', 0)}", f"🔁 Updated: {s.get('updated', 0)}", f"🔍 Refetched: {s.get('refetched', 0)}", f"🚫 Skipped: {s.get('skipped', 0)}", f"⚠️ Warnings: {len(changes.get('data_warnings',[])) + len(changes.get('fetch_warnings',[])) + len(changes.get('artist_image_warnings',[]))}", f"  Total Rows: {total}"])
         lines.append("")
 
     stats['deleted'] = len(context['files_generated']['deleted_data']); stats['artist_images'] = len(context['files_generated']['artist_images'])
     stats['archived'] = len(context['files_generated']['archived_backups']) + len(context['files_generated']['archived_meta_backups'])
     lines.extend([sep, "📊 Overall Summary", sep, f"🆕 Total Created: {stats['created']}", f"🔁 Total Updated: {stats['updated']}", f"🔍 Total Refetched: {stats['refetched']}", f"🖼️ Show Images Updated: {stats['show_images']}", f"🧑‍🎨 New Artist Images Added: {stats['artist_images']}", f"🚫 Total Skipped: {stats['skipped']}", f"❌ Total Deleted: {stats['deleted']}", f"🗄️ Total Archived Backups: {stats['archived']}", f"⚠️ Total Warnings: {stats['warnings']}", f"💾 Backup Files: {len(context['files_generated']['backups'])}", f"  Grand Total Rows: {stats['rows']}", "", f"💾 Metadata Backups: {len(context['files_generated']['meta_backups'])}", ""])
-    for file in[SERIES_JSON_FILE, ARTISTS_JSON_FILE, EXTENDED_CAST_JSON_FILE, ARTIST_LOOKUP_FILE]:
+    for file in[SERIES_JSON_FILE, ARTISTS_JSON_FILE, CAST_JSON_FILE, ARTIST_LOOKUP_FILE]:
         try:
             with open(file, 'r', encoding='utf-8') as f: lines.append(f"📦 Total Objects in {file}: {len(json.load(f))}")
         except Exception: lines.append(f"📦 Total Objects in {file}: 0")
+        
+    # --- FIXED: V6.5 MINI-RECEIPT FOLDER OUTPUT ---
     lines.extend([sep, "🗂️ Folders Generated:", sep])
     for folder, files in context['files_generated'].items():
-        if files: lines.append(f"{folder}/");[lines.append(f"    {os.path.basename(p)}") for p in files]
+        if files: 
+            total_files = len(files)
+            lines.append(f"📁 {folder}/ (Total: {total_files} files)")
+            if total_files <= 5:
+                for p in files: lines.append(f"    📄 {os.path.basename(p)}")
+            else:
+                for p in files[:3]: lines.append(f"    📄 {os.path.basename(p)}")
+                lines.append(f"    ... and {total_files - 3} more files.")
+            lines.append("")
+            
     lines.extend([sep, "🏁 Workflow finished successfully"])
     with open(context['report_file_path'], 'w', encoding='utf-8') as f: f.write("\n".join(lines))
 
 def process_and_distribute_cast(full_cast, artists_db, context):
-    main_cast, support_cast, guest_cast = [], [], []
+    main_cast, support_cast, guest_cast, directors, screenwriters = [], [], [], [],[]
+    director_names = []
     context['new_artists_added'] =[]
     
-    if not full_cast: return[], {}, {}
+    if not full_cast: return {}, {}, []
 
     for artist in full_cast:
         artist_id = artist['artistID']
@@ -814,20 +877,35 @@ def process_and_distribute_cast(full_cast, artists_db, context):
             else:
                 artists_db[artist_id] = {"artistName": artist['artistName'], "artistImage": None}
             
-            context['new_artists_added'].append({"artistID": artist_id, "artistName": artist['artistName'], "imageDownloaded": image_downloaded})
+            context['new_artists_added'].append({"artistID": artist_id, "artistName": artist['artistName'], "imageDownloaded": bool(image_downloaded)})
         
         cast_member = {"artistID": artist_id, "characterName": artist['characterName'], "role": artist['role']}
-        if artist['role'] == 'Main Role': main_cast.append(cast_member)
-        elif artist['role'] == 'Support Role': support_cast.append(cast_member)
-        elif artist['role'] == 'Guest Role': guest_cast.append(cast_member)
+        role = artist['role']
+        
+        if role == 'Main Role': main_cast.append(cast_member)
+        elif role == 'Support Role': support_cast.append(cast_member)
+        elif role == 'Guest Role': guest_cast.append(cast_member)
+        elif role == 'Director': 
+            directors.append(cast_member)
+            if artist['artistName'] not in director_names:
+                director_names.append(artist['artistName'])
+        elif role == 'Screenwriter': screenwriters.append(cast_member)
 
-    extended_cast = {}
-    if support_cast: extended_cast['supportRoles'] = support_cast
-    if guest_cast: extended_cast['guestRoles'] = guest_cast
+    full_cast_dict = {}
+    if main_cast: full_cast_dict['mainRoles'] = main_cast
+    if support_cast: full_cast_dict['supportRoles'] = support_cast
+    if guest_cast: full_cast_dict['guestRoles'] = guest_cast
+    if directors: full_cast_dict['directors'] = directors
+    if screenwriters: full_cast_dict['screenwriters'] = screenwriters
     
-    extended_info = { "hasSupportRoles": bool(support_cast), "supportRoleCount": len(support_cast), "hasGuestRoles": bool(guest_cast), "guestRoleCount": len(guest_cast) }
+    cast_summary = {}
+    if main_cast: cast_summary["Main Role"] = len(main_cast)
+    if support_cast: cast_summary["Support Role"] = len(support_cast)
+    if guest_cast: cast_summary["Guest Role"] = len(guest_cast)
+    if directors: cast_summary["Director"] = len(directors)
+    if screenwriters: cast_summary["Screenwriter"] = len(screenwriters)
     
-    return main_cast, extended_cast, extended_info
+    return cast_summary, full_cast_dict, director_names
 
 def fetch_excel_from_gdrive_bytes(file_id, creds_path):
     if not HAVE_GOOGLE_API: print("ℹ️ Google API packages not installed."); return None
@@ -849,12 +927,17 @@ def fetch_excel_from_gdrive_bytes(file_id, creds_path):
 def load_json_file(file_path):
     try:
         with open(file_path, 'r', encoding='utf-8') as f: return json.load(f)
-    except (FileNotFoundError, json.JSONDecodeError): return {} if file_path in[ARTISTS_JSON_FILE, EXTENDED_CAST_JSON_FILE] else[]
+    except (FileNotFoundError, json.JSONDecodeError): return {} if file_path in[ARTISTS_JSON_FILE, CAST_JSON_FILE] else[]
 
 def save_json_file(file_path, data):
     with open(file_path, 'w', encoding='utf-8') as f: json.dump(data, f, indent=4, ensure_ascii=False)
 
 def main():
+    # --- AUTO MIGRATION BLOCK ---
+    if os.path.exists("extendedCast.json") and not os.path.exists("cast.json"):
+        os.rename("extendedCast.json", "cast.json")
+        print("📦 Auto-Migrated extendedCast.json -> cast.json")
+
     start_time = now_ist()
     context = {
         'run_id': run_id_timestamp(), 
@@ -876,7 +959,7 @@ def main():
 
     series_data = load_json_file(SERIES_JSON_FILE)
     artists_data = load_json_file(ARTISTS_JSON_FILE)
-    extended_cast_data = load_json_file(EXTENDED_CAST_JSON_FILE)
+    cast_data = load_json_file(CAST_JSON_FILE)
     merged_by_id = {o['showID']: o for o in series_data if o.get('showID')}
     
     manual_report = apply_manual_updates(io.BytesIO(excel_bytes.getvalue()), merged_by_id, context)
@@ -894,12 +977,10 @@ def main():
             old_obj_from_json = merged_by_id.get(sid)
             is_new = old_obj_from_json is None
             
-            # --- FIXED SHALLOW COPY BUG ---
             base_template = copy.deepcopy(JSON_OBJECT_TEMPLATE)
             old_data = copy.deepcopy(old_obj_from_json) if old_obj_from_json else {}
             final_obj = {**base_template, **old_data, **excel_obj}
             
-            # Absolute failsafe isolated priority dictionary 
             final_obj['sitePriorityUsed'] = copy.deepcopy(final_obj.get('sitePriorityUsed') or JSON_OBJECT_TEMPLATE['sitePriorityUsed'])
             
             initial_metadata_state = {k: final_obj.get(k) for k in['synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast']}
@@ -907,15 +988,20 @@ def main():
             
             final_obj = fetch_and_populate_metadata(final_obj, context, artists_data)
             
+            # --- COMPACT CAST & AUTO-SYNC ARCHITECTURE ---
             if 'cast' in final_obj and isinstance(final_obj['cast'], list):
-                main_cast, extended_cast, extended_info = process_and_distribute_cast(final_obj['cast'], artists_data, context)
+                cast_summary, full_cast_dict, director_names = process_and_distribute_cast(final_obj['cast'], artists_data, context)
                 
-                full_standardized_cast = main_cast + extended_cast.get('supportRoles', []) + extended_cast.get('guestRoles',[])
+                final_obj['cast'] = cast_summary
                 
-                final_obj['cast'] = full_standardized_cast
-                final_obj['extendedCastInfo'] = extended_info
+                # Auto-sync top-level director array with our accurate MDL scrape
+                if director_names:
+                    final_obj['director'] = director_names
                 
-                if extended_cast: extended_cast_data[str(sid)] = extended_cast
+                if full_cast_dict: 
+                    cast_data[str(sid)] = full_cast_dict
+            
+            final_obj.pop('extendedCastInfo', None) # Cleans up old fields if migrating
             
             final_obj['topRatings'] = (final_obj.get("ratings", 0)) * (len(final_obj.get("againWatchedDates",[])) + 1) * 100
             
@@ -923,7 +1009,7 @@ def main():
             metadata_was_fetched = any(final_obj.get(k) != v for k, v in initial_metadata_state.items())
             
             key_map = {'synopsis': 'Synopsis', 'showImage': 'Show Image', 'otherNames': 'Other Names', 'releaseDate': 'Release Date', 'Duration': 'Duration', 'director': 'Director', 'tags': 'Tags', 'cast': 'Cast'}
-            newly_fetched_fields = sorted([key_map[k] for k, v in initial_metadata_state.items() if not v and (isinstance(final_obj.get(k), list) and final_obj.get(k) or isinstance(final_obj.get(k), str) and final_obj.get(k))])
+            newly_fetched_fields = sorted([key_map[k] for k, v in initial_metadata_state.items() if not v and (isinstance(final_obj.get(k), list) and final_obj.get(k) or isinstance(final_obj.get(k), dict) and final_obj.get(k))])
 
             if is_new:
                 final_obj['updatedDetails'] = "First Time Uploaded"
@@ -940,7 +1026,7 @@ def main():
                     create_diff_backup(old_obj_from_json, final_obj, context)
                 
                 if metadata_was_fetched:
-                    report.setdefault('refetched', []).append({'id': sid, 'name': final_obj['showName'], 'fields': newly_fetched_fields})
+                    report.setdefault('refetched',[]).append({'id': sid, 'name': final_obj['showName'], 'fields': newly_fetched_fields})
                 
                 if not excel_data_has_changed and not metadata_was_fetched:
                     report.setdefault('skipped',[]).append(f"{sid} - {final_obj['showName']} ({final_obj.get('releasedYear')})")
@@ -955,7 +1041,7 @@ def main():
 
     save_json_file(SERIES_JSON_FILE, sorted(merged_by_id.values(), key=lambda x: x.get('showID', 0)))
     save_json_file(ARTISTS_JSON_FILE, artists_data)
-    save_json_file(EXTENDED_CAST_JSON_FILE, extended_cast_data)
+    save_json_file(CAST_JSON_FILE, cast_data)
 
     # --- CREATE ARTIST LOOKUP FILE ---
     artist_lookup_list =[{"artistID": k, "artistName": v['artistName']} for k, v in artists_data.items()]
