@@ -1,1 +1,653 @@
-{}
+{
+    "101": {
+        "mainRoles": [
+            {
+                "artistID": "1465",
+                "characterName": "Lee Jung Hoon",
+                "role": "Main Role"
+            },
+            {
+                "artistID": "5346",
+                "characterName": "Yeo Ha Jin",
+                "role": "Main Role"
+            }
+        ],
+        "supportRoles": [
+            {
+                "artistID": "48927",
+                "characterName": "Unknown",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "83153",
+                "characterName": "Unknown",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "15983",
+                "characterName": "Unknown",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "80159",
+                "characterName": "Unknown",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "20948",
+                "characterName": "Unknown",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "4837",
+                "characterName": "Yeo Ha Kyung",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "5325",
+                "characterName": "Yoo Tae Eun",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "1316",
+                "characterName": "Choi Hee Sang",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "16803",
+                "characterName": "Jo Il Kwon",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "6240",
+                "characterName": "Lee Dong Young",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "19472",
+                "characterName": "Jung Seo Yun",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "1905",
+                "characterName": "Yoo Sung Hyuk",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "40665",
+                "characterName": "Yoo Ji Won",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "19494",
+                "characterName": "Jin So Young",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "40647",
+                "characterName": "Park Kyung Ae",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "24075",
+                "characterName": "Moon Chul",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "4576",
+                "characterName": "Kim Chul Woong",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "9522",
+                "characterName": "[News Media staff]",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "2541",
+                "characterName": "Ji Hyun Geun",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "9604",
+                "characterName": "Park Soo Chang",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "16529",
+                "characterName": "Kim Hee Young",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "37799",
+                "characterName": "[Assistant director]",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "17485",
+                "characterName": "Moon Sung Ho",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "49925",
+                "characterName": "[News Media staff / Cheol Ung's friend ]",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "63227",
+                "characterName": "[Ha Jin's agency staff]",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "57409",
+                "characterName": "Unknown",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "34139",
+                "characterName": "Bit part",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "61755",
+                "characterName": "Unknown",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "11685",
+                "characterName": "Unknown",
+                "role": "Support Role"
+            }
+        ],
+        "guestRoles": [
+            {
+                "artistID": "40583",
+                "characterName": "Lee Jeong Hun [Young] (Ep. 1)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "22616",
+                "characterName": "Lee Jung Hoon [Young] (Ep. 1, 15, 18)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "35723",
+                "characterName": "Yoo Tae Eun [Young] (Ep. 1)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "15244",
+                "characterName": "Seo Gwang Jin [Actor] (Ep. 1)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "11629",
+                "characterName": "Joo Yeo Min [Idol] (Ep. 1)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "42161",
+                "characterName": "Hwang Seo Hoon (Ep. 1-2)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "10853",
+                "characterName": "Oh Taek Won [Chairman] (Ep. 1)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "28261",
+                "characterName": "[Executive] (Ep. 1)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "20701",
+                "characterName": "[Director] (Ep. 2)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "67085",
+                "characterName": "[Filming crew member] (Ep. 2)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "8092",
+                "characterName": "Go Yoo Ra [Actress] (Ep. 2, 4)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "38555",
+                "characterName": "[Waitress] (Ep. 3)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "17467",
+                "characterName": "Yang Suk Hyun [Reporter] (Ep. 4)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "3535",
+                "characterName": "Hong Yoon Hwa [Show reporter] (Ep. 4)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "44149",
+                "characterName": "Yeo Ha Jin [Young] (Ep. 5)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "10253",
+                "characterName": "Jung Seo Yun [Young] (Ep. 5)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "17997",
+                "characterName": "Kim Ea Na [Radio show host] (Ep. 5)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "47305",
+                "characterName": "[Man in accident] (Ep. 8-9)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "2683",
+                "characterName": "Seo Mi Hyun",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "18879",
+                "characterName": "Kim Byung Yoon [Director] (Ep. 10-11)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "4358",
+                "characterName": "Hwang So Sun [Drama screenwriter] (Ep. 11)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "19916",
+                "characterName": "[Drama director] (Ep. 11)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "12704",
+                "characterName": "[Anchor] (Ep. 13)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "44153",
+                "characterName": "[Police officer] (Ep. 16)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "42431",
+                "characterName": "[Herself] (Ep. 18)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "3168",
+                "characterName": "[Detective] (Ep. 19-20)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "20009",
+                "characterName": "[Detective] (Ep. 19-20)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "36045",
+                "characterName": "[Detective] (Ep. 19-20)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "44155",
+                "characterName": "[Reporter] (Ep. 20)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "42433",
+                "characterName": "[Publishing house employee] (Ep. 22, 28)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "20474",
+                "characterName": "[Detective] (Ep. 26-28)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "40977",
+                "characterName": "[CM filming staff] (Ep. 27)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "54703",
+                "characterName": "[Detective] (Ep. 29)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "17135",
+                "characterName": "Ms. Kang (Ep. 30)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "41407",
+                "characterName": "[Passerby who recognized Ha Jin] (Ep. 31)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "5862",
+                "characterName": "[Taxi driver] (Ep. 31)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "5554",
+                "characterName": "Yang Jin Woo [Film director] (Ep. 31-32)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "5645",
+                "characterName": "[Press conference reporter] (Ep. 32)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "5863",
+                "characterName": "[HBN president]",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "44229",
+                "characterName": "[Reporter]",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "63109",
+                "characterName": "Unknown",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "128475",
+                "characterName": "[Cinema high school student] (Ep. 7-8)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "89937",
+                "characterName": "[Il Kwon's ex-girlfriend]",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "76687",
+                "characterName": "[Reporter]",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "44469",
+                "characterName": "[Advertisement Director]",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "63875",
+                "characterName": "Unknown",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "34743",
+                "characterName": "[Cinema high school student] (Ep. 7-8)",
+                "role": "Guest Role"
+            }
+        ]
+    },
+    "102": {
+        "mainRoles": [
+            {
+                "artistID": "2321",
+                "characterName": "Lin Qian",
+                "role": "Main Role"
+            },
+            {
+                "artistID": "13787",
+                "characterName": "Li Zhi Cheng",
+                "role": "Main Role"
+            }
+        ],
+        "supportRoles": [
+            {
+                "artistID": "102061",
+                "characterName": "Unknown",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "98939",
+                "characterName": "Unknown",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "46477",
+                "characterName": "Unknown",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "18857",
+                "characterName": "Unknown",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "54039",
+                "characterName": "Unknown",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "54057",
+                "characterName": "Unknown",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "86281",
+                "characterName": "Unknown",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "1625",
+                "characterName": "Ning Wei Kai [Xin Bao Rui's president]",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "12428",
+                "characterName": "Chen Zheng [Si Mei Qi's president]",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "3649",
+                "characterName": "Gu Yan Zhi [Wen Da's vice-president]",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "13108",
+                "characterName": "Grace [H Group's chief editor]",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "22916",
+                "characterName": "Li Jin Yuan [Zhi Cheng’s sister]",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "4912",
+                "characterName": "Chen Ya Yi [Lin Qian's friend]",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "26707",
+                "characterName": "Ma Feng “Wasp” [Special forces]",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "21847",
+                "characterName": "“Monkey” [Special forces]",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "16514",
+                "characterName": "“Woodpecker” [Special forces]",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "26709",
+                "characterName": "\"Antelope\" [Special forces]",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "55197",
+                "characterName": "Zhu Han Chong [Xin Bao Rui's director]",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "27047",
+                "characterName": "Zhu Han Jing [Han Chong's sister]",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "27045",
+                "characterName": "Zhu Bo Yun [Zhu Group's CEO]",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "26767",
+                "characterName": "Cindy [Grace's aide]",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "10679",
+                "characterName": "Gao Lang [Wei Kai’s aide]",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "10995",
+                "characterName": "Li Zhong Ming [Zhi Cheng's father]",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "7743",
+                "characterName": "Lin Mo Chen [Lin Qian's brother]",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "21911",
+                "characterName": "Peter [DP Group's president]",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "157822",
+                "characterName": "Unknown",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "93587",
+                "characterName": "Lisa",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "67115",
+                "characterName": "Shen Guo Qiang",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "55817",
+                "characterName": "Li Zhi Cheng",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "139757",
+                "characterName": "Li Zhi Qian",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "55819",
+                "characterName": "Lin Qian",
+                "role": "Support Role"
+            }
+        ],
+        "guestRoles": [
+            {
+                "artistID": "26925",
+                "characterName": "Xue Ming Tao [Wen Da's director] (Ep. 1, 3-4, 33-36)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "26751",
+                "characterName": "\"Grizzly Bear\" [Special forces] (Ep. 1, 13-15,19-22, 26)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "2063",
+                "characterName": "Li Zhi Qian [Zhi Cheng's brother] (Ep. 2, 4, 6, 9, 13, 16, 35)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "26851",
+                "characterName": "Mi Huan [Drug lord] (Ep. 8, 14-16, 25-26)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "4928",
+                "characterName": "Chen Zhi Jun [Chen Zheng’s father]",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "2458",
+                "characterName": "Cheng Feng [Ankada Group's president] (Ep. 11-18)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "55199",
+                "characterName": "Cheng Mei Zi [Cheng Feng's daughter] (Ep. 12-14, 16-18)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "39423",
+                "characterName": "Don [Head of Fancy] (Ep. 16-17, 19)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "14348",
+                "characterName": "Geng Xing Min [Xue Yan Ling master] (Ep. 28-29, 32-35, 37-38)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "40065",
+                "characterName": "Jia Han [Amanda's assistant] (Ep. 28-32)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "26753",
+                "characterName": "Amanda [Fancy's design director] (Ep. 28-33)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "14891",
+                "characterName": "Zhou Ying Wei [Qing Cheng's customer] (Ep. 39)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "26941",
+                "characterName": "Jerry [Peter's assistant] (Ep. 39-41, 43-45)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "18933",
+                "characterName": "[Shareholder]",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "80659",
+                "characterName": "[Designer]",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "56753",
+                "characterName": "Wu Dong",
+                "role": "Guest Role"
+            }
+        ]
+    }
+}
