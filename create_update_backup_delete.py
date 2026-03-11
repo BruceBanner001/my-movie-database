@@ -1,30 +1,30 @@
 # ============================================================
 # Script: create_update_backup_delete.py
-# Author: [BruceBanner001]
+# Author:[BruceBanner001]
 # Description:
 #   v16.0 Engine.
 #   - Professional-grade multi-file database system.
 #   - Intelligent scraping (AsianWiki/MDL/IMDb).
 #   - FIX: Deep Cast Scanning (Finds Main/Support/Guest correctly).
 #
-# Version: v7.0 (The Architect Engine - Perfected Cast/Crew Isolation)
+# Version: v7.1 (Direct Upward DOM Scanning & Bracket Fix)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v7.0"
+SCRIPT_VERSION = "v7.1"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames":[], "showImage": None,
     "watchStartedOn": None, "watchEndedOn": None, "releasedYear": 0,
     "releaseDate": None, "totalEpisodes": 0, "showType": None,
     "nativeLanguage": None, "watchedLanguage": None, "country": None,
-    "comments": None, "ratings": 0, "genres": [], "network":[],
+    "comments": None, "ratings": 0, "genres":[], "network":[],
     "againWatchedDates":[], "updatedOn": None, "updatedDetails": None,
     "synopsis": None, "topRatings": 0, "Duration": None,
-    "director": [], "tags":[], "cast": {}, 
+    "director":[], "tags":[], "cast": {}, 
     "sitePriorityUsed": {"showImage": None, "releaseDate": None, "otherNames": None, "Duration": None, "synopsis": None, "director": None, "tags": None, "cast": None}
 }
 
@@ -419,7 +419,6 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
             except Exception as e:
                 logd(f"Failed to fetch /cast page, falling back to main page: {e}")
 
-        # Scan all containers
         items = target_soup.select('li.list-item, div.cast-list div.col-xs-8, div.cast-list div.col-sm-6, .p-a-0 li, .crew-list div.col-xs-8')
         if not items: return None
 
@@ -450,76 +449,63 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
                 if artist_image_url and ('avatar' in artist_image_url or 'default' in artist_image_url):
                     artist_image_url = None
 
-                # --- V7.0: ULTIMATE TEXT EXTRACTION (Catches Split-Grids Perfectly) ---
+                # --- V7.1: EXTRACT ALL ROLE STRINGS (Solves missing small tags) ---
                 role_texts =[]
                 
-                if item.name == 'li':
-                    elements = item.select('.text-muted, .text-sm, small, .role')
+                elements = item.select('.text-muted, .text-sm, small, .role')
+                if elements:
                     for e in elements:
                         t = e.get_text(" ", strip=True)
                         if t and t != artist_name and t not in role_texts:
                             role_texts.append(t)
-                elif item.name == 'div':
+                else:
                     nxt = item.find_next_sibling('div')
-                    if nxt:
-                        elements = nxt.select('.text-muted, .text-sm, small, .role')
-                        if elements:
-                            for e in elements:
-                                t = e.get_text(" ", strip=True)
-                                if t and t != artist_name and t not in role_texts:
-                                    role_texts.append(t)
-                        else:
-                            t = nxt.get_text(" ", strip=True)
-                            if t and t != artist_name:
-                                role_texts.append(t)
+                    if nxt and ('col' in nxt.get('class',[]) or 'text-right' in nxt.get('class',[])):
+                        t = nxt.get_text(" ", strip=True)
+                        if t and t != artist_name:
+                            role_texts.append(t)
+                    else:
+                        full_txt = item.get_text(" ", strip=True)
+                        leftover = full_txt.replace(artist_name, "").strip()
+                        if leftover:
+                            role_texts.append(leftover)
 
-                cleaned_role_texts =[]
-                for rt in role_texts:
-                    if rt not in cleaned_role_texts:
-                        cleaned_role_texts.append(rt)
-
-                # --- V7.0: BULLETPROOF CREW VS CAST DETECTOR ---
+                # --- V7.1: DIRECT UPWARD DOM SCANNING (Solves the nested box bug) ---
                 is_crew = False
                 header_text = ""
                 
-                # Check absolute parent box HTML
-                box = item.find_parent('div', class_='box')
-                if box:
-                    header = box.find(['h2', 'h3', 'h4', 'div'], class_=re.compile(r'header|title', re.I)) or box.find(['h2', 'h3', 'h4'])
-                    if header: header_text = header.get_text(" ", strip=True).lower()
-                else:
-                    prev_header = item.find_previous(['h2', 'h3', 'h4'])
-                    if prev_header: header_text = prev_header.get_text(" ", strip=True).lower()
+                # Looks backward in HTML to find the closest overarching Header (H2, H3, H4)
+                prev_header = item.find_previous(['h2', 'h3', 'h4'])
+                if prev_header:
+                    header_text = prev_header.get_text(" ", strip=True).lower()
                 
-                # Logic 1: Box Headers
                 if 'cast' in header_text:
                     is_crew = False
-                elif any(kw in header_text for kw in['crew', 'director', 'writer', 'producer', 'production', 'music', 'art', 'editing', 'cinematograph']):
+                elif any(kw in header_text for kw in['crew', 'director', 'writer', 'producer', 'production', 'music', 'art', 'editing', 'cinematograph', 'original']):
                     is_crew = True
                 else:
-                    # Logic 2: Text Matching (Failsafe)
-                    combined_text = " ".join(cleaned_role_texts).lower()
+                    # Failsafe Text Matching
+                    combined_text = " ".join(role_texts).lower()
                     if re.search(r'\b(director|writer|screenwriter|producer|composer|cinematographer|editor|music|crew|staff|art|lighting|original)\b', combined_text):
                         is_crew = True
                     if re.search(r'\b(main role|support role|guest role|cameo|bit part)\b', combined_text):
                         is_crew = False
 
-                # --- V7.0: ASSIGNMENT ---
+                # --- V7.1: ROLE ASSIGNMENT ---
                 if is_crew:
-                    character_name = None # CRITICAL FIX: EXPLICITLY NULL FOR CREW
-                    final_role = " ".join(cleaned_role_texts).strip()
+                    character_name = None  # Explicitly None for Crew
+                    final_role = " ".join(role_texts).strip()
                     if not final_role: final_role = "Crew"
                     
-                    # Fix: Strip trailing dashes/commas WITHOUT stripping [Brackets] or (Parentheses)
+                    # Strip rogue commas/hyphens, but DO NOT STRIP brackets
                     final_role = re.sub(r'^[,:\-\/\s]+|[,:\-\/\s]+$', '', final_role).strip().title()
                     if len(final_role) > 50: final_role = final_role[:50]
                 else:
                     character_name = "Unknown"
                     final_role = "Support Role"
                     
-                    for txt in cleaned_role_texts:
+                    for txt in role_texts:
                         txt_lower = txt.lower()
-                        # Detect Role Type
                         if re.search(r'\b(main role|main cast)\b', txt_lower):
                             final_role = 'Main Role'
                         elif re.search(r'\b(support role|supporting cast)\b', txt_lower):
@@ -527,7 +513,7 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
                         elif re.search(r'\b(guest role|guest cast|cameo|bit part)\b', txt_lower):
                             final_role = 'Guest Role'
                         
-                        # Detect Character Name
+                        # Strip role name from character name, keep brackets completely intact
                         clean_char = re.sub(r'\b(main role|main cast|support role|supporting cast|guest role|guest cast|cameo|bit part)\b', '', txt, flags=re.IGNORECASE)
                         clean_char = re.sub(r'^[,:\-\/\s]+|[,:\-\/\s]+$', '', clean_char).strip()
                         
@@ -547,12 +533,10 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
         
         if not full_cast_raw: return None
         
-        # --- V7.0: CREW-PROTECTED FAILSAFE ---
+        # Failsafe for top actors if no text is found, ignores Cinematographers
         if main_role_count == 0 and len(full_cast_raw) > 0:
-            logd("No Main Roles detected via text. Applying fallback.")
             promoted = 0
             for i in range(len(full_cast_raw)):
-                # CRITICAL: ONLY promote actual Actors! Leaves Cinematographers alone!
                 if full_cast_raw[i]['role'] in ['Support Role', 'Guest Role', 'Unknown']:
                     full_cast_raw[i]['role'] = "Main Role"
                     promoted += 1
@@ -910,12 +894,19 @@ def process_and_distribute_cast(full_cast, artists_db, context):
         role = artist['role']
         char_name = artist.get('characterName') 
         
-        # Categorize
-        if role == 'Main Role': main_cast.append({"artistID": artist_id, "characterName": char_name, "role": role})
-        elif role == 'Support Role': support_cast.append({"artistID": artist_id, "characterName": char_name, "role": role})
-        elif role == 'Guest Role': guest_cast.append({"artistID": artist_id, "characterName": char_name, "role": role})
+        role_lower = role.lower()
+        if 'main' in role_lower and ('role' in role_lower or 'cast' in role_lower): role = 'Main Role'
+        elif 'support' in role_lower: role = 'Support Role'
+        elif 'guest' in role_lower or 'cameo' in role_lower: role = 'Guest Role'
+        else: role = role.title()
+        
+        cast_member = {"artistID": artist_id, "characterName": char_name, "role": role}
+        
+        if role == 'Main Role': main_cast.append(cast_member)
+        elif role == 'Support Role': support_cast.append(cast_member)
+        elif role == 'Guest Role': guest_cast.append(cast_member)
         else:
-            crew_cast.append({"artistID": artist_id, "characterName": char_name, "role": role})
+            crew_cast.append(cast_member)
             if 'Director' in role and artist['artistName'] not in director_names:
                 director_names.append(artist['artistName'])
 
