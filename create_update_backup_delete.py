@@ -1,20 +1,20 @@
 # ============================================================
 # Script: create_update_backup_delete.py
-# Author: [BruceBanner001]
+# Author:[BruceBanner001]
 # Description:
 #   v16.0 Engine.
 #   - Professional-grade multi-file database system.
 #   - Intelligent scraping (AsianWiki/MDL/IMDb).
 #   - FIX: Deep Cast Scanning (Finds Main/Support/Guest correctly).
 #
-# Version: v6.5 (Crew Isolation, Auto-Sync Directors, Mini-Receipt Reports)
+# Version: v6.6 (Catch-All Crew System: Composers, Producers, etc.)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v6.5"
+SCRIPT_VERSION = "v6.6"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames":[], "showImage": None,
@@ -402,7 +402,7 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
     try:
         full_cast_raw =[]
         
-        # --- FIXED: V6.5 DEEP CREW & CAST FETCH ISOLATION ---
+        # --- NEW V6.6: CATCH-ALL CREW & CAST FETCH ---
         url = kwargs.get('url', '')
         if url:
             cast_url = url.split('?')[0].rstrip('/') + '/cast'
@@ -412,7 +412,7 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
                 if r.status_code == 200:
                     cast_soup = BeautifulSoup(r.text, "html.parser")
                     
-                    # 1. Isolate the CREW section explicitly to grab Directors and Screenwriters
+                    # 1. Grab EVERYONE in the Crew box (Composers, Producers, etc.)
                     crew_header = cast_soup.find(['h2', 'h3'], string=re.compile(r'Crew', re.IGNORECASE))
                     if crew_header:
                         crew_box = crew_header.find_parent('div', class_='box')
@@ -440,27 +440,26 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
                                         
                                     small_tags = item.select('small')
                                     role = None
-                                    for s in small_tags:
-                                        s_txt = s.get_text(strip=True)
-                                        # Strict regex matching to avoid "Art Director" or "Executive Producer"
-                                        if re.match(r'^(Director)$', s_txt, re.IGNORECASE):
-                                            role = 'Director'
-                                            break
-                                        elif re.match(r'^(Screenwriter|Writer)$', s_txt, re.IGNORECASE):
-                                            role = 'Screenwriter'
-                                            break
+                                    if small_tags:
+                                        # Use exactly whatever role MDL assigned them (e.g. "Composer")
+                                        role = small_tags[0].get_text(strip=True)
                                     
                                     if role:
-                                        full_cast_raw.append({"artistID": artist_id, "artistName": artist_name, "artistImageURL": artist_image_url, "characterName": role, "role": role})
+                                        full_cast_raw.append({
+                                            "artistID": artist_id, 
+                                            "artistName": artist_name, 
+                                            "artistImageURL": artist_image_url, 
+                                            "characterName": role, 
+                                            "role": role
+                                        })
                                 except Exception: continue
 
-                    # 2. Isolate the CAST section explicitly to grab Actors
+                    # 2. Isolate the CAST box for the actors
                     cast_header = cast_soup.find(['h2', 'h3'], string=re.compile(r'Cast', re.IGNORECASE))
                     if cast_header:
                         box = cast_header.find_parent('div', class_='box')
                         if box:
                             soup = box
-                            logd("Successfully isolated the Cast and Crew sections.")
                         else:
                             soup = cast_soup
                     else:
@@ -509,7 +508,7 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
                 elif re.search(r'\b(Support Role|Supporting Cast)\b', full_text, re.IGNORECASE):
                     role = "Support Role"
                 elif re.search(r'(Screenwriter|Director|Producer)', full_text, re.IGNORECASE):
-                    continue # Failsafe against stray crew strings
+                    continue 
                 
                 small_tags = item.select('small')
                 for s in small_tags:
@@ -527,7 +526,8 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
         if main_role_count == 0 and len(full_cast_raw) > 0:
             logd("No Main Roles detected via text. Applying fallback.")
             for i in range(min(6, len(full_cast_raw))):
-                if full_cast_raw[i]['role'] not in ['Director', 'Screenwriter']:
+                # Ensure we don't accidentally turn a Composer into a Main Role actor
+                if full_cast_raw[i]['role'] not in['Director', 'Screenwriter', 'Composer', 'Producer']:
                     full_cast_raw[i]['role'] = "Main Role"
 
         if 'context' in kwargs and 'source_links_temp' in kwargs['context']:
@@ -747,7 +747,7 @@ def apply_manual_updates(excel, by_id, context):
 
 def excel_to_objects(excel, sheet):
     try: df = pd.read_excel(excel, sheet_name=sheet, keep_default_na=False); df.columns =[c.strip().lower() for c in df.columns]
-    except ValueError: print(f"INFO: Sheet '{sheet}' not found. Skipping."); return [], []
+    except ValueError: print(f"INFO: Sheet '{sheet}' not found. Skipping."); return [],[]
     warnings =[]
     try: again_idx =[i for i, c in enumerate(df.columns) if "again watched" in c][0]
     except IndexError: print(f"ERROR: 'Again Watched' in '{sheet}' not found. Skipping."); return [],[]
@@ -842,7 +842,6 @@ def write_report(context):
             with open(file, 'r', encoding='utf-8') as f: lines.append(f"📦 Total Objects in {file}: {len(json.load(f))}")
         except Exception: lines.append(f"📦 Total Objects in {file}: 0")
         
-    # --- FIXED: V6.5 MINI-RECEIPT FOLDER OUTPUT ---
     lines.extend([sep, "🗂️ Folders Generated:", sep])
     for folder, files in context['files_generated'].items():
         if files: 
@@ -859,11 +858,12 @@ def write_report(context):
     with open(context['report_file_path'], 'w', encoding='utf-8') as f: f.write("\n".join(lines))
 
 def process_and_distribute_cast(full_cast, artists_db, context):
-    main_cast, support_cast, guest_cast, directors, screenwriters = [], [], [], [],[]
-    director_names = []
+    main_cast, support_cast, guest_cast = [], [], []
+    crew_cast = []
+    director_names =[]
     context['new_artists_added'] =[]
     
-    if not full_cast: return {}, {}, []
+    if not full_cast: return {}, {},[]
 
     for artist in full_cast:
         artist_id = artist['artistID']
@@ -879,31 +879,34 @@ def process_and_distribute_cast(full_cast, artists_db, context):
             
             context['new_artists_added'].append({"artistID": artist_id, "artistName": artist['artistName'], "imageDownloaded": bool(image_downloaded)})
         
-        cast_member = {"artistID": artist_id, "characterName": artist['characterName'], "role": artist['role']}
         role = artist['role']
+        cast_member = {"artistID": artist_id, "characterName": artist['characterName'], "role": role}
         
+        # Categorize
         if role == 'Main Role': main_cast.append(cast_member)
         elif role == 'Support Role': support_cast.append(cast_member)
         elif role == 'Guest Role': guest_cast.append(cast_member)
-        elif role == 'Director': 
-            directors.append(cast_member)
-            if artist['artistName'] not in director_names:
+        else:
+            crew_cast.append(cast_member)
+            # Auto-Sync director names
+            if role.strip().lower() == 'director' and artist['artistName'] not in director_names:
                 director_names.append(artist['artistName'])
-        elif role == 'Screenwriter': screenwriters.append(cast_member)
 
     full_cast_dict = {}
     if main_cast: full_cast_dict['mainRoles'] = main_cast
     if support_cast: full_cast_dict['supportRoles'] = support_cast
     if guest_cast: full_cast_dict['guestRoles'] = guest_cast
-    if directors: full_cast_dict['directors'] = directors
-    if screenwriters: full_cast_dict['screenwriters'] = screenwriters
+    if crew_cast: full_cast_dict['crew'] = crew_cast
     
     cast_summary = {}
     if main_cast: cast_summary["Main Role"] = len(main_cast)
     if support_cast: cast_summary["Support Role"] = len(support_cast)
     if guest_cast: cast_summary["Guest Role"] = len(guest_cast)
-    if directors: cast_summary["Director"] = len(directors)
-    if screenwriters: cast_summary["Screenwriter"] = len(screenwriters)
+    
+    # Dynamically sum all crew roles (Composer, Producer, Screenwriter, etc.)
+    for c in crew_cast:
+        r = c['role']
+        cast_summary[r] = cast_summary.get(r, 0) + 1
     
     return cast_summary, full_cast_dict, director_names
 
@@ -933,7 +936,6 @@ def save_json_file(file_path, data):
     with open(file_path, 'w', encoding='utf-8') as f: json.dump(data, f, indent=4, ensure_ascii=False)
 
 def main():
-    # --- AUTO MIGRATION BLOCK ---
     if os.path.exists("extendedCast.json") and not os.path.exists("cast.json"):
         os.rename("extendedCast.json", "cast.json")
         print("📦 Auto-Migrated extendedCast.json -> cast.json")
@@ -944,7 +946,7 @@ def main():
         'file_ts': filename_timestamp(),
         'start_time_iso': start_time.isoformat(), 
         'report_data': {}, 'current_sheet': None,
-        'files_generated': {'backups':[], 'show_images':[], 'artist_images': [], 'deleted_data': [], 'deleted_images':[], 'meta_backups':[], 'reports': [], 'archived_backups':[], 'archived_meta_backups':[]}
+        'files_generated': {'backups':[], 'show_images':[], 'artist_images':[], 'deleted_data': [], 'deleted_images':[], 'meta_backups':[], 'reports':[], 'archived_backups':[], 'archived_meta_backups':[]}
     }
     if not (os.path.exists(EXCEL_FILE_ID_TXT) and os.path.exists(SERVICE_ACCOUNT_FILE)): print("❌ Missing GDrive credentials."); sys.exit(1)
     try:
@@ -988,20 +990,18 @@ def main():
             
             final_obj = fetch_and_populate_metadata(final_obj, context, artists_data)
             
-            # --- COMPACT CAST & AUTO-SYNC ARCHITECTURE ---
             if 'cast' in final_obj and isinstance(final_obj['cast'], list):
                 cast_summary, full_cast_dict, director_names = process_and_distribute_cast(final_obj['cast'], artists_data, context)
                 
                 final_obj['cast'] = cast_summary
                 
-                # Auto-sync top-level director array with our accurate MDL scrape
                 if director_names:
                     final_obj['director'] = director_names
                 
                 if full_cast_dict: 
                     cast_data[str(sid)] = full_cast_dict
             
-            final_obj.pop('extendedCastInfo', None) # Cleans up old fields if migrating
+            final_obj.pop('extendedCastInfo', None)
             
             final_obj['topRatings'] = (final_obj.get("ratings", 0)) * (len(final_obj.get("againWatchedDates",[])) + 1) * 100
             
@@ -1043,7 +1043,6 @@ def main():
     save_json_file(ARTISTS_JSON_FILE, artists_data)
     save_json_file(CAST_JSON_FILE, cast_data)
 
-    # --- CREATE ARTIST LOOKUP FILE ---
     artist_lookup_list =[{"artistID": k, "artistName": v['artistName']} for k, v in artists_data.items()]
     save_json_file(ARTIST_LOOKUP_FILE, sorted(artist_lookup_list, key=lambda x: x['artistName']))
     
