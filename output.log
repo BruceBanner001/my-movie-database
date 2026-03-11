@@ -1,7 +1,46 @@
-🚀 Running Script — Version v6.7 | Run ID: RUN_20260311_132548
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:102: UserWarning: Parsing dates in %d-%m-%Y format when dayfirst=False (the default) was specified. Pass `dayfirst=True` or specify a format to silence this warning.
+  try: dt = pd.to_datetime(str(val).strip(), errors='coerce'); return None if pd.isna(dt) else dt.strftime("%d-%m-%Y")
+🚀 Running Script — Version v6.8 | Run ID: RUN_20260311_133116
 [DEBUG] Attempting direct media download...
+[DEBUG] 'Deleting Records' sheet is empty. Nothing to delete.
 INFO: 'Manual Updates' sheet not found. Skipping.
+[DEBUG] Initiating search for: 'Find Me in Your Memory (2020)' on asianwiki.com (Expected Country: South Korea)
+[DEBUG] Executing search query: "Find Me in Your Memory" 2020 Korean site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Find_Me_in_Your_Memory
+[DEBUG] Country validation passed.
+[DEBUG] Title Validation PASSED: 'Find Me in Your Memory' matches 'Find Me in Your Memory'
+[DEBUG] Found soup in cache for 'Find Me in Your Memory' on asianwiki.com
+[DEBUG] Downloading image from: https://asianwiki.com/images/e/e0/Find_Me_in_Your_Memory-P2.jpg
+[DEBUG] Image saved to show-images/101.jpg
+[DEBUG] Initiating search for: 'Find Me in Your Memory (2020)' on mydramalist.com (Expected Country: South Korea)
+[DEBUG] Executing search query: "Find Me in Your Memory" 2020 Korean site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/50941-the-man-s-memory
+[DEBUG] Country validation passed.
+[DEBUG] Title Validation PASSED: 'Find Me in Your Memory' matches 'Find Me in Your Memory'
+[DEBUG] Found soup in cache for 'Find Me in Your Memory' on asianwiki.com
+[DEBUG] Found soup in cache for 'Find Me in Your Memory' on mydramalist.com
+[DEBUG] Found soup in cache for 'Find Me in Your Memory' on mydramalist.com
+[DEBUG] Found soup in cache for 'Find Me in Your Memory' on mydramalist.com
+[DEBUG] Found soup in cache for 'Find Me in Your Memory' on mydramalist.com
+[DEBUG] Deep scraping full cast & crew from: https://mydramalist.com/50941-the-man-s-memory/cast
+[DEBUG] Successfully loaded the /cast page.
+[DEBUG] Initiating search for: 'Our Glamorous Time (2018)' on mydramalist.com (Expected Country: China)
+[DEBUG] Executing search query: "Our Glamorous Time" 2018 Chinese site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/24203-our-glamorous-times
+[DEBUG] Country validation passed.
+[DEBUG] Title Validation PASSED: 'Our Glamorous Time' matches 'Our Glamorous Time'
+[DEBUG] Found soup in cache for 'Our Glamorous Time' on mydramalist.com
+[DEBUG] Downloading image from: https://i.mydramalist.com/2x3ZVc.jpg?v=1
+[DEBUG] Image saved to show-images/102.jpg
+[DEBUG] Found soup in cache for 'Our Glamorous Time' on mydramalist.com
+[DEBUG] Found soup in cache for 'Our Glamorous Time' on mydramalist.com
+[DEBUG] Found soup in cache for 'Our Glamorous Time' on mydramalist.com
+[DEBUG] Found soup in cache for 'Our Glamorous Time' on mydramalist.com
+[DEBUG] Found soup in cache for 'Our Glamorous Time' on mydramalist.com
+[DEBUG] Found soup in cache for 'Our Glamorous Time' on mydramalist.com
+[DEBUG] Deep scraping full cast & crew from: https://mydramalist.com/24203-our-glamorous-times/cast
+[DEBUG] Successfully loaded the /cast page.
 INFO: Sheet 'Sheet2' not found. Skipping.
-✅ Report written -> reports/Report_11_March_2026_1325.txt
+✅ Report written -> reports/Report_11_March_2026_1331.txt
 
 All done.
