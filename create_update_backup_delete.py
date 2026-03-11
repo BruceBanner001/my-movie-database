@@ -1,30 +1,30 @@
 # ============================================================
 # Script: create_update_backup_delete.py
-# Author:[BruceBanner001]
+# Author: [BruceBanner001]
 # Description:
 #   v16.0 Engine.
 #   - Professional-grade multi-file database system.
 #   - Intelligent scraping (AsianWiki/MDL/IMDb).
 #   - FIX: Deep Cast Scanning (Finds Main/Support/Guest correctly).
 #
-# Version: v7.1 (Direct Upward DOM Scanning & Bracket Fix)
+# Version: v7.2 (FIX: The Partial String Sibling Bug)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v7.1"
+SCRIPT_VERSION = "v7.2"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames":[], "showImage": None,
     "watchStartedOn": None, "watchEndedOn": None, "releasedYear": 0,
     "releaseDate": None, "totalEpisodes": 0, "showType": None,
     "nativeLanguage": None, "watchedLanguage": None, "country": None,
-    "comments": None, "ratings": 0, "genres":[], "network":[],
+    "comments": None, "ratings": 0, "genres": [], "network":[],
     "againWatchedDates":[], "updatedOn": None, "updatedDetails": None,
     "synopsis": None, "topRatings": 0, "Duration": None,
-    "director":[], "tags":[], "cast": {}, 
+    "director": [], "tags":[], "cast": {}, 
     "sitePriorityUsed": {"showImage": None, "releaseDate": None, "otherNames": None, "Duration": None, "synopsis": None, "director": None, "tags": None, "cast": None}
 }
 
@@ -449,32 +449,38 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
                 if artist_image_url and ('avatar' in artist_image_url or 'default' in artist_image_url):
                     artist_image_url = None
 
-                # --- V7.1: EXTRACT ALL ROLE STRINGS (Solves missing small tags) ---
+                # --- V7.2: BULLETPROOF PARTIAL-MATCH SIBLING EXTRACTION ---
                 role_texts =[]
+                elements = list(item.select('.text-muted, .text-sm, small, .role'))
                 
-                elements = item.select('.text-muted, .text-sm, small, .role')
-                if elements:
-                    for e in elements:
-                        t = e.get_text(" ", strip=True)
-                        if t and t != artist_name and t not in role_texts:
-                            role_texts.append(t)
-                else:
-                    nxt = item.find_next_sibling('div')
-                    if nxt and ('col' in nxt.get('class',[]) or 'text-right' in nxt.get('class',[])):
-                        t = nxt.get_text(" ", strip=True)
-                        if t and t != artist_name:
-                            role_texts.append(t)
-                    else:
-                        full_txt = item.get_text(" ", strip=True)
-                        leftover = full_txt.replace(artist_name, "").strip()
-                        if leftover:
-                            role_texts.append(leftover)
+                nxt = item.find_next_sibling('div')
+                if nxt:
+                    nxt_classes = nxt.get('class',[])
+                    # FIX: Use partial string matching to safely catch 'col-xs-4' or 'pull-right'
+                    if any('col' in str(c).lower() or 'right' in str(c).lower() or 'role' in str(c).lower() for c in nxt_classes):
+                        sib_elements = list(nxt.select('.text-muted, .text-sm, small, .role'))
+                        if sib_elements:
+                            elements.extend(sib_elements)
+                        else:
+                            t = nxt.get_text(" ", strip=True)
+                            if t and t != artist_name:
+                                role_texts.append(t)
 
-                # --- V7.1: DIRECT UPWARD DOM SCANNING (Solves the nested box bug) ---
+                for e in elements:
+                    t = e.get_text(" ", strip=True)
+                    if t and t != artist_name and t not in role_texts:
+                        role_texts.append(t)
+
+                if not role_texts:
+                    # Final ultimate fallback for badly formatted text
+                    full_txt = item.get_text(" ", strip=True)
+                    leftover = full_txt.replace(artist_name, "").strip()
+                    if leftover:
+                        role_texts.append(leftover)
+
                 is_crew = False
                 header_text = ""
                 
-                # Looks backward in HTML to find the closest overarching Header (H2, H3, H4)
                 prev_header = item.find_previous(['h2', 'h3', 'h4'])
                 if prev_header:
                     header_text = prev_header.get_text(" ", strip=True).lower()
@@ -484,21 +490,19 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
                 elif any(kw in header_text for kw in['crew', 'director', 'writer', 'producer', 'production', 'music', 'art', 'editing', 'cinematograph', 'original']):
                     is_crew = True
                 else:
-                    # Failsafe Text Matching
                     combined_text = " ".join(role_texts).lower()
                     if re.search(r'\b(director|writer|screenwriter|producer|composer|cinematographer|editor|music|crew|staff|art|lighting|original)\b', combined_text):
                         is_crew = True
                     if re.search(r'\b(main role|support role|guest role|cameo|bit part)\b', combined_text):
                         is_crew = False
 
-                # --- V7.1: ROLE ASSIGNMENT ---
                 if is_crew:
-                    character_name = None  # Explicitly None for Crew
+                    character_name = None  
                     final_role = " ".join(role_texts).strip()
                     if not final_role: final_role = "Crew"
                     
-                    # Strip rogue commas/hyphens, but DO NOT STRIP brackets
-                    final_role = re.sub(r'^[,:\-\/\s]+|[,:\-\/\s]+$', '', final_role).strip().title()
+                    # FIX: Safely strip rogue punctuation without deleting Brackets
+                    final_role = re.sub(r'^[,:\-\s]+|[,:\-\s]+$', '', final_role).strip().title()
                     if len(final_role) > 50: final_role = final_role[:50]
                 else:
                     character_name = "Unknown"
@@ -513,9 +517,9 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
                         elif re.search(r'\b(guest role|guest cast|cameo|bit part)\b', txt_lower):
                             final_role = 'Guest Role'
                         
-                        # Strip role name from character name, keep brackets completely intact
+                        # Strip role name from character name, preserve brackets perfectly
                         clean_char = re.sub(r'\b(main role|main cast|support role|supporting cast|guest role|guest cast|cameo|bit part)\b', '', txt, flags=re.IGNORECASE)
-                        clean_char = re.sub(r'^[,:\-\/\s]+|[,:\-\/\s]+$', '', clean_char).strip()
+                        clean_char = re.sub(r'^[,:\-\s]+|[,:\-\s]+$', '', clean_char).strip()
                         
                         if clean_char and clean_char.lower() not in['role', 'cast', 'unknown', artist_name.lower()]:
                             character_name = clean_char
@@ -533,7 +537,6 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
         
         if not full_cast_raw: return None
         
-        # Failsafe for top actors if no text is found, ignores Cinematographers
         if main_role_count == 0 and len(full_cast_raw) > 0:
             promoted = 0
             for i in range(len(full_cast_raw)):
