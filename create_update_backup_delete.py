@@ -7,14 +7,14 @@
 #   - Intelligent scraping (AsianWiki/MDL/IMDb).
 #   - FIX: Deep Cast Scanning (Finds Main/Support/Guest correctly).
 #
-# Version: v6.9 (FIX: The MDL Sibling Grid Trap + Null Character Names)
+# Version: v7.0 (The Architect Engine - Perfected Cast/Crew Isolation)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v6.9"
+SCRIPT_VERSION = "v7.0"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames":[], "showImage": None,
@@ -401,7 +401,7 @@ def _scrape_tags_from_mydramalist(soup, **kwargs):
 def _scrape_cast_from_mydramalist(soup, **kwargs):
     try:
         full_cast_raw =[]
-        seen_ids = set() # Safety measure to prevent duplicate entries
+        seen_ids = set() 
         
         url = kwargs.get('url', '')
         target_soup = soup
@@ -449,61 +449,92 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
                 artist_image_url = img_tag.get('src') or img_tag.get('data-src') or img_tag.get('data-original') if img_tag else None
                 if artist_image_url and ('avatar' in artist_image_url or 'default' in artist_image_url):
                     artist_image_url = None
+
+                # --- V7.0: ULTIMATE TEXT EXTRACTION (Catches Split-Grids Perfectly) ---
+                role_texts =[]
                 
-                # --- V6.9: BULLETPROOF ROLE EXTRACTION (Solves the Sibling Grid layout trap) ---
-                role_text = ""
-                
-                # 1. Attempt to find it directly inside the item
-                role_elem = item.select_one('small, .text-muted, .text-sm, .role')
-                if role_elem:
-                    role_text = role_elem.get_text(" ", strip=True)
-                else:
-                    # 2. Attempt to find it in the neighboring sibling grid box (MDL splits Name and Role)
+                if item.name == 'li':
+                    elements = item.select('.text-muted, .text-sm, small, .role')
+                    for e in elements:
+                        t = e.get_text(" ", strip=True)
+                        if t and t != artist_name and t not in role_texts:
+                            role_texts.append(t)
+                elif item.name == 'div':
                     nxt = item.find_next_sibling('div')
-                    if nxt and ('col' in nxt.get('class',[]) or 'text-right' in nxt.get('class',[])):
-                        role_text = nxt.get_text(" ", strip=True)
-                    else:
-                        # 3. Fallback: Subtract artist name from total text
-                        full_txt = item.get_text(" ", strip=True)
-                        role_text = full_txt.replace(artist_name, "").strip()
+                    if nxt:
+                        elements = nxt.select('.text-muted, .text-sm, small, .role')
+                        if elements:
+                            for e in elements:
+                                t = e.get_text(" ", strip=True)
+                                if t and t != artist_name and t not in role_texts:
+                                    role_texts.append(t)
+                        else:
+                            t = nxt.get_text(" ", strip=True)
+                            if t and t != artist_name:
+                                role_texts.append(t)
 
-                # --- DETERMINE CAST VS CREW ---
+                cleaned_role_texts =[]
+                for rt in role_texts:
+                    if rt not in cleaned_role_texts:
+                        cleaned_role_texts.append(rt)
+
+                # --- V7.0: BULLETPROOF CREW VS CAST DETECTOR ---
                 is_crew = False
-                prev_header = item.find_previous(['h2', 'h3', 'h4'])
-                header_text = prev_header.get_text(" ", strip=True).lower() if prev_header else ""
+                header_text = ""
                 
-                if re.search(r'\b(crew|director|writer|producer|production|music|composer)\b', header_text):
-                    is_crew = True
-                    
-                if re.search(r'\b(director|screenwriter|writer|producer|composer)\b', role_text.lower()):
-                    is_crew = True
-                    
-                if re.search(r'\b(main role|support role|guest role|cameo)\b', role_text.lower()):
+                # Check absolute parent box HTML
+                box = item.find_parent('div', class_='box')
+                if box:
+                    header = box.find(['h2', 'h3', 'h4', 'div'], class_=re.compile(r'header|title', re.I)) or box.find(['h2', 'h3', 'h4'])
+                    if header: header_text = header.get_text(" ", strip=True).lower()
+                else:
+                    prev_header = item.find_previous(['h2', 'h3', 'h4'])
+                    if prev_header: header_text = prev_header.get_text(" ", strip=True).lower()
+                
+                # Logic 1: Box Headers
+                if 'cast' in header_text:
                     is_crew = False
+                elif any(kw in header_text for kw in['crew', 'director', 'writer', 'producer', 'production', 'music', 'art', 'editing', 'cinematograph']):
+                    is_crew = True
+                else:
+                    # Logic 2: Text Matching (Failsafe)
+                    combined_text = " ".join(cleaned_role_texts).lower()
+                    if re.search(r'\b(director|writer|screenwriter|producer|composer|cinematographer|editor|music|crew|staff|art|lighting|original)\b', combined_text):
+                        is_crew = True
+                    if re.search(r'\b(main role|support role|guest role|cameo|bit part)\b', combined_text):
+                        is_crew = False
 
-                # --- ASSIGNMENT ---
+                # --- V7.0: ASSIGNMENT ---
                 if is_crew:
-                    character_name = None  # EXPLICITLY NULL FOR CREW
-                    final_role = role_text if role_text else "Crew"
+                    character_name = None # CRITICAL FIX: EXPLICITLY NULL FOR CREW
+                    final_role = " ".join(cleaned_role_texts).strip()
+                    if not final_role: final_role = "Crew"
                     
-                    # Clean punctuation
-                    final_role = re.sub(r'^\W+|\W+$', '', final_role).strip().title()
+                    # Fix: Strip trailing dashes/commas WITHOUT stripping [Brackets] or (Parentheses)
+                    final_role = re.sub(r'^[,:\-\/\s]+|[,:\-\/\s]+$', '', final_role).strip().title()
                     if len(final_role) > 50: final_role = final_role[:50]
                 else:
                     character_name = "Unknown"
                     final_role = "Support Role"
                     
-                    rl = role_text.lower()
-                    if re.search(r'\b(main role|main cast)\b', rl): final_role = 'Main Role'
-                    elif re.search(r'\b(guest role|guest cast|cameo)\b', rl): final_role = 'Guest Role'
-                    elif re.search(r'\b(support role|supporting cast)\b', rl): final_role = 'Support Role'
-                    
-                    # Extract character name from what is left over
-                    char_clean = re.sub(r'\b(Main Role|Main Cast|Support Role|Supporting Cast|Guest Role|Guest Cast|Cameo)\b', '', role_text, flags=re.IGNORECASE)
-                    char_clean = re.sub(r'^\W+|\W+$', '', char_clean).strip()
-                    if char_clean: character_name = char_clean
-                    
-                    if final_role == "Main Role": main_role_count += 1
+                    for txt in cleaned_role_texts:
+                        txt_lower = txt.lower()
+                        # Detect Role Type
+                        if re.search(r'\b(main role|main cast)\b', txt_lower):
+                            final_role = 'Main Role'
+                        elif re.search(r'\b(support role|supporting cast)\b', txt_lower):
+                            final_role = 'Support Role'
+                        elif re.search(r'\b(guest role|guest cast|cameo|bit part)\b', txt_lower):
+                            final_role = 'Guest Role'
+                        
+                        # Detect Character Name
+                        clean_char = re.sub(r'\b(main role|main cast|support role|supporting cast|guest role|guest cast|cameo|bit part)\b', '', txt, flags=re.IGNORECASE)
+                        clean_char = re.sub(r'^[,:\-\/\s]+|[,:\-\/\s]+$', '', clean_char).strip()
+                        
+                        if clean_char and clean_char.lower() not in['role', 'cast', 'unknown', artist_name.lower()]:
+                            character_name = clean_char
+                            
+                    if final_role == 'Main Role': main_role_count += 1
                     
                 full_cast_raw.append({
                     "artistID": artist_id,
@@ -516,11 +547,16 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
         
         if not full_cast_raw: return None
         
-        # Failsafe for top actors if no specific text found
+        # --- V7.0: CREW-PROTECTED FAILSAFE ---
         if main_role_count == 0 and len(full_cast_raw) > 0:
-            for i in range(min(6, len(full_cast_raw))):
-                if not re.search(r'(Director|Writer|Producer|Composer|Crew)', full_cast_raw[i]['role'], re.IGNORECASE):
+            logd("No Main Roles detected via text. Applying fallback.")
+            promoted = 0
+            for i in range(len(full_cast_raw)):
+                # CRITICAL: ONLY promote actual Actors! Leaves Cinematographers alone!
+                if full_cast_raw[i]['role'] in ['Support Role', 'Guest Role', 'Unknown']:
                     full_cast_raw[i]['role'] = "Main Role"
+                    promoted += 1
+                    if promoted >= 6: break
 
         if 'context' in kwargs and 'source_links_temp' in kwargs['context']:
             kwargs['context']['source_links_temp']['raw_cast'] = full_cast_raw
@@ -872,21 +908,14 @@ def process_and_distribute_cast(full_cast, artists_db, context):
             context['new_artists_added'].append({"artistID": artist_id, "artistName": artist['artistName'], "imageDownloaded": bool(image_downloaded)})
         
         role = artist['role']
-        char_name = artist.get('characterName') # Uses .get() so None values safely pass through
+        char_name = artist.get('characterName') 
         
-        role_lower = role.lower()
-        if 'main' in role_lower and ('role' in role_lower or 'cast' in role_lower): role = 'Main Role'
-        elif 'support' in role_lower: role = 'Support Role'
-        elif 'guest' in role_lower or 'cameo' in role_lower: role = 'Guest Role'
-        else: role = role.title()
-        
-        cast_member = {"artistID": artist_id, "characterName": char_name, "role": role}
-        
-        if role == 'Main Role': main_cast.append(cast_member)
-        elif role == 'Support Role': support_cast.append(cast_member)
-        elif role == 'Guest Role': guest_cast.append(cast_member)
+        # Categorize
+        if role == 'Main Role': main_cast.append({"artistID": artist_id, "characterName": char_name, "role": role})
+        elif role == 'Support Role': support_cast.append({"artistID": artist_id, "characterName": char_name, "role": role})
+        elif role == 'Guest Role': guest_cast.append({"artistID": artist_id, "characterName": char_name, "role": role})
         else:
-            crew_cast.append(cast_member)
+            crew_cast.append({"artistID": artist_id, "characterName": char_name, "role": role})
             if 'Director' in role and artist['artistName'] not in director_names:
                 director_names.append(artist['artistName'])
 
