@@ -1,20 +1,20 @@
 # ============================================================
 # Script: create_update_backup_delete.py
-# Author: [BruceBanner001]
+# Author:[BruceBanner001]
 # Description:
 #   v16.0 Engine.
 #   - Professional-grade multi-file database system.
 #   - Intelligent scraping (AsianWiki/MDL/IMDb).
 #   - FIX: Deep Cast Scanning (Finds Main/Support/Guest correctly).
 #
-# Version: v7.2 (FIX: The Partial String Sibling Bug)
+# Version: v7.3 (FIX: Crew/Bit Part Misclassification & Empty Roles)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v7.2"
+SCRIPT_VERSION = "v7.3"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames":[], "showImage": None,
@@ -449,7 +449,7 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
                 if artist_image_url and ('avatar' in artist_image_url or 'default' in artist_image_url):
                     artist_image_url = None
 
-                # --- V7.2: BULLETPROOF PARTIAL-MATCH SIBLING EXTRACTION ---
+                # --- V7.3: BULLETPROOF PARTIAL-MATCH SIBLING EXTRACTION ---
                 role_texts =[]
                 elements = list(item.select('.text-muted, .text-sm, small, .role'))
                 
@@ -472,9 +472,13 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
                         role_texts.append(t)
 
                 if not role_texts:
-                    # Final ultimate fallback for badly formatted text
-                    full_txt = item.get_text(" ", strip=True)
-                    leftover = full_txt.replace(artist_name, "").strip()
+                    # FIX: Ultimate text-node fallback to ensure "Director" and tag-less roles are extracted safely
+                    leftover_parts =[]
+                    for s_str in item.stripped_strings:
+                        clean_s = s_str.strip()
+                        if clean_s and clean_s.lower() != artist_name.lower():
+                            leftover_parts.append(clean_s)
+                    leftover = " ".join(leftover_parts).strip()
                     if leftover:
                         role_texts.append(leftover)
 
@@ -489,12 +493,13 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
                     is_crew = False
                 elif any(kw in header_text for kw in['crew', 'director', 'writer', 'producer', 'production', 'music', 'art', 'editing', 'cinematograph', 'original']):
                     is_crew = True
-                else:
-                    combined_text = " ".join(role_texts).lower()
-                    if re.search(r'\b(director|writer|screenwriter|producer|composer|cinematographer|editor|music|crew|staff|art|lighting|original)\b', combined_text):
-                        is_crew = True
-                    if re.search(r'\b(main role|support role|guest role|cameo|bit part)\b', combined_text):
-                        is_crew = False
+                
+                # FIX: ALWAYS evaluate text to override false positive headers (like "Bit Part" under a Crew header)
+                combined_text = " ".join(role_texts).lower()
+                if re.search(r'\b(director|writer|screenwriter|producer|composer|cinematographer|editor|music|crew|staff|art|lighting|original)\b', combined_text):
+                    is_crew = True
+                if re.search(r'\b(main role|main cast|support role|supporting cast|guest role|guest cast|cameo|bit part)\b', combined_text):
+                    is_crew = False
 
                 if is_crew:
                     character_name = None  
@@ -900,7 +905,7 @@ def process_and_distribute_cast(full_cast, artists_db, context):
         role_lower = role.lower()
         if 'main' in role_lower and ('role' in role_lower or 'cast' in role_lower): role = 'Main Role'
         elif 'support' in role_lower: role = 'Support Role'
-        elif 'guest' in role_lower or 'cameo' in role_lower: role = 'Guest Role'
+        elif 'guest' in role_lower or 'cameo' in role_lower or 'bit part' in role_lower: role = 'Guest Role'
         else: role = role.title()
         
         cast_member = {"artistID": artist_id, "characterName": char_name, "role": role}
