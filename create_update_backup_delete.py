@@ -7,14 +7,14 @@
 #   - Intelligent scraping (AsianWiki/MDL/IMDb).
 #   - FIX: Deep Cast Scanning (Finds Main/Support/Guest correctly).
 #
-# Version: v7.4 (FIX: MDL Empty Roles Header Fallback)
+# Version: v7.5 (FIX: Comprehensive Crew/Cast Keyword Routing)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v7.4"
+SCRIPT_VERSION = "v7.5"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames":[], "showImage": None,
@@ -488,13 +488,17 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
                     raw_header_text = prev_header.get_text(" ", strip=True)
                     header_text = raw_header_text.lower()
                 
-                if 'cast' in header_text:
+                # FIX: V7.5 MASSIVE DICTIONARY TO CATCH ALL CREW (Like "Composer", "Sound", "Editor")
+                crew_keywords =['crew', 'director', 'writer', 'screenwriter', 'producer', 'production', 'music', 'composer', 'art', 'editing', 'editor', 'cinematograph', 'original', 'staff', 'lighting', 'ost', 'sound', 'action', 'martial']
+                cast_keywords =['cast', 'main', 'support', 'guest', 'cameo', 'bit part', 'actor', 'actress']
+                
+                if any(kw in header_text for kw in cast_keywords):
                     is_crew = False
-                elif any(kw in header_text for kw in['crew', 'director', 'writer', 'producer', 'production', 'music', 'art', 'editing', 'cinematograph', 'original']):
+                elif any(kw in header_text for kw in crew_keywords):
                     is_crew = True
                 
                 combined_text = " ".join(role_texts).lower()
-                if re.search(r'\b(director|writer|screenwriter|producer|composer|cinematographer|editor|music|crew|staff|art|lighting|original)\b', combined_text):
+                if re.search(r'\b(director|writer|screenwriter|producer|composer|cinematographer|editor|music|crew|staff|art|lighting|original|ost|sound|action|martial)\b', combined_text):
                     is_crew = True
                 if re.search(r'\b(main role|main cast|support role|supporting cast|guest role|guest cast|cameo|bit part)\b', combined_text):
                     is_crew = False
@@ -503,7 +507,6 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
                     character_name = None  
                     final_role = " ".join(role_texts).strip()
                     
-                    # FIX: If MDL completely hides the role text because it's already in the <h3> Header
                     if not final_role and raw_header_text:
                         if header_text not in['cast', 'crew', 'cast & crew', 'cast and crew']:
                             final_role = raw_header_text
@@ -517,7 +520,6 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
                     character_name = "Unknown"
                     final_role = "Support Role"
                     
-                    # FIX: If it's empty but header says Guest/Main Role
                     if not role_texts and raw_header_text:
                         if re.search(r'\b(main)\b', header_text):
                             final_role = 'Main Role'
@@ -555,7 +557,7 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
         if main_role_count == 0 and len(full_cast_raw) > 0:
             promoted = 0
             for i in range(len(full_cast_raw)):
-                if full_cast_raw[i]['role'] in ['Support Role', 'Guest Role', 'Unknown']:
+                if full_cast_raw[i]['role'] in['Support Role', 'Guest Role', 'Unknown']:
                     full_cast_raw[i]['role'] = "Main Role"
                     promoted += 1
                     if promoted >= 6: break
