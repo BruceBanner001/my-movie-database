@@ -1,20 +1,20 @@
 # ============================================================
 # Script: create_update_backup_delete.py
-# Author:[BruceBanner001]
+# Author: [BruceBanner001]
 # Description:
 #   v16.0 Engine.
 #   - Professional-grade multi-file database system.
 #   - Intelligent scraping (AsianWiki/MDL/IMDb).
 #   - FIX: Deep Cast Scanning (Finds Main/Support/Guest correctly).
 #
-# Version: v7.3 (FIX: Crew/Bit Part Misclassification & Empty Roles)
+# Version: v7.4 (FIX: MDL Empty Roles Header Fallback)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v7.3"
+SCRIPT_VERSION = "v7.4"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames":[], "showImage": None,
@@ -449,14 +449,12 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
                 if artist_image_url and ('avatar' in artist_image_url or 'default' in artist_image_url):
                     artist_image_url = None
 
-                # --- V7.3: BULLETPROOF PARTIAL-MATCH SIBLING EXTRACTION ---
                 role_texts =[]
                 elements = list(item.select('.text-muted, .text-sm, small, .role'))
                 
                 nxt = item.find_next_sibling('div')
                 if nxt:
                     nxt_classes = nxt.get('class',[])
-                    # FIX: Use partial string matching to safely catch 'col-xs-4' or 'pull-right'
                     if any('col' in str(c).lower() or 'right' in str(c).lower() or 'role' in str(c).lower() for c in nxt_classes):
                         sib_elements = list(nxt.select('.text-muted, .text-sm, small, .role'))
                         if sib_elements:
@@ -472,7 +470,6 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
                         role_texts.append(t)
 
                 if not role_texts:
-                    # FIX: Ultimate text-node fallback to ensure "Director" and tag-less roles are extracted safely
                     leftover_parts =[]
                     for s_str in item.stripped_strings:
                         clean_s = s_str.strip()
@@ -484,17 +481,18 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
 
                 is_crew = False
                 header_text = ""
+                raw_header_text = ""
                 
-                prev_header = item.find_previous(['h2', 'h3', 'h4'])
+                prev_header = item.find_previous(['h2', 'h3', 'h4', 'h5'])
                 if prev_header:
-                    header_text = prev_header.get_text(" ", strip=True).lower()
+                    raw_header_text = prev_header.get_text(" ", strip=True)
+                    header_text = raw_header_text.lower()
                 
                 if 'cast' in header_text:
                     is_crew = False
                 elif any(kw in header_text for kw in['crew', 'director', 'writer', 'producer', 'production', 'music', 'art', 'editing', 'cinematograph', 'original']):
                     is_crew = True
                 
-                # FIX: ALWAYS evaluate text to override false positive headers (like "Bit Part" under a Crew header)
                 combined_text = " ".join(role_texts).lower()
                 if re.search(r'\b(director|writer|screenwriter|producer|composer|cinematographer|editor|music|crew|staff|art|lighting|original)\b', combined_text):
                     is_crew = True
@@ -504,15 +502,28 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
                 if is_crew:
                     character_name = None  
                     final_role = " ".join(role_texts).strip()
-                    if not final_role: final_role = "Crew"
                     
-                    # FIX: Safely strip rogue punctuation without deleting Brackets
+                    # FIX: If MDL completely hides the role text because it's already in the <h3> Header
+                    if not final_role and raw_header_text:
+                        if header_text not in['cast', 'crew', 'cast & crew', 'cast and crew']:
+                            final_role = raw_header_text
+                            
+                    if not final_role: 
+                        final_role = "Crew"
+                    
                     final_role = re.sub(r'^[,:\-\s]+|[,:\-\s]+$', '', final_role).strip().title()
                     if len(final_role) > 50: final_role = final_role[:50]
                 else:
                     character_name = "Unknown"
                     final_role = "Support Role"
                     
+                    # FIX: If it's empty but header says Guest/Main Role
+                    if not role_texts and raw_header_text:
+                        if re.search(r'\b(main)\b', header_text):
+                            final_role = 'Main Role'
+                        elif re.search(r'\b(guest|cameo|bit part)\b', header_text):
+                            final_role = 'Guest Role'
+                            
                     for txt in role_texts:
                         txt_lower = txt.lower()
                         if re.search(r'\b(main role|main cast)\b', txt_lower):
@@ -522,7 +533,6 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
                         elif re.search(r'\b(guest role|guest cast|cameo|bit part)\b', txt_lower):
                             final_role = 'Guest Role'
                         
-                        # Strip role name from character name, preserve brackets perfectly
                         clean_char = re.sub(r'\b(main role|main cast|support role|supporting cast|guest role|guest cast|cameo|bit part)\b', '', txt, flags=re.IGNORECASE)
                         clean_char = re.sub(r'^[,:\-\s]+|[,:\-\s]+$', '', clean_char).strip()
                         
