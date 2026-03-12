@@ -1,34 +1,66 @@
-🚀 Running Script — Version v7.5 | Run ID: RUN_20260312_130847
+🚀 Running Script — Version v7.5 | Run ID: RUN_20260312_133157
 [DEBUG] Attempting direct media download...
 [DEBUG] 'Deleting Records' sheet is empty. Nothing to delete.
 INFO: 'Manual Updates' sheet not found. Skipping.
-[DEBUG] Initiating search for: 'Lawless Lawyer (2018)' on asianwiki.com (Expected Country: South Korea)
-[DEBUG] Executing search query: "Lawless Lawyer" 2018 Korean site:asianwiki.com
-[DEBUG] Found candidate URL: https://blog.asianwiki.com/category/korean-dramas/page/73http:/blog.asianwiki.com/category/korean-dramas/page/304
-[DEBUG] Found candidate URL: https://asianwiki.com/Category:2018_South_Korean_Drama_Series
-[DEBUG] Found candidate URL: https://blog.asianwiki.com/category/korean-dramas/page/54http:/blog.asianwiki.com/category/korean-dramas/page/303
-[DEBUG] Found candidate URL: https://blog.asianwiki.com/category/korean-dramas/page/304
-[DEBUG] Found candidate URL: https://blog.asianwiki.com/page/545?s
-[DEBUG] Executing search query: "Lawless Lawyer" 2018 site:asianwiki.com
-[DEBUG] Found candidate URL: https://asianwiki.com/Lawless_Lawyer
-[DEBUG] Country validation passed.
-[DEBUG] Title Validation PASSED: 'Lawless Lawyer' matches 'Lawless Lawyer'
-[DEBUG] Found soup in cache for 'Lawless Lawyer' on asianwiki.com
-[DEBUG] Downloading image from: https://asianwiki.com/images/f/f0/Lawless_Lawyer-P2.jpg
-[DEBUG] Image saved to show-images/102.jpg
-[DEBUG] Initiating search for: 'Lawless Lawyer (2018)' on mydramalist.com (Expected Country: South Korea)
-[DEBUG] Executing search query: "Lawless Lawyer" 2018 Korean site:mydramalist.com
-[DEBUG] Found candidate URL: https://mydramalist.com/27441-lawless-attorney
-[DEBUG] Country validation passed.
-[DEBUG] Title Validation PASSED: 'Lawless Lawyer' matches 'Lawless Lawyer'
-[DEBUG] Found soup in cache for 'Lawless Lawyer' on asianwiki.com
-[DEBUG] Found soup in cache for 'Lawless Lawyer' on mydramalist.com
-[DEBUG] Found soup in cache for 'Lawless Lawyer' on mydramalist.com
-[DEBUG] Found soup in cache for 'Lawless Lawyer' on mydramalist.com
-[DEBUG] Found soup in cache for 'Lawless Lawyer' on mydramalist.com
-[DEBUG] Deep scraping full cast & crew from: https://mydramalist.com/27441-lawless-attorney/cast
-[DEBUG] Successfully loaded the /cast page.
+[DEBUG] Initiating search for: '12 Monkeys (2015)' on imdb.com (Expected Country: USA)
+[DEBUG] Executing search query: "12 Monkeys" 2015 site:imdb.com
+[DEBUG] Found candidate URL: https://www.imdb.com/title/tt3148266/fullcredits/
+[DEBUG] Title Validation FAILED: Page Title 'Full cast & crew' vs Expected '12 Monkeys' (Ratio: 0.15)
+[DEBUG] Found candidate URL: https://www.imdb.com/es-es/title/tt3148266/?ref_=nm_knf_c_2
+[DEBUG] Title Validation PASSED: '12 monos' matches '12 Monkeys'
+[DEBUG] Found soup in cache for '12 Monkeys' on imdb.com
+[DEBUG] Downloading image from: https://m.media-amazon.com/images/M/MV5BMTkwOTcxNzMzOV5BMl5BanBnXkFtZTgwODYxNjg0ODE@._V1_.jpg
+[DEBUG] Image saved to show-images/103.jpg
+[DEBUG] Found soup in cache for '12 Monkeys' on imdb.com
+[DEBUG] Found soup in cache for '12 Monkeys' on imdb.com
+[DEBUG] Found soup in cache for '12 Monkeys' on imdb.com
+[DEBUG] Found soup in cache for '12 Monkeys' on imdb.com
+[DEBUG] Found soup in cache for '12 Monkeys' on imdb.com
+[DEBUG] Found soup in cache for '12 Monkeys' on imdb.com
+[DEBUG] Initiating search for: '12 Monkeys (2016)' on imdb.com (Expected Country: USA)
+[DEBUG] Executing search query: "12 Monkeys" 2016 site:imdb.com
+[DEBUG] Found candidate URL: https://www.imdb.com/title/tt3148266/
+[DEBUG] Found soup in cache for '12 Monkeys' on imdb.com
+[DEBUG] Downloading image from: https://m.media-amazon.com/images/M/MV5BMTkwOTcxNzMzOV5BMl5BanBnXkFtZTgwODYxNjg0ODE@._V1_.jpg
+[DEBUG] Image saved to show-images/104.jpg
+[DEBUG] Found soup in cache for '12 Monkeys' on imdb.com
+[DEBUG] Found soup in cache for '12 Monkeys' on imdb.com
+[DEBUG] Found soup in cache for '12 Monkeys' on imdb.com
+[DEBUG] Found soup in cache for '12 Monkeys' on imdb.com
+[DEBUG] Found soup in cache for '12 Monkeys' on imdb.com
+[DEBUG] Found soup in cache for '12 Monkeys' on imdb.com
+[DEBUG] Initiating search for: '12 Monkeys (2017)' on imdb.com (Expected Country: USA)
+[DEBUG] Executing search query: "12 Monkeys" 2017 site:imdb.com
+[DEBUG] Found candidate URL: https://m.imdb.com/title/tt3148266/
+[DEBUG] Found soup in cache for '12 Monkeys' on imdb.com
+[DEBUG] Downloading image from: https://m.media-amazon.com/images/M/MV5BMTkwOTcxNzMzOV5BMl5BanBnXkFtZTgwODYxNjg0ODE@._V1_.jpg
+[DEBUG] Image saved to show-images/105.jpg
+[DEBUG] Found soup in cache for '12 Monkeys' on imdb.com
+[DEBUG] Found soup in cache for '12 Monkeys' on imdb.com
+[DEBUG] Found soup in cache for '12 Monkeys' on imdb.com
+[DEBUG] Found soup in cache for '12 Monkeys' on imdb.com
+[DEBUG] Found soup in cache for '12 Monkeys' on imdb.com
+[DEBUG] Found soup in cache for '12 Monkeys' on imdb.com
+[DEBUG] Initiating search for: '12 Monkeys (2018)' on imdb.com (Expected Country: USA)
+[DEBUG] Executing search query: "12 Monkeys" 2018 site:imdb.com
+[DEBUG] Found candidate URL: https://www.imdb.com/title/tt6659954/
+[DEBUG] Title Validation FAILED: Page Title 'The End' vs Expected '12 Monkeys' (Ratio: 0.12)
+[DEBUG] Found candidate URL: https://www.imdb.com/title/tt7106646/
+[DEBUG] Title Validation FAILED: Page Title 'Legacy' vs Expected '12 Monkeys' (Ratio: 0.25)
+[DEBUG] Found candidate URL: https://www.imdb.com/title/tt7178250/
+[DEBUG] Title Validation FAILED: Page Title '45 RPM' vs Expected '12 Monkeys' (Ratio: 0.25)
+[DEBUG] Found candidate URL: https://www.imdb.com/title/tt7103416/
+[DEBUG] Title Validation PASSED: 'Die Glocke' matches '12 Monkeys'
+[DEBUG] Found soup in cache for '12 Monkeys' on imdb.com
+[DEBUG] Downloading image from: https://m.media-amazon.com/images/M/MV5BY2NjNGU0NzUtZWRmZC00MjRhLWJjNzQtNDcwMjlhNTgyMTkzXkEyXkFqcGc@._V1_.jpg
+[DEBUG] Image saved to show-images/106.jpg
+[DEBUG] Found soup in cache for '12 Monkeys' on imdb.com
+[DEBUG] Found soup in cache for '12 Monkeys' on imdb.com
+[DEBUG] Found soup in cache for '12 Monkeys' on imdb.com
+[DEBUG] Found soup in cache for '12 Monkeys' on imdb.com
+[DEBUG] Found soup in cache for '12 Monkeys' on imdb.com
+[DEBUG] Found soup in cache for '12 Monkeys' on imdb.com
 INFO: Sheet 'Sheet2' not found. Skipping.
-✅ Report written -> reports/Report_12_March_2026_1308.txt
+✅ Report written -> reports/Report_12_March_2026_1331.txt
 
 All done.

@@ -1,0 +1,84 @@
+{
+    "scriptVersion": "v7.5",
+    "runID": "RUN_20260312_133157",
+    "timestamp": "12 March 2026 01:32 PM (IST)",
+    "showID": 106,
+    "showName": "12 Monkeys Season 4",
+    "fetchedFields": {
+        "showImage": {
+            "value": "106.jpg",
+            "source": "imdb",
+            "source_link": "https://www.imdb.com/title/tt7103416/"
+        },
+        "releaseDate": {
+            "value": "2018-06-22",
+            "source": "imdb",
+            "source_link": "https://www.imdb.com/title/tt7103416/"
+        },
+        "synopsis": {
+            "value": "The team infiltrates a Nazi gala to steal an artifact as &quot;Die Glocke&quot;; their operation comes undone when French Resistance interferes and an unexpected guest arrives.",
+            "source": "imdb",
+            "source_link": "https://www.imdb.com/title/tt7103416/"
+        },
+        "director": {
+            "value": [
+                "David Grossman"
+            ],
+            "source": "imdb",
+            "source_link": "https://www.imdb.com/title/tt7103416/"
+        },
+        "tags": {
+            "value": [
+                "Adventure",
+                "Drama",
+                "Mystery"
+            ],
+            "source": "imdb",
+            "source_link": "https://www.imdb.com/title/tt7103416/"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "nm0822155",
+                    "artistName": "Aaron Stanford",
+                    "artistImageURL": null,
+                    "characterName": "Unknown",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "nm0776040",
+                    "artistName": "Amanda Schull",
+                    "artistImageURL": null,
+                    "characterName": "Unknown",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "nm0823693",
+                    "artistName": "Todd Stashwick",
+                    "artistImageURL": null,
+                    "characterName": "Unknown",
+                    "role": "Main Role"
+                }
+            ],
+            "source": "imdb",
+            "source_link": "https://www.imdb.com/title/tt7103416/"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "nm0823693",
+            "artistName": "Todd Stashwick",
+            "imageDownloaded": false
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "imdb",
+        "releaseDate": "imdb",
+        "otherNames": null,
+        "Duration": null,
+        "synopsis": "imdb",
+        "director": "imdb",
+        "tags": "imdb",
+        "cast": "imdb"
+    }
+}
