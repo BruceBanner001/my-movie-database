@@ -1,28 +1,34 @@
-🚀 Running Script — Version v7.4 | Run ID: RUN_20260312_125535
+🚀 Running Script — Version v7.5 | Run ID: RUN_20260312_130847
 [DEBUG] Attempting direct media download...
 [DEBUG] 'Deleting Records' sheet is empty. Nothing to delete.
 INFO: 'Manual Updates' sheet not found. Skipping.
-[DEBUG] Initiating search for: 'Find Me in Your Memory (2020)' on asianwiki.com (Expected Country: South Korea)
-[DEBUG] Executing search query: "Find Me in Your Memory" 2020 Korean site:asianwiki.com
-[DEBUG] Found candidate URL: https://asianwiki.com/Find_Me_in_Your_Memory
+[DEBUG] Initiating search for: 'Lawless Lawyer (2018)' on asianwiki.com (Expected Country: South Korea)
+[DEBUG] Executing search query: "Lawless Lawyer" 2018 Korean site:asianwiki.com
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/category/korean-dramas/page/73http:/blog.asianwiki.com/category/korean-dramas/page/304
+[DEBUG] Found candidate URL: https://asianwiki.com/Category:2018_South_Korean_Drama_Series
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/category/korean-dramas/page/54http:/blog.asianwiki.com/category/korean-dramas/page/303
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/category/korean-dramas/page/304
+[DEBUG] Found candidate URL: https://blog.asianwiki.com/page/545?s
+[DEBUG] Executing search query: "Lawless Lawyer" 2018 site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Lawless_Lawyer
 [DEBUG] Country validation passed.
-[DEBUG] Title Validation PASSED: 'Find Me in Your Memory' matches 'Find Me in Your Memory'
-[DEBUG] Found soup in cache for 'Find Me in Your Memory' on asianwiki.com
-[DEBUG] Downloading image from: https://asianwiki.com/images/e/e0/Find_Me_in_Your_Memory-P2.jpg
-[DEBUG] Image saved to show-images/101.jpg
-[DEBUG] Initiating search for: 'Find Me in Your Memory (2020)' on mydramalist.com (Expected Country: South Korea)
-[DEBUG] Executing search query: "Find Me in Your Memory" 2020 Korean site:mydramalist.com
-[DEBUG] Found candidate URL: https://mydramalist.com/50941-the-man-s-memory
+[DEBUG] Title Validation PASSED: 'Lawless Lawyer' matches 'Lawless Lawyer'
+[DEBUG] Found soup in cache for 'Lawless Lawyer' on asianwiki.com
+[DEBUG] Downloading image from: https://asianwiki.com/images/f/f0/Lawless_Lawyer-P2.jpg
+[DEBUG] Image saved to show-images/102.jpg
+[DEBUG] Initiating search for: 'Lawless Lawyer (2018)' on mydramalist.com (Expected Country: South Korea)
+[DEBUG] Executing search query: "Lawless Lawyer" 2018 Korean site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/27441-lawless-attorney
 [DEBUG] Country validation passed.
-[DEBUG] Title Validation PASSED: 'Find Me in Your Memory' matches 'Find Me in Your Memory'
-[DEBUG] Found soup in cache for 'Find Me in Your Memory' on asianwiki.com
-[DEBUG] Found soup in cache for 'Find Me in Your Memory' on mydramalist.com
-[DEBUG] Found soup in cache for 'Find Me in Your Memory' on mydramalist.com
-[DEBUG] Found soup in cache for 'Find Me in Your Memory' on mydramalist.com
-[DEBUG] Found soup in cache for 'Find Me in Your Memory' on mydramalist.com
-[DEBUG] Deep scraping full cast & crew from: https://mydramalist.com/50941-the-man-s-memory/cast
+[DEBUG] Title Validation PASSED: 'Lawless Lawyer' matches 'Lawless Lawyer'
+[DEBUG] Found soup in cache for 'Lawless Lawyer' on asianwiki.com
+[DEBUG] Found soup in cache for 'Lawless Lawyer' on mydramalist.com
+[DEBUG] Found soup in cache for 'Lawless Lawyer' on mydramalist.com
+[DEBUG] Found soup in cache for 'Lawless Lawyer' on mydramalist.com
+[DEBUG] Found soup in cache for 'Lawless Lawyer' on mydramalist.com
+[DEBUG] Deep scraping full cast & crew from: https://mydramalist.com/27441-lawless-attorney/cast
 [DEBUG] Successfully loaded the /cast page.
 INFO: Sheet 'Sheet2' not found. Skipping.
-✅ Report written -> reports/Report_12_March_2026_1255.txt
+✅ Report written -> reports/Report_12_March_2026_1308.txt
 
 All done.
