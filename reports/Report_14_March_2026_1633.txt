@@ -1,0 +1,96 @@
+✅ Workflow completed successfully
+🆔 Run ID: RUN_20260314_163354
+📅 Run Time: 14 March 2026 04:34 PM (IST)
+⚙️ Script Version: v8.1
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Deleting Records ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+❌ Data Deleted:
+- 103 -> 12 Monkeys Season 1 (2015) -> ✅ Deleted
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Sheet1 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🆕 Data Created:
+- 103 - 12 Monkeys Season 2 (2016) -> First Time Uploaded
+
+🔁 Data Updated:
+✍️ 104 - 12 Monkeys Season 3 -> Show Name, Released Year, Total Episodes, Comments, Again Watched Dates Updated
+✍️ 105 - 12 Monkeys Season 4 -> Show Name, Released Year, Total Episodes, Watch Started On, Watch Ended On, Comments Updated
+✍️ 106 - The Lion's Secret -> Show Name, Released Year, Total Episodes, Watch Started On, Watch Ended On, Watched Language, Native Language, Comments, Ratings, Category, Again Watched Dates, Country Updated
+✍️ 107 - Alchemy Of Souls Season 1 -> Show Name, Released Year, Total Episodes, Watch Started On, Watch Ended On, Watched Language, Native Language, Comments, Ratings, Category, Again Watched Dates, Country Updated
+✍️ 108 - Alchemy Of Souls Season 2 -> Show Name, Released Year, Total Episodes, Watch Started On, Comments, Ratings Updated
+
+🔍 Refetched Data:
+✨ 106 - The Lion's Secret -> Fetched: 
+
+🖼️ Fetched Data Details:
+- 103 - 12 Monkeys Season 2 -> Fetched: Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+
+🚫 Skipped (Unchanged):
+- 101 - Find Me in Your Memory (2020)
+- 102 - Lawless Lawyer (2018)
+
+📊 Summary (Sheet: Sheet1)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Created: 1
+🔁 Updated: 5
+🔍 Refetched: 1
+🚫 Skipped: 2
+⚠️ Warnings: 0
+  Total Rows: 9
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 Overall Summary
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Total Created: 1
+🔁 Total Updated: 5
+🔍 Total Refetched: 1
+🖼️ Show Images Updated: 1
+🧑‍🎨 New Artist Images Added: 0
+🚫 Total Skipped: 2
+❌ Total Deleted: 1
+🗄️ Total Archived Backups: 1
+⚠️ Total Warnings: 0
+💾 Backup Files: 5
+  Grand Total Rows Processed: 9
+
+💾 Metadata Backups: 6
+
+📦 Total Objects in seriesData.json: 8
+📦 Total Objects in artists.json: 736
+📦 Total Objects in cast.json: 8
+📦 Total Objects in artists_lookup.json: 736
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ Folders Generated:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📁 backups/ (Total: 5 files)
+    📄 BACKUP_14_March_2026_1633_104.json
+    📄 BACKUP_14_March_2026_1633_105.json
+    📄 BACKUP_14_March_2026_1633_106.json
+    📄 BACKUP_14_March_2026_1633_107.json
+    📄 BACKUP_14_March_2026_1633_108.json
+
+📁 deleted_data/ (Total: 1 files)
+    📄 DELETED_14_March_2026_1633_103.json
+
+📁 deleted_images/ (Total: 1 files)
+    📄 DELETED_14_March_2026_1633_103.jpg
+
+📁 meta_backups/ (Total: 6 files)
+    📄 META_14_March_2026_1633_103.json
+    📄 META_14_March_2026_1633_104.json
+    📄 META_14_March_2026_1633_105.json
+    ... and 3 more files.
+
+📁 reports/ (Total: 1 files)
+    📄 Report_14_March_2026_1633.txt
+
+📁 archived_meta_backups/ (Total: 1 files)
+    📄 META_14_March_2026_1604_103.json
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🏁 Workflow finished successfully

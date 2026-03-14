@@ -754,112 +754,6 @@
             }
         ]
     },
-    "103": {
-        "mainRoles": [
-            {
-                "artistID": "nm0822155",
-                "characterName": "James Cole",
-                "role": "Main Role"
-            },
-            {
-                "artistID": "nm0776040",
-                "characterName": "Dr. Cassandra Railly",
-                "role": "Main Role"
-            },
-            {
-                "artistID": "nm0063800",
-                "characterName": "Aaron Marker",
-                "role": "Main Role"
-            },
-            {
-                "artistID": "nm0837784",
-                "characterName": "Katarina Jones",
-                "role": "Main Role"
-            },
-            {
-                "artistID": "nm0358922",
-                "characterName": "Jennifer Goines",
-                "role": "Main Role"
-            },
-            {
-                "artistID": "nm0823693",
-                "characterName": "Deacon",
-                "role": "Main Role"
-            },
-            {
-                "artistID": "nm0319164",
-                "characterName": "Dr. Julian Adler",
-                "role": "Main Role"
-            },
-            {
-                "artistID": "nm0009716",
-                "characterName": "José Ramse",
-                "role": "Main Role"
-            },
-            {
-                "artistID": "nm0235888",
-                "characterName": "Olivia",
-                "role": "Main Role"
-            },
-            {
-                "artistID": "nm0055567",
-                "characterName": "Whitley",
-                "role": "Main Role"
-            },
-            {
-                "artistID": "nm0299082",
-                "characterName": "Dr. Lasky",
-                "role": "Main Role"
-            },
-            {
-                "artistID": "nm2010527",
-                "characterName": "Hannah Jones",
-                "role": "Main Role"
-            },
-            {
-                "artistID": "nm0006888",
-                "characterName": "Pallid Man",
-                "role": "Main Role"
-            },
-            {
-                "artistID": "nm3257504",
-                "characterName": "Samuel Ramse",
-                "role": "Main Role"
-            },
-            {
-                "artistID": "nm0846687",
-                "characterName": "Mallick",
-                "role": "Main Role"
-            },
-            {
-                "artistID": "nm2174090",
-                "characterName": "Vivian Rutledge",
-                "role": "Main Role"
-            },
-            {
-                "artistID": "nm0389581",
-                "characterName": "Dr. David Eckland",
-                "role": "Main Role"
-            },
-            {
-                "artistID": "nm2903364",
-                "characterName": "Emissary",
-                "role": "Main Role"
-            }
-        ],
-        "crew": [
-            {
-                "artistID": "nm3029174",
-                "characterName": null,
-                "role": "Creator"
-            },
-            {
-                "artistID": "nm0558052",
-                "characterName": null,
-                "role": "Creator"
-            }
-        ]
-    },
     "104": {
         "mainRoles": [
             {
@@ -2075,6 +1969,116 @@
                 "artistID": "16011",
                 "characterName": null,
                 "role": "Screenwriter"
+            }
+        ]
+    },
+    "103": {
+        "mainRoles": [
+            {
+                "artistID": "nm0822155",
+                "characterName": "Unknown",
+                "role": "Main Role"
+            },
+            {
+                "artistID": "nm0776040",
+                "characterName": "Unknown",
+                "role": "Main Role"
+            },
+            {
+                "artistID": "nm0063800",
+                "characterName": "Unknown",
+                "role": "Main Role"
+            },
+            {
+                "artistID": "nm0837784",
+                "characterName": "Unknown",
+                "role": "Main Role"
+            },
+            {
+                "artistID": "nm0358922",
+                "characterName": "Unknown",
+                "role": "Main Role"
+            },
+            {
+                "artistID": "nm0823693",
+                "characterName": "Unknown",
+                "role": "Main Role"
+            }
+        ],
+        "supportRoles": [
+            {
+                "artistID": "nm0319164",
+                "characterName": "Unknown",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "nm0009716",
+                "characterName": "Unknown",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "nm0235888",
+                "characterName": "Unknown",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "nm0055567",
+                "characterName": "Unknown",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "nm0299082",
+                "characterName": "Unknown",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "nm2010527",
+                "characterName": "Unknown",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "nm0006888",
+                "characterName": "Unknown",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "nm3257504",
+                "characterName": "Unknown",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "nm0846687",
+                "characterName": "Unknown",
+                "role": "Support Role"
+            }
+        ],
+        "guestRoles": [
+            {
+                "artistID": "nm2174090",
+                "characterName": "Unknown",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "nm0389581",
+                "characterName": "Unknown",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "nm2903364",
+                "characterName": "Unknown",
+                "role": "Guest Role"
+            }
+        ],
+        "crew": [
+            {
+                "artistID": "nm3029174",
+                "characterName": null,
+                "role": "Creator"
+            },
+            {
+                "artistID": "nm0558052",
+                "characterName": null,
+                "role": "Creator"
             }
         ]
     }

@@ -1,0 +1,61 @@
+{
+    "scriptVersion": "v8.1",
+    "runID": "RUN_20260314_163354",
+    "timestamp": "14 March 2026 04:34 PM (IST)",
+    "showID": 105,
+    "showName": "12 Monkeys Season 4",
+    "fetchedFields": {
+        "showImage": {
+            "value": "105.jpg",
+            "source": "imdb"
+        },
+        "releaseDate": {
+            "value": "2015-01-16",
+            "source": "imdb"
+        },
+        "otherNames": {
+            "value": [
+                "Twelve Monkeys"
+            ],
+            "source": "imdb"
+        },
+        "Duration": {
+            "value": "42m",
+            "source": "imdb"
+        },
+        "synopsis": {
+            "value": "Follows the journey of a time traveler from the post-apocalyptic future who appears in present day on a mission to locate and eradicate the source of a deadly plague that will nearly destroy the human race.",
+            "source": "imdb"
+        },
+        "director": {
+            "value": [
+                "Travis Fickett",
+                "Terry Matalas"
+            ],
+            "source": "imdb"
+        },
+        "tags": {
+            "value": [
+                "Adventure",
+                "Drama",
+                "Mystery"
+            ],
+            "source": "imdb"
+        },
+        "cast": {
+            "value": null,
+            "source": "imdb"
+        }
+    },
+    "sitePriorityUsed": {
+        "showImage": "imdb",
+        "releaseDate": "imdb",
+        "otherNames": "imdb",
+        "Duration": "imdb",
+        "synopsis": "imdb",
+        "director": "imdb",
+        "tags": "imdb",
+        "cast": "imdb",
+        "network": null
+    }
+}
