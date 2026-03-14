@@ -1,0 +1,793 @@
+{
+    "scriptVersion": "v8.0",
+    "runID": "RUN_20260314_160435",
+    "timestamp": "14 March 2026 04:05 PM (IST)",
+    "showID": 107,
+    "showName": "The Lion's Secret",
+    "fetchedFields": {
+        "showImage": {
+            "value": "107.jpg",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/31358-the-lion-s-reflection-of-laying-cat"
+        },
+        "releaseDate": {
+            "value": "Dec 30, 2021 - Jan 23, 2022",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/31358-the-lion-s-reflection-of-laying-cat"
+        },
+        "otherNames": {
+            "value": [
+                "Lai Mao De Shi Zi Dao Ying",
+                "The Lion's Reflection of Laying Cat",
+                "The reflection of the lion"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/31358-the-lion-s-reflection-of-laying-cat"
+        },
+        "Duration": {
+            "value": "45 mins",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/31358-the-lion-s-reflection-of-laying-cat"
+        },
+        "synopsis": {
+            "value": "Mu Wan Qing, a successful CEO, and Liu Qing, an unemployed former soldier, marry first and fall in love later. Their relationship begins with hostility, but Liu Qing supports Mu Wan Qing through company crises and troubles with her ex. As their love grows, they face a new challenge and embark on a journey to Thailand to fulfill their elders' wishes.\n\n(",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/31358-the-lion-s-reflection-of-laying-cat"
+        },
+        "director": {
+            "value": [
+                "Zhu Dong Ning",
+                "Allen Lan",
+                "Ao Wu Chang"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/31358-the-lion-s-reflection-of-laying-cat"
+        },
+        "tags": {
+            "value": [
+                "Marriage Of Convenience",
+                "Former Soldier Male Lead",
+                "Post-traumatic Stress Disorder (PTSD)",
+                "Protective Male Lead",
+                "Fake To Real Lovers",
+                "Childhood Connection",
+                "Warm Man/Cold Woman",
+                "Secondary Couple",
+                "Secret",
+                "Slow Burn Romance"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/31358-the-lion-s-reflection-of-laying-cat"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "52339",
+                    "artistName": "Zhu Dong Ning",
+                    "artistImageURL": "https://i.mydramalist.com/kAqdd8_5m.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "52187",
+                    "artistName": "Allen Lan",
+                    "artistImageURL": "https://i.mydramalist.com/ENvv0_5m.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "64001",
+                    "artistName": "Ao Wu Chang",
+                    "artistImageURL": "https://i.mydramalist.com/pYxLb_5m.jpg",
+                    "characterName": null,
+                    "role": "Original Creator"
+                },
+                {
+                    "artistID": "51837",
+                    "artistName": "Dai Ying",
+                    "artistImageURL": "https://i.mydramalist.com/nOpbzE_5m.jpg",
+                    "characterName": null,
+                    "role": "Producer"
+                },
+                {
+                    "artistID": "90795",
+                    "artistName": "Jin Guo Dong",
+                    "artistImageURL": "https://i.mydramalist.com/EXwr5_5m.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "6457",
+                    "artistName": "Zhu Ya Wen",
+                    "artistImageURL": "https://i.mydramalist.com/nO8OJ2_5s.jpg",
+                    "characterName": "Liu Qing / \"Lion\"",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "5200",
+                    "artistName": "Yang Zi Shan",
+                    "artistImageURL": "https://i.mydramalist.com/g0pJz1_5s.jpg",
+                    "characterName": "Mu Wan Qing",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "330",
+                    "artistName": "Mike He",
+                    "artistImageURL": "https://i.mydramalist.com/pdjwXQ_5s.jpg",
+                    "characterName": "Lei Shuo / \"Bald Eagle\"",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "12980",
+                    "artistName": "Li Yuan",
+                    "artistImageURL": "https://i.mydramalist.com/nOpPNB_5s.jpg",
+                    "characterName": "Fu Jun Die",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "25321",
+                    "artistName": "Zhang Shen",
+                    "artistImageURL": "https://i.mydramalist.com/YYzRbd_5s.jpg",
+                    "characterName": "Mu Jian Jun [Wan Qing's father]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "91257",
+                    "artistName": "Qin Bo Kun",
+                    "artistImageURL": "https://i.mydramalist.com/O8eOgd_5s.jpg",
+                    "characterName": "Wu Feng Yu / \"Aardwolf\"",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4709",
+                    "artistName": "Jason Tsou",
+                    "artistImageURL": "https://i.mydramalist.com/vX570p_5s.jpg",
+                    "characterName": "Li Mo / \"Fox\"",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "52189",
+                    "artistName": "Lan Man Yu",
+                    "artistImageURL": "https://i.mydramalist.com/QJPXlW_5s.jpg",
+                    "characterName": "Li Yu Ting [Li Mo's sister]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "11065",
+                    "artistName": "Li Mu Feng",
+                    "artistImageURL": "https://i.mydramalist.com/YYZbAo_5s.jpg",
+                    "characterName": "Feng Cong [Wan Qing's ex-boyfriend]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "23847",
+                    "artistName": "Chen Hao Ming",
+                    "artistImageURL": "https://i.mydramalist.com/Xd8jzx_5s.jpg",
+                    "characterName": "Na Mu",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "15681",
+                    "artistName": "Kira Shi",
+                    "artistImageURL": "https://i.mydramalist.com/l0pjNQ_5s.jpg",
+                    "characterName": "Yu Man Shan [Maoyuan's R&D manager]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "26547",
+                    "artistName": "Xie Cheng Ying",
+                    "artistImageURL": "https://i.mydramalist.com/0nDrE_5s.jpg",
+                    "characterName": "[Feng Yu's wife]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "46317",
+                    "artistName": "Jian Ze Zheng",
+                    "artistImageURL": "https://i.mydramalist.com/Xd3k4J_5s.jpg",
+                    "characterName": "Li Na [Wan Qing's assistant]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "13586",
+                    "artistName": "Liu Min Ting",
+                    "artistImageURL": "https://i.mydramalist.com/YY6qwA_5s.jpg",
+                    "characterName": "Sun Yu [Lei Shuo's subordinate]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5104",
+                    "artistName": "Leanne Liu",
+                    "artistImageURL": "https://i.mydramalist.com/qYyAL5_5s.jpg",
+                    "characterName": "Mrs. Lin [Wan Qing's grandmother]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5292",
+                    "artistName": "Na Gwang Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/AB4NqL_5s.jpg",
+                    "characterName": "Mr. Yuan [Maoyuan's board member]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "15269",
+                    "artistName": "Li Guang Fu",
+                    "artistImageURL": "https://i.mydramalist.com/rZqLj_5s.jpg",
+                    "characterName": "Gu Xiong Chuan",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "14097",
+                    "artistName": "Yue Yang",
+                    "artistImageURL": "https://i.mydramalist.com/l0LyV6_5s.jpg",
+                    "characterName": "Qian Chang",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "25315",
+                    "artistName": "Fang Xiao Li",
+                    "artistImageURL": "https://i.mydramalist.com/yWrYL3_5s.jpg",
+                    "characterName": "Lin Ya Lian [Wan Qing's mother]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "91249",
+                    "artistName": "Ceng Xian Zi",
+                    "artistImageURL": "https://i.mydramalist.com/eYjXRQ_5s.jpg",
+                    "characterName": "Wu You You [Feng Yu's daughter]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "33007",
+                    "artistName": "Chen Fang Tong",
+                    "artistImageURL": "https://i.mydramalist.com/JBA41m_5s.jpg",
+                    "characterName": "Xiao Mi [Wan Qing's housekeeper]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "89943",
+                    "artistName": "Sean Pai",
+                    "artistImageURL": "https://i.mydramalist.com/vXgd7B_5s.jpg",
+                    "characterName": "Xiao Gua [Wan Qing's chef]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5373",
+                    "artistName": "Chang Han",
+                    "artistImageURL": "https://i.mydramalist.com/qYA0l5_5s.jpg",
+                    "characterName": "Yang Zhen Tian [Zhentian's president]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "56815",
+                    "artistName": "Zhao Cui Wei",
+                    "artistImageURL": "https://i.mydramalist.com/4Egn6_5s.jpg",
+                    "characterName": "Yu Lu [Zhen Tian's wife]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "141657",
+                    "artistName": "Zhao Ruo Jun",
+                    "artistImageURL": "https://i.mydramalist.com/pdgOBD_5s.jpg",
+                    "characterName": "Shen Ye [Feng Cong's subordinate]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "141661",
+                    "artistName": "Julio Acconci",
+                    "artistImageURL": "https://i.mydramalist.com/wJg2Wg_5s.jpg",
+                    "characterName": "Yan Jing / Makulu",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "141663",
+                    "artistName": "Dino Acconci",
+                    "artistImageURL": "https://i.mydramalist.com/WPWelO_5s.jpg",
+                    "characterName": "Pakse [Makulu's brother]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "141659",
+                    "artistName": "Jiang Xue Fei",
+                    "artistImageURL": "https://i.mydramalist.com/XdOb3d_5s.jpg",
+                    "characterName": "Fei Fei",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "12822",
+                    "artistName": "Jiang Xue Ming",
+                    "artistImageURL": "https://i.mydramalist.com/qoKwQs.jpg",
+                    "characterName": "[Fei Fei's brother]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "61967",
+                    "artistName": "Shao Yan Yuan",
+                    "artistImageURL": "https://i.mydramalist.com/Rnn6V_5s.jpg",
+                    "characterName": "Mr. Yang [Li Mo's subordinate]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "55661",
+                    "artistName": "Da Qing",
+                    "artistImageURL": "https://i.mydramalist.com/R5w3o_5s.jpg",
+                    "characterName": "Pang Zi",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "71429",
+                    "artistName": "Wang Zheng Jia",
+                    "artistImageURL": "https://i.mydramalist.com/4QzAK_5s.jpg",
+                    "characterName": "Officer Zhao",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "17862",
+                    "artistName": "Zach Lu",
+                    "artistImageURL": "https://i.mydramalist.com/xLqgj_5s.jpg",
+                    "characterName": "Coach Lu [Dax Triumph Gym]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "29909",
+                    "artistName": "Ryan Hsu",
+                    "artistImageURL": "https://i.mydramalist.com/Q34JY_5s.jpg",
+                    "characterName": "Coach Xu [Dax Triumph Gym]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "35947",
+                    "artistName": "Zhang Han",
+                    "artistImageURL": "https://i.mydramalist.com/jQEVmJ_5s.jpg",
+                    "characterName": "Mother Yan",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "51481",
+                    "artistName": "Chi Guo Dong",
+                    "artistImageURL": "https://i.mydramalist.com/ZQql8_5s.jpg",
+                    "characterName": "Atuna [Bazhen Entrepreneur]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "119445",
+                    "artistName": "Wang Kun",
+                    "artistImageURL": "https://i.mydramalist.com/vXNgKB_5s.jpg",
+                    "characterName": "Mrs. Wang [Mrs. Lin's caregiver]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3029",
+                    "artistName": "Rong Rong",
+                    "artistImageURL": "https://i.mydramalist.com/DkQ82N_5s.jpg",
+                    "characterName": "Mrs. Quan [Quan's wife] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "23069",
+                    "artistName": "Terma Tong",
+                    "artistImageURL": "https://i.mydramalist.com/x4PKxr_5s.jpg",
+                    "characterName": "President Lan (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "94377",
+                    "artistName": "Liu Yuan Feng",
+                    "artistImageURL": "https://i.mydramalist.com/60gbK2_5s.jpg",
+                    "characterName": "[Maoyuan security leader] (Ep. 4-5)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "26751",
+                    "artistName": "Li Yun Ao",
+                    "artistImageURL": "https://i.mydramalist.com/RAWrgs.jpg",
+                    "characterName": "[Maoyuan security guard] (Ep. 4-5)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "52109",
+                    "artistName": "Li Chang Zhi",
+                    "artistImageURL": "https://i.mydramalist.com/vxd3B_5s.jpg",
+                    "characterName": "[Maoyuan security guard] (Ep. 5)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "124469",
+                    "artistName": "Cameron Wang",
+                    "artistImageURL": "https://i.mydramalist.com/BdqL2l_5s.jpg",
+                    "characterName": "Fu Chuan [Jun Die's father] (Ep. 10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "17648",
+                    "artistName": "Qi Xin Rui",
+                    "artistImageURL": "https://i.mydramalist.com/2wzeDw_5s.jpg",
+                    "characterName": "Fu Jun Die [Young] (Ep. 10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "36337",
+                    "artistName": "Zhou Jun Chao",
+                    "artistImageURL": "https://i.mydramalist.com/73me3L_5s.jpg",
+                    "characterName": "Zhou Xiao [Yu Ting's boyfriend] (Ep. 10-11)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "7374",
+                    "artistName": "He Qiang",
+                    "artistImageURL": "https://i.mydramalist.com/dLxAe_5s.jpg",
+                    "characterName": "Mr. Yu [Yu Lu's father] (Ep. 16-17)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "12990",
+                    "artistName": "Lu Zheng",
+                    "artistImageURL": "https://i.mydramalist.com/rAljN_5s.jpg",
+                    "characterName": "[Executive] (Ep. 18)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "87925",
+                    "artistName": "Steven Dasz",
+                    "artistImageURL": "https://i.mydramalist.com/jBgdz_5s.jpg",
+                    "characterName": "[Kidnapper] (Ep. 18)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "46541",
+                    "artistName": "Zhang Yin Long",
+                    "artistImageURL": "https://i.mydramalist.com/ByzWR_5s.jpg",
+                    "characterName": "Mu Jian Jun [Young]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "42083",
+                    "artistName": "Xiao Tian Ren",
+                    "artistImageURL": "https://i.mydramalist.com/731l4L_5s.jpg",
+                    "characterName": "Liu Qing [Child]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "141665",
+                    "artistName": "Li Zi Lin",
+                    "artistImageURL": "https://i.mydramalist.com/vXgnvB_5s.jpg",
+                    "characterName": "Mu Wan Qing [Child]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "141667",
+                    "artistName": "Xu Zi Xin",
+                    "artistImageURL": "https://i.mydramalist.com/RBQJ2x_5s.jpg",
+                    "characterName": "Mu Wan Qing [Young]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "141669",
+                    "artistName": "Chen Sheng Fu",
+                    "artistImageURL": "https://i.mydramalist.com/0wdvBE_5s.jpg",
+                    "characterName": "Liu Qing [Young]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "46973",
+                    "artistName": "Li Yu Su",
+                    "artistImageURL": "https://i.mydramalist.com/qYwYxK_5s.jpg",
+                    "characterName": "Sister Huang",
+                    "role": "Guest Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/31358-the-lion-s-reflection-of-laying-cat"
+        },
+        "network": {
+            "value": [
+                "IQIYI",
+                "Tencent Video"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/31358-the-lion-s-reflection-of-laying-cat"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "52339",
+            "artistName": "Zhu Dong Ning",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "52187",
+            "artistName": "Allen Lan",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "64001",
+            "artistName": "Ao Wu Chang",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "51837",
+            "artistName": "Dai Ying",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "90795",
+            "artistName": "Jin Guo Dong",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "6457",
+            "artistName": "Zhu Ya Wen",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "5200",
+            "artistName": "Yang Zi Shan",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "330",
+            "artistName": "Mike He",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "12980",
+            "artistName": "Li Yuan",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "25321",
+            "artistName": "Zhang Shen",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "91257",
+            "artistName": "Qin Bo Kun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "4709",
+            "artistName": "Jason Tsou",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "52189",
+            "artistName": "Lan Man Yu",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "11065",
+            "artistName": "Li Mu Feng",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "23847",
+            "artistName": "Chen Hao Ming",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "15681",
+            "artistName": "Kira Shi",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "26547",
+            "artistName": "Xie Cheng Ying",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "46317",
+            "artistName": "Jian Ze Zheng",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "13586",
+            "artistName": "Liu Min Ting",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "5104",
+            "artistName": "Leanne Liu",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "5292",
+            "artistName": "Na Gwang Hoon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "15269",
+            "artistName": "Li Guang Fu",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "14097",
+            "artistName": "Yue Yang",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "25315",
+            "artistName": "Fang Xiao Li",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "91249",
+            "artistName": "Ceng Xian Zi",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "33007",
+            "artistName": "Chen Fang Tong",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "89943",
+            "artistName": "Sean Pai",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "5373",
+            "artistName": "Chang Han",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "56815",
+            "artistName": "Zhao Cui Wei",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "141657",
+            "artistName": "Zhao Ruo Jun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "141661",
+            "artistName": "Julio Acconci",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "141663",
+            "artistName": "Dino Acconci",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "141659",
+            "artistName": "Jiang Xue Fei",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "12822",
+            "artistName": "Jiang Xue Ming",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "61967",
+            "artistName": "Shao Yan Yuan",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "55661",
+            "artistName": "Da Qing",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "71429",
+            "artistName": "Wang Zheng Jia",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "17862",
+            "artistName": "Zach Lu",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "29909",
+            "artistName": "Ryan Hsu",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "35947",
+            "artistName": "Zhang Han",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "51481",
+            "artistName": "Chi Guo Dong",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "119445",
+            "artistName": "Wang Kun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "3029",
+            "artistName": "Rong Rong",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "23069",
+            "artistName": "Terma Tong",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "94377",
+            "artistName": "Liu Yuan Feng",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "52109",
+            "artistName": "Li Chang Zhi",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "124469",
+            "artistName": "Cameron Wang",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "17648",
+            "artistName": "Qi Xin Rui",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "36337",
+            "artistName": "Zhou Jun Chao",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "7374",
+            "artistName": "He Qiang",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "12990",
+            "artistName": "Lu Zheng",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "87925",
+            "artistName": "Steven Dasz",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "46541",
+            "artistName": "Zhang Yin Long",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "42083",
+            "artistName": "Xiao Tian Ren",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "141665",
+            "artistName": "Li Zi Lin",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "141667",
+            "artistName": "Xu Zi Xin",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "141669",
+            "artistName": "Chen Sheng Fu",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "46973",
+            "artistName": "Li Yu Su",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "mydramalist",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "mydramalist",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": "mydramalist"
+    }
+}
