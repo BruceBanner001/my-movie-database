@@ -1,7 +1,7 @@
 # ============================================================================
 # Workflow: Excel → JSON Automation
 # Purpose : Automate scheduled and manual Excel-to-JSON updates.
-# Version : 4.6 (Final: Added DEBUG_FETCH flag for diagnostics)
+# Version : 4.7 (FEATURE: Automated Relay-Race Batch Processing)
 # ============================================================================
 
 name: Excel → JSON Update
@@ -17,6 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      actions: write
 
     steps:
       - name: 1. Checkout repository
@@ -45,11 +46,11 @@ jobs:
         env:
           SHEETS: "Sheet1;Sheet2"
           GITHUB_PAGES_URL: "https://brucebanner001.github.io/my-movie-database"
-          
-          # [ THE MOST IMPORTANT DEBUGGING TOOL IS HERE ]
-          # To see exactly why fetching is failing, set this to "true"
-          # The workflow log will show a step-by-step of the scraping process.
           DEBUG_FETCH: "true"
+          
+          # [ THE AUTOMATED BATCH LIMIT ]
+          # Forces the script to pause and save after 50 heavy scrapes.
+          MAX_FETCHES: "50"
           
         run: |
           python create_update_backup_delete.py 2>&1 | tee output.log
@@ -65,9 +66,19 @@ jobs:
         run: |
           rm -f EXCEL_FILE_ID.txt GDRIVE_SERVICE_ACCOUNT.json
 
-      - name: 7. Commit and Push Changes
+      - name: 7. Commit, Push, and Trigger Next Batch
         if: success()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          # 1. Check if the script paused for a next batch
+          CONTINUE_RUN=false
+          if [ -f "RESUME_FLAG.txt" ]; then
+            CONTINUE_RUN=true
+            rm RESUME_FLAG.txt
+          fi
+          
+          # 2. Commit the 50 new rows to GitHub safely
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add -A --force
@@ -76,6 +87,12 @@ jobs:
           else
             git commit -m "Automated data update: $(date -u '+%Y-%m-%d %H:%M UTC')"
             git push
+          fi
+          
+          # 3. If there are more rows, trigger the relay race!
+          if [ "$CONTINUE_RUN" = true ]; then
+            echo "Batch finished! Triggering the next batch immediately..."
+            gh workflow run "Excel → JSON Update"
           fi
       
       - name: 8. Compose Email Body
@@ -90,7 +107,7 @@ jobs:
           report_file=$(find reports -type f -name "Report_*.txt" | sort -r | head -n1 || true)
           {
             if [[ "${WORKFLOW_STATUS}" == "success" ]]; then
-              echo "✅ Workflow completed successfully."
+              echo "✅ Workflow Batch completed successfully."
               echo ""
               if [[ -f "$report_file" ]]; then cat "$report_file"; else echo "⚠️ Report file was not found."; fi
             else
@@ -110,7 +127,7 @@ jobs:
           username: ${{ secrets.SMTP_USERNAME }}
           password: ${{ secrets.SMTP_PASSWORD }}
           subject: >
-            ${{ job.status == 'success' && '[Manual] Workflow - Final Report' || '[ACTION REQUIRED] Workflow FAILED' }}
+            ${{ job.status == 'success' && '[Manual] Workflow - Batch Report' || '[ACTION REQUIRED] Workflow FAILED' }}
           body: file://${{ steps.compose_email.outputs.body_file }}
           to: ${{ secrets.NOTIFY_EMAIL }}
           from: ${{ secrets.SMTP_USERNAME }}

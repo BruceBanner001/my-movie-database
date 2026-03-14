@@ -7,14 +7,14 @@
 #   - Intelligent scraping (AsianWiki/MDL/IMDb).
 #   - FIX: Deep Cast Scanning (Finds Main/Support/Guest correctly).
 #
-# Version: v7.5 (FIX: Comprehensive Crew/Cast Keyword Routing)
+# Version: v7.6 (FEATURE: Automated Batch Processing / Relay Race)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v7.5"
+SCRIPT_VERSION = "v7.6"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames":[], "showImage": None,
@@ -488,7 +488,6 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
                     raw_header_text = prev_header.get_text(" ", strip=True)
                     header_text = raw_header_text.lower()
                 
-                # FIX: V7.5 MASSIVE DICTIONARY TO CATCH ALL CREW (Like "Composer", "Sound", "Editor")
                 crew_keywords =['crew', 'director', 'writer', 'screenwriter', 'producer', 'production', 'music', 'composer', 'art', 'editing', 'editor', 'cinematograph', 'original', 'staff', 'lighting', 'ost', 'sound', 'action', 'martial']
                 cast_keywords =['cast', 'main', 'support', 'guest', 'cameo', 'bit part', 'actor', 'actress']
                 
@@ -886,7 +885,11 @@ def write_report(context):
                 lines.append(f"    ... and {total_files - 3} more files.")
             lines.append("")
             
-    lines.extend([sep, "🏁 Workflow finished successfully"])
+    if context.get('paused'):
+        lines.extend([sep, "⚠️ BATCH LIMIT REACHED: The script paused safely to prevent timeout.", "The GitHub Action will now automatically trigger the next run.", sep])
+    else:
+        lines.extend([sep, "🏁 Workflow finished successfully"])
+        
     with open(context['report_file_path'], 'w', encoding='utf-8') as f: f.write("\n".join(lines))
 
 def process_and_distribute_cast(full_cast, artists_db, context):
@@ -973,6 +976,10 @@ def save_json_file(file_path, data):
     with open(file_path, 'w', encoding='utf-8') as f: json.dump(data, f, indent=4, ensure_ascii=False)
 
 def main():
+    MAX_FETCHES = int(os.environ.get("MAX_FETCHES", "0"))
+    total_heavy_fetches = 0
+    limit_reached = False
+
     if os.path.exists("extendedCast.json") and not os.path.exists("cast.json"):
         os.rename("extendedCast.json", "cast.json")
         print("📦 Auto-Migrated extendedCast.json -> cast.json")
@@ -982,7 +989,7 @@ def main():
         'run_id': run_id_timestamp(), 
         'file_ts': filename_timestamp(),
         'start_time_iso': start_time.isoformat(), 
-        'report_data': {}, 'current_sheet': None,
+        'report_data': {}, 'current_sheet': None, 'paused': False,
         'files_generated': {'backups':[], 'show_images':[], 'artist_images':[], 'deleted_data':[], 'deleted_images':[], 'meta_backups':[], 'reports':[], 'archived_backups':[], 'archived_meta_backups':[]}
     }
     if not (os.path.exists(EXCEL_FILE_ID_TXT) and os.path.exists(SERVICE_ACCOUNT_FILE)): print("❌ Missing GDrive credentials."); sys.exit(1)
@@ -991,6 +998,8 @@ def main():
     except Exception as e: print(f"❌ Error with Excel ID file: {e}"); sys.exit(1)
     
     print(f"🚀 Running Script — Version {SCRIPT_VERSION} | Run ID: {context['run_id']}")
+    if MAX_FETCHES > 0: print(f"⚙️ BATCH MODE ACTIVE: Will pause after {MAX_FETCHES} heavy fetch operations.")
+    
     excel_bytes = fetch_excel_from_gdrive_bytes(excel_id, SERVICE_ACCOUNT_FILE)
     if not excel_bytes: print("❌ Could not fetch Excel file."); sys.exit(1)
 
@@ -1005,13 +1014,18 @@ def main():
     if manual_report: context['report_data']['Manual Updates'] = manual_report
 
     sheets_to_process =[s.strip() for s in os.environ.get("SHEETS", "Sheet1").split(';') if s.strip()]
+    
     for sheet in sheets_to_process:
+        if limit_reached: break
+        
         context['current_sheet'] = sheet
         report = context['report_data'].setdefault(sheet, {})
         excel_rows, warnings = excel_to_objects(io.BytesIO(excel_bytes.getvalue()), sheet)
         if warnings: report.setdefault('data_warnings',[]).extend(warnings)
 
         for excel_obj in excel_rows:
+            if limit_reached: break
+            
             sid = excel_obj['showID']
             old_obj_from_json = merged_by_id.get(sid)
             is_new = old_obj_from_json is None
@@ -1070,10 +1084,20 @@ def main():
             if is_new or excel_data_has_changed or metadata_was_fetched:
                  merged_by_id[sid] = final_obj
                  save_metadata_backup(final_obj, context)
+                 # Increment heavy fetch counter
+                 total_heavy_fetches += 1
 
             missing_fields = {'synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast'}
             missing =[human_readable_field(k) for k, v in final_obj.items() if k in missing_fields and not v]
             if missing: report.setdefault('fetch_warnings',[]).append(f"- {sid} - {final_obj['showName']} -> ⚠️ Missing: {', '.join(sorted(missing))}")
+            
+            # TRIGGER THE PAUSE IF LIMIT REACHED
+            if MAX_FETCHES > 0 and total_heavy_fetches >= MAX_FETCHES:
+                limit_reached = True
+                context['paused'] = True
+                print(f"\n🛑 BATCH LIMIT REACHED: Processed {MAX_FETCHES} records.")
+                with open("RESUME_FLAG.txt", "w") as rf: rf.write("CONTINUE_NEXT_BATCH")
+                break
 
     save_json_file(SERIES_JSON_FILE, sorted(merged_by_id.values(), key=lambda x: x.get('showID', 0)))
     save_json_file(ARTISTS_JSON_FILE, artists_data)
