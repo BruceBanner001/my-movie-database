@@ -1,22 +1,22 @@
 # ============================================================
 # Script: create_update_backup_delete.py
-# Author: [BruceBanner001]
+# Author:[BruceBanner001]
 # Description:
-#   v17.0 Engine.
+#   v18.0 Engine.
 #   - Professional-grade multi-file database system.
-#   - Forced English Headers (Fixes Spanish/Regional texts).
-#   - Advanced IMDb Scrapers (Duration, Cast Characters, Networks).
-#   - Crew Categorization (`otherCrewMembers`).
+#   - FIX: IMDb Deep Localization override (Strict English Cookies).
+#   - FIX: TVSeries vs Movie vs TVEpisode strict validation logic.
+#   - FIX: IMDb Cast limits (Intelligent Main/Support/Guest index).
 #   - Final Batch Report Compiler.
 #
-# Version: v8.0 (FEATURE: Unified Batch Reporting / Deep IMDb Scrape)
+# Version: v8.1 (FEATURE: Flawless IMDb Entity Recognition)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v8.0"
+SCRIPT_VERSION = "v8.1"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames":[], "showImage": None,
@@ -92,10 +92,12 @@ ARCHIVED_BACKUPS_DIR, ARCHIVED_META_DIR = "archived-backups", "archived-backup-m
 
 SERVICE_ACCOUNT_FILE, EXCEL_FILE_ID_TXT = "GDRIVE_SERVICE_ACCOUNT.json", "EXCEL_FILE_ID.txt"
 SCRAPER = cloudscraper.create_scraper() if HAVE_SCRAPER else requests.Session()
-# FIXED: Forced Accept-Language to explicitly grab English results
+
+# FIXED: Forcing strict English Localization Cookies + Headers for IMDb
 SCRAPER.headers.update({
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-    'Accept-Language': 'en-US,en;q=0.9'
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+    'Accept-Language': 'en-US,en;q=0.9',
+    'Cookie': 'lc-main=en_US'
 })
 
 LANG_TO_COUNTRY_MAP = {"korean": "South Korea", "chinese": "China", "japanese": "Japan", "thai": "Thailand", "taiwanese": "Taiwan", "english": "USA"}
@@ -139,21 +141,32 @@ def merge_batch_state(context):
     try:
         with open(BATCH_STATE_FILE, 'r', encoding='utf-8') as f:
             batch_state = json.load(f)
-        
         for sheet, data in batch_state.get('report_data', {}).items():
             if sheet not in context['report_data']: context['report_data'][sheet] = {}
             for key, lst in data.items():
                 if key not in context['report_data'][sheet]: context['report_data'][sheet][key] =[]
                 context['report_data'][sheet][key].extend(lst)
-        
         for category, lst in batch_state.get('files_generated', {}).items():
-            if category not in context['files_generated']: context['files_generated'][category] = []
+            if category not in context['files_generated']: context['files_generated'][category] =[]
             context['files_generated'][category].extend(lst)
     except Exception as e: logd(f"Failed to load batch state: {e}")
 
 def save_batch_state(context):
     state = {'report_data': context['report_data'], 'files_generated': context['files_generated']}
     with open(BATCH_STATE_FILE, 'w', encoding='utf-8') as f: json.dump(state, f, indent=4, ensure_ascii=False)
+
+def _get_imdb_json_ld(soup):
+    try:
+        script = soup.find('script', type='application/ld+json')
+        if script:
+            data = json.loads(script.string)
+            if isinstance(data, list):
+                for item in data:
+                    if item.get('@type') in['Movie', 'TVSeries', 'TVEpisode', 'TVMiniSeries']: return item
+                return data[0] if data else None
+            return data
+    except Exception: pass
+    return None
 
 def _validate_page_title(soup, expected_name, site):
     try:
@@ -191,17 +204,17 @@ def _scrape_country(soup, site):
     except Exception: pass
     return None
 
-def get_soup_from_search(show_name, show_year, site, language, soup_cache):
-    cache_key = f"{show_name}_{show_year}_{site}_{language}"
+def get_soup_from_search(show_name, show_year, site, language, show_type, soup_cache):
+    cache_key = f"{show_name}_{show_year}_{site}_{language}_{show_type}"
     if cache_key in soup_cache: return soup_cache[cache_key]
 
     expected_country = LANG_TO_COUNTRY_MAP.get(language.lower())
-    
     if not HAVE_DDGS: return None, None
 
     search_queries =[ f'"{show_name}" {show_year} {language} site:{site}.com', f'"{show_name}" {show_year} site:{site}.com', f'"{show_name}" site:{site}.com' ]
     if site == "imdb":
-        search_queries =[f'"{show_name}" {show_year} site:imdb.com', f'"{show_name}" TV Series {show_year} site:imdb.com']
+        entity_hint = "TV Series" if "Drama" in show_type else "Movie"
+        search_queries =[f'"{show_name}" {entity_hint} site:imdb.com/title/', f'"{show_name}" {show_year} site:imdb.com/title/']
 
     for query in search_queries:
         results = None
@@ -216,17 +229,38 @@ def get_soup_from_search(show_name, show_year, site, language, soup_cache):
 
         for res in results:
             url = res.get('href', '')
-            if not url or 'bing.com' in url or any(bad in url for bad in['/reviews', '/episode', '/cast', '/recs', '?lang=', '/photos', '/video', '/trivia']): continue
+            if not url or 'bing.com' in url or any(bad in url for bad in['/reviews', '/cast', '/recs', '?lang=', '/photos', '/video', '/trivia']): continue
             if site == "asianwiki" and ("/File:" in url or "/index.php?title=File:" in url): continue
-            if site == "imdb" and "/title/tt" not in url: continue 
+            
+            # PERFECT IMDb URL NORMALIZATION (Removes episodes, language paths, etc.)
+            if site == "imdb":
+                tt_match = re.search(r'/title/(tt\d+)', url)
+                if not tt_match: continue
+                url = f"https://www.imdb.com/title/{tt_match.group(1)}/"
 
             r = SCRAPER.get(url, timeout=15)
             if r.status_code == 200:
                 soup = BeautifulSoup(r.text, "html.parser")
+                
+                # STRICT IMDb TYPE VALIDATION (Prevents 1995 Movie vs 2015 TVSeries overlaps)
+                if site == "imdb":
+                    data = _get_imdb_json_ld(soup)
+                    if data:
+                        imdb_type = data.get('@type', '')
+                        if imdb_type == 'TVEpisode': 
+                            logd(f"Rejecting {url} because it is a single Episode.")
+                            continue
+                        if show_type in ['Drama', 'Mini Drama'] and imdb_type == 'Movie':
+                            logd(f"Rejecting {url} because it's a Movie, expected TV Series.")
+                            continue
+                        if show_type == 'Movie' and imdb_type in['TVSeries', 'TVMiniSeries']:
+                            logd(f"Rejecting {url} because it's a TV Series, expected Movie.")
+                            continue
+                
                 is_valid_landmark = False
                 if site == "asianwiki" and soup.find(id='Profile'): is_valid_landmark = True
                 elif site == "mydramalist" and soup.find('div', class_='box-body'): is_valid_landmark = True
-                elif site == "imdb" and (soup.find('h1') or soup.find(attrs={"type": "application/ld+json"})): is_valid_landmark = True
+                elif site == "imdb" and soup.find('h1'): is_valid_landmark = True
                 
                 if is_valid_landmark:
                     if expected_country and site != 'imdb':
@@ -514,13 +548,6 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
     except Exception as e: return None
 
 # --- IMDB SCRAPERS ---
-def _get_imdb_json_ld(soup):
-    try:
-        script = soup.find('script', type='application/ld+json')
-        if script: return json.loads(script.string)
-    except Exception: pass
-    return None
-
 def _scrape_synopsis_from_imdb(soup, **kwargs):
     try:
         data = _get_imdb_json_ld(soup)
@@ -560,7 +587,9 @@ def _scrape_duration_from_imdb(soup, **kwargs):
             if total_mins > 0: return f"{total_mins} mins"
         runtime_tag = soup.find('li', attrs={'data-testid': 'title-techspec_runtime'})
         if runtime_tag and (div := runtime_tag.find('div')):
-            return div.get_text(strip=True).replace("minutes", "mins").replace("minute", "min")
+            text = div.get_text(strip=True).lower()
+            m = re.search(r'(\d+)\s*m', text)
+            if m: return f"{m.group(1)} mins"
     except Exception: pass
     return None
 
@@ -596,14 +625,15 @@ def _scrape_tags_from_imdb(soup, **kwargs):
     return None
 
 def _scrape_network_from_imdb(soup, **kwargs):
-    # IMDb usually puts Network inside Company Credits, skipping for cleaner Excel merging
     return None
 
 def _scrape_cast_from_imdb(soup, **kwargs):
     try:
         full_cast_raw =[]
         cards = soup.select('div[data-testid="title-cast-item"]')
-        for card in cards[:20]: 
+        
+        # FIXED: IMDb Top 6 = Main, Next 9 = Support, Rest = Guest.
+        for idx, card in enumerate(cards[:20]): 
             try:
                 a_tag = card.select_one('a[data-testid="title-cast-item__actor"]')
                 if not a_tag: continue
@@ -613,24 +643,27 @@ def _scrape_cast_from_imdb(soup, **kwargs):
                 img_tag = card.select_one('img')
                 img_url = img_tag['src'] if img_tag else None
                 
-                char_div = card.select_one('a[data-testid="cast-item-characters-link"]')
-                if char_div:
-                    char_name = char_div.get_text(strip=True)
-                else:
-                    char_span = card.select_one('.cast-item-characters-link, .title-cast-item__characters')
-                    char_name = char_span.get_text(" ", strip=True) if char_span else "Unknown"
-                    
-                char_name = re.sub(r'\s*\d+\s*episodes.*', '', char_name, flags=re.IGNORECASE).strip()
+                char_span = card.select_one('.cast-item-characters-link, .title-cast-item__characters')
+                char_name = char_span.get_text(" ", strip=True) if char_span else "Unknown"
+                
+                # FIXED: Strip "13 episodes" and year spans from character name
+                char_name = re.sub(r'\s*\d+\s*episodes?.*', '', char_name, flags=re.IGNORECASE).strip()
+                char_name = re.sub(r'\s*\d{4}\s*-\s*\d{4}.*', '', char_name).strip()
+                if not char_name: char_name = "Unknown"
+                
+                role = "Main Role"
+                if idx >= 6: role = "Support Role"
+                if idx >= 15: role = "Guest Role"
                 
                 full_cast_raw.append({
                     "artistID": artist_id, "artistName": name, "artistImageURL": img_url,
-                    "characterName": char_name, "role": "Main Role" 
+                    "characterName": char_name, "role": role 
                 })
             except Exception: continue
 
         data = _get_imdb_json_ld(soup)
         if data:
-            for role_key in ['director', 'creator']:
+            for role_key in['director', 'creator']:
                 if role_key in data:
                     entities = data[role_key]
                     if not isinstance(entities, list): entities = [entities]
@@ -662,6 +695,7 @@ def fetch_and_populate_metadata(obj, context, artists_db):
     s_id, s_name, s_year, lang = obj['showID'], obj['showName'], obj['releasedYear'], obj.get("nativeLanguage", "")
     priority = SITE_PRIORITY_BY_LANGUAGE.get(lang.lower(), SITE_PRIORITY_BY_LANGUAGE['default'])
     spu = obj.setdefault('sitePriorityUsed', {})
+    show_type = obj.get('showType', 'Drama')
     
     context['source_links_temp'] = {}
     soup_cache = {}
@@ -677,7 +711,7 @@ def fetch_and_populate_metadata(obj, context, artists_db):
             search_terms =[s_name, re.sub(r'\s*\(?Season\s*\d+\)?', '', s_name, flags=re.IGNORECASE).strip()]
             soup, url = None, None
             for term in set(search_terms):
-                soup, url = get_soup_from_search(term, s_year, site_to_use, lang, soup_cache)
+                soup, url = get_soup_from_search(term, s_year, site_to_use, lang, show_type, soup_cache)
                 if soup: break
             
             if soup:
@@ -795,7 +829,11 @@ def excel_to_objects(excel, sheet):
         if obj.get("showID", 0) != 0: obj['showID'] += base_id
         if not obj.get("showID") or not obj.get("showName"): continue
         obj["againWatchedDates"] =[ddmmyyyy(d) for d in row[again_idx:] if ddmmyyyy(d)]
-        obj["showType"] = "Mini Drama" if "mini" in sheet.lower() else "Drama"
+        
+        # FIXED: Proper ShowType matching for TV vs Movie detection
+        sheet_lower = sheet.lower()
+        obj["showType"] = "Movie" if "movie" in sheet_lower else "Mini Drama" if "mini" in sheet_lower else "Drama"
+        
         obj["nativeLanguage"] = obj.get("nativeLanguage", "").strip().capitalize()
         lang = obj.get("nativeLanguage", "").lower()
         if lang in ("korean", "korea"): obj["country"] = "South Korea"
@@ -866,9 +904,9 @@ def write_report(context):
         lines.append("")
 
     stats['deleted'] = len(context['files_generated'].get('deleted_data', [])); stats['artist_images'] = len(context['files_generated'].get('artist_images', []))
-    stats['archived'] = len(context['files_generated'].get('archived_backups', [])) + len(context['files_generated'].get('archived_meta_backups', []))
+    stats['archived'] = len(context['files_generated'].get('archived_backups',[])) + len(context['files_generated'].get('archived_meta_backups',[]))
     
-    lines.extend([sep, "📊 Cumulative Batch Summary" if context.get('is_final_batch_report') else "📊 Overall Summary", sep, f"🆕 Total Created: {stats['created']}", f"🔁 Total Updated: {stats['updated']}", f"🔍 Total Refetched: {stats['refetched']}", f"🖼️ Show Images Updated: {stats['show_images']}", f"🧑‍🎨 New Artist Images Added: {stats['artist_images']}", f"🚫 Total Skipped: {stats['skipped']}", f"❌ Total Deleted: {stats['deleted']}", f"🗄️ Total Archived Backups: {stats['archived']}", f"⚠️ Total Warnings: {stats['warnings']}", f"💾 Backup Files: {len(context['files_generated'].get('backups', []))}", f"  Grand Total Rows Processed: {stats['rows']}", "", f"💾 Metadata Backups: {len(context['files_generated'].get('meta_backups',[]))}", ""])
+    lines.extend([sep, "📊 Cumulative Batch Summary" if context.get('is_final_batch_report') else "📊 Overall Summary", sep, f"🆕 Total Created: {stats['created']}", f"🔁 Total Updated: {stats['updated']}", f"🔍 Total Refetched: {stats['refetched']}", f"🖼️ Show Images Updated: {stats['show_images']}", f"🧑‍🎨 New Artist Images Added: {stats['artist_images']}", f"🚫 Total Skipped: {stats['skipped']}", f"❌ Total Deleted: {stats['deleted']}", f"🗄️ Total Archived Backups: {stats['archived']}", f"⚠️ Total Warnings: {stats['warnings']}", f"💾 Backup Files: {len(context['files_generated'].get('backups',[]))}", f"  Grand Total Rows Processed: {stats['rows']}", "", f"💾 Metadata Backups: {len(context['files_generated'].get('meta_backups',[]))}", ""])
     
     for file in[SERIES_JSON_FILE, ARTISTS_JSON_FILE, CAST_JSON_FILE, ARTIST_LOOKUP_FILE]:
         try:
@@ -898,7 +936,7 @@ def write_report(context):
 
 def process_and_distribute_cast(full_cast, artists_db, context):
     main_cast, support_cast, guest_cast = [], [],[]
-    crew_cast, other_crew_cast = [], []
+    crew_cast, other_crew_cast = [],[]
     director_names =[]
     context['new_artists_added'] =[]
     
@@ -997,7 +1035,6 @@ def main():
         'files_generated': {'backups':[], 'show_images':[], 'artist_images':[], 'deleted_data':[], 'deleted_images':[], 'meta_backups':[], 'reports':[], 'archived_backups':[], 'archived_meta_backups':[]}
     }
     
-    # Load previous batch state if it exists
     merge_batch_state(context)
 
     if not (os.path.exists(EXCEL_FILE_ID_TXT) and os.path.exists(SERVICE_ACCOUNT_FILE)): print("❌ Missing GDrive credentials."); sys.exit(1)
@@ -1043,7 +1080,6 @@ def main():
             
             final_obj = {**base_template, **old_data, **excel_obj}
             
-            # Smart restore for locked lists to merge Excel + JSON correctly
             for k in LOCKED_FIELDS_AFTER_CREATION:
                 if k in old_data and (old_data[k] or isinstance(old_data[k], (list, dict))):
                     if k == 'network': final_obj[k] = normalize_list(list(dict.fromkeys(normalize_list(old_data[k]) + normalize_list(excel_obj.get(k)))))
@@ -1099,7 +1135,6 @@ def main():
             missing =[human_readable_field(k) for k, v in final_obj.items() if k in missing_fields and not v]
             if missing: report.setdefault('fetch_warnings',[]).append(f"- {sid} - {final_obj['showName']} -> ⚠️ Missing: {', '.join(sorted(missing))}")
             
-            # TRIGGER THE PAUSE IF LIMIT REACHED
             if MAX_FETCHES > 0 and total_heavy_fetches >= MAX_FETCHES:
                 limit_reached = True
                 context['paused'] = True
