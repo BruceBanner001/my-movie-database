@@ -1,22 +1,21 @@
 # ============================================================
 # Script: create_update_backup_delete.py
-# Author:[BruceBanner001]
+# Author: [BruceBanner001]
 # Description:
-#   v18.0 Engine.
+#   v19.0 Engine.
 #   - Professional-grade multi-file database system.
-#   - FIX: IMDb Deep Localization override (Strict English Cookies).
-#   - FIX: TVSeries vs Movie vs TVEpisode strict validation logic.
-#   - FIX: IMDb Cast limits (Intelligent Main/Support/Guest index).
-#   - Final Batch Report Compiler.
+#   - FIX: Aggressive Season/Part Number Validator (Fixes S1/S2 Bleed).
+#   - FIX: Strict Director Array Population (Blocks "Original Creator").
+#   - FIX: Synopsis Orphaned Punctuation Trimmer `(`.
 #
-# Version: v8.1 (FEATURE: Flawless IMDb Entity Recognition)
+# Version: v8.2 (FEATURE: Bulletproof Metadata Integrity)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v8.1"
+SCRIPT_VERSION = "v8.2"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames":[], "showImage": None,
@@ -93,7 +92,6 @@ ARCHIVED_BACKUPS_DIR, ARCHIVED_META_DIR = "archived-backups", "archived-backup-m
 SERVICE_ACCOUNT_FILE, EXCEL_FILE_ID_TXT = "GDRIVE_SERVICE_ACCOUNT.json", "EXCEL_FILE_ID.txt"
 SCRAPER = cloudscraper.create_scraper() if HAVE_SCRAPER else requests.Session()
 
-# FIXED: Forcing strict English Localization Cookies + Headers for IMDb
 SCRAPER.headers.update({
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
     'Accept-Language': 'en-US,en;q=0.9',
@@ -168,7 +166,7 @@ def _get_imdb_json_ld(soup):
     except Exception: pass
     return None
 
-def _validate_page_title(soup, expected_name, site):
+def _validate_page_title(soup, expected_name, site, url):
     try:
         page_title = ""
         if site == "asianwiki":
@@ -182,12 +180,38 @@ def _validate_page_title(soup, expected_name, site):
             if h1: page_title = h1.get_text(strip=True)
 
         if not page_title: return True
+        
+        # EXTRACT SEASONS & PARTS
+        m_page = re.search(r'\b(?:Season|Part)\s*(\d+)\b', page_title, re.IGNORECASE)
+        m_exp = re.search(r'\b(?:Season|Part)\s*(\d+)\b', expected_name, re.IGNORECASE)
+        m_url = re.search(r'(?:season|part)[-_]*(\d+)', url, re.IGNORECASE)
+        
+        page_s = int(m_page.group(1)) if m_page else (int(m_url.group(1)) if m_url else None)
+        exp_s = int(m_exp.group(1)) if m_exp else 1
+        
+        # STRICT ANTI-BLEED SEASON VALIDATOR
+        if page_s is not None and exp_s != page_s:
+            logd(f"Title Validation FAILED: Season mismatch. Expected S{exp_s}, Page has S{page_s} ({page_title})")
+            return False
+            
+        # Catch S1 masquerading as S2 without Explicit Tags
+        if exp_s > 1 and page_s is None:
+            base_expected = re.sub(r'\b(?:Season|Part)\s*\d+\b', '', expected_name, flags=re.IGNORECASE).strip().lower()
+            base_page = re.sub(r'\(\d{4}\)', '', page_title).lower().strip()
+            if base_expected == base_page:
+                logd(f"Title Validation FAILED: Expected S{exp_s}, but found base S1 ('{page_title}')")
+                return False
+
         t1 = re.sub(r'\(\d{4}\)', '', page_title).lower().strip()
         t2 = re.sub(r'\(\d{4}\)', '', expected_name).lower().strip()
-        if site == "imdb" and t2 in t1: return True
+        
+        t1_core = re.sub(r'\b(?:season|part)\s*\d+\b', '', t1).strip()
+        t2_core = re.sub(r'\b(?:season|part)\s*\d+\b', '', t2).strip()
 
-        ratio = SequenceMatcher(None, t1, t2).ratio()
-        if ratio < 0.4 and t2 not in t1 and t1 not in t2:
+        if site == "imdb" and (t2 in t1 or t2_core in t1_core): return True
+
+        ratio = SequenceMatcher(None, t1_core, t2_core).ratio()
+        if ratio < 0.4 and t2_core not in t1_core and t1_core not in t2_core:
             logd(f"Title Validation FAILED: Page Title '{page_title}' vs Expected '{expected_name}' (Ratio: {ratio:.2f})")
             return False
         return True
@@ -211,10 +235,18 @@ def get_soup_from_search(show_name, show_year, site, language, show_type, soup_c
     expected_country = LANG_TO_COUNTRY_MAP.get(language.lower())
     if not HAVE_DDGS: return None, None
 
-    search_queries =[ f'"{show_name}" {show_year} {language} site:{site}.com', f'"{show_name}" {show_year} site:{site}.com', f'"{show_name}" site:{site}.com' ]
+    search_queries =[]
+    clean_name = re.sub(r'\b(?:Season|Part)\s*1\b', '', show_name, flags=re.IGNORECASE).strip()
+
     if site == "imdb":
         entity_hint = "TV Series" if "Drama" in show_type else "Movie"
         search_queries =[f'"{show_name}" {entity_hint} site:imdb.com/title/', f'"{show_name}" {show_year} site:imdb.com/title/']
+        if clean_name != show_name:
+            search_queries.extend([f'"{clean_name}" {entity_hint} site:imdb.com/title/', f'"{clean_name}" {show_year} site:imdb.com/title/'])
+    else:
+        search_queries =[ f'"{show_name}" {show_year} {language} site:{site}.com', f'"{show_name}" {show_year} site:{site}.com', f'"{show_name}" site:{site}.com' ]
+        if clean_name != show_name:
+            search_queries.extend([ f'"{clean_name}" {show_year} {language} site:{site}.com', f'"{clean_name}" {show_year} site:{site}.com', f'"{clean_name}" site:{site}.com' ])
 
     for query in search_queries:
         results = None
@@ -232,7 +264,6 @@ def get_soup_from_search(show_name, show_year, site, language, show_type, soup_c
             if not url or 'bing.com' in url or any(bad in url for bad in['/reviews', '/cast', '/recs', '?lang=', '/photos', '/video', '/trivia']): continue
             if site == "asianwiki" and ("/File:" in url or "/index.php?title=File:" in url): continue
             
-            # PERFECT IMDb URL NORMALIZATION (Removes episodes, language paths, etc.)
             if site == "imdb":
                 tt_match = re.search(r'/title/(tt\d+)', url)
                 if not tt_match: continue
@@ -242,20 +273,13 @@ def get_soup_from_search(show_name, show_year, site, language, show_type, soup_c
             if r.status_code == 200:
                 soup = BeautifulSoup(r.text, "html.parser")
                 
-                # STRICT IMDb TYPE VALIDATION (Prevents 1995 Movie vs 2015 TVSeries overlaps)
                 if site == "imdb":
                     data = _get_imdb_json_ld(soup)
                     if data:
                         imdb_type = data.get('@type', '')
-                        if imdb_type == 'TVEpisode': 
-                            logd(f"Rejecting {url} because it is a single Episode.")
-                            continue
-                        if show_type in ['Drama', 'Mini Drama'] and imdb_type == 'Movie':
-                            logd(f"Rejecting {url} because it's a Movie, expected TV Series.")
-                            continue
-                        if show_type == 'Movie' and imdb_type in['TVSeries', 'TVMiniSeries']:
-                            logd(f"Rejecting {url} because it's a TV Series, expected Movie.")
-                            continue
+                        if imdb_type == 'TVEpisode': continue
+                        if show_type in['Drama', 'Mini Drama'] and imdb_type == 'Movie': continue
+                        if show_type == 'Movie' and imdb_type in['TVSeries', 'TVMiniSeries']: continue
                 
                 is_valid_landmark = False
                 if site == "asianwiki" and soup.find(id='Profile'): is_valid_landmark = True
@@ -267,7 +291,7 @@ def get_soup_from_search(show_name, show_year, site, language, show_type, soup_c
                         scraped_country = _scrape_country(soup, site)
                         if scraped_country and expected_country not in scraped_country: continue
                     
-                    if not _validate_page_title(soup, show_name, site): continue
+                    if not _validate_page_title(soup, show_name, site, url): continue
 
                     soup_cache[cache_key] = (soup, url)
                     return soup, url
@@ -309,7 +333,11 @@ def _scrape_synopsis_from_asianwiki(soup, **kwargs):
             if sibling.name in['h2', 'h3']: break 
             text = sibling.get_text(strip=True) if sibling.name in['p', 'div'] else sibling.strip() if isinstance(sibling, str) else ""
             if text and len(text) > 30: content.append(text)
-        return "\n\n".join(content) if content else None
+        
+        synopsis = "\n\n".join(content) if content else None
+        # Clean up stray floating punctuation (e.g. parenthesis)
+        if synopsis: synopsis = re.sub(r'[\s\(\-\[\]\,]+$', '', synopsis).strip()
+        return synopsis
     except Exception as e: return None
 
 def _scrape_image_from_asianwiki(soup, **kwargs):
@@ -367,6 +395,9 @@ def _scrape_synopsis_from_mydramalist(soup, **kwargs):
         
         patterns_to_remove =[ r'\s*\(Source:.*?\)\s*$', r'\s*Source:.*$', r'~~.*', r'\s*Edit Translation\s*$', r'\s*(Additional Cast Members|Native title|Also Known As):.*$', r'^\s*Remove ads\s*' ]
         for pattern in patterns_to_remove: synopsis = re.sub(pattern, '', synopsis, flags=re.IGNORECASE | re.DOTALL).strip()
+        
+        # Clean up stray floating punctuation (e.g. parenthesis)
+        if synopsis: synopsis = re.sub(r'[\s\(\-\[\]\,]+$', '', synopsis).strip()
         return synopsis if synopsis else None
     except Exception as e: return None
 
@@ -551,9 +582,14 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
 def _scrape_synopsis_from_imdb(soup, **kwargs):
     try:
         data = _get_imdb_json_ld(soup)
-        if data and 'description' in data: return data['description']
-        desc = soup.find(attrs={"data-testid": "plot-xl"})
-        if desc: return desc.get_text(strip=True)
+        synopsis = None
+        if data and 'description' in data: synopsis = data['description']
+        else:
+            desc = soup.find(attrs={"data-testid": "plot-xl"})
+            if desc: synopsis = desc.get_text(strip=True)
+            
+        if synopsis: synopsis = re.sub(r'[\s\(\-\[\]\,]+$', '', synopsis).strip()
+        return synopsis
     except Exception: pass
     return None
 
@@ -632,7 +668,6 @@ def _scrape_cast_from_imdb(soup, **kwargs):
         full_cast_raw =[]
         cards = soup.select('div[data-testid="title-cast-item"]')
         
-        # FIXED: IMDb Top 6 = Main, Next 9 = Support, Rest = Guest.
         for idx, card in enumerate(cards[:20]): 
             try:
                 a_tag = card.select_one('a[data-testid="title-cast-item__actor"]')
@@ -646,7 +681,6 @@ def _scrape_cast_from_imdb(soup, **kwargs):
                 char_span = card.select_one('.cast-item-characters-link, .title-cast-item__characters')
                 char_name = char_span.get_text(" ", strip=True) if char_span else "Unknown"
                 
-                # FIXED: Strip "13 episodes" and year spans from character name
                 char_name = re.sub(r'\s*\d+\s*episodes?.*', '', char_name, flags=re.IGNORECASE).strip()
                 char_name = re.sub(r'\s*\d{4}\s*-\s*\d{4}.*', '', char_name).strip()
                 if not char_name: char_name = "Unknown"
@@ -830,7 +864,6 @@ def excel_to_objects(excel, sheet):
         if not obj.get("showID") or not obj.get("showName"): continue
         obj["againWatchedDates"] =[ddmmyyyy(d) for d in row[again_idx:] if ddmmyyyy(d)]
         
-        # FIXED: Proper ShowType matching for TV vs Movie detection
         sheet_lower = sheet.lower()
         obj["showType"] = "Movie" if "movie" in sheet_lower else "Mini Drama" if "mini" in sheet_lower else "Drama"
         
@@ -975,7 +1008,8 @@ def process_and_distribute_cast(full_cast, artists_db, context):
         else:
             if any(kcr in role.lower() for kcr in known_crew_roles):
                 crew_cast.append(cast_member)
-                if 'director' in role.lower() or 'creator' in role.lower():
+                # STRICT match to prevent "Original Creator" from sneaking into Directors array
+                if re.search(r'\b(director|co-director)\b', role, re.IGNORECASE):
                     if artist['artistName'] not in director_names:
                         director_names.append(artist['artistName'])
             else:
@@ -1095,7 +1129,15 @@ def main():
             if 'cast' in final_obj and isinstance(final_obj['cast'], list):
                 cast_summary, full_cast_dict, director_names = process_and_distribute_cast(final_obj['cast'], artists_data, context)
                 final_obj['cast'] = cast_summary
-                if director_names: final_obj['director'] = director_names
+                
+                # Appends missing directors safely without overwriting IMDb explicitly fetched metadata
+                if director_names:
+                    existing_dirs = final_obj.get('director',[])
+                    merged_dirs = existing_dirs.copy()
+                    for d in director_names:
+                        if d not in merged_dirs: merged_dirs.append(d)
+                    final_obj['director'] = merged_dirs
+                    
                 if full_cast_dict: cast_data[str(sid)] = full_cast_dict
             
             final_obj.pop('extendedCastInfo', None)
