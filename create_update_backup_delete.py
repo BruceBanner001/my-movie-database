@@ -2,20 +2,19 @@
 # Script: create_update_backup_delete.py
 # Author: [BruceBanner001]
 # Description:
-#   v19.0 Engine.
+#   v20.0 Engine.
 #   - Professional-grade multi-file database system.
-#   - FIX: Aggressive Season/Part Number Validator (Fixes S1/S2 Bleed).
-#   - FIX: Strict Director Array Population (Blocks "Original Creator").
-#   - FIX: Synopsis Orphaned Punctuation Trimmer `(`.
+#   - FIX: IMDb Aggregation Bypass (Dynamic Season Sub-Scraping).
+#   - FIX: Unique Posters & Release Dates for IMDb Seasons.
 #
-# Version: v8.2 (FEATURE: Bulletproof Metadata Integrity)
+# Version: v8.3 (FEATURE: IMDb True Season Parsing)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v8.2"
+SCRIPT_VERSION = "v8.3"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames":[], "showImage": None,
@@ -52,7 +51,6 @@ from bs4 import BeautifulSoup
 
 DEBUG_FETCH = os.environ.get("DEBUG_FETCH", "true").lower() == "true" 
 
-# --- ROBUST IMPORT FOR DDGS ---
 HAVE_DDGS = False
 DDGS_ERROR = None
 try: 
@@ -78,7 +76,6 @@ def now_ist(): return datetime.now(IST)
 def filename_timestamp(): return now_ist().strftime("%d_%B_%Y_%H%M")
 def run_id_timestamp(): return now_ist().strftime("RUN_%Y%m%d_%H%M%S")
 
-# --- FILE & FOLDER STRUCTURE ---
 SERIES_JSON_FILE = "seriesData.json"
 ARTISTS_JSON_FILE = "artists.json"
 CAST_JSON_FILE = "cast.json"
@@ -133,7 +130,6 @@ def _clean_other_names(names_list):
             unique_names.append(clean)
     return unique_names
 
-# --- BATCH MERGING ---
 def merge_batch_state(context):
     if not os.path.exists(BATCH_STATE_FILE): return
     try:
@@ -181,7 +177,6 @@ def _validate_page_title(soup, expected_name, site, url):
 
         if not page_title: return True
         
-        # EXTRACT SEASONS & PARTS
         m_page = re.search(r'\b(?:Season|Part)\s*(\d+)\b', page_title, re.IGNORECASE)
         m_exp = re.search(r'\b(?:Season|Part)\s*(\d+)\b', expected_name, re.IGNORECASE)
         m_url = re.search(r'(?:season|part)[-_]*(\d+)', url, re.IGNORECASE)
@@ -189,18 +184,18 @@ def _validate_page_title(soup, expected_name, site, url):
         page_s = int(m_page.group(1)) if m_page else (int(m_url.group(1)) if m_url else None)
         exp_s = int(m_exp.group(1)) if m_exp else 1
         
-        # STRICT ANTI-BLEED SEASON VALIDATOR
         if page_s is not None and exp_s != page_s:
             logd(f"Title Validation FAILED: Season mismatch. Expected S{exp_s}, Page has S{page_s} ({page_title})")
             return False
             
-        # Catch S1 masquerading as S2 without Explicit Tags
         if exp_s > 1 and page_s is None:
-            base_expected = re.sub(r'\b(?:Season|Part)\s*\d+\b', '', expected_name, flags=re.IGNORECASE).strip().lower()
-            base_page = re.sub(r'\(\d{4}\)', '', page_title).lower().strip()
-            if base_expected == base_page:
-                logd(f"Title Validation FAILED: Expected S{exp_s}, but found base S1 ('{page_title}')")
-                return False
+            # ONLY strict reject for non-IMDb. IMDb legitimately groups all seasons on the root page.
+            if site != "imdb":
+                base_expected = re.sub(r'\b(?:Season|Part)\s*\d+\b', '', expected_name, flags=re.IGNORECASE).strip().lower()
+                base_page = re.sub(r'\(.*?\)', '', page_title).lower().strip()
+                if base_expected == base_page:
+                    logd(f"Title Validation FAILED: Expected S{exp_s}, but found base S1 ('{page_title}')")
+                    return False
 
         t1 = re.sub(r'\(\d{4}\)', '', page_title).lower().strip()
         t2 = re.sub(r'\(\d{4}\)', '', expected_name).lower().strip()
@@ -335,7 +330,6 @@ def _scrape_synopsis_from_asianwiki(soup, **kwargs):
             if text and len(text) > 30: content.append(text)
         
         synopsis = "\n\n".join(content) if content else None
-        # Clean up stray floating punctuation (e.g. parenthesis)
         if synopsis: synopsis = re.sub(r'[\s\(\-\[\]\,]+$', '', synopsis).strip()
         return synopsis
     except Exception as e: return None
@@ -396,7 +390,6 @@ def _scrape_synopsis_from_mydramalist(soup, **kwargs):
         patterns_to_remove =[ r'\s*\(Source:.*?\)\s*$', r'\s*Source:.*$', r'~~.*', r'\s*Edit Translation\s*$', r'\s*(Additional Cast Members|Native title|Also Known As):.*$', r'^\s*Remove ads\s*' ]
         for pattern in patterns_to_remove: synopsis = re.sub(pattern, '', synopsis, flags=re.IGNORECASE | re.DOTALL).strip()
         
-        # Clean up stray floating punctuation (e.g. parenthesis)
         if synopsis: synopsis = re.sub(r'[\s\(\-\[\]\,]+$', '', synopsis).strip()
         return synopsis if synopsis else None
     except Exception as e: return None
@@ -595,6 +588,25 @@ def _scrape_synopsis_from_imdb(soup, **kwargs):
 
 def _scrape_image_from_imdb(soup, **kwargs):
     try:
+        # Check if a specific Season is requested, intercept to get exact Season poster!
+        target_soup = soup
+        m = re.search(r'\b(?:Season|Part)\s*(\d+)\b', kwargs.get('show_name', ''), re.IGNORECASE)
+        if m:
+            season_num = m.group(1)
+            season_url = kwargs['url'].rstrip('/') + f"/episodes/?season={season_num}"
+            r = SCRAPER.get(season_url, timeout=15)
+            if r.status_code == 200:
+                target_soup = BeautifulSoup(r.text, "html.parser")
+        
+        # 1. Grab Season-Specific Poster from OpenGraph tags
+        meta_img = target_soup.find('meta', property='og:image')
+        if meta_img and 'content' in meta_img.attrs:
+            url = meta_img['content']
+            if "title_hero_default" not in url and "imdb_fb_logo" not in url:
+                image_path = os.path.join(SHOW_IMAGES_DIR, f"{kwargs['sid']}.jpg")
+                if download_and_save_image(url, image_path): return os.path.basename(image_path)
+
+        # 2. Fallback to Series Poster
         data = _get_imdb_json_ld(soup)
         if data and 'image' in data:
             url = data['image']
@@ -605,6 +617,26 @@ def _scrape_image_from_imdb(soup, **kwargs):
 
 def _scrape_release_date_from_imdb(soup, **kwargs):
     try:
+        # Check if a specific Season is requested, intercept to get Season Premiere Date!
+        m = re.search(r'\b(?:Season|Part)\s*(\d+)\b', kwargs.get('show_name', ''), re.IGNORECASE)
+        if m:
+            season_num = m.group(1)
+            season_url = kwargs['url'].rstrip('/') + f"/episodes/?season={season_num}"
+            r = SCRAPER.get(season_url, timeout=15)
+            if r.status_code == 200:
+                season_soup = BeautifulSoup(r.text, "html.parser")
+                script = season_soup.find('script', type='application/ld+json')
+                if script:
+                    data = json.loads(script.string)
+                    if isinstance(data, list): data = data[0]
+                    if data.get('@type') == 'ItemList' and 'itemListElement' in data:
+                        elements = data['itemListElement']
+                        if len(elements) > 0:
+                            first_ep = elements[0].get('item', {})
+                            if 'datePublished' in first_ep:
+                                return first_ep['datePublished']
+
+        # Fallback to Series Date
         data = _get_imdb_json_ld(soup)
         if data and 'datePublished' in data: return data['datePublished']
     except Exception: pass
@@ -643,7 +675,7 @@ def _scrape_director_from_imdb(soup, **kwargs):
         dirs =[]
         data = _get_imdb_json_ld(soup)
         if data:
-            for key in ['director', 'creator']:
+            for key in['director', 'creator']:
                 if key in data:
                     entities = data[key]
                     if not isinstance(entities, list): entities = [entities]
@@ -968,7 +1000,7 @@ def write_report(context):
     with open(context['report_file_path'], 'w', encoding='utf-8') as f: f.write("\n".join(lines))
 
 def process_and_distribute_cast(full_cast, artists_db, context):
-    main_cast, support_cast, guest_cast = [], [],[]
+    main_cast, support_cast, guest_cast = [],[],[]
     crew_cast, other_crew_cast = [],[]
     director_names =[]
     context['new_artists_added'] =[]
@@ -1008,7 +1040,6 @@ def process_and_distribute_cast(full_cast, artists_db, context):
         else:
             if any(kcr in role.lower() for kcr in known_crew_roles):
                 crew_cast.append(cast_member)
-                # STRICT match to prevent "Original Creator" from sneaking into Directors array
                 if re.search(r'\b(director|co-director)\b', role, re.IGNORECASE):
                     if artist['artistName'] not in director_names:
                         director_names.append(artist['artistName'])
@@ -1130,7 +1161,6 @@ def main():
                 cast_summary, full_cast_dict, director_names = process_and_distribute_cast(final_obj['cast'], artists_data, context)
                 final_obj['cast'] = cast_summary
                 
-                # Appends missing directors safely without overwriting IMDb explicitly fetched metadata
                 if director_names:
                     existing_dirs = final_obj.get('director',[])
                     merged_dirs = existing_dirs.copy()
