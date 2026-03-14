@@ -1,0 +1,96 @@
+✅ Workflow completed successfully
+🆔 Run ID: RUN_20260314_184545
+📅 Run Time: 14 March 2026 06:47 PM (IST)
+⚙️ Script Version: v8.3
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Sheet1 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🆕 Data Created:
+- 108 - Manifest Season  1 (2018) -> First Time Uploaded
+- 109 - Manifest Season  2 (2020) -> First Time Uploaded
+- 110 - Manifest Season  3 (2021) -> First Time Uploaded
+- 111 - Manifest Season  4 (2022) -> First Time Uploaded
+
+🖼️ Fetched Data Details:
+- 108 - Manifest Season  1 -> Fetched: Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 109 - Manifest Season  2 -> Fetched: Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 110 - Manifest Season  3 -> Fetched: Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 111 - Manifest Season  4 -> Fetched: Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+
+🚫 Skipped (Unchanged):
+- 101 - Alchemy Of Souls Season 1 (2022)
+- 102 - Alchemy Of Souls Season 2 (2023)
+- 103 - 12 Monkeys Season 1 (2015)
+- 104 - Stranger Things Season 1 (2016)
+- 105 - Stranger Things Season 2 (2017)
+- 106 - Stranger Things Season 3 (2019)
+- 107 - Stranger Things Season 4 (2022)
+
+📊 Summary (Sheet: Sheet1)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Created: 4
+🔁 Updated: 0
+🔍 Refetched: 0
+🚫 Skipped: 7
+⚠️ Warnings: 0
+  Total Rows: 11
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Sheet2 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🚫 Skipped (Unchanged):
+- 3001 - Mr. Queen (2020)
+
+📊 Summary (Sheet: Sheet2)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Created: 0
+🔁 Updated: 0
+🔍 Refetched: 0
+🚫 Skipped: 1
+⚠️ Warnings: 0
+  Total Rows: 1
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 Overall Summary
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Total Created: 4
+🔁 Total Updated: 0
+🔍 Total Refetched: 0
+🖼️ Show Images Updated: 4
+🧑‍🎨 New Artist Images Added: 18
+🚫 Total Skipped: 8
+❌ Total Deleted: 0
+🗄️ Total Archived Backups: 0
+⚠️ Total Warnings: 0
+💾 Backup Files: 0
+  Grand Total Rows Processed: 12
+
+💾 Metadata Backups: 4
+
+📦 Total Objects in seriesData.json: 12
+📦 Total Objects in artists.json: 902
+📦 Total Objects in cast.json: 12
+📦 Total Objects in artists_lookup.json: 902
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ Folders Generated:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📁 artist_images/ (Total: 18 files)
+    📄 nm4612692.jpg
+    📄 nm2796047.jpg
+    📄 nm2824707.jpg
+    ... and 15 more files.
+
+📁 meta_backups/ (Total: 4 files)
+    📄 META_14_March_2026_1845_108.json
+    📄 META_14_March_2026_1845_109.json
+    📄 META_14_March_2026_1845_110.json
+    📄 META_14_March_2026_1845_111.json
+
+📁 reports/ (Total: 1 files)
+    📄 Report_14_March_2026_1845.txt
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🏁 Workflow finished successfully
