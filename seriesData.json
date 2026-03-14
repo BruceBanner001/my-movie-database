@@ -247,7 +247,9 @@
         "synopsis": "Follows the journey of a time traveler from the post-apocalyptic future who appears in present day on a mission to locate and eradicate the source of a deadly plague that will nearly destroy the human race.",
         "topRatings": 3000,
         "Duration": null,
-        "director": [],
+        "director": [
+            "David Grossman"
+        ],
         "tags": [
             "Adventure",
             "Drama",
@@ -262,7 +264,7 @@
             "otherNames": null,
             "Duration": null,
             "synopsis": "imdb",
-            "director": null,
+            "director": "imdb",
             "tags": "imdb",
             "cast": "imdb"
         }
@@ -301,7 +303,9 @@
         "synopsis": "Follows the journey of a time traveler from the post-apocalyptic future who appears in present day on a mission to locate and eradicate the source of a deadly plague that will nearly destroy the human race.",
         "topRatings": 3000,
         "Duration": null,
-        "director": [],
+        "director": [
+            "Terry Gilliam"
+        ],
         "tags": [
             "Adventure",
             "Drama",
@@ -316,7 +320,7 @@
             "otherNames": null,
             "Duration": null,
             "synopsis": "imdb",
-            "director": null,
+            "director": "imdb",
             "tags": "imdb",
             "cast": "imdb"
         }
@@ -375,6 +379,87 @@
             "director": "imdb",
             "tags": "imdb",
             "cast": "imdb"
+        }
+    },
+    {
+        "showID": 107,
+        "showName": "Familiar Wife",
+        "otherNames": [
+            "Aneun Waipeu",
+            "Esposa Familiar",
+            "Knowing Wife",
+            "La esposa que conozco",
+            "Wife That I Know",
+            "Жена",
+            "которую я знаю",
+            "زوجة مألوفة"
+        ],
+        "showImage": "107.jpg",
+        "watchStartedOn": "05-09-2023",
+        "watchEndedOn": "05-09-2023",
+        "releasedYear": 2018,
+        "releaseDate": "August 1 - September 20, 2018",
+        "totalEpisodes": 16,
+        "showType": "Drama",
+        "nativeLanguage": "Korean",
+        "watchedLanguage": "Korean",
+        "country": "South Korea",
+        "comments": "Nice Drama. Ending Was Nice.",
+        "ratings": 9,
+        "genres": [
+            "Comedy",
+            "Drama",
+            "Family",
+            "Fantasy",
+            "Melodrama",
+            "Romance",
+            "Time Travel"
+        ],
+        "network": [
+            "tvN"
+        ],
+        "againWatchedDates": [
+            "21-10-2023",
+            "23-05-2024",
+            "10-02-2025"
+        ],
+        "updatedOn": "14 March 2026",
+        "updatedDetails": "First Time Uploaded",
+        "synopsis": "Joo-Hyuk (Ji Sung) has been married to Woo-Jin (Han Ji-Min) for 5 years. Joo-Hyuk works at a bank and Woo-Jin works as a massage therapist. They have two young children. Due to having to pay off their apartment and supporting both of their parents, Joo-Hyuk and Woo-Jin have a hard time financially. Joo-Hyuk thinks his wife is a bad wife as well. He is even scared of her. Meanwhile, Woo-Jin is stressed from taking care of their young children and working at the same time. She has a hard time controlling her anger. Both of them are not happy with their current situation. One day, Joo-Hyuk meets his first love from his college days Hye-Won (Kang Han-Na). She tells him that she liked him back then.\n\nLater, Joo-Hyuk helps a man on the subway and the man gives him two coins. These two coins causes Joo-Hyuk to travel back in time. When Joo-Hyuk wakes up, he finds himself in a totally different situation. He is married to Hye-Won not Woo-Jin.",
+        "topRatings": 3600,
+        "Duration": "1 hr. 15 min.",
+        "director": [
+            "Lee Sang Yeob"
+        ],
+        "tags": [
+            "Time Travel",
+            "Second Chance Romance",
+            "Mother-Daughter Relationship",
+            "Brother-Sister Relationship",
+            "Female Chases Male First",
+            "First Love",
+            "Love Triangle",
+            "Flashback To Past",
+            "Love At First Sight",
+            "Rich Woman/Poor Man"
+        ],
+        "cast": {
+            "Main Role": 4,
+            "Support Role": 17,
+            "Guest Role": 25,
+            "Director": 1,
+            "Editor": 1,
+            "Screenwriter": 1
+        },
+        "sitePriorityUsed": {
+            "showImage": "asianwiki",
+            "releaseDate": "asianwiki",
+            "otherNames": "mydramalist",
+            "Duration": "mydramalist",
+            "synopsis": "asianwiki",
+            "director": "mydramalist",
+            "tags": "mydramalist",
+            "cast": "mydramalist"
         }
     }
 ]

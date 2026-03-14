@@ -1,0 +1,81 @@
+✅ Workflow completed successfully
+🆔 Run ID: RUN_20260314_145458
+📅 Run Time: 14 March 2026 02:55 PM (IST)
+🕒 Duration: 0 min 31 sec
+⚙️ Script Version: v7.5
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Sheet1 — 14 March 2026 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🆕 Data Created:
+- 107 - Familiar Wife (2018) -> First Time Uploaded
+
+🔍 Refetched Data:
+✨ 104 - 12 Monkeys Season 2 -> Fetched: Director
+✨ 105 - 12 Monkeys Season 3 -> Fetched: Director
+
+🖼️ Fetched Data Details:
+- 107 - Familiar Wife -> Fetched: Cast, Director, Other Names, Tags
+
+🕳️ Value Not Found:
+- 103 - 12 Monkeys Season 1 -> ⚠️ Missing: Director, Duration, Other Names
+- 104 - 12 Monkeys Season 2 -> ⚠️ Missing: Duration, Other Names
+- 105 - 12 Monkeys Season 3 -> ⚠️ Missing: Duration, Other Names
+- 106 - 12 Monkeys Season 4 -> ⚠️ Missing: Duration, Other Names
+
+🚫 Skipped (Unchanged):
+- 101 - Find Me in Your Memory (2020)
+- 102 - Lawless Lawyer (2018)
+- 103 - 12 Monkeys Season 1 (2015)
+- 106 - 12 Monkeys Season 4 (2018)
+
+📊 Summary (Sheet: Sheet1)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Created: 1
+🔁 Updated: 0
+🔍 Refetched: 2
+🚫 Skipped: 4
+⚠️ Warnings: 4
+  Total Rows: 7
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 Overall Summary
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Total Created: 1
+🔁 Total Updated: 0
+🔍 Total Refetched: 2
+🖼️ Show Images Updated: 0
+🧑‍🎨 New Artist Images Added: 41
+🚫 Total Skipped: 4
+❌ Total Deleted: 0
+🗄️ Total Archived Backups: 0
+⚠️ Total Warnings: 4
+💾 Backup Files: 0
+  Grand Total Rows: 7
+
+💾 Metadata Backups: 3
+
+📦 Total Objects in seriesData.json: 7
+📦 Total Objects in artists.json: 536
+📦 Total Objects in cast.json: 7
+📦 Total Objects in artists_lookup.json: 536
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ Folders Generated:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📁 artist_images/ (Total: 41 files)
+    📄 16147.jpg
+    📄 43341.jpg
+    📄 15982.jpg
+    ... and 38 more files.
+
+📁 meta_backups/ (Total: 3 files)
+    📄 META_14_March_2026_1454_104.json
+    📄 META_14_March_2026_1454_105.json
+    📄 META_14_March_2026_1454_107.json
+
+📁 reports/ (Total: 1 files)
+    📄 Report_14_March_2026_1454.txt
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🏁 Workflow finished successfully
