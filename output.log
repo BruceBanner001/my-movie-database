@@ -1,7 +1,29 @@
-🚀 Running Script — Version v7.5 | Run ID: RUN_20260314_151609
+🚀 Running Script — Version v7.6 | Run ID: RUN_20260314_152857
+⚙️ BATCH MODE ACTIVE: Will pause after 50 heavy fetch operations.
 [DEBUG] Attempting direct media download...
+[DEBUG] 'Deleting Records' sheet is empty. Nothing to delete.
 INFO: 'Manual Updates' sheet not found. Skipping.
+[DEBUG] Initiating search for: 'Find Me in Your Memory (2020)' on asianwiki.com (Expected Country: South Korea)
+[DEBUG] Executing search query: "Find Me in Your Memory" 2020 Korean site:asianwiki.com
+[DEBUG] Found candidate URL: https://asianwiki.com/Find_Me_in_Your_Memory
+[DEBUG] Country validation passed.
+[DEBUG] Title Validation PASSED: 'Find Me in Your Memory' matches 'Find Me in Your Memory'
+[DEBUG] Found soup in cache for 'Find Me in Your Memory' on asianwiki.com
+[DEBUG] Downloading image from: https://asianwiki.com/images/e/e0/Find_Me_in_Your_Memory-P2.jpg
+[DEBUG] Image saved to show-images/101.jpg
+[DEBUG] Initiating search for: 'Find Me in Your Memory (2020)' on mydramalist.com (Expected Country: South Korea)
+[DEBUG] Executing search query: "Find Me in Your Memory" 2020 Korean site:mydramalist.com
+[DEBUG] Found candidate URL: https://mydramalist.com/50941-the-man-s-memory
+[DEBUG] Country validation passed.
+[DEBUG] Title Validation PASSED: 'Find Me in Your Memory' matches 'Find Me in Your Memory'
+[DEBUG] Found soup in cache for 'Find Me in Your Memory' on asianwiki.com
+[DEBUG] Found soup in cache for 'Find Me in Your Memory' on mydramalist.com
+[DEBUG] Found soup in cache for 'Find Me in Your Memory' on mydramalist.com
+[DEBUG] Found soup in cache for 'Find Me in Your Memory' on mydramalist.com
+[DEBUG] Found soup in cache for 'Find Me in Your Memory' on mydramalist.com
+[DEBUG] Deep scraping full cast & crew from: https://mydramalist.com/50941-the-man-s-memory/cast
+[DEBUG] Successfully loaded the /cast page.
 INFO: Sheet 'Sheet2' not found. Skipping.
-✅ Report written -> reports/Report_14_March_2026_1516.txt
+✅ Report written -> reports/Report_14_March_2026_1528.txt
 
 All done.
