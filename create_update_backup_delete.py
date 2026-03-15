@@ -7,27 +7,27 @@
 #   - FIX: Meta-Data Backup fallback for Manual Updates (`cast` null fix).
 #   - FIX: Strict Type Casting & Fuzzy Excel Sheet Matching.
 #   - FIX: Manual Updates image source tagging and Backup generation.
-#   - FIX: MDL robust Cast & Crew HTML scraping (100+ cast members).
 #   - FIX: Prevent `showID` integer-to-string conversion in Manual Updates.
+#   - FIX: MDL Cast Parsing restored to v8.3 precision + dynamic HTML fallbacks.
 #
-# Version: v8.9 (FIX: Robust MDL Cast & String ID Bug)
+# Version: v9.0 (STABLE: MDL Robust Cast Fix & Core Speed Patch)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v8.9"
+SCRIPT_VERSION = "v9.0"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames":[], "showImage": None,
     "watchStartedOn": None, "watchEndedOn": None, "releasedYear": 0,
     "releaseDate": None, "totalEpisodes": 0, "showType": None,
     "nativeLanguage": None, "watchedLanguage": None, "country": None,
-    "comments": None, "ratings": 0, "genres": [], "network":[],
+    "comments": None, "ratings": 0, "genres":[], "network":[],
     "againWatchedDates":[], "updatedOn": None, "updatedDetails": None,
     "synopsis": None, "topRatings": 0, "Duration": None,
-    "director": [], "tags":[], "cast": {}, 
+    "director":[], "tags":[], "cast": {}, 
     "sitePriorityUsed": {"showImage": None, "releaseDate": None, "otherNames": None, "Duration": None, "synopsis": None, "director": None, "tags": None, "cast": None, "network": None}
 }
 
@@ -464,37 +464,28 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
         url = kwargs.get('url', '')
         target_soup = soup
         
-        # 1. Check if the full Cast page exists
         if url:
             cast_url = url.split('?')[0].rstrip('/') + '/cast'
             try:
                 r = SCRAPER.get(cast_url, timeout=15)
                 if r.status_code == 200:
                     cast_soup = BeautifulSoup(r.text, "html.parser")
-                    if cast_soup.select('a[href*="/people/"]'): target_soup = cast_soup
+                    # FIX: Added `.box-body` to ensure the 80+ member page is successfully selected
+                    if cast_soup.select('li.list-item, div.col-xs-8, div.col-sm-6, .box-body'): 
+                        target_soup = cast_soup
             except Exception as e: pass
 
-        # 2. Extract elements containing an Artist Profile link
-        items = []
-        for a in target_soup.select('a[href*="/people/"]'):
-            container = a.find_parent('li')
-            if not container:
-                container = a.find_parent('div', class_=re.compile(r'\b(col-(?:xs|sm|md|lg)-\d+|list-item)\b'))
-            if container and container not in items:
-                items.append(container)
-
+        items = target_soup.select('li.list-item, div.cast-list div.col-xs-8, div.cast-list div.col-sm-6, .p-a-0 li, .crew-list div.col-xs-8')
         if not items: return None
 
         main_role_count = 0
         for item in items:
             try:
                 artist_name, artist_link = None, None
-                for a in item.select('a[href*="/people/"]'):
+                for a in item.select('a'):
                     text = a.get_text(strip=True)
-                    if text:
-                        artist_name = text
-                        artist_link = a['href']
-                        break 
+                    if '/people/' in a.get('href', '') and text:
+                        artist_name = text; artist_link = a['href']; break 
                 
                 if not artist_name: continue 
                 id_match = re.search(r'/people/(\d+)-', artist_link)
@@ -508,12 +499,27 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
                 artist_image_url = img_tag.get('src') or img_tag.get('data-src') or img_tag.get('data-original') if img_tag else None
                 if artist_image_url and ('avatar' in artist_image_url or 'default' in artist_image_url): artist_image_url = None
 
-                # Gather all text nodes inside this member's block
                 role_texts =[]
-                for s in item.stripped_strings:
-                    s_clean = s.strip()
-                    if s_clean and s_clean != artist_name and s_clean not in role_texts:
-                        role_texts.append(s_clean)
+                elements = list(item.select('.text-muted, .text-sm, small, .role'))
+                
+                # FIX: Fallback if MDL removes standard classes
+                if not elements:
+                    for s in item.stripped_strings:
+                        s_clean = s.strip()
+                        if s_clean and s_clean != artist_name and s_clean not in role_texts:
+                            role_texts.append(s_clean)
+                else:
+                    nxt = item.find_next_sibling('div')
+                    if nxt and any('col' in str(c).lower() or 'right' in str(c).lower() or 'role' in str(c).lower() for c in nxt.get('class',[])):
+                        sib_elements = list(nxt.select('.text-muted, .text-sm, small, .role'))
+                        if sib_elements: elements.extend(sib_elements)
+                        else:
+                            t = nxt.get_text(" ", strip=True)
+                            if t and t != artist_name: role_texts.append(t)
+
+                    for e in elements:
+                        t = e.get_text(" ", strip=True)
+                        if t and t != artist_name and t not in role_texts: role_texts.append(t)
 
                 is_crew = False
                 header_text = ""
@@ -569,7 +575,7 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
         if main_role_count == 0 and len(full_cast_raw) > 0:
             promoted = 0
             for i in range(len(full_cast_raw)):
-                if full_cast_raw[i]['role'] in ['Support Role', 'Guest Role', 'Unknown']:
+                if full_cast_raw[i]['role'] in['Support Role', 'Guest Role', 'Unknown']:
                     full_cast_raw[i]['role'] = "Main Role"; promoted += 1
                     if promoted >= 6: break
 
@@ -679,7 +685,7 @@ def _scrape_director_from_imdb(soup, **kwargs):
             for key in['director', 'creator']:
                 if key in data:
                     entities = data[key]
-                    if not isinstance(entities, list): entities =[entities]
+                    if not isinstance(entities, list): entities = [entities]
                     for e in entities:
                         if e.get('@type') == 'Person' and 'name' in e: dirs.append(e['name'])
         if dirs: return list(dict.fromkeys(dirs))
@@ -867,7 +873,7 @@ def apply_manual_updates(xl, by_id, context):
         df.columns =[c.strip().lower() for c in df.columns]
     except Exception: return {}
     
-    # FIX: Removed "no": "showID" from the MAP. It prevents showID from being processed as an updated field.
+    # FIX: Excluded "no": "showID" from mapping so the ID is never updated as a string!
     MAP, report = {"image": "showImage", "other names": "otherNames", "release date": "releaseDate", "synopsis": "synopsis", "duration": "Duration"}, {}
     
     for _, row in df.iterrows():
@@ -888,13 +894,12 @@ def apply_manual_updates(xl, by_id, context):
                         context['files_generated']['show_images'].append(image_path)
                         image_downloaded = True
                     else:
-                        continue # Skip field if image download failed
+                        continue
                 elif key == 'otherNames': 
                     val = normalize_list(val)
                 else: 
                     val = str(val).strip()
                 
-                # Force update if image was downloaded, even if filename is identical
                 if obj.get(key) != val or image_downloaded:
                     old_val = obj.get(key)
                     if image_downloaded and old_val == val:
@@ -910,7 +915,7 @@ def apply_manual_updates(xl, by_id, context):
             obj['updatedOn'] = now_ist().strftime('%d %B %Y')
             report.setdefault('updated',[]).append({'old': old, 'new': obj})
             
-            # Send exact changes explicitly so locked fields aren't ignored by the backup generator
+            # Use explicit changes override to bypass locked fields
             create_diff_backup(old, obj, context, explicit_changes=changed)
             save_metadata_backup(obj, context)
             
@@ -985,7 +990,6 @@ def save_metadata_backup(obj, context):
     context['files_generated']['meta_backups'].append(path)
 
 def create_diff_backup(old, new, context, explicit_changes=None):
-    # Use explicit overrides so locked metadata fields trigger backups when done Manually
     if explicit_changes is not None:
         changed_fields = explicit_changes
     else:
@@ -1074,7 +1078,7 @@ def write_report(context):
     with open(context['report_file_path'], 'w', encoding='utf-8') as f: f.write("\n".join(lines))
 
 def process_and_distribute_cast(full_cast, artists_db, context):
-    main_cast, support_cast, guest_cast =[],[],[]
+    main_cast, support_cast, guest_cast = [],[],[]
     crew_cast, other_crew_cast = [],[]
     director_names =[]
     context['new_artists_added'] =[]
@@ -1187,6 +1191,7 @@ def main():
     excel_bytes = fetch_excel_from_gdrive_bytes(excel_id, SERVICE_ACCOUNT_FILE)
     if not excel_bytes: print("❌ Could not fetch Excel file."); sys.exit(1)
 
+    # Re-use Excel object to radically improve parsing speed
     xl = pd.ExcelFile(io.BytesIO(excel_bytes.getvalue()))
 
     process_deletions(xl, context)
