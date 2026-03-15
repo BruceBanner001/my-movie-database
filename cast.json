@@ -80,5 +80,71 @@
                 "role": "Producer"
             }
         ]
+    },
+    "103": {
+        "mainRoles": [
+            {
+                "artistID": "28525",
+                "characterName": "Unknown",
+                "role": "Main Role"
+            },
+            {
+                "artistID": "5236",
+                "characterName": "Unknown",
+                "role": "Main Role"
+            },
+            {
+                "artistID": "4999",
+                "characterName": "Unknown",
+                "role": "Main Role"
+            },
+            {
+                "artistID": "9509",
+                "characterName": "Unknown",
+                "role": "Main Role"
+            },
+            {
+                "artistID": "30743",
+                "characterName": "Unknown",
+                "role": "Main Role"
+            },
+            {
+                "artistID": "1733",
+                "characterName": "Unknown",
+                "role": "Main Role"
+            }
+        ],
+        "crew": [
+            {
+                "artistID": "52157",
+                "characterName": null,
+                "role": "Composer"
+            },
+            {
+                "artistID": "16029",
+                "characterName": null,
+                "role": "Director"
+            },
+            {
+                "artistID": "47617",
+                "characterName": null,
+                "role": "Original Creator"
+            },
+            {
+                "artistID": "99573",
+                "characterName": null,
+                "role": "Producer"
+            },
+            {
+                "artistID": "58055",
+                "characterName": null,
+                "role": "Producer"
+            },
+            {
+                "artistID": "16916",
+                "characterName": null,
+                "role": "Screenwriter"
+            }
+        ]
     }
 }
