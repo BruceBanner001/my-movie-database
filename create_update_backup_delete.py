@@ -8,26 +8,25 @@
 #   - FIX: Strict Type Casting & Fuzzy Excel Sheet Matching.
 #   - FIX: Manual Updates image source tagging and Backup generation.
 #   - FIX: Prevent `showID` integer-to-string conversion in Manual Updates.
-#   - FIX: MDL Cast Parsing restored to v8.3 precision + dynamic HTML fallbacks.
 #
-# Version: v9.0 (STABLE: MDL Robust Cast Fix & Core Speed Patch)
+# Version: v9.1 (STABLE: Original Cast Parsing restored + Manual Update Fixes)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v9.0"
+SCRIPT_VERSION = "v9.1"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames":[], "showImage": None,
     "watchStartedOn": None, "watchEndedOn": None, "releasedYear": 0,
     "releaseDate": None, "totalEpisodes": 0, "showType": None,
     "nativeLanguage": None, "watchedLanguage": None, "country": None,
-    "comments": None, "ratings": 0, "genres":[], "network":[],
+    "comments": None, "ratings": 0, "genres": [], "network":[],
     "againWatchedDates":[], "updatedOn": None, "updatedDetails": None,
     "synopsis": None, "topRatings": 0, "Duration": None,
-    "director":[], "tags":[], "cast": {}, 
+    "director": [], "tags":[], "cast": {}, 
     "sitePriorityUsed": {"showImage": None, "releaseDate": None, "otherNames": None, "Duration": None, "synopsis": None, "director": None, "tags": None, "cast": None, "network": None}
 }
 
@@ -470,9 +469,7 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
                 r = SCRAPER.get(cast_url, timeout=15)
                 if r.status_code == 200:
                     cast_soup = BeautifulSoup(r.text, "html.parser")
-                    # FIX: Added `.box-body` to ensure the 80+ member page is successfully selected
-                    if cast_soup.select('li.list-item, div.col-xs-8, div.col-sm-6, .box-body'): 
-                        target_soup = cast_soup
+                    if cast_soup.select('li.list-item, div.col-xs-8, div.col-sm-6'): target_soup = cast_soup
             except Exception as e: pass
 
         items = target_soup.select('li.list-item, div.cast-list div.col-xs-8, div.cast-list div.col-sm-6, .p-a-0 li, .crew-list div.col-xs-8')
@@ -501,25 +498,17 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
 
                 role_texts =[]
                 elements = list(item.select('.text-muted, .text-sm, small, .role'))
-                
-                # FIX: Fallback if MDL removes standard classes
-                if not elements:
-                    for s in item.stripped_strings:
-                        s_clean = s.strip()
-                        if s_clean and s_clean != artist_name and s_clean not in role_texts:
-                            role_texts.append(s_clean)
-                else:
-                    nxt = item.find_next_sibling('div')
-                    if nxt and any('col' in str(c).lower() or 'right' in str(c).lower() or 'role' in str(c).lower() for c in nxt.get('class',[])):
-                        sib_elements = list(nxt.select('.text-muted, .text-sm, small, .role'))
-                        if sib_elements: elements.extend(sib_elements)
-                        else:
-                            t = nxt.get_text(" ", strip=True)
-                            if t and t != artist_name: role_texts.append(t)
+                nxt = item.find_next_sibling('div')
+                if nxt and any('col' in str(c).lower() or 'right' in str(c).lower() or 'role' in str(c).lower() for c in nxt.get('class',[])):
+                    sib_elements = list(nxt.select('.text-muted, .text-sm, small, .role'))
+                    if sib_elements: elements.extend(sib_elements)
+                    else:
+                        t = nxt.get_text(" ", strip=True)
+                        if t and t != artist_name: role_texts.append(t)
 
-                    for e in elements:
-                        t = e.get_text(" ", strip=True)
-                        if t and t != artist_name and t not in role_texts: role_texts.append(t)
+                for e in elements:
+                    t = e.get_text(" ", strip=True)
+                    if t and t != artist_name and t not in role_texts: role_texts.append(t)
 
                 is_crew = False
                 header_text = ""
@@ -873,14 +862,12 @@ def apply_manual_updates(xl, by_id, context):
         df.columns =[c.strip().lower() for c in df.columns]
     except Exception: return {}
     
-    # FIX: Excluded "no": "showID" from mapping so the ID is never updated as a string!
+    # FIX: Excluded "no": "showID" from mapping so ID string conversion never happens.
     MAP, report = {"image": "showImage", "other names": "otherNames", "release date": "releaseDate", "synopsis": "synopsis", "duration": "Duration"}, {}
-    
     for _, row in df.iterrows():
         sid = pd.to_numeric(row.get('no'), errors='coerce')
         if pd.isna(sid) or int(sid) not in by_id: continue
-        sid = int(sid)
-        obj, old, changed = by_id[sid], copy.deepcopy(by_id[sid]), {}
+        sid = int(sid); obj, old, changed = by_id[sid], copy.deepcopy(by_id[sid]), {}
         
         for col, key in MAP.items():
             if col in row and str(row[col]).strip():
@@ -893,20 +880,19 @@ def apply_manual_updates(xl, by_id, context):
                         val = os.path.basename(image_path)
                         context['files_generated']['show_images'].append(image_path)
                         image_downloaded = True
-                    else:
-                        continue
+                    else: continue
                 elif key == 'otherNames': 
                     val = normalize_list(val)
                 else: 
                     val = str(val).strip()
                 
+                # Force update if image was downloaded
                 if obj.get(key) != val or image_downloaded:
                     old_val = obj.get(key)
                     if image_downloaded and old_val == val:
                         changed[key] = {'old': f"{old_val} (Old Image)", 'new': f"{val} (New Image Replaced)"}
                     else:
                         changed[key] = {'old': old_val, 'new': val}
-                        
                     obj[key] = val
                     obj.setdefault('sitePriorityUsed', {})[key] = "Manual"
                     
@@ -915,7 +901,7 @@ def apply_manual_updates(xl, by_id, context):
             obj['updatedOn'] = now_ist().strftime('%d %B %Y')
             report.setdefault('updated',[]).append({'old': old, 'new': obj})
             
-            # Use explicit changes override to bypass locked fields
+            # Send explicit_changes to force backups for locked fields
             create_diff_backup(old, obj, context, explicit_changes=changed)
             save_metadata_backup(obj, context)
             
@@ -1191,7 +1177,6 @@ def main():
     excel_bytes = fetch_excel_from_gdrive_bytes(excel_id, SERVICE_ACCOUNT_FILE)
     if not excel_bytes: print("❌ Could not fetch Excel file."); sys.exit(1)
 
-    # Re-use Excel object to radically improve parsing speed
     xl = pd.ExcelFile(io.BytesIO(excel_bytes.getvalue()))
 
     process_deletions(xl, context)
