@@ -1,0 +1,75 @@
+✅ Workflow completed successfully
+🆔 Run ID: RUN_20260315_180335
+📅 Run Time: 15 March 2026 06:03 PM (IST)
+⚙️ Script Version: v9.1
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Sheet1 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🆕 Data Created:
+- 104 - I Miss You (2014) -> First Time Uploaded
+
+🔍 Refetched Data:
+✨ 103 - Miracle That We Met -> Fetched: Cast, Director, Duration, Other Names, Tags
+
+🖼️ Fetched Data Details:
+- 104 - I Miss You -> Fetched: Release Date, Show Image, Synopsis
+
+🕳️ Value Not Found:
+- 104 - I Miss You -> ⚠️ Missing: Cast, Director, Duration, Other Names, Tags
+
+🚫 Skipped (Unchanged):
+- 101 - It's Okay to Not be Okay (2020)
+- 102 - Meteor Garden (2018)
+
+📊 Summary (Sheet: Sheet1)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Created: 1
+🔁 Updated: 0
+🔍 Refetched: 1
+🚫 Skipped: 2
+⚠️ Warnings: 1
+  Total Rows: 4
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 Overall Summary
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Total Created: 1
+🔁 Total Updated: 0
+🔍 Total Refetched: 1
+🖼️ Show Images Updated: 1
+🧑‍🎨 New Artist Images Added: 6
+🚫 Total Skipped: 2
+❌ Total Deleted: 0
+🗄️ Total Archived Backups: 0
+⚠️ Total Warnings: 1
+💾 Backup Files: 0
+  Grand Total Rows Processed: 4
+
+💾 Metadata Backups: 2
+
+📦 Total Objects in seriesData.json: 4
+📦 Total Objects in artists.json: 1040
+📦 Total Objects in cast.json: 3
+📦 Total Objects in artists_lookup.json: 1040
+🖼️ Total images in show-images: 4
+🧑‍🎨 Total images in artist-images: 1019
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ Folders Generated:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📁 artist_images/ (Total: 6 files)
+    📄 94867.jpg
+    📄 17370.jpg
+    📄 21991.jpg
+    ... and 3 more files.
+
+📁 meta_backups/ (Total: 2 files)
+    📄 META_15_March_2026_1803_103.json
+    📄 META_15_March_2026_1803_104.json
+
+📁 reports/ (Total: 1 files)
+    📄 Report_15_March_2026_1803.txt
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🏁 Workflow finished successfully

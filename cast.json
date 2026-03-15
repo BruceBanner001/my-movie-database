@@ -100,5 +100,46 @@
                 "role": "Producer"
             }
         ]
+    },
+    "103": {
+        "mainRoles": [
+            {
+                "artistID": "45183",
+                "characterName": "Unknown",
+                "role": "Main Role"
+            },
+            {
+                "artistID": "48813",
+                "characterName": "Unknown",
+                "role": "Main Role"
+            }
+        ],
+        "crew": [
+            {
+                "artistID": "54533",
+                "characterName": null,
+                "role": "Chief Producer"
+            },
+            {
+                "artistID": "94867",
+                "characterName": null,
+                "role": "Composer"
+            },
+            {
+                "artistID": "17370",
+                "characterName": null,
+                "role": "Director"
+            },
+            {
+                "artistID": "21991",
+                "characterName": null,
+                "role": "Director"
+            },
+            {
+                "artistID": "16545",
+                "characterName": null,
+                "role": "Screenwriter"
+            }
+        ]
     }
 }
