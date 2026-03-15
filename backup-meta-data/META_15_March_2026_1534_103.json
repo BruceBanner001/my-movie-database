@@ -1,0 +1,71 @@
+{
+    "scriptVersion": "v8.7",
+    "runID": "RUN_20260315_153435",
+    "timestamp": "15 March 2026 03:34 PM (IST)",
+    "showID": "103",
+    "showName": "12 Monkeys Season 1",
+    "fetchedFields": {
+        "showImage": {
+            "value": "103.jpg",
+            "source": "imdb"
+        },
+        "releaseDate": {
+            "value": "2015-01-16",
+            "source": "imdb"
+        },
+        "otherNames": {
+            "value": [
+                "Twelve Monkeys"
+            ],
+            "source": "imdb"
+        },
+        "Duration": {
+            "value": "42 mins",
+            "source": "imdb"
+        },
+        "synopsis": {
+            "value": "Follows the journey of a time traveler from the post-apocalyptic future who appears in present day on a mission to locate and eradicate the source of a deadly plague that will nearly destroy the human race.",
+            "source": "imdb"
+        },
+        "director": {
+            "value": [
+                "Travis Fickett",
+                "Terry Matalas"
+            ],
+            "source": "imdb"
+        },
+        "tags": {
+            "value": [
+                "Adventure",
+                "Drama",
+                "Mystery"
+            ],
+            "source": "imdb"
+        },
+        "cast": {
+            "value": {
+                "Main Role": 6,
+                "Support Role": 9,
+                "Guest Role": 3,
+                "Creator": 2
+            },
+            "source": "imdb"
+        },
+        "showID": {
+            "value": "103",
+            "source": "Manual"
+        }
+    },
+    "sitePriorityUsed": {
+        "showImage": "imdb",
+        "releaseDate": "imdb",
+        "otherNames": "imdb",
+        "Duration": "imdb",
+        "synopsis": "imdb",
+        "director": "imdb",
+        "tags": "imdb",
+        "cast": "imdb",
+        "network": null,
+        "showID": "Manual"
+    }
+}

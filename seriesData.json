@@ -1,6 +1,6 @@
 [
     {
-        "showID": "101",
+        "showID": 101,
         "showName": "Alchemy Of Souls Season 1",
         "otherNames": [
             "But",
@@ -154,7 +154,7 @@
         }
     },
     {
-        "showID": 103,
+        "showID": "103",
         "showName": "12 Monkeys Season 1",
         "otherNames": [
             "Twelve Monkeys"
@@ -184,8 +184,8 @@
             "27-05-2024",
             "14-08-2025"
         ],
-        "updatedOn": "14 March 2026",
-        "updatedDetails": "First Time Uploaded",
+        "updatedOn": "15 March 2026",
+        "updatedDetails": "Show ID Updated Manually",
         "synopsis": "Follows the journey of a time traveler from the post-apocalyptic future who appears in present day on a mission to locate and eradicate the source of a deadly plague that will nearly destroy the human race.",
         "topRatings": 3000,
         "Duration": "42 mins",
@@ -213,20 +213,25 @@
             "director": "imdb",
             "tags": "imdb",
             "cast": "imdb",
-            "network": null
+            "network": null,
+            "showID": "Manual"
         }
     },
     {
-        "showID": 104,
+        "showID": "104",
         "showName": "Stranger Things Season 1",
         "otherNames": [
-            "Montauk"
+            "But",
+            "NO PROBLEM",
+            "No",
+            "Thanks",
+            "Yes"
         ],
         "showImage": "104.jpg",
         "watchStartedOn": "28-07-2024",
         "watchEndedOn": "28-07-2024",
         "releasedYear": 2016,
-        "releaseDate": "2016-07-15",
+        "releaseDate": "Apr 10 2011 - March 12 2021",
         "totalEpisodes": 8,
         "showType": "Drama",
         "nativeLanguage": "English",
@@ -247,11 +252,11 @@
         "againWatchedDates": [
             "03-12-2025"
         ],
-        "updatedOn": "14 March 2026",
-        "updatedDetails": "First Time Uploaded",
-        "synopsis": "In 1980s Indiana, a group of young friends witness supernatural forces and secret government exploits. As they search for answers, the children unravel a series of extraordinary mysteries.",
+        "updatedOn": "15 March 2026",
+        "updatedDetails": "Show ID, Other Names, Release Date, Synopsis, Duration Updated Manually",
+        "synopsis": "Law Cafe",
         "topRatings": 2000,
-        "Duration": "60 mins",
+        "Duration": "1 hr 99 mins.",
         "director": [
             "Matt Duffer",
             "Ross Duffer"
@@ -269,14 +274,15 @@
         },
         "sitePriorityUsed": {
             "showImage": "imdb",
-            "releaseDate": "imdb",
-            "otherNames": "imdb",
-            "Duration": "imdb",
-            "synopsis": "imdb",
+            "releaseDate": "Manual",
+            "otherNames": "Manual",
+            "Duration": "Manual",
+            "synopsis": "Manual",
             "director": "imdb",
             "tags": "imdb",
             "cast": "imdb",
-            "network": null
+            "network": null,
+            "showID": "Manual"
         }
     },
     {
@@ -709,7 +715,7 @@
         }
     },
     {
-        "showID": "112",
+        "showID": 112,
         "showName": "The Law Café",
         "otherNames": [
             "Amor Segundo a Lei",
