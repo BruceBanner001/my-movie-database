@@ -1,30 +1,31 @@
 # ============================================================
 # Script: create_update_backup_delete.py
-# Author: [BruceBanner001]
+# Author:[BruceBanner001]
 # Description:
 #   v24.0 Engine.
 #   - Professional-grade multi-file database system.
 #   - FIX: Meta-Data Backup fallback for Manual Updates (`cast` null fix).
 #   - FIX: Strict Type Casting & Fuzzy Excel Sheet Matching.
+#   - FIX: Manual Updates image source tagging and Backup generation.
 #
-# Version: v8.7 (FEATURE: Meta-Data Fallback Engine)
+# Version: v8.8 (FIX: Manual Update Backup & Source Tagging)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v8.7"
+SCRIPT_VERSION = "v8.8"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames":[], "showImage": None,
     "watchStartedOn": None, "watchEndedOn": None, "releasedYear": 0,
     "releaseDate": None, "totalEpisodes": 0, "showType": None,
     "nativeLanguage": None, "watchedLanguage": None, "country": None,
-    "comments": None, "ratings": 0, "genres": [], "network":[],
+    "comments": None, "ratings": 0, "genres":[], "network":[],
     "againWatchedDates":[], "updatedOn": None, "updatedDetails": None,
     "synopsis": None, "topRatings": 0, "Duration": None,
-    "director": [], "tags":[], "cast": {}, 
+    "director":[], "tags":[], "cast": {}, 
     "sitePriorityUsed": {"showImage": None, "releaseDate": None, "otherNames": None, "Duration": None, "synopsis": None, "director": None, "tags": None, "cast": None, "network": None}
 }
 
@@ -861,24 +862,51 @@ def apply_manual_updates(xl, by_id, context):
     except Exception: return {}
     
     MAP, report = {"no": "showID", "image": "showImage", "other names": "otherNames", "release date": "releaseDate", "synopsis": "synopsis", "duration": "Duration"}, {}
+    
     for _, row in df.iterrows():
         sid = pd.to_numeric(row.get('no'), errors='coerce')
         if pd.isna(sid) or int(sid) not in by_id: continue
-        sid = int(sid); obj, old, changed = by_id[sid], copy.deepcopy(by_id[sid]), {}
+        sid = int(sid)
+        obj, old, changed = by_id[sid], copy.deepcopy(by_id[sid]), {}
+        
         for col, key in MAP.items():
-            if col in row and row[col]:
+            if col in row and str(row[col]).strip():
                 val = row[col]
-                image_path = os.path.join(SHOW_IMAGES_DIR, f"{sid}.jpg")
-                if key == 'showImage' and download_and_save_image(val, image_path):
-                    val = os.path.basename(image_path); context['files_generated']['show_images'].append(image_path)
-                elif key == 'otherNames': val = normalize_list(val)
-                else: val = str(val).strip()
-                if obj.get(key) != val: changed[key] = {'old': obj.get(key), 'new': val}; obj[key] = val; obj.setdefault('sitePriorityUsed', {})[key] = "Manual"
+                image_downloaded = False
+                
+                if key == 'showImage':
+                    image_path = os.path.join(SHOW_IMAGES_DIR, f"{sid}.jpg")
+                    if download_and_save_image(val, image_path):
+                        val = os.path.basename(image_path)
+                        context['files_generated']['show_images'].append(image_path)
+                        image_downloaded = True
+                    else:
+                        continue # Skip field if image download failed
+                elif key == 'otherNames': 
+                    val = normalize_list(val)
+                else: 
+                    val = str(val).strip()
+                
+                # FIX: Force update if image was downloaded, even if filename is identical
+                if obj.get(key) != val or image_downloaded:
+                    old_val = obj.get(key)
+                    if image_downloaded and old_val == val:
+                        changed[key] = {'old': f"{old_val} (Old Image)", 'new': f"{val} (New Image Replaced)"}
+                    else:
+                        changed[key] = {'old': old_val, 'new': val}
+                        
+                    obj[key] = val
+                    obj.setdefault('sitePriorityUsed', {})[key] = "Manual"
+                    
         if changed:
-            obj['updatedDetails'] = f"{', '.join([human_readable_field(f) for f in changed])} Updated Manually"; obj['updatedOn'] = now_ist().strftime('%d %B %Y')
+            obj['updatedDetails'] = f"{', '.join([human_readable_field(f) for f in changed])} Updated Manually"
+            obj['updatedOn'] = now_ist().strftime('%d %B %Y')
             report.setdefault('updated',[]).append({'old': old, 'new': obj})
-            create_diff_backup(old, obj, context)
+            
+            # FIX: Send exact changes explicitly so locked fields aren't ignored by the backup generator
+            create_diff_backup(old, obj, context, explicit_changes=changed)
             save_metadata_backup(obj, context)
+            
     return report
 
 def excel_to_objects(xl, sheet):
@@ -927,7 +955,6 @@ def save_metadata_backup(obj, context):
     
     for key, site in obj.get('sitePriorityUsed', {}).items():
         if site:
-            # FIXED: Fallback to cast summary if raw_cast isn't available (e.g., Manual Updates)
             if key == 'cast':
                 if site == "Manual" or not source_links.get('raw_cast'):
                     value = obj.get('cast')
@@ -950,12 +977,18 @@ def save_metadata_backup(obj, context):
     save_json_file(path, data)
     context['files_generated']['meta_backups'].append(path)
 
-def create_diff_backup(old, new, context):
-    changed_fields = {}
-    for key, new_val in new.items():
-        if key not in LOCKED_FIELDS_AFTER_CREATION and normalize_list(old.get(key)) != normalize_list(new_val):
-            changed_fields[key] = {"old": old.get(key), "new": new_val}
+def create_diff_backup(old, new, context, explicit_changes=None):
+    # FIX: Use explicit overrides so locked metadata fields trigger backups when done Manually
+    if explicit_changes is not None:
+        changed_fields = explicit_changes
+    else:
+        changed_fields = {}
+        for key, new_val in new.items():
+            if key not in LOCKED_FIELDS_AFTER_CREATION and normalize_list(old.get(key)) != normalize_list(new_val):
+                changed_fields[key] = {"old": old.get(key), "new": new_val}
+                
     if not changed_fields: return
+    
     data = {"scriptVersion": SCRIPT_VERSION, "runID": context['run_id'], "timestamp": now_ist().strftime("%d %B %Y %I:%M %p (IST)"), "backupType": "partial_diff", "showID": new['showID'], "showName": new['showName'], "releasedYear": new.get('releasedYear'), "updatedDetails": new.get('updatedDetails', 'Record Updated'), "changedFields": changed_fields}
     path = os.path.join(BACKUP_DIR, f"BACKUP_{context['file_ts']}_{new['showID']}.json"); os.makedirs(BACKUP_DIR, exist_ok=True)
     save_json_file(path, data)
