@@ -2,20 +2,19 @@
 # Script: create_update_backup_delete.py
 # Author: [BruceBanner001]
 # Description:
-#   v22.0 Engine.
+#   v24.0 Engine.
 #   - Professional-grade multi-file database system.
-#   - FIX: Strict Type Casting for `showID` (Prevents Sorting Crashes).
-#   - FIX: Fuzzy Excel Sheet Matching (Fixes hidden spaces in tab names).
-#   - OPTIMIZATION: Caches Excel file in memory for faster processing.
+#   - FIX: Meta-Data Backup fallback for Manual Updates (`cast` null fix).
+#   - FIX: Strict Type Casting & Fuzzy Excel Sheet Matching.
 #
-# Version: v8.5 (FEATURE: Type Safety & Excel Engine Optimization)
+# Version: v8.7 (FEATURE: Meta-Data Fallback Engine)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v8.5"
+SCRIPT_VERSION = "v8.7"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames":[], "showImage": None,
@@ -520,7 +519,7 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
                 crew_keywords =['crew', 'director', 'writer', 'screenwriter', 'producer', 'production', 'music', 'composer', 'art', 'editing', 'editor', 'cinematograph', 'original', 'staff', 'lighting', 'ost', 'sound', 'action', 'martial']
                 cast_keywords =['cast', 'main', 'support', 'guest', 'cameo', 'bit part', 'actor', 'actress']
                 
-                if any(kw in header_text for kw in cast_keywords): is_crew = False
+                if any(kw in header_text for cast_kw in cast_keywords if cast_kw in header_text): is_crew = False
                 elif any(kw in header_text for kw in crew_keywords): is_crew = True
                 
                 combined_text = " ".join(role_texts).lower()
@@ -877,7 +876,9 @@ def apply_manual_updates(xl, by_id, context):
                 if obj.get(key) != val: changed[key] = {'old': obj.get(key), 'new': val}; obj[key] = val; obj.setdefault('sitePriorityUsed', {})[key] = "Manual"
         if changed:
             obj['updatedDetails'] = f"{', '.join([human_readable_field(f) for f in changed])} Updated Manually"; obj['updatedOn'] = now_ist().strftime('%d %B %Y')
-            report.setdefault('updated',[]).append({'old': old, 'new': obj}); create_diff_backup(old, obj, context)
+            report.setdefault('updated',[]).append({'old': old, 'new': obj})
+            create_diff_backup(old, obj, context)
+            save_metadata_backup(obj, context)
     return report
 
 def excel_to_objects(xl, sheet):
@@ -923,9 +924,18 @@ def excel_to_objects(xl, sheet):
 def save_metadata_backup(obj, context):
     fetched = {}
     source_links = context.get('source_links_temp', {})
+    
     for key, site in obj.get('sitePriorityUsed', {}).items():
-        if site and site != "Manual":
-            value = source_links.get('raw_cast') if key == 'cast' else obj.get(key)
+        if site:
+            # FIXED: Fallback to cast summary if raw_cast isn't available (e.g., Manual Updates)
+            if key == 'cast':
+                if site == "Manual" or not source_links.get('raw_cast'):
+                    value = obj.get('cast')
+                else:
+                    value = source_links.get('raw_cast')
+            else:
+                value = obj.get(key)
+                
             field_data = {"value": value, "source": site}
             if key in source_links: field_data["source_link"] = source_links[key]
             fetched[key] = field_data
@@ -1137,7 +1147,6 @@ def main():
     excel_bytes = fetch_excel_from_gdrive_bytes(excel_id, SERVICE_ACCOUNT_FILE)
     if not excel_bytes: print("❌ Could not fetch Excel file."); sys.exit(1)
 
-    # Convert the bytes once into a highly-optimized pandas Excel object
     xl = pd.ExcelFile(io.BytesIO(excel_bytes.getvalue()))
 
     process_deletions(xl, context)
@@ -1146,7 +1155,6 @@ def main():
     artists_data = load_json_file(ARTISTS_JSON_FILE)
     cast_data = load_json_file(CAST_JSON_FILE)
     
-    # STRICT INTEGER CASTING
     merged_by_id = {}
     for o in series_data:
         if o.get('showID'):
@@ -1256,7 +1264,6 @@ def main():
             os.remove(BATCH_STATE_FILE)
             context['is_final_batch_report'] = True
 
-    # SAFE SORTING (Prevents TypeErrors forever)
     save_json_file(SERIES_JSON_FILE, sorted(merged_by_id.values(), key=lambda x: int(x.get('showID') or 0)))
     save_json_file(ARTISTS_JSON_FILE, artists_data)
     save_json_file(CAST_JSON_FILE, cast_data)
