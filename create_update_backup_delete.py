@@ -1,23 +1,22 @@
 # ============================================================
 # Script: create_update_backup_delete.py
-# Author: [BruceBanner001]
+# Author:[BruceBanner001]
 # Description:
 #   v24.0 Engine.
 #   - Professional-grade multi-file database system.
-#   - FIX: Meta-Data Backup fallback for Manual Updates (`cast` null fix).
-#   - FIX: Strict Type Casting & Fuzzy Excel Sheet Matching.
-#   - FIX: Manual Updates image source tagging and Backup generation.
-#   - FIX: Prevent `showID` integer-to-string conversion in Manual Updates.
-#   - FIX: MDL Full Cast Scraping (100+ members) & Missing HTML Class Fallbacks.
+#   - FIX: MDL Full Cast Scraping (100+ members) & Cloudflare bypass.
+#   - FIX: Corrected NameError typo in cast role logic.
+#   - FIX: Prevent Pillow truncated image memory crashes.
+#   - FIX: Safely check for NaN/None in Pandas dataframes.
 #
-# Version: v9.2 (STABLE: Bulletproof Cast Extraction & Manual Updates)
+# Version: v9.3 (STABLE: Bulletproof Full Cast Extraction)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v9.2"
+SCRIPT_VERSION = "v9.3"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames":[], "showImage": None,
@@ -69,8 +68,13 @@ except ImportError as e:
 
 try: import cloudscraper; HAVE_SCRAPER = True
 except Exception: HAVE_SCRAPER = False
-try: from PIL import Image; HAVE_PIL = True
+
+try: 
+    from PIL import Image, ImageFile 
+    ImageFile.LOAD_TRUNCATED_IMAGES = True # FIX: Stop memory crashes on partial image downloads
+    HAVE_PIL = True
 except Exception: HAVE_PIL = False
+
 try: from google.oauth2 import service_account; from googleapiclient.discovery import build; from googleapiclient.http import MediaIoBaseDownload; HAVE_GOOGLE_API = True
 except Exception: HAVE_GOOGLE_API = False
 
@@ -464,19 +468,23 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
         url = kwargs.get('url', '')
         target_soup = soup
         
-        # FIX: Securely fetch /cast page
+        # FIX: Securely fetch /cast page with a delay to prevent Cloudflare 403 Blocks
         if url:
             cast_url = url.split('?')[0].rstrip('/') + '/cast'
             try:
+                time.sleep(2.0) # <--- CRITICAL FIX: Bypass MyDramaList rate limit
                 r = SCRAPER.get(cast_url, timeout=15)
                 if r.status_code == 200:
                     cast_soup = BeautifulSoup(r.text, "html.parser")
                     # If this page has person links, we force target_soup to adopt the full cast page!
                     if cast_soup.select('a[href*="/people/"]'):
                         target_soup = cast_soup
-            except Exception as e: pass
+                else:
+                    logd(f"MDL /cast page blocked or unavailable. Status: {r.status_code}")
+            except Exception as e: 
+                logd(f"Failed to fetch MDL /cast page: {e}")
 
-        # FIX: Extremely broad selector that catches modern MDL columns and classic list-items
+        # Extremely broad selector that catches modern MDL columns and classic list-items
         items = target_soup.select(
             'li.list-item, '
             'div.cast-list div.col-xs-8, div.cast-list div.col-sm-6, '
@@ -532,12 +540,10 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
                     t = e.get_text(" ", strip=True)
                     if t and t != artist_name and t not in role_texts: role_texts.append(t)
 
-                # FIX: NEW SAFE FALLBACK IF MDL DROPS .text-muted CLASSES
+                # NEW SAFE FALLBACK IF MDL DROPS .text-muted CLASSES
                 if not role_texts:
                     for div in item.find_all('div'):
-                        # Exclude image blocks and text-center blocks
                         if 'col-xs-4' in div.get('class',[]) or 'text-center' in div.get('class',[]): continue
-                        # Exclude the block containing the name <a> link itself
                         if not div.find('a'):
                             t = div.get_text(" ", strip=True)
                             if t and t != artist_name and t not in role_texts:
@@ -554,7 +560,8 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
                 crew_keywords =['crew', 'director', 'writer', 'screenwriter', 'producer', 'production', 'music', 'composer', 'art', 'editing', 'editor', 'cinematograph', 'original', 'staff', 'lighting', 'ost', 'sound', 'action', 'martial']
                 cast_keywords =['cast', 'main', 'support', 'guest', 'cameo', 'bit part', 'actor', 'actress']
                 
-                if any(kw in header_text for cast_kw in cast_keywords if cast_kw in header_text): is_crew = False
+                # FIX: Corrected NameError typo preventing support/guest cast logic
+                if any(cast_kw in header_text for cast_kw in cast_keywords): is_crew = False
                 elif any(kw in header_text for kw in crew_keywords): is_crew = True
                 
                 combined_text = " ".join(role_texts).lower()
@@ -591,7 +598,10 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
                     "artistID": artist_id, "artistName": artist_name, "artistImageURL": artist_image_url,
                     "characterName": character_name, "role": final_role
                 })
-            except Exception: continue
+            # FIX: Stop silencing inner loop errors
+            except Exception as e: 
+                logd(f"Error parsing actor item: {e}")
+                continue
         
         if not full_cast_raw: return None
         if main_role_count == 0 and len(full_cast_raw) > 0:
@@ -601,9 +611,13 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
                     full_cast_raw[i]['role'] = "Main Role"; promoted += 1
                     if promoted >= 6: break
 
-        if 'context' in kwargs and 'source_links_temp' in kwargs['context']: kwargs['context']['source_links_temp']['raw_cast'] = full_cast_raw
+        if 'context' in kwargs and 'source_links_temp' in kwargs['context']: 
+            kwargs['context']['source_links_temp']['raw_cast'] = full_cast_raw
+        
         return full_cast_raw
-    except Exception as e: return None
+    except Exception as e: 
+        logd(f"Fatal error in _scrape_cast_from_mydramalist: {e}")
+        return None
 
 # --- IMDB SCRAPERS ---
 def _scrape_synopsis_from_imdb(soup, **kwargs):
@@ -877,9 +891,10 @@ def process_deletions(xl, context):
             
             for d in[BACKUP_DIR, BACKUP_META_DIR]:
                 for f in os.listdir(d) if os.path.exists(d) else[]:
-                    if f.endswith(f"_{sid}.json"):
+                    src_path = os.path.join(d, f)
+                    if f.endswith(f"_{sid}.json") and os.path.isfile(src_path):  # FIX: Prevent crash on directories
                         archive_dir = os.path.join(ARCHIVED_BACKUPS_DIR if d == BACKUP_DIR else ARCHIVED_META_DIR, sid_str); os.makedirs(archive_dir, exist_ok=True)
-                        src_path = os.path.join(d, f); dest_path = os.path.join(archive_dir, f); shutil.move(src_path, dest_path)
+                        dest_path = os.path.join(archive_dir, f); shutil.move(src_path, dest_path)
                         context['files_generated']['archived_backups' if d == BACKUP_DIR else 'archived_meta_backups'].append(dest_path)
             deleted_count += 1
 
@@ -891,7 +906,8 @@ def apply_manual_updates(xl, by_id, context):
     try:
         target = next((s for s in xl.sheet_names if s.strip().lower() == 'manual updates'), None)
         if not target: return {}
-        df = pd.read_excel(xl, sheet_name=target, keep_default_na=False)
+        # FIX: Safe pandas reading to prevent NaN injection into JSON
+        df = pd.read_excel(xl, sheet_name=target, keep_default_na=False).replace({float('nan'): None, pd.NA: None})
         df.columns =[c.strip().lower() for c in df.columns]
     except Exception: return {}
     
@@ -1280,7 +1296,12 @@ def main():
             metadata_was_fetched = any(final_obj.get(k) != v for k, v in initial_metadata_state.items())
             
             key_map = {'synopsis': 'Synopsis', 'showImage': 'Show Image', 'otherNames': 'Other Names', 'releaseDate': 'Release Date', 'Duration': 'Duration', 'director': 'Director', 'tags': 'Tags', 'cast': 'Cast', 'network': 'Network'}
-            newly_fetched_fields = sorted([key_map[k] for k, v in initial_metadata_state.items() if not v and (isinstance(final_obj.get(k), list) and final_obj.get(k) or isinstance(final_obj.get(k), dict) and final_obj.get(k) or (isinstance(final_obj.get(k), str) and final_obj.get(k)))])
+            
+            # FIX: Cleaner and safer way to determine what was newly fetched
+            newly_fetched_fields = sorted([
+                key_map[k] for k, v in initial_metadata_state.items() 
+                if not v and bool(final_obj.get(k))
+            ])
 
             if is_new:
                 final_obj['updatedDetails'] = "First Time Uploaded"
