@@ -1,1 +1,84 @@
-{}
+{
+    "101": {
+        "mainRoles": [
+            {
+                "artistID": "76355",
+                "characterName": "Unknown",
+                "role": "Main Role"
+            },
+            {
+                "artistID": "94733",
+                "characterName": "Unknown",
+                "role": "Main Role"
+            },
+            {
+                "artistID": "92283",
+                "characterName": "Unknown",
+                "role": "Main Role"
+            },
+            {
+                "artistID": "68951",
+                "characterName": "Unknown",
+                "role": "Main Role"
+            },
+            {
+                "artistID": "48173",
+                "characterName": "Unknown",
+                "role": "Main Role"
+            }
+        ],
+        "crew": [
+            {
+                "artistID": "45603",
+                "characterName": null,
+                "role": "Composer"
+            },
+            {
+                "artistID": "67051",
+                "characterName": null,
+                "role": "Composer"
+            },
+            {
+                "artistID": "17013",
+                "characterName": null,
+                "role": "Director"
+            },
+            {
+                "artistID": "42017",
+                "characterName": null,
+                "role": "Producer"
+            },
+            {
+                "artistID": "15977",
+                "characterName": null,
+                "role": "Screenwriter"
+            }
+        ],
+        "otherCrewMembers": [
+            {
+                "artistID": "61195",
+                "characterName": null,
+                "role": "Cinematography"
+            },
+            {
+                "artistID": "61197",
+                "characterName": null,
+                "role": "Cinematography"
+            }
+        ]
+    },
+    "102": {
+        "crew": [
+            {
+                "artistID": "62087",
+                "characterName": null,
+                "role": "Director"
+            },
+            {
+                "artistID": "51419",
+                "characterName": null,
+                "role": "Producer"
+            }
+        ]
+    }
+}

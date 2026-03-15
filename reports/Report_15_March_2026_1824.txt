@@ -1,0 +1,65 @@
+✅ Workflow completed successfully
+🆔 Run ID: RUN_20260315_182458
+📅 Run Time: 15 March 2026 06:25 PM (IST)
+⚙️ Script Version: v9.1
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Sheet1 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🆕 Data Created:
+- 101 - Crash Landing On You (2019) -> First Time Uploaded
+- 102 - Unforgettable Love (2021) -> First Time Uploaded
+
+🖼️ Fetched Data Details:
+- 101 - Crash Landing On You -> Fetched: Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 102 - Unforgettable Love -> Fetched: Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+
+📊 Summary (Sheet: Sheet1)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Created: 2
+🔁 Updated: 0
+🔍 Refetched: 0
+🚫 Skipped: 0
+⚠️ Warnings: 0
+  Total Rows: 2
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 Overall Summary
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Total Created: 2
+🔁 Total Updated: 0
+🔍 Total Refetched: 0
+🖼️ Show Images Updated: 2
+🧑‍🎨 New Artist Images Added: 2
+🚫 Total Skipped: 0
+❌ Total Deleted: 0
+🗄️ Total Archived Backups: 0
+⚠️ Total Warnings: 0
+💾 Backup Files: 0
+  Grand Total Rows Processed: 2
+
+💾 Metadata Backups: 2
+
+📦 Total Objects in seriesData.json: 2
+📦 Total Objects in artists.json: 1044
+📦 Total Objects in cast.json: 2
+📦 Total Objects in artists_lookup.json: 1044
+🖼️ Total images in show-images: 2
+🧑‍🎨 Total images in artist-images: 1023
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ Folders Generated:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📁 artist_images/ (Total: 2 files)
+    📄 62087.jpg
+    📄 51419.jpg
+
+📁 meta_backups/ (Total: 2 files)
+    📄 META_15_March_2026_1824_101.json
+    📄 META_15_March_2026_1824_102.json
+
+📁 reports/ (Total: 1 files)
+    📄 Report_15_March_2026_1824.txt
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🏁 Workflow finished successfully
