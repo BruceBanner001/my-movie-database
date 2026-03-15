@@ -2,19 +2,19 @@
 # Script: create_update_backup_delete.py
 # Author: [BruceBanner001]
 # Description:
-#   v20.0 Engine.
+#   v21.0 Engine.
 #   - Professional-grade multi-file database system.
 #   - FIX: IMDb Aggregation Bypass (Dynamic Season Sub-Scraping).
-#   - FIX: Unique Posters & Release Dates for IMDb Seasons.
+#   - FEATURE: Live Image Directory Counting in final reports.
 #
-# Version: v8.3 (FEATURE: IMDb True Season Parsing)
+# Version: v8.4 (FEATURE: Directory Image Counters)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v8.3"
+SCRIPT_VERSION = "v8.4"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames":[], "showImage": None,
@@ -189,7 +189,6 @@ def _validate_page_title(soup, expected_name, site, url):
             return False
             
         if exp_s > 1 and page_s is None:
-            # ONLY strict reject for non-IMDb. IMDb legitimately groups all seasons on the root page.
             if site != "imdb":
                 base_expected = re.sub(r'\b(?:Season|Part)\s*\d+\b', '', expected_name, flags=re.IGNORECASE).strip().lower()
                 base_page = re.sub(r'\(.*?\)', '', page_title).lower().strip()
@@ -588,7 +587,6 @@ def _scrape_synopsis_from_imdb(soup, **kwargs):
 
 def _scrape_image_from_imdb(soup, **kwargs):
     try:
-        # Check if a specific Season is requested, intercept to get exact Season poster!
         target_soup = soup
         m = re.search(r'\b(?:Season|Part)\s*(\d+)\b', kwargs.get('show_name', ''), re.IGNORECASE)
         if m:
@@ -598,7 +596,6 @@ def _scrape_image_from_imdb(soup, **kwargs):
             if r.status_code == 200:
                 target_soup = BeautifulSoup(r.text, "html.parser")
         
-        # 1. Grab Season-Specific Poster from OpenGraph tags
         meta_img = target_soup.find('meta', property='og:image')
         if meta_img and 'content' in meta_img.attrs:
             url = meta_img['content']
@@ -606,7 +603,6 @@ def _scrape_image_from_imdb(soup, **kwargs):
                 image_path = os.path.join(SHOW_IMAGES_DIR, f"{kwargs['sid']}.jpg")
                 if download_and_save_image(url, image_path): return os.path.basename(image_path)
 
-        # 2. Fallback to Series Poster
         data = _get_imdb_json_ld(soup)
         if data and 'image' in data:
             url = data['image']
@@ -617,7 +613,6 @@ def _scrape_image_from_imdb(soup, **kwargs):
 
 def _scrape_release_date_from_imdb(soup, **kwargs):
     try:
-        # Check if a specific Season is requested, intercept to get Season Premiere Date!
         m = re.search(r'\b(?:Season|Part)\s*(\d+)\b', kwargs.get('show_name', ''), re.IGNORECASE)
         if m:
             season_num = m.group(1)
@@ -636,7 +631,6 @@ def _scrape_release_date_from_imdb(soup, **kwargs):
                             if 'datePublished' in first_ep:
                                 return first_ep['datePublished']
 
-        # Fallback to Series Date
         data = _get_imdb_json_ld(soup)
         if data and 'datePublished' in data: return data['datePublished']
     except Exception: pass
@@ -977,6 +971,17 @@ def write_report(context):
         try:
             with open(file, 'r', encoding='utf-8') as f: lines.append(f"📦 Total Objects in {file}: {len(json.load(f))}")
         except Exception: lines.append(f"📦 Total Objects in {file}: 0")
+        
+    # NEW FEATURE: Directory Image Counting
+    try:
+        show_img_count = len([f for f in os.listdir(SHOW_IMAGES_DIR) if f.lower().endswith('.jpg')])
+        lines.append(f"🖼️ Total images in {SHOW_IMAGES_DIR}: {show_img_count}")
+    except Exception: lines.append(f"🖼️ Total images in {SHOW_IMAGES_DIR}: 0")
+
+    try:
+        artist_img_count = len([f for f in os.listdir(ARTIST_IMAGES_DIR) if f.lower().endswith('.jpg')])
+        lines.append(f"🧑‍🎨 Total images in {ARTIST_IMAGES_DIR}: {artist_img_count}")
+    except Exception: lines.append(f"🧑‍🎨 Total images in {ARTIST_IMAGES_DIR}: 0")
         
     lines.extend([sep, "🗂️ Folders Generated:", sep])
     for folder, files in context['files_generated'].items():
