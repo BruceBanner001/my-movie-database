@@ -1,0 +1,96 @@
+✅ Workflow completed successfully
+🆔 Run ID: RUN_20260315_162943
+📅 Run Time: 15 March 2026 04:31 PM (IST)
+⚙️ Script Version: v8.8
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Manual Updates ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🔁 Data Updated:
+✍️ 105 - Stranger Things Season 2 -> Show ID, Show Image Updated Manually
+✍️ 106 - Stranger Things Season 3 -> Show ID, Other Names, Release Date, Synopsis, Duration Updated Manually
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Sheet1 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🆕 Data Created:
+- 114 - Crash Landing On You (2019) -> First Time Uploaded
+
+🖼️ Fetched Data Details:
+- 114 - Crash Landing On You -> Fetched: Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+
+🚫 Skipped (Unchanged):
+- 101 - Alchemy Of Souls Season 1 (2022)
+- 102 - Alchemy Of Souls Season 2 (2023)
+- 103 - 12 Monkeys Season 1 (2015)
+- 104 - Stranger Things Season 1 (2016)
+- 105 - Stranger Things Season 2 (2017)
+- 106 - Stranger Things Season 3 (2019)
+- 107 - Stranger Things Season 4 (2022)
+- 108 - Manifest Season  1 (2018)
+- 109 - Manifest Season  2 (2020)
+- 110 - Manifest Season  3 (2021)
+- 111 - Manifest Season  4 (2022)
+- 112 - The Law Café (2022)
+- 113 - Meteor Garden (2018)
+
+📊 Summary (Sheet: Sheet1)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Created: 1
+🔁 Updated: 0
+🔍 Refetched: 0
+🚫 Skipped: 13
+⚠️ Warnings: 0
+  Total Rows: 14
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 Overall Summary
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Total Created: 1
+🔁 Total Updated: 0
+🔍 Total Refetched: 0
+🖼️ Show Images Updated: 1
+🧑‍🎨 New Artist Images Added: 9
+🚫 Total Skipped: 13
+❌ Total Deleted: 0
+🗄️ Total Archived Backups: 0
+⚠️ Total Warnings: 0
+💾 Backup Files: 2
+  Grand Total Rows Processed: 14
+
+💾 Metadata Backups: 3
+
+📦 Total Objects in seriesData.json: 15
+📦 Total Objects in artists.json: 1034
+📦 Total Objects in cast.json: 15
+📦 Total Objects in artists_lookup.json: 1034
+🖼️ Total images in show-images: 15
+🧑‍🎨 Total images in artist-images: 1013
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ Folders Generated:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📁 backups/ (Total: 2 files)
+    📄 BACKUP_15_March_2026_1629_105.json
+    📄 BACKUP_15_March_2026_1629_106.json
+
+📁 show_images/ (Total: 1 files)
+    📄 105.jpg
+
+📁 artist_images/ (Total: 9 files)
+    📄 61195.jpg
+    📄 61197.jpg
+    📄 17013.jpg
+    ... and 6 more files.
+
+📁 meta_backups/ (Total: 3 files)
+    📄 META_15_March_2026_1629_105.json
+    📄 META_15_March_2026_1629_106.json
+    📄 META_15_March_2026_1629_114.json
+
+📁 reports/ (Total: 1 files)
+    📄 Report_15_March_2026_1629.txt
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🏁 Workflow finished successfully

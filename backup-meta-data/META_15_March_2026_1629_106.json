@@ -1,0 +1,75 @@
+{
+    "scriptVersion": "v8.8",
+    "runID": "RUN_20260315_162943",
+    "timestamp": "15 March 2026 04:29 PM (IST)",
+    "showID": "106",
+    "showName": "Stranger Things Season 3",
+    "fetchedFields": {
+        "showImage": {
+            "value": "106.jpg",
+            "source": "imdb"
+        },
+        "releaseDate": {
+            "value": "Apr 10 2011 - March 12 2021",
+            "source": "Manual"
+        },
+        "otherNames": {
+            "value": [
+                "But",
+                "NO PROBLEM",
+                "No",
+                "Thanks",
+                "Yes"
+            ],
+            "source": "Manual"
+        },
+        "Duration": {
+            "value": "1 hr 99 mins.",
+            "source": "Manual"
+        },
+        "synopsis": {
+            "value": "Law Cafe",
+            "source": "Manual"
+        },
+        "director": {
+            "value": [
+                "Matt Duffer",
+                "Ross Duffer"
+            ],
+            "source": "imdb"
+        },
+        "tags": {
+            "value": [
+                "Drama",
+                "Fantasy",
+                "Horror"
+            ],
+            "source": "imdb"
+        },
+        "cast": {
+            "value": {
+                "Main Role": 6,
+                "Support Role": 9,
+                "Guest Role": 3,
+                "Creator": 2
+            },
+            "source": "imdb"
+        },
+        "showID": {
+            "value": "106",
+            "source": "Manual"
+        }
+    },
+    "sitePriorityUsed": {
+        "showImage": "imdb",
+        "releaseDate": "Manual",
+        "otherNames": "Manual",
+        "Duration": "Manual",
+        "synopsis": "Manual",
+        "director": "imdb",
+        "tags": "imdb",
+        "cast": "imdb",
+        "network": null,
+        "showID": "Manual"
+    }
+}
