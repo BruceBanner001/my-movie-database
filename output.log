@@ -1,9 +1,13 @@
-🚀 Running Script — Version v8.3 | Run ID: RUN_20260315_003230
+🚀 Running Script — Version v8.4 | Run ID: RUN_20260315_131115
 ⚙️ BATCH MODE ACTIVE: Will pause after 50 heavy fetch operations.
-[DEBUG] Title Validation FAILED: Page Title 'Corpse Club' vs Expected 'Stranger Things Season 3' (Ratio: 0.15)
-[DEBUG] Title Validation FAILED: Page Title 'The Chosen' vs Expected 'Stranger Things Season 3' (Ratio: 0.24)
-[DEBUG] Title Validation FAILED: Page Title 'I Feel Bad' vs Expected 'Manifest Season  2' (Ratio: 0.33)
-[DEBUG] Title Validation FAILED: Page Title 'Debris' vs Expected 'Manifest Season  3' (Ratio: 0.29)
-✅ Report written -> reports/Report_15_March_2026_0032.txt
+[DEBUG] Title Validation FAILED: Season mismatch. Expected S1, Page has S2 (Alchemy of Souls Season 2: Light and Shadow)
+[DEBUG] Title Validation FAILED: Page Title 'Drama Addict' vs Expected 'Alchemy Of Souls' (Ratio: 0.21)
+[DEBUG] Title Validation FAILED: Page Title 'ltspada' vs Expected 'Alchemy Of Souls' (Ratio: 0.17)
+[DEBUG] Title Validation FAILED: Page Title 'FL with a strong temper' vs Expected 'Alchemy Of Souls' (Ratio: 0.21)
+[DEBUG] Title Validation FAILED: Page Title 'Top 100 Best K-Dramas of 2026' vs Expected 'Alchemy Of Souls' (Ratio: 0.27)
+[DEBUG] Title Validation FAILED: Page Title 'Top Dramas' vs Expected 'Alchemy Of Souls' (Ratio: 0.23)
+[DEBUG] Title Validation FAILED: Page Title 'Revenge' vs Expected 'Alchemy Of Souls' (Ratio: 0.09)
+[DEBUG] Title Validation FAILED: Page Title 'Alex Rider' vs Expected 'Stranger Things Season 1' (Ratio: 0.24)
+✅ Report written -> reports/Report_15_March_2026_1311.txt
 
 All done.
