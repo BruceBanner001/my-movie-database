@@ -1,22 +1,21 @@
 # ============================================================
 # Script: create_update_backup_delete.py
-# Author:[BruceBanner001]
+# Author: [BruceBanner001]
 # Description:
 #   v24.0 Engine.
 #   - Professional-grade multi-file database system.
-#   - FIX: MDL Full Cast Scraping (100+ members) & Cloudflare bypass.
-#   - FIX: Corrected NameError typo in cast role logic.
-#   - FIX: Prevent Pillow truncated image memory crashes.
-#   - FIX: Safely check for NaN/None in Pandas dataframes.
+#   - FIX: MDL Cloudflare block on /cast page (Added strict headers + 4.0s delay).
+#   - FIX: MDL HTML tag structural changes (Switched to Bulletproof Regex subtraction for Director, Other Names, etc.).
+#   - FIX: AsianWiki Other Names regex fallback.
 #
-# Version: v9.3 (STABLE: Bulletproof Full Cast Extraction)
+# Version: v9.4 (STABLE: Bulletproof Regex Extractors)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v9.3"
+SCRIPT_VERSION = "v9.4"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames":[], "showImage": None,
@@ -71,7 +70,7 @@ except Exception: HAVE_SCRAPER = False
 
 try: 
     from PIL import Image, ImageFile 
-    ImageFile.LOAD_TRUNCATED_IMAGES = True # FIX: Stop memory crashes on partial image downloads
+    ImageFile.LOAD_TRUNCATED_IMAGES = True 
     HAVE_PIL = True
 except Exception: HAVE_PIL = False
 
@@ -192,7 +191,6 @@ def _validate_page_title(soup, expected_name, site, url):
         exp_s = int(m_exp.group(1)) if m_exp else 1
         
         if page_s is not None and exp_s != page_s:
-            logd(f"Title Validation FAILED: Season mismatch. Expected S{exp_s}, Page has S{page_s} ({page_title})")
             return False
             
         if exp_s > 1 and page_s is None:
@@ -200,7 +198,6 @@ def _validate_page_title(soup, expected_name, site, url):
                 base_expected = re.sub(r'\b(?:Season|Part)\s*\d+\b', '', expected_name, flags=re.IGNORECASE).strip().lower()
                 base_page = re.sub(r'\(.*?\)', '', page_title).lower().strip()
                 if base_expected == base_page:
-                    logd(f"Title Validation FAILED: Expected S{exp_s}, but found base S1 ('{page_title}')")
                     return False
 
         t1 = re.sub(r'\(\d{4}\)', '', page_title).lower().strip()
@@ -213,7 +210,6 @@ def _validate_page_title(soup, expected_name, site, url):
 
         ratio = SequenceMatcher(None, t1_core, t2_core).ratio()
         if ratio < 0.4 and t2_core not in t1_core and t1_core not in t2_core:
-            logd(f"Title Validation FAILED: Page Title '{page_title}' vs Expected '{expected_name}' (Ratio: {ratio:.2f})")
             return False
         return True
     except Exception as e: return True
@@ -316,6 +312,27 @@ def download_and_save_image(url, local_path, is_artist=False):
     except Exception as e: pass
     return False
 
+# --- BULLETPROOF EXTRACTION HELPERS ---
+def _extract_mdl_list_item(soup, label_regex):
+    b_tag = soup.find('b', string=re.compile(label_regex, re.IGNORECASE))
+    if b_tag and (li_tag := b_tag.find_parent('li')):
+        full_text = li_tag.get_text(" ", strip=True)
+        b_text = b_tag.get_text(" ", strip=True)
+        text = full_text.replace(b_text, "").strip()
+        text = re.sub(r'^[:\s]+', '', text).strip()
+        return text, li_tag
+    return None, None
+
+def _extract_aw_list_item(soup, label_regex):
+    b_tag = soup.find('b', string=re.compile(label_regex, re.IGNORECASE))
+    if b_tag and (parent := b_tag.parent):
+        full_text = parent.get_text(" ", strip=True)
+        b_text = b_tag.get_text(" ", strip=True)
+        text = full_text.replace(b_text, "").strip()
+        text = re.sub(r'^[:\s]+', '', text).strip()
+        return text
+    return None
+
 # --- ASIANWIKI SCRAPERS ---
 def _scrape_synopsis_from_asianwiki(soup, **kwargs):
     try:
@@ -351,28 +368,30 @@ def _scrape_image_from_asianwiki(soup, **kwargs):
 
 def _scrape_othernames_from_asianwiki(soup, **kwargs):
     try:
-        p_tag = soup.find('p', string=re.compile(r"^(Drama:|Movie:)"))
-        if p_tag:
-            full_text = p_tag.get_text(strip=True).replace(" Hangul:", " (Hangul:")
-            match = re.search(r':(.*?)(?=\(Revised romanization:|\(literal title\)|$)', full_text, re.DOTALL)
-            if match:
-                raw_names =[name.strip() for name in match.group(1).strip().split('/') if name.strip()]
-                filtered =[name for name in raw_names if name.lower() != kwargs['show_name'].lower()]
-                return _clean_other_names(filtered)
-    except Exception: return None
+        for tag in soup.find_all('b'):
+            text = tag.get_text(strip=True)
+            if re.search(r"^(Drama|Movie):?", text, re.IGNORECASE):
+                parent = tag.parent
+                full_text = parent.get_text(" ", strip=True).replace(" Hangul:", " (Hangul:")
+                match = re.search(r':(.*?)(?=\(Revised romanization:|\(literal title\)|$)', full_text, re.DOTALL)
+                if match:
+                    raw_names =[name.strip() for name in match.group(1).strip().split('/') if name.strip()]
+                    filtered =[name for name in raw_names if name.lower() != kwargs.get('show_name', '').lower()]
+                    return _clean_other_names(filtered)
+    except Exception: pass
+    return None
 
 def _scrape_release_date_from_asianwiki(soup, **kwargs):
     try:
-        b_tag = soup.find('b', string=re.compile(r"Release Date:"))
-        if b_tag and (parent := b_tag.parent):
-            b_tag.decompose(); return parent.get_text(strip=True)
-    except Exception: return None
+        text = _extract_aw_list_item(soup, r"Release Date")
+        if text: return text
+    except Exception: pass
+    return None
 
 def _scrape_network_from_asianwiki(soup, **kwargs):
     try:
-        b_tag = soup.find('b', string=re.compile(r"Network:"))
-        if b_tag and (parent := b_tag.parent):
-            b_tag.decompose(); return[n.strip() for n in parent.get_text(strip=True).split(',') if n.strip()]
+        text = _extract_aw_list_item(soup, r"Network")
+        if text: return [n.strip() for n in text.split(',') if n.strip()]
     except Exception: pass
     return None
 
@@ -412,37 +431,36 @@ def _scrape_image_from_mydramalist(soup, **kwargs):
 
 def _scrape_othernames_from_mydramalist(soup, **kwargs):
     try:
-        b_tag = soup.find('b', string="Also Known As:")
-        if b_tag and (li_tag := b_tag.find_parent('li')):
-            b_tag.decompose()
-            raw_names =[name.strip() for name in li_tag.get_text(strip=True).split(',') if name.strip()]
-            filtered =[name for name in raw_names if name.lower() != kwargs['show_name'].lower()]
+        text, _ = _extract_mdl_list_item(soup, r"Also Known As")
+        if text:
+            raw_names =[name.strip() for name in text.split(',') if name.strip()]
+            filtered =[name for name in raw_names if name.lower() != kwargs.get('show_name', '').lower()]
             return _clean_other_names(filtered)
-    except Exception: return None
+    except Exception: pass
+    return None
 
 def _scrape_duration_from_mydramalist(soup, **kwargs):
     try:
-        b_tag = soup.find('b', string=re.compile(r"Duration:"))
-        if b_tag and (li_tag := b_tag.find_parent('li')):
-            b_tag.decompose()
-            duration_text = li_tag.get_text(strip=True)
-            return duration_text.replace(" min.", " mins") if "hr" not in duration_text else duration_text
-    except Exception: return None
+        text, _ = _extract_mdl_list_item(soup, r"Duration")
+        if text:
+            return text.replace(" min.", " mins") if "hr" not in text else text
+    except Exception: pass
+    return None
 
 def _scrape_release_date_from_mydramalist(soup, **kwargs):
     try:
-        b_tag = soup.find('b', string=re.compile(r"Aired:"))
-        if b_tag and (li_tag := b_tag.find_parent('li')):
-            b_tag.decompose(); return li_tag.get_text(strip=True)
-    except Exception: return None
+        text, _ = _extract_mdl_list_item(soup, r"Aired")
+        if text: return text
+    except Exception: pass
+    return None
 
 def _scrape_director_from_mydramalist(soup, **kwargs):
     try:
-        b_tag = soup.find('b', string="Director:")
-        if b_tag and (li_tag := b_tag.find_parent('li')):
-            b_tag.decompose()
-            return[name.strip() for name in li_tag.get_text(strip=True).split(',') if name.strip()]
-    except Exception: return None
+        text, _ = _extract_mdl_list_item(soup, r"Director")
+        if text:
+            return[name.strip() for name in text.split(',') if name.strip()]
+    except Exception: pass
+    return None
 
 def _scrape_tags_from_mydramalist(soup, **kwargs):
     try:
@@ -452,12 +470,11 @@ def _scrape_tags_from_mydramalist(soup, **kwargs):
 
 def _scrape_network_from_mydramalist(soup, **kwargs):
     try:
-        b_tag = soup.find('b', string=re.compile(r"Original Network:"))
-        if b_tag and (li_tag := b_tag.find_parent('li')):
-            b_tag.decompose()
+        text, li_tag = _extract_mdl_list_item(soup, r"Original Network")
+        if li_tag:
             nets =[a.get_text(strip=True) for a in li_tag.find_all('a')]
             if nets: return nets
-            return[n.strip() for n in li_tag.get_text(strip=True).split(',') if n.strip()]
+            return [n.strip() for n in text.split(',') if n.strip()]
     except Exception: pass
     return None
 
@@ -468,23 +485,23 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
         url = kwargs.get('url', '')
         target_soup = soup
         
-        # FIX: Securely fetch /cast page with a delay to prevent Cloudflare 403 Blocks
+        # FIX: Securely fetch /cast page with heavy delay to bypass Cloudflare
         if url:
-            cast_url = url.split('?')[0].rstrip('/') + '/cast'
+            cast_url = url.split('#')[0].split('?')[0].rstrip('/') + '/cast'
             try:
-                time.sleep(2.0) # <--- CRITICAL FIX: Bypass MyDramaList rate limit
-                r = SCRAPER.get(cast_url, timeout=15)
-                if r.status_code == 200:
+                time.sleep(4.0) 
+                headers = {
+                    "Referer": url, 
+                    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8"
+                }
+                r = SCRAPER.get(cast_url, headers=headers, timeout=20)
+                if r.status_code == 200 and '/people/' in r.text:
                     cast_soup = BeautifulSoup(r.text, "html.parser")
-                    # If this page has person links, we force target_soup to adopt the full cast page!
                     if cast_soup.select('a[href*="/people/"]'):
                         target_soup = cast_soup
-                else:
-                    logd(f"MDL /cast page blocked or unavailable. Status: {r.status_code}")
             except Exception as e: 
                 logd(f"Failed to fetch MDL /cast page: {e}")
 
-        # Extremely broad selector that catches modern MDL columns and classic list-items
         items = target_soup.select(
             'li.list-item, '
             'div.cast-list div.col-xs-8, div.cast-list div.col-sm-6, '
@@ -492,7 +509,6 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
             '.box-body div[class*="col-sm-"], .box-body div[class*="col-md-"], .box-body div.list-item'
         )
         
-        # Absolute Fallback: if they change CSS entirely again, find every row via its child link
         if not items:
             for a in target_soup.select('a[href*="/people/"]'):
                 parent = a.find_parent(['li', 'div'], class_=re.compile(r'\b(list-item|col-(?:sm|md|lg)-\d+|row)\b'))
@@ -526,7 +542,6 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
 
                 role_texts =[]
                 
-                # ORIGINAL v8.7 CLASSIC EXTRACTOR
                 elements = list(item.select('.text-muted, .text-sm, small, .role'))
                 nxt = item.find_next_sibling('div')
                 if nxt and any('col' in str(c).lower() or 'right' in str(c).lower() or 'role' in str(c).lower() for c in nxt.get('class',[])):
@@ -540,7 +555,6 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
                     t = e.get_text(" ", strip=True)
                     if t and t != artist_name and t not in role_texts: role_texts.append(t)
 
-                # NEW SAFE FALLBACK IF MDL DROPS .text-muted CLASSES
                 if not role_texts:
                     for div in item.find_all('div'):
                         if 'col-xs-4' in div.get('class',[]) or 'text-center' in div.get('class',[]): continue
@@ -560,7 +574,6 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
                 crew_keywords =['crew', 'director', 'writer', 'screenwriter', 'producer', 'production', 'music', 'composer', 'art', 'editing', 'editor', 'cinematograph', 'original', 'staff', 'lighting', 'ost', 'sound', 'action', 'martial']
                 cast_keywords =['cast', 'main', 'support', 'guest', 'cameo', 'bit part', 'actor', 'actress']
                 
-                # FIX: Corrected NameError typo preventing support/guest cast logic
                 if any(cast_kw in header_text for cast_kw in cast_keywords): is_crew = False
                 elif any(kw in header_text for kw in crew_keywords): is_crew = True
                 
@@ -598,7 +611,6 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
                     "artistID": artist_id, "artistName": artist_name, "artistImageURL": artist_image_url,
                     "characterName": character_name, "role": final_role
                 })
-            # FIX: Stop silencing inner loop errors
             except Exception as e: 
                 logd(f"Error parsing actor item: {e}")
                 continue
@@ -892,7 +904,7 @@ def process_deletions(xl, context):
             for d in[BACKUP_DIR, BACKUP_META_DIR]:
                 for f in os.listdir(d) if os.path.exists(d) else[]:
                     src_path = os.path.join(d, f)
-                    if f.endswith(f"_{sid}.json") and os.path.isfile(src_path):  # FIX: Prevent crash on directories
+                    if f.endswith(f"_{sid}.json") and os.path.isfile(src_path):
                         archive_dir = os.path.join(ARCHIVED_BACKUPS_DIR if d == BACKUP_DIR else ARCHIVED_META_DIR, sid_str); os.makedirs(archive_dir, exist_ok=True)
                         dest_path = os.path.join(archive_dir, f); shutil.move(src_path, dest_path)
                         context['files_generated']['archived_backups' if d == BACKUP_DIR else 'archived_meta_backups'].append(dest_path)
@@ -906,7 +918,6 @@ def apply_manual_updates(xl, by_id, context):
     try:
         target = next((s for s in xl.sheet_names if s.strip().lower() == 'manual updates'), None)
         if not target: return {}
-        # FIX: Safe pandas reading to prevent NaN injection into JSON
         df = pd.read_excel(xl, sheet_name=target, keep_default_na=False).replace({float('nan'): None, pd.NA: None})
         df.columns =[c.strip().lower() for c in df.columns]
     except Exception: return {}
@@ -918,7 +929,7 @@ def apply_manual_updates(xl, by_id, context):
         sid = int(sid); obj, old, changed = by_id[sid], copy.deepcopy(by_id[sid]), {}
         
         for col, key in MAP.items():
-            if col in row and str(row[col]).strip():
+            if col in row and str(row[col]).strip() and str(row[col]).strip().lower() != 'nan':
                 val = row[col]
                 image_downloaded = False
                 
@@ -1296,8 +1307,6 @@ def main():
             metadata_was_fetched = any(final_obj.get(k) != v for k, v in initial_metadata_state.items())
             
             key_map = {'synopsis': 'Synopsis', 'showImage': 'Show Image', 'otherNames': 'Other Names', 'releaseDate': 'Release Date', 'Duration': 'Duration', 'director': 'Director', 'tags': 'Tags', 'cast': 'Cast', 'network': 'Network'}
-            
-            # FIX: Cleaner and safer way to determine what was newly fetched
             newly_fetched_fields = sorted([
                 key_map[k] for k, v in initial_metadata_state.items() 
                 if not v and bool(final_obj.get(k))
