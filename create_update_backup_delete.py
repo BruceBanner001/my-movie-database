@@ -8,15 +8,16 @@
 #   - FIX: Strict Type Casting & Fuzzy Excel Sheet Matching.
 #   - FIX: Manual Updates image source tagging and Backup generation.
 #   - FIX: Prevent `showID` integer-to-string conversion in Manual Updates.
+#   - FIX: MDL Full Cast Scraping (100+ members) & Missing HTML Class Fallbacks.
 #
-# Version: v9.1 (STABLE: Original Cast Parsing restored + Manual Update Fixes)
+# Version: v9.2 (STABLE: Bulletproof Cast Extraction & Manual Updates)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v9.1"
+SCRIPT_VERSION = "v9.2"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames":[], "showImage": None,
@@ -463,26 +464,45 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
         url = kwargs.get('url', '')
         target_soup = soup
         
+        # FIX: Securely fetch /cast page
         if url:
             cast_url = url.split('?')[0].rstrip('/') + '/cast'
             try:
                 r = SCRAPER.get(cast_url, timeout=15)
                 if r.status_code == 200:
                     cast_soup = BeautifulSoup(r.text, "html.parser")
-                    if cast_soup.select('li.list-item, div.col-xs-8, div.col-sm-6'): target_soup = cast_soup
+                    # If this page has person links, we force target_soup to adopt the full cast page!
+                    if cast_soup.select('a[href*="/people/"]'):
+                        target_soup = cast_soup
             except Exception as e: pass
 
-        items = target_soup.select('li.list-item, div.cast-list div.col-xs-8, div.cast-list div.col-sm-6, .p-a-0 li, .crew-list div.col-xs-8')
+        # FIX: Extremely broad selector that catches modern MDL columns and classic list-items
+        items = target_soup.select(
+            'li.list-item, '
+            'div.cast-list div.col-xs-8, div.cast-list div.col-sm-6, '
+            '.p-a-0 li, .crew-list div.col-xs-8, '
+            '.box-body div[class*="col-sm-"], .box-body div[class*="col-md-"], .box-body div.list-item'
+        )
+        
+        # Absolute Fallback: if they change CSS entirely again, find every row via its child link
+        if not items:
+            for a in target_soup.select('a[href*="/people/"]'):
+                parent = a.find_parent(['li', 'div'], class_=re.compile(r'\b(list-item|col-(?:sm|md|lg)-\d+|row)\b'))
+                if parent and parent not in items:
+                    items.append(parent)
+
         if not items: return None
 
         main_role_count = 0
         for item in items:
             try:
                 artist_name, artist_link = None, None
-                for a in item.select('a'):
+                for a in item.select('a[href*="/people/"]'):
                     text = a.get_text(strip=True)
-                    if '/people/' in a.get('href', '') and text:
-                        artist_name = text; artist_link = a['href']; break 
+                    if text:
+                        artist_name = text
+                        artist_link = a['href']
+                        break 
                 
                 if not artist_name: continue 
                 id_match = re.search(r'/people/(\d+)-', artist_link)
@@ -497,6 +517,8 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
                 if artist_image_url and ('avatar' in artist_image_url or 'default' in artist_image_url): artist_image_url = None
 
                 role_texts =[]
+                
+                # ORIGINAL v8.7 CLASSIC EXTRACTOR
                 elements = list(item.select('.text-muted, .text-sm, small, .role'))
                 nxt = item.find_next_sibling('div')
                 if nxt and any('col' in str(c).lower() or 'right' in str(c).lower() or 'role' in str(c).lower() for c in nxt.get('class',[])):
@@ -509,6 +531,17 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
                 for e in elements:
                     t = e.get_text(" ", strip=True)
                     if t and t != artist_name and t not in role_texts: role_texts.append(t)
+
+                # FIX: NEW SAFE FALLBACK IF MDL DROPS .text-muted CLASSES
+                if not role_texts:
+                    for div in item.find_all('div'):
+                        # Exclude image blocks and text-center blocks
+                        if 'col-xs-4' in div.get('class',[]) or 'text-center' in div.get('class',[]): continue
+                        # Exclude the block containing the name <a> link itself
+                        if not div.find('a'):
+                            t = div.get_text(" ", strip=True)
+                            if t and t != artist_name and t not in role_texts:
+                                role_texts.append(t)
 
                 is_crew = False
                 header_text = ""
@@ -862,7 +895,6 @@ def apply_manual_updates(xl, by_id, context):
         df.columns =[c.strip().lower() for c in df.columns]
     except Exception: return {}
     
-    # FIX: Excluded "no": "showID" from mapping so ID string conversion never happens.
     MAP, report = {"image": "showImage", "other names": "otherNames", "release date": "releaseDate", "synopsis": "synopsis", "duration": "Duration"}, {}
     for _, row in df.iterrows():
         sid = pd.to_numeric(row.get('no'), errors='coerce')
@@ -886,7 +918,6 @@ def apply_manual_updates(xl, by_id, context):
                 else: 
                     val = str(val).strip()
                 
-                # Force update if image was downloaded
                 if obj.get(key) != val or image_downloaded:
                     old_val = obj.get(key)
                     if image_downloaded and old_val == val:
@@ -900,8 +931,6 @@ def apply_manual_updates(xl, by_id, context):
             obj['updatedDetails'] = f"{', '.join([human_readable_field(f) for f in changed])} Updated Manually"
             obj['updatedOn'] = now_ist().strftime('%d %B %Y')
             report.setdefault('updated',[]).append({'old': old, 'new': obj})
-            
-            # Send explicit_changes to force backups for locked fields
             create_diff_backup(old, obj, context, explicit_changes=changed)
             save_metadata_backup(obj, context)
             
