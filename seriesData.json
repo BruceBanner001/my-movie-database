@@ -154,7 +154,7 @@
         }
     },
     {
-        "showID": "103",
+        "showID": 103,
         "showName": "12 Monkeys Season 1",
         "otherNames": [
             "Twelve Monkeys"
@@ -253,7 +253,7 @@
             "03-12-2025"
         ],
         "updatedOn": "15 March 2026",
-        "updatedDetails": "Show ID, Other Names, Release Date, Synopsis, Duration Updated Manually",
+        "updatedDetails": "Show ID Updated Manually",
         "synopsis": "Law Cafe",
         "topRatings": 2000,
         "Duration": "1 hr 99 mins.",
@@ -286,7 +286,7 @@
         }
     },
     {
-        "showID": 105,
+        "showID": "105",
         "showName": "Stranger Things Season 2",
         "otherNames": [
             "Montauk"
@@ -316,8 +316,8 @@
         "againWatchedDates": [
             "03-12-2025"
         ],
-        "updatedOn": "14 March 2026",
-        "updatedDetails": "First Time Uploaded",
+        "updatedOn": "15 March 2026",
+        "updatedDetails": "Show ID, Show Image Updated Manually",
         "synopsis": "In 1980s Indiana, a group of young friends witness supernatural forces and secret government exploits. As they search for answers, the children unravel a series of extraordinary mysteries.",
         "topRatings": 2000,
         "Duration": "60 mins",
@@ -337,7 +337,7 @@
             "Creator": 2
         },
         "sitePriorityUsed": {
-            "showImage": "imdb",
+            "showImage": "Manual",
             "releaseDate": "imdb",
             "otherNames": "imdb",
             "Duration": "imdb",
@@ -345,7 +345,8 @@
             "director": "imdb",
             "tags": "imdb",
             "cast": "imdb",
-            "network": null
+            "network": null,
+            "showID": "Manual"
         }
     },
     {
