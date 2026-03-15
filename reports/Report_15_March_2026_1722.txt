@@ -1,0 +1,65 @@
+✅ Workflow completed successfully
+🆔 Run ID: RUN_20260315_172259
+📅 Run Time: 15 March 2026 05:23 PM (IST)
+⚙️ Script Version: v9.0
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Sheet1 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🆕 Data Created:
+- 103 - Miracle That We Met (2018) -> First Time Uploaded
+
+🖼️ Fetched Data Details:
+- 103 - Miracle That We Met -> Fetched: Release Date, Show Image, Synopsis
+
+🕳️ Value Not Found:
+- 103 - Miracle That We Met -> ⚠️ Missing: Cast, Director, Duration, Other Names, Tags
+
+🚫 Skipped (Unchanged):
+- 101 - It's Okay to Not be Okay (2020)
+- 102 - Meteor Garden (2018)
+
+📊 Summary (Sheet: Sheet1)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Created: 1
+🔁 Updated: 0
+🔍 Refetched: 0
+🚫 Skipped: 2
+⚠️ Warnings: 1
+  Total Rows: 3
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 Overall Summary
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Total Created: 1
+🔁 Total Updated: 0
+🔍 Total Refetched: 0
+🖼️ Show Images Updated: 1
+🧑‍🎨 New Artist Images Added: 0
+🚫 Total Skipped: 2
+❌ Total Deleted: 0
+🗄️ Total Archived Backups: 0
+⚠️ Total Warnings: 1
+💾 Backup Files: 0
+  Grand Total Rows Processed: 3
+
+💾 Metadata Backups: 1
+
+📦 Total Objects in seriesData.json: 3
+📦 Total Objects in artists.json: 1034
+📦 Total Objects in cast.json: 2
+📦 Total Objects in artists_lookup.json: 1034
+🖼️ Total images in show-images: 3
+🧑‍🎨 Total images in artist-images: 1013
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ Folders Generated:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📁 meta_backups/ (Total: 1 files)
+    📄 META_15_March_2026_1722_103.json
+
+📁 reports/ (Total: 1 files)
+    📄 Report_15_March_2026_1722.txt
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🏁 Workflow finished successfully
