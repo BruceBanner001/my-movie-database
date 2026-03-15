@@ -2,19 +2,20 @@
 # Script: create_update_backup_delete.py
 # Author: [BruceBanner001]
 # Description:
-#   v21.0 Engine.
+#   v22.0 Engine.
 #   - Professional-grade multi-file database system.
-#   - FIX: IMDb Aggregation Bypass (Dynamic Season Sub-Scraping).
-#   - FEATURE: Live Image Directory Counting in final reports.
+#   - FIX: Strict Type Casting for `showID` (Prevents Sorting Crashes).
+#   - FIX: Fuzzy Excel Sheet Matching (Fixes hidden spaces in tab names).
+#   - OPTIMIZATION: Caches Excel file in memory for faster processing.
 #
-# Version: v8.4 (FEATURE: Directory Image Counters)
+# Version: v8.5 (FEATURE: Type Safety & Excel Engine Optimization)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v8.4"
+SCRIPT_VERSION = "v8.5"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames":[], "showImage": None,
@@ -35,7 +36,7 @@ SITE_PRIORITY_BY_LANGUAGE = {
     "thai": { "synopsis": "mydramalist", "showImage": "mydramalist", "otherNames": "mydramalist", "Duration": "mydramalist", "releaseDate": "mydramalist", "director": "mydramalist", "tags": "mydramalist", "cast": "mydramalist", "network": "mydramalist" },
     "taiwanese": { "synopsis": "mydramalist", "showImage": "mydramalist", "otherNames": "mydramalist", "Duration": "mydramalist", "releaseDate": "mydramalist", "director": "mydramalist", "tags": "mydramalist", "cast": "mydramalist", "network": "mydramalist" },
     "english": { "synopsis": "imdb", "showImage": "imdb", "otherNames": "imdb", "Duration": "imdb", "releaseDate": "imdb", "director": "imdb", "tags": "imdb", "cast": "imdb", "network": "imdb" },
-    "default": { "synopsis": "mydramalist", "showImage": "mydramalist", "otherNames": "mydramalist", "Duration": "mydramalist", "releaseDate": "mydramalist", "director": "mydramalist", "tags": "mydramalist", "cast": "mydramalist", "network": "mydramalist" }
+    "default": { "synopsis": "mydramalist", "showImage": "asianwiki", "otherNames": "mydramalist", "Duration": "mydramalist", "releaseDate": "asianwiki", "director": "mydramalist", "tags": "mydramalist", "cast": "mydramalist", "network": "mydramalist" }
 }
 
 FIELD_NAME_MAP = { "showID": "Show ID", "showName": "Show Name", "otherNames": "Other Names", "showImage": "Show Image", "watchStartedOn": "Watch Started On", "watchEndedOn": "Watch Ended On", "releasedYear": "Released Year", "releaseDate": "Release Date", "totalEpisodes": "Total Episodes", "showType": "Show Type", "nativeLanguage": "Native Language", "watchedLanguage": "Watched Language", "country": "Country", "comments": "Comments", "ratings": "Ratings", "genres": "Category", "network": "Network", "againWatchedDates": "Again Watched Dates", "updatedOn": "Updated On", "updatedDetails": "Updated Details", "synopsis": "Synopsis", "topRatings": "Top Ratings", "Duration": "Duration", "director": "Director", "tags": "Tags", "cast": "Cast", "sitePriorityUsed": "Site Priority Used" }
@@ -798,15 +799,23 @@ def fetch_and_populate_metadata(obj, context, artists_db):
                             
     return obj
 
-def process_deletions(excel, context):
-    try: df = pd.read_excel(excel, sheet_name='Deleting Records')
-    except ValueError: return
+def process_deletions(xl, context):
+    try:
+        target = next((s for s in xl.sheet_names if s.strip().lower() == 'deleting records'), None)
+        if not target: return
+        df = pd.read_excel(xl, sheet_name=target)
+    except Exception: return
     if df.empty: return
     
     series_data = load_json_file(SERIES_JSON_FILE)
     cast_data = load_json_file(CAST_JSON_FILE)
     
-    series_by_id = {int(o['showID']): o for o in series_data if o.get('showID')}
+    series_by_id = {}
+    for o in series_data:
+        if o.get('showID'):
+            try: series_by_id[int(o['showID'])] = o
+            except ValueError: pass
+            
     to_delete = set(pd.to_numeric(df.iloc[:, 0], errors='coerce').dropna().astype(int))
     deleted_count = 0
     
@@ -841,12 +850,17 @@ def process_deletions(excel, context):
             deleted_count += 1
 
     if deleted_count > 0:
-        save_json_file(SERIES_JSON_FILE, sorted(list(series_by_id.values()), key=lambda x: x.get('showID', 0)))
+        save_json_file(SERIES_JSON_FILE, sorted(list(series_by_id.values()), key=lambda x: int(x.get('showID') or 0)))
         save_json_file(CAST_JSON_FILE, cast_data)
 
-def apply_manual_updates(excel, by_id, context):
-    try: df = pd.read_excel(excel, sheet_name='Manual Updates', keep_default_na=False); df.columns =[c.strip().lower() for c in df.columns]
-    except ValueError: return {}
+def apply_manual_updates(xl, by_id, context):
+    try:
+        target = next((s for s in xl.sheet_names if s.strip().lower() == 'manual updates'), None)
+        if not target: return {}
+        df = pd.read_excel(xl, sheet_name=target, keep_default_na=False)
+        df.columns =[c.strip().lower() for c in df.columns]
+    except Exception: return {}
+    
     MAP, report = {"no": "showID", "image": "showImage", "other names": "otherNames", "release date": "releaseDate", "synopsis": "synopsis", "duration": "Duration"}, {}
     for _, row in df.iterrows():
         sid = pd.to_numeric(row.get('no'), errors='coerce')
@@ -866,12 +880,18 @@ def apply_manual_updates(excel, by_id, context):
             report.setdefault('updated',[]).append({'old': old, 'new': obj}); create_diff_backup(old, obj, context)
     return report
 
-def excel_to_objects(excel, sheet):
-    try: df = pd.read_excel(excel, sheet_name=sheet, keep_default_na=False); df.columns =[c.strip().lower() for c in df.columns]
-    except ValueError: return [],[]
+def excel_to_objects(xl, sheet):
+    try:
+        target = next((s for s in xl.sheet_names if s.strip().lower() == sheet.strip().lower()), None)
+        if not target: return[],[]
+        df = pd.read_excel(xl, sheet_name=target, keep_default_na=False)
+        df.columns =[c.strip().lower() for c in df.columns]
+    except Exception: return [],[]
+    
     warnings =[]
     try: again_idx =[i for i, c in enumerate(df.columns) if "again watched" in c][0]
     except IndexError: return [],[]
+    
     MAP = {"no": "showID", "series title": "showName", "started date": "watchStartedOn", "finished date": "watchEndedOn", "year": "releasedYear", "total episodes": "totalEpisodes", "original language": "nativeLanguage", "language": "watchedLanguage", "ratings": "ratings", "catagory": "genres", "category": "genres", "original network": "network", "comments": "comments"}
     base_id = {"sheet1": 100, "feb 7 2023 onwards": 1000, "sheet2": 3000}.get(sheet.lower(), 0)
     processed =[]
@@ -962,7 +982,7 @@ def write_report(context):
             lines.extend([f"\n📊 Summary (Sheet: {display_sheet})", sep, f"🆕 Created: {s.get('created', 0)}", f"🔁 Updated: {s.get('updated', 0)}", f"🔍 Refetched: {s.get('refetched', 0)}", f"🚫 Skipped: {s.get('skipped', 0)}", f"⚠️ Warnings: {len(changes.get('data_warnings',[])) + len(changes.get('fetch_warnings',[])) + len(changes.get('artist_image_warnings',[]))}", f"  Total Rows: {total}"])
         lines.append("")
 
-    stats['deleted'] = len(context['files_generated'].get('deleted_data', [])); stats['artist_images'] = len(context['files_generated'].get('artist_images', []))
+    stats['deleted'] = len(context['files_generated'].get('deleted_data', [])); stats['artist_images'] = len(context['files_generated'].get('artist_images',[]))
     stats['archived'] = len(context['files_generated'].get('archived_backups',[])) + len(context['files_generated'].get('archived_meta_backups',[]))
     
     lines.extend([sep, "📊 Cumulative Batch Summary" if context.get('is_final_batch_report') else "📊 Overall Summary", sep, f"🆕 Total Created: {stats['created']}", f"🔁 Total Updated: {stats['updated']}", f"🔍 Total Refetched: {stats['refetched']}", f"🖼️ Show Images Updated: {stats['show_images']}", f"🧑‍🎨 New Artist Images Added: {stats['artist_images']}", f"🚫 Total Skipped: {stats['skipped']}", f"❌ Total Deleted: {stats['deleted']}", f"🗄️ Total Archived Backups: {stats['archived']}", f"⚠️ Total Warnings: {stats['warnings']}", f"💾 Backup Files: {len(context['files_generated'].get('backups',[]))}", f"  Grand Total Rows Processed: {stats['rows']}", "", f"💾 Metadata Backups: {len(context['files_generated'].get('meta_backups',[]))}", ""])
@@ -972,7 +992,6 @@ def write_report(context):
             with open(file, 'r', encoding='utf-8') as f: lines.append(f"📦 Total Objects in {file}: {len(json.load(f))}")
         except Exception: lines.append(f"📦 Total Objects in {file}: 0")
         
-    # NEW FEATURE: Directory Image Counting
     try:
         show_img_count = len([f for f in os.listdir(SHOW_IMAGES_DIR) if f.lower().endswith('.jpg')])
         lines.append(f"🖼️ Total images in {SHOW_IMAGES_DIR}: {show_img_count}")
@@ -1118,14 +1137,26 @@ def main():
     excel_bytes = fetch_excel_from_gdrive_bytes(excel_id, SERVICE_ACCOUNT_FILE)
     if not excel_bytes: print("❌ Could not fetch Excel file."); sys.exit(1)
 
-    process_deletions(io.BytesIO(excel_bytes.getvalue()), context)
+    # Convert the bytes once into a highly-optimized pandas Excel object
+    xl = pd.ExcelFile(io.BytesIO(excel_bytes.getvalue()))
+
+    process_deletions(xl, context)
 
     series_data = load_json_file(SERIES_JSON_FILE)
     artists_data = load_json_file(ARTISTS_JSON_FILE)
     cast_data = load_json_file(CAST_JSON_FILE)
-    merged_by_id = {o['showID']: o for o in series_data if o.get('showID')}
     
-    manual_report = apply_manual_updates(io.BytesIO(excel_bytes.getvalue()), merged_by_id, context)
+    # STRICT INTEGER CASTING
+    merged_by_id = {}
+    for o in series_data:
+        if o.get('showID'):
+            try:
+                sid_int = int(o['showID'])
+                o['showID'] = sid_int
+                merged_by_id[sid_int] = o
+            except ValueError: pass
+    
+    manual_report = apply_manual_updates(xl, merged_by_id, context)
     if manual_report: context['report_data']['Manual Updates'] = manual_report
 
     sheets_to_process =[s.strip() for s in os.environ.get("SHEETS", "Sheet1").split(';') if s.strip()]
@@ -1135,7 +1166,7 @@ def main():
         
         context['current_sheet'] = sheet
         report = context['report_data'].setdefault(sheet, {})
-        excel_rows, warnings = excel_to_objects(io.BytesIO(excel_bytes.getvalue()), sheet)
+        excel_rows, warnings = excel_to_objects(xl, sheet)
         if warnings: report.setdefault('data_warnings',[]).extend(warnings)
 
         for excel_obj in excel_rows:
@@ -1225,7 +1256,8 @@ def main():
             os.remove(BATCH_STATE_FILE)
             context['is_final_batch_report'] = True
 
-    save_json_file(SERIES_JSON_FILE, sorted(merged_by_id.values(), key=lambda x: x.get('showID', 0)))
+    # SAFE SORTING (Prevents TypeErrors forever)
+    save_json_file(SERIES_JSON_FILE, sorted(merged_by_id.values(), key=lambda x: int(x.get('showID') or 0)))
     save_json_file(ARTISTS_JSON_FILE, artists_data)
     save_json_file(CAST_JSON_FILE, cast_data)
 
