@@ -1,0 +1,102 @@
+{
+    "scriptVersion": "v9.1",
+    "runID": "RUN_20260315_180806",
+    "timestamp": "15 March 2026 06:08 PM (IST)",
+    "showID": 104,
+    "showName": "Missing Y",
+    "fetchedFields": {
+        "showImage": {
+            "value": "104.jpg",
+            "source": "asianwiki"
+        },
+        "releaseDate": {
+            "value": "November 7, 2012 - January 17, 2013",
+            "source": "asianwiki"
+        },
+        "otherNames": {
+            "value": [
+                "Bogoshibda",
+                "I Miss You",
+                "Sinto Sua Falta",
+                "Я скучаю по тебе"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/5364-missing-you"
+        },
+        "Duration": {
+            "value": "1 hr. 5 min.",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/5364-missing-you"
+        },
+        "synopsis": {
+            "value": "15-year-old  Soo-Yeon (Kim So-Hyun) is a victim of bullying at school. They target her, because her father is a murderer. Soo-Yeon has an ally in Jung-Woo (Yeo Jin-Ku), who always protects her from the bullies. Soo-Yeon and Jung-Woo are in love, but due to an unexpected accident they become separated. Now as adults they meet again through destiny.\n\nJung-Woo (Park Yoo-Chun) is now a detective and his first love has always remained in the back of his mind. Soo-Yeon (Yoon Eun-Hye) is now a rookie fashion designer who tries to have a bright personality, but still carries emotional scars inside of her. Hyung-Joon (Yoo Seung-Ho) is Soo-Yeon's lover, who appears warm and nice, but he will try to take vengeance upon Jung-Woo.",
+            "source": "asianwiki"
+        },
+        "director": {
+            "value": [
+                "Park Jae Bum"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/5364-missing-you"
+        },
+        "tags": {
+            "value": [
+                "Sexual Assault",
+                "Love Triangle",
+                "First Love",
+                "Double Identity",
+                "Nice Male Lead",
+                "School Bullying",
+                "Childish Male Lead",
+                "Mad Dog",
+                "Love At First Sight",
+                "Rape"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/5364-missing-you"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "16214",
+                    "artistName": "Park Jae Bum",
+                    "artistImageURL": "https://i.mydramalist.com/zN8EJm.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "21477",
+                    "artistName": "Moon Hee Jung",
+                    "artistImageURL": "https://i.mydramalist.com/qE1P2_5m.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/5364-missing-you"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "16214",
+            "artistName": "Park Jae Bum",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "21477",
+            "artistName": "Moon Hee Jung",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "asianwiki",
+        "releaseDate": "asianwiki",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": null
+    }
+}

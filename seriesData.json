@@ -241,8 +241,13 @@
     },
     {
         "showID": 104,
-        "showName": "I Miss You",
-        "otherNames": [],
+        "showName": "Missing Y",
+        "otherNames": [
+            "Bogoshibda",
+            "I Miss You",
+            "Sinto Sua Falta",
+            "Я скучаю по тебе"
+        ],
         "showImage": "104.jpg",
         "watchStartedOn": "04-03-2023",
         "watchEndedOn": "06-03-2023",
@@ -265,22 +270,38 @@
         ],
         "againWatchedDates": [],
         "updatedOn": "15 March 2026",
-        "updatedDetails": "First Time Uploaded",
+        "updatedDetails": "Show Name Updated",
         "synopsis": "15-year-old  Soo-Yeon (Kim So-Hyun) is a victim of bullying at school. They target her, because her father is a murderer. Soo-Yeon has an ally in Jung-Woo (Yeo Jin-Ku), who always protects her from the bullies. Soo-Yeon and Jung-Woo are in love, but due to an unexpected accident they become separated. Now as adults they meet again through destiny.\n\nJung-Woo (Park Yoo-Chun) is now a detective and his first love has always remained in the back of his mind. Soo-Yeon (Yoon Eun-Hye) is now a rookie fashion designer who tries to have a bright personality, but still carries emotional scars inside of her. Hyung-Joon (Yoo Seung-Ho) is Soo-Yeon's lover, who appears warm and nice, but he will try to take vengeance upon Jung-Woo.",
         "topRatings": 500,
-        "Duration": null,
-        "director": [],
-        "tags": [],
-        "cast": {},
+        "Duration": "1 hr. 5 min.",
+        "director": [
+            "Park Jae Bum"
+        ],
+        "tags": [
+            "Sexual Assault",
+            "Love Triangle",
+            "First Love",
+            "Double Identity",
+            "Nice Male Lead",
+            "School Bullying",
+            "Childish Male Lead",
+            "Mad Dog",
+            "Love At First Sight",
+            "Rape"
+        ],
+        "cast": {
+            "Director": 1,
+            "Screenwriter": 1
+        },
         "sitePriorityUsed": {
             "showImage": "asianwiki",
             "releaseDate": "asianwiki",
-            "otherNames": null,
-            "Duration": null,
+            "otherNames": "mydramalist",
+            "Duration": "mydramalist",
             "synopsis": "asianwiki",
-            "director": null,
-            "tags": null,
-            "cast": null,
+            "director": "mydramalist",
+            "tags": "mydramalist",
+            "cast": "mydramalist",
             "network": null
         }
     }
