@@ -1,0 +1,60 @@
+✅ Workflow completed successfully
+🆔 Run ID: RUN_20260316_134239
+📅 Run Time: 16 March 2026 01:42 PM (IST)
+⚙️ Script Version: v9.6
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Deleting Records ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+❌ Data Deleted:
+- 101 -> Alchemy Of Souls Season 1 (2022) -> ✅ Deleted
+- 102 -> Alchemy of Souls Season 2: Light and Shadow (2023) -> ✅ Deleted
+- 103 -> Perfect Mismatch (2023) -> ✅ Deleted
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 Overall Summary
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Total Created: 0
+🔁 Total Updated: 0
+🔍 Total Refetched: 0
+🖼️ Show Images Updated: 0
+🧑‍🎨 New Artist Images Added: 0
+🚫 Total Skipped: 0
+❌ Total Deleted: 3
+🗄️ Total Archived Backups: 3
+⚠️ Total Warnings: 0
+💾 Backup Files: 0
+  Grand Total Rows Processed: 0
+
+💾 Metadata Backups: 0
+
+📦 Total Objects in seriesData.json: 0
+📦 Total Objects in artists.json: 1228
+📦 Total Objects in cast.json: 0
+📦 Total Objects in artists_lookup.json: 1228
+🖼️ Total images in show-images: 0
+🧑‍🎨 Total images in artist-images: 1207
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ Folders Generated:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📁 deleted_data/ (Total: 3 files)
+    📄 DELETED_16_March_2026_1342_101.json
+    📄 DELETED_16_March_2026_1342_102.json
+    📄 DELETED_16_March_2026_1342_103.json
+
+📁 deleted_images/ (Total: 3 files)
+    📄 DELETED_16_March_2026_1342_101.jpg
+    📄 DELETED_16_March_2026_1342_102.jpg
+    📄 DELETED_16_March_2026_1342_103.jpg
+
+📁 reports/ (Total: 1 files)
+    📄 Report_16_March_2026_1342.txt
+
+📁 archived_meta_backups/ (Total: 3 files)
+    📄 META_16_March_2026_1325_101.json
+    📄 META_16_March_2026_1325_102.json
+    📄 META_16_March_2026_1325_103.json
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🏁 Workflow finished successfully
