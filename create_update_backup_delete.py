@@ -1,33 +1,35 @@
 # ============================================================
 # Script: create_update_backup_delete.py
-# Author:[BruceBanner001]
+# Author: [BruceBanner001]
 # Description:
 #   v24.0 Engine.
+#   - FIX: Ultra-lenient Regex for MDL Extractors (Catches "Perfect Mismatch" spacing anomalies).
+#   - FIX: Smart Synopsis extraction (Bypasses MDL span/p tag changes).
+#   - FIX: Added `og:image` Meta Tag extraction for 100% reliable Image fetching.
 #   - FIX: Atomic JSON saving & strict DecodeErrors to prevent DB wipe on PC crash.
 #   - FIX: Safely handles missing "Again Watched" Excel columns.
-#   - FIX: Cross-contamination of `Aired` vs `Aired On` via strict regex boundaries.
-#   - FIX: Double `/cast/cast` 404 URL bug when DDG links directly to cast pages.
-#   - FIX: Asian Drama "Trailing Number" fallback search bug (e.g. Dr. Romantic 2).
-#   - Includes all v9.7 memory protections, Cloudflare bypass, and AiredOn schemas.
+#   - BULLETPROOF UPDATE: Hardened IMDb Duration, Cast, & Synopsis scraping.
+#   - BULLETPROOF UPDATE: Resilient AsianWiki other-names & synopsis parsers.
+#   - BULLETPROOF UPDATE: Blocked dummy/placeholder images from downloading.
 #
-# Version: v9.9 (FINAL STABLE: Ultimate Extraction & DB Protection)
+# Version: v10.1 (BULLETPROOF EDITION: Maximum Scraping Resilience)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v9.9"
+SCRIPT_VERSION = "v10.1"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames":[], "showImage": None,
     "watchStartedOn": None, "watchEndedOn": None, "releasedYear": 0,
     "releaseDate": None, "totalEpisodes": 0, "showType": None,
     "nativeLanguage": None, "watchedLanguage": None, "country": None,
-    "comments": None, "ratings": 0, "genres": [], "network":[],
+    "comments": None, "ratings": 0, "genres":[], "network":[],
     "againWatchedDates":[], "updatedOn": None, "updatedDetails": None,
     "synopsis": None, "topRatings": 0, "Duration": None,
-    "director": [], "tags":[], "cast": {}, "airedOn":[],
+    "director":[], "tags":[], "cast": {}, "airedOn":[],
     "sitePriorityUsed": {"showImage": None, "releaseDate": None, "otherNames": None, "Duration": None, "synopsis": None, "director": None, "tags": None, "cast": None, "network": None, "airedOn": None}
 }
 
@@ -313,11 +315,19 @@ def get_soup_from_search(search_term, expected_name, show_year, site, language, 
     return None, None
 
 def download_and_save_image(url, local_path, is_artist=False):
-    if not HAVE_PIL: return False
+    if not HAVE_PIL or not url: return False
+    
+    # Block known placeholder/dummy image URLs across all sites
+    dummy_keywords =['default', 'nopicture', 'no-poster', 'avatar', 'blank', 'null', 'data:image']
+    if any(kw in url.lower() for kw in dummy_keywords):
+        return False
+
     os.makedirs(os.path.dirname(local_path), exist_ok=True)
     try:
         url = re.sub(r'_[24]c\.jpg$', '.jpg', url) if not is_artist else url
         r = SCRAPER.get(url, stream=True, timeout=20)
+        
+        # Ensure it's a real image and not an HTML error page
         if r.status_code == 200 and r.headers.get("content-type", "").startswith("image"):
             with Image.open(r.raw) as img:
                 img = img.convert("RGB")
@@ -325,7 +335,8 @@ def download_and_save_image(url, local_path, is_artist=False):
                 img.thumbnail(size, Image.LANCZOS)
                 img.save(local_path, "JPEG", quality=90)
                 return True
-    except Exception as e: pass
+    except Exception as e: 
+        logd(f"Failed to download image from {url}: {e}")
     return False
 
 # --- BULLETPROOF EXTRACTION HELPERS ---
@@ -352,68 +363,96 @@ def _extract_aw_list_item(soup, label_regex):
 # --- ASIANWIKI SCRAPERS ---
 def _scrape_synopsis_from_asianwiki(soup, **kwargs):
     try:
+        # Step 1: Look for exact ID
         target_element = soup.find(id=re.compile(r"(Plot|Synopsis)", re.IGNORECASE))
+        
+        # Step 2: Fallback to searching all text headings (human error bypass)
         if not target_element:
-            headers = soup.find_all(['h2', 'h3'])
-            for h in headers:
-                if re.search(r"(Plot|Synopsis)", h.get_text(strip=True), re.IGNORECASE):
-                    target_element = h; break
+            for tag in soup.find_all(['h2', 'h3', 'h4', 'b', 'strong']):
+                if re.search(r"^(Plot|Synopsis)", tag.get_text(strip=True), re.IGNORECASE):
+                    target_element = tag
+                    break
+                    
         if not target_element: return None
-        if target_element.name not in['h2', 'h3']:
+        
+        # Normalize the starting point
+        if target_element.name not in ['h2', 'h3']:
             parent = target_element.find_parent(['h2', 'h3'])
             if parent: target_element = parent
+            
         content =[]
+        # Safely iterate through siblings until the next major section
         for sibling in target_element.next_siblings:
-            if sibling.name in['h2', 'h3']: break 
-            text = sibling.get_text(strip=True) if sibling.name in['p', 'div'] else sibling.strip() if isinstance(sibling, str) else ""
-            if text and len(text) > 30: content.append(text)
+            if getattr(sibling, 'name', None) in['h2', 'h3', 'h4']: break 
+            
+            text = sibling.get_text(strip=True) if hasattr(sibling, 'get_text') else str(sibling).strip()
+            # Ignore script tags, tables, or generic UI garbage
+            if getattr(sibling, 'name', None) in['script', 'style', 'table']: continue
+            
+            if text and len(text) > 20: 
+                content.append(text)
         
         synopsis = "\n\n".join(content) if content else None
         if synopsis: synopsis = re.sub(r'[\s\(\-\[\]\,]+$', '', synopsis).strip()
         return synopsis
-    except Exception as e: return None
+    except Exception: return None
 
 def _scrape_image_from_asianwiki(soup, **kwargs):
     try:
-        img = soup.select_one('a.image > img[src], .infobox img[src], .thumbinner img[src]')
-        if not img: return None
-        img_url = requests.compat.urljoin("https://asianwiki.com", img['src'])
+        # Fallback to og:image meta tag first
+        meta_img = soup.find('meta', property='og:image')
+        url = meta_img['content'] if meta_img and 'content' in meta_img.attrs else None
+        
+        if not url or "default" in url.lower():
+            img = soup.select_one('a.image > img[src], .infobox img[src], .thumbinner img[src]')
+            if img: url = requests.compat.urljoin("https://asianwiki.com", img['src'])
+                
+        if not url: return None
         image_path = os.path.join(SHOW_IMAGES_DIR, f"{kwargs['sid']}.jpg")
-        if download_and_save_image(img_url, image_path): return os.path.basename(image_path)
+        if download_and_save_image(url, image_path): return os.path.basename(image_path)
     except Exception: return None
 
 def _scrape_othernames_from_asianwiki(soup, **kwargs):
     try:
-        for tag in soup.find_all('b'):
-            text = tag.get_text(strip=True)
-            if re.search(r"^(Drama|Movie):?", text, re.IGNORECASE):
-                parent = tag.parent
-                full_text = parent.get_text(" ", strip=True).replace(" Hangul:", " (Hangul:")
-                match = re.search(r':(.*?)(?=\(Revised romanization:|\(literal title\)|$)', full_text, re.DOTALL)
-                if match:
-                    raw_names =[name.strip() for name in match.group(1).strip().split('/') if name.strip()]
-                    filtered =[name for name in raw_names if name.lower() != kwargs.get('show_name', '').lower()]
-                    return _clean_other_names(filtered)
+        names = []
+        target_keywords =['also known as', 'romaji', 'pinyin', 'literal title', 'chinese title', 'japanese title', 'hangul']
+        
+        for b_tag in soup.find_all('b'):
+            text = b_tag.get_text(strip=True).lower()
+            if any(keyword in text for keyword in target_keywords):
+                parent = b_tag.parent
+                if not parent: continue
+                full_text = parent.get_text(" ", strip=True)
+                
+                # Strip out the bold label itself to get just the value
+                val = full_text.replace(b_tag.get_text(strip=True), "").replace(':', '').strip()
+                
+                # Some formatting has multiple names separated by / or ,
+                if val and val.lower() != kwargs.get('show_name', '').lower():
+                    raw_names = re.split(r'[/,]', val)
+                    names.extend([n.strip() for n in raw_names if n.strip() and len(n.strip()) > 1])
+                    
+        return _clean_other_names(names) if names else None
     except Exception: pass
     return None
 
 def _scrape_release_date_from_asianwiki(soup, **kwargs):
     try:
-        text = _extract_aw_list_item(soup, r"^Release Date:?$")
+        text = _extract_aw_list_item(soup, r"^\s*Release Date.*")
         if text: return text
     except Exception: pass
     return None
 
 def _scrape_network_from_asianwiki(soup, **kwargs):
     try:
-        text = _extract_aw_list_item(soup, r"^Network:?$")
+        text = _extract_aw_list_item(soup, r"^\s*Network.*")
         if text: return[n.strip() for n in text.split(',') if n.strip()]
     except Exception: pass
     return None
 
 def _scrape_director_from_asianwiki(soup, **kwargs):
     try:
-        text = _extract_aw_list_item(soup, r"^Director:?$")
+        text = _extract_aw_list_item(soup, r"^\s*Director.*")
         if text: return[n.strip() for n in text.split(',') if n.strip()]
     except Exception: pass
     return None
@@ -421,18 +460,12 @@ def _scrape_director_from_asianwiki(soup, **kwargs):
 # --- MYDRAMALIST SCRAPERS ---
 def _scrape_synopsis_from_mydramalist(soup, **kwargs):
     try:
-        synopsis_div = soup.select_one('div.show-synopsis, div[itemprop="description"]')
+        synopsis_div = soup.select_one('.show-synopsis, [itemprop="description"]')
         if not synopsis_div: return None
-        paragraphs =[]
-        for element in synopsis_div.find_all(['p', 'br'], recursive=False):
-            if element.name == 'br':
-                if paragraphs and paragraphs[-1] != "": paragraphs.append("")
-            else:
-                text = element.get_text(strip=True)
-                if text: paragraphs.append(text)
-        if not paragraphs:
-            text = synopsis_div.get_text(separator='\n', strip=True)
-            paragraphs =[line.strip() for line in text.split('\n') if line.strip()]
+        
+        # Smart extraction: Extracts text with safe newlines regardless of span/p usage
+        text = synopsis_div.get_text(separator='\n', strip=True)
+        paragraphs =[line.strip() for line in text.split('\n') if line.strip()]
         synopsis = "\n\n".join(paragraphs)
         
         patterns_to_remove =[ r'\s*\(Source:.*?\)\s*$', r'\s*Source:.*$', r'~~.*', r'\s*Edit Translation\s*$', r'\s*(Additional Cast Members|Native title|Also Known As):.*$', r'^\s*Remove ads\s*' ]
@@ -444,9 +477,14 @@ def _scrape_synopsis_from_mydramalist(soup, **kwargs):
 
 def _scrape_image_from_mydramalist(soup, **kwargs):
     try:
-        img = soup.select_one('.film-cover img, .cover img')
-        if not img: return None
-        url = img.get('src') or img.get('data-src') or img.get('data-original')
+        # Fallback to og:image meta tag first to bypass HTML layout changes
+        meta_img = soup.find('meta', property='og:image')
+        url = meta_img['content'] if meta_img and 'content' in meta_img.attrs else None
+        
+        if not url or "default" in url.lower():
+            img = soup.select_one('.film-cover img, .cover img')
+            if img: url = img.get('src') or img.get('data-src') or img.get('data-original')
+            
         if not url: return None
         image_path = os.path.join(SHOW_IMAGES_DIR, f"{kwargs['sid']}.jpg")
         if download_and_save_image(url, image_path): return os.path.basename(image_path)
@@ -454,7 +492,7 @@ def _scrape_image_from_mydramalist(soup, **kwargs):
 
 def _scrape_othernames_from_mydramalist(soup, **kwargs):
     try:
-        text, _ = _extract_mdl_list_item(soup, r"^Also Known As:?$")
+        text, _ = _extract_mdl_list_item(soup, r"^\s*Also Known As.*")
         if text:
             raw_names =[name.strip() for name in text.split(',') if name.strip()]
             filtered =[name for name in raw_names if name.lower() != kwargs.get('show_name', '').lower()]
@@ -464,7 +502,7 @@ def _scrape_othernames_from_mydramalist(soup, **kwargs):
 
 def _scrape_duration_from_mydramalist(soup, **kwargs):
     try:
-        text, _ = _extract_mdl_list_item(soup, r"^Duration:?$")
+        text, _ = _extract_mdl_list_item(soup, r"^\s*Duration.*")
         if text:
             return text.replace(" min.", " mins") if "hr" not in text else text
     except Exception: pass
@@ -472,14 +510,15 @@ def _scrape_duration_from_mydramalist(soup, **kwargs):
 
 def _scrape_release_date_from_mydramalist(soup, **kwargs):
     try:
-        text, _ = _extract_mdl_list_item(soup, r"^Aired:?$")
-        if text and "day" not in text.lower(): return text
+        # Strict colon boundaries prevent matching "Aired On"
+        text, _ = _extract_mdl_list_item(soup, r"^\s*Aired[\s:]*$")
+        if text: return text
     except Exception: pass
     return None
 
 def _scrape_director_from_mydramalist(soup, **kwargs):
     try:
-        text, _ = _extract_mdl_list_item(soup, r"^Director:?$")
+        text, _ = _extract_mdl_list_item(soup, r"^\s*Director.*")
         if text:
             return[name.strip() for name in text.split(',') if name.strip()]
     except Exception: pass
@@ -493,7 +532,7 @@ def _scrape_tags_from_mydramalist(soup, **kwargs):
 
 def _scrape_network_from_mydramalist(soup, **kwargs):
     try:
-        text, parent_tag = _extract_mdl_list_item(soup, r"^Original Network:?$")
+        text, parent_tag = _extract_mdl_list_item(soup, r"^\s*Original Network.*")
         if parent_tag:
             nets =[a.get_text(strip=True) for a in parent_tag.find_all('a')]
             if nets: return nets
@@ -503,7 +542,7 @@ def _scrape_network_from_mydramalist(soup, **kwargs):
 
 def _scrape_airedon_from_mydramalist(soup, **kwargs):
     try:
-        text, _ = _extract_mdl_list_item(soup, r"^Aired On:?$")
+        text, _ = _extract_mdl_list_item(soup, r"^\s*Aired On.*")
         if text:
             return[day.strip() for day in text.split(',') if day.strip()]
     except Exception: pass
@@ -668,9 +707,11 @@ def _scrape_synopsis_from_imdb(soup, **kwargs):
     try:
         data = _get_imdb_json_ld(soup)
         synopsis = None
-        if data and 'description' in data: synopsis = data['description']
+        if data and 'description' in data: 
+            synopsis = data['description']
         else:
-            desc = soup.find(attrs={"data-testid": "plot-xl"})
+            # Bulletproof: Uses ^= to match ANY testid starting with 'plot'
+            desc = soup.select_one('[data-testid^="plot"]')
             if desc: synopsis = desc.get_text(strip=True)
             
         if synopsis: synopsis = re.sub(r'[\s\(\-\[\]\,]+$', '', synopsis).strip()
@@ -734,12 +775,15 @@ def _scrape_duration_from_imdb(soup, **kwargs):
         data = _get_imdb_json_ld(soup)
         if data and 'duration' in data:
             dur = data['duration']
-            h_match = re.search(r'(\d+)H', dur)
-            m_match = re.search(r'(\d+)M', dur)
-            h = int(h_match.group(1)) if h_match else 0
-            m = int(m_match.group(1)) if m_match else 0
-            total_mins = h * 60 + m
-            if total_mins > 0: return f"{total_mins} mins"
+            # Safely handle standard ISO 8601 durations like PT1H30M, PT120M, PT2H
+            match = re.match(r'PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?', dur.upper())
+            if match:
+                h = int(match.group(1)) if match.group(1) else 0
+                m = int(match.group(2)) if match.group(2) else 0
+                total_mins = (h * 60) + m
+                if total_mins > 0: return f"{total_mins} mins"
+                
+        # Fallback to visual DOM
         runtime_tag = soup.find('li', attrs={'data-testid': 'title-techspec_runtime'})
         if runtime_tag and (div := runtime_tag.find('div')):
             text = div.get_text(strip=True).lower()
@@ -785,6 +829,7 @@ def _scrape_network_from_imdb(soup, **kwargs):
 def _scrape_cast_from_imdb(soup, **kwargs):
     try:
         full_cast_raw =[]
+        seen_ids = set()
         cards = soup.select('div[data-testid="title-cast-item"]')
         
         for idx, card in enumerate(cards[:20]): 
@@ -794,6 +839,8 @@ def _scrape_cast_from_imdb(soup, **kwargs):
                 name = a_tag.get_text(strip=True)
                 url = a_tag['href']
                 artist_id = re.search(r'(nm\d+)', url).group(1)
+                
+                seen_ids.add(artist_id)
                 img_tag = card.select_one('img')
                 img_url = img_tag['src'] if img_tag else None
                 
@@ -818,18 +865,33 @@ def _scrape_cast_from_imdb(soup, **kwargs):
         if data:
             for role_key in['director', 'creator']:
                 if role_key in data:
-                    entities = data[role_key]
-                    if not isinstance(entities, list): entities = [entities]
+                    entities = data[role_key] if isinstance(data[role_key], list) else[data[role_key]]
                     for e in entities:
                         if e.get('@type') == 'Person' and 'name' in e:
-                            a_id = hashlib.md5(e['name'].encode('utf-8')).hexdigest()[:8]
+                            artist_name = e['name']
+                            a_id = None
+                            
+                            # 1. Try to get ID from JSON-LD URL
                             if 'url' in e:
                                 match = re.search(r'(nm\d+)', e['url'])
                                 if match: a_id = match.group(1)
-                            full_cast_raw.append({
-                                "artistID": a_id, "artistName": e['name'], "artistImageURL": None,
-                                "characterName": None, "role": role_key.title()
-                            })
+                                
+                            # 2. Prevent duplicates: Search HTML for this exact name to find their real ID
+                            if not a_id:
+                                html_link = soup.find('a', string=re.compile(f"^{re.escape(artist_name)}$", re.IGNORECASE), href=re.compile(r'/name/nm\d+'))
+                                if html_link:
+                                    a_id = re.search(r'(nm\d+)', html_link['href']).group(1)
+                                    
+                            # 3. Last resort hash (prefixed to avoid colliding with real IDs)
+                            if not a_id:
+                                a_id = "unk_" + hashlib.md5(artist_name.lower().encode('utf-8')).hexdigest()[:8]
+
+                            if a_id not in seen_ids:
+                                seen_ids.add(a_id)
+                                full_cast_raw.append({
+                                    "artistID": a_id, "artistName": artist_name, "artistImageURL": None,
+                                    "characterName": None, "role": role_key.title()
+                                })
 
         if full_cast_raw:
              if 'context' in kwargs and 'source_links_temp' in kwargs['context']:
