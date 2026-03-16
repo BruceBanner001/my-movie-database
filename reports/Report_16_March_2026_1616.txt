@@ -1,0 +1,100 @@
+✅ Workflow completed successfully
+🆔 Run ID: RUN_20260316_161615
+📅 Run Time: 16 March 2026 04:16 PM (IST)
+⚙️ Script Version: v10.2
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Manual Updates ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🔁 Data Updated:
+✍️ 101 - She Is The One -> Show Image Updated Manually
+✍️ 3001 - She Would Never Know -> Other Names, Release Date, Synopsis, Duration Updated Manually
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Sheet1 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🆕 Data Created:
+- 102 - King The Land (2023) -> First Time Uploaded
+
+🖼️ Fetched Data Details:
+- 102 - King The Land -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+
+🚫 Skipped (Unchanged):
+- 101 - She Is The One (2021)
+
+📊 Summary (Sheet: Sheet1)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Created: 1
+🔁 Updated: 0
+🔍 Refetched: 0
+🚫 Skipped: 1
+⚠️ Warnings: 0
+  Total Rows: 2
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Sheet2 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🚫 Skipped (Unchanged):
+- 3001 - She Would Never Know (2021)
+
+📊 Summary (Sheet: Sheet2)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Created: 0
+🔁 Updated: 0
+🔍 Refetched: 0
+🚫 Skipped: 1
+⚠️ Warnings: 0
+  Total Rows: 1
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 Overall Summary
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Total Created: 1
+🔁 Total Updated: 0
+🔍 Total Refetched: 0
+🖼️ Show Images Updated: 1
+🧑‍🎨 New Artist Images Added: 99
+🚫 Total Skipped: 2
+❌ Total Deleted: 0
+🗄️ Total Archived Backups: 0
+⚠️ Total Warnings: 0
+💾 Backup Files: 2
+  Grand Total Rows Processed: 3
+
+💾 Metadata Backups: 3
+
+📦 Total Objects in seriesData.json: 3
+📦 Total Objects in artists.json: 215
+📦 Total Objects in cast.json: 3
+📦 Total Objects in artists_lookup.json: 215
+🖼️ Total images in show-images: 3
+🧑‍🎨 Total images in artist-images: 215
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ Folders Generated:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📁 backups/ (Total: 2 files)
+    📄 BACKUP_16_March_2026_1616_101.json
+    📄 BACKUP_16_March_2026_1616_3001.json
+
+📁 show_images/ (Total: 1 files)
+    📄 101.jpg
+
+📁 artist_images/ (Total: 99 files)
+    📄 56189.jpg
+    📄 121175.jpg
+    📄 16387.jpg
+    ... and 96 more files.
+
+📁 meta_backups/ (Total: 3 files)
+    📄 META_16_March_2026_1616_101.json
+    📄 META_16_March_2026_1616_3001.json
+    📄 META_16_March_2026_1616_102.json
+
+📁 reports/ (Total: 1 files)
+    📄 Report_16_March_2026_1616.txt
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🏁 Workflow finished successfully

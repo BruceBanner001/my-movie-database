@@ -1,0 +1,93 @@
+{
+    "scriptVersion": "v10.2",
+    "runID": "RUN_20260316_161615",
+    "timestamp": "16 March 2026 04:16 PM (IST)",
+    "showID": 3001,
+    "showName": "She Would Never Know",
+    "fetchedFields": {
+        "showImage": {
+            "value": "3001.jpg",
+            "source": "asianwiki"
+        },
+        "releaseDate": {
+            "value": "Apr 10 2011 - March 12 2021",
+            "source": "Manual"
+        },
+        "otherNames": {
+            "value": [
+                "But",
+                "NO PROBLEM",
+                "No",
+                "Thanks",
+                "Yes"
+            ],
+            "source": "Manual"
+        },
+        "Duration": {
+            "value": "1 hr 99 mins.",
+            "source": "Manual"
+        },
+        "synopsis": {
+            "value": "Law Cafe",
+            "source": "Manual"
+        },
+        "director": {
+            "value": [
+                "Lee Dong Yoon"
+            ],
+            "source": "mydramalist"
+        },
+        "tags": {
+            "value": [
+                "Secret Relationship",
+                "Male Chases Female First",
+                "Nice Male Lead",
+                "Mother-Daughter Relationship",
+                "Older Woman/Younger Man",
+                "Brother-Sister Relationship",
+                "Time Skip",
+                "Family Relationship",
+                "Rich Male Lead",
+                "Successful Female Lead"
+            ],
+            "source": "mydramalist"
+        },
+        "cast": {
+            "value": {
+                "Main Role": 5,
+                "Support Role": 20,
+                "Guest Role": 70,
+                "Composer": 1,
+                "Director": 1,
+                "Screenwriter": 1
+            },
+            "source": "mydramalist"
+        },
+        "network": {
+            "value": [
+                "jtbc",
+                "iQiyi"
+            ],
+            "source": "mydramalist"
+        },
+        "airedOn": {
+            "value": [
+                "Monday",
+                "Tuesday"
+            ],
+            "source": "mydramalist"
+        }
+    },
+    "sitePriorityUsed": {
+        "showImage": "asianwiki",
+        "releaseDate": "Manual",
+        "otherNames": "Manual",
+        "Duration": "Manual",
+        "synopsis": "Manual",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": "mydramalist",
+        "airedOn": "mydramalist"
+    }
+}
