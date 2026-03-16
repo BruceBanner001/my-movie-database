@@ -1,0 +1,363 @@
+{
+    "scriptVersion": "v10.2",
+    "runID": "RUN_20260317_001308",
+    "timestamp": "17 March 2026 12:22 AM (IST)",
+    "showID": 167,
+    "showName": "Blade Man",
+    "fetchedFields": {
+        "showImage": {
+            "value": "167.jpg",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Blade_Man"
+        },
+        "releaseDate": {
+            "value": "September 10 - November 13, 2014",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Blade_Man"
+        },
+        "otherNames": {
+            "value": [
+                "ai-eon-maen",
+                "Aieon Maen",
+                "Homem de Ferro",
+                "Iron Man",
+                "Железный человек"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/10686-blade-man"
+        },
+        "Duration": {
+            "value": "60 mins",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/10686-blade-man"
+        },
+        "synopsis": {
+            "value": "Hong-Bin (Lee Dong-Wook) is an arrogant man with an anger problem. He runs a game company. The employees are all afraid of him. He holds a grudge against his father especially. His father broke up his relationship with Tae-Hee (Han Da-Gam) and he still can't get over her.\n\nRecently, he seems angry all the time and his sense of smell has gotten more sensitive. His secretary (Han Jung-Soo) hasn't told him that when he gets angry, blades come out of his body. He is the only person that knows about that.\n\nOne day, Hong-Bin goes to the hospital to see his employees who were beaten by him. There, he notices the scent of Tae-Hee. The woman who has her scent is Se-Dong (Shin Se-Kyung).",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Blade_Man"
+        },
+        "director": {
+            "value": [
+                "Kim Yong Soo"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/10686-blade-man"
+        },
+        "tags": {
+            "value": [
+                "Company President (CEO) Male Lead",
+                "Nice Female Lead",
+                "Father-Son Relationship",
+                "Boss-Employee Relationship",
+                "Secretary Male Lead",
+                "Selfless Female Lead",
+                "Controlling Parent",
+                "Disapproving Parent",
+                "Game Developer Female Lead",
+                "Single Father Male Lead"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/10686-blade-man"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "54533",
+                    "artistName": "Bae Kyung Soo",
+                    "artistImageURL": "https://i.mydramalist.com/j36j8_5m.jpg",
+                    "characterName": null,
+                    "role": "Chief Producer"
+                },
+                {
+                    "artistID": "16625",
+                    "artistName": "Kim Yong Soo",
+                    "artistImageURL": "https://i.mydramalist.com/mkQmqm.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "20937",
+                    "artistName": "Kim Gyoo Wan",
+                    "artistImageURL": "https://i.mydramalist.com/07Ed6_5m.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "274",
+                    "artistName": "Lee Dong Wook",
+                    "artistImageURL": "https://i.mydramalist.com/jQQJvv_5s.jpg",
+                    "characterName": "Joo Hong Bin",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "993",
+                    "artistName": "Shin Sae Kyeong",
+                    "artistImageURL": "https://i.mydramalist.com/p17PD_5s.jpg",
+                    "characterName": "Song Se Dong",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "949",
+                    "artistName": "Kim Gab Soo",
+                    "artistImageURL": "https://i.mydramalist.com/RRXLz_5s.jpg",
+                    "characterName": "Joo Jang Won",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "1519",
+                    "artistName": "Han Jung Soo",
+                    "artistImageURL": "https://i.mydramalist.com/1lQdd_5s.jpg",
+                    "characterName": "Secretary Go Ja Kyung",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "6897",
+                    "artistName": "Jung Yoo Geun",
+                    "artistImageURL": "https://i.mydramalist.com/l0PBlJ_5s.jpg",
+                    "characterName": "Chang",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3286",
+                    "artistName": "Shin Seung Hwan",
+                    "artistImageURL": "https://i.mydramalist.com/kAobVd_5s.jpg",
+                    "characterName": "Seung Hwan",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2939",
+                    "artistName": "Jung Jin",
+                    "artistImageURL": "https://i.mydramalist.com/2gZ8Os.jpg",
+                    "characterName": "Oh Jung Shik",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "516",
+                    "artistName": "Lee Mi Sook",
+                    "artistImageURL": "https://i.mydramalist.com/kRYnk_5s.jpg",
+                    "characterName": "Madame Yoon",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4089",
+                    "artistName": "Lee Ju Seung",
+                    "artistImageURL": "https://i.mydramalist.com/nO1ezL_5s.jpg",
+                    "characterName": "Joo Hong Joo",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4027",
+                    "artistName": "Kim Sun Woong",
+                    "artistImageURL": "https://i.mydramalist.com/jpDyw_5s.jpg",
+                    "characterName": "Kyung Ho",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3441",
+                    "artistName": "Kim Jin Tae",
+                    "artistImageURL": "https://i.mydramalist.com/MBxjVs.jpg",
+                    "characterName": "Jeong Jun",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3654",
+                    "artistName": "Ra Mi Ran",
+                    "artistImageURL": "https://i.mydramalist.com/0wOEn6_5s.jpg",
+                    "characterName": "Park Erisa",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "6564",
+                    "artistName": "Lee  Seung Ho",
+                    "artistImageURL": "https://i.mydramalist.com/yWYx6s.jpg",
+                    "characterName": "Yoon Seok",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "8232",
+                    "artistName": "Kim Jae Yeong",
+                    "artistImageURL": "https://i.mydramalist.com/g0r4v1_5s.jpg",
+                    "characterName": "Jae Gil",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "8234",
+                    "artistName": "Kang Da Bin",
+                    "artistImageURL": "https://i.mydramalist.com/jV1Qrs.jpg",
+                    "characterName": "Su Jae",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2622",
+                    "artistName": "Yeom Dong Hun",
+                    "artistImageURL": "https://i.mydramalist.com/kxAlb_5s.jpg",
+                    "characterName": "[Se Dong's landlord]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "10052",
+                    "artistName": "Jin Joo Hyung",
+                    "artistImageURL": "https://i.mydramalist.com/d04yx5_5s.jpg",
+                    "characterName": "Jung Joon",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "10272",
+                    "artistName": "Song Kyung Chul",
+                    "artistImageURL": "https://i.mydramalist.com/qQY32s.jpg",
+                    "characterName": "[Gardener]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1693",
+                    "artistName": "Kim Mi Kyung",
+                    "artistImageURL": "https://i.mydramalist.com/xw1DX_5s.jpg",
+                    "characterName": "[Housekeeper]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "20854",
+                    "artistName": "Hwang Hyun Hee",
+                    "artistImageURL": "https://i.mydramalist.com/60rzBP_5s.jpg",
+                    "characterName": "Kang Min Jung",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5902",
+                    "artistName": "Son Ji Na",
+                    "artistImageURL": "https://i.mydramalist.com/e6XOK_5s.jpg",
+                    "characterName": "Yeon Mi Jung",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1724",
+                    "artistName": "Kim Kyu Chul",
+                    "artistImageURL": "https://i.mydramalist.com/rmynps.jpg",
+                    "characterName": "Jo Bung Gu",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5298",
+                    "artistName": "So Hee Jung",
+                    "artistImageURL": "https://i.mydramalist.com/wN30n_5s.jpg",
+                    "characterName": "(Ep. 12)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "295",
+                    "artistName": "Han Da Gam",
+                    "artistImageURL": "https://i.mydramalist.com/w2J1As.jpg",
+                    "characterName": "Kim Tae Hee (Ep. 14-18)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "15685",
+                    "artistName": "Bang Yoo Sul",
+                    "artistImageURL": "https://i.mydramalist.com/dLyNz_5s.jpg",
+                    "characterName": "Niece Yoo Ri (Ep. 17-18)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "15323",
+                    "artistName": "Son Dong Hwa",
+                    "artistImageURL": "https://i.mydramalist.com/50oNes.jpg",
+                    "characterName": "[High school student]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21173",
+                    "artistName": "Lee Ju A",
+                    "artistImageURL": "https://i.mydramalist.com/Z2pw1_5s.jpg",
+                    "characterName": "Soo Kyung",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "18440",
+                    "artistName": "Park Geon Rak",
+                    "artistImageURL": "https://i.mydramalist.com/v5rqD_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/10686-blade-man"
+        },
+        "airedOn": {
+            "value": [
+                "Wednesday",
+                "Thursday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/10686-blade-man"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "16625",
+            "artistName": "Kim Yong Soo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "20937",
+            "artistName": "Kim Gyoo Wan",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "1519",
+            "artistName": "Han Jung Soo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "6897",
+            "artistName": "Jung Yoo Geun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "4089",
+            "artistName": "Lee Ju Seung",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "3441",
+            "artistName": "Kim Jin Tae",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "10272",
+            "artistName": "Song Kyung Chul",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "20854",
+            "artistName": "Hwang Hyun Hee",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "5902",
+            "artistName": "Son Ji Na",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "295",
+            "artistName": "Han Da Gam",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "15685",
+            "artistName": "Bang Yoo Sul",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "asianwiki",
+        "releaseDate": "asianwiki",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": null,
+        "airedOn": "mydramalist"
+    }
+}

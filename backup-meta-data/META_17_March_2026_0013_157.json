@@ -1,0 +1,414 @@
+{
+    "scriptVersion": "v10.2",
+    "runID": "RUN_20260317_001308",
+    "timestamp": "17 March 2026 12:20 AM (IST)",
+    "showID": 157,
+    "showName": "Secret Love Affair",
+    "fetchedFields": {
+        "showImage": {
+            "value": "157.jpg",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Secret_Affair_(Korean_Drama)"
+        },
+        "releaseDate": {
+            "value": "March 17 - May 13, 2014",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Secret_Affair_(Korean_Drama)"
+        },
+        "otherNames": {
+            "value": [
+                "Milhwe",
+                "Romance Secreto",
+                "Secret Affair",
+                "Un Amorío Secreto",
+                "Тайный роман"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/8929-secret-love-affair"
+        },
+        "Duration": {
+            "value": "60 mins",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/8929-secret-love-affair"
+        },
+        "synopsis": {
+            "value": "\"Secret Affair\" tells the story of secret romance between Oh Hye-Won (Kim Hee-Ae), a woman in her 40's, and Lee Sun-Jae (Yoo Ah-In), a man in his 20's.\n\nOh Hye-Won works as the director of planning for the Seohan Arts Foundation. She is elegant and excels at dealing with other people. Oh Hye-Won becomes involved in a love affair with Lee Sun-Jae. He is genius like pianist in his 20's.",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Secret_Affair_(Korean_Drama)"
+        },
+        "director": {
+            "value": [
+                "Ahn Pan Seok"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/8929-secret-love-affair"
+        },
+        "tags": {
+            "value": [
+                "Older Woman/Younger Man",
+                "Infidelity",
+                "Rich Woman/Poor Man",
+                "Student-Teacher Relationship",
+                "Poor Male Lead",
+                "Business Industry",
+                "Emotionally Strong Female Lead",
+                "Betrayed By A Significant Other",
+                "Student Male Lead",
+                "School Setting"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/8929-secret-love-affair"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "60321",
+                    "artistName": "Lee Nam Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/4JdXd_5m.jpg",
+                    "characterName": null,
+                    "role": "Composer"
+                },
+                {
+                    "artistID": "16037",
+                    "artistName": "Ahn Pan Seok",
+                    "artistImageURL": "https://i.mydramalist.com/KDLLXm.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "16038",
+                    "artistName": "Jung Sung Joo",
+                    "artistImageURL": "https://i.mydramalist.com/45VVdm.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "432",
+                    "artistName": "Yoo Ah In",
+                    "artistImageURL": "https://i.mydramalist.com/2WKrw_5s.jpg",
+                    "characterName": "Lee Sun Jae",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "1278",
+                    "artistName": "Kim Hee Ae",
+                    "artistImageURL": "https://i.mydramalist.com/pjevQs.jpg",
+                    "characterName": "Oh Hye Won",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "1783",
+                    "artistName": "Shim Hye Jin",
+                    "artistImageURL": "https://i.mydramalist.com/qbqOPs.jpg",
+                    "characterName": "Han Sung Suk",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1905",
+                    "artistName": "Kim Chang Wan",
+                    "artistImageURL": "https://i.mydramalist.com/6xQPg_5s.jpg",
+                    "characterName": "Dean Min Yong Ki",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2616",
+                    "artistName": "Park Hyuk Kwon",
+                    "artistImageURL": "https://i.mydramalist.com/w6pZY_5s.jpg",
+                    "characterName": "Kang Joon Hyeong",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2690",
+                    "artistName": "Gyeong Su Jin",
+                    "artistImageURL": "https://i.mydramalist.com/x4wpzj_5s.jpg",
+                    "characterName": "Park Da Mi",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2725",
+                    "artistName": "Kim Hye Eun",
+                    "artistImageURL": "https://i.mydramalist.com/Z8vj8q_5s.jpg",
+                    "characterName": "Seo Young Woo",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2909",
+                    "artistName": "Kim Yong Gun",
+                    "artistImageURL": "https://i.mydramalist.com/QJplL5_5s.jpg",
+                    "characterName": "Seo Pil Won",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3074",
+                    "artistName": "Shin Ji Ho",
+                    "artistImageURL": "https://i.mydramalist.com/vXq8Re_5s.jpg",
+                    "characterName": "Ji Min Woo",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1476",
+                    "artistName": "Jang Hyun Sung",
+                    "artistImageURL": "https://i.mydramalist.com/1LJLds.jpg",
+                    "characterName": "Kim In Kyum",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "7355",
+                    "artistName": "Yang Min Young",
+                    "artistImageURL": "https://i.mydramalist.com/x47BNs.jpg",
+                    "characterName": "Kim In Joo",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "7356",
+                    "artistName": "Jin Bo Ra",
+                    "artistImageURL": "https://i.mydramalist.com/x4AjlN_5s.jpg",
+                    "characterName": "Jung Yoo Ra",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "7357",
+                    "artistName": "Park Jong Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/QP0jY_5s.jpg",
+                    "characterName": "Jo In Seo",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "7358",
+                    "artistName": "Choi Tae Hwan",
+                    "artistImageURL": "https://i.mydramalist.com/kRO1O_5s.jpg",
+                    "characterName": "Son Jang Ho",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "8512",
+                    "artistName": "Yoon Bok In",
+                    "artistImageURL": "https://i.mydramalist.com/jQVdnd_5s.jpg",
+                    "characterName": "Yoon Ji Soo",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2632",
+                    "artistName": "Jang So Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/BdqzvR_5s.jpg",
+                    "characterName": "Se Jin",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "10370",
+                    "artistName": "Heo Jung Do",
+                    "artistImageURL": "https://i.mydramalist.com/rZ7Oy_5s.jpg",
+                    "characterName": "Im Jong Su [Jun Hyeong's teaching assistant]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "6136",
+                    "artistName": "Kim Kwon",
+                    "artistImageURL": "https://i.mydramalist.com/47rKY_5s.jpg",
+                    "characterName": "Woo Sung [Seo Yeong Woo's young lover]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "14503",
+                    "artistName": "Kim Shin Jae",
+                    "artistImageURL": "https://i.mydramalist.com/45yB6s.jpg",
+                    "characterName": "Jang Shi Eun",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "6308",
+                    "artistName": "Baek Ji Won",
+                    "artistImageURL": "https://i.mydramalist.com/3oxZkd_5s.jpg",
+                    "characterName": "Secretary Wang Jung Hee",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2683",
+                    "artistName": "Kil Hae Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/l0b7gv_5s.jpg",
+                    "characterName": "Teacher Baek",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "7522",
+                    "artistName": "Lee Moo Saeng",
+                    "artistImageURL": "https://i.mydramalist.com/xnAqE_5s.jpg",
+                    "characterName": "Chief Lim",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "15706",
+                    "artistName": "Kim Shi Young",
+                    "artistImageURL": "https://i.mydramalist.com/ElAjQs.jpg",
+                    "characterName": "Director Cha",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "9446",
+                    "artistName": "Son Jong Hak",
+                    "artistImageURL": "https://i.mydramalist.com/g0KPqP_5s.jpg",
+                    "characterName": "[Chief of staff]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "9355",
+                    "artistName": "Kim Jung Young",
+                    "artistImageURL": "https://i.mydramalist.com/VXyKlm_5s.jpg",
+                    "characterName": "[Editor-in-chief]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "12694",
+                    "artistName": "Jang Jun Hee",
+                    "artistImageURL": "https://i.mydramalist.com/eRKJYs.jpg",
+                    "characterName": "[Performance section chief]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4250",
+                    "artistName": "Lee Kan Hee",
+                    "artistImageURL": "https://i.mydramalist.com/WQ81Ds.jpg",
+                    "characterName": "Myeong Hwa",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "22260",
+                    "artistName": "Jo Young Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/RW3xPs.jpg",
+                    "characterName": "[Young man]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "45589",
+                    "artistName": "Henny Savenije",
+                    "artistImageURL": "https://i.mydramalist.com/WA24m_5s.jpg",
+                    "characterName": "[Artisan tailor]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "9351",
+                    "artistName": "Seo Jung Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/73dV0b_5s.jpg",
+                    "characterName": "[Restaurant employee]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "24035",
+                    "artistName": "Jung Eui Soon",
+                    "artistImageURL": "https://i.mydramalist.com/p46ors.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/8929-secret-love-affair"
+        },
+        "airedOn": {
+            "value": [
+                "Monday",
+                "Tuesday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/8929-secret-love-affair"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "60321",
+            "artistName": "Lee Nam Yeon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "16037",
+            "artistName": "Ahn Pan Seok",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "16038",
+            "artistName": "Jung Sung Joo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "1783",
+            "artistName": "Shim Hye Jin",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "2725",
+            "artistName": "Kim Hye Eun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "3074",
+            "artistName": "Shin Ji Ho",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "7355",
+            "artistName": "Yang Min Young",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "7356",
+            "artistName": "Jin Bo Ra",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "8512",
+            "artistName": "Yoon Bok In",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "6136",
+            "artistName": "Kim Kwon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "14503",
+            "artistName": "Kim Shin Jae",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "6308",
+            "artistName": "Baek Ji Won",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "15706",
+            "artistName": "Kim Shi Young",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "9446",
+            "artistName": "Son Jong Hak",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "12694",
+            "artistName": "Jang Jun Hee",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "4250",
+            "artistName": "Lee Kan Hee",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "22260",
+            "artistName": "Jo Young Hoon",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "asianwiki",
+        "releaseDate": "asianwiki",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": null,
+        "airedOn": "mydramalist"
+    }
+}
