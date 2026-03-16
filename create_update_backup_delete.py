@@ -4,18 +4,19 @@
 # Description:
 #   v24.0 Engine.
 #   - Professional-grade multi-file database system.
+#   - ADDED: `airedOn` array data extraction & schema update.
+#   - ADDED: Filipino language mapping and site priorities.
 #   - FIX: MDL Cloudflare block on /cast page (Added strict headers + 4.0s delay).
-#   - FIX: MDL HTML tag structural changes (Switched to Bulletproof Regex subtraction for Director, Other Names, etc.).
-#   - FIX: AsianWiki Other Names regex fallback.
+#   - FIX: MDL HTML tag structural changes (Bulletproof Regex subtraction).
 #
-# Version: v9.4 (STABLE: Bulletproof Regex Extractors)
+# Version: v9.5 (STABLE: Added Aired On & Filipino Priority)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v9.4"
+SCRIPT_VERSION = "v9.5"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames":[], "showImage": None,
@@ -25,22 +26,23 @@ JSON_OBJECT_TEMPLATE = {
     "comments": None, "ratings": 0, "genres": [], "network":[],
     "againWatchedDates":[], "updatedOn": None, "updatedDetails": None,
     "synopsis": None, "topRatings": 0, "Duration": None,
-    "director": [], "tags":[], "cast": {}, 
-    "sitePriorityUsed": {"showImage": None, "releaseDate": None, "otherNames": None, "Duration": None, "synopsis": None, "director": None, "tags": None, "cast": None, "network": None}
+    "director": [], "tags":[], "cast": {}, "airedOn":[],
+    "sitePriorityUsed": {"showImage": None, "releaseDate": None, "otherNames": None, "Duration": None, "synopsis": None, "director": None, "tags": None, "cast": None, "network": None, "airedOn": None}
 }
 
 SITE_PRIORITY_BY_LANGUAGE = {
-    "korean": { "synopsis": "asianwiki", "showImage": "asianwiki", "otherNames": "mydramalist", "Duration": "mydramalist", "releaseDate": "asianwiki", "director": "mydramalist", "tags": "mydramalist", "cast": "mydramalist", "network": "mydramalist" },
-    "chinese": { "synopsis": "mydramalist", "showImage": "mydramalist", "otherNames": "mydramalist", "Duration": "mydramalist", "releaseDate": "mydramalist", "director": "mydramalist", "tags": "mydramalist", "cast": "mydramalist", "network": "mydramalist" },
-    "japanese": { "synopsis": "asianwiki", "showImage": "asianwiki", "otherNames": "mydramalist", "Duration": "mydramalist", "releaseDate": "asianwiki", "director": "mydramalist", "tags": "mydramalist", "cast": "mydramalist", "network": "mydramalist" },
-    "thai": { "synopsis": "mydramalist", "showImage": "mydramalist", "otherNames": "mydramalist", "Duration": "mydramalist", "releaseDate": "mydramalist", "director": "mydramalist", "tags": "mydramalist", "cast": "mydramalist", "network": "mydramalist" },
-    "taiwanese": { "synopsis": "mydramalist", "showImage": "mydramalist", "otherNames": "mydramalist", "Duration": "mydramalist", "releaseDate": "mydramalist", "director": "mydramalist", "tags": "mydramalist", "cast": "mydramalist", "network": "mydramalist" },
-    "english": { "synopsis": "imdb", "showImage": "imdb", "otherNames": "imdb", "Duration": "imdb", "releaseDate": "imdb", "director": "imdb", "tags": "imdb", "cast": "imdb", "network": "imdb" },
-    "default": { "synopsis": "mydramalist", "showImage": "asianwiki", "otherNames": "mydramalist", "Duration": "mydramalist", "releaseDate": "asianwiki", "director": "mydramalist", "tags": "mydramalist", "cast": "mydramalist", "network": "mydramalist" }
+    "korean": { "synopsis": "asianwiki", "showImage": "asianwiki", "otherNames": "mydramalist", "Duration": "mydramalist", "releaseDate": "asianwiki", "director": "mydramalist", "tags": "mydramalist", "cast": "mydramalist", "network": "mydramalist", "airedOn": "mydramalist" },
+    "chinese": { "synopsis": "mydramalist", "showImage": "mydramalist", "otherNames": "mydramalist", "Duration": "mydramalist", "releaseDate": "mydramalist", "director": "mydramalist", "tags": "mydramalist", "cast": "mydramalist", "network": "mydramalist", "airedOn": "mydramalist" },
+    "japanese": { "synopsis": "asianwiki", "showImage": "asianwiki", "otherNames": "mydramalist", "Duration": "mydramalist", "releaseDate": "asianwiki", "director": "mydramalist", "tags": "mydramalist", "cast": "mydramalist", "network": "mydramalist", "airedOn": "mydramalist" },
+    "thai": { "synopsis": "mydramalist", "showImage": "mydramalist", "otherNames": "mydramalist", "Duration": "mydramalist", "releaseDate": "mydramalist", "director": "mydramalist", "tags": "mydramalist", "cast": "mydramalist", "network": "mydramalist", "airedOn": "mydramalist" },
+    "taiwanese": { "synopsis": "mydramalist", "showImage": "mydramalist", "otherNames": "mydramalist", "Duration": "mydramalist", "releaseDate": "mydramalist", "director": "mydramalist", "tags": "mydramalist", "cast": "mydramalist", "network": "mydramalist", "airedOn": "mydramalist" },
+    "filipino": { "synopsis": "mydramalist", "showImage": "mydramalist", "otherNames": "mydramalist", "Duration": "mydramalist", "releaseDate": "mydramalist", "director": "mydramalist", "tags": "mydramalist", "cast": "mydramalist", "network": "mydramalist", "airedOn": "mydramalist" },
+    "english": { "synopsis": "imdb", "showImage": "imdb", "otherNames": "imdb", "Duration": "imdb", "releaseDate": "imdb", "director": "imdb", "tags": "imdb", "cast": "imdb", "network": "imdb", "airedOn": "imdb" },
+    "default": { "synopsis": "mydramalist", "showImage": "asianwiki", "otherNames": "mydramalist", "Duration": "mydramalist", "releaseDate": "asianwiki", "director": "mydramalist", "tags": "mydramalist", "cast": "mydramalist", "network": "mydramalist", "airedOn": "mydramalist" }
 }
 
-FIELD_NAME_MAP = { "showID": "Show ID", "showName": "Show Name", "otherNames": "Other Names", "showImage": "Show Image", "watchStartedOn": "Watch Started On", "watchEndedOn": "Watch Ended On", "releasedYear": "Released Year", "releaseDate": "Release Date", "totalEpisodes": "Total Episodes", "showType": "Show Type", "nativeLanguage": "Native Language", "watchedLanguage": "Watched Language", "country": "Country", "comments": "Comments", "ratings": "Ratings", "genres": "Category", "network": "Network", "againWatchedDates": "Again Watched Dates", "updatedOn": "Updated On", "updatedDetails": "Updated Details", "synopsis": "Synopsis", "topRatings": "Top Ratings", "Duration": "Duration", "director": "Director", "tags": "Tags", "cast": "Cast", "sitePriorityUsed": "Site Priority Used" }
-LOCKED_FIELDS_AFTER_CREATION = {'synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast', 'updatedOn', 'updatedDetails', 'sitePriorityUsed', 'topRatings', 'network'}
+FIELD_NAME_MAP = { "showID": "Show ID", "showName": "Show Name", "otherNames": "Other Names", "showImage": "Show Image", "watchStartedOn": "Watch Started On", "watchEndedOn": "Watch Ended On", "releasedYear": "Released Year", "releaseDate": "Release Date", "totalEpisodes": "Total Episodes", "showType": "Show Type", "nativeLanguage": "Native Language", "watchedLanguage": "Watched Language", "country": "Country", "comments": "Comments", "ratings": "Ratings", "genres": "Category", "network": "Network", "againWatchedDates": "Again Watched Dates", "updatedOn": "Updated On", "updatedDetails": "Updated Details", "synopsis": "Synopsis", "topRatings": "Top Ratings", "Duration": "Duration", "director": "Director", "tags": "Tags", "cast": "Cast", "airedOn": "Aired On", "sitePriorityUsed": "Site Priority Used" }
+LOCKED_FIELDS_AFTER_CREATION = {'synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast', 'updatedOn', 'updatedDetails', 'sitePriorityUsed', 'topRatings', 'network', 'airedOn'}
 
 # ---------------------------- IMPORTS & GLOBALS ----------------------------
 import os, re, sys, json, io, shutil, traceback, copy, time
@@ -101,7 +103,7 @@ SCRAPER.headers.update({
     'Cookie': 'lc-main=en_US'
 })
 
-LANG_TO_COUNTRY_MAP = {"korean": "South Korea", "chinese": "China", "japanese": "Japan", "thai": "Thailand", "taiwanese": "Taiwan", "english": "USA"}
+LANG_TO_COUNTRY_MAP = {"korean": "South Korea", "chinese": "China", "japanese": "Japan", "thai": "Thailand", "taiwanese": "Taiwan", "filipino": "Philippines", "english": "USA"}
 
 def logd(msg):
     if DEBUG_FETCH: print(f"[DEBUG] {msg}")
@@ -450,7 +452,8 @@ def _scrape_duration_from_mydramalist(soup, **kwargs):
 def _scrape_release_date_from_mydramalist(soup, **kwargs):
     try:
         text, _ = _extract_mdl_list_item(soup, r"Aired")
-        if text: return text
+        # Ensure we don't accidentally grab "Aired On"
+        if text and "day" not in text.lower(): return text
     except Exception: pass
     return None
 
@@ -474,7 +477,15 @@ def _scrape_network_from_mydramalist(soup, **kwargs):
         if li_tag:
             nets =[a.get_text(strip=True) for a in li_tag.find_all('a')]
             if nets: return nets
-            return [n.strip() for n in text.split(',') if n.strip()]
+            return[n.strip() for n in text.split(',') if n.strip()]
+    except Exception: pass
+    return None
+
+def _scrape_airedon_from_mydramalist(soup, **kwargs):
+    try:
+        text, _ = _extract_mdl_list_item(soup, r"Aired On")
+        if text:
+            return [day.strip() for day in text.split(',') if day.strip()]
     except Exception: pass
     return None
 
@@ -485,7 +496,6 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
         url = kwargs.get('url', '')
         target_soup = soup
         
-        # FIX: Securely fetch /cast page with heavy delay to bypass Cloudflare
         if url:
             cast_url = url.split('#')[0].split('?')[0].rstrip('/') + '/cast'
             try:
@@ -807,9 +817,9 @@ def _scrape_cast_from_imdb(soup, **kwargs):
     return None
 
 SCRAPE_MAP = {
-    'asianwiki': {'synopsis': _scrape_synopsis_from_asianwiki, 'showImage': _scrape_image_from_asianwiki, 'otherNames': _scrape_othernames_from_asianwiki, 'Duration': lambda **kwargs: None, 'releaseDate': _scrape_release_date_from_asianwiki, 'director': lambda **kwargs: None, 'tags': lambda **kwargs: None, 'cast': lambda **kwargs: None, 'network': _scrape_network_from_asianwiki},
-    'mydramalist': {'synopsis': _scrape_synopsis_from_mydramalist, 'showImage': _scrape_image_from_mydramalist, 'otherNames': _scrape_othernames_from_mydramalist, 'Duration': _scrape_duration_from_mydramalist, 'releaseDate': _scrape_release_date_from_mydramalist, 'director': _scrape_director_from_mydramalist, 'tags': _scrape_tags_from_mydramalist, 'cast': _scrape_cast_from_mydramalist, 'network': _scrape_network_from_mydramalist},
-    'imdb': {'synopsis': _scrape_synopsis_from_imdb, 'showImage': _scrape_image_from_imdb, 'otherNames': _scrape_othernames_from_imdb, 'Duration': _scrape_duration_from_imdb, 'releaseDate': _scrape_release_date_from_imdb, 'director': _scrape_director_from_imdb, 'tags': _scrape_tags_from_imdb, 'cast': _scrape_cast_from_imdb, 'network': _scrape_network_from_imdb}
+    'asianwiki': {'synopsis': _scrape_synopsis_from_asianwiki, 'showImage': _scrape_image_from_asianwiki, 'otherNames': _scrape_othernames_from_asianwiki, 'Duration': lambda **kwargs: None, 'releaseDate': _scrape_release_date_from_asianwiki, 'director': lambda **kwargs: None, 'tags': lambda **kwargs: None, 'cast': lambda **kwargs: None, 'network': _scrape_network_from_asianwiki, 'airedOn': lambda **kwargs: None},
+    'mydramalist': {'synopsis': _scrape_synopsis_from_mydramalist, 'showImage': _scrape_image_from_mydramalist, 'otherNames': _scrape_othernames_from_mydramalist, 'Duration': _scrape_duration_from_mydramalist, 'releaseDate': _scrape_release_date_from_mydramalist, 'director': _scrape_director_from_mydramalist, 'tags': _scrape_tags_from_mydramalist, 'cast': _scrape_cast_from_mydramalist, 'network': _scrape_network_from_mydramalist, 'airedOn': _scrape_airedon_from_mydramalist},
+    'imdb': {'synopsis': _scrape_synopsis_from_imdb, 'showImage': _scrape_image_from_imdb, 'otherNames': _scrape_othernames_from_imdb, 'Duration': _scrape_duration_from_imdb, 'releaseDate': _scrape_release_date_from_imdb, 'director': _scrape_director_from_imdb, 'tags': _scrape_tags_from_imdb, 'cast': _scrape_cast_from_imdb, 'network': _scrape_network_from_imdb, 'airedOn': lambda **kwargs: None}
 }
 
 def fetch_and_populate_metadata(obj, context, artists_db):
@@ -820,7 +830,7 @@ def fetch_and_populate_metadata(obj, context, artists_db):
     
     context['source_links_temp'] = {}
     soup_cache = {}
-    fields_to_check =[ 'synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast', 'network' ]
+    fields_to_check =[ 'synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast', 'network', 'airedOn' ]
     
     for field in fields_to_check:
         should_fetch = not obj.get(field) or field == 'network' 
@@ -922,7 +932,7 @@ def apply_manual_updates(xl, by_id, context):
         df.columns =[c.strip().lower() for c in df.columns]
     except Exception: return {}
     
-    MAP, report = {"image": "showImage", "other names": "otherNames", "release date": "releaseDate", "synopsis": "synopsis", "duration": "Duration"}, {}
+    MAP, report = {"image": "showImage", "other names": "otherNames", "release date": "releaseDate", "synopsis": "synopsis", "duration": "Duration", "aired on": "airedOn"}, {}
     for _, row in df.iterrows():
         sid = pd.to_numeric(row.get('no'), errors='coerce')
         if pd.isna(sid) or int(sid) not in by_id: continue
@@ -942,6 +952,8 @@ def apply_manual_updates(xl, by_id, context):
                     else: continue
                 elif key == 'otherNames': 
                     val = normalize_list(val)
+                elif key == 'airedOn':
+                    val =[v.strip() for v in str(val).split(',')] if val else[]
                 else: 
                     val = str(val).strip()
                 
@@ -1121,7 +1133,7 @@ def write_report(context):
 
 def process_and_distribute_cast(full_cast, artists_db, context):
     main_cast, support_cast, guest_cast = [],[],[]
-    crew_cast, other_crew_cast = [],[]
+    crew_cast, other_crew_cast =[],[]
     director_names =[]
     context['new_artists_added'] =[]
     
@@ -1282,7 +1294,7 @@ def main():
                     else: final_obj[k] = old_data[k]
             
             final_obj['sitePriorityUsed'] = copy.deepcopy(final_obj.get('sitePriorityUsed') or JSON_OBJECT_TEMPLATE['sitePriorityUsed'])
-            initial_metadata_state = {k: final_obj.get(k) for k in['synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast', 'network']}
+            initial_metadata_state = {k: final_obj.get(k) for k in['synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast', 'network', 'airedOn']}
             context['new_artists_added'] =[] 
             
             final_obj = fetch_and_populate_metadata(final_obj, context, artists_data)
@@ -1306,7 +1318,7 @@ def main():
             excel_data_has_changed = not is_new and objects_differ(old_obj_from_json, excel_obj)
             metadata_was_fetched = any(final_obj.get(k) != v for k, v in initial_metadata_state.items())
             
-            key_map = {'synopsis': 'Synopsis', 'showImage': 'Show Image', 'otherNames': 'Other Names', 'releaseDate': 'Release Date', 'Duration': 'Duration', 'director': 'Director', 'tags': 'Tags', 'cast': 'Cast', 'network': 'Network'}
+            key_map = {'synopsis': 'Synopsis', 'showImage': 'Show Image', 'otherNames': 'Other Names', 'releaseDate': 'Release Date', 'Duration': 'Duration', 'director': 'Director', 'tags': 'Tags', 'cast': 'Cast', 'network': 'Network', 'airedOn': 'Aired On'}
             newly_fetched_fields = sorted([
                 key_map[k] for k, v in initial_metadata_state.items() 
                 if not v and bool(final_obj.get(k))
@@ -1336,7 +1348,7 @@ def main():
                  save_metadata_backup(final_obj, context)
                  total_heavy_fetches += 1
 
-            missing_fields = {'synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast'}
+            missing_fields = {'synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast', 'airedOn'}
             missing =[human_readable_field(k) for k, v in final_obj.items() if k in missing_fields and not v]
             if missing: report.setdefault('fetch_warnings',[]).append(f"- {sid} - {final_obj['showName']} -> ⚠️ Missing: {', '.join(sorted(missing))}")
             
