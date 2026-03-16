@@ -1,5 +1,23 @@
-🚀 Running Script — Version v10.2 | Run ID: RUN_20260316_161615
+/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:337: UserWarning: Parsing dates in %d-%m-%Y format when dayfirst=False (the default) was specified. Pass `dayfirst=True` or specify a format to silence this warning.
+  dt = pd.to_datetime(str(val).strip(), errors="coerce")
+🚀 Running Script — Version v10.2 | Run ID: RUN_20260317_000015
 ⚙️ BATCH MODE ACTIVE: Will pause after 50 heavy fetch operations.
-✅ Report written -> reports/Report_16_March_2026_1616.txt
+[DEBUG] Title Validation FAILED: Page Title 'Song Joong-Ki' vs Expected 'Descendant of the Sun' (Ratio: 0.18)
+[DEBUG] Title Validation FAILED: Page Title 'One Night Stands & Pregnancies' vs Expected 'My Secret Romance' (Ratio: 0.34)
+[DEBUG] Title Validation FAILED: Page Title '2021 MBC Drama Awards' vs Expected 'Oh! Master' (Ratio: 0.19)
+[DEBUG] Title Validation FAILED: Page Title '2021 SBS Drama Awards' vs Expected 'Now, We Are Breaking Up' (Ratio: 0.18)
+[DEBUG] Title Validation FAILED: Page Title 'Christi' vs Expected 'Miracle That We Met' (Ratio: 0.23)
+[DEBUG] Title Validation FAILED: Season mismatch. Expected S1, Page has S12 (Miracle That We Met Episode 12)
+[DEBUG] Title Validation FAILED: Page Title 'Hwang Bo Ra' vs Expected 'Miracle That We Met' (Ratio: 0.13)
+[DEBUG] Title Validation FAILED: Page Title '2012 Review - Best and Worst' vs Expected 'I Miss You' (Ratio: 0.21)
+[DEBUG] Title Validation FAILED: Page Title 'Tan Jian Ci' vs Expected 'I Miss You' (Ratio: 0.29)
+[DEBUG] Title Validation FAILED: Page Title 'Choi Bo-Rim (screenwriter)' vs Expected 'Touch Your Heart' (Ratio: 0.29)
+[DEBUG] Title Validation FAILED: Page Title 'Kim Dae-Gon (1983)' vs Expected 'Touch Your Heart' (Ratio: 0.15)
+[DEBUG] Title Validation FAILED: Page Title 'Kwon Yul' vs Expected 'Lie To Me' (Ratio: 0.24)
+[DEBUG] Title Validation FAILED: Page Title 'Dramas where there is hint/platonic/minimal romance between main leads' vs Expected 'New Life (Yeni Hayat)' (Ratio: 0.20)
+[DEBUG] Title Validation FAILED: Page Title 'ltspada' vs Expected 'Hotel King' (Ratio: 0.12)
+
+🛑 BATCH LIMIT REACHED: Processed 50 heavy fetch records.
+✅ Report written -> reports/Report_17_March_2026_0000.txt
 
 All done.

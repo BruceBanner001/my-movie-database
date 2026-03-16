@@ -1,0 +1,713 @@
+{
+    "scriptVersion": "v10.2",
+    "runID": "RUN_20260317_000015",
+    "timestamp": "17 March 2026 12:06 AM (IST)",
+    "showID": 129,
+    "showName": "Falling Into Your Smile",
+    "fetchedFields": {
+        "showImage": {
+            "value": "129.jpg",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/49241-falling-into-your-smile"
+        },
+        "releaseDate": {
+            "value": "Jun 23, 2021 - Jul 15, 2021",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/49241-falling-into-your-smile"
+        },
+        "otherNames": {
+            "value": [
+                "Nei Mei Siu Si Han Mei",
+                "Ni Wei Xiao Shi Hen Mei",
+                "You Are Beautiful When Smiling",
+                "You’re Beautiful When You Smile",
+                "你微笑時很美"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/49241-falling-into-your-smile"
+        },
+        "Duration": {
+            "value": "45 mins",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/49241-falling-into-your-smile"
+        },
+        "synopsis": {
+            "value": "In the ultra-competitive world of e-sports, the all-male ZGDX OPL team is second to none. Armies of adoring female fans follow the team wherever it goes. But when one of the team’s star players suffers a hand injury, the tall, handsome, and notoriously hard-to-please ZGDX captain Lu Si Cheng will not be rushed into choosing a replacement.\n\nThe petite, lollipop-loving Tong Yao, meanwhile, is a budding amateur gamer – obsessed with OPL.\n\nHer skills are exceptional, but she is of the firm belief that in the male-dominated world of pro gaming, love is a big no-no – even though her own ex-boyfriend was a gamer. When the ZGDX team manager learns of her skills, he contacts her, thinking that recruiting her as the scene’s first female player will help score a major PR coup. Lu Si Cheng is dismissive of her initially, but eventually agrees to accept her as a substitute – a move that polarizes the team’s fanbase. But as they start to get to know one another better, could a closer bond begin to form between them?",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/49241-falling-into-your-smile"
+        },
+        "director": {
+            "value": [
+                "Qiu Zhong Wei"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/49241-falling-into-your-smile"
+        },
+        "tags": {
+            "value": [
+                "Gaming",
+                "Teamwork",
+                "Smart Male Lead",
+                "Online Gamer Female Lead",
+                "Bromance",
+                "Competition",
+                "Online Gamer Male Lead",
+                "Professional Gaming",
+                "Online Gaming",
+                "Cohabitation"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/49241-falling-into-your-smile"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "32923",
+                    "artistName": "Yang Xia",
+                    "artistImageURL": "https://i.mydramalist.com/O876Ex_5m.jpg",
+                    "characterName": null,
+                    "role": "Chief Producer"
+                },
+                {
+                    "artistID": "42183",
+                    "artistName": "Qiu Zhong Wei",
+                    "artistImageURL": "https://i.mydramalist.com/VXeq50_5m.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "52311",
+                    "artistName": "Xie Ying",
+                    "artistImageURL": "https://i.mydramalist.com/WzLem_5m.jpg",
+                    "characterName": null,
+                    "role": "Executive Producer"
+                },
+                {
+                    "artistID": "52387",
+                    "artistName": "Qing Mei",
+                    "artistImageURL": "https://i.mydramalist.com/0XJKe_5m.jpg",
+                    "characterName": null,
+                    "role": "Original Creator"
+                },
+                {
+                    "artistID": "58237",
+                    "artistName": "Li Zhan Ying",
+                    "artistImageURL": "https://i.mydramalist.com/yWnxbN_5m.jpg",
+                    "characterName": null,
+                    "role": "Producer"
+                },
+                {
+                    "artistID": "108079",
+                    "artistName": "Jia Chang",
+                    "artistImageURL": "https://i.mydramalist.com/R6Oj6_5m.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "17086",
+                    "artistName": "Xu Kai",
+                    "artistImageURL": "https://i.mydramalist.com/d0wEBd_5s.jpg",
+                    "characterName": "Lu Si Cheng",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "16297",
+                    "artistName": "Cheng Xiao",
+                    "artistImageURL": "https://i.mydramalist.com/DkZ4Ln_5s.jpg",
+                    "characterName": "Tong Yao",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "36997",
+                    "artistName": "Zhai Xiao Wen",
+                    "artistImageURL": "https://i.mydramalist.com/nO7276_5s.jpg",
+                    "characterName": "Jian Yang",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "34811",
+                    "artistName": "Yao Chi",
+                    "artistImageURL": "https://i.mydramalist.com/pbQZ8_5s.jpg",
+                    "characterName": "Lu Yue",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "26493",
+                    "artistName": "Rachel Wang",
+                    "artistImageURL": "https://i.mydramalist.com/PxjVPy_5s.jpg",
+                    "characterName": "Chen Jin Yang",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "36995",
+                    "artistName": "Zhou Yi Ran",
+                    "artistImageURL": "https://i.mydramalist.com/3oxmrd_5s.jpg",
+                    "characterName": "Ai Jia",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "35745",
+                    "artistName": "Sun Kai",
+                    "artistImageURL": "https://i.mydramalist.com/6A14W_5s.jpg",
+                    "characterName": "Xiao Pang",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "20957",
+                    "artistName": "Gao Han",
+                    "artistImageURL": "https://i.mydramalist.com/3oNx24_5s.jpg",
+                    "characterName": "Lao K",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "37001",
+                    "artistName": "Xiao Kai Zhong",
+                    "artistImageURL": "https://i.mydramalist.com/jQyq6O_5s.jpg",
+                    "characterName": "Lao Mao",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "8008",
+                    "artistName": "Merxat Yalkun",
+                    "artistImageURL": "https://i.mydramalist.com/ABj5ZE_5s.jpg",
+                    "characterName": "Yu Ming",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "36999",
+                    "artistName": "Cui Shao Yang",
+                    "artistImageURL": "https://i.mydramalist.com/DkKjA2_5s.jpg",
+                    "characterName": "Xiao Rui",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "37005",
+                    "artistName": "Wang Yi Jun",
+                    "artistImageURL": "https://i.mydramalist.com/81j2Rb_5s.jpg",
+                    "characterName": "Lee Kun Hyeok",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "34535",
+                    "artistName": "Hou Chang Rong",
+                    "artistImageURL": "https://i.mydramalist.com/ZrR68s.jpg",
+                    "characterName": "[Tong Yao's father] (Ep. 1-5, 10-12, 29, 31)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6445",
+                    "artistName": "Yang Ming Na",
+                    "artistImageURL": "https://i.mydramalist.com/Z8REZW_5s.jpg",
+                    "characterName": "[Tong Yao's mother] (Ep. 1-5, 10-12, 29, 31)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "20218",
+                    "artistName": "Yan Hao Yuan",
+                    "artistImageURL": "https://i.mydramalist.com/vKPzp_5s.jpg",
+                    "characterName": "Hu Die",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "23285",
+                    "artistName": "Li Kun",
+                    "artistImageURL": "https://i.mydramalist.com/q1dE2_5s.jpg",
+                    "characterName": "Hau Yun Lai",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "66593",
+                    "artistName": "DeDe",
+                    "artistImageURL": "https://i.mydramalist.com/RxnQV_5s.jpg",
+                    "characterName": "Xiao Hua",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "44505",
+                    "artistName": "Wang Zi Hao",
+                    "artistImageURL": "https://i.mydramalist.com/jJkq8_5s.jpg",
+                    "characterName": "Lao Wang",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "16721",
+                    "artistName": "Gou Chen Hao Yu",
+                    "artistImageURL": "https://i.mydramalist.com/ZqWAq_5s.jpg",
+                    "characterName": "Liang Sheng",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "39085",
+                    "artistName": "DiDi",
+                    "artistImageURL": "https://i.mydramalist.com/W2m5W_5s.jpg",
+                    "characterName": "Lee Hang Suk",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "75107",
+                    "artistName": "Xiong Ao Bo",
+                    "artistImageURL": "https://i.mydramalist.com/l01kkN_5s.jpg",
+                    "characterName": "Jin En Shuo / \"Xbang\" / YQCB (Ep. 5, 8-10, 21-22, 25-31)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "75101",
+                    "artistName": "Liu Jin Yu",
+                    "artistImageURL": "https://i.mydramalist.com/BLv5b_5s.jpg",
+                    "characterName": "Rong Rong",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "28985",
+                    "artistName": "He Peng",
+                    "artistImageURL": "https://i.mydramalist.com/73JbBr_5s.jpg",
+                    "characterName": "Ah Tai",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "75091",
+                    "artistName": "Jeremy Luo",
+                    "artistImageURL": "https://i.mydramalist.com/2vwzR_5s.jpg",
+                    "characterName": "A Guang",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "57181",
+                    "artistName": "Brian Chang",
+                    "artistImageURL": "https://i.mydramalist.com/Px5DWz_5s.jpg",
+                    "characterName": "Xu Tai Lun",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "75099",
+                    "artistName": "Zoelly Wu",
+                    "artistImageURL": "https://i.mydramalist.com/zBJQ4W_5s.jpg",
+                    "characterName": "Ling Mao / DQ.Five (Ep. 10, 19-20, 26, 30)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "26599",
+                    "artistName": "Qi Yan Di",
+                    "artistImageURL": "https://i.mydramalist.com/rNb3xZ_5s.jpg",
+                    "characterName": "Su Luo",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "12972",
+                    "artistName": "Che Yong Li",
+                    "artistImageURL": "https://i.mydramalist.com/jeok8_5s.jpg",
+                    "characterName": "Director Wang [Si Cheng & Yue's mother] (Ep. 17, 24-25, 31)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "75215",
+                    "artistName": "Chen Nuo",
+                    "artistImageURL": "https://i.mydramalist.com/E4Akm_5s.jpg",
+                    "characterName": "Ning Jia Qi",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "35241",
+                    "artistName": "Wu Qian Ying",
+                    "artistImageURL": "https://i.mydramalist.com/DkQKw5_5s.jpg",
+                    "characterName": "Guo Guo",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "75113",
+                    "artistName": "Wang Min",
+                    "artistImageURL": "https://i.mydramalist.com/rNWPRp_5s.jpg",
+                    "characterName": "[Ai Jia's mother] (Ep. 24, 31)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "75115",
+                    "artistName": "Zheng Yang",
+                    "artistImageURL": "https://i.mydramalist.com/v1Dd2_5s.jpg",
+                    "characterName": "Lin Mo",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "75095",
+                    "artistName": "Roy Luo",
+                    "artistImageURL": "https://i.mydramalist.com/d1nN0_5s.jpg",
+                    "characterName": "Rab",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "66731",
+                    "artistName": "Rhys Du",
+                    "artistImageURL": "https://i.mydramalist.com/BdB0mV_5s.jpg",
+                    "characterName": "Xiao Du",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "75097",
+                    "artistName": "Gao Wei Man",
+                    "artistImageURL": "https://i.mydramalist.com/wJml61_5s.jpg",
+                    "characterName": "Lu Lu",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "59887",
+                    "artistName": "Bao Ma",
+                    "artistImageURL": "https://i.mydramalist.com/XJnkx_5s.jpg",
+                    "characterName": "President Bao",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "75111",
+                    "artistName": "Liu Hao Jun Long",
+                    "artistImageURL": "https://i.mydramalist.com/XQ6bn_5s.jpg",
+                    "characterName": "Tony",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "141685",
+                    "artistName": "Zhou Tai Heng",
+                    "artistImageURL": "https://i.mydramalist.com/YY6zLo_5s.jpg",
+                    "characterName": "[Alpha team member]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "55845",
+                    "artistName": "He Wen Xiao",
+                    "artistImageURL": "https://i.mydramalist.com/3oA6Dd_5s.jpg",
+                    "characterName": "Voice Actor",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "127433",
+                    "artistName": "Ling Fei",
+                    "artistImageURL": "https://i.mydramalist.com/nOJZOQ_5s.jpg",
+                    "characterName": "Voice Actor",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "140153",
+                    "artistName": "Chen Zhang Tai Kang",
+                    "artistImageURL": "https://i.mydramalist.com/KpyEXn_5s.jpg",
+                    "characterName": "Voice Actor",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "143745",
+                    "artistName": "Qian Wen Qing",
+                    "artistImageURL": "https://i.mydramalist.com/5vlAl0_5s.jpg",
+                    "characterName": "Voice Actor",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "146948",
+                    "artistName": "Zhang Hui Lin",
+                    "artistImageURL": "https://i.mydramalist.com/NdXdQJ_5s.jpg",
+                    "characterName": "Voice Actor",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "147302",
+                    "artistName": "Yi Fan",
+                    "artistImageURL": "https://i.mydramalist.com/5vlpW4_5s.jpg",
+                    "characterName": "Voice Actor",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "149800",
+                    "artistName": "Fa Xuan Ge",
+                    "artistImageURL": "https://i.mydramalist.com/b3NLLj_5s.jpg",
+                    "characterName": "[Wu Alpha team member]",
+                    "role": "Support Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/49241-falling-into-your-smile"
+        },
+        "network": {
+            "value": [
+                "Tencent",
+                "LINE TV",
+                "Tencent Video",
+                "Youku"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/49241-falling-into-your-smile"
+        },
+        "airedOn": {
+            "value": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday",
+                "Sunday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/49241-falling-into-your-smile"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "32923",
+            "artistName": "Yang Xia",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "42183",
+            "artistName": "Qiu Zhong Wei",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "52387",
+            "artistName": "Qing Mei",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "58237",
+            "artistName": "Li Zhan Ying",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "108079",
+            "artistName": "Jia Chang",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "17086",
+            "artistName": "Xu Kai",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "16297",
+            "artistName": "Cheng Xiao",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "36997",
+            "artistName": "Zhai Xiao Wen",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "34811",
+            "artistName": "Yao Chi",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "26493",
+            "artistName": "Rachel Wang",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "36995",
+            "artistName": "Zhou Yi Ran",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "35745",
+            "artistName": "Sun Kai",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "20957",
+            "artistName": "Gao Han",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "37001",
+            "artistName": "Xiao Kai Zhong",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "8008",
+            "artistName": "Merxat Yalkun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "36999",
+            "artistName": "Cui Shao Yang",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "37005",
+            "artistName": "Wang Yi Jun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "34535",
+            "artistName": "Hou Chang Rong",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "6445",
+            "artistName": "Yang Ming Na",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "20218",
+            "artistName": "Yan Hao Yuan",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "23285",
+            "artistName": "Li Kun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "66593",
+            "artistName": "DeDe",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "44505",
+            "artistName": "Wang Zi Hao",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "16721",
+            "artistName": "Gou Chen Hao Yu",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "39085",
+            "artistName": "DiDi",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "75107",
+            "artistName": "Xiong Ao Bo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "75101",
+            "artistName": "Liu Jin Yu",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "28985",
+            "artistName": "He Peng",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "75091",
+            "artistName": "Jeremy Luo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "57181",
+            "artistName": "Brian Chang",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "75099",
+            "artistName": "Zoelly Wu",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "26599",
+            "artistName": "Qi Yan Di",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "12972",
+            "artistName": "Che Yong Li",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "75215",
+            "artistName": "Chen Nuo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "35241",
+            "artistName": "Wu Qian Ying",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "75113",
+            "artistName": "Wang Min",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "75115",
+            "artistName": "Zheng Yang",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "75095",
+            "artistName": "Roy Luo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "66731",
+            "artistName": "Rhys Du",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "75097",
+            "artistName": "Gao Wei Man",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "59887",
+            "artistName": "Bao Ma",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "75111",
+            "artistName": "Liu Hao Jun Long",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "141685",
+            "artistName": "Zhou Tai Heng",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "55845",
+            "artistName": "He Wen Xiao",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "127433",
+            "artistName": "Ling Fei",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "140153",
+            "artistName": "Chen Zhang Tai Kang",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "143745",
+            "artistName": "Qian Wen Qing",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "146948",
+            "artistName": "Zhang Hui Lin",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "147302",
+            "artistName": "Yi Fan",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "149800",
+            "artistName": "Fa Xuan Ge",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "mydramalist",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "mydramalist",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": "mydramalist",
+        "airedOn": "mydramalist"
+    }
+}
