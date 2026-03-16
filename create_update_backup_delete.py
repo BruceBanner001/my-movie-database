@@ -11,15 +11,16 @@
 #   - BULLETPROOF UPDATE: Hardened IMDb Duration, Cast, & Synopsis scraping.
 #   - BULLETPROOF UPDATE: Resilient AsianWiki other-names & synopsis parsers.
 #   - BULLETPROOF UPDATE: Blocked dummy/placeholder images from downloading.
+#   - V10.2 HOTFIX: Parent traversal for massive AKA lists, Regex Word Boundaries for Cast mapping.
 #
-# Version: v10.1 (BULLETPROOF EDITION: Maximum Scraping Resilience)
+# Version: v10.2 (BULLETPROOF EDITION: Maximum Scraping Resilience)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v10.1"
+SCRIPT_VERSION = "v10.2"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames":[], "showImage": None,
@@ -94,7 +95,7 @@ ARTIST_LOOKUP_FILE = "artists_lookup.json"
 BATCH_STATE_FILE = "BATCH_REPORT_DATA.json"
 
 BACKUP_DIR, SHOW_IMAGES_DIR, ARTIST_IMAGES_DIR, DELETE_IMAGES_DIR = "backups", "show-images", "artist-images", "deleted-images"
-DELETED_DATA_DIR, REPORTS_DIR, BACKUP_META_DIR = "deleted-data", "reports", "backup-meta-data"
+DELETED_DATA_DIR, REPORTS_DIR, BACKUP_META_DIR = "backup-meta-data", "reports", "archived-backup-meta-data"
 ARCHIVED_BACKUPS_DIR, ARCHIVED_META_DIR = "archived-backups", "archived-backup-meta-data"
 
 SERVICE_ACCOUNT_FILE, EXCEL_FILE_ID_TXT = "GDRIVE_SERVICE_ACCOUNT.json", "EXCEL_FILE_ID.txt"
@@ -342,22 +343,26 @@ def download_and_save_image(url, local_path, is_artist=False):
 # --- BULLETPROOF EXTRACTION HELPERS ---
 def _extract_mdl_list_item(soup, label_regex):
     b_tag = soup.find('b', string=re.compile(label_regex, re.IGNORECASE))
-    if b_tag and (parent_tag := b_tag.find_parent(['li', 'div', 'p'])):
-        full_text = parent_tag.get_text(" ", strip=True)
-        b_text = b_tag.get_text(" ", strip=True)
-        text = full_text.replace(b_text, "").strip()
-        text = re.sub(r'^[:\s]+', '', text).strip()
-        return text, parent_tag
+    if b_tag:
+        for parent_tag in b_tag.find_parents(['li', 'div', 'p']):
+            full_text = parent_tag.get_text(" ", strip=True)
+            b_text = b_tag.get_text(" ", strip=True)
+            text = full_text.replace(b_text, "").strip()
+            text = re.sub(r'^[:\s]+', '', text).strip()
+            if text:
+                return text, parent_tag
     return None, None
 
 def _extract_aw_list_item(soup, label_regex):
     b_tag = soup.find('b', string=re.compile(label_regex, re.IGNORECASE))
-    if b_tag and (parent := b_tag.parent):
-        full_text = parent.get_text(" ", strip=True)
-        b_text = b_tag.get_text(" ", strip=True)
-        text = full_text.replace(b_text, "").strip()
-        text = re.sub(r'^[:\s]+', '', text).strip()
-        return text
+    if b_tag:
+        for parent in b_tag.find_parents(['li', 'div', 'p', 'td', 'tr']):
+            full_text = parent.get_text(" ", strip=True)
+            b_text = b_tag.get_text(" ", strip=True)
+            text = full_text.replace(b_text, "").strip()
+            text = re.sub(r'^[:\s]+', '', text).strip()
+            if text:
+                return text
     return None
 
 # --- ASIANWIKI SCRAPERS ---
@@ -389,7 +394,7 @@ def _scrape_synopsis_from_asianwiki(soup, **kwargs):
             # Ignore script tags, tables, or generic UI garbage
             if getattr(sibling, 'name', None) in['script', 'style', 'table']: continue
             
-            if text and len(text) > 20: 
+            if text and len(text) >= 3: 
                 content.append(text)
         
         synopsis = "\n\n".join(content) if content else None
@@ -420,12 +425,11 @@ def _scrape_othernames_from_asianwiki(soup, **kwargs):
         for b_tag in soup.find_all('b'):
             text = b_tag.get_text(strip=True).lower()
             if any(keyword in text for keyword in target_keywords):
-                parent = b_tag.parent
-                if not parent: continue
-                full_text = parent.get_text(" ", strip=True)
-                
-                # Strip out the bold label itself to get just the value
-                val = full_text.replace(b_tag.get_text(strip=True), "").replace(':', '').strip()
+                for parent in b_tag.find_parents(['li', 'div', 'p', 'td']):
+                    full_text = parent.get_text(" ", strip=True)
+                    val = full_text.replace(b_tag.get_text(strip=True), "").replace(':', '').strip()
+                    if val:
+                        break
                 
                 # Some formatting has multiple names separated by / or ,
                 if val and val.lower() != kwargs.get('show_name', '').lower():
@@ -600,7 +604,7 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
                         break 
                 
                 if not artist_name: continue 
-                id_match = re.search(r'/people/(\d+)-', artist_link)
+                id_match = re.search(r'/people/(\d+)', artist_link)
                 if not id_match: continue
                 artist_id = id_match.group(1)
                 
@@ -796,7 +800,8 @@ def _scrape_othernames_from_imdb(soup, **kwargs):
     try:
         aka_tag = soup.find('li', attrs={'data-testid': 'title-details-akas'})
         if aka_tag and (div := aka_tag.find('div')):
-            names =[n.strip() for n in div.get_text(strip=True).split(',') if n.strip()]
+            text_content = div.get_text(separator=', ', strip=True)
+            names =[n.strip() for n in text_content.split(',') if n.strip()]
             return _clean_other_names(names)
     except Exception: pass
     return None
@@ -1268,7 +1273,7 @@ def process_and_distribute_cast(full_cast, artists_db, context):
         elif role == 'Support Role': support_cast.append(cast_member)
         elif role == 'Guest Role': guest_cast.append(cast_member)
         else:
-            if any(kcr in role.lower() for kcr in known_crew_roles):
+            if any(re.search(rf'\b{kcr}\b', role.lower()) for kcr in known_crew_roles):
                 crew_cast.append(cast_member)
                 if re.search(r'\b(director|co-director)\b', role, re.IGNORECASE):
                     if artist['artistName'] not in director_names:
