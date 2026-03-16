@@ -4,19 +4,21 @@
 # Description:
 #   v24.0 Engine.
 #   - Professional-grade multi-file database system.
+#   - FIX: Multi-Season mismatch (Validation Amnesia & Random Search Order).
+#   - FIX: Upgraded Season/Part regex to detect trailing numbers (e.g. "Dr. Romantic 2").
 #   - ADDED: `airedOn` array data extraction & schema update.
 #   - ADDED: Filipino language mapping and site priorities.
 #   - FIX: MDL Cloudflare block on /cast page (Added strict headers + 4.0s delay).
 #   - FIX: MDL HTML tag structural changes (Bulletproof Regex subtraction).
 #
-# Version: v9.5 (STABLE: Added Aired On & Filipino Priority)
+# Version: v9.6 (STABLE: Strict Multi-Season Separation)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v9.5"
+SCRIPT_VERSION = "v9.6"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames":[], "showImage": None,
@@ -185,33 +187,49 @@ def _validate_page_title(soup, expected_name, site, url):
 
         if not page_title: return True
         
-        m_page = re.search(r'\b(?:Season|Part)\s*(\d+)\b', page_title, re.IGNORECASE)
-        m_exp = re.search(r'\b(?:Season|Part)\s*(\d+)\b', expected_name, re.IGNORECASE)
-        m_url = re.search(r'(?:season|part)[-_]*(\d+)', url, re.IGNORECASE)
+        # SMART SEASON EXTRACTOR
+        def extract_season(text):
+            m = re.search(r'\b(?:Season|Part|S)\s*(\d+)\b', text, re.IGNORECASE)
+            if m: return int(m.group(1))
+            m2 = re.search(r'\s+(\d+)$', re.sub(r'\(\d{4}\)', '', text).strip())
+            # Prevents treating years like "Reply 1988" as Season 1988
+            if m2 and int(m2.group(1)) < 20: 
+                return int(m2.group(1))
+            return None
+
+        page_s = extract_season(page_title)
+        exp_s = extract_season(expected_name)
         
-        page_s = int(m_page.group(1)) if m_page else (int(m_url.group(1)) if m_url else None)
-        exp_s = int(m_exp.group(1)) if m_exp else 1
+        # URL fallback if page doesn't explicitly state season
+        if page_s is None:
+            m_url = re.search(r'(?:season|part)[-_]*(\d+)', url, re.IGNORECASE)
+            if m_url: page_s = int(m_url.group(1))
+            
+        exp_s = exp_s if exp_s is not None else 1
         
         if page_s is not None and exp_s != page_s:
+            logd(f"Title Validation FAILED: Season mismatch. Expected S{exp_s}, Page has S{page_s} ({page_title})")
             return False
             
         if exp_s > 1 and page_s is None:
             if site != "imdb":
-                base_expected = re.sub(r'\b(?:Season|Part)\s*\d+\b', '', expected_name, flags=re.IGNORECASE).strip().lower()
+                base_expected = re.sub(r'\b(?:Season|Part|S)\s*\d+\b|\s+\d+$', '', expected_name, flags=re.IGNORECASE).strip().lower()
                 base_page = re.sub(r'\(.*?\)', '', page_title).lower().strip()
-                if base_expected == base_page:
+                if base_expected in base_page or base_page in base_expected:
+                    logd(f"Title Validation FAILED: Expected S{exp_s}, but found base S1 ('{page_title}')")
                     return False
 
         t1 = re.sub(r'\(\d{4}\)', '', page_title).lower().strip()
         t2 = re.sub(r'\(\d{4}\)', '', expected_name).lower().strip()
         
-        t1_core = re.sub(r'\b(?:season|part)\s*\d+\b', '', t1).strip()
-        t2_core = re.sub(r'\b(?:season|part)\s*\d+\b', '', t2).strip()
+        t1_core = re.sub(r'\b(?:season|part|s)\s*\d+\b|\s+\d+$', '', t1).strip()
+        t2_core = re.sub(r'\b(?:season|part|s)\s*\d+\b|\s+\d+$', '', t2).strip()
 
         if site == "imdb" and (t2 in t1 or t2_core in t1_core): return True
 
         ratio = SequenceMatcher(None, t1_core, t2_core).ratio()
         if ratio < 0.4 and t2_core not in t1_core and t1_core not in t2_core:
+            logd(f"Title Validation FAILED: Page Title '{page_title}' vs Expected '{expected_name}' (Ratio: {ratio:.2f})")
             return False
         return True
     except Exception as e: return True
@@ -227,24 +245,24 @@ def _scrape_country(soup, site):
     except Exception: pass
     return None
 
-def get_soup_from_search(show_name, show_year, site, language, show_type, soup_cache):
-    cache_key = f"{show_name}_{show_year}_{site}_{language}_{show_type}"
+def get_soup_from_search(search_term, expected_name, show_year, site, language, show_type, soup_cache):
+    cache_key = f"{expected_name}_{search_term}_{show_year}_{site}_{language}_{show_type}"
     if cache_key in soup_cache: return soup_cache[cache_key]
 
     expected_country = LANG_TO_COUNTRY_MAP.get(language.lower())
     if not HAVE_DDGS: return None, None
 
     search_queries =[]
-    clean_name = re.sub(r'\b(?:Season|Part)\s*1\b', '', show_name, flags=re.IGNORECASE).strip()
+    clean_name = re.sub(r'\b(?:Season|Part|S)\s*1\b', '', search_term, flags=re.IGNORECASE).strip()
 
     if site == "imdb":
         entity_hint = "TV Series" if "Drama" in show_type else "Movie"
-        search_queries =[f'"{show_name}" {entity_hint} site:imdb.com/title/', f'"{show_name}" {show_year} site:imdb.com/title/']
-        if clean_name != show_name:
+        search_queries =[f'"{search_term}" {entity_hint} site:imdb.com/title/', f'"{search_term}" {show_year} site:imdb.com/title/']
+        if clean_name != search_term:
             search_queries.extend([f'"{clean_name}" {entity_hint} site:imdb.com/title/', f'"{clean_name}" {show_year} site:imdb.com/title/'])
     else:
-        search_queries =[ f'"{show_name}" {show_year} {language} site:{site}.com', f'"{show_name}" {show_year} site:{site}.com', f'"{show_name}" site:{site}.com' ]
-        if clean_name != show_name:
+        search_queries =[ f'"{search_term}" {show_year} {language} site:{site}.com', f'"{search_term}" {show_year} site:{site}.com', f'"{search_term}" site:{site}.com' ]
+        if clean_name != search_term:
             search_queries.extend([ f'"{clean_name}" {show_year} {language} site:{site}.com', f'"{clean_name}" {show_year} site:{site}.com', f'"{clean_name}" site:{site}.com' ])
 
     for query in search_queries:
@@ -290,7 +308,7 @@ def get_soup_from_search(show_name, show_year, site, language, show_type, soup_c
                         scraped_country = _scrape_country(soup, site)
                         if scraped_country and expected_country not in scraped_country: continue
                     
-                    if not _validate_page_title(soup, show_name, site, url): continue
+                    if not _validate_page_title(soup, expected_name, site, url): continue
 
                     soup_cache[cache_key] = (soup, url)
                     return soup, url
@@ -393,7 +411,7 @@ def _scrape_release_date_from_asianwiki(soup, **kwargs):
 def _scrape_network_from_asianwiki(soup, **kwargs):
     try:
         text = _extract_aw_list_item(soup, r"Network")
-        if text: return [n.strip() for n in text.split(',') if n.strip()]
+        if text: return[n.strip() for n in text.split(',') if n.strip()]
     except Exception: pass
     return None
 
@@ -452,7 +470,6 @@ def _scrape_duration_from_mydramalist(soup, **kwargs):
 def _scrape_release_date_from_mydramalist(soup, **kwargs):
     try:
         text, _ = _extract_mdl_list_item(soup, r"Aired")
-        # Ensure we don't accidentally grab "Aired On"
         if text and "day" not in text.lower(): return text
     except Exception: pass
     return None
@@ -839,10 +856,18 @@ def fetch_and_populate_metadata(obj, context, artists_db):
             site_to_use = priority.get(field)
             if not site_to_use: continue
             
-            search_terms =[s_name, re.sub(r'\s*\(?Season\s*\d+\)?', '', s_name, flags=re.IGNORECASE).strip()]
+            search_terms =[s_name, re.sub(r'\s*\(?(?:Season|Part|S)\s*\d+\)?', '', s_name, flags=re.IGNORECASE).strip()]
             soup, url = None, None
-            for term in set(search_terms):
-                soup, url = get_soup_from_search(term, s_year, site_to_use, lang, show_type, soup_cache)
+            
+            # Preserve search order, remove duplicates
+            ordered_terms =[]
+            for term in search_terms:
+                if term not in ordered_terms:
+                    ordered_terms.append(term)
+                    
+            for term in ordered_terms:
+                # FIX: Pass term for searching, but s_name for strict validation memory
+                soup, url = get_soup_from_search(term, s_name, s_year, site_to_use, lang, show_type, soup_cache)
                 if soup: break
             
             if soup:
@@ -1133,7 +1158,7 @@ def write_report(context):
 
 def process_and_distribute_cast(full_cast, artists_db, context):
     main_cast, support_cast, guest_cast = [],[],[]
-    crew_cast, other_crew_cast =[],[]
+    crew_cast, other_crew_cast = [],[]
     director_names =[]
     context['new_artists_added'] =[]
     
