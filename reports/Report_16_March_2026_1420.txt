@@ -1,0 +1,65 @@
+✅ Workflow completed successfully
+🆔 Run ID: RUN_20260316_142026
+📅 Run Time: 16 March 2026 02:20 PM (IST)
+⚙️ Script Version: v9.9
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Sheet1 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🆕 Data Created:
+- 103 - Perfect Mismatch (2023) -> First Time Uploaded
+
+🖼️ Fetched Data Details:
+- 103 - Perfect Mismatch -> Fetched: Aired On, Cast, Director, Duration, Release Date, Tags
+
+🕳️ Value Not Found:
+- 103 - Perfect Mismatch -> ⚠️ Missing: Other Names, Show Image, Synopsis
+
+🚫 Skipped (Unchanged):
+- 101 - Alchemy Of Souls Season 1 (2022)
+- 102 - Alchemy of Souls Season 2: Light and Shadow (2023)
+
+📊 Summary (Sheet: Sheet1)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Created: 1
+🔁 Updated: 0
+🔍 Refetched: 0
+🚫 Skipped: 2
+⚠️ Warnings: 1
+  Total Rows: 3
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 Overall Summary
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Total Created: 1
+🔁 Total Updated: 0
+🔍 Total Refetched: 0
+🖼️ Show Images Updated: 0
+🧑‍🎨 New Artist Images Added: 0
+🚫 Total Skipped: 2
+❌ Total Deleted: 0
+🗄️ Total Archived Backups: 0
+⚠️ Total Warnings: 1
+💾 Backup Files: 0
+  Grand Total Rows Processed: 3
+
+💾 Metadata Backups: 1
+
+📦 Total Objects in seriesData.json: 3
+📦 Total Objects in artists.json: 1228
+📦 Total Objects in cast.json: 3
+📦 Total Objects in artists_lookup.json: 1228
+🖼️ Total images in show-images: 2
+🧑‍🎨 Total images in artist-images: 1207
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ Folders Generated:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📁 meta_backups/ (Total: 1 files)
+    📄 META_16_March_2026_1420_103.json
+
+📁 reports/ (Total: 1 files)
+    📄 Report_16_March_2026_1420.txt
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🏁 Workflow finished successfully
