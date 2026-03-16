@@ -1,0 +1,87 @@
+{
+    "scriptVersion": "v10.1",
+    "runID": "RUN_20260316_152406",
+    "timestamp": "16 March 2026 03:24 PM (IST)",
+    "showID": 102,
+    "showName": "Alchemy Of Souls Season 1",
+    "fetchedFields": {
+        "showImage": {
+            "value": "102.jpg",
+            "source": "asianwiki"
+        },
+        "releaseDate": {
+            "value": "Apr 10 2011 - March 12 2021",
+            "source": "Manual"
+        },
+        "otherNames": {
+            "value": [
+                "But",
+                "NO PROBLEM",
+                "No",
+                "Thanks",
+                "Yes"
+            ],
+            "source": "Manual"
+        },
+        "Duration": {
+            "value": "1 hr 99 mins.",
+            "source": "Manual"
+        },
+        "synopsis": {
+            "value": "Law Cafe",
+            "source": "Manual"
+        },
+        "director": {
+            "value": [
+                "Park Joon Hwa"
+            ],
+            "source": "mydramalist"
+        },
+        "tags": {
+            "value": [
+                "Transmigration",
+                "Master-Disciple Relationship",
+                "Supernatural",
+                "Hidden Identity",
+                "Body Swap",
+                "Elemental Power",
+                "Fake Identity",
+                "Comedy",
+                "Master-Servant Relationship",
+                "Flashback To Past"
+            ],
+            "source": "mydramalist"
+        },
+        "cast": {
+            "value": {
+                "Main Role": 2,
+                "Support Role": 29,
+                "Guest Role": 79,
+                "Composer": 1,
+                "Director": 1,
+                "Executive Producer": 1,
+                "Screenwriter": 2
+            },
+            "source": "mydramalist"
+        },
+        "airedOn": {
+            "value": [
+                "Saturday",
+                "Sunday"
+            ],
+            "source": "mydramalist"
+        }
+    },
+    "sitePriorityUsed": {
+        "showImage": "asianwiki",
+        "releaseDate": "Manual",
+        "otherNames": "Manual",
+        "Duration": "Manual",
+        "synopsis": "Manual",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": null,
+        "airedOn": "mydramalist"
+    }
+}

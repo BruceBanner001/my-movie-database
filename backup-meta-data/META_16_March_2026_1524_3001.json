@@ -1,0 +1,887 @@
+{
+    "scriptVersion": "v10.1",
+    "runID": "RUN_20260316_152406",
+    "timestamp": "16 March 2026 03:24 PM (IST)",
+    "showID": 3001,
+    "showName": "Mr. Queen",
+    "fetchedFields": {
+        "showImage": {
+            "value": "3001.jpg",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Mr._Queen"
+        },
+        "releaseDate": {
+            "value": "December 12, 2020 - February 14, 2021",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Mr._Queen"
+        },
+        "otherNames": {
+            "value": [
+                "Cheolinwanghoo",
+                "Cheolinwanghu",
+                "Cheorinwanghoo",
+                "Cheorinwanghu",
+                "Iron Queen",
+                "Mister Queen",
+                "No Touch Princess",
+                "Queen Cheo Rin",
+                "Queen Cheolin",
+                "Queen Cheorin",
+                "Queen Iron",
+                "The Iron Empress"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/58365-queen-cheorin"
+        },
+        "Duration": {
+            "value": "1 hr. 15 min.",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/58365-queen-cheorin"
+        },
+        "synopsis": {
+            "value": "In the present day, Jang Bong-Hwan works as a chef at the President's Blue House. He has a free spirit, but his spirit somehow finds its way into the body of Queen Kim So-Yong (Shin Hae-Sun) in the Joseon period.\n\nKing Cheoljong (Kim Jung-Hyun) has secrets. He seems like a figurehead, who is gentle and easygoing. In fact, he hides his strong aspects. Queen Sunwon (Bae Jong-Ok) is the late King Sunjo’s wife. She wields the true power in the country and, thus, relegates King Cheoljong as just a figurehead. Kim Jwa-Geun (Kim Tae-Woo) is Queen Sunwon’s younger brother. He is extremely ambitious.",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Mr._Queen"
+        },
+        "director": {
+            "value": [
+                "Yoon Sung Shik"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/58365-queen-cheorin"
+        },
+        "tags": {
+            "value": [
+                "Transmigration",
+                "Sassy Female Lead",
+                "Eccentric Female Lead",
+                "Joseon Dynasty",
+                "Time Travel",
+                "Calm Male Lead",
+                "Palace Setting",
+                "Marriage Of Convenience",
+                "Gender Swap",
+                "Nice Male Lead"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/58365-queen-cheorin"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "114139",
+                    "artistName": "HowL",
+                    "artistImageURL": "https://i.mydramalist.com/BdrXDq_5m.jpg",
+                    "characterName": null,
+                    "role": "Composer"
+                },
+                {
+                    "artistID": "18914",
+                    "artistName": "Yoon Sung Shik",
+                    "artistImageURL": "https://i.mydramalist.com/Qr0A2_5m.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "23551",
+                    "artistName": "Park Gye Ok",
+                    "artistImageURL": "https://i.mydramalist.com/YYBENo_5m.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "63265",
+                    "artistName": "Choi Ah Il",
+                    "artistImageURL": "https://i.mydramalist.com/4ELrd_5m.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "7194",
+                    "artistName": "Shin Hae Sun",
+                    "artistImageURL": "https://i.mydramalist.com/O8J8kk_5s.jpg",
+                    "characterName": "Kim So Yong / Jang Bong Hwan",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "11840",
+                    "artistName": "Kim Jung Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/QVKxv_5s.jpg",
+                    "characterName": "King Cheol Jong",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "2016",
+                    "artistName": "Bae Jong Ok",
+                    "artistImageURL": "https://i.mydramalist.com/Qxym5_5s.jpg",
+                    "characterName": "Grand Queen Dowager Sunwon [Cheoljong's grandmother]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4473",
+                    "artistName": "Kim Tae Woo",
+                    "artistImageURL": "https://i.mydramalist.com/47PO1_5s.jpg",
+                    "characterName": "Kim Jwa Geun [Queen Dowager's brother]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "35765",
+                    "artistName": "Jo Yun Hee",
+                    "artistImageURL": "https://i.mydramalist.com/2EQRP_5s.jpg",
+                    "characterName": "Queen Dowager Jo",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "14261",
+                    "artistName": "Seol In Ah",
+                    "artistImageURL": "https://i.mydramalist.com/NdnRoE_5s.jpg",
+                    "characterName": "Jo Hwa Jin [Royal concubine]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "44989",
+                    "artistName": "Chae Seo Eun",
+                    "artistImageURL": "https://i.mydramalist.com/rXoW7_5s.jpg",
+                    "characterName": "Hong Yeon [So Yong's maid]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "20296",
+                    "artistName": "Cha Chung Hwa",
+                    "artistImageURL": "https://i.mydramalist.com/EbNK5_5s.jpg",
+                    "characterName": "Court Lady Choi [So Yong's attendant]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "9481",
+                    "artistName": "Na In Woo",
+                    "artistImageURL": "https://i.mydramalist.com/kdwOO_5s.jpg",
+                    "characterName": "Kim Byeong In [Jwa Geun's adoptive son]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "6294",
+                    "artistName": "Jeon Bae Soo",
+                    "artistImageURL": "https://i.mydramalist.com/jJb0w_5s.jpg",
+                    "characterName": "Kim Mun Geun [So Yong's father]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1877",
+                    "artistName": "Yoo Min Kyu",
+                    "artistImageURL": "https://i.mydramalist.com/RrVZzs.jpg",
+                    "characterName": "Prince Yeongpyeong [Cheoljong's brother]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4562",
+                    "artistName": "Lee Jae Won",
+                    "artistImageURL": "https://i.mydramalist.com/By7eb_5s.jpg",
+                    "characterName": "Hong Byul Gam [Cheoljong's friend]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "16621",
+                    "artistName": "Yoo Young Jae",
+                    "artistImageURL": "https://i.mydramalist.com/kR07b_5s.jpg",
+                    "characterName": "Kim Hwan [Byung In's cousin]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "14559",
+                    "artistName": "Son Kwang Eop",
+                    "artistImageURL": "https://i.mydramalist.com/112m7_5s.jpg",
+                    "characterName": "Kim Chang Hyuk [Minister of War]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4573",
+                    "artistName": "Song Min Hyung",
+                    "artistImageURL": "https://i.mydramalist.com/pz8rn_5s.jpg",
+                    "characterName": "Kim Byung Hak [Chief State councilor]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "6166",
+                    "artistName": "Kang Ji Hoo",
+                    "artistImageURL": "https://i.mydramalist.com/qEQm8_5s.jpg",
+                    "characterName": "Kim Seok Geun [Left State councilor]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4577",
+                    "artistName": "Go In Beom",
+                    "artistImageURL": "https://i.mydramalist.com/XOqkd_5s.jpg",
+                    "characterName": "Jo Man Hong [Right State councilor]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4568",
+                    "artistName": "Kim Kwang Shik",
+                    "artistImageURL": "https://i.mydramalist.com/6Egbg_5s.jpg",
+                    "characterName": "Jo Deok Moon [Minister of Personnel]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4242",
+                    "artistName": "Kim Bang Won",
+                    "artistImageURL": "https://i.mydramalist.com/6dQ1W_5s.jpg",
+                    "characterName": "Sal Soo [Jwa Geun's assassin]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1628",
+                    "artistName": "Kim In Kwon",
+                    "artistImageURL": "https://i.mydramalist.com/l0nk2N_5s.jpg",
+                    "characterName": "Man Bok [Royal chef]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "39653",
+                    "artistName": "Noh Jae Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/dx55D_5s.jpg",
+                    "characterName": "[Palace cook]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "20028",
+                    "artistName": "Ji Ho Sung",
+                    "artistImageURL": "https://i.mydramalist.com/wK0xns.jpg",
+                    "characterName": "[Palace cook]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1741",
+                    "artistName": "Yoon Gi Won",
+                    "artistImageURL": "https://i.mydramalist.com/WBWwps.jpg",
+                    "characterName": "[Royal physician]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4574",
+                    "artistName": "Yoon Jin Ho",
+                    "artistImageURL": "https://i.mydramalist.com/6n2Nps.jpg",
+                    "characterName": "[King Cheoljong's attendant / head eunuch]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4627",
+                    "artistName": "Lee Tae Geom",
+                    "artistImageURL": "https://i.mydramalist.com/00LL6s.jpg",
+                    "characterName": "Eunuch Kim",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "59253",
+                    "artistName": "Choi Hwan Yi",
+                    "artistImageURL": "https://i.mydramalist.com/E0kel_5s.jpg",
+                    "characterName": "Eunuch Choi",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1713",
+                    "artistName": "Yoon Bong Gil",
+                    "artistImageURL": "https://i.mydramalist.com/v8vx2_5s.jpg",
+                    "characterName": "Do Sul Li [Head Inspector]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "59255",
+                    "artistName": "Kang Chae Won",
+                    "artistImageURL": "https://i.mydramalist.com/0j47O_5s.jpg",
+                    "characterName": "Dam Hyang [Court lady]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "44227",
+                    "artistName": "Kim Joo Young",
+                    "artistImageURL": "https://i.mydramalist.com/xBD6q_5s.jpg",
+                    "characterName": "Oh Wol [Hwa Jin's maid]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "25265",
+                    "artistName": "O Ji Yeong",
+                    "artistImageURL": "https://i.mydramalist.com/81A0jD_5s.jpg",
+                    "characterName": "Court Lady Go [Hwa Jin's attendant]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "14078",
+                    "artistName": "Jeon Young Mi",
+                    "artistImageURL": "https://i.mydramalist.com/pAzlD_5s.jpg",
+                    "characterName": "Court Lady Chun [Grand Queen Dowager's attendant]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "61441",
+                    "artistName": "Lee Seung Ah",
+                    "artistImageURL": "https://i.mydramalist.com/2EO5O_5s.jpg",
+                    "characterName": "Court Lady Han [Queen Dowager Jo's attendant]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "44869",
+                    "artistName": "Son So Mang",
+                    "artistImageURL": "https://i.mydramalist.com/EgyP7_5s.jpg",
+                    "characterName": "Court Lady Kang [Queen Dowager Jo's maid]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "879",
+                    "artistName": "Lee Chul Min",
+                    "artistImageURL": "https://i.mydramalist.com/RdvDY_5s.jpg",
+                    "characterName": "Han Pyo Jin  / Han Shim Ong [Andong Kim clan's spy]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "80745",
+                    "artistName": "Kim Ye Ji",
+                    "artistImageURL": "https://i.mydramalist.com/2vJw7_5s.jpg",
+                    "characterName": "Yoon Gyeong Ok",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "107035",
+                    "artistName": "Lee Hyo Bin",
+                    "artistImageURL": "https://i.mydramalist.com/Bdqzrl_5s.jpg",
+                    "characterName": "Min Ja Hyeon [Concubine]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3771",
+                    "artistName": "Baek Jae Jin",
+                    "artistImageURL": "https://i.mydramalist.com/QxnQv_5s.jpg",
+                    "characterName": "[General store owner]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "10560",
+                    "artistName": "Lee Yang Hee",
+                    "artistImageURL": "https://i.mydramalist.com/4jXPY_5s.jpg",
+                    "characterName": "Jo Dae Su [Royal secretariat] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "19874",
+                    "artistName": "Kim Jun Won",
+                    "artistImageURL": "https://i.mydramalist.com/r5XJZ_5s.jpg",
+                    "characterName": "Bu Seung Min [Blue House's sous chef] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "126921",
+                    "artistName": "Lee Seung Heon",
+                    "artistImageURL": "https://i.mydramalist.com/d0dDKW_5s.jpg",
+                    "characterName": "[Aide] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "101059",
+                    "artistName": "Lee Young Joo",
+                    "artistImageURL": "https://i.mydramalist.com/eXvOY_5s.jpg",
+                    "characterName": "[Hwa Jin's nanny] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "48353",
+                    "artistName": "Richard Kim",
+                    "artistImageURL": "https://i.mydramalist.com/vzwdX_5s.jpg",
+                    "characterName": "[Chinese ambassador] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "62075",
+                    "artistName": "Han Ji Ho",
+                    "artistImageURL": "https://i.mydramalist.com/1xZ0Q_5s.jpg",
+                    "characterName": "Detective Lee (Ep. 1, 7, 20)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "1328",
+                    "artistName": "Choi Jin Hyuk",
+                    "artistImageURL": "https://i.mydramalist.com/pb7nb_5s.jpg",
+                    "characterName": "Jang Bong Hwan [Blue House chef] (Ep. 1, 6-7, 20)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "22281",
+                    "artistName": "Ha Min",
+                    "artistImageURL": "https://i.mydramalist.com/YYgBOB_5s.jpg",
+                    "characterName": "Physician Park [Queen Dowager's blind attendant] (Ep. 1, 5, 7, 13, 19)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21144",
+                    "artistName": "Seo Wang Seok",
+                    "artistImageURL": "https://i.mydramalist.com/4rX7Q_5s.jpg",
+                    "characterName": "[Detective] (Ep. 1, 7, 20)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "94559",
+                    "artistName": "Shin Ha Jun",
+                    "artistImageURL": "https://i.mydramalist.com/EOAbb_5s.jpg",
+                    "characterName": "[Guard] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "9522",
+                    "artistName": "Kwon Eun Soo",
+                    "artistImageURL": "https://i.mydramalist.com/rXLzD_5s.jpg",
+                    "characterName": "[Court lady] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "58703",
+                    "artistName": "Kim Ka Eun",
+                    "artistImageURL": "https://i.mydramalist.com/QxnjY_5s.jpg",
+                    "characterName": "[Court lady] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "55511",
+                    "artistName": "Lee Seung Jin",
+                    "artistImageURL": "https://i.mydramalist.com/XXEDZ_5s.jpg",
+                    "characterName": "[Royal guard] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "25587",
+                    "artistName": "Yoon Jung Ro",
+                    "artistImageURL": "https://i.mydramalist.com/5vZ5Nw_5s.jpg",
+                    "characterName": "[Royal guard] (Ep. 2, 12)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "42433",
+                    "artistName": "Lee Eun Joo",
+                    "artistImageURL": "https://i.mydramalist.com/QmDmYs.jpg",
+                    "characterName": "[Dam Hyang's mother] (Ep. 2, 15)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "9279",
+                    "artistName": "Yoo Jung Ho",
+                    "artistImageURL": "https://i.mydramalist.com/Bw216s.jpg",
+                    "characterName": "[Dam Hyang's father] (Ep. 2, 18-19)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "9645",
+                    "artistName": "Kim Yong Jin",
+                    "artistImageURL": "https://i.mydramalist.com/2DJmws.jpg",
+                    "characterName": "[Eunuch] (Ep. 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "33667",
+                    "artistName": "Na Mi Hee",
+                    "artistImageURL": "https://i.mydramalist.com/XKpmXs.jpg",
+                    "characterName": "[Court lady] (Ep. 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "63107",
+                    "artistName": "Lee Sun Young",
+                    "artistImageURL": "https://i.mydramalist.com/vbOqg_5s.jpg",
+                    "characterName": "[Court lady] (Ep. 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "8548",
+                    "artistName": "Kim Kang Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/XJ6qq_5s.jpg",
+                    "characterName": "King Cheoljong [Young] (Ep. 4, 8-9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "39717",
+                    "artistName": "Lee Shi Hoo",
+                    "artistImageURL": "https://i.mydramalist.com/0jKN6_5s.jpg",
+                    "characterName": "Kim Hong Geun [Banished official] (Ep. 5)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "43831",
+                    "artistName": "Bae Eun Woo",
+                    "artistImageURL": "https://i.mydramalist.com/YYq0yA_5s.jpg",
+                    "characterName": "[Gisaeng] (Ep. 5)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "49215",
+                    "artistName": "Kim Nan Hee",
+                    "artistImageURL": "https://i.mydramalist.com/2Eg4V_5s.jpg",
+                    "characterName": "[Fortune teller] (Ep. 6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "25725",
+                    "artistName": "Moon Hak Jin",
+                    "artistImageURL": "https://i.mydramalist.com/vBDLq_5s.jpg",
+                    "characterName": "[Food palanquin bearer] (Ep. 6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "27837",
+                    "artistName": "Koo Ja Keon",
+                    "artistImageURL": "https://i.mydramalist.com/RXwQx_5s.jpg",
+                    "characterName": "[Food palanquin bearer] (Ep. 6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "36045",
+                    "artistName": "Kim Seung Wan",
+                    "artistImageURL": "https://i.mydramalist.com/2AOOO_5s.jpg",
+                    "characterName": "[Food palanquin bearer] (Ep. 6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "52031",
+                    "artistName": "Moon Chang Jun",
+                    "artistImageURL": "https://i.mydramalist.com/0jKWO_5s.jpg",
+                    "characterName": "Lee Saeng Bang [Kim Hwan's new friend] (Ep. 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "61951",
+                    "artistName": "Lee Soo Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/2P56P_5s.jpg",
+                    "characterName": "[Nurse] (Ep. 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "4345",
+                    "artistName": "Hwang Dong Joo",
+                    "artistImageURL": "https://i.mydramalist.com/E5YggW_5s.jpg",
+                    "characterName": "[Nobleman] (Ep. 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "42503",
+                    "artistName": "Jang Yong Bok",
+                    "artistImageURL": "https://i.mydramalist.com/E3qqp_5s.jpg",
+                    "characterName": "[Silk trader]  (Ep. 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "34621",
+                    "artistName": "Choi Young Min",
+                    "artistImageURL": "https://i.mydramalist.com/wgBpb_5s.jpg",
+                    "characterName": "[Bong Hwan's doctor] (Ep. 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "70829",
+                    "artistName": "Yoon Tae Soo",
+                    "artistImageURL": "https://i.mydramalist.com/XJ15g_5s.jpg",
+                    "characterName": "(Ep. 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "16414",
+                    "artistName": "Seo Eun Sol",
+                    "artistImageURL": "https://i.mydramalist.com/Zj03O_5s.jpg",
+                    "characterName": "Kim So Yong [Young] (Ep. 7-9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "44843",
+                    "artistName": "Kim Beom Jun",
+                    "artistImageURL": "https://i.mydramalist.com/yWnynd_5s.jpg",
+                    "characterName": "[Gun soldier] (Ep. 8, 11)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "25275",
+                    "artistName": "Kim Jung Chul",
+                    "artistImageURL": "https://i.mydramalist.com/qqBp0s.jpg",
+                    "characterName": "Kim Byung In [Young] (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "34631",
+                    "artistName": "Gu Bon Jin",
+                    "artistImageURL": "https://i.mydramalist.com/ByxVl_5s.jpg",
+                    "characterName": "[Thief] (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "25187",
+                    "artistName": "Park Ji Hong",
+                    "artistImageURL": "https://i.mydramalist.com/673w2_5s.jpg",
+                    "characterName": "[Thief] (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6082",
+                    "artistName": "Kim Min Kyo",
+                    "artistImageURL": "https://i.mydramalist.com/1w44B6_5s.jpg",
+                    "characterName": "[Bandit] (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "13046",
+                    "artistName": "Moon Seung Bae",
+                    "artistImageURL": "https://i.mydramalist.com/qEbPd_5s.jpg",
+                    "characterName": "[Villager] (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "32657",
+                    "artistName": "Kim Gyeong Min",
+                    "artistImageURL": "https://i.mydramalist.com/O87k4L_5s.jpg",
+                    "characterName": "[Villager] (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "84113",
+                    "artistName": "Son Seung Taek",
+                    "artistImageURL": "https://i.mydramalist.com/Xxkxw_5s.jpg",
+                    "characterName": "[Carpenter] (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "87981",
+                    "artistName": "Kim Ji Won",
+                    "artistImageURL": "https://i.mydramalist.com/eYnlyW_5s.jpg",
+                    "characterName": "[Taunting girl] (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "124347",
+                    "artistName": "Lee Seul Yi",
+                    "artistImageURL": "https://i.mydramalist.com/wJm6bN_5s.jpg",
+                    "characterName": "[King Cheoljong's mother] (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "3515",
+                    "artistName": "Kwon Yong Woon",
+                    "artistImageURL": "https://i.mydramalist.com/2JdX7_5s.jpg",
+                    "characterName": "[Sim Hyang's father] (Ep. 11)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "8118",
+                    "artistName": "Kim Jin Ho",
+                    "artistImageURL": "https://i.mydramalist.com/en0zWs.jpg",
+                    "characterName": "[Gyeong Ok's father] (Ep. 11)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "20009",
+                    "artistName": "Min Jung Sup",
+                    "artistImageURL": "https://i.mydramalist.com/wmvR1s.jpg",
+                    "characterName": "[Royal banquet officiate] (Ep. 11)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "17585",
+                    "artistName": "Kang Da Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/O8JXDd_5s.jpg",
+                    "characterName": "Hong Sim Hyang [Consort] (Ep. 11-12, 14, 16, 18)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "31239",
+                    "artistName": "Eom Ji Man",
+                    "artistImageURL": "https://i.mydramalist.com/dJ5pW_5s.jpg",
+                    "characterName": "[Gunpowder trader] (Ep. 13)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "24797",
+                    "artistName": "Choi Yo Han",
+                    "artistImageURL": "https://i.mydramalist.com/Xmweg_5s.jpg",
+                    "characterName": "[Monk] (Ep. 14)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "81127",
+                    "artistName": "Han Ji Eun",
+                    "artistImageURL": "https://i.mydramalist.com/BLzWb_5s.jpg",
+                    "characterName": "[Prisoner] (Ep. 16)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "128337",
+                    "artistName": "Bang Bo Yong",
+                    "artistImageURL": "https://i.mydramalist.com/2w32Ww_5s.jpg",
+                    "characterName": "[Commoner] (Ep. 16)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "64685",
+                    "artistName": "Lee Do Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/Bo056_5s.jpg",
+                    "characterName": "[Chang Hyuk's son] (Ep. 16-19)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "58685",
+                    "artistName": "Je Seung Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/0JkBe_5s.jpg",
+                    "characterName": "[Court lady] (Ep. 17)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "30335",
+                    "artistName": "Lee Chan Yoo",
+                    "artistImageURL": "https://i.mydramalist.com/Xvgwqs.jpg",
+                    "characterName": "[Donghak rebel] (Ep. 18)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "55241",
+                    "artistName": "Oh Je Geun",
+                    "artistImageURL": "https://i.mydramalist.com/jZlmv_5s.jpg",
+                    "characterName": "[Tortured herb gatherer] (Ep. 18)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "44961",
+                    "artistName": "Choi Hyung Joo",
+                    "artistImageURL": "https://i.mydramalist.com/20npd_5s.jpg",
+                    "characterName": "Lee Kyung Won (Ep. 19-20)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "64765",
+                    "artistName": "Ko Hoon Mok",
+                    "artistImageURL": "https://i.mydramalist.com/vAOL2_5s.jpg",
+                    "characterName": "[Rare ingredients cart puller] (Ep. 19-20)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "22963",
+                    "artistName": "Kim Dae Kook",
+                    "artistImageURL": "https://i.mydramalist.com/EgBJm_5s.jpg",
+                    "characterName": "[Soldier #2] (Ep. 20)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "93319",
+                    "artistName": "Kong Joon Min",
+                    "artistImageURL": "https://i.mydramalist.com/wYDVp_5s.jpg",
+                    "characterName": "[New governor] (Ep. 20)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "23394",
+                    "artistName": "Eom Seo Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/dXAEK_5s.jpg",
+                    "characterName": "Jo Hwa Jin [Young]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "67457",
+                    "artistName": "Kim Sung Ha",
+                    "artistImageURL": "https://i.mydramalist.com/ZN14q_5s.jpg",
+                    "characterName": "King Cheol Jong [Old]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "148152",
+                    "artistName": "Park Ji Won",
+                    "artistImageURL": "https://i.mydramalist.com/5vbJdy_5s.jpg",
+                    "characterName": "[Commoner] (Ep. 16)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "58731",
+                    "artistName": "An Ju Ri",
+                    "artistImageURL": "https://i.mydramalist.com/4x0nJ_5s.jpg",
+                    "characterName": "[Court lady]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "150152",
+                    "artistName": "Lee Cheol Eun",
+                    "artistImageURL": "https://i.mydramalist.com/NdbvjE_5s.jpg",
+                    "characterName": "[Consort Min's father] (Ep. 11)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "58733",
+                    "artistName": "Seo Hye Ryeong",
+                    "artistImageURL": "https://i.mydramalist.com/v8vpD_5s.jpg",
+                    "characterName": "[Court lady]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "72979",
+                    "artistName": "Jung Hye Ji",
+                    "artistImageURL": "https://i.mydramalist.com/ZqK31_5s.jpg",
+                    "characterName": "[Court lady]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "74443",
+                    "artistName": "Yoon Yi Reh",
+                    "artistImageURL": "https://i.mydramalist.com/QbNr5_5s.jpg",
+                    "characterName": "[Court lady]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "99789",
+                    "artistName": "Ahn So Ye",
+                    "artistImageURL": "https://i.mydramalist.com/Q4wJ6_5s.jpg",
+                    "characterName": "[Kid couple]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "44145",
+                    "artistName": "Kim Han Sang",
+                    "artistImageURL": "https://i.mydramalist.com/0g86O_5s.jpg",
+                    "characterName": "[Magistrate]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "54595",
+                    "artistName": "Han Sang Jo",
+                    "artistImageURL": "https://i.mydramalist.com/R4bRV_5s.jpg",
+                    "characterName": "[Royal guard]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "64885",
+                    "artistName": "Kim Jae Ho",
+                    "artistImageURL": "https://i.mydramalist.com/pY0vQ_5s.jpg",
+                    "characterName": "[Royal guard]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "93715",
+                    "artistName": "Kim Joo Young",
+                    "artistImageURL": "https://i.mydramalist.com/EOLVl_5s.jpg",
+                    "characterName": "[Moon Geun's servant]",
+                    "role": "Guest Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/58365-queen-cheorin"
+        },
+        "airedOn": {
+            "value": [
+                "Saturday",
+                "Sunday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/58365-queen-cheorin"
+        }
+    },
+    "sitePriorityUsed": {
+        "showImage": "asianwiki",
+        "releaseDate": "asianwiki",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": null,
+        "airedOn": "mydramalist"
+    }
+}

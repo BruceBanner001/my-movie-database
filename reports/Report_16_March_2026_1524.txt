@@ -1,0 +1,114 @@
+✅ Workflow completed successfully
+🆔 Run ID: RUN_20260316_152406
+📅 Run Time: 16 March 2026 03:24 PM (IST)
+⚙️ Script Version: v10.1
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Manual Updates ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🔁 Data Updated:
+✍️ 101 - Perfect Mismatch -> Show Image Updated Manually
+✍️ 102 - Alchemy Of Souls Season 1 -> Other Names, Release Date, Synopsis, Duration Updated Manually
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Sheet1 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🆕 Data Created:
+- 104 - She Is The One (2021) -> First Time Uploaded
+
+🔁 Data Updated:
+✍️ 103 - Alchemy of Souls Season 2: Light and Shadow -> Released Year, Total Episodes, Watch Ended On, Comments, Ratings, Category, Again Watched Dates Updated
+
+🖼️ Fetched Data Details:
+- 104 - She Is The One -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+
+🚫 Skipped (Unchanged):
+- 101 - Perfect Mismatch (2023)
+- 102 - Alchemy Of Souls Season 1 (2022)
+
+📊 Summary (Sheet: Sheet1)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Created: 1
+🔁 Updated: 1
+🔍 Refetched: 0
+🚫 Skipped: 2
+⚠️ Warnings: 0
+  Total Rows: 4
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Sheet2 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🆕 Data Created:
+- 3001 - Mr. Queen (2020) -> First Time Uploaded
+- 3002 - She Would Never Know (2021) -> First Time Uploaded
+
+🖼️ Fetched Data Details:
+- 3001 - Mr. Queen -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 3002 - She Would Never Know -> Fetched: Aired On, Cast, Director, Duration, Release Date, Show Image, Synopsis, Tags
+
+🕳️ Value Not Found:
+- 3002 - She Would Never Know -> ⚠️ Missing: Other Names
+
+📊 Summary (Sheet: Sheet2)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Created: 2
+🔁 Updated: 0
+🔍 Refetched: 0
+🚫 Skipped: 0
+⚠️ Warnings: 1
+  Total Rows: 2
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 Overall Summary
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Total Created: 3
+🔁 Total Updated: 1
+🔍 Total Refetched: 0
+🖼️ Show Images Updated: 3
+🧑‍🎨 New Artist Images Added: 86
+🚫 Total Skipped: 2
+❌ Total Deleted: 0
+🗄️ Total Archived Backups: 0
+⚠️ Total Warnings: 1
+💾 Backup Files: 3
+  Grand Total Rows Processed: 6
+
+💾 Metadata Backups: 6
+
+📦 Total Objects in seriesData.json: 6
+📦 Total Objects in artists.json: 1314
+📦 Total Objects in cast.json: 6
+📦 Total Objects in artists_lookup.json: 1314
+🖼️ Total images in show-images: 6
+🧑‍🎨 Total images in artist-images: 1293
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ Folders Generated:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📁 backups/ (Total: 3 files)
+    📄 BACKUP_16_March_2026_1524_101.json
+    📄 BACKUP_16_March_2026_1524_102.json
+    📄 BACKUP_16_March_2026_1524_103.json
+
+📁 show_images/ (Total: 1 files)
+    📄 101.jpg
+
+📁 artist_images/ (Total: 86 files)
+    📄 51741.jpg
+    📄 52311.jpg
+    📄 47379.jpg
+    ... and 83 more files.
+
+📁 meta_backups/ (Total: 6 files)
+    📄 META_16_March_2026_1524_101.json
+    📄 META_16_March_2026_1524_102.json
+    📄 META_16_March_2026_1524_103.json
+    ... and 3 more files.
+
+📁 reports/ (Total: 1 files)
+    📄 Report_16_March_2026_1524.txt
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🏁 Workflow finished successfully
