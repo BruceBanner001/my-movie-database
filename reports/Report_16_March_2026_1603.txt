@@ -1,0 +1,84 @@
+✅ Workflow completed successfully
+🆔 Run ID: RUN_20260316_160350
+📅 Run Time: 16 March 2026 04:04 PM (IST)
+⚙️ Script Version: v10.2
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Sheet1 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🆕 Data Created:
+- 101 - She Is The One (2021) -> First Time Uploaded
+
+🖼️ Fetched Data Details:
+- 101 - She Is The One -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+
+📊 Summary (Sheet: Sheet1)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Created: 1
+🔁 Updated: 0
+🔍 Refetched: 0
+🚫 Skipped: 0
+⚠️ Warnings: 0
+  Total Rows: 1
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Sheet2 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🆕 Data Created:
+- 3001 - She Would Never Know (2021) -> First Time Uploaded
+
+🖼️ Fetched Data Details:
+- 3001 - She Would Never Know -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+
+📊 Summary (Sheet: Sheet2)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Created: 1
+🔁 Updated: 0
+🔍 Refetched: 0
+🚫 Skipped: 0
+⚠️ Warnings: 0
+  Total Rows: 1
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 Overall Summary
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Total Created: 2
+🔁 Total Updated: 0
+🔍 Total Refetched: 0
+🖼️ Show Images Updated: 2
+🧑‍🎨 New Artist Images Added: 116
+🚫 Total Skipped: 0
+❌ Total Deleted: 0
+🗄️ Total Archived Backups: 0
+⚠️ Total Warnings: 0
+💾 Backup Files: 0
+  Grand Total Rows Processed: 2
+
+💾 Metadata Backups: 2
+
+📦 Total Objects in seriesData.json: 2
+📦 Total Objects in artists.json: 116
+📦 Total Objects in cast.json: 2
+📦 Total Objects in artists_lookup.json: 116
+🖼️ Total images in show-images: 2
+🧑‍🎨 Total images in artist-images: 116
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ Folders Generated:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📁 artist_images/ (Total: 116 files)
+    📄 51741.jpg
+    📄 52311.jpg
+    📄 47379.jpg
+    ... and 113 more files.
+
+📁 meta_backups/ (Total: 2 files)
+    📄 META_16_March_2026_1603_101.json
+    📄 META_16_March_2026_1603_3001.json
+
+📁 reports/ (Total: 1 files)
+    📄 Report_16_March_2026_1603.txt
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🏁 Workflow finished successfully
