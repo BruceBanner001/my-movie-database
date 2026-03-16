@@ -1,0 +1,65 @@
+✅ Workflow completed successfully
+🆔 Run ID: RUN_20260316_131951
+📅 Run Time: 16 March 2026 01:19 PM (IST)
+⚙️ Script Version: v9.5
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Deleting Records ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+❌ Data Deleted:
+- 104 -> Unforgettable Love (2021) -> ✅ Deleted
+- 101 -> Alchemy Of Souls Season 1 (2022) -> ✅ Deleted
+- 102 -> Alchemy of Souls Season 2: Light and Shadow (2023) -> ✅ Deleted
+- 103 -> Find Me in Your Memory (2020) -> ✅ Deleted
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 Overall Summary
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Total Created: 0
+🔁 Total Updated: 0
+🔍 Total Refetched: 0
+🖼️ Show Images Updated: 0
+🧑‍🎨 New Artist Images Added: 0
+🚫 Total Skipped: 0
+❌ Total Deleted: 4
+🗄️ Total Archived Backups: 5
+⚠️ Total Warnings: 0
+💾 Backup Files: 0
+  Grand Total Rows Processed: 0
+
+💾 Metadata Backups: 0
+
+📦 Total Objects in seriesData.json: 0
+📦 Total Objects in artists.json: 1211
+📦 Total Objects in cast.json: 0
+📦 Total Objects in artists_lookup.json: 1211
+🖼️ Total images in show-images: 0
+🧑‍🎨 Total images in artist-images: 1190
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ Folders Generated:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📁 deleted_data/ (Total: 4 files)
+    📄 DELETED_16_March_2026_1319_104.json
+    📄 DELETED_16_March_2026_1319_101.json
+    📄 DELETED_16_March_2026_1319_102.json
+    📄 DELETED_16_March_2026_1319_103.json
+
+📁 deleted_images/ (Total: 4 files)
+    📄 DELETED_16_March_2026_1319_104.jpg
+    📄 DELETED_16_March_2026_1319_101.jpg
+    📄 DELETED_16_March_2026_1319_102.jpg
+    📄 DELETED_16_March_2026_1319_103.jpg
+
+📁 reports/ (Total: 1 files)
+    📄 Report_16_March_2026_1319.txt
+
+📁 archived_meta_backups/ (Total: 5 files)
+    📄 META_16_March_2026_1016_104.json
+    📄 META_16_March_2026_0954_101.json
+    📄 META_16_March_2026_1016_101.json
+    📄 META_16_March_2026_0954_102.json
+    📄 META_16_March_2026_1016_103.json
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🏁 Workflow finished successfully
