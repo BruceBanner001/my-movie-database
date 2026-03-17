@@ -93,7 +93,7 @@ jobs:
           fi
           
           # 4. If there are more rows, trigger the relay race!
-          if [ "$CONTINUE_RUN" = true ]; then
+          if[ "$CONTINUE_RUN" = true ]; then
             echo "Batch finished! Triggering the next batch immediately..."
             gh workflow run "Excel → JSON Update"
           fi
