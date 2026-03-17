@@ -58,10 +58,6 @@ jobs:
           script_exit_code=${PIPESTATUS[0]}
           output=$(cat output.log)
           echo "output_log<<EOF" >> "$GITHUB_OUTPUT"; echo "$output" >> "$GITHUB_OUTPUT"; echo "EOF" >> "$GITHUB_OUTPUT"
-          
-          # Only extract report path if it actually generated a report
-          report_path=$(echo "$output" | grep -oP 'Final Report written -> \K.*' || true)
-          echo "report_path=$report_path" >> "$GITHUB_OUTPUT"
           exit $script_exit_code
 
       - name: 6. Cleanup Secret Files
@@ -77,7 +73,7 @@ jobs:
         run: |
           # 1. Check if the script paused for a next batch
           CONTINUE_RUN=false
-          if [ -f "RESUME_FLAG.txt" ]; then
+          if[ -f "RESUME_FLAG.txt" ]; then
             CONTINUE_RUN=true
             rm RESUME_FLAG.txt
           fi
@@ -112,12 +108,19 @@ jobs:
         run: |
           email_body_file=$(mktemp)
           echo "body_file=$email_body_file" >> "$GITHUB_OUTPUT"
-          report_file=$(find reports -type f -name "FINAL_BATCH_REPORT_*.txt" | sort -r | head -n1 || find reports -type f -name "Report_*.txt" | sort -r | head -n1 || true)
+          
+          # FIX: Sort by modification time (-t) so the absolute newest file is always picked, ignoring alphabetical order!
+          report_file=$(ls -1t reports/*.txt 2>/dev/null | head -n 1 || true)
+          
           {
             if [[ "${WORKFLOW_STATUS}" == "success" ]]; then
               echo "✅ Workflow Batch completed successfully."
               echo ""
-              if [[ -f "$report_file" ]]; then cat "$report_file"; else echo "⚠️ Report file was not found."; fi
+              if [[ -n "$report_file" && -f "$report_file" ]]; then
+                cat "$report_file"
+              else
+                echo "⚠️ Report file was not found."
+              fi
             else
               echo "❌ Workflow FAILED."
               echo "Please check the Actions log on GitHub. Raw script output is below:"
