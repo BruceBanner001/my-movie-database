@@ -1,7 +1,7 @@
 # ============================================================================
 # Workflow: Excel → JSON Automation
 # Purpose : Automate scheduled and manual Excel-to-JSON updates.
-# Version : 4.7 (FEATURE: Automated Relay-Race Batch Processing)
+# Version : 4.8 (FEATURE: Automated Relay-Race Batch Processing + Fallbacks)
 # ============================================================================
 
 name: Excel → JSON Update
@@ -44,21 +44,31 @@ jobs:
       - name: 5. Run the Excel-to-JSON update script
         id: run_updater
         env:
-          SHEETS: "Sheet1;Sheet2"
+          SHEETS: "Sheet1;Sheet2;Manual Updates"
           GITHUB_PAGES_URL: "https://brucebanner001.github.io/my-movie-database"
           DEBUG_FETCH: "true"
-          
-          # [ THE AUTOMATED BATCH LIMIT ]
-          # Forces the script to pause and save after 50 heavy scrapes.
           MAX_FETCHES: "50"
-          
         run: |
           python create_update_backup_delete.py 2>&1 | tee output.log
           script_exit_code=${PIPESTATUS[0]}
           output=$(cat output.log)
-          echo "output_log<<EOF" >> "$GITHUB_OUTPUT"; echo "$output" >> "$GITHUB_OUTPUT"; echo "EOF" >> "$GITHUB_OUTPUT"
+          
+          # Dynamic delimiter for multi-line output to guarantee safety
+          EOF_DELIMITER=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "output_log<<$EOF_DELIMITER" >> "$GITHUB_OUTPUT"
+          echo "$output" >> "$GITHUB_OUTPUT"
+          echo "$EOF_DELIMITER" >> "$GITHUB_OUTPUT"
+          
           report_path=$(echo "$output" | grep -oP 'Report written -> \K.*')
           echo "report_path=$report_path" >> "$GITHUB_OUTPUT"
+          
+          # Flag if the script paused or finished
+          if [ -f "RESUME_FLAG.txt" ]; then
+            echo "IS_FINAL_BATCH=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "IS_FINAL_BATCH=true" >> "$GITHUB_OUTPUT"
+          fi
+          
           exit $script_exit_code
 
       - name: 6. Cleanup Secret Files
@@ -71,17 +81,19 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # 1. Check if the script paused for a next batch
           CONTINUE_RUN=false
-          if [ -f "RESUME_FLAG.txt" ]; then
+          if[ -f "RESUME_FLAG.txt" ]; then
             CONTINUE_RUN=true
             rm RESUME_FLAG.txt
           fi
           
-          # 2. Commit the 50 new rows to GitHub safely
+          # Delete output.log so it doesn't get committed to the repo
+          rm -f output.log
+          
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add -A --force
+          git add -A 
+          
           if git diff --cached --quiet; then
             echo "No data changes to commit."
           else
@@ -89,10 +101,9 @@ jobs:
             git push
           fi
           
-          # 3. If there are more rows, trigger the relay race!
           if [ "$CONTINUE_RUN" = true ]; then
             echo "Batch finished! Triggering the next batch immediately..."
-            gh workflow run "Excel → JSON Update"
+            gh workflow run "Excel → JSON Update" --ref ${{ github.ref_name }}
           fi
       
       - name: 8. Compose Email Body
@@ -101,10 +112,18 @@ jobs:
         env:
           WORKFLOW_STATUS: ${{ job.status }}
           SCRIPT_OUTPUT: ${{ steps.run_updater.outputs.output_log }}
+          REPORT_PATH: ${{ steps.run_updater.outputs.report_path }}
         run: |
           email_body_file=$(mktemp)
           echo "body_file=$email_body_file" >> "$GITHUB_OUTPUT"
-          report_file=$(find reports -type f -name "Report_*.txt" | sort -r | head -n1 || true)
+          
+          if [[ -n "$REPORT_PATH" && -f "$REPORT_PATH" ]]; then
+            report_file="$REPORT_PATH"
+          else
+            # Wildcard easily catches both PAUSED and FINAL reports
+            report_file=$(find reports -type f -name "*_REPORT.txt" | sort -r | head -n1 || true)
+          fi
+          
           {
             if [[ "${WORKFLOW_STATUS}" == "success" ]]; then
               echo "✅ Workflow Batch completed successfully."
@@ -118,8 +137,9 @@ jobs:
             fi
           } > "$email_body_file"
           
+      # ONLY SEND EMAIL IF IT IS THE FINAL BATCH OR IF IT CRASHED
       - name: 9. Send Final Email Notification
-        if: always()
+        if: always() && (steps.run_updater.outputs.IS_FINAL_BATCH == 'true' || job.status != 'success')
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: ${{ secrets.SMTP_SERVER }}
@@ -127,7 +147,7 @@ jobs:
           username: ${{ secrets.SMTP_USERNAME }}
           password: ${{ secrets.SMTP_PASSWORD }}
           subject: >
-            ${{ job.status == 'success' && '[Manual] Workflow - Batch Report' || '[ACTION REQUIRED] Workflow FAILED' }}
+            ${{ job.status == 'success' && '[Success] MyDramaList - Excel to JSON Final Batch Summary' || '[ACTION REQUIRED] Workflow FAILED' }}
           body: file://${{ steps.compose_email.outputs.body_file }}
           to: ${{ secrets.NOTIFY_EMAIL }}
           from: ${{ secrets.SMTP_USERNAME }}
