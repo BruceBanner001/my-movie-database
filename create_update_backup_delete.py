@@ -1,6 +1,6 @@
 # ============================================================
 # Script: create_update_backup_delete.py
-# Author:[BruceBanner001]
+# Author: [BruceBanner001]
 # Description:
 #   v24.0 Engine.
 #   - FIX: Ultra-lenient Regex for MDL Extractors (Catches "Perfect Mismatch" spacing anomalies).
@@ -12,68 +12,37 @@
 #   - BULLETPROOF UPDATE: Resilient AsianWiki other-names & synopsis parsers.
 #   - BULLETPROOF UPDATE: Blocked dummy/placeholder images from downloading.
 #   - V10.2 HOTFIX: Parent traversal for massive AKA lists, Regex Word Boundaries for Cast mapping.
-#   - V10.3 HOTFIX: Smart Fallback System (AsianWiki -> MDL) & Cumulative Runtime Tracker.
 #
-# Version: v10.3 (SMART FALLBACK & TIME TRACKER EDITION)
+# Version: v10.2 (BULLETPROOF EDITION: Maximum Scraping Resilience)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v10.3"
+SCRIPT_VERSION = "v10.2"
 
 JSON_OBJECT_TEMPLATE = {
-    "showID": None,
-    "showName": None,
-    "otherNames":[],
-    "showImage": None,
-    "watchStartedOn": None,
-    "watchEndedOn": None,
-    "releasedYear": 0,
-    "releaseDate": None,
-    "totalEpisodes": 0,
-    "showType": None,
-    "nativeLanguage": None,
-    "watchedLanguage": None,
-    "country": None,
-    "comments": None,
-    "ratings": 0,
-    "genres": [],
-    "network": [],
-    "againWatchedDates":[],
-    "updatedOn": None,
-    "updatedDetails": None,
-    "synopsis": None,
-    "topRatings": 0,
-    "Duration": None,
-    "director":[],
-    "tags": [],
-    "cast": {},
-    "airedOn":[],
-    "sitePriorityUsed": {
-        "showImage": None,
-        "releaseDate": None,
-        "otherNames": None,
-        "Duration": None,
-        "synopsis": None,
-        "director": None,
-        "tags": None,
-        "cast": None,
-        "network": None,
-        "airedOn": None,
-    },
+    "showID": None, "showName": None, "otherNames":[], "showImage": None,
+    "watchStartedOn": None, "watchEndedOn": None, "releasedYear": 0,
+    "releaseDate": None, "totalEpisodes": 0, "showType": None,
+    "nativeLanguage": None, "watchedLanguage": None, "country": None,
+    "comments": None, "ratings": 0, "genres":[], "network":[],
+    "againWatchedDates":[], "updatedOn": None, "updatedDetails": None,
+    "synopsis": None, "topRatings": 0, "Duration": None,
+    "director":[], "tags":[], "cast": {}, "airedOn":[],
+    "sitePriorityUsed": {"showImage": None, "releaseDate": None, "otherNames": None, "Duration": None, "synopsis": None, "director": None, "tags": None, "cast": None, "network": None, "airedOn": None}
 }
 
 SITE_PRIORITY_BY_LANGUAGE = {
-    "korean": { "synopsis": ["asianwiki", "mydramalist"], "showImage":["asianwiki", "mydramalist"], "otherNames": "mydramalist", "Duration": "mydramalist", "releaseDate":["asianwiki", "mydramalist"], "director": "mydramalist", "tags": "mydramalist", "cast": "mydramalist", "network": "mydramalist", "airedOn": "mydramalist" },
+    "korean": { "synopsis": "asianwiki", "showImage": "asianwiki", "otherNames": "mydramalist", "Duration": "mydramalist", "releaseDate": "asianwiki", "director": "mydramalist", "tags": "mydramalist", "cast": "mydramalist", "network": "mydramalist", "airedOn": "mydramalist" },
     "chinese": { "synopsis": "mydramalist", "showImage": "mydramalist", "otherNames": "mydramalist", "Duration": "mydramalist", "releaseDate": "mydramalist", "director": "mydramalist", "tags": "mydramalist", "cast": "mydramalist", "network": "mydramalist", "airedOn": "mydramalist" },
-    "japanese": { "synopsis": ["asianwiki", "mydramalist"], "showImage":["asianwiki", "mydramalist"], "otherNames": "mydramalist", "Duration": "mydramalist", "releaseDate": ["asianwiki", "mydramalist"], "director": "mydramalist", "tags": "mydramalist", "cast": "mydramalist", "network": "mydramalist", "airedOn": "mydramalist" },
+    "japanese": { "synopsis": "asianwiki", "showImage": "asianwiki", "otherNames": "mydramalist", "Duration": "mydramalist", "releaseDate": "asianwiki", "director": "mydramalist", "tags": "mydramalist", "cast": "mydramalist", "network": "mydramalist", "airedOn": "mydramalist" },
     "thai": { "synopsis": "mydramalist", "showImage": "mydramalist", "otherNames": "mydramalist", "Duration": "mydramalist", "releaseDate": "mydramalist", "director": "mydramalist", "tags": "mydramalist", "cast": "mydramalist", "network": "mydramalist", "airedOn": "mydramalist" },
     "taiwanese": { "synopsis": "mydramalist", "showImage": "mydramalist", "otherNames": "mydramalist", "Duration": "mydramalist", "releaseDate": "mydramalist", "director": "mydramalist", "tags": "mydramalist", "cast": "mydramalist", "network": "mydramalist", "airedOn": "mydramalist" },
     "filipino": { "synopsis": "mydramalist", "showImage": "mydramalist", "otherNames": "mydramalist", "Duration": "mydramalist", "releaseDate": "mydramalist", "director": "mydramalist", "tags": "mydramalist", "cast": "mydramalist", "network": "mydramalist", "airedOn": "mydramalist" },
     "english": { "synopsis": "imdb", "showImage": "imdb", "otherNames": "imdb", "Duration": "imdb", "releaseDate": "imdb", "director": "imdb", "tags": "imdb", "cast": "imdb", "network": "imdb", "airedOn": "imdb" },
-    "default": { "synopsis": ["asianwiki", "mydramalist"], "showImage":["asianwiki", "mydramalist"], "otherNames": "mydramalist", "Duration": "mydramalist", "releaseDate": ["asianwiki", "mydramalist"], "director": "mydramalist", "tags": "mydramalist", "cast": "mydramalist", "network": "mydramalist", "airedOn": "mydramalist" }
+    "default": { "synopsis": "mydramalist", "showImage": "asianwiki", "otherNames": "mydramalist", "Duration": "mydramalist", "releaseDate": "asianwiki", "director": "mydramalist", "tags": "mydramalist", "cast": "mydramalist", "network": "mydramalist", "airedOn": "mydramalist" }
 }
 
 FIELD_NAME_MAP = { "showID": "Show ID", "showName": "Show Name", "otherNames": "Other Names", "showImage": "Show Image", "watchStartedOn": "Watch Started On", "watchEndedOn": "Watch Ended On", "releasedYear": "Released Year", "releaseDate": "Release Date", "totalEpisodes": "Total Episodes", "showType": "Show Type", "nativeLanguage": "Native Language", "watchedLanguage": "Watched Language", "country": "Country", "comments": "Comments", "ratings": "Ratings", "genres": "Category", "network": "Network", "againWatchedDates": "Again Watched Dates", "updatedOn": "Updated On", "updatedDetails": "Updated Details", "synopsis": "Synopsis", "topRatings": "Top Ratings", "Duration": "Duration", "director": "Director", "tags": "Tags", "cast": "Cast", "airedOn": "Aired On", "sitePriorityUsed": "Site Priority Used" }
@@ -186,16 +155,10 @@ def merge_batch_state(context):
         for category, lst in batch_state.get('files_generated', {}).items():
             if category not in context['files_generated']: context['files_generated'][category] =[]
             context['files_generated'][category].extend(lst)
-            
-        context['total_runtime_seconds'] = batch_state.get('total_runtime_seconds', 0.0)
     except Exception as e: logd(f"Failed to load batch state: {e}")
 
 def save_batch_state(context):
-    state = {
-        'report_data': context['report_data'], 
-        'files_generated': context['files_generated'],
-        'total_runtime_seconds': context.get('total_runtime_seconds', 0.0)
-    }
+    state = {'report_data': context['report_data'], 'files_generated': context['files_generated']}
     with open(BATCH_STATE_FILE, 'w', encoding='utf-8') as f: json.dump(state, f, indent=4, ensure_ascii=False)
 
 def _get_imdb_json_ld(soup):
@@ -365,6 +328,7 @@ def download_and_save_image(url, local_path, is_artist=False):
         url = re.sub(r'_[24]c\.jpg$', '.jpg', url) if not is_artist else url
         r = SCRAPER.get(url, stream=True, timeout=20)
         
+        # Ensure it's a real image and not an HTML error page
         if r.status_code == 200 and r.headers.get("content-type", "").startswith("image"):
             with Image.open(r.raw) as img:
                 img = img.convert("RGB")
@@ -404,7 +368,10 @@ def _extract_aw_list_item(soup, label_regex):
 # --- ASIANWIKI SCRAPERS ---
 def _scrape_synopsis_from_asianwiki(soup, **kwargs):
     try:
+        # Step 1: Look for exact ID
         target_element = soup.find(id=re.compile(r"(Plot|Synopsis)", re.IGNORECASE))
+        
+        # Step 2: Fallback to searching all text headings (human error bypass)
         if not target_element:
             for tag in soup.find_all(['h2', 'h3', 'h4', 'b', 'strong']):
                 if re.search(r"^(Plot|Synopsis)", tag.get_text(strip=True), re.IGNORECASE):
@@ -413,15 +380,18 @@ def _scrape_synopsis_from_asianwiki(soup, **kwargs):
                     
         if not target_element: return None
         
-        if target_element.name not in['h2', 'h3']:
+        # Normalize the starting point
+        if target_element.name not in ['h2', 'h3']:
             parent = target_element.find_parent(['h2', 'h3'])
             if parent: target_element = parent
             
         content =[]
+        # Safely iterate through siblings until the next major section
         for sibling in target_element.next_siblings:
             if getattr(sibling, 'name', None) in['h2', 'h3', 'h4']: break 
             
             text = sibling.get_text(strip=True) if hasattr(sibling, 'get_text') else str(sibling).strip()
+            # Ignore script tags, tables, or generic UI garbage
             if getattr(sibling, 'name', None) in['script', 'style', 'table']: continue
             
             if text and len(text) >= 3: 
@@ -434,6 +404,7 @@ def _scrape_synopsis_from_asianwiki(soup, **kwargs):
 
 def _scrape_image_from_asianwiki(soup, **kwargs):
     try:
+        # Fallback to og:image meta tag first
         meta_img = soup.find('meta', property='og:image')
         url = meta_img['content'] if meta_img and 'content' in meta_img.attrs else None
         
@@ -448,7 +419,7 @@ def _scrape_image_from_asianwiki(soup, **kwargs):
 
 def _scrape_othernames_from_asianwiki(soup, **kwargs):
     try:
-        names =[]
+        names = []
         target_keywords =['also known as', 'romaji', 'pinyin', 'literal title', 'chinese title', 'japanese title', 'hangul']
         
         for b_tag in soup.find_all('b'):
@@ -460,6 +431,7 @@ def _scrape_othernames_from_asianwiki(soup, **kwargs):
                     if val:
                         break
                 
+                # Some formatting has multiple names separated by / or ,
                 if val and val.lower() != kwargs.get('show_name', '').lower():
                     raw_names = re.split(r'[/,]', val)
                     names.extend([n.strip() for n in raw_names if n.strip() and len(n.strip()) > 1])
@@ -495,6 +467,7 @@ def _scrape_synopsis_from_mydramalist(soup, **kwargs):
         synopsis_div = soup.select_one('.show-synopsis, [itemprop="description"]')
         if not synopsis_div: return None
         
+        # Smart extraction: Extracts text with safe newlines regardless of span/p usage
         text = synopsis_div.get_text(separator='\n', strip=True)
         paragraphs =[line.strip() for line in text.split('\n') if line.strip()]
         synopsis = "\n\n".join(paragraphs)
@@ -508,6 +481,7 @@ def _scrape_synopsis_from_mydramalist(soup, **kwargs):
 
 def _scrape_image_from_mydramalist(soup, **kwargs):
     try:
+        # Fallback to og:image meta tag first to bypass HTML layout changes
         meta_img = soup.find('meta', property='og:image')
         url = meta_img['content'] if meta_img and 'content' in meta_img.attrs else None
         
@@ -540,6 +514,7 @@ def _scrape_duration_from_mydramalist(soup, **kwargs):
 
 def _scrape_release_date_from_mydramalist(soup, **kwargs):
     try:
+        # Strict colon boundaries prevent matching "Aired On"
         text, _ = _extract_mdl_list_item(soup, r"^\s*Aired[\s:]*$")
         if text: return text
     except Exception: pass
@@ -739,6 +714,7 @@ def _scrape_synopsis_from_imdb(soup, **kwargs):
         if data and 'description' in data: 
             synopsis = data['description']
         else:
+            # Bulletproof: Uses ^= to match ANY testid starting with 'plot'
             desc = soup.select_one('[data-testid^="plot"]')
             if desc: synopsis = desc.get_text(strip=True)
             
@@ -803,6 +779,7 @@ def _scrape_duration_from_imdb(soup, **kwargs):
         data = _get_imdb_json_ld(soup)
         if data and 'duration' in data:
             dur = data['duration']
+            # Safely handle standard ISO 8601 durations like PT1H30M, PT120M, PT2H
             match = re.match(r'PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?', dur.upper())
             if match:
                 h = int(match.group(1)) if match.group(1) else 0
@@ -810,6 +787,7 @@ def _scrape_duration_from_imdb(soup, **kwargs):
                 total_mins = (h * 60) + m
                 if total_mins > 0: return f"{total_mins} mins"
                 
+        # Fallback to visual DOM
         runtime_tag = soup.find('li', attrs={'data-testid': 'title-techspec_runtime'})
         if runtime_tag and (div := runtime_tag.find('div')):
             text = div.get_text(strip=True).lower()
@@ -898,15 +876,18 @@ def _scrape_cast_from_imdb(soup, **kwargs):
                             artist_name = e['name']
                             a_id = None
                             
+                            # 1. Try to get ID from JSON-LD URL
                             if 'url' in e:
                                 match = re.search(r'(nm\d+)', e['url'])
                                 if match: a_id = match.group(1)
                                 
+                            # 2. Prevent duplicates: Search HTML for this exact name to find their real ID
                             if not a_id:
                                 html_link = soup.find('a', string=re.compile(f"^{re.escape(artist_name)}$", re.IGNORECASE), href=re.compile(r'/name/nm\d+'))
                                 if html_link:
                                     a_id = re.search(r'(nm\d+)', html_link['href']).group(1)
                                     
+                            # 3. Last resort hash (prefixed to avoid colliding with real IDs)
                             if not a_id:
                                 a_id = "unk_" + hashlib.md5(artist_name.lower().encode('utf-8')).hexdigest()[:8]
 
@@ -947,56 +928,45 @@ def fetch_and_populate_metadata(obj, context, artists_db):
         should_fetch = not obj.get(field) or field == 'network' 
         
         if should_fetch:
-            # 1. Look up the priority (can be a string or a list of fallbacks)
-            sites_to_try = priority.get(field)
-            if not sites_to_try: continue
+            site_to_use = priority.get(field)
+            if not site_to_use: continue
             
-            # 2. Convert to list if it's just a single string
-            if isinstance(sites_to_try, str):
-                sites_to_try = [sites_to_try]
+            if site_to_use == 'imdb' and field == 'airedOn':
+                continue
             
-            # 3. Try each site in order (The Fallback Loop)
-            for site_to_use in sites_to_try:
-                if site_to_use == 'imdb' and field == 'airedOn':
-                    continue
-                
-                search_terms =[s_name, re.sub(r'\b(?:Season|Part|S)\s*\d+\b|\s+\d+$', '', s_name, flags=re.IGNORECASE).strip()]
-                soup, url = None, None
-                
-                ordered_terms =[]
-                for term in search_terms:
-                    if term not in ordered_terms:
-                        ordered_terms.append(term)
-                        
-                for term in ordered_terms:
-                    soup, url = get_soup_from_search(term, s_name, s_year, site_to_use, lang, show_type, soup_cache)
-                    if soup: break
-                
-                if soup:
-                    scrape_args = {'soup': soup, 'url': url, 'sid': s_id, 'show_name': s_name, 'context': context, 'artists_db': artists_db}
-                    data = SCRAPE_MAP[site_to_use][field](**scrape_args)
+            search_terms =[s_name, re.sub(r'\b(?:Season|Part|S)\s*\d+\b|\s+\d+$', '', s_name, flags=re.IGNORECASE).strip()]
+            soup, url = None, None
+            
+            ordered_terms =[]
+            for term in search_terms:
+                if term not in ordered_terms:
+                    ordered_terms.append(term)
                     
-                    if data:
-                        if field == 'network':
-                            existing = normalize_list(obj.get('network'))
-                            new_data = normalize_list(data)
-                            merged =[]
-                            seen = set()
-                            for n in existing + new_data:
-                                if n.lower() not in seen:
-                                    merged.append(n)
-                                    seen.add(n.lower())
-                            if merged != existing:
-                                obj['network'] = merged
-                                spu[field] = site_to_use
-                                context['source_links_temp'][field] = url
-                        else:
-                            obj[field] = data
-                            spu[field] = site_to_use 
+            for term in ordered_terms:
+                soup, url = get_soup_from_search(term, s_name, s_year, site_to_use, lang, show_type, soup_cache)
+                if soup: break
+            
+            if soup:
+                scrape_args = {'soup': soup, 'url': url, 'sid': s_id, 'show_name': s_name, 'context': context, 'artists_db': artists_db}
+                data = SCRAPE_MAP[site_to_use][field](**scrape_args)
+                if data:
+                    if field == 'network':
+                        existing = normalize_list(obj.get('network'))
+                        new_data = normalize_list(data)
+                        merged =[]
+                        seen = set()
+                        for n in existing + new_data:
+                            if n.lower() not in seen:
+                                merged.append(n)
+                                seen.add(n.lower())
+                        if merged != existing:
+                            obj['network'] = merged
+                            spu[field] = site_to_use
                             context['source_links_temp'][field] = url
-                        
-                        # Data found successfully! Break the fallback loop and move to the next field.
-                        break
+                    else:
+                        obj[field] = data
+                        spu[field] = site_to_use 
+                        context['source_links_temp'][field] = url
                             
     return obj
 
@@ -1194,14 +1164,9 @@ def create_diff_backup(old, new, context, explicit_changes=None):
 
 def write_report(context):
     if context.get('is_final_batch_report'):
-        lines =[
-            f"🏆 FINAL BATCH REPORT: Workflow completed perfectly across all segments", 
-            f"🆔 Run ID: {context['run_id']}", 
-            f"📅 Finished On: {now_ist().strftime('%d %B %Y %I:%M %p (IST)')}", 
-            f"⏱️ Total Batch Runtime: {context.get('formatted_total_time', 'Unknown')}",
-            f"⚙️ Script Version: {SCRIPT_VERSION}", 
-            ""
-        ]
+        lines =[f"🏆 FINAL BATCH REPORT: Workflow completed perfectly across all segments", f"🆔 Run ID: {context['run_id']}", f"📅 Finished On: {now_ist().strftime('%d %B %Y %I:%M %p (IST)')}", f"⚙️ Script Version: {SCRIPT_VERSION}", ""]
+    elif context.get('paused'):
+        lines =[f"⏳ BATCH PAUSED: Workflow reached limit and saved state safely.", f"🆔 Run ID: {context['run_id']}", f"📅 Paused On: {now_ist().strftime('%d %B %Y %I:%M %p (IST)')}", f"⚙️ Script Version: {SCRIPT_VERSION}", ""]
     else:
         lines =[f"✅ Workflow completed successfully", f"🆔 Run ID: {context['run_id']}", f"📅 Run Time: {now_ist().strftime('%d %B %Y %I:%M %p (IST)')}", f"⚙️ Script Version: {SCRIPT_VERSION}", ""]
         
@@ -1502,36 +1467,16 @@ def main():
             if MAX_FETCHES > 0 and total_heavy_fetches >= MAX_FETCHES:
                 limit_reached = True
                 context['paused'] = True
-                
-                # Update Timer for this paused batch
-                run_duration = (now_ist() - datetime.fromisoformat(context['start_time_iso'])).total_seconds()
-                context['total_runtime_seconds'] = context.get('total_runtime_seconds', 0.0) + run_duration
-                
                 save_batch_state(context)
                 print(f"\n🛑 BATCH LIMIT REACHED: Processed {MAX_FETCHES} heavy fetch records.")
                 with open("RESUME_FLAG.txt", "w") as rf: rf.write("CONTINUE_NEXT_BATCH")
                 break
 
-    # If it is NOT paused, we are finally done with ALL records!
     if not context.get('paused'):
-        # Update Timer for this final run
-        run_duration = (now_ist() - datetime.fromisoformat(context['start_time_iso'])).total_seconds()
-        context['total_runtime_seconds'] = context.get('total_runtime_seconds', 0.0) + run_duration
-        
-        # Calculate Human-Readable Total Time
-        tot_sec = int(context['total_runtime_seconds'])
-        hrs, mins, secs = tot_sec // 3600, (tot_sec % 3600) // 60, tot_sec % 60
-        time_str = ""
-        if hrs > 0: time_str += f"{hrs} hrs "
-        if mins > 0: time_str += f"{mins} mins "
-        time_str += f"{secs} secs"
-        context['formatted_total_time'] = time_str.strip()
-
         if os.path.exists(BATCH_STATE_FILE):
             os.remove(BATCH_STATE_FILE)
             context['is_final_batch_report'] = True
 
-    # Save to disk
     save_json_file(SERIES_JSON_FILE, sorted(merged_by_id.values(), key=lambda x: int(x.get('showID') or 0)))
     save_json_file(ARTISTS_JSON_FILE, artists_data)
     save_json_file(CAST_JSON_FILE, cast_data)
@@ -1539,19 +1484,18 @@ def main():
     artist_lookup_list =[{"artistID": k, "artistName": v['artistName']} for k, v in artists_data.items()]
     save_json_file(ARTIST_LOOKUP_FILE, sorted(artist_lookup_list, key=lambda x: x['artistName']))
     
-    # ---------------- REPORT GENERATION LOGIC ----------------
-    # ONLY write the text report if we are NOT paused (only at the very end!)
-    if not context.get('paused'):
-        report_title = f"Report_{context['file_ts']}" if not context.get('is_final_batch_report') else f"FINAL_BATCH_REPORT_{context['file_ts']}"
-        report_path = os.path.join(REPORTS_DIR, f"{report_title}.txt"); os.makedirs(REPORTS_DIR, exist_ok=True)
-        context['report_file_path'] = report_path
-        context['files_generated']['reports'].append(report_path)
-        
-        write_report(context)
-        print(f"✅ Final Report written -> {report_path}")
-        print("\nAll done.")
-    else:
-        print("⏸️ State safely paused. Waiting for next GitHub Action run. (No report generated yet).")
+    end_time = now_ist()
+    duration = end_time - datetime.fromisoformat(context['start_time_iso'])
+    context['duration_str'] = f"{duration.seconds // 60} min {duration.seconds % 60} sec"
+    
+    report_title = f"Report_{context['file_ts']}" if not context.get('is_final_batch_report') else f"FINAL_BATCH_REPORT_{context['file_ts']}"
+    report_path = os.path.join(REPORTS_DIR, f"{report_title}.txt"); os.makedirs(REPORTS_DIR, exist_ok=True)
+    context['report_file_path'] = report_path
+    context['files_generated']['reports'].append(report_path)
+    
+    write_report(context)
+    print(f"✅ Report written -> {report_path}")
+    print("\nAll done.")
 
 if __name__ == '__main__':
     try:

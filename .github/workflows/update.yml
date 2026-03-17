@@ -1,7 +1,7 @@
 # ============================================================================
 # Workflow: Excel → JSON Automation
 # Purpose : Automate scheduled and manual Excel-to-JSON updates.
-# Version : 4.8 (FEATURE: Suppressed Email Spam for Batch Processes)
+# Version : 4.7 (FEATURE: Automated Relay-Race Batch Processing)
 # ============================================================================
 
 name: Excel → JSON Update
@@ -44,17 +44,21 @@ jobs:
       - name: 5. Run the Excel-to-JSON update script
         id: run_updater
         env:
-          SHEETS: "Sheet1;Manual Updates;Sheet2"
+          SHEETS: "Sheet1;Sheet2"
           GITHUB_PAGES_URL: "https://brucebanner001.github.io/my-movie-database"
           DEBUG_FETCH: "true"
+          
+          # [ THE AUTOMATED BATCH LIMIT ]
+          # Forces the script to pause and save after 50 heavy scrapes.
           MAX_FETCHES: "50"
+          
         run: |
           python create_update_backup_delete.py 2>&1 | tee output.log
           script_exit_code=${PIPESTATUS[0]}
           output=$(cat output.log)
-          echo "output_log<<EOF" >> "$GITHUB_OUTPUT"
-          echo "$output" >> "$GITHUB_OUTPUT"
-          echo "EOF" >> "$GITHUB_OUTPUT"
+          echo "output_log<<EOF" >> "$GITHUB_OUTPUT"; echo "$output" >> "$GITHUB_OUTPUT"; echo "EOF" >> "$GITHUB_OUTPUT"
+          report_path=$(echo "$output" | grep -oP 'Report written -> \K.*')
+          echo "report_path=$report_path" >> "$GITHUB_OUTPUT"
           exit $script_exit_code
 
       - name: 6. Cleanup Secret Files
@@ -63,22 +67,18 @@ jobs:
           rm -f EXCEL_FILE_ID.txt GDRIVE_SERVICE_ACCOUNT.json
 
       - name: 7. Commit, Push, and Trigger Next Batch
-        id: relay_race
         if: success()
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # 1. Check if the script paused for a next batch
-          CONTINUE_RUN="false"
+          CONTINUE_RUN=false
           if [ -f "RESUME_FLAG.txt" ]; then
-            CONTINUE_RUN="true"
+            CONTINUE_RUN=true
             rm RESUME_FLAG.txt
           fi
           
-          # 2. Tell GitHub Actions if we are continuing or not
-          echo "continue_batch=$CONTINUE_RUN" >> "$GITHUB_OUTPUT"
-          
-          # 3. Commit the new rows to GitHub safely
+          # 2. Commit the 50 new rows to GitHub safely
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add -A --force
@@ -89,34 +89,27 @@ jobs:
             git push
           fi
           
-          # 4. If there are more rows, trigger the relay race!
-          if[ "$CONTINUE_RUN" = "true" ]; then
+          # 3. If there are more rows, trigger the relay race!
+          if [ "$CONTINUE_RUN" = true ]; then
             echo "Batch finished! Triggering the next batch immediately..."
             gh workflow run "Excel → JSON Update"
           fi
       
       - name: 8. Compose Email Body
         id: compose_email
-        if: always() && steps.relay_race.outputs.continue_batch != 'true'
+        if: always()
         env:
           WORKFLOW_STATUS: ${{ job.status }}
           SCRIPT_OUTPUT: ${{ steps.run_updater.outputs.output_log }}
         run: |
           email_body_file=$(mktemp)
           echo "body_file=$email_body_file" >> "$GITHUB_OUTPUT"
-          
-          # FIX: Sort by modification time (-t) so the absolute newest file is always picked.
-          report_file=$(ls -1t reports/*.txt 2>/dev/null | head -n 1 || true)
-          
+          report_file=$(find reports -type f -name "Report_*.txt" | sort -r | head -n1 || true)
           {
             if [[ "${WORKFLOW_STATUS}" == "success" ]]; then
               echo "✅ Workflow Batch completed successfully."
               echo ""
-              if [[ -n "$report_file" && -f "$report_file" ]]; then
-                cat "$report_file"
-              else
-                echo "⚠️ Report file was not found."
-              fi
+              if [[ -f "$report_file" ]]; then cat "$report_file"; else echo "⚠️ Report file was not found."; fi
             else
               echo "❌ Workflow FAILED."
               echo "Please check the Actions log on GitHub. Raw script output is below:"
@@ -126,7 +119,7 @@ jobs:
           } > "$email_body_file"
           
       - name: 9. Send Final Email Notification
-        if: always() && steps.relay_race.outputs.continue_batch != 'true'
+        if: always()
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: ${{ secrets.SMTP_SERVER }}
