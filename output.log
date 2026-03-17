@@ -1,20 +1,5 @@
-/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:337: UserWarning: Parsing dates in %d-%m-%Y format when dayfirst=False (the default) was specified. Pass `dayfirst=True` or specify a format to silence this warning.
-  dt = pd.to_datetime(str(val).strip(), errors="coerce")
-🚀 Running Script — Version v10.2 | Run ID: RUN_20260317_001308
+🚀 Running Script — Version v10.2 | Run ID: RUN_20260317_090406
 ⚙️ BATCH MODE ACTIVE: Will pause after 50 heavy fetch operations.
-[DEBUG] Title Validation FAILED: Page Title 'Modern Romance' vs Expected 'Lawless Lawyer' (Ratio: 0.14)
-[DEBUG] Title Validation FAILED: Page Title '“We Got This”: Shows WITHOUT damsels in distress' vs Expected 'Lawless Lawyer' (Ratio: 0.16)
-[DEBUG] Title Validation FAILED: Page Title 'Strong/badass Female leads' vs Expected 'Lawless Lawyer' (Ratio: 0.25)
-[DEBUG] Title Validation FAILED: Page Title 'One Night Stands & Pregnancies' vs Expected 'My Secret Romance' (Ratio: 0.34)
-[DEBUG] Title Validation FAILED: Page Title 'Top 10 Dramas Where Student Falls In Love With Teacher' vs Expected 'My Strange Hero' (Ratio: 0.23)
-[DEBUG] Title Validation FAILED: Page Title 'Top 10 Study Motivation K-Dramas to Stay Inspired' vs Expected 'My Strange Hero' (Ratio: 0.22)
-[DEBUG] Title Validation FAILED: Page Title 'My favorite antagonists' vs Expected 'My Strange Hero' (Ratio: 0.37)
-[DEBUG] Title Validation FAILED: Page Title 'My absolute favourites' vs Expected 'My Strange Hero' (Ratio: 0.38)
-[DEBUG] Title Validation FAILED: Page Title 'Dramas where there is hint/platonic/minimal romance between main leads' vs Expected 'New Life (Yeni Hayat)' (Ratio: 0.20)
-[DEBUG] Title Validation FAILED: Page Title '8 Korean Dramas About Marriage' vs Expected 'Marriage Contract' (Ratio: 0.34)
-[DEBUG] Title Validation FAILED: Page Title 'Boss and Employee Relationship Chinese Dramas' vs Expected 'About is Love' (Ratio: 0.24)
-[DEBUG] Title Validation FAILED: Page Title 'Recommendations like Hidden Love' vs Expected 'Once We Get Married' (Ratio: 0.24)
-[DEBUG] Title Validation FAILED: Page Title 'Wang Zi Qi' vs Expected 'Once We Get Married' (Ratio: 0.21)
-✅ Report written -> reports/FINAL_BATCH_REPORT_17_March_2026_0013.txt
+✅ Report written -> reports/Report_17_March_2026_0904.txt
 
 All done.
