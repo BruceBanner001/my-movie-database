@@ -1,7 +1,7 @@
 # ============================================================================
 # Workflow: Excel → JSON Automation
 # Purpose : Automate scheduled and manual Excel-to-JSON updates.
-# Version : 4.7 (FEATURE: Automated Relay-Race Batch Processing)
+# Version : 4.8 (FEATURE: Suppressed Email Spam for Batch Processes)
 # ============================================================================
 
 name: Excel → JSON Update
@@ -44,7 +44,7 @@ jobs:
       - name: 5. Run the Excel-to-JSON update script
         id: run_updater
         env:
-          SHEETS: "Sheet1;Manual Updates"
+          SHEETS: "Sheet1;Manual Updates;Sheet2"
           # SHEETS: "Sheet1;Sheet2"
           GITHUB_PAGES_URL: "https://brucebanner001.github.io/my-movie-database"
           DEBUG_FETCH: "true"
@@ -58,7 +58,9 @@ jobs:
           script_exit_code=${PIPESTATUS[0]}
           output=$(cat output.log)
           echo "output_log<<EOF" >> "$GITHUB_OUTPUT"; echo "$output" >> "$GITHUB_OUTPUT"; echo "EOF" >> "$GITHUB_OUTPUT"
-          report_path=$(echo "$output" | grep -oP 'Report written -> \K.*')
+          
+          # Only extract report path if it actually generated a report
+          report_path=$(echo "$output" | grep -oP 'Final Report written -> \K.*' || true)
           echo "report_path=$report_path" >> "$GITHUB_OUTPUT"
           exit $script_exit_code
 
@@ -68,6 +70,7 @@ jobs:
           rm -f EXCEL_FILE_ID.txt GDRIVE_SERVICE_ACCOUNT.json
 
       - name: 7. Commit, Push, and Trigger Next Batch
+        id: relay_race
         if: success()
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -79,7 +82,10 @@ jobs:
             rm RESUME_FLAG.txt
           fi
           
-          # 2. Commit the 50 new rows to GitHub safely
+          # 2. Tell GitHub Actions if we are continuing or not
+          echo "continue_batch=$CONTINUE_RUN" >> "$GITHUB_OUTPUT"
+          
+          # 3. Commit the 50 new rows to GitHub safely
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add -A --force
@@ -90,7 +96,7 @@ jobs:
             git push
           fi
           
-          # 3. If there are more rows, trigger the relay race!
+          # 4. If there are more rows, trigger the relay race!
           if [ "$CONTINUE_RUN" = true ]; then
             echo "Batch finished! Triggering the next batch immediately..."
             gh workflow run "Excel → JSON Update"
@@ -98,14 +104,15 @@ jobs:
       
       - name: 8. Compose Email Body
         id: compose_email
-        if: always()
+        # ONLY COMPOSE THE EMAIL IF THE BATCH IS COMPLETELY FINISHED OR CRASHED!
+        if: always() && steps.relay_race.outputs.continue_batch != 'true'
         env:
           WORKFLOW_STATUS: ${{ job.status }}
           SCRIPT_OUTPUT: ${{ steps.run_updater.outputs.output_log }}
         run: |
           email_body_file=$(mktemp)
           echo "body_file=$email_body_file" >> "$GITHUB_OUTPUT"
-          report_file=$(find reports -type f -name "Report_*.txt" | sort -r | head -n1 || true)
+          report_file=$(find reports -type f -name "FINAL_BATCH_REPORT_*.txt" | sort -r | head -n1 || find reports -type f -name "Report_*.txt" | sort -r | head -n1 || true)
           {
             if [[ "${WORKFLOW_STATUS}" == "success" ]]; then
               echo "✅ Workflow Batch completed successfully."
@@ -120,7 +127,8 @@ jobs:
           } > "$email_body_file"
           
       - name: 9. Send Final Email Notification
-        if: always()
+        # ONLY SEND THE EMAIL IF THE BATCH IS COMPLETELY FINISHED OR CRASHED!
+        if: always() && steps.relay_race.outputs.continue_batch != 'true'
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: ${{ secrets.SMTP_SERVER }}
