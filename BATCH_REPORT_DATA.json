@@ -315,21 +315,116 @@
                         "network": null,
                         "airedOn": "mydramalist"
                     }
+                },
+                {
+                    "showID": 105,
+                    "showName": "Lawless Lawyer",
+                    "otherNames": [
+                        "Abogado Sin Ley",
+                        "Advogado Sem Lei",
+                        "Lawless Attorney",
+                        "Lawless Lawyer - Gesetzlose Verteidigung",
+                        "Moobeob Byeonhosa",
+                        "Mubeop Byeonhosa",
+                        "Адвокат вне закона",
+                        "محامٍ متمرد على القانون",
+                        "武法律师"
+                    ],
+                    "showImage": "105.jpg",
+                    "watchStartedOn": "12-02-2023",
+                    "watchEndedOn": "13-02-2023",
+                    "releasedYear": 2018,
+                    "releaseDate": "May 12 - July 1, 2018",
+                    "totalEpisodes": 16,
+                    "showType": "Drama",
+                    "nativeLanguage": "Korean",
+                    "watchedLanguage": "Korean",
+                    "country": "South Korea",
+                    "comments": "Not Bad. One Time Watchable",
+                    "ratings": 5,
+                    "genres": [
+                        "Action",
+                        "Law",
+                        "Revenge"
+                    ],
+                    "network": [
+                        "tvN"
+                    ],
+                    "againWatchedDates": [],
+                    "updatedOn": "18 March 2026",
+                    "updatedDetails": "First Time Uploaded",
+                    "synopsis": "Bong Sang-Pil works as an attorney and has one of the highest win rates in the country. Bong Sang-Pil will take advantage of any loopholes in the law. He stands before the court for his mother’s revenge, opposing absolute power.\n\nWhen Bong Sang-Pil (Lee Joon-Gi) was little, he lived with his mother in Gisung. His mother worked as a lawyer and she took on a case that Judge Cha Moon-Sook (Lee Hye-Young) got involved with. Judge Cha Moon-Sook was the most respected person in the city. One night, Bong Sang-Pil witnessed his mother get killed by Judge Cha Moon-Sook's subordinate  (Choi Min-Soo). Bong Sang-Pil got out of Gisung and went to live with his gang boss uncle Choi Dae-Woong (Ahn Nae-Sang). Bong Sang-Pl decided to become a lawyer to take revenge on those responsible for his mother's death.\n\n18 years later, Bong Sang-Pil works as a lawyer. He sees news on the TV that a detective was arrested for killing the mayor of Gisung. The detective holds a key to the murder of Bong Sang-Pil's mother. Bong Sang-Pil returns to Gisung for the first time in 18 years. He opens up a law office there.\n\nMeanwhile, Ha Jae-Yi (Seo Yea-Ji) is a lawyer with integrity. She beats up a judge in court and gets her law license suspended. Ha Jae-Yi returns to her hometown of Gisung. There, Bong Sang-Pil approaches Ha Jae-Yi and gets her to work at his law office. Bong Sang-Pil holds a secret related to the death of Ha Jae-Yi’s mother.",
+                    "topRatings": 500,
+                    "Duration": "1 hr. 6 min.",
+                    "director": [
+                        "Kim Jin Min"
+                    ],
+                    "tags": [
+                        "Revenge",
+                        "Smart Female Lead",
+                        "Mixed Martial Arts",
+                        "Corruption",
+                        "Male Chases Female First",
+                        "Badass Female Lead",
+                        "Teamwork",
+                        "Orphan Male Lead",
+                        "Lawyer Male Lead",
+                        "Lawyer Female Lead"
+                    ],
+                    "cast": {
+                        "Main Role": 4,
+                        "Support Role": 37,
+                        "Guest Role": 25,
+                        "Director": 1,
+                        "Executive Producer": 1,
+                        "Screenwriter": 1
+                    },
+                    "airedOn": [
+                        "Saturday",
+                        "Sunday"
+                    ],
+                    "sitePriorityUsed": {
+                        "showImage": "asianwiki",
+                        "releaseDate": "asianwiki",
+                        "otherNames": "mydramalist",
+                        "Duration": "mydramalist",
+                        "synopsis": "asianwiki",
+                        "director": "mydramalist",
+                        "tags": "mydramalist",
+                        "cast": "mydramalist",
+                        "network": null,
+                        "airedOn": "mydramalist"
+                    }
                 }
             ],
             "fetched_data": [
                 "- 101 - It's Okay to Not be Okay -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags",
                 "- 102 - It's Okay That's Love -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags",
                 "- 103 - Descendant of the Sun -> Fetched: Release Date, Show Image, Synopsis",
-                "- 104 - Find Me in Your Memory -> Fetched: Aired On, Cast, Duration, Release Date, Show Image, Synopsis, Tags"
+                "- 104 - Find Me in Your Memory -> Fetched: Aired On, Cast, Duration, Release Date, Show Image, Synopsis, Tags",
+                "- 105 - Lawless Lawyer -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags"
             ],
             "skipped": [
                 "101 - It's Okay to Not be Okay (2020)",
-                "102 - It's Okay That's Love (2014)"
+                "102 - It's Okay That's Love (2014)",
+                "101 - It's Okay to Not be Okay (2020)",
+                "102 - It's Okay That's Love (2014)",
+                "103 - Descendant of the Sun (2016)"
             ],
             "fetch_warnings": [
                 "- 103 - Descendant of the Sun -> ⚠️ Missing: Aired On, Cast, Director, Duration, Other Names, Tags",
-                "- 104 - Find Me in Your Memory -> ⚠️ Missing: Director, Other Names"
+                "- 104 - Find Me in Your Memory -> ⚠️ Missing: Director, Other Names",
+                "- 103 - Descendant of the Sun -> ⚠️ Missing: Aired On, Cast, Director, Duration, Other Names, Tags"
+            ],
+            "refetched": [
+                {
+                    "id": 104,
+                    "name": "Find Me in Your Memory",
+                    "fields": [
+                        "Director",
+                        "Other Names"
+                    ]
+                }
             ]
         }
     },
@@ -376,7 +471,69 @@
             "artist-images/21016.jpg",
             "artist-images/21053.jpg",
             "artist-images/20028.jpg",
-            "artist-images/20149.jpg"
+            "artist-images/20149.jpg",
+            "artist-images/16966.jpg",
+            "artist-images/16201.jpg",
+            "artist-images/18844.jpg",
+            "artist-images/207.jpg",
+            "artist-images/1550.jpg",
+            "artist-images/1507.jpg",
+            "artist-images/14062.jpg",
+            "artist-images/1651.jpg",
+            "artist-images/10786.jpg",
+            "artist-images/4039.jpg",
+            "artist-images/3924.jpg",
+            "artist-images/13068.jpg",
+            "artist-images/1853.jpg",
+            "artist-images/1530.jpg",
+            "artist-images/5860.jpg",
+            "artist-images/9628.jpg",
+            "artist-images/939.jpg",
+            "artist-images/18737.jpg",
+            "artist-images/18881.jpg",
+            "artist-images/13064.jpg",
+            "artist-images/10727.jpg",
+            "artist-images/6294.jpg",
+            "artist-images/6181.jpg",
+            "artist-images/19054.jpg",
+            "artist-images/5851.jpg",
+            "artist-images/9586.jpg",
+            "artist-images/2620.jpg",
+            "artist-images/19079.jpg",
+            "artist-images/18558.jpg",
+            "artist-images/19085.jpg",
+            "artist-images/48025.jpg",
+            "artist-images/55137.jpg",
+            "artist-images/11813.jpg",
+            "artist-images/3527.jpg",
+            "artist-images/6701.jpg",
+            "artist-images/12692.jpg",
+            "artist-images/5628.jpg",
+            "artist-images/10451.jpg",
+            "artist-images/15619.jpg",
+            "artist-images/17661.jpg",
+            "artist-images/9860.jpg",
+            "artist-images/19083.jpg",
+            "artist-images/20600.jpg",
+            "artist-images/22937.jpg",
+            "artist-images/28557.jpg",
+            "artist-images/44413.jpg",
+            "artist-images/29257.jpg",
+            "artist-images/22281.jpg",
+            "artist-images/13802.jpg",
+            "artist-images/10044.jpg",
+            "artist-images/88631.jpg",
+            "artist-images/23565.jpg",
+            "artist-images/22619.jpg",
+            "artist-images/52897.jpg",
+            "artist-images/43693.jpg",
+            "artist-images/15807.jpg",
+            "artist-images/115895.jpg",
+            "artist-images/66075.jpg",
+            "artist-images/122751.jpg",
+            "artist-images/21144.jpg",
+            "artist-images/19982.jpg",
+            "artist-images/84115.jpg"
         ],
         "deleted_data": [],
         "deleted_images": [],
@@ -384,7 +541,9 @@
             "backup-meta-data/META_18_March_2026_1516_101.json",
             "backup-meta-data/META_18_March_2026_1516_102.json",
             "backup-meta-data/META_18_March_2026_1517_103.json",
-            "backup-meta-data/META_18_March_2026_1517_104.json"
+            "backup-meta-data/META_18_March_2026_1517_104.json",
+            "backup-meta-data/META_18_March_2026_1518_104.json",
+            "backup-meta-data/META_18_March_2026_1518_105.json"
         ],
         "reports": [],
         "archived_backups": [],

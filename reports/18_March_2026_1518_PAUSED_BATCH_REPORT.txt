@@ -1,0 +1,92 @@
+⏳ BATCH PAUSED: Workflow reached limit and saved state safely.
+🆔 Run ID: RUN_20260318_151825
+📅 Paused On: 18 March 2026 03:18 PM (IST)
+⚙️ Script Version: v10.3
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Sheet1 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🆕 Data Created:
+- 101 - It's Okay to Not be Okay (2020) -> First Time Uploaded
+- 102 - It's Okay That's Love (2014) -> First Time Uploaded
+- 103 - Descendant of the Sun (2016) -> First Time Uploaded
+- 104 - Find Me in Your Memory (2020) -> First Time Uploaded
+- 105 - Lawless Lawyer (2018) -> First Time Uploaded
+
+🔍 Refetched Data:
+✨ 104 - Find Me in Your Memory -> Fetched: Director, Other Names
+
+🖼️ Fetched Data Details:
+- 101 - It's Okay to Not be Okay -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 102 - It's Okay That's Love -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 103 - Descendant of the Sun -> Fetched: Release Date, Show Image, Synopsis
+- 104 - Find Me in Your Memory -> Fetched: Aired On, Cast, Duration, Release Date, Show Image, Synopsis, Tags
+- 105 - Lawless Lawyer -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+
+🕳️ Value Not Found:
+- 103 - Descendant of the Sun -> ⚠️ Missing: Aired On, Cast, Director, Duration, Other Names, Tags
+- 103 - Descendant of the Sun -> ⚠️ Missing: Aired On, Cast, Director, Duration, Other Names, Tags
+- 104 - Find Me in Your Memory -> ⚠️ Missing: Director, Other Names
+
+🚫 Skipped (Unchanged):
+- 101 - It's Okay to Not be Okay (2020)
+- 101 - It's Okay to Not be Okay (2020)
+- 102 - It's Okay That's Love (2014)
+- 102 - It's Okay That's Love (2014)
+- 103 - Descendant of the Sun (2016)
+
+📊 Summary (Sheet: Sheet1)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Created: 5
+🔁 Updated: 0
+🔍 Refetched: 1
+🚫 Skipped: 5
+⚠️ Warnings: 3
+  Total Rows: 11
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 Overall Summary
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Total Created: 5
+🔁 Total Updated: 0
+🔍 Total Refetched: 1
+🖼️ Show Images Updated: 5
+🧑‍🎨 New Artist Images Added: 102
+🚫 Total Skipped: 5
+❌ Total Deleted: 0
+🗄️ Total Archived Backups: 0
+⚠️ Total Warnings: 3
+💾 Backup Files: 0
+  Grand Total Rows Processed: 11
+
+💾 Metadata Backups: 6
+
+📦 Total Objects in seriesData.json: 5
+📦 Total Objects in artists.json: 423
+📦 Total Objects in cast.json: 4
+📦 Total Objects in artists_lookup.json: 423
+🖼️ Total images in show-images: 5
+🧑‍🎨 Total images in artist-images: 423
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ Folders Generated:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📁 artist_images/ (Total: 102 files)
+    📄 64131.jpg
+    📄 74267.jpg
+    📄 15913.jpg
+    ... and 99 more files.
+
+📁 meta_backups/ (Total: 6 files)
+    📄 META_18_March_2026_1516_101.json
+    📄 META_18_March_2026_1516_102.json
+    📄 META_18_March_2026_1517_103.json
+    ... and 3 more files.
+
+📁 reports/ (Total: 1 files)
+    📄 18_March_2026_1518_PAUSED_BATCH_REPORT.txt
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚠️ BATCH LIMIT REACHED: The script paused safely to prevent timeout.
+The GitHub Action will now automatically trigger the next run.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
