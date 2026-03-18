@@ -51,7 +51,7 @@ jobs:
           SHEETS: "Sheet1;Sheet2;Manual Updates"
           GITHUB_PAGES_URL: "https://brucebanner001.github.io/my-movie-database"
           DEBUG_FETCH: "true"
-          MAX_FETCHES: "50"
+          MAX_FETCHES: "1"
         run: |
 
           # Capture start time
@@ -149,6 +149,7 @@ jobs:
           START_TIME="${{ steps.run_updater.outputs.start_time }}"
           END_TIME=$(TZ='Asia/Kolkata' date +"%d %B %Y - %I:%M:%S %p")
           RUNTIME=${{ steps.run_updater.outputs.runtime_seconds }}
+          RUN_NUMBER=${{ github.run_attempt }}
 
           if [[ -n "$REPORT_PATH" && -f "$REPORT_PATH" ]]; then
             report_file="$REPORT_PATH"
@@ -164,6 +165,7 @@ jobs:
             echo "══════════════════════════════════════════════════════"
             echo ""
             echo "🚀 Workflow Type : $TRIGGER_TYPE"
+            echo "🔁 RUN           : $RUN_NUMBER"
             echo "⏰ Start Time    : $START_TIME"
             echo "⏰ End Time      : $END_TIME"
             echo "⏱️ Runtime       : ${RUNTIME} seconds"
