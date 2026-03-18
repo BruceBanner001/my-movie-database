@@ -395,6 +395,86 @@
                         "network": null,
                         "airedOn": "mydramalist"
                     }
+                },
+                {
+                    "showID": 106,
+                    "showName": "Love to Hate You",
+                    "otherNames": [
+                        "Batalha De Amor",
+                        "Batalla de amor",
+                        "Láska z nenávisti",
+                        "Love Battle",
+                        "Love Wars",
+                        "Yeonaedaejeon",
+                        "Любовная битва",
+                        "أحبّ كرهي لك"
+                    ],
+                    "showImage": "106.jpg",
+                    "watchStartedOn": "13-02-2023",
+                    "watchEndedOn": "14-02-2023",
+                    "releasedYear": 2023,
+                    "releaseDate": "February 10, 2023",
+                    "totalEpisodes": 10,
+                    "showType": "Drama",
+                    "nativeLanguage": "Korean",
+                    "watchedLanguage": "Korean",
+                    "country": "South Korea",
+                    "comments": "Not Much Interesting. One Time Watchable. Ending Was Too Simple.",
+                    "ratings": 7,
+                    "genres": [
+                        "Celebrity",
+                        "Comedy",
+                        "Romance"
+                    ],
+                    "network": [
+                        "Netflix"
+                    ],
+                    "againWatchedDates": [
+                        "29-09-2024"
+                    ],
+                    "updatedOn": "18 March 2026",
+                    "updatedDetails": "First Time Uploaded",
+                    "synopsis": "Yeo Mi-Ran (Kim Ok-Vin) is a rookie attorney at Gilmu Law Firm, which works primarily with the entertainment industry. She is not interested in having a romantic relationship and she hates to lose to a man in anything.\n\nNam Gang-Ho (Yoo Teo) is a top actor in the entertainment industry. He is the most popular actor in South Korea due to his handsome appearance, intelligence, and kindness. He is sought after to work in romantic movies, but he doesn't actually trust women.\n\nYeo Mi-Ran and Nam Gang-Ho, who both don’t believe in love, fall into a love battle.",
+                    "topRatings": 1400,
+                    "Duration": "52 mins",
+                    "director": [
+                        "Kim Jung Kwon"
+                    ],
+                    "tags": [
+                        "Badass Female Lead",
+                        "Enemies To Lovers",
+                        "Actor Male Lead",
+                        "Famous Male Lead",
+                        "Entertainment Industry",
+                        "Aggressive Female Lead",
+                        "Social Issues",
+                        "Skilled Fighter",
+                        "Lawyer Female Lead",
+                        "Gender Discrimination"
+                    ],
+                    "cast": {
+                        "Main Role": 4,
+                        "Support Role": 19,
+                        "Guest Role": 17,
+                        "Director": 1,
+                        "Screenwriter": 1,
+                        "otherCrewMembers": 1
+                    },
+                    "airedOn": [
+                        "Friday"
+                    ],
+                    "sitePriorityUsed": {
+                        "showImage": "asianwiki",
+                        "releaseDate": "asianwiki",
+                        "otherNames": "mydramalist",
+                        "Duration": "mydramalist",
+                        "synopsis": "asianwiki",
+                        "director": "mydramalist",
+                        "tags": "mydramalist",
+                        "cast": "mydramalist",
+                        "network": null,
+                        "airedOn": "mydramalist"
+                    }
                 }
             ],
             "fetched_data": [
@@ -402,14 +482,19 @@
                 "- 102 - It's Okay That's Love -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags",
                 "- 103 - Descendant of the Sun -> Fetched: Release Date, Show Image, Synopsis",
                 "- 104 - Find Me in Your Memory -> Fetched: Aired On, Cast, Duration, Release Date, Show Image, Synopsis, Tags",
-                "- 105 - Lawless Lawyer -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags"
+                "- 105 - Lawless Lawyer -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags",
+                "- 106 - Love to Hate You -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags"
             ],
             "skipped": [
                 "101 - It's Okay to Not be Okay (2020)",
                 "102 - It's Okay That's Love (2014)",
                 "101 - It's Okay to Not be Okay (2020)",
                 "102 - It's Okay That's Love (2014)",
-                "103 - Descendant of the Sun (2016)"
+                "103 - Descendant of the Sun (2016)",
+                "101 - It's Okay to Not be Okay (2020)",
+                "102 - It's Okay That's Love (2014)",
+                "104 - Find Me in Your Memory (2020)",
+                "105 - Lawless Lawyer (2018)"
             ],
             "fetch_warnings": [
                 "- 103 - Descendant of the Sun -> ⚠️ Missing: Aired On, Cast, Director, Duration, Other Names, Tags",
@@ -423,6 +508,18 @@
                     "fields": [
                         "Director",
                         "Other Names"
+                    ]
+                },
+                {
+                    "id": 103,
+                    "name": "Descendant of the Sun",
+                    "fields": [
+                        "Aired On",
+                        "Cast",
+                        "Director",
+                        "Duration",
+                        "Other Names",
+                        "Tags"
                     ]
                 }
             ]
@@ -533,7 +630,48 @@
             "artist-images/122751.jpg",
             "artist-images/21144.jpg",
             "artist-images/19982.jpg",
-            "artist-images/84115.jpg"
+            "artist-images/84115.jpg",
+            "artist-images/55761.jpg",
+            "artist-images/33707.jpg",
+            "artist-images/26143.jpg",
+            "artist-images/2991.jpg",
+            "artist-images/11255.jpg",
+            "artist-images/1270.jpg",
+            "artist-images/7883.jpg",
+            "artist-images/873.jpg",
+            "artist-images/1210.jpg",
+            "artist-images/3425.jpg",
+            "artist-images/25131.jpg",
+            "artist-images/30119.jpg",
+            "artist-images/2829.jpg",
+            "artist-images/4542.jpg",
+            "artist-images/38711.jpg",
+            "artist-images/6965.jpg",
+            "artist-images/5931.jpg",
+            "artist-images/879.jpg",
+            "artist-images/19446.jpg",
+            "artist-images/45441.jpg",
+            "artist-images/7068.jpg",
+            "artist-images/87647.jpg",
+            "artist-images/66025.jpg",
+            "artist-images/43627.jpg",
+            "artist-images/5225.jpg",
+            "artist-images/8234.jpg",
+            "artist-images/6108.jpg",
+            "artist-images/10467.jpg",
+            "artist-images/9710.jpg",
+            "artist-images/156348.jpg",
+            "artist-images/36651.jpg",
+            "artist-images/1889.jpg",
+            "artist-images/63025.jpg",
+            "artist-images/24395.jpg",
+            "artist-images/42401.jpg",
+            "artist-images/671.jpg",
+            "artist-images/4457.jpg",
+            "artist-images/3381.jpg",
+            "artist-images/2521.jpg",
+            "artist-images/336.jpg",
+            "artist-images/117073.jpg"
         ],
         "deleted_data": [],
         "deleted_images": [],
@@ -543,7 +681,9 @@
             "backup-meta-data/META_18_March_2026_1517_103.json",
             "backup-meta-data/META_18_March_2026_1517_104.json",
             "backup-meta-data/META_18_March_2026_1518_104.json",
-            "backup-meta-data/META_18_March_2026_1518_105.json"
+            "backup-meta-data/META_18_March_2026_1518_105.json",
+            "backup-meta-data/META_18_March_2026_1519_103.json",
+            "backup-meta-data/META_18_March_2026_1519_106.json"
         ],
         "reports": [],
         "archived_backups": [],
