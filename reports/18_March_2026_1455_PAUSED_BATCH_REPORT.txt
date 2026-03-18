@@ -1,6 +1,6 @@
 ⏳ BATCH PAUSED: Workflow reached limit and saved state safely.
-🆔 Run ID: RUN_20260318_145520
-📅 Paused On: 18 March 2026 02:55 PM (IST)
+🆔 Run ID: RUN_20260318_145554
+📅 Paused On: 18 March 2026 02:56 PM (IST)
 ⚙️ Script Version: v10.3
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -8,6 +8,7 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 🆕 Data Created:
+- 101 - Don't Mess With My Ex-Girlfriend (2022) -> First Time Uploaded
 - 101 - Don't Mess With My Ex-Girlfriend (2022) -> First Time Uploaded
 - 101 - Don't Mess With My Ex-Girlfriend (2022) -> First Time Uploaded
 - 101 - Don't Mess With My Ex-Girlfriend (2022) -> First Time Uploaded
@@ -24,8 +25,10 @@
 - 101 - Don't Mess With My Ex-Girlfriend -> Fetched: Aired On, Cast, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
 - 101 - Don't Mess With My Ex-Girlfriend -> Fetched: Aired On, Cast, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
 - 101 - Don't Mess With My Ex-Girlfriend -> Fetched: Aired On, Cast, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 101 - Don't Mess With My Ex-Girlfriend -> Fetched: Aired On, Cast, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
 
 🕳️ Value Not Found:
+- 101 - Don't Mess With My Ex-Girlfriend -> ⚠️ Missing: Director
 - 101 - Don't Mess With My Ex-Girlfriend -> ⚠️ Missing: Director
 - 101 - Don't Mess With My Ex-Girlfriend -> ⚠️ Missing: Director
 - 101 - Don't Mess With My Ex-Girlfriend -> ⚠️ Missing: Director
@@ -36,12 +39,12 @@
 
 📊 Summary (Sheet: Sheet1)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🆕 Created: 7
+🆕 Created: 8
 🔁 Updated: 0
 🔍 Refetched: 0
 🚫 Skipped: 0
-⚠️ Warnings: 7
-  Total Rows: 7
+⚠️ Warnings: 8
+  Total Rows: 8
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Deleting Records ===
@@ -54,23 +57,24 @@
 - 101 -> Don't Mess With My Ex-Girlfriend (2022) -> ✅ Deleted
 - 101 -> Don't Mess With My Ex-Girlfriend (2022) -> ✅ Deleted
 - 101 -> Don't Mess With My Ex-Girlfriend (2022) -> ✅ Deleted
+- 101 -> Don't Mess With My Ex-Girlfriend (2022) -> ✅ Deleted
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📊 Overall Summary
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🆕 Total Created: 7
+🆕 Total Created: 8
 🔁 Total Updated: 0
 🔍 Total Refetched: 0
-🖼️ Show Images Updated: 7
+🖼️ Show Images Updated: 8
 🧑‍🎨 New Artist Images Added: 8
 🚫 Total Skipped: 0
-❌ Total Deleted: 6
-🗄️ Total Archived Backups: 6
-⚠️ Total Warnings: 7
+❌ Total Deleted: 7
+🗄️ Total Archived Backups: 7
+⚠️ Total Warnings: 8
 💾 Backup Files: 0
-  Grand Total Rows Processed: 7
+  Grand Total Rows Processed: 8
 
-💾 Metadata Backups: 7
+💾 Metadata Backups: 8
 
 📦 Total Objects in seriesData.json: 1
 📦 Total Objects in artists.json: 321
@@ -87,32 +91,32 @@
     📄 57603.jpg
     ... and 5 more files.
 
-📁 deleted_data/ (Total: 6 files)
+📁 deleted_data/ (Total: 7 files)
     📄 DELETED_18_March_2026_1452_101.json
     📄 DELETED_18_March_2026_1452_101.json
     📄 DELETED_18_March_2026_1453_101.json
-    ... and 3 more files.
+    ... and 4 more files.
 
-📁 deleted_images/ (Total: 6 files)
+📁 deleted_images/ (Total: 7 files)
     📄 DELETED_18_March_2026_1452_101.jpg
     📄 DELETED_18_March_2026_1452_101.jpg
     📄 DELETED_18_March_2026_1453_101.jpg
-    ... and 3 more files.
+    ... and 4 more files.
 
-📁 meta_backups/ (Total: 7 files)
+📁 meta_backups/ (Total: 8 files)
     📄 META_18_March_2026_1451_101.json
     📄 META_18_March_2026_1452_101.json
     📄 META_18_March_2026_1452_101.json
-    ... and 4 more files.
+    ... and 5 more files.
 
 📁 reports/ (Total: 1 files)
     📄 18_March_2026_1455_PAUSED_BATCH_REPORT.txt
 
-📁 archived_meta_backups/ (Total: 6 files)
+📁 archived_meta_backups/ (Total: 7 files)
     📄 META_18_March_2026_1451_101.json
     📄 META_18_March_2026_1452_101.json
     📄 META_18_March_2026_1452_101.json
-    ... and 3 more files.
+    ... and 4 more files.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ⚠️ BATCH LIMIT REACHED: The script paused safely to prevent timeout.
