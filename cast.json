@@ -1,1 +1,50 @@
-{}
+{
+    "101": {
+        "mainRoles": [
+            {
+                "artistID": "85195",
+                "characterName": "An Duo Duo",
+                "role": "Main Role"
+            },
+            {
+                "artistID": "57603",
+                "characterName": "Qin Qi",
+                "role": "Main Role"
+            },
+            {
+                "artistID": "34625",
+                "characterName": "Qin Lang",
+                "role": "Main Role"
+            },
+            {
+                "artistID": "23655",
+                "characterName": "Cheng Zi",
+                "role": "Main Role"
+            }
+        ],
+        "supportRoles": [
+            {
+                "artistID": "56825",
+                "characterName": "Secretary Zhang",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "142317",
+                "characterName": "Li Wei Wei",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "127453",
+                "characterName": "Voice Actor",
+                "role": "Support Role"
+            }
+        ],
+        "crew": [
+            {
+                "artistID": "141431",
+                "characterName": null,
+                "role": "Executive Producer"
+            }
+        ]
+    }
+}
