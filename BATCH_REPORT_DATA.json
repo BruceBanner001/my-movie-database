@@ -226,9 +226,85 @@
                         "network": "mydramalist",
                         "airedOn": "mydramalist"
                     }
+                },
+                {
+                    "showID": 101,
+                    "showName": "Don't Mess With My Ex-Girlfriend",
+                    "otherNames": [
+                        "Bie Re Qian Nu You",
+                        "Don't Mess with Your Ex",
+                        "Ex's Revenge",
+                        "Não Se Meta com Minha Ex-namorada",
+                        "別惹前女友"
+                    ],
+                    "showImage": "101.jpg",
+                    "watchStartedOn": "17-06-2023",
+                    "watchEndedOn": "17-06-2023",
+                    "releasedYear": 2022,
+                    "releaseDate": "Aug 29, 2022 - Sep 19, 2022",
+                    "totalEpisodes": 20,
+                    "showType": "Drama",
+                    "nativeLanguage": "Chinese",
+                    "watchedLanguage": "Chinese",
+                    "country": "China",
+                    "comments": "Nice Drama. Even Though The Story Was Too Short  For A Series. It Was Nice To Watch.",
+                    "ratings": 10,
+                    "genres": [
+                        "Business",
+                        "Mini Drama",
+                        "Romance"
+                    ],
+                    "network": [
+                        "Tencent",
+                        "Tencent Video"
+                    ],
+                    "againWatchedDates": [],
+                    "updatedOn": "18 March 2026",
+                    "updatedDetails": "First Time Uploaded",
+                    "synopsis": "Designer An Duo Duo finds out that her fiancé Qin Lang is cheating on her in the midst of their wedding preparations when she finds him in bed with his mistress Li Wei Wei. Unexpectedly, Qin Lang did not cancel the wedding but instead tied the knot with Li Wei Wei. In order to get a little revenge, An Duo Duo hired Qin Qi, the head of the Qin family, to be\n\nher fake husband at Qin Lang and Li Wei Wei's wedding. Qin Qi helped An Duo Duo, but for his own personal reasons, and their fake marriage wasn't exactly easy. When Li Wei Wei tried to provoke An Duo Duo, both she and Qin Lang would discover the mistake of messing with this particular ex-girlfriend. A war is about to kick off...",
+                    "topRatings": 1000,
+                    "Duration": "8 mins",
+                    "director": [],
+                    "tags": [
+                        "Short Length Series",
+                        "Male Chases Female First",
+                        "Jewelry Designer Female Lead",
+                        "Fake Relationship",
+                        "Fake Marriage",
+                        "Love At First Sight",
+                        "Cohabitation",
+                        "Web Series",
+                        "Rich Man/Poor Woman",
+                        "Emotionally Strong Female Lead"
+                    ],
+                    "cast": {
+                        "Main Role": 4,
+                        "Support Role": 3,
+                        "Executive Producer": 1
+                    },
+                    "airedOn": [
+                        "Monday",
+                        "Tuesday",
+                        "Wednesday",
+                        "Thursday",
+                        "Friday"
+                    ],
+                    "sitePriorityUsed": {
+                        "showImage": "mydramalist",
+                        "releaseDate": "mydramalist",
+                        "otherNames": "mydramalist",
+                        "Duration": "mydramalist",
+                        "synopsis": "mydramalist",
+                        "director": null,
+                        "tags": "mydramalist",
+                        "cast": "mydramalist",
+                        "network": "mydramalist",
+                        "airedOn": "mydramalist"
+                    }
                 }
             ],
             "fetched_data": [
+                "- 101 - Don't Mess With My Ex-Girlfriend -> Fetched: Aired On, Cast, Duration, Other Names, Release Date, Show Image, Synopsis, Tags",
                 "- 101 - Don't Mess With My Ex-Girlfriend -> Fetched: Aired On, Cast, Duration, Other Names, Release Date, Show Image, Synopsis, Tags",
                 "- 101 - Don't Mess With My Ex-Girlfriend -> Fetched: Aired On, Cast, Duration, Other Names, Release Date, Show Image, Synopsis, Tags",
                 "- 101 - Don't Mess With My Ex-Girlfriend -> Fetched: Aired On, Cast, Duration, Other Names, Release Date, Show Image, Synopsis, Tags"
@@ -236,11 +312,13 @@
             "fetch_warnings": [
                 "- 101 - Don't Mess With My Ex-Girlfriend -> ⚠️ Missing: Director",
                 "- 101 - Don't Mess With My Ex-Girlfriend -> ⚠️ Missing: Director",
+                "- 101 - Don't Mess With My Ex-Girlfriend -> ⚠️ Missing: Director",
                 "- 101 - Don't Mess With My Ex-Girlfriend -> ⚠️ Missing: Director"
             ]
         },
         "Deleting Records": {
             "data_deleted": [
+                "- 101 -> Don't Mess With My Ex-Girlfriend (2022) -> ✅ Deleted",
                 "- 101 -> Don't Mess With My Ex-Girlfriend (2022) -> ✅ Deleted",
                 "- 101 -> Don't Mess With My Ex-Girlfriend (2022) -> ✅ Deleted"
             ]
@@ -261,21 +339,25 @@
         ],
         "deleted_data": [
             "deleted-data/DELETED_18_March_2026_1452_101.json",
-            "deleted-data/DELETED_18_March_2026_1452_101.json"
+            "deleted-data/DELETED_18_March_2026_1452_101.json",
+            "deleted-data/DELETED_18_March_2026_1453_101.json"
         ],
         "deleted_images": [
             "deleted-images/DELETED_18_March_2026_1452_101.jpg",
-            "deleted-images/DELETED_18_March_2026_1452_101.jpg"
+            "deleted-images/DELETED_18_March_2026_1452_101.jpg",
+            "deleted-images/DELETED_18_March_2026_1453_101.jpg"
         ],
         "meta_backups": [
             "backup-meta-data/META_18_March_2026_1451_101.json",
             "backup-meta-data/META_18_March_2026_1452_101.json",
-            "backup-meta-data/META_18_March_2026_1452_101.json"
+            "backup-meta-data/META_18_March_2026_1452_101.json",
+            "backup-meta-data/META_18_March_2026_1453_101.json"
         ],
         "reports": [],
         "archived_backups": [],
         "archived_meta_backups": [
             "archived-backup-meta-data/101/META_18_March_2026_1451_101.json",
+            "archived-backup-meta-data/101/META_18_March_2026_1452_101.json",
             "archived-backup-meta-data/101/META_18_March_2026_1452_101.json"
         ]
     },
