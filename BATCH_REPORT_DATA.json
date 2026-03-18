@@ -676,6 +676,57 @@
                         "network": "mydramalist",
                         "airedOn": "mydramalist"
                     }
+                },
+                {
+                    "showID": 102,
+                    "showName": "It's Okay That's Love",
+                    "otherNames": [],
+                    "showImage": "102.jpg",
+                    "watchStartedOn": "08-02-2023",
+                    "watchEndedOn": "10-02-2023",
+                    "releasedYear": 2014,
+                    "releaseDate": "July 23 - September 11, 2014",
+                    "totalEpisodes": 16,
+                    "showType": "Drama",
+                    "nativeLanguage": "Korean",
+                    "watchedLanguage": "Korean",
+                    "country": "South Korea",
+                    "comments": "One Time Watchable. Ending Was Simple And Nice.",
+                    "ratings": 8,
+                    "genres": [
+                        "Comedy",
+                        "Melodrama",
+                        "Psychology",
+                        "Romance"
+                    ],
+                    "network": [
+                        "SBS"
+                    ],
+                    "againWatchedDates": [
+                        "03-02-2024",
+                        "24-09-2025"
+                    ],
+                    "updatedOn": "18 March 2026",
+                    "updatedDetails": "First Time Uploaded",
+                    "synopsis": "Jang Jae-Yeol is a mystery writer and radio DJ. He suffers from a obsession. Ji Hae-Soo is going through her first year fellowship in psychiatry at a University Hospital. She chose psychiatry because she doesn't want to perform surgeries. After she meets Jang Jae-Yeol, her life goes through big changes.",
+                    "topRatings": 2400,
+                    "Duration": null,
+                    "director": [],
+                    "tags": [],
+                    "cast": {},
+                    "airedOn": [],
+                    "sitePriorityUsed": {
+                        "showImage": "asianwiki",
+                        "releaseDate": "asianwiki",
+                        "otherNames": null,
+                        "Duration": null,
+                        "synopsis": "asianwiki",
+                        "director": null,
+                        "tags": null,
+                        "cast": null,
+                        "network": null,
+                        "airedOn": null
+                    }
                 }
             ],
             "fetched_data": [
@@ -687,7 +738,8 @@
                 "- 101 - Don't Mess With My Ex-Girlfriend -> Fetched: Aired On, Cast, Duration, Other Names, Release Date, Show Image, Synopsis, Tags",
                 "- 101 - Don't Mess With My Ex-Girlfriend -> Fetched: Aired On, Cast, Duration, Other Names, Release Date, Show Image, Synopsis, Tags",
                 "- 101 - Don't Mess With My Ex-Girlfriend -> Fetched: Aired On, Cast, Duration, Other Names, Release Date, Show Image, Synopsis, Tags",
-                "- 101 - Don't Mess With My Ex-Girlfriend -> Fetched: Aired On, Cast, Duration, Other Names, Release Date, Show Image, Synopsis, Tags"
+                "- 101 - Don't Mess With My Ex-Girlfriend -> Fetched: Aired On, Cast, Duration, Other Names, Release Date, Show Image, Synopsis, Tags",
+                "- 102 - It's Okay That's Love -> Fetched: Release Date, Show Image, Synopsis"
             ],
             "fetch_warnings": [
                 "- 101 - Don't Mess With My Ex-Girlfriend -> ⚠️ Missing: Director",
@@ -698,7 +750,12 @@
                 "- 101 - Don't Mess With My Ex-Girlfriend -> ⚠️ Missing: Director",
                 "- 101 - Don't Mess With My Ex-Girlfriend -> ⚠️ Missing: Director",
                 "- 101 - Don't Mess With My Ex-Girlfriend -> ⚠️ Missing: Director",
-                "- 101 - Don't Mess With My Ex-Girlfriend -> ⚠️ Missing: Director"
+                "- 101 - Don't Mess With My Ex-Girlfriend -> ⚠️ Missing: Director",
+                "- 101 - Don't Mess With My Ex-Girlfriend -> ⚠️ Missing: Director",
+                "- 102 - It's Okay That's Love -> ⚠️ Missing: Aired On, Cast, Director, Duration, Other Names, Tags"
+            ],
+            "skipped": [
+                "101 - Don't Mess With My Ex-Girlfriend (2022)"
             ]
         },
         "Deleting Records": {
@@ -756,7 +813,8 @@
             "backup-meta-data/META_18_March_2026_1454_101.json",
             "backup-meta-data/META_18_March_2026_1455_101.json",
             "backup-meta-data/META_18_March_2026_1455_101.json",
-            "backup-meta-data/META_18_March_2026_1456_101.json"
+            "backup-meta-data/META_18_March_2026_1456_101.json",
+            "backup-meta-data/META_18_March_2026_1457_102.json"
         ],
         "reports": [],
         "archived_backups": [],
