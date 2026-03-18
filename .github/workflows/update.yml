@@ -51,7 +51,7 @@ jobs:
           SHEETS: "Sheet1;Sheet2;Manual Updates"
           GITHUB_PAGES_URL: "https://brucebanner001.github.io/my-movie-database"
           DEBUG_FETCH: "true"
-          MAX_FETCHES: "20"
+          MAX_FETCHES: "2"
         run: |
 
           # Capture start time
