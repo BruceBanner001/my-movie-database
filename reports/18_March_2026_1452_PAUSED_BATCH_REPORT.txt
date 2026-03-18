@@ -1,0 +1,89 @@
+⏳ BATCH PAUSED: Workflow reached limit and saved state safely.
+🆔 Run ID: RUN_20260318_145216
+📅 Paused On: 18 March 2026 02:52 PM (IST)
+⚙️ Script Version: v10.3
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Sheet1 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🆕 Data Created:
+- 101 - Don't Mess With My Ex-Girlfriend (2022) -> First Time Uploaded
+- 101 - Don't Mess With My Ex-Girlfriend (2022) -> First Time Uploaded
+
+🖼️ Fetched Data Details:
+- 101 - Don't Mess With My Ex-Girlfriend -> Fetched: Aired On, Cast, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 101 - Don't Mess With My Ex-Girlfriend -> Fetched: Aired On, Cast, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+
+🕳️ Value Not Found:
+- 101 - Don't Mess With My Ex-Girlfriend -> ⚠️ Missing: Director
+- 101 - Don't Mess With My Ex-Girlfriend -> ⚠️ Missing: Director
+
+📊 Summary (Sheet: Sheet1)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Created: 2
+🔁 Updated: 0
+🔍 Refetched: 0
+🚫 Skipped: 0
+⚠️ Warnings: 2
+  Total Rows: 2
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Deleting Records ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+❌ Data Deleted:
+- 101 -> Don't Mess With My Ex-Girlfriend (2022) -> ✅ Deleted
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 Overall Summary
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Total Created: 2
+🔁 Total Updated: 0
+🔍 Total Refetched: 0
+🖼️ Show Images Updated: 2
+🧑‍🎨 New Artist Images Added: 8
+🚫 Total Skipped: 0
+❌ Total Deleted: 1
+🗄️ Total Archived Backups: 1
+⚠️ Total Warnings: 2
+💾 Backup Files: 0
+  Grand Total Rows Processed: 2
+
+💾 Metadata Backups: 2
+
+📦 Total Objects in seriesData.json: 1
+📦 Total Objects in artists.json: 321
+📦 Total Objects in cast.json: 1
+📦 Total Objects in artists_lookup.json: 321
+🖼️ Total images in show-images: 1
+🧑‍🎨 Total images in artist-images: 321
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ Folders Generated:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📁 artist_images/ (Total: 8 files)
+    📄 141431.jpg
+    📄 85195.jpg
+    📄 57603.jpg
+    ... and 5 more files.
+
+📁 deleted_data/ (Total: 1 files)
+    📄 DELETED_18_March_2026_1452_101.json
+
+📁 deleted_images/ (Total: 1 files)
+    📄 DELETED_18_March_2026_1452_101.jpg
+
+📁 meta_backups/ (Total: 2 files)
+    📄 META_18_March_2026_1451_101.json
+    📄 META_18_March_2026_1452_101.json
+
+📁 reports/ (Total: 1 files)
+    📄 18_March_2026_1452_PAUSED_BATCH_REPORT.txt
+
+📁 archived_meta_backups/ (Total: 1 files)
+    📄 META_18_March_2026_1451_101.json
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚠️ BATCH LIMIT REACHED: The script paused safely to prevent timeout.
+The GitHub Action will now automatically trigger the next run.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
