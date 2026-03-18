@@ -55,7 +55,7 @@ jobs:
         run: |
 
           # Capture start time
-          START_TIME_FORMATTED=$(date +"%d %B %Y %I:%M %p (IST)")
+          START_TIME_FORMATTED=$(TZ='Asia/Kolkata' date +"%d %B %Y %I:%M %p (IST)")
           START_TIME_SECONDS=$(date +%s)
 
           echo "start_time=$START_TIME_FORMATTED" >> "$GITHUB_OUTPUT"
@@ -147,7 +147,7 @@ jobs:
           fi
 
           START_TIME="${{ steps.run_updater.outputs.start_time }}"
-          END_TIME=$(date +"%d %B %Y %I:%M %p (IST)")
+          END_TIME=$(TZ='Asia/Kolkata' date +"%d %B %Y %I:%M %p (IST)")
           RUNTIME=${{ steps.run_updater.outputs.runtime_seconds }}
 
           if [[ -n "$REPORT_PATH" && -f "$REPORT_PATH" ]]; then
@@ -199,7 +199,7 @@ jobs:
             TRIGGER_TYPE="Automatic"
           fi
 
-          RUN_DATE=$(date +"%d %B %Y %H:%M IST")
+          RUN_DATE=$(TZ='Asia/Kolkata' date +"%d %B %Y %H:%M IST")
 
           SUBJECT="[$TRIGGER_TYPE] Workflow $RUN_DATE Report"
 
