@@ -1,0 +1,56 @@
+✅ Workflow completed successfully
+🆔 Run ID: RUN_20260318_131657
+📅 Run Time: 18 March 2026 01:16 PM (IST)
+⚙️ Script Version: v10.3
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Deleting Records ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+❌ Data Deleted:
+- 101 -> It's Okay to Not be Okay (2020) -> ✅ Deleted
+- 102 -> Descendant of the Sun (2016) -> ✅ Deleted
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 Overall Summary
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Total Created: 0
+🔁 Total Updated: 0
+🔍 Total Refetched: 0
+🖼️ Show Images Updated: 0
+🧑‍🎨 New Artist Images Added: 0
+🚫 Total Skipped: 0
+❌ Total Deleted: 2
+🗄️ Total Archived Backups: 2
+⚠️ Total Warnings: 0
+💾 Backup Files: 0
+  Grand Total Rows Processed: 0
+
+💾 Metadata Backups: 0
+
+📦 Total Objects in seriesData.json: 0
+📦 Total Objects in artists.json: 80
+📦 Total Objects in cast.json: 0
+📦 Total Objects in artists_lookup.json: 80
+🖼️ Total images in show-images: 0
+🧑‍🎨 Total images in artist-images: 80
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ Folders Generated:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📁 deleted_data/ (Total: 2 files)
+    📄 DELETED_18_March_2026_1316_101.json
+    📄 DELETED_18_March_2026_1316_102.json
+
+📁 deleted_images/ (Total: 2 files)
+    📄 DELETED_18_March_2026_1316_101.jpg
+    📄 DELETED_18_March_2026_1316_102.jpg
+
+📁 reports/ (Total: 1 files)
+    📄 18_March_2026_1316_REPORT.txt
+
+📁 archived_meta_backups/ (Total: 2 files)
+    📄 META_18_March_2026_1240_101.json
+    📄 META_18_March_2026_1313_102.json
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🏁 Workflow finished successfully
