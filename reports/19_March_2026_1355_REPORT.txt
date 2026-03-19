@@ -1,16 +1,16 @@
 ✅ Workflow Batch completed successfully
-⏳ Batch Processing in Progress...
+🏁 Final Batch Completed
 ══════════════════════════════════════════════════════
 📊 My Movie Database – Excel to JSON Workflow Report
 ══════════════════════════════════════════════════════
 
 🚀 Workflow Type : Manual
-🔁 RUN           : 769
+🔁 RUN           : 770
 ⏰ Start Time    : 19 March 2026 - 01:54:21 PM
-⏰ End Time      : 19 March 2026 - 01:55:14 PM
-⏱️ Runtime       : 25 Seconds
+⏰ End Time      : 19 March 2026 - 01:55:59 PM
+⏱️ Runtime       : 43 Seconds
 ⚙️ Max Process   : 1 Row Per Run
-🔄 Total Batches : 2 Runs
+🔄 Total Batches : 3 Runs
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Sheet1 ===
@@ -19,69 +19,75 @@
 🆕 Data Created:
 - 104 - Meloholic (2017) -> First Time Uploaded
 - 105 - Meteor Garden (2018) -> First Time Uploaded
+- 106 - Miracle That We Met (2018) -> First Time Uploaded
 
 🖼️ Fetched Data Details:
 - 104 - Meloholic -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
 - 105 - Meteor Garden -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 106 - Miracle That We Met -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
 
 🚫 Skipped (Unchanged):
 - 101 - It's Okay to Not be Okay
 - 101 - It's Okay to Not be Okay
+- 101 - It's Okay to Not be Okay
 - 102 - It's Okay That's Love
 - 102 - It's Okay That's Love
+- 102 - It's Okay That's Love
+- 103 - Find Me in Your Memory
 - 103 - Find Me in Your Memory
 - 103 - Find Me in Your Memory
 - 104 - Meloholic
+- 104 - Meloholic
+- 105 - Meteor Garden
 
 📊 Summary (Sheet: Sheet1)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🆕 Created: 2
+🆕 Created: 3
 🔁 Updated: 0
 🔍 Refetched: 0
-🚫 Skipped: 7
+🚫 Skipped: 12
 ⚠️ Warnings: 0
-  Total Rows: 9
+  Total Rows: 15
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📊 Overall Summary
+📊 Cumulative Batch Summary
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🆕 Total Created: 2
+🆕 Total Created: 3
 🔁 Total Updated: 0
 🔍 Total Refetched: 0
-🖼️ Show Images Updated: 2
-🧑‍🎨 New Artist Images Added: 76
-🚫 Total Skipped: 7
+🖼️ Show Images Updated: 3
+🧑‍🎨 New Artist Images Added: 139
+🚫 Total Skipped: 12
 ❌ Total Deleted: 0
 🗄️ Total Archived Backups: 0
 ⚠️ Total Warnings: 0
 💾 Backup Files: 0
-  Grand Total Rows Processed: 9
+  Grand Total Rows Processed: 15
 
-💾 Metadata Backups: 2
+💾 Metadata Backups: 3
 
-📦 Total Objects in seriesData.json: 5
-📦 Total Objects in artists.json: 623
-📦 Total Objects in cast.json: 5
-📦 Total Objects in artists_lookup.json: 623
-🖼️ Total images in show-images: 5
-🧑‍🎨 Total images in artist-images: 623
+📦 Total Objects in seriesData.json: 6
+📦 Total Objects in artists.json: 686
+📦 Total Objects in cast.json: 6
+📦 Total Objects in artists_lookup.json: 686
+🖼️ Total images in show-images: 6
+🧑‍🎨 Total images in artist-images: 686
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ Folders Generated:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📁 artist_images/ (Total: 76 files)
+📁 artist_images/ (Total: 139 files)
     📄 60377.jpg
     📄 15989.jpg
     📄 78043.jpg
-    ... and 73 more files.
+    ... and 136 more files.
 
-📁 meta_backups/ (Total: 2 files)
+📁 meta_backups/ (Total: 3 files)
     📄 META_19_March_2026_1354_104.json
     📄 META_19_March_2026_1355_105.json
+    📄 META_19_March_2026_1355_106.json
 
 📁 reports/ (Total: 1 files)
     📄 19_March_2026_1355_REPORT.txt
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⚠️ BATCH LIMIT REACHED: The script paused safely.
-GitHub Actions will trigger next run automatically.
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🏁 Workflow finished successfully
