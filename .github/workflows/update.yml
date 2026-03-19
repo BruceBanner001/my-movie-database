@@ -1,12 +1,17 @@
 # ============================================================================
 # Workflow: Excel → JSON Update
-# Version : 7.0 (Start Time Fix + Manual/Automatic Email + Runtime)
+# Version : 7.1 (MAX_FETCHES UI Input + Report Display)
 # ============================================================================
 
 name: Excel → JSON Update
 
 on:
   workflow_dispatch:
+    inputs:
+      max_fetches:
+        description: "Maximum items to fetch"
+        required: false
+        default: "50"
   schedule:
     - cron: "30 18 * * 6"
 
@@ -51,7 +56,7 @@ jobs:
           SHEETS: "Sheet1;Sheet2;Manual Updates"
           GITHUB_PAGES_URL: "https://brucebanner001.github.io/my-movie-database"
           DEBUG_FETCH: "true"
-          MAX_FETCHES: "2"
+          MAX_FETCHES: ${{ github.event.inputs.max_fetches || '50' }}
         run: |
 
           # Capture start time
@@ -59,6 +64,10 @@ jobs:
           START_TIME_SECONDS=$(date +%s)
 
           echo "start_time=$START_TIME_FORMATTED" >> "$GITHUB_OUTPUT"
+
+          # Store MAX_FETCHES for email report
+          MAX_FETCHES_VALUE="${{ github.event.inputs.max_fetches || '50' }}"
+          echo "max_fetches=$MAX_FETCHES_VALUE" >> "$GITHUB_OUTPUT"
 
           python create_update_backup_delete.py 2>&1 | tee output.log
           script_exit_code=${PIPESTATUS[0]}
@@ -149,7 +158,8 @@ jobs:
           START_TIME="${{ steps.run_updater.outputs.start_time }}"
           END_TIME=$(TZ='Asia/Kolkata' date +"%d %B %Y - %I:%M:%S %p")
           RUNTIME=${{ steps.run_updater.outputs.runtime_seconds }}
-          RUN_NUMBER=${{ github.run_attempt }}
+          MAX_FETCHES=${{ steps.run_updater.outputs.max_fetches }}
+          RUN_NUMBER=${{ github.run_number }}
 
           if [[ -n "$REPORT_PATH" && -f "$REPORT_PATH" ]]; then
             report_file="$REPORT_PATH"
@@ -169,6 +179,7 @@ jobs:
             echo "⏰ Start Time    : $START_TIME"
             echo "⏰ End Time      : $END_TIME"
             echo "⏱️ Runtime       : ${RUNTIME} seconds"
+            echo "⚙️ Max Fetches   : $MAX_FETCHES"
             echo ""
 
             if [[ "${WORKFLOW_STATUS}" == "success" ]]; then
