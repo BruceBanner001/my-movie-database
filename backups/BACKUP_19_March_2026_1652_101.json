@@ -1,0 +1,46 @@
+{
+    "scriptVersion": "v10.5",
+    "runID": "RUN_20260319_165216",
+    "timestamp": "19 March 2026 04:52 PM (IST)",
+    "backupType": "partial_diff",
+    "showID": 101,
+    "showName": "It's Okay to Not be Okay",
+    "releasedYear": 2020,
+    "updatedDetails": "Watch Started On, Watch Ended On, Category, Again Watched Dates Updated",
+    "changedFields": {
+        "watchStartedOn": {
+            "old": "07-02-2023",
+            "new": "02-07-2023"
+        },
+        "watchEndedOn": {
+            "old": "08-02-2023",
+            "new": "02-08-2023"
+        },
+        "genres": {
+            "old": [
+                "Comedy",
+                "Psychological",
+                "Romance"
+            ],
+            "new": [
+                "Romance",
+                "Psychological",
+                "Comedy"
+            ]
+        },
+        "againWatchedDates": {
+            "old": [
+                "14-09-2023",
+                "02-05-2024",
+                "26-08-2024",
+                "19-08-2025"
+            ],
+            "new": [
+                "14-09-2023",
+                "05-02-2024",
+                "26-08-2024",
+                "19-08-2025"
+            ]
+        }
+    }
+}
