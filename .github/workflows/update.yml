@@ -1,6 +1,6 @@
 # ============================================================================
 # Workflow: Excel → JSON Update (Relay-Race Edition)
-# Version : 8.6 (Infinite Loop Protected + IST Reporting)
+# Version : 8.7 (Full Report Email + Loop Protection)
 # ============================================================================
 
 name: Excel → JSON Update
@@ -15,9 +15,9 @@ on:
   schedule:
     - cron: "30 18 * * 6"
 
-# PREVENT CONFLICTS: Only one sequence can run at a time
+# Only one run sequence can edit the database at a time
 concurrency:
-  group: movie-db-update-${{ github.ref }}
+  group: movie-db-sync-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -90,8 +90,7 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           
-          # CRITICAL: Delete temporary flags so they ARE NOT pushed to the repo
-          # This prevents the Infinite Loop!
+          # Delete temp files so they aren't pushed (Prevents Infinite Loop)
           rm -f RESUME_FLAG.txt
           rm -f BATCH_REPORT_DATA.json
           
@@ -104,26 +103,41 @@ jobs:
           fi
           echo "::endgroup::"
 
-      - name: 8. Publish Report to Summary
+      - name: 8. Upload Artifacts
         if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: batch-results
+          path: |
+            output.log
+            reports/
+
+      - name: 9. Prepare Report for Email & Summary
+        if: always()
+        id: get_report
         run: |
-          LATEST_REPORT=$(ls -t reports/*_REPORT.txt 2>/dev/null | head -n1 || echo "")
-          if [ -f "$LATEST_REPORT" ]; then
-            echo "### 📊 Batch Execution Report" >> $GITHUB_STEP_SUMMARY
+          # Find the latest report text file
+          REPORT_PATH=$(ls -t reports/*_REPORT.txt 2>/dev/null | head -n1 || echo "")
+          echo "REPORT_PATH=$REPORT_PATH" >> $GITHUB_ENV
+          echo "report_exists=$([ -f "$REPORT_PATH" ] && echo 'true' || echo 'false')" >> "$GITHUB_OUTPUT"
+          
+          if [ -f "$REPORT_PATH" ]; then
+            echo "### 📊 Workflow Execution Report" >> $GITHUB_STEP_SUMMARY
             echo '```text' >> $GITHUB_STEP_SUMMARY
-            cat "$LATEST_REPORT" >> $GITHUB_STEP_SUMMARY
+            cat "$REPORT_PATH" >> $GITHUB_STEP_SUMMARY
             echo '```' >> $GITHUB_STEP_SUMMARY
           fi
 
-      - name: 9. Trigger Next Batch
+      - name: 10. Trigger Next Batch
         if: success() && steps.run_script.outputs.CONTINUE_BATCH == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "::notice::Limit hit. Restarting for next batch..."
+          echo "::notice::Limit hit. Starting next batch run..."
           gh workflow run "Excel → JSON Update" --ref ${{ github.ref_name }} -f max_fetches=${{ github.event.inputs.max_fetches || '50' }}
 
-      - name: 10. Email Notification
+      - name: 11. Send Email Notification
+        # Send email on Final Success or any Failure
         if: always() && (steps.run_script.outputs.CONTINUE_BATCH == 'false' || job.status != 'success')
         uses: dawidd6/action-send-mail@v3
         with:
@@ -132,6 +146,7 @@ jobs:
           username: ${{ secrets.SMTP_USERNAME }}
           password: ${{ secrets.SMTP_PASSWORD }}
           subject: "Movie DB Batch Finished [${{ job.status }}]"
-          body: "Workflow completed all batches. Check GitHub Actions for details."
+          # Point to the file found in step 9
+          body: file://${{ env.REPORT_PATH }}
           to: ${{ secrets.NOTIFY_EMAIL }}
           from: ${{ secrets.SMTP_USERNAME }}

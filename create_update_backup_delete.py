@@ -1,11 +1,15 @@
-# ============================================================================
-# Script: create_update_backup_delete.py
-# Version: v10.4 (BULLETPROOF RELAY-RACE EDITION)
-# Author: [BruceBanner001]
-# ============================================================================
-
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
+# ============================================================
+# Script: create_update_backup_delete.py
+# Author:[BruceBanner001]
+# Description:
+#   v10.4 Engine.
+#   - Full Persistence: Tracks Global Start Time and Batch Runs.
+#   - Scenario Ready: Strict MAX_FETCHES handling.
+#   - Bulletproof Scrapers: MDL, AsianWiki, IMDb fallback logic.
+# ============================================================
 
 # --------------------------- VERSION & CONFIG ------------------------
 SCRIPT_VERSION = "v10.4"
@@ -157,7 +161,8 @@ def save_batch_state(context, current_run_seconds):
         'files_generated': context['files_generated'],
         'cumulative_time_seconds': context['cumulative_time_seconds'] + current_run_seconds
     }
-    with open(BATCH_STATE_FILE, 'w', encoding='utf-8') as f: json.dump(state, f, indent=4, ensure_ascii=False)
+    with open(BATCH_STATE_FILE, 'w', encoding='utf-8') as f: 
+        json.dump(state, f, indent=4, ensure_ascii=False)
 
 # ---------------------------- SCRAPER ENGINE ----------------------------
 
@@ -1123,7 +1128,7 @@ def create_diff_backup(old, new, context, explicit_changes=None):
     save_json_file(path, data)
     context['files_generated']['backups'].append(path)
 
-# ---------------------------- UPDATED REPORTING ENGINE ----------------------------
+# ---------------------------- UPDATED write_report ----------------------------
 
 def write_report(context, current_run_seconds):
     
@@ -1165,7 +1170,7 @@ def write_report(context, current_run_seconds):
         f"⏰ Start Time    : {context['global_start_time']}",
         f"⏰ End Time      : {end_time_ist}",
         f"⏱️ Runtime       : {runtime_str}",
-        f"⚙️ Max Process   : {os.environ.get('MAX_FETCHES', '50')} Per Run",
+        f"⚙️ Max Process   : {os.environ.get('MAX_FETCHES', '50')} Row Per Run",
         f"🔄 Total Batches : {context.get('batch_run_count', 1)} Run{'s' if context.get('batch_run_count', 1) != 1 else ''}",
         ""
     ]
@@ -1380,6 +1385,7 @@ def main():
             
             if is_new or excel_data_has_changed:
                 
+                # --- SCENARIO 3: CHECK LIMIT BEFORE STARTING WORK ---
                 if MAX_FETCHES > 0 and total_heavy_fetches >= MAX_FETCHES:
                     limit_reached = True
                     context['paused'] = True
@@ -1449,7 +1455,7 @@ def main():
             else:
                 report.setdefault('skipped',[]).append(f"{sid} - {excel_obj['showName']}")
 
-    # --- FINALIZATION LOGIC (SCENARIO FIXES) ---
+    # Finalize
     duration = (now_ist() - run_start_time).total_seconds()
     
     if limit_reached:
