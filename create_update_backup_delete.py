@@ -1,26 +1,14 @@
 # ============================================================
 # Script: create_update_backup_delete.py
 # Author:[BruceBanner001]
-# Description:
-#   v24.0 Engine.
-#   - FIX: Ultra-lenient Regex for MDL Extractors (Catches "Perfect Mismatch" spacing anomalies).
-#   - FIX: Smart Synopsis extraction (Bypasses MDL span/p tag changes).
-#   - FIX: Added `og:image` Meta Tag extraction for 100% reliable Image fetching.
-#   - FIX: Atomic JSON saving & strict DecodeErrors to prevent DB wipe on PC crash.
-#   - FIX: Safely handles missing "Again Watched" Excel columns.
-#   - BULLETPROOF UPDATE: Hardened IMDb Duration, Cast, & Synopsis scraping.
-#   - BULLETPROOF UPDATE: Resilient AsianWiki other-names & synopsis parsers.
-#   - BULLETPROOF UPDATE: Blocked dummy/placeholder images from downloading.
-#   - V10.3 UPDATE: Implemented AsianWiki Fallbacks, Director Cast Fix, & Relay-Race Stopwatch.
-#
-# Version: v10.3 (BULLETPROOF EDITION: Maximum Scraping Resilience + Fallbacks)
+# Version: v10.4 (BULLETPROOF RELAY-RACE EDITION)
 # ============================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # --------------------------- VERSION & CONFIG ------------------------
-SCRIPT_VERSION = "v10.3"
+SCRIPT_VERSION = "v10.4"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames":[], "showImage": None,
@@ -142,6 +130,8 @@ def _clean_other_names(names_list):
             unique_names.append(clean)
     return unique_names
 
+# ---------------------------- BATCH STATE LOGIC ----------------------------
+
 def merge_batch_state(context):
     if not os.path.exists(BATCH_STATE_FILE): return
     try:
@@ -157,15 +147,21 @@ def merge_batch_state(context):
             context['files_generated'][category].extend(lst)
             
         context['cumulative_time_seconds'] = batch_state.get('cumulative_time_seconds', 0)
+        context['global_start_time'] = batch_state.get('global_start_time')
+        context['batch_run_count'] = batch_state.get('batch_run_count', 1)
     except Exception as e: logd(f"Failed to load batch state: {e}")
 
-def save_batch_state(context):
+def save_batch_state(context, current_run_seconds):
     state = {
+        'global_start_time': context['global_start_time'],
+        'batch_run_count': context['batch_run_count'] + 1,
         'report_data': context['report_data'], 
         'files_generated': context['files_generated'],
-        'cumulative_time_seconds': context.get('cumulative_time_seconds', 0)
+        'cumulative_time_seconds': context['cumulative_time_seconds'] + current_run_seconds
     }
     with open(BATCH_STATE_FILE, 'w', encoding='utf-8') as f: json.dump(state, f, indent=4, ensure_ascii=False)
+
+# ---------------------------- SCRAPER ENGINE ----------------------------
 
 def _get_imdb_json_ld(soup):
     try:
@@ -344,7 +340,6 @@ def download_and_save_image(url, local_path, is_artist=False):
         logd(f"Failed to download image from {url}: {e}")
     return False
 
-# --- BULLETPROOF EXTRACTION HELPERS ---
 def _extract_mdl_list_item(soup, label_regex):
     b_tag = soup.find('b', string=re.compile(label_regex, re.IGNORECASE))
     if b_tag:
@@ -417,6 +412,7 @@ def _scrape_othernames_from_asianwiki(soup, **kwargs):
         for b_tag in soup.find_all('b'):
             text = b_tag.get_text(strip=True).lower()
             if any(keyword in text for keyword in target_keywords):
+                val = ""
                 for parent in b_tag.find_parents(['li', 'div', 'p', 'td']):
                     full_text = parent.get_text(" ", strip=True)
                     val = full_text.replace(b_tag.get_text(strip=True), "").replace(':', '').strip()
@@ -1129,14 +1125,53 @@ def create_diff_backup(old, new, context, explicit_changes=None):
     save_json_file(path, data)
     context['files_generated']['backups'].append(path)
 
-def write_report(context):
-    if context.get('is_final_batch_report'):
-        lines =[f"🏆 FINAL BATCH REPORT: Workflow completed perfectly across all segments", f"🆔 Run ID: {context['run_id']}", f"📅 Finished On: {now_ist().strftime('%d %B %Y %I:%M %p (IST)')}", f"⏱️ Total Batch Execution Time: {context['duration_str']}", f"⚙️ Script Version: {SCRIPT_VERSION}", ""]
-    elif context.get('paused'):
-        lines =[f"⏳ BATCH PAUSED: Workflow reached limit and saved state safely.", f"🆔 Run ID: {context['run_id']}", f"📅 Paused On: {now_ist().strftime('%d %B %Y %I:%M %p (IST)')}", f"⚙️ Script Version: {SCRIPT_VERSION}", ""]
+# ---------------------------- UPDATED write_report ----------------------------
+
+def write_report(context, current_run_seconds):
+    
+    total_seconds = int(context['cumulative_time_seconds'] + current_run_seconds)
+    hours = total_seconds // 3600
+    minutes = (total_seconds % 3600) // 60
+    seconds = total_seconds % 60
+
+    if hours > 0:
+        runtime_str = f"{hours} Hour{'s' if hours > 1 else ''} {minutes} Minute{'s' if minutes != 1 else ''} {seconds} Second{'s' if seconds != 1 else ''}"
+    elif minutes > 0:
+        runtime_str = f"{minutes} Minute{'s' if minutes != 1 else ''} {seconds} Second{'s' if seconds != 1 else ''}"
     else:
-        lines =[f"✅ Workflow completed successfully", f"🆔 Run ID: {context['run_id']}", f"📅 Run Time: {now_ist().strftime('%d %B %Y %I:%M %p (IST)')}", f"⚙️ Script Version: {SCRIPT_VERSION}", ""]
+        runtime_str = f"{seconds} Second{'s' if seconds != 1 else ''}"
+
+    if os.environ.get('GITHUB_EVENT_NAME') == 'workflow_dispatch':
+        trigger_type = "Manual"
+    else:
+        trigger_type = "Automatic"
         
+    end_time_ist = now_ist().strftime("%d %B %Y - %I:%M:%S %p")
+    
+    if context.get('paused'):
+        status_msg = "✅ Workflow Batch completed successfully"
+        batch_msg = "⏳ Batch Processing in Progress..."
+    else:
+        status_msg = "✅ Workflow Batch completed successfully"
+        batch_msg = "🏁 Final Batch Completed"
+
+    lines = [
+        status_msg,
+        batch_msg,
+        "══════════════════════════════════════════════════════",
+        "📊 My Movie Database – Excel to JSON Workflow Report",
+        "══════════════════════════════════════════════════════",
+        "",
+        f"🚀 Workflow Type : {trigger_type}",
+        f"🔁 RUN           : {os.environ.get('GITHUB_RUN_NUMBER', 'Local')}",
+        f"⏰ Start Time    : {context['global_start_time']}",
+        f"⏰ End Time      : {end_time_ist}",
+        f"⏱️ Runtime       : {runtime_str}",
+        f"⚙️ Max Process   : {os.environ.get('MAX_FETCHES', '50')} Row Per Run",
+        f"🔄 Total Batches : {context.get('batch_run_count', 1)} Run{'s' if context.get('batch_run_count', 1) != 1 else ''}",
+        ""
+    ]
+
     sep, stats = "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", {'created': 0, 'updated': 0, 'skipped': 0, 'deleted': 0, 'warnings': 0, 'show_images': 0, 'artist_images': 0, 'rows': 0, 'refetched': 0, 'archived': 0, 'artist_img_warn': 0}
     
     for sheet, changes in context['report_data'].items():
@@ -1163,7 +1198,7 @@ def write_report(context):
     stats['deleted'] = len(context['files_generated'].get('deleted_data',[])); stats['artist_images'] = len(context['files_generated'].get('artist_images',[]))
     stats['archived'] = len(context['files_generated'].get('archived_backups',[])) + len(context['files_generated'].get('archived_meta_backups',[]))
     
-    lines.extend([sep, "📊 Cumulative Batch Summary" if context.get('is_final_batch_report') else "📊 Overall Summary", sep, f"🆕 Total Created: {stats['created']}", f"🔁 Total Updated: {stats['updated']}", f"🔍 Total Refetched: {stats['refetched']}", f"🖼️ Show Images Updated: {stats['show_images']}", f"🧑‍🎨 New Artist Images Added: {stats['artist_images']}", f"🚫 Total Skipped: {stats['skipped']}", f"❌ Total Deleted: {stats['deleted']}", f"🗄️ Total Archived Backups: {stats['archived']}", f"⚠️ Total Warnings: {stats['warnings']}", f"💾 Backup Files: {len(context['files_generated'].get('backups',[]))}", f"  Grand Total Rows Processed: {stats['rows']}", "", f"💾 Metadata Backups: {len(context['files_generated'].get('meta_backups',[]))}", ""])
+    lines.extend([sep, "📊 Cumulative Batch Summary" if not context.get('paused') else "📊 Overall Summary", sep, f"🆕 Total Created: {stats['created']}", f"🔁 Total Updated: {stats['updated']}", f"🔍 Total Refetched: {stats['refetched']}", f"🖼️ Show Images Updated: {stats['show_images']}", f"🧑‍🎨 New Artist Images Added: {stats['artist_images']}", f"🚫 Total Skipped: {stats['skipped']}", f"❌ Total Deleted: {stats['deleted']}", f"🗄️ Total Archived Backups: {stats['archived']}", f"⚠️ Total Warnings: {stats['warnings']}", f"💾 Backup Files: {len(context['files_generated'].get('backups',[]))}", f"  Grand Total Rows Processed: {stats['rows']}", "", f"💾 Metadata Backups: {len(context['files_generated'].get('meta_backups',[]))}", ""])
     
     for file in[SERIES_JSON_FILE, ARTISTS_JSON_FILE, CAST_JSON_FILE, ARTIST_LOOKUP_FILE]:
         try:
@@ -1193,9 +1228,7 @@ def write_report(context):
             lines.append("")
             
     if context.get('paused'):
-        lines.extend([sep, "⚠️ BATCH LIMIT REACHED: The script paused safely to prevent timeout.", "The GitHub Action will now automatically trigger the next run.", sep])
-    elif context.get('is_final_batch_report'):
-        lines.extend([sep, "🏆 FINISHED ENTIRE BATCH PROCESS SUCCESSFULLY", sep])
+        lines.extend([sep, "⚠️ BATCH LIMIT REACHED: The script paused safely.", "GitHub Actions will trigger next run automatically.", sep])
     else:
         lines.extend([sep, "🏁 Workflow finished successfully"])
         
@@ -1283,7 +1316,7 @@ def load_json_file(file_path):
     except FileNotFoundError:
         return {} if file_path in[ARTISTS_JSON_FILE, CAST_JSON_FILE] else[]
     except json.JSONDecodeError as e:
-        print(f"\n❌ CRITICAL ERROR: {file_path} is corrupted! The script has halted to protect your database. Please restore from a backup. Error: {e}")
+        print(f"\n❌ CRITICAL ERROR: {file_path} is corrupted!")
         sys.exit(1)
 
 def save_json_file(file_path, data):
@@ -1291,32 +1324,30 @@ def save_json_file(file_path, data):
     with open(temp_path, 'w', encoding='utf-8') as f: json.dump(data, f, indent=4, ensure_ascii=False)
     os.replace(temp_path, file_path)
 
+# ---------------------------- UPDATED MAIN ENGINE ----------------------------
+
 def main():
-    MAX_FETCHES = int(os.environ.get("MAX_FETCHES", "0"))
+    
+    MAX_FETCHES = int(os.environ.get("MAX_FETCHES", "50"))
     total_heavy_fetches = 0
     limit_reached = False
 
-    start_time = now_ist()
+    run_start_time = now_ist()
+    
     context = {
         'run_id': run_id_timestamp(), 'file_ts': filename_timestamp(),
-        'start_time_iso': start_time.isoformat(), 
-        'report_data': {}, 'current_sheet': None, 'paused': False, 'is_final_batch_report': False,
-        'cumulative_time_seconds': 0,
-        'files_generated': {'backups':[], 'show_images':[], 'artist_images':[], 'deleted_data':[], 'deleted_images':[], 'meta_backups':[], 'reports':[], 'archived_backups':[], 'archived_meta_backups':[]}
+        'report_data': {}, 'files_generated': {'backups':[], 'show_images':[], 'artist_images':[], 'deleted_data':[], 'deleted_images':[], 'meta_backups':[], 'reports':[], 'archived_backups':[], 'archived_meta_backups':[]},
+        'cumulative_time_seconds': 0, 'global_start_time': run_start_time.strftime("%d %B %Y - %I:%M:%S %p"),
+        'batch_run_count': 1, 'paused': False
     }
     
     merge_batch_state(context)
 
-    if not (os.path.exists(EXCEL_FILE_ID_TXT) and os.path.exists(SERVICE_ACCOUNT_FILE)): print("❌ Missing GDrive credentials."); sys.exit(1)
-    try:
-        with open(EXCEL_FILE_ID_TXT, 'r') as f: excel_id = f.read().strip()
-    except Exception as e: print(f"❌ Error with Excel ID file: {e}"); sys.exit(1)
-    
-    print(f"🚀 Running Script — Version {SCRIPT_VERSION} | Run ID: {context['run_id']}")
-    if MAX_FETCHES > 0: print(f"⚙️ BATCH MODE ACTIVE: Will pause after {MAX_FETCHES} heavy fetch operations.")
+    if not (os.path.exists(EXCEL_FILE_ID_TXT) and os.path.exists(SERVICE_ACCOUNT_FILE)): sys.exit(1)
+    with open(EXCEL_FILE_ID_TXT, 'r') as f: excel_id = f.read().strip()
     
     excel_bytes = fetch_excel_from_gdrive_bytes(excel_id, SERVICE_ACCOUNT_FILE)
-    if not excel_bytes: print("❌ Could not fetch Excel file."); sys.exit(1)
+    if not excel_bytes: sys.exit(1)
 
     xl = pd.ExcelFile(io.BytesIO(excel_bytes.getvalue()))
 
@@ -1338,7 +1369,7 @@ def main():
     manual_report = apply_manual_updates(xl, merged_by_id, context)
     if manual_report: context['report_data']['Manual Updates'] = manual_report
 
-    sheets_to_process =[s.strip() for s in os.environ.get("SHEETS", "Sheet1").split(';') if s.strip()]
+    sheets_to_process = [s.strip() for s in os.environ.get("SHEETS", "Sheet1").split(';') if s.strip()]
     
     for sheet in sheets_to_process:
         if limit_reached: break
@@ -1346,92 +1377,97 @@ def main():
         context['current_sheet'] = sheet
         report = context['report_data'].setdefault(sheet, {})
         excel_rows, warnings = excel_to_objects(xl, sheet)
-        if warnings: report.setdefault('data_warnings',[]).extend(warnings)
+        if warnings: report.setdefault('data_warnings', []).extend(warnings)
 
         for excel_obj in excel_rows:
-            if limit_reached: break
             
             sid = excel_obj['showID']
             old_obj_from_json = merged_by_id.get(sid)
             is_new = old_obj_from_json is None
             
-            base_template = copy.deepcopy(JSON_OBJECT_TEMPLATE)
-            old_data = copy.deepcopy(old_obj_from_json) if old_obj_from_json else {}
-            
-            final_obj = {**base_template, **old_data, **excel_obj}
-            
-            for k in LOCKED_FIELDS_AFTER_CREATION:
-                if k in old_data and (old_data[k] or isinstance(old_data[k], (list, dict))):
-                    if k == 'network': final_obj[k] = normalize_list(list(dict.fromkeys(normalize_list(old_data[k]) + normalize_list(excel_obj.get(k)))))
-                    elif k == 'otherNames': final_obj[k] = _clean_other_names(normalize_list(old_data[k]) + normalize_list(excel_obj.get(k)))
-                    else: final_obj[k] = old_data[k]
-            
-            final_obj['sitePriorityUsed'] = copy.deepcopy(final_obj.get('sitePriorityUsed') or JSON_OBJECT_TEMPLATE['sitePriorityUsed'])
-            initial_metadata_state = {k: final_obj.get(k) for k in['synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast', 'network', 'airedOn']}
-            context['new_artists_added'] =[] 
-            
-            final_obj = fetch_and_populate_metadata(final_obj, context, artists_data)
-            
-            if 'cast' in final_obj and isinstance(final_obj['cast'], list):
-                cast_summary, full_cast_dict = process_and_distribute_cast(final_obj['cast'], artists_data, context)
-                final_obj['cast'] = cast_summary
-                if full_cast_dict: cast_data[str(sid)] = full_cast_dict
-            
-            final_obj.pop('extendedCastInfo', None)
-            final_obj['topRatings'] = (final_obj.get("ratings", 0)) * (len(final_obj.get("againWatchedDates",[])) + 1) * 100
-            
+            # --- SCENARIO 3: CHECK IF ROW NEEDS WORK ---
             excel_data_has_changed = not is_new and objects_differ(old_obj_from_json, excel_obj)
-            metadata_was_fetched = any(final_obj.get(k) != v for k, v in initial_metadata_state.items())
             
-            key_map = {'synopsis': 'Synopsis', 'showImage': 'Show Image', 'otherNames': 'Other Names', 'releaseDate': 'Release Date', 'Duration': 'Duration', 'director': 'Director', 'tags': 'Tags', 'cast': 'Cast', 'network': 'Network', 'airedOn': 'Aired On'}
-            newly_fetched_fields = sorted([
-                key_map[k] for k, v in initial_metadata_state.items() 
-                if not v and bool(final_obj.get(k))
-            ])
+            if is_new or excel_data_has_changed:
+                
+                # --- SCENARIO 3: CHECK LIMIT BEFORE STARTING WORK ---
+                if MAX_FETCHES > 0 and total_heavy_fetches >= MAX_FETCHES:
+                    limit_reached = True
+                    context['paused'] = True
+                    break
+                
+                total_heavy_fetches += 1
+                
+                base_template = copy.deepcopy(JSON_OBJECT_TEMPLATE)
+                old_data = copy.deepcopy(old_obj_from_json) if old_obj_from_json else {}
+                
+                final_obj = {**base_template, **old_data, **excel_obj}
+                
+                for k in LOCKED_FIELDS_AFTER_CREATION:
+                    if k in old_data and (old_data[k] or isinstance(old_data[k], (list, dict))):
+                        if k == 'network': final_obj[k] = normalize_list(list(dict.fromkeys(normalize_list(old_data[k]) + normalize_list(excel_obj.get(k)))))
+                        elif k == 'otherNames': final_obj[k] = _clean_other_names(normalize_list(old_data[k]) + normalize_list(excel_obj.get(k)))
+                        else: final_obj[k] = old_data[k]
+                
+                final_obj['sitePriorityUsed'] = copy.deepcopy(final_obj.get('sitePriorityUsed') or JSON_OBJECT_TEMPLATE['sitePriorityUsed'])
+                initial_metadata_state = {k: final_obj.get(k) for k in['synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast', 'network', 'airedOn']}
+                context['new_artists_added'] =[] 
+                
+                final_obj = fetch_and_populate_metadata(final_obj, context, artists_data)
+                
+                if 'cast' in final_obj and isinstance(final_obj['cast'], list):
+                    cast_summary, full_cast_dict = process_and_distribute_cast(final_obj['cast'], artists_data, context)
+                    final_obj['cast'] = cast_summary
+                    if full_cast_dict: cast_data[str(sid)] = full_cast_dict
+                
+                final_obj.pop('extendedCastInfo', None)
+                final_obj['topRatings'] = (final_obj.get("ratings", 0)) * (len(final_obj.get("againWatchedDates",[])) + 1) * 100
+                
+                metadata_was_fetched = any(final_obj.get(k) != v for k, v in initial_metadata_state.items())
+                
+                key_map = {'synopsis': 'Synopsis', 'showImage': 'Show Image', 'otherNames': 'Other Names', 'releaseDate': 'Release Date', 'Duration': 'Duration', 'director': 'Director', 'tags': 'Tags', 'cast': 'Cast', 'network': 'Network', 'airedOn': 'Aired On'}
+                newly_fetched_fields = sorted([
+                    key_map[k] for k, v in initial_metadata_state.items() 
+                    if not v and bool(final_obj.get(k))
+                ])
 
-            if is_new:
-                final_obj['updatedDetails'] = "First Time Uploaded"
-                final_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
-                report.setdefault('created',[]).append(final_obj)
-                if newly_fetched_fields: report.setdefault('fetched_data',[]).append(f"- {sid} - {final_obj['showName']} -> Fetched: {', '.join(newly_fetched_fields)}")
-            else:
-                if excel_data_has_changed:
-                    changes =[human_readable_field(k) for k, v in excel_obj.items() if normalize_list(old_obj_from_json.get(k)) != normalize_list(v) and k not in LOCKED_FIELDS_AFTER_CREATION]
-                    final_obj['updatedDetails'] = f"{', '.join(changes)} Updated"
+                if is_new:
+                    final_obj['updatedDetails'] = "First Time Uploaded"
                     final_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
-                    report.setdefault('updated',[]).append({'old': old_obj_from_json, 'new': final_obj})
-                    create_diff_backup(old_obj_from_json, final_obj, context)
+                    report.setdefault('created',[]).append(final_obj)
+                    if newly_fetched_fields: report.setdefault('fetched_data',[]).append(f"- {sid} - {final_obj['showName']} -> Fetched: {', '.join(newly_fetched_fields)}")
+                else:
+                    if excel_data_has_changed:
+                        changes =[human_readable_field(k) for k, v in excel_obj.items() if normalize_list(old_obj_from_json.get(k)) != normalize_list(v) and k not in LOCKED_FIELDS_AFTER_CREATION]
+                        final_obj['updatedDetails'] = f"{', '.join(changes)} Updated"
+                        final_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
+                        report.setdefault('updated',[]).append({'old': old_obj_from_json, 'new': final_obj})
+                        create_diff_backup(old_obj_from_json, final_obj, context)
+                    
+                    if metadata_was_fetched:
+                        report.setdefault('refetched',[]).append({'id': sid, 'name': final_obj['showName'], 'fields': newly_fetched_fields})
                 
-                if metadata_was_fetched:
-                    report.setdefault('refetched',[]).append({'id': sid, 'name': final_obj['showName'], 'fields': newly_fetched_fields})
-                
-                if not excel_data_has_changed and not metadata_was_fetched:
-                    report.setdefault('skipped',[]).append(f"{sid} - {final_obj['showName']} ({final_obj.get('releasedYear')})")
-            
-            if is_new or excel_data_has_changed or metadata_was_fetched:
-                 merged_by_id[sid] = final_obj
-                 save_metadata_backup(final_obj, context)
-                 total_heavy_fetches += 1
+                merged_by_id[sid] = final_obj
+                save_metadata_backup(final_obj, context)
 
-            missing_fields = {'synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast'}
-            if final_obj.get('showType') != 'Movie':
-                missing_fields.update({'airedOn', 'network'})
+                missing_fields = {'synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast'}
+                if final_obj.get('showType') != 'Movie':
+                    missing_fields.update({'airedOn', 'network'})
+                    
+                missing =[human_readable_field(k) for k, v in final_obj.items() if k in missing_fields and not v]
+                if missing: report.setdefault('fetch_warnings',[]).append(f"- {sid} - {final_obj['showName']} -> ⚠️ Missing: {', '.join(sorted(missing))}")
                 
-            missing =[human_readable_field(k) for k, v in final_obj.items() if k in missing_fields and not v]
-            if missing: report.setdefault('fetch_warnings',[]).append(f"- {sid} - {final_obj['showName']} -> ⚠️ Missing: {', '.join(sorted(missing))}")
-            
-            if MAX_FETCHES > 0 and total_heavy_fetches >= MAX_FETCHES:
-                limit_reached = True
-                context['paused'] = True
-                save_batch_state(context)
-                print(f"\n🛑 BATCH LIMIT REACHED: Processed {MAX_FETCHES} heavy fetch records.")
-                with open("RESUME_FLAG.txt", "w") as rf: rf.write("CONTINUE_NEXT_BATCH")
-                break
+            else:
+                report.setdefault('skipped',[]).append(f"{sid} - {excel_obj['showName']}")
 
-    if not context.get('paused'):
-        if os.path.exists(BATCH_STATE_FILE):
-            os.remove(BATCH_STATE_FILE)
-            context['is_final_batch_report'] = True
+    # Finalize
+    duration = (now_ist() - run_start_time).total_seconds()
+    
+    if limit_reached:
+        save_batch_state(context, current_run_seconds=duration)
+        with open("RESUME_FLAG.txt", "w") as rf: rf.write("CONTINUE")
+    else:
+        if os.path.exists(BATCH_STATE_FILE): os.remove(BATCH_STATE_FILE)
 
     save_json_file(SERIES_JSON_FILE, sorted(merged_by_id.values(), key=lambda x: int(x.get('showID') or 0)))
     save_json_file(ARTISTS_JSON_FILE, artists_data)
@@ -1440,40 +1476,17 @@ def main():
     artist_lookup_list =[{"artistID": k, "artistName": v['artistName']} for k, v in artists_data.items()]
     save_json_file(ARTIST_LOOKUP_FILE, sorted(artist_lookup_list, key=lambda x: x['artistName']))
     
-    # --- TIME TRACKING CALCULATION ---
-    end_time = now_ist()
-    duration = end_time - datetime.fromisoformat(context['start_time_iso'])
-    
-    # Add current run duration to cumulative tracker
-    context['cumulative_time_seconds'] += duration.total_seconds()
-    total_seconds = int(context['cumulative_time_seconds'])
-    
-    hrs = total_seconds // 3600
-    mins = (total_seconds % 3600) // 60
-    secs = total_seconds % 60
-    context['duration_str'] = f"{hrs} hrs {mins} mins {secs} secs" if hrs > 0 else f"{mins} mins {secs} secs"
-    
-    # --- REPORT FILE NAMING ---
-    if context.get('is_final_batch_report'):
-        report_title = f"{context['file_ts']}_FINAL_BATCH_REPORT"
-    elif context.get('paused'):
-        report_title = f"{context['file_ts']}_PAUSED_BATCH_REPORT"
-    else:
-        report_title = f"{context['file_ts']}_REPORT"
-
-    report_path = os.path.join(REPORTS_DIR, f"{report_title}.txt")
+    report_path = os.path.join(REPORTS_DIR, f"{filename_timestamp()}_REPORT.txt")
     os.makedirs(REPORTS_DIR, exist_ok=True)
     context['report_file_path'] = report_path
     context['files_generated']['reports'].append(report_path)
     
-    write_report(context)
+    write_report(context, current_run_seconds=duration)
     print(f"✅ Report written -> {report_path}")
-    print("\nAll done.")
 
 if __name__ == '__main__':
-    try:
-        main()
+    try: main()
     except Exception as e:
-        print(f"\n❌ A fatal, unexpected error occurred: {e}")
-        logd(traceback.format_exc())
+        print(f"❌ Error: {e}")
+        traceback.print_exc()
         sys.exit(1)
