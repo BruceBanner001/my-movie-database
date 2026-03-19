@@ -1,0 +1,89 @@
+✅ Workflow Batch completed successfully
+🏁 Final Batch Completed
+══════════════════════════════════════════════════════
+📊 My Movie Database – Excel to JSON Workflow Report
+══════════════════════════════════════════════════════
+
+🚀 Workflow Type : Manual
+🔁 RUN           : 815
+⏰ Start Time    : 19 March 2026 - 05:06:25 PM
+⏰ End Time      : 19 March 2026 - 05:08:09 PM
+⏱️ Runtime       : 45 Seconds
+⚙️ Max Process   : 1 Row Per Run
+🔄 Total Batches : 3 Runs
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Sheet1 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🆕 Data Created:
+- 101 - It's Okay to Not be Okay (2020) -> First Time Uploaded
+- 102 - Find Me in Your Memory (2020) -> First Time Uploaded
+- 103 - Unforgettable Love (2021) -> First Time Uploaded
+
+🖼️ Fetched Data Details:
+- 101 - It's Okay to Not be Okay -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 102 - Find Me in Your Memory -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 103 - Unforgettable Love -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+
+🚫 Skipped (Unchanged):
+- 101 - It's Okay to Not be Okay
+- 101 - It's Okay to Not be Okay
+- 102 - Find Me in Your Memory
+
+📊 Summary (Sheet: Sheet1)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Created: 3
+🔁 Updated: 0
+🔍 Refetched: 0
+🚫 Skipped: 3
+⚠️ Warnings: 0
+  Total Rows: 6
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 Cumulative Batch Summary
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Total Created: 3
+🔁 Total Updated: 0
+🔍 Total Refetched: 0
+🖼️ Show Images Updated: 3
+🧑‍🎨 New Artist Images Added: 93
+🚫 Total Skipped: 3
+❌ Total Deleted: 0
+🗄️ Total Archived Backups: 0
+⚠️ Total Warnings: 0
+💾 Backup Files: 0
+  Grand Total Rows Processed: 6
+
+💾 Metadata Backups: 3
+
+📦 Total Objects in seriesData.json: 3
+📦 Total Objects in artists.json: 502
+📦 Total Objects in cast.json: 3
+📦 Total Objects in artists_lookup.json: 502
+🖼️ Total images in show-images: 3
+🧑‍🎨 Total images in artist-images: 502
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ Folders Generated:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📁 show_images/ (Total: 3 files)
+    📄 101.jpg
+    📄 102.jpg
+    📄 103.jpg
+
+📁 artist_images/ (Total: 93 files)
+    📄 48927.jpg
+    📄 83153.jpg
+    📄 15983.jpg
+    ... and 90 more files.
+
+📁 meta_backups/ (Total: 3 files)
+    📄 META_19_March_2026_1706_101.json
+    📄 META_19_March_2026_1707_102.json
+    📄 META_19_March_2026_1707_103.json
+
+📁 reports/ (Total: 1 files)
+    📄 19_March_2026_1708_REPORT.txt
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🏁 Workflow finished successfully
