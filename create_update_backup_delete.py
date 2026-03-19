@@ -1,8 +1,8 @@
-# ============================================================
+# ============================================================================
 # Script: create_update_backup_delete.py
-# Author:[BruceBanner001]
 # Version: v10.4 (BULLETPROOF RELAY-RACE EDITION)
-# ============================================================
+# Author: [BruceBanner001]
+# ============================================================================
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
@@ -47,29 +47,27 @@ from bs4 import BeautifulSoup
 DEBUG_FETCH = os.environ.get("DEBUG_FETCH", "true").lower() == "true" 
 
 HAVE_DDGS = False
-DDGS_ERROR = None
 try: 
     from ddgs import DDGS
     HAVE_DDGS = True
-except ImportError as e:
-    DDGS_ERROR = str(e)
+except:
     try:
         from duckduckgo_search import DDGS
         HAVE_DDGS = True
-    except ImportError:
+    except:
         HAVE_DDGS = False
 
 try: import cloudscraper; HAVE_SCRAPER = True
-except Exception: HAVE_SCRAPER = False
+except: HAVE_SCRAPER = False
 
 try: 
     from PIL import Image, ImageFile 
     ImageFile.LOAD_TRUNCATED_IMAGES = True 
     HAVE_PIL = True
-except Exception: HAVE_PIL = False
+except: HAVE_PIL = False
 
 try: from google.oauth2 import service_account; from googleapiclient.discovery import build; from googleapiclient.http import MediaIoBaseDownload; HAVE_GOOGLE_API = True
-except Exception: HAVE_GOOGLE_API = False
+except: HAVE_GOOGLE_API = False
 
 IST = timezone(timedelta(hours=5, minutes=30))
 def now_ist(): return datetime.now(IST)
@@ -1125,7 +1123,7 @@ def create_diff_backup(old, new, context, explicit_changes=None):
     save_json_file(path, data)
     context['files_generated']['backups'].append(path)
 
-# ---------------------------- UPDATED write_report ----------------------------
+# ---------------------------- UPDATED REPORTING ENGINE ----------------------------
 
 def write_report(context, current_run_seconds):
     
@@ -1167,7 +1165,7 @@ def write_report(context, current_run_seconds):
         f"⏰ Start Time    : {context['global_start_time']}",
         f"⏰ End Time      : {end_time_ist}",
         f"⏱️ Runtime       : {runtime_str}",
-        f"⚙️ Max Process   : {os.environ.get('MAX_FETCHES', '50')} Row Per Run",
+        f"⚙️ Max Process   : {os.environ.get('MAX_FETCHES', '50')} Per Run",
         f"🔄 Total Batches : {context.get('batch_run_count', 1)} Run{'s' if context.get('batch_run_count', 1) != 1 else ''}",
         ""
     ]
@@ -1357,14 +1355,7 @@ def main():
     artists_data = load_json_file(ARTISTS_JSON_FILE)
     cast_data = load_json_file(CAST_JSON_FILE)
     
-    merged_by_id = {}
-    for o in series_data:
-        if o.get('showID'):
-            try:
-                sid_int = int(o['showID'])
-                o['showID'] = sid_int
-                merged_by_id[sid_int] = o
-            except ValueError: pass
+    merged_by_id = {int(o['showID']): o for o in series_data if o.get('showID')}
     
     manual_report = apply_manual_updates(xl, merged_by_id, context)
     if manual_report: context['report_data']['Manual Updates'] = manual_report
@@ -1385,12 +1376,10 @@ def main():
             old_obj_from_json = merged_by_id.get(sid)
             is_new = old_obj_from_json is None
             
-            # --- SCENARIO 3: CHECK IF ROW NEEDS WORK ---
             excel_data_has_changed = not is_new and objects_differ(old_obj_from_json, excel_obj)
             
             if is_new or excel_data_has_changed:
                 
-                # --- SCENARIO 3: CHECK LIMIT BEFORE STARTING WORK ---
                 if MAX_FETCHES > 0 and total_heavy_fetches >= MAX_FETCHES:
                     limit_reached = True
                     context['paused'] = True
@@ -1460,14 +1449,18 @@ def main():
             else:
                 report.setdefault('skipped',[]).append(f"{sid} - {excel_obj['showName']}")
 
-    # Finalize
+    # --- FINALIZATION LOGIC (SCENARIO FIXES) ---
     duration = (now_ist() - run_start_time).total_seconds()
     
     if limit_reached:
         save_batch_state(context, current_run_seconds=duration)
         with open("RESUME_FLAG.txt", "w") as rf: rf.write("CONTINUE")
     else:
-        if os.path.exists(BATCH_STATE_FILE): os.remove(BATCH_STATE_FILE)
+        # DATA FINISHED: Kill the state and the flag
+        if os.path.exists(BATCH_STATE_FILE): 
+            os.remove(BATCH_STATE_FILE)
+        if os.path.exists("RESUME_FLAG.txt"):
+            os.remove("RESUME_FLAG.txt")
 
     save_json_file(SERIES_JSON_FILE, sorted(merged_by_id.values(), key=lambda x: int(x.get('showID') or 0)))
     save_json_file(ARTISTS_JSON_FILE, artists_data)

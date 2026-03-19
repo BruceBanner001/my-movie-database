@@ -1,6 +1,6 @@
 # ============================================================================
-# Workflow: Excel → JSON Update
-# Version : 8.5 (Relay-Race + Professional IST Reporting)
+# Workflow: Excel → JSON Update (Relay-Race Edition)
+# Version : 8.6 (Infinite Loop Protected + IST Reporting)
 # ============================================================================
 
 name: Excel → JSON Update
@@ -9,20 +9,19 @@ on:
   workflow_dispatch:
     inputs:
       max_fetches:
-        description: "Maximum Items to Fetch Per Batch"
+        description: "Max Rows per Batch"
         required: false
         default: "50"
   schedule:
     - cron: "30 18 * * 6"
 
-# PREVENT CONFLICTS: Only one batch sequence can run at a time
+# PREVENT CONFLICTS: Only one sequence can run at a time
 concurrency:
-  group: movie-db-sync-${{ github.ref }}
+  group: movie-db-update-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
   update-json:
-    timeout-minutes: 50
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -46,13 +45,9 @@ jobs:
 
       - name: 3. Install Dependencies
         run: |
-          echo "::group::📦 Installing Dependencies"
+          echo "::group::📦 Dependencies"
           python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then
-            pip install -r requirements.txt
-          else
-            echo "::notice::requirements.txt not found"
-          fi
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           echo "::endgroup::"
 
       - name: 4. Configure Secrets
@@ -60,29 +55,29 @@ jobs:
           EXCEL_FILE_ID: ${{ secrets.EXCEL_FILE_ID }}
           GDRIVE_SERVICE_ACCOUNT: ${{ secrets.GDRIVE_SERVICE_ACCOUNT }}
         run: |
-          echo "::group::🔑 Configuring Credentials"
+          echo "::group::🔑 Credentials"
           printf '%s' "$EXCEL_FILE_ID" > EXCEL_FILE_ID.txt
           printf '%s' "$GDRIVE_SERVICE_ACCOUNT" > GDRIVE_SERVICE_ACCOUNT.json
           echo "::endgroup::"
 
-      - name: 5. Run Excel → JSON Engine
-        id: run_updater
+      - name: 5. Run Python Engine
+        id: run_script
         env:
           MAX_FETCHES: ${{ github.event.inputs.max_fetches || '50' }}
         run: |
-          echo "::group::🚀 Executing Python Engine"
+          echo "::group::🚀 Processing Data"
           python create_update_backup_delete.py 2>&1 | tee output.log
-          script_exit_code=${PIPESTATUS[0]}
+          exit_code=${PIPESTATUS[0]}
           
           if [ -f "RESUME_FLAG.txt" ]; then
-            echo "IS_FINAL_BATCH=false" >> "$GITHUB_OUTPUT"
+            echo "CONTINUE_BATCH=true" >> "$GITHUB_OUTPUT"
           else
-            echo "IS_FINAL_BATCH=true" >> "$GITHUB_OUTPUT"
+            echo "CONTINUE_BATCH=false" >> "$GITHUB_OUTPUT"
           fi
           echo "::endgroup::"
-          exit $script_exit_code
+          exit $exit_code
 
-      - name: 6. Cleanup Secret Files
+      - name: 6. Cleanup Secrets
         if: always()
         run: rm -f EXCEL_FILE_ID.txt GDRIVE_SERVICE_ACCOUNT.json
 
@@ -94,45 +89,42 @@ jobs:
           echo "::group::💾 Saving Changes"
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # CRITICAL: Delete temporary flags so they ARE NOT pushed to the repo
+          # This prevents the Infinite Loop!
+          rm -f RESUME_FLAG.txt
+          rm -f BATCH_REPORT_DATA.json
+          
           git add -A
           if git diff --cached --quiet; then
-            echo "::notice::No changes to data."
+            echo "No changes to commit"
           else
             git commit -m "Automated Batch Update: $(date -u '+%Y-%m-%d %H:%M UTC')"
             git push
           fi
           echo "::endgroup::"
 
-      - name: 8. Upload Artifacts
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: batch-results
-          path: |
-            output.log
-            reports/
-
-      - name: 9. Display Report in Summary
+      - name: 8. Publish Report to Summary
         if: always()
         run: |
-          report_file=$(ls -t reports/*_REPORT.txt 2>/dev/null | head -n1 || echo "")
-          if [ -f "$report_file" ]; then
+          LATEST_REPORT=$(ls -t reports/*_REPORT.txt 2>/dev/null | head -n1 || echo "")
+          if [ -f "$LATEST_REPORT" ]; then
             echo "### 📊 Batch Execution Report" >> $GITHUB_STEP_SUMMARY
             echo '```text' >> $GITHUB_STEP_SUMMARY
-            cat "$report_file" >> $GITHUB_STEP_SUMMARY
+            cat "$LATEST_REPORT" >> $GITHUB_STEP_SUMMARY
             echo '```' >> $GITHUB_STEP_SUMMARY
           fi
 
-      - name: 10. Trigger Next Batch
-        if: success() && steps.run_updater.outputs.IS_FINAL_BATCH == 'false'
+      - name: 9. Trigger Next Batch
+        if: success() && steps.run_script.outputs.CONTINUE_BATCH == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "::notice::Triggering next workflow run..."
+          echo "::notice::Limit hit. Restarting for next batch..."
           gh workflow run "Excel → JSON Update" --ref ${{ github.ref_name }} -f max_fetches=${{ github.event.inputs.max_fetches || '50' }}
 
-      - name: 11. Send Email Notification
-        if: always() && (steps.run_updater.outputs.IS_FINAL_BATCH == 'true' || job.status != 'success')
+      - name: 10. Email Notification
+        if: always() && (steps.run_script.outputs.CONTINUE_BATCH == 'false' || job.status != 'success')
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: ${{ secrets.SMTP_SERVER }}
@@ -140,6 +132,6 @@ jobs:
           username: ${{ secrets.SMTP_USERNAME }}
           password: ${{ secrets.SMTP_PASSWORD }}
           subject: "Movie DB Batch Finished [${{ job.status }}]"
-          body: "Workflow completed all batches. View the report in the GitHub Actions Summary."
+          body: "Workflow completed all batches. Check GitHub Actions for details."
           to: ${{ secrets.NOTIFY_EMAIL }}
           from: ${{ secrets.SMTP_USERNAME }}
