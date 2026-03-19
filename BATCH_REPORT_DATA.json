@@ -1,12 +1,16 @@
 {
     "global_start_time": "19 March 2026 - 04:01:17 PM",
-    "batch_run_count": 2,
+    "batch_run_count": 3,
     "report_data": {
         "Sheet1": {
             "skipped": [
                 "101 - It's Okay to Not be Okay",
                 "102 - Crazy Love",
-                "103 - Love At First Hate"
+                "103 - Love At First Hate",
+                "101 - It's Okay to Not be Okay",
+                "102 - Crazy Love",
+                "103 - Love At First Hate",
+                "104 - Abyss"
             ],
             "created": [
                 {
@@ -93,17 +97,102 @@
                         "network": null,
                         "airedOn": "mydramalist"
                     }
+                },
+                {
+                    "showID": 105,
+                    "showName": "Woori The Virgin",
+                    "otherNames": [
+                        "From Today We Are",
+                        "Jane the Virgin",
+                        "Jein Deo Beojin",
+                        "Miss Mom Jane",
+                        "Urineun Oneulbuteo",
+                        "Woo Ri the Virgin",
+                        "Woorineun Oneulbuteo",
+                        "미쓰맘 제인",
+                        "제인 더 버진"
+                    ],
+                    "showImage": "105.jpg",
+                    "watchStartedOn": "30-05-2023",
+                    "watchEndedOn": "30-05-2023",
+                    "releasedYear": 2022,
+                    "releaseDate": "May 9 - June 21, 2022",
+                    "totalEpisodes": 14,
+                    "showType": "Drama",
+                    "nativeLanguage": "Korean",
+                    "watchedLanguage": "Korean",
+                    "country": "South Korea",
+                    "comments": "When I First Watched Drama, I Didn't Know It Was A Remake Instead The Korean Story. So, I Gave 10 Ratings. Later I Learned That It Was A Remake Again I Watched. This Time It Got Bored. I Don't Know Why I Gave Full Ratings.",
+                    "ratings": 6,
+                    "genres": [
+                        "Comedy",
+                        "Drama",
+                        "Rich Guy",
+                        "Romance"
+                    ],
+                    "network": [
+                        "SBS"
+                    ],
+                    "againWatchedDates": [
+                        "06-03-2026"
+                    ],
+                    "updatedOn": "19 March 2026",
+                    "updatedDetails": "First Time Uploaded",
+                    "synopsis": "Oh Woo-Ri (Lim Soo-Hyang) works as an assistant writer on a popular drama series. Even though she is dating Detective Lee Gang-Jae (Shin Dong-Wook), she wants to keep her virginity until she marries. Her boyfriend accepts her wish. One day, Oh Woo-Ri goes to an OB-GYN for a regular checkup. Due to her doctor's mistake, Oh Woo-Ri gets pregnant through artificial insemination. The biological father of Oh Woo-Ri’s baby is Raphael (Sung Hoon). He is the CEO of a cosmetics company. He gives off the impression that he is cold, but, in his mind, he is a romanticist and wants to meet a person he loves. His reality is different. He is married to Lee Ma-Ri (Hong Ji-Yoon). She intentionally approached him and married him. Love is nothing in her life.",
+                    "topRatings": 1200,
+                    "Duration": "1 hr. 10 min.",
+                    "director": [],
+                    "tags": [
+                        "Pregnancy",
+                        "Independent Female Lead",
+                        "Grandma-Granddaughter Relationship",
+                        "Unexpected Pregnancy",
+                        "Mother-Daughter Relationship",
+                        "Rich Male Lead",
+                        "Screenwriter Female Lead",
+                        "Father-Daughter Relationship",
+                        "Love Triangle",
+                        "Catholicism"
+                    ],
+                    "cast": {
+                        "Main Role": 3,
+                        "Support Role": 18,
+                        "Guest Role": 65,
+                        "Screenwriter": 1,
+                        "Screenwriter & Director": 1
+                    },
+                    "airedOn": [
+                        "Monday",
+                        "Tuesday"
+                    ],
+                    "sitePriorityUsed": {
+                        "showImage": "asianwiki",
+                        "releaseDate": "asianwiki",
+                        "otherNames": "mydramalist",
+                        "Duration": "mydramalist",
+                        "synopsis": "asianwiki",
+                        "director": null,
+                        "tags": "mydramalist",
+                        "cast": "mydramalist",
+                        "network": null,
+                        "airedOn": "mydramalist"
+                    }
                 }
             ],
             "fetched_data": [
-                "- 104 - Abyss -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags"
+                "- 104 - Abyss -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags",
+                "- 105 - Woori The Virgin -> Fetched: Aired On, Cast, Duration, Other Names, Release Date, Show Image, Synopsis, Tags"
+            ],
+            "fetch_warnings": [
+                "- 105 - Woori The Virgin -> ⚠️ Missing: Director"
             ]
         }
     },
     "files_generated": {
         "backups": [],
         "show_images": [
-            "show-images/104.jpg"
+            "show-images/104.jpg",
+            "show-images/105.jpg"
         ],
         "artist_images": [
             "artist-images/87685.jpg",
@@ -193,16 +282,101 @@
             "artist-images/30703.jpg",
             "artist-images/22850.jpg",
             "artist-images/52897.jpg",
-            "artist-images/93715.jpg"
+            "artist-images/93715.jpg",
+            "artist-images/29705.jpg",
+            "artist-images/16197.jpg",
+            "artist-images/545.jpg",
+            "artist-images/546.jpg",
+            "artist-images/875.jpg",
+            "artist-images/5465.jpg",
+            "artist-images/10675.jpg",
+            "artist-images/1108.jpg",
+            "artist-images/6895.jpg",
+            "artist-images/4398.jpg",
+            "artist-images/17889.jpg",
+            "artist-images/45317.jpg",
+            "artist-images/68599.jpg",
+            "artist-images/27997.jpg",
+            "artist-images/4361.jpg",
+            "artist-images/2815.jpg",
+            "artist-images/42503.jpg",
+            "artist-images/4027.jpg",
+            "artist-images/72761.jpg",
+            "artist-images/2414.jpg",
+            "artist-images/1560.jpg",
+            "artist-images/25727.jpg",
+            "artist-images/103503.jpg",
+            "artist-images/123073.jpg",
+            "artist-images/20474.jpg",
+            "artist-images/103725.jpg",
+            "artist-images/20208.jpg",
+            "artist-images/23418.jpg",
+            "artist-images/104449.jpg",
+            "artist-images/101039.jpg",
+            "artist-images/121649.jpg",
+            "artist-images/2831.jpg",
+            "artist-images/15119.jpg",
+            "artist-images/21045.jpg",
+            "artist-images/43831.jpg",
+            "artist-images/75571.jpg",
+            "artist-images/105001.jpg",
+            "artist-images/21145.jpg",
+            "artist-images/5901.jpg",
+            "artist-images/64865.jpg",
+            "artist-images/95865.jpg",
+            "artist-images/64867.jpg",
+            "artist-images/55501.jpg",
+            "artist-images/60525.jpg",
+            "artist-images/99029.jpg",
+            "artist-images/75581.jpg",
+            "artist-images/59955.jpg",
+            "artist-images/20701.jpg",
+            "artist-images/103367.jpg",
+            "artist-images/14689.jpg",
+            "artist-images/100505.jpg",
+            "artist-images/104011.jpg",
+            "artist-images/4575.jpg",
+            "artist-images/9163.jpg",
+            "artist-images/121547.jpg",
+            "artist-images/28261.jpg",
+            "artist-images/5717.jpg",
+            "artist-images/145750.jpg",
+            "artist-images/96909.jpg",
+            "artist-images/24889.jpg",
+            "artist-images/62159.jpg",
+            "artist-images/51977.jpg",
+            "artist-images/55747.jpg",
+            "artist-images/9353.jpg",
+            "artist-images/91771.jpg",
+            "artist-images/103611.jpg",
+            "artist-images/38555.jpg",
+            "artist-images/19548.jpg",
+            "artist-images/13802.jpg",
+            "artist-images/65915.jpg",
+            "artist-images/105003.jpg",
+            "artist-images/95791.jpg",
+            "artist-images/38865.jpg",
+            "artist-images/94135.jpg",
+            "artist-images/10823.jpg",
+            "artist-images/32103.jpg",
+            "artist-images/14668.jpg",
+            "artist-images/53907.jpg",
+            "artist-images/31999.jpg",
+            "artist-images/22358.jpg",
+            "artist-images/122923.jpg",
+            "artist-images/122471.jpg",
+            "artist-images/126859.jpg",
+            "artist-images/121699.jpg"
         ],
         "deleted_data": [],
         "deleted_images": [],
         "meta_backups": [
-            "backup-meta-data/META_19_March_2026_1601_104.json"
+            "backup-meta-data/META_19_March_2026_1601_104.json",
+            "backup-meta-data/META_19_March_2026_1602_105.json"
         ],
         "reports": [],
         "archived_backups": [],
         "archived_meta_backups": []
     },
-    "cumulative_time_seconds": 16.342532
+    "cumulative_time_seconds": 33.951854999999995
 }
