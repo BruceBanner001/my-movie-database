@@ -1,0 +1,81 @@
+✅ Workflow Batch completed successfully
+⏳ Batch Processing in Progress...
+══════════════════════════════════════════════════════
+📊 My Movie Database – Excel to JSON Workflow Report
+══════════════════════════════════════════════════════
+
+🚀 Workflow Type : Manual
+🔁 RUN           : 800
+⏰ Start Time    : 19 March 2026 - 03:40:56 PM
+⏰ End Time      : 19 March 2026 - 03:41:12 PM
+⏱️ Runtime       : 16 Seconds
+⚙️ Max Process   : 1 Row Per Run
+🔄 Total Batches : 1 Run
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Sheet1 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🆕 Data Created:
+- 102 - Crazy Love (2013) -> First Time Uploaded
+
+🖼️ Fetched Data Details:
+- 102 - Crazy Love -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+
+🚫 Skipped (Unchanged):
+- 101 - It's Okay to Not be Okay
+
+📊 Summary (Sheet: Sheet1)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Created: 1
+🔁 Updated: 0
+🔍 Refetched: 0
+🚫 Skipped: 1
+⚠️ Warnings: 0
+  Total Rows: 2
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 Overall Summary
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Total Created: 1
+🔁 Total Updated: 0
+🔍 Total Refetched: 0
+🖼️ Show Images Updated: 1
+🧑‍🎨 New Artist Images Added: 23
+🚫 Total Skipped: 1
+❌ Total Deleted: 0
+🗄️ Total Archived Backups: 0
+⚠️ Total Warnings: 0
+💾 Backup Files: 0
+  Grand Total Rows Processed: 2
+
+💾 Metadata Backups: 1
+
+📦 Total Objects in seriesData.json: 2
+📦 Total Objects in artists.json: 103
+📦 Total Objects in cast.json: 2
+📦 Total Objects in artists_lookup.json: 103
+🖼️ Total images in show-images: 2
+🧑‍🎨 Total images in artist-images: 103
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ Folders Generated:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📁 show_images/ (Total: 1 files)
+    📄 102.jpg
+
+📁 artist_images/ (Total: 23 files)
+    📄 102041.jpg
+    📄 28595.jpg
+    📄 61901.jpg
+    ... and 20 more files.
+
+📁 meta_backups/ (Total: 1 files)
+    📄 META_19_March_2026_1540_102.json
+
+📁 reports/ (Total: 1 files)
+    📄 19_March_2026_1541_REPORT.txt
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚠️ BATCH LIMIT REACHED: The script paused safely.
+GitHub Actions will trigger next run automatically.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
