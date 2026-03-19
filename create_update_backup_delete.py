@@ -4,7 +4,7 @@
 # ============================================================
 # Script: create_update_backup_delete.py
 # Author:[BruceBanner001]
-# Version: v10.5 (MANUAL OVERRIDE EDITION)
+# Version: v10.6 (PROFESSIONAL RELAY EDITION)
 # ============================================================
 
 # ---------------------------- IMPORTS & GLOBALS ----------------------------
@@ -15,7 +15,7 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
-SCRIPT_VERSION = "v10.5"
+SCRIPT_VERSION = "v10.6"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames":[], "showImage": None,
@@ -107,11 +107,7 @@ def normalize_list(val):
     if val is None: return []
     if isinstance(val, dict): return val
     if isinstance(val, list): items = val
-    else: 
-        # Convert to string and split by comma
-        items = [p.strip() for p in str(val).split(',') if p.strip()]
-    
-    # Remove duplicates while maintaining some order, though sorted is safer for comparison
+    else: items = [p.strip() for p in str(val).split(',') if p.strip()]
     unique_items = []
     seen = set()
     for item in items:
@@ -157,6 +153,8 @@ def merge_batch_state(context):
         context['cumulative_time_seconds'] = batch_state.get('cumulative_time_seconds', 0)
         context['global_start_time'] = batch_state.get('global_start_time')
         context['batch_run_count'] = batch_state.get('batch_run_count', 1)
+        context['first_run_id'] = batch_state.get('first_run_id')
+        context['processed_ids_all_runs'] = set(batch_state.get('processed_ids_all_runs', []))
     except Exception as e: logd(f"Failed to load batch state: {e}")
 
 def save_batch_state(context, current_run_seconds):
@@ -165,7 +163,9 @@ def save_batch_state(context, current_run_seconds):
         'batch_run_count': context['batch_run_count'] + 1,
         'report_data': context['report_data'], 
         'files_generated': context['files_generated'],
-        'cumulative_time_seconds': context['cumulative_time_seconds'] + current_run_seconds
+        'cumulative_time_seconds': context['cumulative_time_seconds'] + current_run_seconds,
+        'first_run_id': context.get('first_run_id'),
+        'processed_ids_all_runs': list(context.get('processed_ids_all_runs', set()))
     }
     with open(BATCH_STATE_FILE, 'w', encoding='utf-8') as f: json.dump(state, f, indent=4, ensure_ascii=False)
 
@@ -942,7 +942,6 @@ def fetch_and_populate_metadata(obj, context, artists_db):
                                 img_path = os.path.join(SHOW_IMAGES_DIR, str(data))
                                 if img_path not in context['files_generated']['show_images']:
                                     context['files_generated']['show_images'].append(img_path)
-                            
                             break 
                             
     return obj
@@ -1010,7 +1009,6 @@ def apply_manual_updates(xl, by_id, context):
         df.columns =[c.strip().lower() for c in df.columns]
     except Exception: return {}
     
-    # UPDATED MAP: Added 'director' and 'tags'
     MAP = {
         "image": "showImage", 
         "other names": "otherNames", 
@@ -1041,14 +1039,12 @@ def apply_manual_updates(xl, by_id, context):
                         image_downloaded = True
                     else: continue
                 
-                # UPDATED LOGIC: Consistently handle all list-based fields
                 elif key in ['otherNames', 'airedOn', 'director', 'tags']:
                     val = normalize_list(val)
                 
                 else: 
                     val = str(val).strip()
                 
-                # Compare value with existing object
                 if obj.get(key) != val or image_downloaded:
                     old_val = obj.get(key)
                     if image_downloaded and old_val == val:
@@ -1169,10 +1165,8 @@ def write_report(context, current_run_seconds):
     else:
         runtime_str = f"{seconds} Second{'s' if seconds != 1 else ''}"
 
-    if os.environ.get('GITHUB_EVENT_NAME') == 'workflow_dispatch':
-        trigger_type = "Manual"
-    else:
-        trigger_type = "Automatic"
+    is_manual = os.environ.get('GITHUB_EVENT_NAME') == 'workflow_dispatch'
+    trigger_type = "Manual" if is_manual else "Automatic"
         
     end_time_ist = now_ist().strftime("%d %B %Y - %I:%M:%S %p")
     
@@ -1183,6 +1177,11 @@ def write_report(context, current_run_seconds):
         status_msg = "✅ Workflow Batch completed successfully"
         batch_msg = "🏁 Final Batch Completed"
 
+    # DYNAMIC RUN ID LOGIC
+    current_run = os.environ.get('GITHUB_RUN_NUMBER', 'Local')
+    first_run = context.get('first_run_id', current_run)
+    run_display = f"{first_run} - {current_run}" if str(first_run) != str(current_run) else f"{current_run}"
+
     lines = [
         status_msg,
         batch_msg,
@@ -1191,7 +1190,7 @@ def write_report(context, current_run_seconds):
         "══════════════════════════════════════════════════════",
         "",
         f"🚀 Workflow Type : {trigger_type}",
-        f"🔁 RUN           : {os.environ.get('GITHUB_RUN_NUMBER', 'Local')}",
+        f"🔁 RUN           : {run_display}",
         f"⏰ Start Time    : {context['global_start_time']}",
         f"⏰ End Time      : {end_time_ist}",
         f"⏱️ Runtime       : {runtime_str}",
@@ -1200,30 +1199,90 @@ def write_report(context, current_run_seconds):
         ""
     ]
 
-    sep, stats = "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", {'created': 0, 'updated': 0, 'skipped': 0, 'deleted': 0, 'warnings': 0, 'show_images': 0, 'artist_images': 0, 'rows': 0, 'refetched': 0, 'archived': 0, 'artist_img_warn': 0}
+    sep, stats = "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", {'created': 0, 'updated': 0, 'skipped': 0, 'deleted': 0, 'warnings': 0, 'show_images': 0, 'artist_images': 0, 'rows': 0, 'refetched': 0, 'archived': 0}
     
     for sheet, changes in context['report_data'].items():
         if not any(v for k, v in changes.items()): continue
         display_sheet = sheet.replace("sheet", "Sheet ").title(); lines.extend([sep, f"🗂️ === {display_sheet} ==="]); lines.append(sep)
-        if changes.get('created'): lines.append("\n🆕 Data Created:");[lines.append(f"- {o['showID']} - {o['showName']} ({o.get('releasedYear')}) -> {o.get('updatedDetails', '')}") for o in changes['created']]
-        if changes.get('updated'): lines.append("\n🔁 Data Updated:");[lines.append(f"✍️ {p['new']['showID']} - {p['new']['showName']} -> {p['new']['updatedDetails']}") for p in changes['updated']]
-        if changes.get('refetched'): lines.append("\n🔍 Refetched Data:");[lines.append(f"✨ {o['id']} - {o['name']} -> Fetched: {', '.join(o['fields'])}") for o in changes['refetched']]
-        if changes.get('data_warnings'): lines.append("\n⚠️ Data Validation Warnings:");[lines.append(i) for i in changes['data_warnings']]
-        if changes.get('fetched_data'): lines.append("\n🖼️ Fetched Data Details:");[lines.append(i) for i in sorted(changes['fetched_data'])]
-        if changes.get('fetch_warnings'): lines.append("\n🕳️ Value Not Found:");[lines.append(i) for i in sorted(changes['fetch_warnings'])]
-        if changes.get('artist_image_warnings'): lines.append("\n🧑‍🎨 Artist Image Warnings:");[lines.append(i) for i in sorted(changes['artist_image_warnings'])]
-        if changes.get('skipped'): lines.append("\n🚫 Skipped (Unchanged):");[lines.append(f"- {i}") for i in sorted(changes['skipped'])]
-        if changes.get('data_deleted'): lines.append("\n❌ Data Deleted:");[lines.append(i) for i in changes['data_deleted']]
+        
+        # STANDARD DEDUPLICATION FOR REPORT LISTS
+        def get_unique(lst): return list(dict.fromkeys(lst))
+
+        if changes.get('created'): 
+            lines.append("\n🆕 Data Created:")
+            seen_c = set()
+            for o in changes['created']:
+                if o['showID'] not in seen_c:
+                    lines.append(f"- {o['showID']} - {o['showName']} ({o.get('releasedYear')}) -> {o.get('updatedDetails', '')}")
+                    seen_c.add(o['showID'])
+
+        if changes.get('updated'): 
+            lines.append("\n🔁 Data Updated:")
+            seen_u = set()
+            for p in changes['updated']:
+                if p['new']['showID'] not in seen_u:
+                    lines.append(f"✍️ {p['new']['showID']} - {p['new']['showName']} -> {p['new']['updatedDetails']}")
+                    seen_u.add(p['new']['showID'])
+
+        if changes.get('refetched'): 
+            lines.append("\n🔍 Refetched Data:")
+            seen_r = set()
+            for o in changes['refetched']:
+                if o['id'] not in seen_r:
+                    lines.append(f"✨ {o['id']} - {o['name']} -> Fetched: {', '.join(o['fields'])}")
+                    seen_r.add(o['id'])
+
+        if changes.get('data_warnings'): 
+            lines.append("\n⚠️ Data Validation Warnings:")
+            [lines.append(i) for i in get_unique(changes['data_warnings'])]
+
+        if changes.get('fetched_data'): 
+            lines.append("\n🖼️ Fetched Data Details:")
+            [lines.append(i) for i in sorted(get_unique(changes['fetched_data']))]
+
+        if changes.get('fetch_warnings'): 
+            lines.append("\n🕳️ Value Not Found:")
+            [lines.append(i) for i in sorted(get_unique(changes['fetch_warnings']))]
+
+        if changes.get('artist_image_warnings'): 
+            lines.append("\n🧑‍🎨 Artist Image Warnings:")
+            [lines.append(i) for i in sorted(get_unique(changes['artist_image_warnings']))]
+
+        if changes.get('skipped'): 
+            lines.append("\n🚫 Skipped (Unchanged):")
+            [lines.append(f"- {i}") for i in sorted(get_unique(changes['skipped']))]
+
+        if changes.get('data_deleted'): 
+            lines.append("\n❌ Data Deleted:")
+            [lines.append(i) for i in get_unique(changes['data_deleted'])]
         
         if sheet not in["Deleting Records", "Manual Updates"]:
-            s = {k: len(v) for k, v in changes.items() if isinstance(v, list)}; total = sum(s.get(k, 0) for k in['created', 'updated', 'skipped', 'refetched'])
-            stats['created'] += s.get('created', 0); stats['updated'] += s.get('updated', 0); stats['skipped'] += s.get('skipped', 0); stats['refetched'] += s.get('refetched', 0)
-            stats['show_images'] += sum(1 for i in changes.get('fetched_data',[]) if "Show Image" in i); stats['rows'] += total
-            stats['warnings'] += len(changes.get('data_warnings',[])) + len(changes.get('fetch_warnings',[])) + len(changes.get('artist_image_warnings',[]))
-            lines.extend([f"\n📊 Summary (Sheet: {display_sheet})", sep, f"🆕 Created: {s.get('created', 0)}", f"🔁 Updated: {s.get('updated', 0)}", f"🔍 Refetched: {s.get('refetched', 0)}", f"🚫 Skipped: {s.get('skipped', 0)}", f"⚠️ Warnings: {len(changes.get('data_warnings',[])) + len(changes.get('fetch_warnings',[])) + len(changes.get('artist_image_warnings',[]))}", f"  Total Rows: {total}"])
+            # Recalculate stats based on unique IDs for the sheet summary
+            s_created = len(set(o['showID'] for o in changes.get('created', [])))
+            s_updated = len(set(o['new']['showID'] for o in changes.get('updated', [])))
+            s_refetched = len(set(o['id'] for o in changes.get('refetched', [])))
+            s_skipped = len(set(i.split(' - ')[0] for i in changes.get('skipped', [])))
+            
+            total_sheet = s_created + s_updated + s_refetched + s_skipped
+            
+            stats['created'] += s_created
+            stats['updated'] += s_updated
+            stats['skipped'] += s_skipped
+            stats['refetched'] += s_refetched
+            
+            stats['show_images'] += sum(1 for i in get_unique(changes.get('fetched_data',[])) if "Show Image" in i)
+            stats['rows'] += total_sheet
+            
+            warn_count = len(get_unique(changes.get('data_warnings',[]))) + \
+                         len(get_unique(changes.get('fetch_warnings',[]))) + \
+                         len(get_unique(changes.get('artist_image_warnings',[])))
+            stats['warnings'] += warn_count
+
+            lines.extend([f"\n📊 Summary (Sheet: {display_sheet})", sep, f"🆕 Created: {s_created}", f"🔁 Updated: {s_updated}", f"🔍 Refetched: {s_refetched}", f"🚫 Skipped: {s_skipped}", f"⚠️ Warnings: {warn_count}", f"  Total Unique Rows: {total_sheet}"])
         lines.append("")
 
-    stats['deleted'] = len(context['files_generated'].get('deleted_data',[])); stats['artist_images'] = len(context['files_generated'].get('artist_images',[]))
+    stats['deleted'] = len(context['files_generated'].get('deleted_data',[]))
+    stats['artist_images'] = len(context['files_generated'].get('artist_images',[]))
     stats['archived'] = len(context['files_generated'].get('archived_backups',[])) + len(context['files_generated'].get('archived_meta_backups',[]))
     
     lines.extend([sep, "📊 Cumulative Batch Summary" if not context.get('paused') else "📊 Overall Summary", sep, f"🆕 Total Created: {stats['created']}", f"🔁 Total Updated: {stats['updated']}", f"🔍 Total Refetched: {stats['refetched']}", f"🖼️ Show Images Updated: {stats['show_images']}", f"🧑‍🎨 New Artist Images Added: {stats['artist_images']}", f"🚫 Total Skipped: {stats['skipped']}", f"❌ Total Deleted: {stats['deleted']}", f"🗄️ Total Archived Backups: {stats['archived']}", f"⚠️ Total Warnings: {stats['warnings']}", f"💾 Backup Files: {len(context['files_generated'].get('backups',[]))}", f"  Grand Total Rows Processed: {stats['rows']}", "", f"💾 Metadata Backups: {len(context['files_generated'].get('meta_backups',[]))}", ""])
@@ -1261,6 +1320,12 @@ def write_report(context, current_run_seconds):
         lines.extend([sep, "🏁 Workflow finished successfully"])
         
     with open(context['report_file_path'], 'w', encoding='utf-8') as f: f.write("\n".join(lines))
+
+    # EMAIL SUBJECT GENERATION
+    mail_trigger = f"[{trigger_type}]"
+    mail_date = now_ist().strftime("%d %B %Y %I:%M %p IST")
+    email_subject = f"{mail_trigger} Workflow {mail_date} Report"
+    with open("EMAIL_SUBJECT.txt", "w", encoding='utf-8') as ef: ef.write(email_subject)
 
 def process_and_distribute_cast(full_cast, artists_db, context):
     main_cast, support_cast, guest_cast = [],[],[]
@@ -1361,12 +1426,13 @@ def main():
     limit_reached = False
 
     run_start_time = now_ist()
+    current_gh_run = os.environ.get('GITHUB_RUN_NUMBER', 'Local')
     
     context = {
         'run_id': run_id_timestamp(), 'file_ts': filename_timestamp(),
         'report_data': {}, 'files_generated': {'backups':[], 'show_images':[], 'artist_images':[], 'deleted_data':[], 'deleted_images':[], 'meta_backups':[], 'reports':[], 'archived_backups':[], 'archived_meta_backups':[]},
         'cumulative_time_seconds': 0, 'global_start_time': run_start_time.strftime("%d %B %Y - %I:%M:%S %p"),
-        'batch_run_count': 1, 'paused': False
+        'batch_run_count': 1, 'paused': False, 'first_run_id': current_gh_run, 'processed_ids_all_runs': set()
     }
     
     merge_batch_state(context)
@@ -1401,8 +1467,12 @@ def main():
         if warnings: report.setdefault('data_warnings', []).extend(warnings)
 
         for excel_obj in excel_rows:
-            
             sid = excel_obj['showID']
+            
+            # SCENARIO PROTECTION: If ID already handled in a previous batch of this trigger, ignore it.
+            if sid in context['processed_ids_all_runs']:
+                continue
+
             old_obj_from_json = merged_by_id.get(sid)
             is_new = old_obj_from_json is None
             
@@ -1410,6 +1480,7 @@ def main():
             
             if is_new or excel_data_has_changed:
                 
+                # Check limit before heavy fetch
                 if MAX_FETCHES > 0 and total_heavy_fetches >= MAX_FETCHES:
                     limit_reached = True
                     context['paused'] = True
@@ -1476,9 +1547,13 @@ def main():
                 missing =[human_readable_field(k) for k, v in final_obj.items() if k in missing_fields and not v]
                 if missing: report.setdefault('fetch_warnings',[]).append(f"- {sid} - {final_obj['showName']} -> ⚠️ Missing: {', '.join(sorted(missing))}")
                 
+                # MARK AS PROCESSED
+                context['processed_ids_all_runs'].add(sid)
             else:
                 report.setdefault('skipped',[]).append(f"{sid} - {excel_obj['showName']}")
+                context['processed_ids_all_runs'].add(sid)
 
+    # Finalize
     duration = (now_ist() - run_start_time).total_seconds()
     
     if limit_reached:
