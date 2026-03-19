@@ -1,235 +1,203 @@
-name: Excel → JSON Workflow
+# ============================================================================
+# Workflow: Excel → JSON Update (Version 8.0 - Professional IST Reporting)
+# ============================================================================
+
+name: Excel → JSON Update
 
 on:
   workflow_dispatch:
     inputs:
       max_fetches:
-        description: "Max Process Per Run"
+        description: "Maximum items to fetch"
         required: false
         default: "50"
+  schedule:
+    - cron: "30 18 * * 6"
 
 jobs:
-  excel-to-json:
+  update-json:
+    timeout-minutes: 50
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: write
 
     env:
       SHEETS: "Sheet1;Sheet2;Manual Updates"
       GITHUB_PAGES_URL: "https://brucebanner001.github.io/my-movie-database"
-      DEBUG_FETCH: true
+      DEBUG_FETCH: "true"
 
     steps:
-
-      # ------------------------------------------------
-      # Checkout Repository
-      # ------------------------------------------------
-      - name: Checkout Repository
+      - name: 1. Checkout repository
         uses: actions/checkout@v4
 
-      # ------------------------------------------------
-      # Setup Python
-      # ------------------------------------------------
-      - name: Setup Python
+      - name: 2. Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      # ------------------------------------------------
-      # Install Dependencies
-      # ------------------------------------------------
-      - name: Install Dependencies
+      - name: 3. Install Dependencies
         run: |
           echo "::group::📦 Installing Dependencies"
-
+          python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then
             pip install -r requirements.txt
-          else
-            echo "::notice::requirements.txt not found — skipping installation"
           fi
-
           echo "::endgroup::"
 
-      # ------------------------------------------------
-      # Run Python Script
-      # ------------------------------------------------
-      - name: Run Excel → JSON Script
-        id: run_script
+      - name: 4. Configure Secrets
+        env:
+          EXCEL_FILE_ID: ${{ secrets.EXCEL_FILE_ID }}
+          GDRIVE_SERVICE_ACCOUNT: ${{ secrets.GDRIVE_SERVICE_ACCOUNT }}
         run: |
+          printf '%s' "$EXCEL_FILE_ID" > EXCEL_FILE_ID.txt
+          printf '%s' "$GDRIVE_SERVICE_ACCOUNT" > GDRIVE_SERVICE_ACCOUNT.json
 
-          ##################################################
-          # WORKFLOW START
-          ##################################################
-
-          echo "::group::🚀 Starting Workflow"
-
-          START_TIME_FORMATTED=$(TZ='Asia/Kolkata' date +"%d %B %Y - %I:%M:%S %p")
+      - name: 5. Run Excel → JSON Script
+        id: run_updater
+        run: |
+          echo "::group::🚀 Starting Script"
+          
+          # Capture START TIME in IST
+          START_TIME_IST=$(TZ='Asia/Kolkata' date +"%d %B %Y - %I:%M:%S %p")
           START_TIME_SECONDS=$(date +%s)
+          
+          echo "start_time_ist=$START_TIME_IST" >> "$GITHUB_OUTPUT"
+          echo "start_time_seconds=$START_TIME_SECONDS" >> "$GITHUB_OUTPUT"
 
-          echo "start_time=$START_TIME_FORMATTED" >> "$GITHUB_OUTPUT"
-
-          MAX_FETCHES_VALUE="${{ github.event.inputs.max_fetches }}"
-
-          if [ -z "$MAX_FETCHES_VALUE" ]; then
-            MAX_FETCHES_VALUE="50"
-            echo "::notice::Using default Max Process = 50"
-          fi
-
+          MAX_FETCHES_VALUE="${{ github.event.inputs.max_fetches || '50' }}"
           echo "MAX_FETCHES=$MAX_FETCHES_VALUE" >> $GITHUB_ENV
           echo "max_fetches=$MAX_FETCHES_VALUE" >> "$GITHUB_OUTPUT"
 
-          echo "::notice::Max Process Per Run: $MAX_FETCHES_VALUE"
-          echo "::notice::Start Time: $START_TIME_FORMATTED"
-
-          echo "::endgroup::"
-
-
-          ##################################################
-          # RUN SCRIPT
-          ##################################################
-
-          echo "::group::🐍 Running Python Script"
-
+          # Run the script
           python create_update_backup_delete.py 2>&1 | tee output.log
-          SCRIPT_EXIT_CODE=${PIPESTATUS[0]}
+          script_exit_code=${PIPESTATUS[0]}
+          
+          # Capture END TIME in IST
+          END_TIME_IST=$(TZ='Asia/Kolkata' date +"%d %B %Y - %I:%M:%S %p")
+          echo "end_time_ist=$END_TIME_IST" >> "$GITHUB_OUTPUT"
 
-          if [ $SCRIPT_EXIT_CODE -ne 0 ]; then
-            echo "::error::Python script failed with exit code $SCRIPT_EXIT_CODE"
-          else
-            echo "::notice::Python script finished successfully"
-          fi
-
-          echo "::endgroup::"
-
-
-          ##################################################
-          # CALCULATE RUNTIME
-          ##################################################
-
-          echo "::group::⏱️ Calculating Runtime"
-
-          END_TIME_SECONDS=$(date +%s)
-          RUNTIME=$((END_TIME_SECONDS-START_TIME_SECONDS))
-
-          format_runtime() {
-
-            total_seconds=$1
-            hours=$((total_seconds / 3600))
-            minutes=$(((total_seconds % 3600) / 60))
-            seconds=$((total_seconds % 60))
-
-            if [ $hours -gt 0 ]; then
-              echo "${hours} hour $([ $hours -gt 1 ] && echo s) ${minutes} minute $([ $minutes -ne 1 ] && echo s)"
-            elif [ $minutes -gt 0 ]; then
-              echo "${minutes} minute $([ $minutes -ne 1 ] && echo s)"
-            else
-              echo "${seconds} seconds"
-            fi
-          }
-
-          RUNTIME_FORMATTED=$(format_runtime $RUNTIME)
-
-          echo "runtime_seconds=$RUNTIME" >> "$GITHUB_OUTPUT"
-          echo "runtime_formatted=$RUNTIME_FORMATTED" >> "$GITHUB_OUTPUT"
-
-          echo "::notice::Runtime: $RUNTIME_FORMATTED"
-
-          echo "::endgroup::"
-
-
-          ##################################################
-          # EXTRACT REPORT PATH
-          ##################################################
-
-          echo "::group::📄 Extracting Report Path"
-
-          OUTPUT_LOG=$(cat output.log)
-
-          report_path=$(echo "$OUTPUT_LOG" | grep -oP 'Report written -> \K.*')
-
-          if [ -z "$report_path" ]; then
-            echo "::warning::Report path not detected"
-          else
-            echo "::notice::Report found: $report_path"
-          fi
-
+          # Extract Report Path from script output
+          report_path=$(grep -oP 'Report written -> \K.*' output.log || echo "")
           echo "report_path=$report_path" >> "$GITHUB_OUTPUT"
 
-          echo "::endgroup::"
-
-
-          ##################################################
-          # CHECK FOR NEXT BATCH
-          ##################################################
-
-          echo "::group::🔁 Batch Detection"
-
+          # Batch Detection Logic
           if [ -f "RESUME_FLAG.txt" ]; then
             echo "IS_FINAL_BATCH=false" >> "$GITHUB_OUTPUT"
-            echo "::notice::More batches remaining"
+            echo "status_msg=✅ Workflow Batch completed successfully" >> "$GITHUB_OUTPUT"
+            echo "batch_msg=⏳ Batch Processing in Progress..." >> "$GITHUB_OUTPUT"
           else
             echo "IS_FINAL_BATCH=true" >> "$GITHUB_OUTPUT"
-            echo "::notice::Final batch completed"
+            echo "status_msg=✅ Workflow Batch completed successfully" >> "$GITHUB_OUTPUT"
+            echo "batch_msg=🏁 Final Batch Completed" >> "$GITHUB_OUTPUT"
           fi
 
           echo "::endgroup::"
+          exit $script_exit_code
 
-          exit $SCRIPT_EXIT_CODE
+      - name: 6. Cleanup Secret Files
+        if: always()
+        run: rm -f EXCEL_FILE_ID.txt GDRIVE_SERVICE_ACCOUNT.json
 
-
-      # ------------------------------------------------
-      # Upload Debug Logs
-      # ------------------------------------------------
-      - name: Upload Debug Log
-        uses: actions/upload-artifact@v4
-        with:
-          name: workflow-debug-log
-          path: output.log
-
-
-      # ------------------------------------------------
-      # Upload Report File
-      # ------------------------------------------------
-      - name: Upload Report
-        if: steps.run_script.outputs.report_path != ''
-        uses: actions/upload-artifact@v4
-        with:
-          name: workflow-report
-          path: ${{ steps.run_script.outputs.report_path }}
-
-
-      # ------------------------------------------------
-      # Show Report in Logs
-      # ------------------------------------------------
-      - name: Display Report
-        if: steps.run_script.outputs.report_path != ''
+      - name: 7. Commit & Push Changes
+        if: success()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "::group::📊 Workflow Report"
-          cat "${{ steps.run_script.outputs.report_path }}"
+          echo "::group::💾 Saving Changes to Git"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          git add -A
+          if git diff --cached --quiet; then
+            echo "::notice::No data changes detected."
+          else
+            git commit -m "Automated data update: $(date -u '+%Y-%m-%d %H:%M UTC')"
+            git push
+          fi
           echo "::endgroup::"
 
-
-      # ------------------------------------------------
-      # Workflow Summary
-      # ------------------------------------------------
-      - name: Workflow Summary
+      - name: 8. Generate Final Report & Summary
+        id: generate_report
+        if: always()
         run: |
-          echo "## 📊 Workflow Execution Summary" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "🚀 Start Time: ${{ steps.run_script.outputs.start_time }}" >> $GITHUB_STEP_SUMMARY
-          echo "⏱ Runtime: ${{ steps.run_script.outputs.runtime_formatted }}" >> $GITHUB_STEP_SUMMARY
-          echo "⚙️ Max Process: ${{ steps.run_script.outputs.max_fetches }}" >> $GITHUB_STEP_SUMMARY
+          # Calculate Runtime
+          START=${{ steps.run_updater.outputs.start_time_seconds }}
+          END=$(date +%s)
+          RUNTIME=$((END-START))
+          
+          # Smart Runtime Formatter
+          hours=$((RUNTIME / 3600))
+          mins=$(( (RUNTIME % 3600) / 60 ))
+          secs=$((RUNTIME % 60))
+          
+          if [ $hours -gt 0 ]; then
+            RUNTIME_STR="${hours} Hour$([ $hours -ne 1 ] && echo s) ${mins} Minute$([ $mins -ne 1 ] && echo s) ${secs} Second$([ $secs -ne 1 ] && echo s)"
+          elif [ $mins -gt 0 ]; then
+            RUNTIME_STR="${mins} Minute$([ $mins -ne 1 ] && echo s) ${secs} Second$([ $secs -ne 1 ] && echo s)"
+          else
+            RUNTIME_STR="${secs} Second$([ $secs -ne 1 ] && echo s)"
+          fi
 
+          # Prepare Header variables
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then TYPE="Manual"; else TYPE="Automatic"; fi
+          
+          # Create temporary file for Email and Summary
+          REPORT_FILE=$(mktemp)
+          {
+            echo "${{ steps.run_updater.outputs.status_msg }}"
+            echo "${{ steps.run_updater.outputs.batch_msg }}"
+            echo "══════════════════════════════════════════════════════"
+            echo "📊 My Movie Database – Excel to JSON Workflow Report"
+            echo "══════════════════════════════════════════════════════"
+            echo ""
+            echo "🚀 Workflow Type : $TYPE"
+            echo "🔁 RUN           : ${{ github.run_number }}"
+            echo "⏰ Start Time    : ${{ steps.run_updater.outputs.start_time_ist }}"
+            echo "⏰ End Time      : ${{ steps.run_updater.outputs.end_time_ist }}"
+            echo "⏱️ Runtime       : $RUNTIME_STR"
+            echo "⚙️ Max Process   : ${{ steps.run_updater.outputs.max_fetches }}"
+            echo ""
+            echo "--- Details from Script ---"
+            if [ -f "${{ steps.run_updater.outputs.report_path }}" ]; then
+              cat "${{ steps.run_updater.outputs.report_path }}"
+            else
+              echo "No additional report details available."
+            fi
+          } > "$REPORT_FILE"
 
-      # ------------------------------------------------
-      # AUTO CONTINUE NEXT BATCH
-      # ------------------------------------------------
-      - name: Trigger Next Batch
-        if: steps.run_script.outputs.IS_FINAL_BATCH == 'false'
+          # Save for next steps
+          echo "full_report_path=$REPORT_FILE" >> "$GITHUB_OUTPUT"
+          
+          # Output to GitHub Job Summary (The UI)
+          cat "$REPORT_FILE" >> $GITHUB_STEP_SUMMARY
+
+      - name: 9. Upload Artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: workflow-results
+          path: |
+            output.log
+            reports/
+
+      - name: 10. Trigger Next Batch (Recursion)
+        if: success() && steps.run_updater.outputs.IS_FINAL_BATCH == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-
           echo "::notice::Triggering next batch run..."
+          gh workflow run "Excel → JSON Update" --ref ${{ github.ref_name }} -f max_fetches=${{ steps.run_updater.outputs.max_fetches }}
 
-          curl -X POST \
-          -H "Accept: application/vnd.github+json" \
-          -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-          https://api.github.com/repos/${{ github.repository }}/actions/workflows/excel_to_json.yml/dispatches \
-          -d "{\"ref\":\"${{ github.ref_name }}\",\"inputs\":{\"max_fetches\":\"${{ steps.run_script.outputs.max_fetches }}\"}}"
+      - name: 11. Send Email Notification
+        if: always() && (steps.run_updater.outputs.IS_FINAL_BATCH == 'true' || job.status != 'success')
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.SMTP_SERVER }}
+          server_port: ${{ secrets.SMTP_PORT }}
+          username: ${{ secrets.SMTP_USERNAME }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          subject: "[${{ github.event_name == 'workflow_dispatch' && 'Manual' || 'Automatic' }}] Movie DB Report - Batch Finished"
+          body: file://${{ steps.generate_report.outputs.full_report_path }}
+          to: ${{ secrets.NOTIFY_EMAIL }}
+          from: ${{ secrets.SMTP_USERNAME }}
