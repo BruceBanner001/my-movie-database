@@ -1,0 +1,85 @@
+✅ Workflow Batch completed successfully
+🏁 Final Batch Completed
+══════════════════════════════════════════════════════
+📊 My Movie Database – Excel to JSON Workflow Report
+══════════════════════════════════════════════════════
+
+🚀 Workflow Type : Manual
+🔁 RUN           : 816 - 817
+⏰ Start Time    : 19 March 2026 - 07:00:07 PM
+⏰ End Time      : 19 March 2026 - 07:01:10 PM
+⏱️ Runtime       : 29 Seconds
+⚙️ Max Process   : 1 Row Per Run
+🔄 Total Batches : 2 Runs
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Sheet1 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🆕 Data Created:
+- 104 - Crash Landing On You (2019) -> First Time Uploaded
+- 105 - Falling Into Your Smile (2021) -> First Time Uploaded
+
+🖼️ Fetched Data Details:
+- 104 - Crash Landing On You -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 105 - Falling Into Your Smile -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+
+🚫 Skipped (Unchanged):
+- 101 - It's Okay to Not be Okay
+- 102 - Find Me in Your Memory
+- 103 - Unforgettable Love
+
+📊 Summary (Sheet: Sheet1)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Created: 2
+🔁 Updated: 0
+🔍 Refetched: 0
+🚫 Skipped: 3
+⚠️ Warnings: 0
+  Total Unique Rows: 5
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 Cumulative Batch Summary
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Total Created: 2
+🔁 Total Updated: 0
+🔍 Total Refetched: 0
+🖼️ Show Images Updated: 2
+🧑‍🎨 New Artist Images Added: 170
+🚫 Total Skipped: 3
+❌ Total Deleted: 0
+🗄️ Total Archived Backups: 0
+⚠️ Total Warnings: 0
+💾 Backup Files: 0
+  Grand Total Rows Processed: 5
+
+💾 Metadata Backups: 2
+
+📦 Total Objects in seriesData.json: 5
+📦 Total Objects in artists.json: 672
+📦 Total Objects in cast.json: 5
+📦 Total Objects in artists_lookup.json: 672
+🖼️ Total images in show-images: 5
+🧑‍🎨 Total images in artist-images: 672
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ Folders Generated:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📁 show_images/ (Total: 2 files)
+    📄 104.jpg
+    📄 105.jpg
+
+📁 artist_images/ (Total: 170 files)
+    📄 61195.jpg
+    📄 61197.jpg
+    📄 17013.jpg
+    ... and 167 more files.
+
+📁 meta_backups/ (Total: 2 files)
+    📄 META_19_March_2026_1900_104.json
+    📄 META_19_March_2026_1900_105.json
+
+📁 reports/ (Total: 1 files)
+    📄 19_March_2026_1901_REPORT.txt
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🏁 Workflow finished successfully
