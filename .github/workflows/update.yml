@@ -1,6 +1,6 @@
 # ============================================================================
 # Workflow: Excel → JSON Update
-# Version : 7.1 (MAX_FETCHES UI Input + Report Display)
+# Version : 7.2 (MAX_FETCHES UI + Smart Runtime Format)
 # ============================================================================
 
 name: Excel → JSON Update
@@ -59,20 +59,17 @@ jobs:
           MAX_FETCHES: ${{ github.event.inputs.max_fetches || '50' }}
         run: |
 
-          # Capture start time
           START_TIME_FORMATTED=$(TZ='Asia/Kolkata' date +"%d %B %Y - %I:%M:%S %p")
           START_TIME_SECONDS=$(date +%s)
 
           echo "start_time=$START_TIME_FORMATTED" >> "$GITHUB_OUTPUT"
 
-          # Store MAX_FETCHES for email report
           MAX_FETCHES_VALUE="${{ github.event.inputs.max_fetches || '50' }}"
           echo "max_fetches=$MAX_FETCHES_VALUE" >> "$GITHUB_OUTPUT"
 
           python create_update_backup_delete.py 2>&1 | tee output.log
           script_exit_code=${PIPESTATUS[0]}
 
-          # Capture runtime
           END_TIME_SECONDS=$(date +%s)
           RUNTIME=$((END_TIME_SECONDS-START_TIME_SECONDS))
 
@@ -161,6 +158,24 @@ jobs:
           MAX_FETCHES=${{ steps.run_updater.outputs.max_fetches }}
           RUN_NUMBER=${{ github.run_number }}
 
+          # Smart runtime formatter
+          HOURS=$((RUNTIME / 3600))
+          MINUTES=$(( (RUNTIME % 3600) / 60 ))
+          SECONDS=$((RUNTIME % 60))
+
+          if [ $HOURS -gt 0 ]; then
+            RUNTIME_FORMAT="${HOURS} hour"
+            [ $HOURS -gt 1 ] && RUNTIME_FORMAT="${HOURS} hours"
+            [ $MINUTES -gt 0 ] && RUNTIME_FORMAT="$RUNTIME_FORMAT ${MINUTES} minute"
+            [ $MINUTES -gt 1 ] && RUNTIME_FORMAT="${HOURS} hours ${MINUTES} minutes"
+          elif [ $MINUTES -gt 0 ]; then
+            RUNTIME_FORMAT="${MINUTES} minute"
+            [ $MINUTES -gt 1 ] && RUNTIME_FORMAT="${MINUTES} minutes"
+            [ $SECONDS -gt 0 ] && RUNTIME_FORMAT="$RUNTIME_FORMAT ${SECONDS} seconds"
+          else
+            RUNTIME_FORMAT="${SECONDS} seconds"
+          fi
+
           if [[ -n "$REPORT_PATH" && -f "$REPORT_PATH" ]]; then
             report_file="$REPORT_PATH"
           else
@@ -178,8 +193,8 @@ jobs:
             echo "🔁 RUN           : $RUN_NUMBER"
             echo "⏰ Start Time    : $START_TIME"
             echo "⏰ End Time      : $END_TIME"
-            echo "⏱️ Runtime       : ${RUNTIME} seconds"
-            echo "⚙️ Max Fetches   : $MAX_FETCHES"
+            echo "⏱️ Runtime       : $RUNTIME_FORMAT"
+            echo "⚙️ Max Process   : $MAX_FETCHES"
             echo ""
 
             if [[ "${WORKFLOW_STATUS}" == "success" ]]; then
