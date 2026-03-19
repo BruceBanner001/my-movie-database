@@ -1,0 +1,81 @@
+✅ Workflow Batch completed successfully
+🏁 Final Batch Completed
+══════════════════════════════════════════════════════
+📊 My Movie Database – Excel to JSON Workflow Report
+══════════════════════════════════════════════════════
+
+🚀 Workflow Type : Manual
+🔁 RUN           : 811
+⏰ Start Time    : 19 March 2026 - 05:00:49 PM
+⏰ End Time      : 19 March 2026 - 05:00:52 PM
+⏱️ Runtime       : 2 Seconds
+⚙️ Max Process   : 50 Row Per Run
+🔄 Total Batches : 1 Run
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Deleting Records ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+❌ Data Deleted:
+- 101 -> It's Okay to Not be Okay (2020) -> ✅ Deleted
+- 102 -> Crazy Love (2013) -> ✅ Deleted
+- 103 -> Love At First Hate (2018) -> ✅ Deleted
+- 104 -> Abyss (2019) -> ✅ Deleted
+- 105 -> Woori The Virgin (2022) -> ✅ Deleted
+- 106 -> The King Eternal Monarch (2020) -> ✅ Deleted
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 Cumulative Batch Summary
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Total Created: 0
+🔁 Total Updated: 0
+🔍 Total Refetched: 0
+🖼️ Show Images Updated: 0
+🧑‍🎨 New Artist Images Added: 0
+🚫 Total Skipped: 0
+❌ Total Deleted: 6
+🗄️ Total Archived Backups: 24
+⚠️ Total Warnings: 0
+💾 Backup Files: 0
+  Grand Total Rows Processed: 0
+
+💾 Metadata Backups: 0
+
+📦 Total Objects in seriesData.json: 0
+📦 Total Objects in artists.json: 409
+📦 Total Objects in cast.json: 0
+📦 Total Objects in artists_lookup.json: 409
+🖼️ Total images in show-images: 0
+🧑‍🎨 Total images in artist-images: 409
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ Folders Generated:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📁 deleted_data/ (Total: 6 files)
+    📄 DELETED_19_March_2026_1700_101.json
+    📄 DELETED_19_March_2026_1700_102.json
+    📄 DELETED_19_March_2026_1700_103.json
+    ... and 3 more files.
+
+📁 deleted_images/ (Total: 6 files)
+    📄 DELETED_19_March_2026_1700_101.jpg
+    📄 DELETED_19_March_2026_1700_102.jpg
+    📄 DELETED_19_March_2026_1700_103.jpg
+    ... and 3 more files.
+
+📁 reports/ (Total: 1 files)
+    📄 19_March_2026_1700_REPORT.txt
+
+📁 archived_backups/ (Total: 9 files)
+    📄 BACKUP_19_March_2026_1655_101.json
+    📄 BACKUP_19_March_2026_1653_101.json
+    📄 BACKUP_19_March_2026_1654_101.json
+    ... and 6 more files.
+
+📁 archived_meta_backups/ (Total: 15 files)
+    📄 META_19_March_2026_1518_101.json
+    📄 META_19_March_2026_1653_101.json
+    📄 META_19_March_2026_1655_101.json
+    ... and 12 more files.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🏁 Workflow finished successfully
