@@ -927,11 +927,11 @@ def fetch_and_populate_metadata(obj, context, artists_db):
                             spu[field] = f"{initial_site} (Fallback: {current_site})" if current_site != initial_site else current_site
                             context['source_links_temp'][field] = url
                             
-                            # --- FIX: Track newly fetched automated images ---
-                            if field == 'showImage':
-                                img_full_path = os.path.join(SHOW_IMAGES_DIR, str(data))
-                                if img_full_path not in context['files_generated']['show_images']:
-                                    context['files_generated']['show_images'].append(img_full_path)
+                            # --- FIX: TRACK SHOW IMAGE IN REPOR T---
+                            if field == 'showImage' and data:
+                                img_path = os.path.join(SHOW_IMAGES_DIR, str(data))
+                                if img_path not in context['files_generated']['show_images']:
+                                    context['files_generated']['show_images'].append(img_path)
                             
                             break # Found data, escape fallback loop!
                             
@@ -1129,7 +1129,7 @@ def create_diff_backup(old, new, context, explicit_changes=None):
     save_json_file(path, data)
     context['files_generated']['backups'].append(path)
 
-# ---------------------------- REPORTING ENGINE ----------------------------
+# ---------------------------- write_report ----------------------------
 
 def write_report(context, current_run_seconds):
     
