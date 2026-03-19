@@ -4,7 +4,7 @@
 # ============================================================
 # Script: create_update_backup_delete.py
 # Author:[BruceBanner001]
-# Version: v10.4 (BULLETPROOF RELAY-RACE EDITION)
+# Version: v10.5 (MANUAL OVERRIDE EDITION)
 # ============================================================
 
 # ---------------------------- IMPORTS & GLOBALS ----------------------------
@@ -15,7 +15,7 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
-SCRIPT_VERSION = "v10.4"
+SCRIPT_VERSION = "v10.5"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames":[], "showImage": None,
@@ -102,12 +102,23 @@ def ddmmyyyy(val):
     if pd.isna(val): return None
     try: dt = pd.to_datetime(str(val).strip(), errors='coerce'); return None if pd.isna(dt) else dt.strftime("%d-%m-%Y")
     except Exception: return None
+
 def normalize_list(val):
-    if val is None: return[]
+    if val is None: return []
     if isinstance(val, dict): return val
     if isinstance(val, list): items = val
-    else: items =[p.strip() for p in str(val).split(',') if p.strip()]
-    return sorted([item for item in items if item])
+    else: 
+        # Convert to string and split by comma
+        items = [p.strip() for p in str(val).split(',') if p.strip()]
+    
+    # Remove duplicates while maintaining some order, though sorted is safer for comparison
+    unique_items = []
+    seen = set()
+    for item in items:
+        if item.lower() not in seen:
+            unique_items.append(item)
+            seen.add(item.lower())
+    return unique_items
 
 def objects_differ(old, new):
     excel_fields = set(FIELD_NAME_MAP.keys()) - LOCKED_FIELDS_AFTER_CREATION
@@ -927,13 +938,12 @@ def fetch_and_populate_metadata(obj, context, artists_db):
                             spu[field] = f"{initial_site} (Fallback: {current_site})" if current_site != initial_site else current_site
                             context['source_links_temp'][field] = url
                             
-                            # --- FIX: TRACK SHOW IMAGE IN REPOR T---
                             if field == 'showImage' and data:
                                 img_path = os.path.join(SHOW_IMAGES_DIR, str(data))
                                 if img_path not in context['files_generated']['show_images']:
                                     context['files_generated']['show_images'].append(img_path)
                             
-                            break # Found data, escape fallback loop!
+                            break 
                             
     return obj
 
@@ -1000,7 +1010,19 @@ def apply_manual_updates(xl, by_id, context):
         df.columns =[c.strip().lower() for c in df.columns]
     except Exception: return {}
     
-    MAP, report = {"image": "showImage", "other names": "otherNames", "release date": "releaseDate", "synopsis": "synopsis", "duration": "Duration", "aired on": "airedOn"}, {}
+    # UPDATED MAP: Added 'director' and 'tags'
+    MAP = {
+        "image": "showImage", 
+        "other names": "otherNames", 
+        "release date": "releaseDate", 
+        "synopsis": "synopsis", 
+        "duration": "Duration", 
+        "aired on": "airedOn",
+        "director": "director",
+        "tags": "tags"
+    }
+    
+    report = {}
     for _, row in df.iterrows():
         sid = pd.to_numeric(row.get('no'), errors='coerce')
         if pd.isna(sid) or int(sid) not in by_id: continue
@@ -1018,13 +1040,15 @@ def apply_manual_updates(xl, by_id, context):
                         context['files_generated']['show_images'].append(image_path)
                         image_downloaded = True
                     else: continue
-                elif key == 'otherNames': 
+                
+                # UPDATED LOGIC: Consistently handle all list-based fields
+                elif key in ['otherNames', 'airedOn', 'director', 'tags']:
                     val = normalize_list(val)
-                elif key == 'airedOn':
-                    val =[v.strip() for v in str(val).split(',')] if val else[]
+                
                 else: 
                     val = str(val).strip()
                 
+                # Compare value with existing object
                 if obj.get(key) != val or image_downloaded:
                     old_val = obj.get(key)
                     if image_downloaded and old_val == val:
@@ -1386,7 +1410,6 @@ def main():
             
             if is_new or excel_data_has_changed:
                 
-                # Check limit before heavy fetch
                 if MAX_FETCHES > 0 and total_heavy_fetches >= MAX_FETCHES:
                     limit_reached = True
                     context['paused'] = True
@@ -1456,14 +1479,12 @@ def main():
             else:
                 report.setdefault('skipped',[]).append(f"{sid} - {excel_obj['showName']}")
 
-    # Finalize
     duration = (now_ist() - run_start_time).total_seconds()
     
     if limit_reached:
         save_batch_state(context, current_run_seconds=duration)
         with open("RESUME_FLAG.txt", "w") as rf: rf.write("CONTINUE")
     else:
-        # DATA FINISHED: Kill the state and the flag
         if os.path.exists(BATCH_STATE_FILE): 
             os.remove(BATCH_STATE_FILE)
         if os.path.exists("RESUME_FLAG.txt"):
