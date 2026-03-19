@@ -1,0 +1,92 @@
+✅ Workflow Batch completed successfully
+⏳ Batch Processing in Progress...
+══════════════════════════════════════════════════════
+📊 My Movie Database – Excel to JSON Workflow Report
+══════════════════════════════════════════════════════
+
+🚀 Workflow Type : Manual
+🔁 RUN           : 806
+⏰ Start Time    : 19 March 2026 - 04:52:16 PM
+⏰ End Time      : 19 March 2026 - 04:53:02 PM
+⏱️ Runtime       : 13 Seconds
+⚙️ Max Process   : 1 Row Per Run
+🔄 Total Batches : 2 Runs
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Manual Updates ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🔁 Data Updated:
+✍️ 101 - It's Okay to Not be Okay -> Show Image Updated Manually
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Sheet1 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🔁 Data Updated:
+✍️ 101 - It's Okay to Not be Okay -> Watch Started On, Watch Ended On, Category, Again Watched Dates Updated
+✍️ 102 - Crazy Love -> Watch Ended On Updated
+
+🚫 Skipped (Unchanged):
+- 101 - It's Okay to Not be Okay
+
+📊 Summary (Sheet: Sheet1)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Created: 0
+🔁 Updated: 2
+🔍 Refetched: 0
+🚫 Skipped: 1
+⚠️ Warnings: 0
+  Total Rows: 3
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 Overall Summary
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Total Created: 0
+🔁 Total Updated: 2
+🔍 Total Refetched: 0
+🖼️ Show Images Updated: 0
+🧑‍🎨 New Artist Images Added: 0
+🚫 Total Skipped: 1
+❌ Total Deleted: 0
+🗄️ Total Archived Backups: 0
+⚠️ Total Warnings: 0
+💾 Backup Files: 5
+  Grand Total Rows Processed: 3
+
+💾 Metadata Backups: 5
+
+📦 Total Objects in seriesData.json: 6
+📦 Total Objects in artists.json: 409
+📦 Total Objects in cast.json: 6
+📦 Total Objects in artists_lookup.json: 409
+🖼️ Total images in show-images: 6
+🧑‍🎨 Total images in artist-images: 409
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ Folders Generated:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📁 backups/ (Total: 5 files)
+    📄 BACKUP_19_March_2026_1652_101.json
+    📄 BACKUP_19_March_2026_1652_102.json
+    📄 BACKUP_19_March_2026_1652_101.json
+    📄 BACKUP_19_March_2026_1652_101.json
+    📄 BACKUP_19_March_2026_1652_102.json
+
+📁 show_images/ (Total: 2 files)
+    📄 101.jpg
+    📄 101.jpg
+
+📁 meta_backups/ (Total: 5 files)
+    📄 META_19_March_2026_1652_101.json
+    📄 META_19_March_2026_1652_102.json
+    📄 META_19_March_2026_1652_101.json
+    📄 META_19_March_2026_1652_101.json
+    📄 META_19_March_2026_1652_102.json
+
+📁 reports/ (Total: 1 files)
+    📄 19_March_2026_1653_REPORT.txt
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚠️ BATCH LIMIT REACHED: The script paused safely.
+GitHub Actions will trigger next run automatically.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
