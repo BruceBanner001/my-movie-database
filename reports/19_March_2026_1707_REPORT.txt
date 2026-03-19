@@ -1,0 +1,85 @@
+✅ Workflow Batch completed successfully
+⏳ Batch Processing in Progress...
+══════════════════════════════════════════════════════
+📊 My Movie Database – Excel to JSON Workflow Report
+══════════════════════════════════════════════════════
+
+🚀 Workflow Type : Manual
+🔁 RUN           : 814
+⏰ Start Time    : 19 March 2026 - 05:06:25 PM
+⏰ End Time      : 19 March 2026 - 05:07:30 PM
+⏱️ Runtime       : 36 Seconds
+⚙️ Max Process   : 1 Row Per Run
+🔄 Total Batches : 2 Runs
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Sheet1 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🆕 Data Created:
+- 101 - It's Okay to Not be Okay (2020) -> First Time Uploaded
+- 102 - Find Me in Your Memory (2020) -> First Time Uploaded
+
+🖼️ Fetched Data Details:
+- 101 - It's Okay to Not be Okay -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 102 - Find Me in Your Memory -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+
+🚫 Skipped (Unchanged):
+- 101 - It's Okay to Not be Okay
+
+📊 Summary (Sheet: Sheet1)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Created: 2
+🔁 Updated: 0
+🔍 Refetched: 0
+🚫 Skipped: 1
+⚠️ Warnings: 0
+  Total Rows: 3
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 Overall Summary
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Total Created: 2
+🔁 Total Updated: 0
+🔍 Total Refetched: 0
+🖼️ Show Images Updated: 2
+🧑‍🎨 New Artist Images Added: 68
+🚫 Total Skipped: 1
+❌ Total Deleted: 0
+🗄️ Total Archived Backups: 0
+⚠️ Total Warnings: 0
+💾 Backup Files: 0
+  Grand Total Rows Processed: 3
+
+💾 Metadata Backups: 2
+
+📦 Total Objects in seriesData.json: 2
+📦 Total Objects in artists.json: 477
+📦 Total Objects in cast.json: 2
+📦 Total Objects in artists_lookup.json: 477
+🖼️ Total images in show-images: 2
+🧑‍🎨 Total images in artist-images: 477
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ Folders Generated:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📁 show_images/ (Total: 2 files)
+    📄 101.jpg
+    📄 102.jpg
+
+📁 artist_images/ (Total: 68 files)
+    📄 48927.jpg
+    📄 83153.jpg
+    📄 15983.jpg
+    ... and 65 more files.
+
+📁 meta_backups/ (Total: 2 files)
+    📄 META_19_March_2026_1706_101.json
+    📄 META_19_March_2026_1707_102.json
+
+📁 reports/ (Total: 1 files)
+    📄 19_March_2026_1707_REPORT.txt
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚠️ BATCH LIMIT REACHED: The script paused safely.
+GitHub Actions will trigger next run automatically.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
