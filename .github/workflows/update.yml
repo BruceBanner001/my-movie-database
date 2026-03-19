@@ -1,6 +1,6 @@
 # ============================================================================
 # Workflow: Excel → JSON Update (Relay-Race Edition)
-# Version : 8.7 (Full Report Email + Loop Protection)
+# Version : 8.8 (Infinite Loop Protected + Full Email Content)
 # ============================================================================
 
 name: Excel → JSON Update
@@ -15,9 +15,9 @@ on:
   schedule:
     - cron: "30 18 * * 6"
 
-# Only one run sequence can edit the database at a time
+# PREVENT CONFLICTS: Only one sequence can run at a time
 concurrency:
-  group: movie-db-sync-${{ github.ref }}
+  group: movie-db-update-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -119,7 +119,6 @@ jobs:
           # Find the latest report text file
           REPORT_PATH=$(ls -t reports/*_REPORT.txt 2>/dev/null | head -n1 || echo "")
           echo "REPORT_PATH=$REPORT_PATH" >> $GITHUB_ENV
-          echo "report_exists=$([ -f "$REPORT_PATH" ] && echo 'true' || echo 'false')" >> "$GITHUB_OUTPUT"
           
           if [ -f "$REPORT_PATH" ]; then
             echo "### 📊 Workflow Execution Report" >> $GITHUB_STEP_SUMMARY
@@ -133,7 +132,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "::notice::Limit hit. Starting next batch run..."
+          echo "::notice::Limit hit. Restarting for next batch..."
           gh workflow run "Excel → JSON Update" --ref ${{ github.ref_name }} -f max_fetches=${{ github.event.inputs.max_fetches || '50' }}
 
       - name: 11. Send Email Notification
@@ -146,7 +145,6 @@ jobs:
           username: ${{ secrets.SMTP_USERNAME }}
           password: ${{ secrets.SMTP_PASSWORD }}
           subject: "Movie DB Batch Finished [${{ job.status }}]"
-          # Point to the file found in step 9
           body: file://${{ env.REPORT_PATH }}
           to: ${{ secrets.NOTIFY_EMAIL }}
           from: ${{ secrets.SMTP_USERNAME }}

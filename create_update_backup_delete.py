@@ -4,14 +4,17 @@
 # ============================================================
 # Script: create_update_backup_delete.py
 # Author:[BruceBanner001]
-# Description:
-#   v10.4 Engine.
-#   - Full Persistence: Tracks Global Start Time and Batch Runs.
-#   - Scenario Ready: Strict MAX_FETCHES handling.
-#   - Bulletproof Scrapers: MDL, AsianWiki, IMDb fallback logic.
+# Version: v10.4 (BULLETPROOF RELAY-RACE EDITION)
 # ============================================================
 
-# --------------------------- VERSION & CONFIG ------------------------
+# ---------------------------- IMPORTS & GLOBALS ----------------------------
+import os, re, sys, json, io, shutil, traceback, copy, time, hashlib
+from datetime import datetime, timedelta, timezone
+from difflib import SequenceMatcher
+import pandas as pd
+import requests
+from bs4 import BeautifulSoup
+
 SCRIPT_VERSION = "v10.4"
 
 JSON_OBJECT_TEMPLATE = {
@@ -39,14 +42,6 @@ SITE_PRIORITY_BY_LANGUAGE = {
 
 FIELD_NAME_MAP = { "showID": "Show ID", "showName": "Show Name", "otherNames": "Other Names", "showImage": "Show Image", "watchStartedOn": "Watch Started On", "watchEndedOn": "Watch Ended On", "releasedYear": "Released Year", "releaseDate": "Release Date", "totalEpisodes": "Total Episodes", "showType": "Show Type", "nativeLanguage": "Native Language", "watchedLanguage": "Watched Language", "country": "Country", "comments": "Comments", "ratings": "Ratings", "genres": "Category", "network": "Network", "againWatchedDates": "Again Watched Dates", "updatedOn": "Updated On", "updatedDetails": "Updated Details", "synopsis": "Synopsis", "topRatings": "Top Ratings", "Duration": "Duration", "director": "Director", "tags": "Tags", "cast": "Cast", "airedOn": "Aired On", "sitePriorityUsed": "Site Priority Used" }
 LOCKED_FIELDS_AFTER_CREATION = {'synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast', 'updatedOn', 'updatedDetails', 'sitePriorityUsed', 'topRatings', 'network', 'airedOn'}
-
-# ---------------------------- IMPORTS & GLOBALS ----------------------------
-import os, re, sys, json, io, shutil, traceback, copy, time, hashlib
-from datetime import datetime, timedelta, timezone
-from difflib import SequenceMatcher
-import pandas as pd
-import requests
-from bs4 import BeautifulSoup
 
 DEBUG_FETCH = os.environ.get("DEBUG_FETCH", "true").lower() == "true" 
 
@@ -161,8 +156,7 @@ def save_batch_state(context, current_run_seconds):
         'files_generated': context['files_generated'],
         'cumulative_time_seconds': context['cumulative_time_seconds'] + current_run_seconds
     }
-    with open(BATCH_STATE_FILE, 'w', encoding='utf-8') as f: 
-        json.dump(state, f, indent=4, ensure_ascii=False)
+    with open(BATCH_STATE_FILE, 'w', encoding='utf-8') as f: json.dump(state, f, indent=4, ensure_ascii=False)
 
 # ---------------------------- SCRAPER ENGINE ----------------------------
 
@@ -932,6 +926,13 @@ def fetch_and_populate_metadata(obj, context, artists_db):
                             obj[field] = data
                             spu[field] = f"{initial_site} (Fallback: {current_site})" if current_site != initial_site else current_site
                             context['source_links_temp'][field] = url
+                            
+                            # --- FIX: Track newly fetched automated images ---
+                            if field == 'showImage':
+                                img_full_path = os.path.join(SHOW_IMAGES_DIR, str(data))
+                                if img_full_path not in context['files_generated']['show_images']:
+                                    context['files_generated']['show_images'].append(img_full_path)
+                            
                             break # Found data, escape fallback loop!
                             
     return obj
@@ -1128,7 +1129,7 @@ def create_diff_backup(old, new, context, explicit_changes=None):
     save_json_file(path, data)
     context['files_generated']['backups'].append(path)
 
-# ---------------------------- UPDATED write_report ----------------------------
+# ---------------------------- REPORTING ENGINE ----------------------------
 
 def write_report(context, current_run_seconds):
     
@@ -1327,7 +1328,7 @@ def save_json_file(file_path, data):
     with open(temp_path, 'w', encoding='utf-8') as f: json.dump(data, f, indent=4, ensure_ascii=False)
     os.replace(temp_path, file_path)
 
-# ---------------------------- UPDATED MAIN ENGINE ----------------------------
+# ---------------------------- MAIN ENGINE ----------------------------
 
 def main():
     
@@ -1385,7 +1386,7 @@ def main():
             
             if is_new or excel_data_has_changed:
                 
-                # --- SCENARIO 3: CHECK LIMIT BEFORE STARTING WORK ---
+                # Check limit before heavy fetch
                 if MAX_FETCHES > 0 and total_heavy_fetches >= MAX_FETCHES:
                     limit_reached = True
                     context['paused'] = True
