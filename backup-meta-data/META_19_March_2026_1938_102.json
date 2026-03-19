@@ -1,0 +1,79 @@
+{
+    "scriptVersion": "v10.7",
+    "runID": "RUN_20260319_193835",
+    "timestamp": "19 March 2026 07:38 PM (IST)",
+    "showID": 102,
+    "showName": "Find Me in Your Memory",
+    "fetchedFields": {
+        "showImage": {
+            "value": "102.jpg",
+            "source": "asianwiki"
+        },
+        "releaseDate": {
+            "value": "Apr 10 2011 - March 12 2021",
+            "source": "Manual"
+        },
+        "otherNames": {
+            "value": [
+                "Yes",
+                "No",
+                "But",
+                "Thanks",
+                "NO PROBLEM"
+            ],
+            "source": "Manual"
+        },
+        "Duration": {
+            "value": "1 hr 99 mins.",
+            "source": "Manual"
+        },
+        "synopsis": {
+            "value": "Law Cafe",
+            "source": "Manual"
+        },
+        "director": {
+            "value": [
+                "Raja"
+            ],
+            "source": "Manual"
+        },
+        "tags": {
+            "value": [
+                "One",
+                "Two",
+                "Three",
+                "Four"
+            ],
+            "source": "Manual"
+        },
+        "cast": {
+            "value": {
+                "Main Role": 2,
+                "Support Role": 23,
+                "Guest Role": 48,
+                "Composer": 2,
+                "Director": 2,
+                "Screenwriter": 1
+            },
+            "source": "mydramalist"
+        },
+        "airedOn": {
+            "value": [
+                "Monday"
+            ],
+            "source": "Manual"
+        }
+    },
+    "sitePriorityUsed": {
+        "showImage": "asianwiki",
+        "releaseDate": "Manual",
+        "otherNames": "Manual",
+        "Duration": "Manual",
+        "synopsis": "Manual",
+        "director": "Manual",
+        "tags": "Manual",
+        "cast": "mydramalist",
+        "network": null,
+        "airedOn": "Manual"
+    }
+}
