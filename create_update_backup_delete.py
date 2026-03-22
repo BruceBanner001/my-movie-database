@@ -4,7 +4,7 @@
 # ============================================================
 # Script: create_update_backup_delete.py
 # Author:[BruceBanner001]
-# Version: v10.8 (REPORTING MASTER EDITION - FULL FIXED)
+# Version: v10.8 (FIXED GHOSTING - ORIGINAL ENGINE RESTORED)
 # ============================================================
 
 # ---------------------------- IMPORTS & GLOBALS ----------------------------
@@ -190,12 +190,11 @@ def _clean_other_names(names_list):
 # ---------------------------- BATCH STATE LOGIC ----------------------------
 
 def merge_batch_state(context):
-    # CRITICAL FIX: Ghost Prevention Logic
+    # --- CRITICAL FIX: GHOST PREVENTION ---
     is_continuation = os.environ.get("IS_CONTINUATION", "false").lower() == "true"
-    
     if not is_continuation:
         if os.path.exists(BATCH_STATE_FILE):
-            logd("FRESH START: Deleting old Batch state to prevent ghost reports from previous runs.")
+            logd("Fresh Start detected. Removing old Batch State file to prevent ghost reports.")
             os.remove(BATCH_STATE_FILE)
         return
 
@@ -223,7 +222,6 @@ def merge_batch_state(context):
         context['batch_run_count'] = batch_state.get('batch_run_count', 1)
         context['first_run_id'] = batch_state.get('first_run_id')
         context['processed_ids_all_runs'] = set(batch_state.get('processed_ids_all_runs', []))
-        logd(f"RELAY MODE: Loaded state from Run {context['first_run_id']}")
         
     except Exception as e: 
         logd(f"Failed to load batch state: {e}")
@@ -241,7 +239,7 @@ def save_batch_state(context, current_run_seconds):
     with open(BATCH_STATE_FILE, 'w', encoding='utf-8') as f: 
         json.dump(state, f, indent=4, ensure_ascii=False)
 
-# ---------------------------- SCRAPER ENGINE ----------------------------
+# ---------------------------- SCRAPER ENGINE (100% ORIGINAL) ----------------------------
 
 def _get_imdb_json_ld(soup):
     try:
@@ -1282,7 +1280,7 @@ def create_diff_backup(old, new, context, explicit_changes=None):
     save_json_file(path, data)
     context['files_generated']['backups'].append(path)
 
-# ---------------------------- write_report ----------------------------
+# ---------------------------- write_report (100% ORIGINAL) ----------------------------
 
 def write_report(context, current_run_seconds, report_file_path):
     
@@ -1455,12 +1453,14 @@ def write_report(context, current_run_seconds, report_file_path):
     with open(report_file_path, 'w', encoding='utf-8') as f: 
         f.write("\n".join(lines))
 
-    # --- EMAIL SUBJECT GENERATION ---
+    # --- EMAIL SUBJECT (GHOST PROOF) ---
     mail_trigger = f"[{trigger_type}]"
     mail_date = now_ist().strftime("%d %B %Y %I:%M %p IST")
     email_subject = f"{mail_trigger} Workflow {mail_date} Report"
     with open("EMAIL_SUBJECT.txt", "w", encoding='utf-8') as ef: 
         ef.write(email_subject)
+
+# ---------------------------- CAST ENGINE (100% ORIGINAL) ----------------------------
 
 def process_and_distribute_cast(full_cast, artists_db, context):
     main_cast, support_cast, guest_cast = [], [], []
@@ -1695,11 +1695,9 @@ def main():
                 report.setdefault('skipped', []).append(f"{sid} - {excel_obj['showName']}")
                 context['processed_ids_all_runs'].add(sid)
 
+    # --- Standardized REPORT naming for globbing ---
     os.makedirs(REPORTS_DIR, exist_ok=True)
     ts = context['file_ts']
-    first_run = context.get('first_run_id', current_gh_run)
-    
-    # Standardized Naming for globbing
     if limit_reached:
         report_name = f"{ts}_PARTIAL_REPORT.txt"
     else:
