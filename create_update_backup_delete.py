@@ -4,7 +4,7 @@
 # ============================================================
 # Script: create_update_backup_delete.py
 # Author:[BruceBanner001]
-# Version: v10.9 (FIXED REPORTING & BATCH SYNC)
+# Version: v10.8 (REPORTING MASTER EDITION - FULL FIXED)
 # ============================================================
 
 # ---------------------------- IMPORTS & GLOBALS ----------------------------
@@ -15,7 +15,7 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
-SCRIPT_VERSION = "v10.9"
+SCRIPT_VERSION = "v10.8"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames":[], "showImage": None,
@@ -190,6 +190,15 @@ def _clean_other_names(names_list):
 # ---------------------------- BATCH STATE LOGIC ----------------------------
 
 def merge_batch_state(context):
+    # CRITICAL FIX: Ghost Prevention Logic
+    is_continuation = os.environ.get("IS_CONTINUATION", "false").lower() == "true"
+    
+    if not is_continuation:
+        if os.path.exists(BATCH_STATE_FILE):
+            logd("FRESH START: Deleting old Batch state to prevent ghost reports from previous runs.")
+            os.remove(BATCH_STATE_FILE)
+        return
+
     if not os.path.exists(BATCH_STATE_FILE): 
         return
     try:
@@ -214,7 +223,7 @@ def merge_batch_state(context):
         context['batch_run_count'] = batch_state.get('batch_run_count', 1)
         context['first_run_id'] = batch_state.get('first_run_id')
         context['processed_ids_all_runs'] = set(batch_state.get('processed_ids_all_runs', []))
-        logd(f"Merging State: Previous First Run ID was {context['first_run_id']}")
+        logd(f"RELAY MODE: Loaded state from Run {context['first_run_id']}")
         
     except Exception as e: 
         logd(f"Failed to load batch state: {e}")
@@ -981,7 +990,75 @@ FALLBACK_ORDER = {
     'imdb': ['imdb']
 }
 
-# ---------------------------- PROCESSING UTILITIES ----------------------------
+def fetch_and_populate_metadata(obj, context, artists_db):
+    s_id, s_name, s_year, lang = obj['showID'], obj['showName'], obj['releasedYear'], obj.get("nativeLanguage", "")
+    priority = SITE_PRIORITY_BY_LANGUAGE.get(lang.lower(), SITE_PRIORITY_BY_LANGUAGE['default'])
+    spu = obj.setdefault('sitePriorityUsed', {})
+    show_type = obj.get('showType', 'Drama')
+    
+    context['source_links_temp'] = {}
+    soup_cache = {}
+    fields_to_check = [ 'synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast', 'network', 'airedOn' ]
+    
+    for field in fields_to_check:
+        if show_type == 'Movie' and field in ['airedOn', 'network']:
+            continue
+            
+        should_fetch = not obj.get(field) or field == 'network' 
+        
+        if should_fetch:
+            initial_site = priority.get(field)
+            if not initial_site: continue
+            
+            sites_to_try = FALLBACK_ORDER.get(initial_site, [initial_site])
+            
+            for current_site in sites_to_try:
+                if current_site == 'imdb' and field == 'airedOn':
+                    continue
+                
+                search_terms = [s_name, re.sub(r'\b(?:Season|Part|S)\s*\d+\b|\s+\d+$', '', s_name, flags=re.IGNORECASE).strip()]
+                soup, url = None, None
+                
+                ordered_terms = []
+                for term in search_terms:
+                    if term not in ordered_terms:
+                        ordered_terms.append(term)
+                        
+                for term in ordered_terms:
+                    soup, url = get_soup_from_search(term, s_name, s_year, current_site, lang, show_type, soup_cache)
+                    if soup: break
+                
+                if soup:
+                    scrape_args = {'soup': soup, 'url': url, 'sid': s_id, 'show_name': s_name, 'context': context, 'artists_db': artists_db}
+                    data = SCRAPE_MAP[current_site][field](**scrape_args)
+                    
+                    if data:
+                        if field == 'network':
+                            existing = normalize_list(obj.get('network'))
+                            new_data = normalize_list(data)
+                            merged = []
+                            seen = set()
+                            for n in existing + new_data:
+                                if n.lower() not in seen:
+                                    merged.append(n)
+                                    seen.add(n.lower())
+                            if merged != existing:
+                                obj['network'] = merged
+                                spu[field] = f"{initial_site} (Fallback: {current_site})" if current_site != initial_site else current_site
+                                context['source_links_temp'][field] = url
+                                break
+                        else:
+                            obj[field] = data
+                            spu[field] = f"{initial_site} (Fallback: {current_site})" if current_site != initial_site else current_site
+                            context['source_links_temp'][field] = url
+                            
+                            if field == 'showImage' and data:
+                                img_path = os.path.join(SHOW_IMAGES_DIR, str(data))
+                                if img_path not in context['files_generated']['show_images']:
+                                    context['files_generated']['show_images'].append(img_path)
+                            break 
+                            
+    return obj
 
 def process_deletions(xl, context):
     try:
@@ -1205,184 +1282,21 @@ def create_diff_backup(old, new, context, explicit_changes=None):
     save_json_file(path, data)
     context['files_generated']['backups'].append(path)
 
-# ---------------------------- CORE ENGINE LOGIC ----------------------------
-
-def fetch_and_populate_metadata(obj, context, artists_db):
-    s_id, s_name, s_year, lang = obj['showID'], obj['showName'], obj['releasedYear'], obj.get("nativeLanguage", "")
-    priority = SITE_PRIORITY_BY_LANGUAGE.get(lang.lower(), SITE_PRIORITY_BY_LANGUAGE['default'])
-    spu = obj.setdefault('sitePriorityUsed', {})
-    show_type = obj.get('showType', 'Drama')
-    
-    context['source_links_temp'] = {}
-    soup_cache = {}
-    fields_to_check = [ 'synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast', 'network', 'airedOn' ]
-    
-    for field in fields_to_check:
-        if show_type == 'Movie' and field in ['airedOn', 'network']:
-            continue
-            
-        should_fetch = not obj.get(field) or field == 'network' 
-        
-        if should_fetch:
-            initial_site = priority.get(field)
-            if not initial_site: continue
-            
-            sites_to_try = FALLBACK_ORDER.get(initial_site, [initial_site])
-            
-            for current_site in sites_to_try:
-                if current_site == 'imdb' and field == 'airedOn':
-                    continue
-                
-                search_terms = [s_name, re.sub(r'\b(?:Season|Part|S)\s*\d+\b|\s+\d+$', '', s_name, flags=re.IGNORECASE).strip()]
-                soup, url = None, None
-                
-                ordered_terms = []
-                for term in search_terms:
-                    if term not in ordered_terms:
-                        ordered_terms.append(term)
-                        
-                for term in ordered_terms:
-                    soup, url = get_soup_from_search(term, s_name, s_year, current_site, lang, show_type, soup_cache)
-                    if soup: break
-                
-                if soup:
-                    scrape_args = {'soup': soup, 'url': url, 'sid': s_id, 'show_name': s_name, 'context': context, 'artists_db': artists_db}
-                    data = SCRAPE_MAP[current_site][field](**scrape_args)
-                    
-                    if data:
-                        if field == 'network':
-                            existing = normalize_list(obj.get('network'))
-                            new_data = normalize_list(data)
-                            merged = []
-                            seen = set()
-                            for n in existing + new_data:
-                                if n.lower() not in seen:
-                                    merged.append(n)
-                                    seen.add(n.lower())
-                            if merged != existing:
-                                obj['network'] = merged
-                                spu[field] = f"{initial_site} (Fallback: {current_site})" if current_site != initial_site else current_site
-                                context['source_links_temp'][field] = url
-                                break
-                        else:
-                            obj[field] = data
-                            spu[field] = f"{initial_site} (Fallback: {current_site})" if current_site != initial_site else current_site
-                            context['source_links_temp'][field] = url
-                            
-                            if field == 'showImage' and data:
-                                img_path = os.path.join(SHOW_IMAGES_DIR, str(data))
-                                if img_path not in context['files_generated']['show_images']:
-                                    context['files_generated']['show_images'].append(img_path)
-                            break 
-                            
-    return obj
-
-def process_and_distribute_cast(full_cast, artists_db, context):
-    main_cast, support_cast, guest_cast = [], [], []
-    crew_cast, other_crew_cast = [], []
-    context['new_artists_added'] = []
-    
-    if not full_cast: return {}, {}
-
-    known_crew_roles = ['director', 'writer', 'screenwriter', 'composer', 'producer', 'creator', 'executive', 'editor', 'cinematographer', 'music', 'art']
-
-    for artist in full_cast:
-        artist_id = artist['artistID']
-        if artist_id not in artists_db:
-            image_path = os.path.join(ARTIST_IMAGES_DIR, f"{artist_id}.jpg")
-            image_downloaded = artist['artistImageURL'] and download_and_save_image(artist['artistImageURL'], image_path, is_artist=True)
-            
-            if image_downloaded:
-                artists_db[artist_id] = {"artistName": artist['artistName'], "artistImage": os.path.basename(image_path)}
-                context['files_generated']['artist_images'].append(image_path)
-            else:
-                artists_db[artist_id] = {"artistName": artist['artistName'], "artistImage": None}
-            
-            context['new_artists_added'].append({"artistID": artist_id, "artistName": artist['artistName'], "imageDownloaded": bool(image_downloaded)})
-        
-        role = artist['role']
-        char_name = artist.get('characterName') 
-        
-        role_lower = role.lower()
-        if 'main' in role_lower and ('role' in role_lower or 'cast' in role_lower): role = 'Main Role'
-        elif 'support' in role_lower: role = 'Support Role'
-        elif 'guest' in role_lower or 'cameo' in role_lower or 'bit part' in role_lower: role = 'Guest Role'
-        else: role = role.title()
-        
-        cast_member = {"artistID": artist_id, "characterName": char_name, "role": role}
-        
-        if role == 'Main Role': main_cast.append(cast_member)
-        elif role == 'Support Role': support_cast.append(cast_member)
-        elif role == 'Guest Role': guest_cast.append(cast_member)
-        else:
-            if any(re.search(rf'\b{kcr}\b', role.lower()) for kcr in known_crew_roles):
-                crew_cast.append(cast_member)
-            else:
-                other_crew_cast.append(cast_member)
-
-    full_cast_dict = {}
-    if main_cast: full_cast_dict['mainRoles'] = main_cast
-    if support_cast: full_cast_dict['supportRoles'] = support_cast
-    if guest_cast: full_cast_dict['guestRoles'] = guest_cast
-    if crew_cast: full_cast_dict['crew'] = crew_cast
-    if other_crew_cast: full_cast_dict['otherCrewMembers'] = other_crew_cast
-    
-    cast_summary = {}
-    if main_cast: cast_summary["Main Role"] = len(main_cast)
-    if support_cast: cast_summary["Support Role"] = len(support_cast)
-    if guest_cast: cast_summary["Guest Role"] = len(guest_cast)
-    for c in crew_cast:
-        r = c['role']
-        cast_summary[r] = cast_summary.get(r, 0) + 1
-    for c in other_crew_cast:
-        cast_summary['otherCrewMembers'] = cast_summary.get('otherCrewMembers', 0) + 1
-    
-    return cast_summary, full_cast_dict
-
-# ---------------------------- DATA PERSISTENCE ----------------------------
-
-def fetch_excel_from_gdrive_bytes(file_id, creds_path):
-    if not HAVE_GOOGLE_API: return None
-    try:
-        creds = service_account.Credentials.from_service_account_file(creds_path, scopes=['https://www.googleapis.com/auth/drive.readonly'])
-        service = build('drive', 'v3', credentials=creds)
-        try: 
-            request = service.files().get_media(fileId=file_id)
-        except Exception: 
-            request = service.files().export_media(fileId=file_id, mimeType='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-        fh = io.BytesIO()
-        downloader = MediaIoBaseDownload(fh, request)
-        done = False
-        while not done: _, done = downloader.next_chunk()
-        fh.seek(0)
-        return fh
-    except Exception as e: return None
-
-def load_json_file(file_path):
-    try:
-        with open(file_path, 'r', encoding='utf-8') as f: return json.load(f)
-    except FileNotFoundError:
-        return {} if file_path in [ARTISTS_JSON_FILE, CAST_JSON_FILE] else []
-    except json.JSONDecodeError as e:
-        print(f"\n❌ CRITICAL ERROR: {file_path} is corrupted!")
-        sys.exit(1)
-
-def save_json_file(file_path, data):
-    temp_path = file_path + ".tmp"
-    with open(temp_path, 'w', encoding='utf-8') as f: 
-        json.dump(data, f, indent=4, ensure_ascii=False)
-    os.replace(temp_path, file_path)
-
-# ---------------------------- FINAL REPORTING ENGINE ----------------------------
+# ---------------------------- write_report ----------------------------
 
 def write_report(context, current_run_seconds, report_file_path):
-    total_seconds = int(context['cumulative_time_seconds'] + current_run_seconds)
-    hours, rem = divmod(total_seconds, 3600)
-    minutes, seconds = divmod(rem, 60)
     
-    runtime_str = f"{hours}h " if hours else ""
-    runtime_str += f"{minutes}m " if minutes or hours else ""
-    runtime_str += f"{seconds}s"
+    total_seconds = int(context['cumulative_time_seconds'] + current_run_seconds)
+    hours = total_seconds // 3600
+    minutes = (total_seconds % 3600) // 60
+    seconds = total_seconds % 60
+
+    if hours > 0:
+        runtime_str = f"{hours} Hour{'s' if hours > 1 else ''} {minutes} Minute{'s' if minutes != 1 else ''} {seconds} Second{'s' if seconds != 1 else ''}"
+    elif minutes > 0:
+        runtime_str = f"{minutes} Minute{'s' if minutes != 1 else ''} {seconds} Second{'s' if seconds != 1 else ''}"
+    else:
+        runtime_str = f"{seconds} Second{'s' if seconds != 1 else ''}"
 
     is_manual = os.environ.get('GITHUB_EVENT_NAME') == 'workflow_dispatch'
     trigger_type = "Manual" if is_manual else "Automatic"
@@ -1390,8 +1304,8 @@ def write_report(context, current_run_seconds, report_file_path):
     end_time_ist = now_ist().strftime("%d %B %Y - %I:%M:%S %p")
     
     if context.get('paused'):
-        status_msg = "✅ Workflow Batch completed successfully"
-        batch_msg = "⏳ Batch Processing in Progress..."
+        status_msg = "⏳ Batch Processing in Progress..."
+        batch_msg = "⚠️ BATCH LIMIT REACHED: The script paused safely."
     else:
         status_msg = "✅ Workflow Batch completed successfully"
         batch_msg = "🏁 Final Batch Completed"
@@ -1411,7 +1325,7 @@ def write_report(context, current_run_seconds, report_file_path):
         f"🔁 RUN           : {run_display}",
         f"⏰ Start Time    : {context['global_start_time']}",
         f"⏰ End Time      : {end_time_ist}",
-        f"⏱️ Total Runtime : {runtime_str}",
+        f"⏱️ Runtime       : {runtime_str}",
         f"⚙️ Max Process   : {os.environ.get('MAX_FETCHES', '50')} Row Per Run",
         f"🔄 Total Batches : {context.get('batch_run_count', 1)} Run{'s' if context.get('batch_run_count', 1) != 1 else ''}",
         ""
@@ -1503,7 +1417,7 @@ def write_report(context, current_run_seconds, report_file_path):
     stats['artist_images'] = len(context['files_generated'].get('artist_images', []))
     stats['archived'] = len(context['files_generated'].get('archived_backups', [])) + len(context['files_generated'].get('archived_meta_backups', []))
     
-    lines.extend([sep, "📊 Overall Summary (Cumulative Batching)" if context.get('paused') else "📊 Overall Summary", sep, f"🆕 Total Created: {stats['created']}", f"🔁 Total Updated: {stats['updated']}", f"🔍 Total Refetched: {stats['refetched']}", f"🖼️ Show Images Updated: {stats['show_images']}", f"🧑‍🎨 New Artist Images Added: {stats['artist_images']}", f"🚫 Total Skipped: {stats['skipped']}", f"❌ Total Deleted: {stats['deleted']}", f"🗄️ Total Archived Backups: {stats['archived']}", f"⚠️ Total Warnings: {stats['warnings']}", f"💾 Backup Files: {len(context['files_generated'].get('backups', []))}", f"  Grand Total Rows Processed: {stats['rows']}", "", f"💾 Metadata Backups: {len(context['files_generated'].get('meta_backups', []))}", ""])
+    lines.extend([sep, "📊 Overall Summary", sep, f"🆕 Total Created: {stats['created']}", f"🔁 Total Updated: {stats['updated']}", f"🔍 Total Refetched: {stats['refetched']}", f"🖼️ Show Images Updated: {stats['show_images']}", f"🧑‍🎨 New Artist Images Added: {stats['artist_images']}", f"🚫 Total Skipped: {stats['skipped']}", f"❌ Total Deleted: {stats['deleted']}", f"🗄️ Total Archived Backups: {stats['archived']}", f"⚠️ Total Warnings: {stats['warnings']}", f"💾 Backup Files: {len(context['files_generated'].get('backups', []))}", f"  Grand Total Rows Processed: {stats['rows']}", "", f"💾 Metadata Backups: {len(context['files_generated'].get('meta_backups', []))}", ""])
     
     for file in [SERIES_JSON_FILE, ARTISTS_JSON_FILE, CAST_JSON_FILE, ARTIST_LOOKUP_FILE]:
         try:
@@ -1543,15 +1457,109 @@ def write_report(context, current_run_seconds, report_file_path):
 
     # --- EMAIL SUBJECT GENERATION ---
     mail_trigger = f"[{trigger_type}]"
-    batch_tag = "[PARTIAL]" if context.get('paused') else "[FINAL]"
-    mail_date = now_ist().strftime("%d %B %Y")
-    email_subject = f"{mail_trigger} {batch_tag} Movie DB Report - Run {run_display} ({mail_date})"
+    mail_date = now_ist().strftime("%d %B %Y %I:%M %p IST")
+    email_subject = f"{mail_trigger} Workflow {mail_date} Report"
     with open("EMAIL_SUBJECT.txt", "w", encoding='utf-8') as ef: 
         ef.write(email_subject)
+
+def process_and_distribute_cast(full_cast, artists_db, context):
+    main_cast, support_cast, guest_cast = [], [], []
+    crew_cast, other_crew_cast = [], []
+    context['new_artists_added'] = []
+    
+    if not full_cast: return {}, {}
+
+    known_crew_roles = ['director', 'writer', 'screenwriter', 'composer', 'producer', 'creator', 'executive', 'editor', 'cinematographer', 'music', 'art']
+
+    for artist in full_cast:
+        artist_id = artist['artistID']
+        if artist_id not in artists_db:
+            image_path = os.path.join(ARTIST_IMAGES_DIR, f"{artist_id}.jpg")
+            image_downloaded = artist['artistImageURL'] and download_and_save_image(artist['artistImageURL'], image_path, is_artist=True)
+            
+            if image_downloaded:
+                artists_db[artist_id] = {"artistName": artist['artistName'], "artistImage": os.path.basename(image_path)}
+                context['files_generated']['artist_images'].append(image_path)
+            else:
+                artists_db[artist_id] = {"artistName": artist['artistName'], "artistImage": None}
+            
+            context['new_artists_added'].append({"artistID": artist_id, "artistName": artist['artistName'], "imageDownloaded": bool(image_downloaded)})
+        
+        role = artist['role']
+        char_name = artist.get('characterName') 
+        
+        role_lower = role.lower()
+        if 'main' in role_lower and ('role' in role_lower or 'cast' in role_lower): role = 'Main Role'
+        elif 'support' in role_lower: role = 'Support Role'
+        elif 'guest' in role_lower or 'cameo' in role_lower or 'bit part' in role_lower: role = 'Guest Role'
+        else: role = role.title()
+        
+        cast_member = {"artistID": artist_id, "characterName": char_name, "role": role}
+        
+        if role == 'Main Role': main_cast.append(cast_member)
+        elif role == 'Support Role': support_cast.append(cast_member)
+        elif role == 'Guest Role': guest_cast.append(cast_member)
+        else:
+            if any(re.search(rf'\b{kcr}\b', role.lower()) for kcr in known_crew_roles):
+                crew_cast.append(cast_member)
+            else:
+                other_crew_cast.append(cast_member)
+
+    full_cast_dict = {}
+    if main_cast: full_cast_dict['mainRoles'] = main_cast
+    if support_cast: full_cast_dict['supportRoles'] = support_cast
+    if guest_cast: full_cast_dict['guestRoles'] = guest_cast
+    if crew_cast: full_cast_dict['crew'] = crew_cast
+    if other_crew_cast: full_cast_dict['otherCrewMembers'] = other_crew_cast
+    
+    cast_summary = {}
+    if main_cast: cast_summary["Main Role"] = len(main_cast)
+    if support_cast: cast_summary["Support Role"] = len(support_cast)
+    if guest_cast: cast_summary["Guest Role"] = len(guest_cast)
+    for c in crew_cast:
+        r = c['role']
+        cast_summary[r] = cast_summary.get(r, 0) + 1
+    for c in other_crew_cast:
+        cast_summary['otherCrewMembers'] = cast_summary.get('otherCrewMembers', 0) + 1
+    
+    return cast_summary, full_cast_dict
+
+def fetch_excel_from_gdrive_bytes(file_id, creds_path):
+    if not HAVE_GOOGLE_API: return None
+    try:
+        creds = service_account.Credentials.from_service_account_file(creds_path, scopes=['https://www.googleapis.com/auth/drive.readonly'])
+        service = build('drive', 'v3', credentials=creds)
+        try: 
+            request = service.files().get_media(fileId=file_id)
+        except Exception: 
+            request = service.files().export_media(fileId=file_id, mimeType='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        fh = io.BytesIO()
+        downloader = MediaIoBaseDownload(fh, request)
+        done = False
+        while not done: _, done = downloader.next_chunk()
+        fh.seek(0)
+        return fh
+    except Exception as e: return None
+
+def load_json_file(file_path):
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f: return json.load(f)
+    except FileNotFoundError:
+        return {} if file_path in [ARTISTS_JSON_FILE, CAST_JSON_FILE] else []
+    except json.JSONDecodeError as e:
+        print(f"\n❌ CRITICAL ERROR: {file_path} is corrupted!")
+        sys.exit(1)
+
+def save_json_file(file_path, data):
+    temp_path = file_path + ".tmp"
+    with open(temp_path, 'w', encoding='utf-8') as f: 
+        json.dump(data, f, indent=4, ensure_ascii=False)
+    os.replace(temp_path, file_path)
 
 # ---------------------------- MAIN ENGINE ----------------------------
 
 def main():
+    
     MAX_FETCHES = int(os.environ.get("MAX_FETCHES", "50"))
     total_heavy_fetches = 0
     limit_reached = False
@@ -1574,50 +1582,45 @@ def main():
         'processed_ids_all_runs': set()
     }
     
-    # Check for previous run state
     merge_batch_state(context)
 
-    # Standard check for keys
     if not (os.path.exists(EXCEL_FILE_ID_TXT) and os.path.exists(SERVICE_ACCOUNT_FILE)): 
-        print("Missing credentials file."); sys.exit(1)
-        
+        sys.exit(1)
     with open(EXCEL_FILE_ID_TXT, 'r') as f: 
         excel_id = f.read().strip()
     
     excel_bytes = fetch_excel_from_gdrive_bytes(excel_id, SERVICE_ACCOUNT_FILE)
-    if not excel_bytes: 
-        print("Failed to fetch Excel from GDrive."); sys.exit(1)
+    if not excel_bytes: sys.exit(1)
 
     xl = pd.ExcelFile(io.BytesIO(excel_bytes.getvalue()))
 
-    # 1. Process deletions
     process_deletions(xl, context)
 
-    # 2. Load DB
     series_data = load_json_file(SERIES_JSON_FILE)
     artists_data = load_json_file(ARTISTS_JSON_FILE)
     cast_data = load_json_file(CAST_JSON_FILE)
     
     merged_by_id = {int(o['showID']): o for o in series_data if o.get('showID')}
     
-    # 3. Manual Updates
     manual_report = apply_manual_updates(xl, merged_by_id, context)
     if manual_report: 
         context['report_data']['Manual Updates'] = manual_report
 
-    # 4. Sheets
     sheets_to_process = [s.strip() for s in os.environ.get("SHEETS", "Sheet1").split(';') if s.strip()]
     
     for sheet in sheets_to_process:
-        if limit_reached: break
+        if limit_reached: 
+            break
         context['current_sheet'] = sheet
         report = context['report_data'].setdefault(sheet, {})
         excel_rows, warnings = excel_to_objects(xl, sheet)
-        if warnings: report.setdefault('data_warnings', []).extend(warnings)
+        if warnings: 
+            report.setdefault('data_warnings', []).extend(warnings)
 
         for excel_obj in excel_rows:
             sid = excel_obj['showID']
-            if sid in context['processed_ids_all_runs']: continue
+            if sid in context['processed_ids_all_runs']: 
+                continue
 
             old_obj_from_json = merged_by_id.get(sid)
             is_new = old_obj_from_json is None
@@ -1679,34 +1682,38 @@ def main():
                 
                 merged_by_id[sid] = final_obj
                 save_metadata_backup(final_obj, context)
+                
+                missing_fields = {'synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast'}
+                if final_obj.get('showType') != 'Movie': 
+                    missing_fields.update({'airedOn', 'network'})
+                missing = [human_readable_field(k) for k, v in final_obj.items() if k in missing_fields and not v]
+                if missing: 
+                    report.setdefault('fetch_warnings', []).append(f"- {sid} - {final_obj['showName']} -> ⚠️ Missing: {', '.join(sorted(missing))}")
+                
                 context['processed_ids_all_runs'].add(sid)
             else:
                 report.setdefault('skipped', []).append(f"{sid} - {excel_obj['showName']}")
                 context['processed_ids_all_runs'].add(sid)
 
-    # --- REPORT FILENAME FIX ---
     os.makedirs(REPORTS_DIR, exist_ok=True)
     ts = context['file_ts']
     first_run = context.get('first_run_id', current_gh_run)
-    run_label = f"{first_run}-{current_gh_run}" if str(first_run) != str(current_gh_run) else current_gh_run
     
-    # Ensuring "REPORT" is always in the filename so the YAML can find it
+    # Standardized Naming for globbing
     if limit_reached:
-        report_name = f"REPORT_PARTIAL_{ts}_RUN_{run_label}.txt"
+        report_name = f"{ts}_PARTIAL_REPORT.txt"
     else:
-        report_name = f"REPORT_FINAL_{ts}_RUN_{run_label}.txt"
+        report_name = f"{ts}_FINAL_REPORT.txt"
             
     report_path = os.path.join(REPORTS_DIR, report_name)
     context['files_generated']['reports'].append(report_path)
 
-    # Finalization
     duration = (now_ist() - run_start_time).total_seconds()
     
     if limit_reached:
         save_batch_state(context, current_run_seconds=duration)
         with open("RESUME_FLAG.txt", "w") as rf: rf.write("CONTINUE")
     else:
-        # 100% Finished -> Remove state and flag
         if os.path.exists(BATCH_STATE_FILE): os.remove(BATCH_STATE_FILE)
         if os.path.exists("RESUME_FLAG.txt"): os.remove("RESUME_FLAG.txt")
 
@@ -1718,10 +1725,11 @@ def main():
     save_json_file(ARTIST_LOOKUP_FILE, sorted(artist_lookup_list, key=lambda x: x['artistName']))
     
     write_report(context, current_run_seconds=duration, report_file_path=report_path)
-    print(f"✅ Finished. Report generated: {report_path}")
+    print(f"✅ Report written -> {report_path}")
 
 if __name__ == '__main__':
     try: main()
     except Exception as e:
+        print(f"❌ Error: {e}")
         traceback.print_exc()
         sys.exit(1)
