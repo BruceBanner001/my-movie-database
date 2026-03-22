@@ -4,7 +4,7 @@
 # ============================================================
 # Script: create_update_backup_delete.py
 # Author:[BruceBanner001]
-# Version: v10.8 (FIXED GHOSTING - ORIGINAL ENGINE RESTORED)
+# Version: v10.7 (REPORTING MASTER EDITION - EXPANDED)
 # ============================================================
 
 # ---------------------------- IMPORTS & GLOBALS ----------------------------
@@ -15,7 +15,7 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
-SCRIPT_VERSION = "v10.8"
+SCRIPT_VERSION = "v10.7"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames":[], "showImage": None,
@@ -69,10 +69,14 @@ DEBUG_FETCH = os.environ.get("DEBUG_FETCH", "true").lower() == "true"
 
 HAVE_DDGS = False
 try: 
-    from duckduckgo_search import DDGS
+    from ddgs import DDGS
     HAVE_DDGS = True
 except:
-    HAVE_DDGS = False
+    try:
+        from duckduckgo_search import DDGS
+        HAVE_DDGS = True
+    except:
+        HAVE_DDGS = False
 
 try: 
     import cloudscraper
@@ -190,14 +194,6 @@ def _clean_other_names(names_list):
 # ---------------------------- BATCH STATE LOGIC ----------------------------
 
 def merge_batch_state(context):
-    # --- CRITICAL FIX: GHOST PREVENTION ---
-    is_continuation = os.environ.get("IS_CONTINUATION", "false").lower() == "true"
-    if not is_continuation:
-        if os.path.exists(BATCH_STATE_FILE):
-            logd("Fresh Start detected. Removing old Batch State file to prevent ghost reports.")
-            os.remove(BATCH_STATE_FILE)
-        return
-
     if not os.path.exists(BATCH_STATE_FILE): 
         return
     try:
@@ -239,7 +235,7 @@ def save_batch_state(context, current_run_seconds):
     with open(BATCH_STATE_FILE, 'w', encoding='utf-8') as f: 
         json.dump(state, f, indent=4, ensure_ascii=False)
 
-# ---------------------------- SCRAPER ENGINE (100% ORIGINAL) ----------------------------
+# ---------------------------- SCRAPER ENGINE ----------------------------
 
 def _get_imdb_json_ld(soup):
     try:
@@ -1280,7 +1276,7 @@ def create_diff_backup(old, new, context, explicit_changes=None):
     save_json_file(path, data)
     context['files_generated']['backups'].append(path)
 
-# ---------------------------- write_report (100% ORIGINAL) ----------------------------
+# ---------------------------- write_report ----------------------------
 
 def write_report(context, current_run_seconds, report_file_path):
     
@@ -1302,8 +1298,8 @@ def write_report(context, current_run_seconds, report_file_path):
     end_time_ist = now_ist().strftime("%d %B %Y - %I:%M:%S %p")
     
     if context.get('paused'):
-        status_msg = "⏳ Batch Processing in Progress..."
-        batch_msg = "⚠️ BATCH LIMIT REACHED: The script paused safely."
+        status_msg = "✅ Workflow Batch completed successfully"
+        batch_msg = "⏳ Batch Processing in Progress..."
     else:
         status_msg = "✅ Workflow Batch completed successfully"
         batch_msg = "🏁 Final Batch Completed"
@@ -1415,7 +1411,7 @@ def write_report(context, current_run_seconds, report_file_path):
     stats['artist_images'] = len(context['files_generated'].get('artist_images', []))
     stats['archived'] = len(context['files_generated'].get('archived_backups', [])) + len(context['files_generated'].get('archived_meta_backups', []))
     
-    lines.extend([sep, "📊 Overall Summary", sep, f"🆕 Total Created: {stats['created']}", f"🔁 Total Updated: {stats['updated']}", f"🔍 Total Refetched: {stats['refetched']}", f"🖼️ Show Images Updated: {stats['show_images']}", f"🧑‍🎨 New Artist Images Added: {stats['artist_images']}", f"🚫 Total Skipped: {stats['skipped']}", f"❌ Total Deleted: {stats['deleted']}", f"🗄️ Total Archived Backups: {stats['archived']}", f"⚠️ Total Warnings: {stats['warnings']}", f"💾 Backup Files: {len(context['files_generated'].get('backups', []))}", f"  Grand Total Rows Processed: {stats['rows']}", "", f"💾 Metadata Backups: {len(context['files_generated'].get('meta_backups', []))}", ""])
+    lines.extend([sep, "📊 Cumulative Batch Summary" if not context.get('paused') else "📊 Overall Summary", sep, f"🆕 Total Created: {stats['created']}", f"🔁 Total Updated: {stats['updated']}", f"🔍 Total Refetched: {stats['refetched']}", f"🖼️ Show Images Updated: {stats['show_images']}", f"🧑‍🎨 New Artist Images Added: {stats['artist_images']}", f"🚫 Total Skipped: {stats['skipped']}", f"❌ Total Deleted: {stats['deleted']}", f"🗄️ Total Archived Backups: {stats['archived']}", f"⚠️ Total Warnings: {stats['warnings']}", f"💾 Backup Files: {len(context['files_generated'].get('backups', []))}", f"  Grand Total Rows Processed: {stats['rows']}", "", f"💾 Metadata Backups: {len(context['files_generated'].get('meta_backups', []))}", ""])
     
     for file in [SERIES_JSON_FILE, ARTISTS_JSON_FILE, CAST_JSON_FILE, ARTIST_LOOKUP_FILE]:
         try:
@@ -1453,14 +1449,12 @@ def write_report(context, current_run_seconds, report_file_path):
     with open(report_file_path, 'w', encoding='utf-8') as f: 
         f.write("\n".join(lines))
 
-    # --- EMAIL SUBJECT (GHOST PROOF) ---
+    # --- EMAIL SUBJECT ---
     mail_trigger = f"[{trigger_type}]"
     mail_date = now_ist().strftime("%d %B %Y %I:%M %p IST")
     email_subject = f"{mail_trigger} Workflow {mail_date} Report"
     with open("EMAIL_SUBJECT.txt", "w", encoding='utf-8') as ef: 
         ef.write(email_subject)
-
-# ---------------------------- CAST ENGINE (100% ORIGINAL) ----------------------------
 
 def process_and_distribute_cast(full_cast, artists_db, context):
     main_cast, support_cast, guest_cast = [], [], []
@@ -1695,17 +1689,23 @@ def main():
                 report.setdefault('skipped', []).append(f"{sid} - {excel_obj['showName']}")
                 context['processed_ids_all_runs'].add(sid)
 
-    # --- Standardized REPORT naming for globbing ---
+    # --- REPORT FILENAME GENERATION ---
     os.makedirs(REPORTS_DIR, exist_ok=True)
     ts = context['file_ts']
+    first_run = context.get('first_run_id', current_gh_run)
+    
     if limit_reached:
-        report_name = f"{ts}_PARTIAL_REPORT.txt"
+        report_name = f"{ts}_PARTIAL_{current_gh_run}_REPORT.txt"
     else:
-        report_name = f"{ts}_FINAL_REPORT.txt"
+        if str(first_run) != str(current_gh_run):
+            report_name = f"{ts}_FINAL_{first_run}-{current_gh_run}_REPORT.txt"
+        else:
+            report_name = f"{ts}_FINAL_{current_gh_run}_REPORT.txt"
             
     report_path = os.path.join(REPORTS_DIR, report_name)
     context['files_generated']['reports'].append(report_path)
 
+    # FINALIZATION
     duration = (now_ist() - run_start_time).total_seconds()
     
     if limit_reached:
