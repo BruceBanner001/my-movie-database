@@ -1,0 +1,86 @@
+✅ Workflow Batch completed successfully
+🏁 Final Batch Completed
+══════════════════════════════════════════════════════
+📊 My Movie Database – Excel to JSON Workflow Report
+══════════════════════════════════════════════════════
+
+🚀 Workflow Type : Manual
+🔁 RUN           : 833 - 834
+⏰ Start Time    : 22 March 2026 - 04:56:29 PM
+⏰ End Time      : 22 March 2026 - 04:57:43 PM
+⏱️ Runtime       : 43 Seconds
+⚙️ Max Process   : 1 Row Per Run
+🔄 Total Batches : 2 Runs
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Sheet1 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🆕 Data Created:
+- 102 - Descendant of the Sun (2016) -> First Time Uploaded
+- 103 - Love to Hate You (2023) -> First Time Uploaded
+
+🖼️ Fetched Data Details:
+- 102 - Descendant of the Sun -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 103 - Love to Hate You -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+
+🚫 Skipped (Unchanged):
+- 101 - It's Okay to Not be Okay
+
+📊 Summary (Sheet: Sheet1)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Created: 2
+🔁 Updated: 0
+🔍 Refetched: 0
+🚫 Skipped: 1
+⚠️ Warnings: 0
+  Total Unique Rows: 3
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 Cumulative Batch Summary
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Total Created: 2
+🔁 Total Updated: 0
+🔍 Total Refetched: 0
+🖼️ Show Images Updated: 2
+🧑‍🎨 New Artist Images Added: 105
+🚫 Total Skipped: 1
+❌ Total Deleted: 0
+🗄️ Total Archived Backups: 0
+⚠️ Total Warnings: 0
+💾 Backup Files: 0
+  Grand Total Rows Processed: 3
+
+💾 Metadata Backups: 2
+
+📦 Total Objects in seriesData.json: 3
+📦 Total Objects in artists.json: 805
+📦 Total Objects in cast.json: 3
+📦 Total Objects in artists_lookup.json: 805
+🖼️ Total images in show-images: 3
+🧑‍🎨 Total images in artist-images: 805
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ Folders Generated:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📁 show_images/ (Total: 2 files)
+    📄 102.jpg
+    📄 103.jpg
+
+📁 artist_images/ (Total: 105 files)
+    📄 54533.jpg
+    📄 122353.jpg
+    📄 16030.jpg
+    📄 21127.jpg
+    📄 16024.jpg
+    ... and 100 more files.
+
+📁 meta_backups/ (Total: 2 files)
+    📄 META_22_March_2026_1656_102.json
+    📄 META_22_March_2026_1657_103.json
+
+📁 reports/ (Total: 2 files)
+    📄 22_March_2026_1656_PARTIAL_833_REPORT.txt
+    📄 22_March_2026_1657_FINAL_833-834_REPORT.txt
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🏁 Workflow finished successfully
