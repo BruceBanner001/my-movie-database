@@ -4,7 +4,7 @@
 # ============================================================
 # Script: create_update_backup_delete.py
 # Author:[BruceBanner001]
-# Version: v10.7 (REPORTING MASTER EDITION - EXPANDED)
+# Version: v10.8 (METADATA AUDIT & REPORTING MASTER)
 # ============================================================
 
 # ---------------------------- IMPORTS & GLOBALS ----------------------------
@@ -15,7 +15,7 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
-SCRIPT_VERSION = "v10.7"
+SCRIPT_VERSION = "v10.8"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames":[], "showImage": None,
@@ -69,14 +69,10 @@ DEBUG_FETCH = os.environ.get("DEBUG_FETCH", "true").lower() == "true"
 
 HAVE_DDGS = False
 try: 
-    from ddgs import DDGS
+    from duckduckgo_search import DDGS
     HAVE_DDGS = True
 except:
-    try:
-        from duckduckgo_search import DDGS
-        HAVE_DDGS = True
-    except:
-        HAVE_DDGS = False
+    HAVE_DDGS = False
 
 try: 
     import cloudscraper
@@ -1276,8 +1272,6 @@ def create_diff_backup(old, new, context, explicit_changes=None):
     save_json_file(path, data)
     context['files_generated']['backups'].append(path)
 
-# ---------------------------- write_report ----------------------------
-
 def write_report(context, current_run_seconds, report_file_path):
     
     total_seconds = int(context['cumulative_time_seconds'] + current_run_seconds)
@@ -1387,7 +1381,7 @@ def write_report(context, current_run_seconds, report_file_path):
             s_created = len(set(o['showID'] for o in changes.get('created', [])))
             s_updated = len(set(o['new']['showID'] for o in changes.get('updated', [])))
             s_refetched = len(set(o['id'] for o in changes.get('refetched', [])))
-            s_skipped = len(set(i.split(' - ')[0] for i in changes.get('skipped', [])))
+            s_skipped = len(set(i.split(' - ')[0] for i in changes.get('skipped', [])) if isinstance(changes.get('skipped'), list) else 0)
             
             total_sheet = s_created + s_updated + s_refetched + s_skipped
             
@@ -1620,7 +1614,24 @@ def main():
             is_new = old_obj_from_json is None
             excel_data_has_changed = not is_new and objects_differ(old_obj_from_json, excel_obj)
             
-            if is_new or excel_data_has_changed:
+            # --- METADATA COMPLETENESS CHECK (NEW IN v10.8) ---
+            metadata_incomplete = False
+            if not is_new:
+                # Fields that must be fetched from the web
+                fields_to_check = ['synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast', 'network', 'airedOn']
+                # Ignore specific fields for Movies
+                if excel_obj.get('showType') == 'Movie':
+                    fields_to_check = [f for f in fields_to_check if f not in ['network', 'airedOn']]
+                
+                for field in fields_to_check:
+                    val = old_obj_from_json.get(field)
+                    # Check for null, empty string, empty list, or empty dict
+                    if val is None or val == "" or val == [] or val == {}:
+                        metadata_incomplete = True
+                        break
+
+            # Process if: New Show OR Excel Row Changed OR Metadata is missing/null
+            if is_new or excel_data_has_changed or metadata_incomplete:
                 if MAX_FETCHES > 0 and total_heavy_fetches >= MAX_FETCHES:
                     limit_reached = True
                     context['paused'] = True
@@ -1677,19 +1688,12 @@ def main():
                 merged_by_id[sid] = final_obj
                 save_metadata_backup(final_obj, context)
                 
-                missing_fields = {'synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast'}
-                if final_obj.get('showType') != 'Movie': 
-                    missing_fields.update({'airedOn', 'network'})
-                missing = [human_readable_field(k) for k, v in final_obj.items() if k in missing_fields and not v]
-                if missing: 
-                    report.setdefault('fetch_warnings', []).append(f"- {sid} - {final_obj['showName']} -> ⚠️ Missing: {', '.join(sorted(missing))}")
-                
                 context['processed_ids_all_runs'].add(sid)
             else:
                 report.setdefault('skipped', []).append(f"{sid} - {excel_obj['showName']}")
                 context['processed_ids_all_runs'].add(sid)
 
-    # --- REPORT FILENAME GENERATION ---
+    # --- REPORT FILENAME GENERATION (FIXED IN v10.8) ---
     os.makedirs(REPORTS_DIR, exist_ok=True)
     ts = context['file_ts']
     first_run = context.get('first_run_id', current_gh_run)
