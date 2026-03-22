@@ -4,7 +4,7 @@
 # ============================================================
 # Script: create_update_backup_delete.py
 # Author:[BruceBanner001]
-# Version: v10.8 (METADATA AUDIT & REPORTING MASTER)
+# Version: v10.9 (AUDIT BYPASS & REPORTING MASTER)
 # ============================================================
 
 # ---------------------------- IMPORTS & GLOBALS ----------------------------
@@ -15,7 +15,7 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
-SCRIPT_VERSION = "v10.8"
+SCRIPT_VERSION = "v10.9"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames":[], "showImage": None,
@@ -1381,7 +1381,12 @@ def write_report(context, current_run_seconds, report_file_path):
             s_created = len(set(o['showID'] for o in changes.get('created', [])))
             s_updated = len(set(o['new']['showID'] for o in changes.get('updated', [])))
             s_refetched = len(set(o['id'] for o in changes.get('refetched', [])))
-            s_skipped = len(set(i.split(' - ')[0] for i in changes.get('skipped', [])) if isinstance(changes.get('skipped'), list) else 0)
+            
+            # IMPROVED SKIP COUNTING LOGIC
+            skipped_list = changes.get('skipped', [])
+            s_skipped = 0
+            if isinstance(skipped_list, list):
+                s_skipped = len(set(i.split(' - ')[0] if isinstance(i, str) else i for i in skipped_list))
             
             total_sheet = s_created + s_updated + s_refetched + s_skipped
             
@@ -1607,21 +1612,17 @@ def main():
 
         for excel_obj in excel_rows:
             sid = excel_obj['showID']
-            if sid in context['processed_ids_all_runs']: 
-                continue
 
+            # --- METADATA AUDIT LOGIC (v10.9) ---
             old_obj_from_json = merged_by_id.get(sid)
             is_new = old_obj_from_json is None
-            excel_data_has_changed = not is_new and objects_differ(old_obj_from_json, excel_obj)
             
-            # --- METADATA COMPLETENESS CHECK (NEW IN v10.8) ---
             metadata_incomplete = False
             if not is_new:
-                # Fields that must be fetched from the web
-                fields_to_check = ['synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast', 'network', 'airedOn']
-                # Ignore specific fields for Movies
-                if excel_obj.get('showType') == 'Movie':
-                    fields_to_check = [f for f in fields_to_check if f not in ['network', 'airedOn']]
+                # Fields that must be checked for missing values
+                fields_to_check = ['synopsis', 'showImage', 'cast', 'releaseDate', 'Duration', 'director', 'tags']
+                if excel_obj.get('showType') != 'Movie':
+                    fields_to_check += ['network', 'airedOn']
                 
                 for field in fields_to_check:
                     val = old_obj_from_json.get(field)
@@ -1630,7 +1631,13 @@ def main():
                         metadata_incomplete = True
                         break
 
-            # Process if: New Show OR Excel Row Changed OR Metadata is missing/null
+            # --- BYPASS BATCH SKIP IF METADATA IS INCOMPLETE ---
+            if sid in context['processed_ids_all_runs'] and not metadata_incomplete:
+                continue
+
+            excel_data_has_changed = not is_new and objects_differ(old_obj_from_json, excel_obj)
+            
+            # Process if: New Show OR Excel Row Changed OR Data is missing
             if is_new or excel_data_has_changed or metadata_incomplete:
                 if MAX_FETCHES > 0 and total_heavy_fetches >= MAX_FETCHES:
                     limit_reached = True
@@ -1693,7 +1700,7 @@ def main():
                 report.setdefault('skipped', []).append(f"{sid} - {excel_obj['showName']}")
                 context['processed_ids_all_runs'].add(sid)
 
-    # --- REPORT FILENAME GENERATION (FIXED IN v10.8) ---
+    # --- REPORT FILENAME GENERATION (v10.9) ---
     os.makedirs(REPORTS_DIR, exist_ok=True)
     ts = context['file_ts']
     first_run = context.get('first_run_id', current_gh_run)
