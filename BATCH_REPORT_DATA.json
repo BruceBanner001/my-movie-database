@@ -1,0 +1,44 @@
+{
+    "global_start_time": "22 March 2026 - 06:38:22 PM",
+    "batch_run_count": 2,
+    "report_data": {
+        "Sheet1": {
+            "skipped": [
+                "101 - It's Okay to Not be Okay",
+                "103 - Love to Hate You"
+            ],
+            "refetched": [
+                {
+                    "id": 102,
+                    "name": "Descendant of the Sun",
+                    "fields": [
+                        "Aired On",
+                        "Director"
+                    ]
+                }
+            ]
+        }
+    },
+    "files_generated": {
+        "backups": [],
+        "show_images": [],
+        "artist_images": [],
+        "deleted_data": [],
+        "deleted_images": [],
+        "meta_backups": [
+            "backup-meta-data/META_22_March_2026_1838_102.json"
+        ],
+        "reports": [
+            "reports/22_March_2026_1838_PARTIAL_837_REPORT.txt"
+        ],
+        "archived_backups": [],
+        "archived_meta_backups": []
+    },
+    "cumulative_time_seconds": 6.91661,
+    "first_run_id": "837",
+    "processed_ids_all_runs": [
+        101,
+        102,
+        103
+    ]
+}
