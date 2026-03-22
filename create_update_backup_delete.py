@@ -4,7 +4,7 @@
 # ============================================================
 # Script: create_update_backup_delete.py
 # Author:[BruceBanner001]
-# Version: v10.9 (AUDIT BYPASS & REPORTING MASTER)
+# Version: v11.0 (ULTIMATE AUDIT & REPORTING SYSTEM)
 # ============================================================
 
 # ---------------------------- IMPORTS & GLOBALS ----------------------------
@@ -15,7 +15,7 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
-SCRIPT_VERSION = "v10.9"
+SCRIPT_VERSION = "v11.0"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames":[], "showImage": None,
@@ -1182,7 +1182,7 @@ def excel_to_objects(xl, sheet):
         again_idx = len(df.columns) 
         
     MAP = {"no": "showID", "series title": "showName", "started date": "watchStartedOn", "finished date": "watchEndedOn", "year": "releasedYear", "total episodes": "totalEpisodes", "original language": "nativeLanguage", "language": "watchedLanguage", "ratings": "ratings", "catagory": "genres", "category": "genres", "original network": "network", "comments": "comments"}
-    base_id = {"sheet1": 100, "feb 7 2023 onwards": 1000, "sheet2": 3000}.get(sheet.lower(), 0)
+    
     processed = []
     for index, row in df.iterrows():
         obj, row_num = {}, index + 2
@@ -1198,7 +1198,6 @@ def excel_to_objects(xl, sheet):
             else: 
                 obj[key] = ddmmyyyy(val) if key in ("watchStartedOn", "watchEndedOn") else normalize_list(val) if key in ("genres", "network") else str(val).strip() if val else None
         
-        if obj.get("showID", 0) != 0: obj['showID'] += base_id
         if not obj.get("showID") or not obj.get("showName"): continue
         obj["againWatchedDates"] = [ddmmyyyy(d) for d in row[again_idx:] if ddmmyyyy(d)]
         
@@ -1382,7 +1381,6 @@ def write_report(context, current_run_seconds, report_file_path):
             s_updated = len(set(o['new']['showID'] for o in changes.get('updated', [])))
             s_refetched = len(set(o['id'] for o in changes.get('refetched', [])))
             
-            # IMPROVED SKIP COUNTING LOGIC
             skipped_list = changes.get('skipped', [])
             s_skipped = 0
             if isinstance(skipped_list, list):
@@ -1613,31 +1611,30 @@ def main():
         for excel_obj in excel_rows:
             sid = excel_obj['showID']
 
-            # --- METADATA AUDIT LOGIC (v10.9) ---
+            # --- AUDIT LOGIC (FORCED CHECK) ---
             old_obj_from_json = merged_by_id.get(sid)
             is_new = old_obj_from_json is None
             
             metadata_incomplete = False
             if not is_new:
-                # Fields that must be checked for missing values
-                fields_to_check = ['synopsis', 'showImage', 'cast', 'releaseDate', 'Duration', 'director', 'tags']
+                # MANDATORY FIELDS THAT MUST EXIST
+                fields_to_audit = ['synopsis', 'showImage', 'cast', 'releaseDate', 'Duration', 'director', 'tags']
                 if excel_obj.get('showType') != 'Movie':
-                    fields_to_check += ['network', 'airedOn']
+                    fields_to_audit += ['network', 'airedOn']
                 
-                for field in fields_to_check:
+                for field in fields_to_audit:
                     val = old_obj_from_json.get(field)
-                    # Check for null, empty string, empty list, or empty dict
                     if val is None or val == "" or val == [] or val == {}:
                         metadata_incomplete = True
                         break
 
-            # --- BYPASS BATCH SKIP IF METADATA IS INCOMPLETE ---
+            # ONLY SKIP IF ROW IS FULLY COMPLETE
             if sid in context['processed_ids_all_runs'] and not metadata_incomplete:
+                report.setdefault('skipped', []).append(f"{sid} - {excel_obj['showName']}")
                 continue
 
             excel_data_has_changed = not is_new and objects_differ(old_obj_from_json, excel_obj)
             
-            # Process if: New Show OR Excel Row Changed OR Data is missing
             if is_new or excel_data_has_changed or metadata_incomplete:
                 if MAX_FETCHES > 0 and total_heavy_fetches >= MAX_FETCHES:
                     limit_reached = True
@@ -1694,13 +1691,12 @@ def main():
                 
                 merged_by_id[sid] = final_obj
                 save_metadata_backup(final_obj, context)
-                
                 context['processed_ids_all_runs'].add(sid)
             else:
                 report.setdefault('skipped', []).append(f"{sid} - {excel_obj['showName']}")
                 context['processed_ids_all_runs'].add(sid)
 
-    # --- REPORT FILENAME GENERATION (v10.9) ---
+    # --- REPORT FILENAME GENERATION ---
     os.makedirs(REPORTS_DIR, exist_ok=True)
     ts = context['file_ts']
     first_run = context.get('first_run_id', current_gh_run)
