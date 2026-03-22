@@ -4,7 +4,7 @@
 # ============================================================
 # Script: create_update_backup_delete.py
 # Author:[BruceBanner001]
-# Version: v11.0 (ULTIMATE AUDIT & REPORTING SYSTEM)
+# Version: v10.7 (REPORTING MASTER EDITION - EXPANDED)
 # ============================================================
 
 # ---------------------------- IMPORTS & GLOBALS ----------------------------
@@ -15,7 +15,7 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
-SCRIPT_VERSION = "v11.0"
+SCRIPT_VERSION = "v10.7"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames":[], "showImage": None,
@@ -69,10 +69,14 @@ DEBUG_FETCH = os.environ.get("DEBUG_FETCH", "true").lower() == "true"
 
 HAVE_DDGS = False
 try: 
-    from duckduckgo_search import DDGS
+    from ddgs import DDGS
     HAVE_DDGS = True
 except:
-    HAVE_DDGS = False
+    try:
+        from duckduckgo_search import DDGS
+        HAVE_DDGS = True
+    except:
+        HAVE_DDGS = False
 
 try: 
     import cloudscraper
@@ -1182,7 +1186,7 @@ def excel_to_objects(xl, sheet):
         again_idx = len(df.columns) 
         
     MAP = {"no": "showID", "series title": "showName", "started date": "watchStartedOn", "finished date": "watchEndedOn", "year": "releasedYear", "total episodes": "totalEpisodes", "original language": "nativeLanguage", "language": "watchedLanguage", "ratings": "ratings", "catagory": "genres", "category": "genres", "original network": "network", "comments": "comments"}
-    
+    base_id = {"sheet1": 100, "feb 7 2023 onwards": 1000, "sheet2": 3000}.get(sheet.lower(), 0)
     processed = []
     for index, row in df.iterrows():
         obj, row_num = {}, index + 2
@@ -1198,6 +1202,7 @@ def excel_to_objects(xl, sheet):
             else: 
                 obj[key] = ddmmyyyy(val) if key in ("watchStartedOn", "watchEndedOn") else normalize_list(val) if key in ("genres", "network") else str(val).strip() if val else None
         
+        if obj.get("showID", 0) != 0: obj['showID'] += base_id
         if not obj.get("showID") or not obj.get("showName"): continue
         obj["againWatchedDates"] = [ddmmyyyy(d) for d in row[again_idx:] if ddmmyyyy(d)]
         
@@ -1270,6 +1275,8 @@ def create_diff_backup(old, new, context, explicit_changes=None):
     path = os.path.join(BACKUP_DIR, f"BACKUP_{context['file_ts']}_{new['showID']}.json"); os.makedirs(BACKUP_DIR, exist_ok=True)
     save_json_file(path, data)
     context['files_generated']['backups'].append(path)
+
+# ---------------------------- write_report ----------------------------
 
 def write_report(context, current_run_seconds, report_file_path):
     
@@ -1380,11 +1387,7 @@ def write_report(context, current_run_seconds, report_file_path):
             s_created = len(set(o['showID'] for o in changes.get('created', [])))
             s_updated = len(set(o['new']['showID'] for o in changes.get('updated', [])))
             s_refetched = len(set(o['id'] for o in changes.get('refetched', [])))
-            
-            skipped_list = changes.get('skipped', [])
-            s_skipped = 0
-            if isinstance(skipped_list, list):
-                s_skipped = len(set(i.split(' - ')[0] if isinstance(i, str) else i for i in skipped_list))
+            s_skipped = len(set(i.split(' - ')[0] for i in changes.get('skipped', [])))
             
             total_sheet = s_created + s_updated + s_refetched + s_skipped
             
@@ -1610,32 +1613,14 @@ def main():
 
         for excel_obj in excel_rows:
             sid = excel_obj['showID']
-
-            # --- AUDIT LOGIC (FORCED CHECK) ---
-            old_obj_from_json = merged_by_id.get(sid)
-            is_new = old_obj_from_json is None
-            
-            metadata_incomplete = False
-            if not is_new:
-                # MANDATORY FIELDS THAT MUST EXIST
-                fields_to_audit = ['synopsis', 'showImage', 'cast', 'releaseDate', 'Duration', 'director', 'tags']
-                if excel_obj.get('showType') != 'Movie':
-                    fields_to_audit += ['network', 'airedOn']
-                
-                for field in fields_to_audit:
-                    val = old_obj_from_json.get(field)
-                    if val is None or val == "" or val == [] or val == {}:
-                        metadata_incomplete = True
-                        break
-
-            # ONLY SKIP IF ROW IS FULLY COMPLETE
-            if sid in context['processed_ids_all_runs'] and not metadata_incomplete:
-                report.setdefault('skipped', []).append(f"{sid} - {excel_obj['showName']}")
+            if sid in context['processed_ids_all_runs']: 
                 continue
 
+            old_obj_from_json = merged_by_id.get(sid)
+            is_new = old_obj_from_json is None
             excel_data_has_changed = not is_new and objects_differ(old_obj_from_json, excel_obj)
             
-            if is_new or excel_data_has_changed or metadata_incomplete:
+            if is_new or excel_data_has_changed:
                 if MAX_FETCHES > 0 and total_heavy_fetches >= MAX_FETCHES:
                     limit_reached = True
                     context['paused'] = True
@@ -1691,6 +1676,14 @@ def main():
                 
                 merged_by_id[sid] = final_obj
                 save_metadata_backup(final_obj, context)
+                
+                missing_fields = {'synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast'}
+                if final_obj.get('showType') != 'Movie': 
+                    missing_fields.update({'airedOn', 'network'})
+                missing = [human_readable_field(k) for k, v in final_obj.items() if k in missing_fields and not v]
+                if missing: 
+                    report.setdefault('fetch_warnings', []).append(f"- {sid} - {final_obj['showName']} -> ⚠️ Missing: {', '.join(sorted(missing))}")
+                
                 context['processed_ids_all_runs'].add(sid)
             else:
                 report.setdefault('skipped', []).append(f"{sid} - {excel_obj['showName']}")
