@@ -1,37 +1,44 @@
-[DEBUG] Title Validation FAILED: Page Title 'Kim Dae-Gon (1983)' vs Expected 'Touch Your Heart' (Ratio: 0.15)
-[DEBUG] Title Validation FAILED: Page Title 'Choi Bo-Rim (screenwriter)' vs Expected 'Touch Your Heart' (Ratio: 0.29)
-✅ Workflow Batch completed successfully
-🏁 Final Batch Completed
+✅ Partial Batch completed successfully
+⏳ Batch Processing in Progress...
 ══════════════════════════════════════════════════════
 📊 My Movie Database – Excel to JSON Workflow Report
 ══════════════════════════════════════════════════════
 
 🚀 Workflow Type : Manual
-🔁 RUN           : 847
-⏰ Start Time    : 23 March 2026 - 12:53:22 PM
-⏰ End Time      : 23 March 2026 - 12:54:20 PM
-⏱️ Run Time      : 17 Seconds
+🔁 RUN           : 849
+⏰ Start Time    : 23 March 2026 - 01:40:29 PM
+⏰ End Time      : 23 March 2026 - 01:40:40 PM
+⏱️ Run Time      : 11 Seconds
 ⚙️ Max Process   : 1 Row Per Run
-🔄 Current Batch : 2
+🔄 Current Batch : 1
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Sheet1 ===
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 🆕 Data Created:
-- 107 - Touch Your Heart (2019) -> First Time Uploaded
+- 108 - Once We Get Married (2021) -> First Time Uploaded
 
 🖼️ Fetched Data Details:
-- 107 - Touch Your Heart -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 108 - Once We Get Married -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+
+🚫 Skipped (Unchanged):
+- 101 - It's Okay to Not be Okay
+- 102 - Find Me in Your Memory
+- 103 - Unforgettable Love
+- 104 - Youth of May
+- 105 - It's Okay That's Love
+- 106 - Because This Is My First Life
+- 107 - Touch Your Heart
 
 📊 Summary (Sheet: Sheet1)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🆕 Created: 1
 🔁 Updated: 0
 🔍 Refetched: 0
-🚫 Skipped: 0
+🚫 Skipped: 7
 ⚠️ Warnings: 0
-  Total Unique Rows: 1
+  Total Unique Rows: 8
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📊 Summary (Current Batch Only)
@@ -40,43 +47,46 @@
 🔁 Total Updated: 0
 🔍 Total Refetched: 0
 🖼️ Show Images Updated: 1
-🧑‍🎨 New Artist Images Added: 57
-🚫 Total Skipped: 0
+🧑‍🎨 New Artist Images Added: 37
+🚫 Total Skipped: 7
 ❌ Total Deleted: 0
 🗄️ Total Archived Backups: 0
 ⚠️ Total Warnings: 0
 💾 Backup Files: 0
-  Grand Total Rows Processed: 1
+  Grand Total Rows Processed: 8
 
 💾 Metadata Backups: 1
 
-📦 Total Objects in seriesData.json: 7
-📦 Total Objects in artists.json: 967
-📦 Total Objects in cast.json: 7
-📦 Total Objects in artists_lookup.json: 967
-🖼️ Total images in show-images: 7
-🧑‍🎨 Total images in artist-images: 967
+📦 Total Objects in seriesData.json: 8
+📦 Total Objects in artists.json: 1004
+📦 Total Objects in cast.json: 8
+📦 Total Objects in artists_lookup.json: 1004
+🖼️ Total images in show-images: 8
+🧑‍🎨 Total images in artist-images: 1004
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ Folders Generated:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📁 show_images/ (Total: 1 files)
-    📄 107.jpg
+    📄 108.jpg
 
-📁 artist_images/ (Total: 57 files)
-    📄 22628.jpg
-    📄 18338.jpg
-    📄 274.jpg
-    📄 633.jpg
-    📄 1782.jpg
-    ... and 52 more files.
+📁 artist_images/ (Total: 37 files)
+    📄 103769.jpg
+    📄 73433.jpg
+    📄 56663.jpg
+    📄 36803.jpg
+    📄 52213.jpg
+    ... and 32 more files.
 
 📁 meta_backups/ (Total: 1 files)
-    📄 META_23_March_2026_1254_107.json
+    📄 META_23_March_2026_1340_108.json
 
 📁 reports/ (Total: 1 files)
-    📄 23_March_2026_1254_FINAL_846-847_REPORT.txt
+    📄 23_March_2026_1340_PARTIAL_849_REPORT.txt
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🏁 Workflow finished successfully
+⚠️ BATCH LIMIT REACHED: The script paused safely.
+GitHub Actions will trigger next run automatically.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-✅ Final Master Report written -> reports/23_March_2026_1254_FINAL_846-847_REPORT.txt (Saved to Repo)
+✅ Partial Report created at -> reports/23_March_2026_1340_PARTIAL_849_REPORT.txt
+   (Git will ignore this file due to .gitignore settings)
