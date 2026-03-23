@@ -1,11 +1,8 @@
 {
     "global_start_time": "23 March 2026 - 01:40:29 PM",
-    "batch_run_count": 2,
+    "batch_run_count": 3,
     "report_data": {
         "Sheet1": {
-            "fetched_data": [
-                "- 108 - Once We Get Married -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags"
-            ],
             "created": [
                 {
                     "showID": 108,
@@ -87,6 +84,86 @@
                         "network": "mydramalist",
                         "airedOn": "mydramalist"
                     }
+                },
+                {
+                    "showID": 109,
+                    "showName": "The Beauty Inside",
+                    "otherNames": [
+                        "Beauty Inside",
+                        "Byooti Insaideu"
+                    ],
+                    "showImage": "109.jpg",
+                    "watchStartedOn": "13-04-2023",
+                    "watchEndedOn": "14-04-2023",
+                    "releasedYear": 2018,
+                    "releaseDate": "October 1 - November 20, 2018",
+                    "totalEpisodes": 16,
+                    "showType": "Drama",
+                    "nativeLanguage": "Korean",
+                    "watchedLanguage": "Korean",
+                    "country": "South Korea",
+                    "comments": "Nice Supernatural Series. I Don’T Like The Ending And Especially They Never Explained Why And How She The Transformation In The First Place. Ending Was Simple And Nice.",
+                    "ratings": 8,
+                    "genres": [
+                        "Romance",
+                        "Supernatural",
+                        "Rich Guy",
+                        "Celebrity"
+                    ],
+                    "network": [
+                        "jtbc"
+                    ],
+                    "againWatchedDates": [
+                        "25-12-2023",
+                        "30-06-2024",
+                        "02-04-2025",
+                        "16-07-2025"
+                    ],
+                    "updatedOn": "23 March 2026",
+                    "updatedDetails": "First Time Uploaded",
+                    "synopsis": "A woman changes her appearance whenever a certain supernatural phenomenon occurs. A man falls in love with this woman.\n\nHan Se-Kye (Seo Hyun-Jin) is a top actress. She is known as a troublemaker and the object of many rumors. Her life is a mystery, but, in reality, she suffers from an unusual phenomenon. At a certain point every month, her appearance changes to a different person. She lives one week out of every month with a different appearance. Han Se-Kye meets Seo Do-Jae (Lee Min-Ki). Seo Do-Jae is an executive at an airline company. He seems perfect with an attractive appearance and possessing smarts, but he suffers from an inability to recognize faces. He hides this disability and tries hard to memorize people by their habits and mannerisms. The only person's face that he is able to recognize is Han Se-Kye. By meeting her, his life changes.",
+                    "topRatings": 4000,
+                    "Duration": "1 hr. 10 min.",
+                    "director": [
+                        "Song Hyun Wook"
+                    ],
+                    "tags": [
+                        "Prosopagnosia",
+                        "Successful Male Lead",
+                        "Calm Male Lead",
+                        "Secondary Couple",
+                        "Contract Relationship",
+                        "Famous Female Lead",
+                        "Rich Female Lead",
+                        "Rich Male Lead",
+                        "Sismance",
+                        "Secret"
+                    ],
+                    "cast": {
+                        "Main Role": 4,
+                        "Support Role": 29,
+                        "Guest Role": 83,
+                        "Composer": 1,
+                        "Director": 1,
+                        "Executive Producer": 1,
+                        "Screenwriter": 1
+                    },
+                    "airedOn": [
+                        "Monday",
+                        "Tuesday"
+                    ],
+                    "sitePriorityUsed": {
+                        "showImage": "asianwiki",
+                        "releaseDate": "asianwiki",
+                        "otherNames": "mydramalist",
+                        "Duration": "mydramalist",
+                        "synopsis": "asianwiki",
+                        "director": "mydramalist",
+                        "tags": "mydramalist",
+                        "cast": "mydramalist",
+                        "network": null,
+                        "airedOn": "mydramalist"
+                    }
                 }
             ],
             "skipped": [
@@ -97,14 +174,19 @@
                 "105 - It's Okay That's Love",
                 "106 - Because This Is My First Life",
                 "107 - Touch Your Heart"
+            ],
+            "fetched_data": [
+                "- 108 - Once We Get Married -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags",
+                "- 109 - The Beauty Inside -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags"
             ]
         }
     },
     "files_generated": {
-        "reports": [
-            "reports/23_March_2026_1340_PARTIAL_849_REPORT.txt"
-        ],
+        "deleted_images": [],
+        "deleted_data": [],
         "backups": [],
+        "archived_backups": [],
+        "archived_meta_backups": [],
         "artist_images": [
             "artist-images/103769.jpg",
             "artist-images/73433.jpg",
@@ -142,20 +224,113 @@
             "artist-images/127537.jpg",
             "artist-images/147138.jpg",
             "artist-images/147156.jpg",
-            "artist-images/150260.jpg"
+            "artist-images/150260.jpg",
+            "artist-images/60377.jpg",
+            "artist-images/15989.jpg",
+            "artist-images/76475.jpg",
+            "artist-images/20492.jpg",
+            "artist-images/941.jpg",
+            "artist-images/1736.jpg",
+            "artist-images/6555.jpg",
+            "artist-images/1253.jpg",
+            "artist-images/3279.jpg",
+            "artist-images/3656.jpg",
+            "artist-images/3199.jpg",
+            "artist-images/1853.jpg",
+            "artist-images/19958.jpg",
+            "artist-images/14319.jpg",
+            "artist-images/2563.jpg",
+            "artist-images/3430.jpg",
+            "artist-images/4459.jpg",
+            "artist-images/18599.jpg",
+            "artist-images/21077.jpg",
+            "artist-images/23130.jpg",
+            "artist-images/20884.jpg",
+            "artist-images/20969.jpg",
+            "artist-images/2385.jpg",
+            "artist-images/2830.jpg",
+            "artist-images/792.jpg",
+            "artist-images/67807.jpg",
+            "artist-images/22585.jpg",
+            "artist-images/105613.jpg",
+            "artist-images/20082.jpg",
+            "artist-images/17696.jpg",
+            "artist-images/4238.jpg",
+            "artist-images/9339.jpg",
+            "artist-images/85835.jpg",
+            "artist-images/19612.jpg",
+            "artist-images/29861.jpg",
+            "artist-images/3654.jpg",
+            "artist-images/19005.jpg",
+            "artist-images/4947.jpg",
+            "artist-images/2495.jpg",
+            "artist-images/394.jpg",
+            "artist-images/1155.jpg",
+            "artist-images/4276.jpg",
+            "artist-images/3442.jpg",
+            "artist-images/12778.jpg",
+            "artist-images/4587.jpg",
+            "artist-images/923.jpg",
+            "artist-images/12162.jpg",
+            "artist-images/21371.jpg",
+            "artist-images/16915.jpg",
+            "artist-images/19734.jpg",
+            "artist-images/38489.jpg",
+            "artist-images/86745.jpg",
+            "artist-images/38487.jpg",
+            "artist-images/21016.jpg",
+            "artist-images/6200.jpg",
+            "artist-images/96607.jpg",
+            "artist-images/8418.jpg",
+            "artist-images/27237.jpg",
+            "artist-images/57813.jpg",
+            "artist-images/10281.jpg",
+            "artist-images/15256.jpg",
+            "artist-images/11105.jpg",
+            "artist-images/2851.jpg",
+            "artist-images/48189.jpg",
+            "artist-images/18446.jpg",
+            "artist-images/12224.jpg",
+            "artist-images/19073.jpg",
+            "artist-images/25713.jpg",
+            "artist-images/21859.jpg",
+            "artist-images/25499.jpg",
+            "artist-images/9131.jpg",
+            "artist-images/101881.jpg",
+            "artist-images/14963.jpg",
+            "artist-images/10845.jpg",
+            "artist-images/9832.jpg",
+            "artist-images/11850.jpg",
+            "artist-images/20555.jpg",
+            "artist-images/18529.jpg",
+            "artist-images/10044.jpg",
+            "artist-images/126527.jpg",
+            "artist-images/50747.jpg",
+            "artist-images/125259.jpg",
+            "artist-images/124925.jpg",
+            "artist-images/122871.jpg",
+            "artist-images/122601.jpg",
+            "artist-images/20847.jpg",
+            "artist-images/132193.jpg",
+            "artist-images/128523.jpg",
+            "artist-images/44929.jpg",
+            "artist-images/82885.jpg",
+            "artist-images/6681.jpg"
+        ],
+        "meta_backups": [
+            "backup-meta-data/META_23_March_2026_1340_108.json",
+            "backup-meta-data/META_23_March_2026_1341_109.json"
+        ],
+        "reports": [
+            "reports/23_March_2026_1340_PARTIAL_849_REPORT.txt",
+            "reports/23_March_2026_1341_PARTIAL_850_REPORT.txt"
         ],
         "show_images": [
-            "show-images/108.jpg"
-        ],
-        "deleted_images": [],
-        "archived_backups": [],
-        "meta_backups": [
-            "backup-meta-data/META_23_March_2026_1340_108.json"
-        ],
-        "deleted_data": [],
-        "archived_meta_backups": []
+            "show-images/108.jpg",
+            "show-images/109.jpg"
+        ]
     },
-    "cumulative_time_seconds": 11.391986,
+    "cumulative_time_seconds": 26.927735,
     "first_run_id": "849",
     "processed_ids_all_runs": [
         101,
@@ -165,6 +340,7 @@
         105,
         106,
         107,
-        108
+        108,
+        109
     ]
 }
