@@ -97,7 +97,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "Automated Batch Update: $(date -u '+%Y-%m-%d %H:%M UTC')"
+            git commit -m "Automated Batch Update: $(TZ='Asia/Kolkata' date '+%Y-%m-%d %I:%M %p IST')"
             git push
           fi
           echo "::endgroup::"

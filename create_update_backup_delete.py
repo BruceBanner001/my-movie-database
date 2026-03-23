@@ -3,8 +3,8 @@
 
 # ============================================================
 # Script: create_update_backup_delete.py
-# Author:[BruceBanner001]
-# Version: v10.8 (AUTO FETCH MISSING METADATA EDITION)
+# Author: [BruceBanner001]
+# Version: v10.9 (RELAY RACE CLEAN REPO EDITION)
 # ============================================================
 
 # ---------------------------- IMPORTS & GLOBALS ----------------------------
@@ -15,7 +15,7 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
-SCRIPT_VERSION = "v10.8"
+SCRIPT_VERSION = "v10.9"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames":[], "showImage": None,
@@ -109,6 +109,21 @@ def filename_timestamp():
 
 def run_id_timestamp(): 
     return now_ist().strftime("RUN_%Y%m%d_%H%M%S")
+
+# --- Ensures partial reports never pollute the Github Repo ---
+def setup_gitignore_for_partials():
+    ignore_entry = "reports/*_PARTIAL_*_REPORT.txt"
+    gitignore_path = ".gitignore"
+    try:
+        content = ""
+        if os.path.exists(gitignore_path):
+            with open(gitignore_path, "r", encoding="utf-8") as f:
+                content = f.read()
+        if ignore_entry not in content:
+            with open(gitignore_path, "a", encoding="utf-8") as f:
+                f.write(f"\n# Ignore partial batch reports to keep repo clean\n{ignore_entry}\n")
+    except Exception as e:
+        logd(f"Could not update .gitignore: {e}")
 
 SERIES_JSON_FILE = "seriesData.json"
 ARTISTS_JSON_FILE = "artists.json"
@@ -488,13 +503,13 @@ def _scrape_synopsis_from_asianwiki(soup, **kwargs):
                     break
                     
         if not target_element: return None
-        if target_element.name not in ['h2', 'h3']:
+        if target_element.name not in['h2', 'h3']:
             parent = target_element.find_parent(['h2', 'h3'])
             if parent: target_element = parent
             
         content =[]
         for sibling in target_element.next_siblings:
-            if getattr(sibling, 'name', None) in ['h2', 'h3', 'h4']: break 
+            if getattr(sibling, 'name', None) in['h2', 'h3', 'h4']: break 
             text = sibling.get_text(strip=True) if hasattr(sibling, 'get_text') else str(sibling).strip()
             if getattr(sibling, 'name', None) in['script', 'style', 'table']: continue
             if text and len(text) >= 3: 
@@ -520,7 +535,7 @@ def _scrape_image_from_asianwiki(soup, **kwargs):
 
 def _scrape_othernames_from_asianwiki(soup, **kwargs):
     try:
-        names = []
+        names =[]
         target_keywords =['also known as', 'romaji', 'pinyin', 'literal title', 'chinese title', 'japanese title', 'hangul']
         for b_tag in soup.find_all('b'):
             text = b_tag.get_text(strip=True).lower()
@@ -548,7 +563,7 @@ def _scrape_release_date_from_asianwiki(soup, **kwargs):
 def _scrape_network_from_asianwiki(soup, **kwargs):
     try:
         text = _extract_aw_list_item(soup, r"^\s*Network.*")
-        if text: return [n.strip() for n in text.split(',') if n.strip()]
+        if text: return[n.strip() for n in text.split(',') if n.strip()]
     except Exception: pass
     return None
 
@@ -1082,8 +1097,7 @@ def fetch_and_populate_metadata(obj, context, artists_db):
                             fetched_successfully = True
                             break 
             
-            # SAFEGUARD: If we tried to fetch an empty field but absolutely nothing was found online, 
-            # mark it as "Not Found" so we don't spam requests during the next workflow run!
+            # SAFEGUARD: If we tried to fetch an empty field but absolutely nothing was found online, mark it as Not Found
             if not fetched_successfully and is_empty:
                 spu[field] = "Not Found"
                             
@@ -1211,7 +1225,7 @@ def excel_to_objects(xl, sheet):
         target = next((s for s in xl.sheet_names if s.strip().lower() == sheet.strip().lower()), None)
         if not target: return [],[]
         df = pd.read_excel(xl, sheet_name=target, keep_default_na=False)
-        df.columns = [c.strip().lower() for c in df.columns]
+        df.columns =[c.strip().lower() for c in df.columns]
     except Exception: return [],[]
     
     warnings = []
@@ -1482,8 +1496,15 @@ def write_report(context, current_run_seconds, report_file_path):
     else:
         lines.extend([sep, "🏁 Workflow finished successfully"])
         
+    # Write the report file
     with open(report_file_path, 'w', encoding='utf-8') as f: 
         f.write("\n".join(lines))
+    
+    if context.get('paused'):
+        print(f"\n✅ Partial Report created at -> {report_file_path}")
+        print("   (Git will ignore this file due to .gitignore settings)")
+    else:
+        print(f"\n✅ Final Report written -> {report_file_path} (Saved to Repo)")
 
     # --- EMAIL SUBJECT ---
     mail_trigger = f"[{trigger_type}]"
@@ -1589,6 +1610,9 @@ def save_json_file(file_path, data):
 # ---------------------------- MAIN ENGINE ----------------------------
 
 def main():
+    
+    # 🌟 Keep Git clean by ensuring partial reports are ALWAYS ignored 🌟
+    setup_gitignore_for_partials()
     
     MAX_FETCHES = int(os.environ.get("MAX_FETCHES", "50"))
     total_heavy_fetches = 0
@@ -1732,7 +1756,7 @@ def main():
                 
                 context['processed_ids_all_runs'].add(sid)
             else:
-                report.setdefault('skipped', []).append(f"{sid} - {excel_obj['showName']}")
+                report.setdefault('skipped',[]).append(f"{sid} - {excel_obj['showName']}")
                 context['processed_ids_all_runs'].add(sid)
 
     # --- REPORT FILENAME GENERATION ---
@@ -1741,8 +1765,10 @@ def main():
     first_run = context.get('first_run_id', current_gh_run)
     
     if limit_reached:
+        # ⚠️ This filename triggers the .gitignore exception!
         report_name = f"{ts}_PARTIAL_{current_gh_run}_REPORT.txt"
     else:
+        # 🏁 Final Run! (Hyphen format if multiple runs, standard if single)
         if str(first_run) != str(current_gh_run):
             report_name = f"{ts}_FINAL_{first_run}-{current_gh_run}_REPORT.txt"
         else:
@@ -1765,11 +1791,10 @@ def main():
     save_json_file(ARTISTS_JSON_FILE, artists_data)
     save_json_file(CAST_JSON_FILE, cast_data)
     
-    artist_lookup_list = [{"artistID": k, "artistName": v['artistName']} for k, v in artists_data.items()]
+    artist_lookup_list =[{"artistID": k, "artistName": v['artistName']} for k, v in artists_data.items()]
     save_json_file(ARTIST_LOOKUP_FILE, sorted(artist_lookup_list, key=lambda x: x['artistName']))
     
     write_report(context, current_run_seconds=duration, report_file_path=report_path)
-    print(f"✅ Report written -> {report_path}")
 
 if __name__ == '__main__':
     try: main()
