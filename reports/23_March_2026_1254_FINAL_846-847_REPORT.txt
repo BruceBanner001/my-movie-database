@@ -1,5 +1,3 @@
-[DEBUG] Title Validation FAILED: Page Title 'Kim Dae-Gon (1983)' vs Expected 'Touch Your Heart' (Ratio: 0.15)
-[DEBUG] Title Validation FAILED: Page Title 'Choi Bo-Rim (screenwriter)' vs Expected 'Touch Your Heart' (Ratio: 0.29)
 ✅ Workflow Batch completed successfully
 🏁 Final Batch Completed
 ══════════════════════════════════════════════════════
@@ -7,12 +5,12 @@
 ══════════════════════════════════════════════════════
 
 🚀 Workflow Type : Manual
-🔁 RUN           : 847
+🔁 RUN           : 846 - 847
 ⏰ Start Time    : 23 March 2026 - 12:53:22 PM
 ⏰ End Time      : 23 March 2026 - 12:54:20 PM
-⏱️ Run Time      : 17 Seconds
+⏱️ Total Runtime : 26 Seconds
 ⚙️ Max Process   : 1 Row Per Run
-🔄 Current Batch : 2
+🔄 Total Batches : 2 Runs
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Sheet1 ===
@@ -21,34 +19,44 @@
 🆕 Data Created:
 - 107 - Touch Your Heart (2019) -> First Time Uploaded
 
+🔍 Refetched Data:
+✨ 102 - Find Me in Your Memory -> Fetched: Director, Other Names, Synopsis
+
 🖼️ Fetched Data Details:
 - 107 - Touch Your Heart -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+
+🚫 Skipped (Unchanged):
+- 101 - It's Okay to Not be Okay
+- 103 - Unforgettable Love
+- 104 - Youth of May
+- 105 - It's Okay That's Love
+- 106 - Because This Is My First Life
 
 📊 Summary (Sheet: Sheet1)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🆕 Created: 1
 🔁 Updated: 0
-🔍 Refetched: 0
-🚫 Skipped: 0
+🔍 Refetched: 1
+🚫 Skipped: 5
 ⚠️ Warnings: 0
-  Total Unique Rows: 1
+  Total Unique Rows: 7
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📊 Summary (Current Batch Only)
+📊 Overall Cumulative Summary
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🆕 Total Created: 1
 🔁 Total Updated: 0
-🔍 Total Refetched: 0
+🔍 Total Refetched: 1
 🖼️ Show Images Updated: 1
 🧑‍🎨 New Artist Images Added: 57
-🚫 Total Skipped: 0
+🚫 Total Skipped: 5
 ❌ Total Deleted: 0
 🗄️ Total Archived Backups: 0
 ⚠️ Total Warnings: 0
 💾 Backup Files: 0
-  Grand Total Rows Processed: 1
+  Grand Total Rows Processed: 7
 
-💾 Metadata Backups: 1
+💾 Metadata Backups: 2
 
 📦 Total Objects in seriesData.json: 7
 📦 Total Objects in artists.json: 967
@@ -59,6 +67,10 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ Folders Generated:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📁 meta_backups/ (Total: 2 files)
+    📄 META_23_March_2026_1253_102.json
+    📄 META_23_March_2026_1254_107.json
+
 📁 show_images/ (Total: 1 files)
     📄 107.jpg
 
@@ -70,13 +82,9 @@
     📄 1782.jpg
     ... and 52 more files.
 
-📁 meta_backups/ (Total: 1 files)
-    📄 META_23_March_2026_1254_107.json
-
-📁 reports/ (Total: 1 files)
+📁 reports/ (Total: 2 files)
+    📄 23_March_2026_1253_PARTIAL_846_REPORT.txt
     📄 23_March_2026_1254_FINAL_846-847_REPORT.txt
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🏁 Workflow finished successfully
-
-✅ Final Master Report written -> reports/23_March_2026_1254_FINAL_846-847_REPORT.txt (Saved to Repo)
