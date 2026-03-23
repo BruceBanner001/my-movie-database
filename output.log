@@ -1,2 +1,76 @@
+✅ Partial Batch completed successfully
+⏳ Batch Processing in Progress...
+══════════════════════════════════════════════════════
+📊 My Movie Database – Excel to JSON Workflow Report
+══════════════════════════════════════════════════════
 
-✅ Final Report written -> reports/23_March_2026_1001_FINAL_844-845_REPORT.txt (Saved to Repo)
+🚀 Workflow Type : Manual
+🔁 RUN           : 846
+⏰ Start Time    : 23 March 2026 - 12:53:22 PM
+⏰ End Time      : 23 March 2026 - 12:53:31 PM
+⏱️ Run Time      : 9 Seconds
+⚙️ Max Process   : 1 Row Per Run
+🔄 Current Batch : 1
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Sheet1 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🔍 Refetched Data:
+✨ 102 - Find Me in Your Memory -> Fetched: Director, Other Names, Synopsis
+
+🚫 Skipped (Unchanged):
+- 101 - It's Okay to Not be Okay
+- 103 - Unforgettable Love
+- 104 - Youth of May
+- 105 - It's Okay That's Love
+- 106 - Because This Is My First Life
+
+📊 Summary (Sheet: Sheet1)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Created: 0
+🔁 Updated: 0
+🔍 Refetched: 1
+🚫 Skipped: 5
+⚠️ Warnings: 0
+  Total Unique Rows: 6
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 Summary (Current Batch Only)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Total Created: 0
+🔁 Total Updated: 0
+🔍 Total Refetched: 1
+🖼️ Show Images Updated: 0
+🧑‍🎨 New Artist Images Added: 0
+🚫 Total Skipped: 5
+❌ Total Deleted: 0
+🗄️ Total Archived Backups: 0
+⚠️ Total Warnings: 0
+💾 Backup Files: 0
+  Grand Total Rows Processed: 6
+
+💾 Metadata Backups: 1
+
+📦 Total Objects in seriesData.json: 6
+📦 Total Objects in artists.json: 910
+📦 Total Objects in cast.json: 6
+📦 Total Objects in artists_lookup.json: 910
+🖼️ Total images in show-images: 6
+🧑‍🎨 Total images in artist-images: 910
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ Folders Generated:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📁 meta_backups/ (Total: 1 files)
+    📄 META_23_March_2026_1253_102.json
+
+📁 reports/ (Total: 1 files)
+    📄 23_March_2026_1253_PARTIAL_846_REPORT.txt
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚠️ BATCH LIMIT REACHED: The script paused safely.
+GitHub Actions will trigger next run automatically.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ Partial Report created at -> reports/23_March_2026_1253_PARTIAL_846_REPORT.txt
+   (Git will ignore this file due to .gitignore settings)
