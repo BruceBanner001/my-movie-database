@@ -4,7 +4,7 @@
 # ============================================================
 # Script: create_update_backup_delete.py
 # Author: [BruceBanner001]
-# Version: v11.0 (CLEAN REPORTING & INFINITE RE-FETCH EDITION)
+# Version: v11.1 (STRICT BATCH LOGGING & NO "NOT FOUND" EDITION)
 # ============================================================
 
 # ---------------------------- IMPORTS & GLOBALS ----------------------------
@@ -15,7 +15,7 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
-SCRIPT_VERSION = "v11.0"
+SCRIPT_VERSION = "v11.1"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames":[], "showImage": None,
@@ -1337,7 +1337,7 @@ def create_diff_backup(old, new, context, explicit_changes=None):
 
 # ---------------------------- write_report ----------------------------
 
-def write_report(context, current_run_seconds, report_file_path):
+def write_report(context, current_run_seconds, run_start_time, report_file_path):
     is_paused = context.get('paused')
 
     def build_report_text(rep_data, files_data, is_cumulative):
@@ -1347,10 +1347,12 @@ def write_report(context, current_run_seconds, report_file_path):
             batch_label = f"🔄 Total Batches : {context.get('batch_run_count', 1)} Run{'s' if context.get('batch_run_count', 1) != 1 else ''}"
             status_msg = "✅ Workflow Batch completed successfully"
             batch_msg = "🏁 Final Batch Completed"
+            start_time_str = context['global_start_time']
         else:
             total_seconds = int(current_run_seconds)
             run_label = "⏱️ Run Time      : "
             batch_label = f"🔄 Current Batch : {context.get('batch_run_count', 1)}"
+            start_time_str = run_start_time.strftime("%d %B %Y - %I:%M:%S %p")
             if is_paused:
                 status_msg = "✅ Partial Batch completed successfully"
                 batch_msg = "⏳ Batch Processing in Progress..."
@@ -1389,7 +1391,7 @@ def write_report(context, current_run_seconds, report_file_path):
             "",
             f"🚀 Workflow Type : {trigger_type}",
             f"🔁 RUN           : {run_display}",
-            f"⏰ Start Time    : {context['global_start_time']}",
+            f"⏰ Start Time    : {start_time_str}",
             f"⏰ End Time      : {end_time_ist}",
             f"{run_label}{runtime_str}",
             f"⚙️ Max Process   : {os.environ.get('MAX_FETCHES', '50')} Row Per Run",
@@ -1468,7 +1470,7 @@ def write_report(context, current_run_seconds, report_file_path):
                 stats['skipped'] += s_skipped
                 stats['refetched'] += s_refetched
                 
-                stats['show_images'] += sum(1 for i in get_unique(changes.get('fetched_data', [])) if "Show Image" in i)
+                stats['show_images'] += sum(1 for i in get_unique(changes.get('fetched_data',[])) if "Show Image" in i)
                 stats['rows'] += total_sheet
                 
                 warn_count = len(get_unique(changes.get('data_warnings',[]))) + \
@@ -1524,13 +1526,18 @@ def write_report(context, current_run_seconds, report_file_path):
     current_report_data = context.get('report_data', {})
     current_files = context.get('files_generated', {})
     
-    if not is_paused:
-        cumulative_report_data = combine_reports(context.get('previous_report_data', {}), current_report_data)
-        cumulative_files = combine_files(context.get('previous_files_generated', {}), current_files)
-
-    # --- 2. ALWAYS Print Current Batch to Console (To avoid clutter) ---
+    # --- 2. ALWAYS Generate Current Batch Output ---
     console_output = build_report_text(current_report_data, current_files, is_cumulative=False)
     print(console_output)
+
+    # Write to GITHUB_STEP_SUMMARY explicitly here so we don't rely on YAML cat'ing the wrong file
+    step_summary_file = os.environ.get('GITHUB_STEP_SUMMARY')
+    if step_summary_file:
+        with open(step_summary_file, 'a', encoding='utf-8') as f:
+            f.write("### 📊 Workflow Execution Report (Current Batch)\n")
+            f.write("```text\n")
+            f.write(console_output)
+            f.write("\n```\n")
 
     # --- 3. Save to Text File (For GitHub Repo & Summary/Email) ---
     if is_paused:
@@ -1540,6 +1547,9 @@ def write_report(context, current_run_seconds, report_file_path):
         print(f"\n✅ Partial Report created at -> {report_file_path}")
         print("   (Git will ignore this file due to .gitignore settings)")
     else:
+        cumulative_report_data = combine_reports(context.get('previous_report_data', {}), current_report_data)
+        cumulative_files = combine_files(context.get('previous_files_generated', {}), current_files)
+
         # Final run -> Write MASTER CUMULATIVE batch text to file (Committed to Git, emailed, and added to summary)
         file_output = build_report_text(cumulative_report_data, cumulative_files, is_cumulative=True)
         with open(report_file_path, 'w', encoding='utf-8') as f: 
@@ -1834,7 +1844,7 @@ def main():
     artist_lookup_list =[{"artistID": k, "artistName": v['artistName']} for k, v in artists_data.items()]
     save_json_file(ARTIST_LOOKUP_FILE, sorted(artist_lookup_list, key=lambda x: x['artistName']))
     
-    write_report(context, current_run_seconds=duration, report_file_path=report_path)
+    write_report(context, current_run_seconds=duration, run_start_time=run_start_time, report_file_path=report_path)
 
 if __name__ == '__main__':
     try: main()
