@@ -28,7 +28,7 @@ jobs:
       actions: write
 
     env:
-      SHEETS: "Sheet1;Sheet2;Manual Updates"
+      SHEETS: "Sheet1;Sheet2"
       GITHUB_PAGES_URL: "https://brucebanner001.github.io/my-movie-database"
       DEBUG_FETCH: "true"
 
