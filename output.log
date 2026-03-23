@@ -1,87 +1,102 @@
-✅ Workflow Batch completed successfully
-🏁 Final Batch Completed
+✅ Partial Batch completed successfully
+⏳ Batch Processing in Progress...
 ══════════════════════════════════════════════════════
 📊 My Movie Database – Excel to JSON Workflow Report
 ══════════════════════════════════════════════════════
 
 🚀 Workflow Type : Manual
-🔁 RUN           : 852
-⏰ Start Time    : 23 March 2026 - 02:15:41 PM
-⏰ End Time      : 23 March 2026 - 02:15:43 PM
-⏱️ Run Time      : 2 Seconds
-⚙️ Max Process   : 45 Row Per Run
+🔁 RUN           : 853
+⏰ Start Time    : 23 March 2026 - 02:55:47 PM
+⏰ End Time      : 23 March 2026 - 02:56:31 PM
+⏱️ Run Time      : 43 Seconds
+⚙️ Max Process   : 4 Row Per Run
 🔄 Current Batch : 1
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🗂️ === Deleting Records ===
+🗂️ === Sheet1 ===
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-❌ Data Deleted:
-- 101 -> It's Okay to Not be Okay (2020) -> ✅ Deleted
-- 102 -> Find Me in Your Memory (2020) -> ✅ Deleted
-- 103 -> Unforgettable Love (2021) -> ✅ Deleted
-- 104 -> Youth of May (2021) -> ✅ Deleted
-- 105 -> It's Okay That's Love (2014) -> ✅ Deleted
-- 106 -> Because This Is My First Life (2017) -> ✅ Deleted
-- 107 -> Touch Your Heart (2019) -> ✅ Deleted
-- 108 -> Once We Get Married (2021) -> ✅ Deleted
-- 109 -> The Beauty Inside (2018) -> ✅ Deleted
-- 110 -> Once We Get Married (2021) -> ✅ Deleted
+🆕 Data Created:
+- 101 - My Dear Lady (2020) -> First Time Uploaded
+- 102 - My Mister (2018) -> First Time Uploaded
+- 103 - Husband in Disguise (2022) -> First Time Uploaded
+- 104 - Mr.Baek (2014) -> First Time Uploaded
+
+⚠️ Data Validation Warnings:
+- Row 9: Invalid value '-' in 'ratings'. Using 0.
+
+🖼️ Fetched Data Details:
+- 101 - My Dear Lady (2020) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 102 - My Mister (2018) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 103 - Husband in Disguise (2022) -> Fetched: Aired On, Duration, Release Date, Show Image, Tags
+- 104 - Mr.Baek (2014) -> Fetched: Release Date, Show Image, Synopsis
+
+⚠️ Missing Values (Still attempting to fetch):
+- 103 - Husband in Disguise (2022) -> ⚠️ Missing: Cast, Director, Other Names, Synopsis
+- 104 - Mr.Baek (2014) -> ⚠️ Missing: Aired On, Cast, Director, Duration, Other Names, Tags
+
+📊 Summary (Sheet: Sheet1)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Created: 4
+🔁 Updated: 0
+🔍 Refetched: 0
+🚫 Skipped: 0
+⚠️ Warnings: 3
+  Total Unique Rows: 4
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📊 Summary (Current Batch Only)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🆕 Total Created: 0
+🆕 Total Created: 4
 🔁 Total Updated: 0
 🔍 Total Refetched: 0
-🖼️ Show Images Updated: 0
-🧑‍🎨 New Artist Images Added: 0
+🖼️ Show Images Updated: 4
+🧑‍🎨 New Artist Images Added: 95
 🚫 Total Skipped: 0
-❌ Total Deleted: 10
-🗄️ Total Archived Backups: 11
-⚠️ Total Warnings: 0
+❌ Total Deleted: 0
+🗄️ Total Archived Backups: 0
+⚠️ Total Warnings: 3
 💾 Backup Files: 0
-  Grand Total Rows Processed: 0
+  Grand Total Rows Processed: 4
 
-💾 Metadata Backups: 0
+💾 Metadata Backups: 4
 
-📦 Total Objects in seriesData.json: 0
-📦 Total Objects in artists.json: 1095
-📦 Total Objects in cast.json: 0
-📦 Total Objects in artists_lookup.json: 1095
-🖼️ Total images in show-images: 0
-🧑‍🎨 Total images in artist-images: 1095
+📦 Total Objects in seriesData.json: 4
+📦 Total Objects in artists.json: 95
+📦 Total Objects in cast.json: 2
+📦 Total Objects in artists_lookup.json: 95
+🖼️ Total images in show-images: 4
+🧑‍🎨 Total images in artist-images: 95
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ Folders Generated:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📁 deleted_data/ (Total: 10 files)
-    📄 DELETED_23_March_2026_1415_101.json
-    📄 DELETED_23_March_2026_1415_102.json
-    📄 DELETED_23_March_2026_1415_103.json
-    📄 DELETED_23_March_2026_1415_104.json
-    📄 DELETED_23_March_2026_1415_105.json
-    ... and 5 more files.
+📁 show_images/ (Total: 4 files)
+    📄 101.jpg
+    📄 102.jpg
+    📄 103.jpg
+    📄 104.jpg
 
-📁 deleted_images/ (Total: 10 files)
-    📄 DELETED_23_March_2026_1415_101.jpg
-    📄 DELETED_23_March_2026_1415_102.jpg
-    📄 DELETED_23_March_2026_1415_103.jpg
-    📄 DELETED_23_March_2026_1415_104.jpg
-    📄 DELETED_23_March_2026_1415_105.jpg
-    ... and 5 more files.
+📁 artist_images/ (Total: 95 files)
+    📄 46483.jpg
+    📄 46377.jpg
+    📄 46467.jpg
+    📄 46469.jpg
+    📄 46471.jpg
+    ... and 90 more files.
+
+📁 meta_backups/ (Total: 4 files)
+    📄 META_23_March_2026_1455_101.json
+    📄 META_23_March_2026_1455_102.json
+    📄 META_23_March_2026_1455_103.json
+    📄 META_23_March_2026_1455_104.json
 
 📁 reports/ (Total: 1 files)
-    📄 23_March_2026_1415_FINAL_852_REPORT.txt
-
-📁 archived_meta_backups/ (Total: 11 files)
-    📄 META_22_March_2026_1652_101.json
-    📄 META_23_March_2026_1253_102.json
-    📄 META_23_March_2026_0920_102.json
-    📄 META_23_March_2026_0921_103.json
-    📄 META_23_March_2026_0922_104.json
-    ... and 6 more files.
+    📄 23_March_2026_1455_PARTIAL_853_REPORT.txt
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🏁 Workflow finished successfully
+⚠️ BATCH LIMIT REACHED: The script paused safely.
+GitHub Actions will trigger next run automatically.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-✅ Final Master Report written -> reports/23_March_2026_1415_FINAL_852_REPORT.txt (Saved to Repo)
+✅ Partial Report created at -> reports/23_March_2026_1455_PARTIAL_853_REPORT.txt
+   (Git will ignore this file due to .gitignore settings)
