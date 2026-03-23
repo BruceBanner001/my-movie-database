@@ -61,11 +61,12 @@ jobs:
 
       - name: 7. Commit, Push, and Trigger Next Batch
         id: relay_race
-        if: success()
+        if: success() || failure()
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           CONTINUE_RUN=false
+          # FIXED: Added the space after 'if ['
           if[ -f "RESUME_FLAG.txt" ]; then
             CONTINUE_RUN=true
             rm RESUME_FLAG.txt

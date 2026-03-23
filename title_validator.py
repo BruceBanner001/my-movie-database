@@ -1,4 +1,4 @@
-import os, time, re, json
+import os, time, re, json, sys, traceback
 from datetime import datetime, timedelta, timezone
 import pandas as pd
 from bs4 import BeautifulSoup
@@ -14,10 +14,8 @@ except ImportError:
 # Setup Timezone (IST)
 IST = timezone(timedelta(hours=5, minutes=30))
 
-
 def now_ist():
     return datetime.now(IST)
-
 
 TODAY_DATE = now_ist().strftime("%d-%m-%Y")
 
@@ -27,12 +25,10 @@ SCRAPER.headers.update({"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)
 
 STATE_FILE = "title_validator_state.json"
 
-
 def normalize_title(t):
     if not t or str(t).strip() == "N/A":
         return ""
     return re.sub(r"[^a-z0-9]", "", str(t).lower().strip())
-
 
 def search_and_get_title(search_term, year, site):
     clean_search = re.sub(
@@ -41,7 +37,7 @@ def search_and_get_title(search_term, year, site):
         str(search_term),
         flags=re.IGNORECASE,
     ).strip()
-    queries = [
+    queries =[
         f'"{search_term}" {year} site:{site}.com',
         f'"{clean_search}" {year} site:{site}.com',
     ]
@@ -53,7 +49,7 @@ def search_and_get_title(search_term, year, site):
                     url = res.get("href", "")
                     if any(
                         bad in url
-                        for bad in [
+                        for bad in[
                             "/reviews",
                             "/recs",
                             "/photos",
@@ -89,7 +85,6 @@ def search_and_get_title(search_term, year, site):
         print(f"Error searching {site}: {e}")
     return "N/A"
 
-
 def main():
     print(f"🚀 Starting Title Validation on {TODAY_DATE} (IST)")
 
@@ -109,7 +104,7 @@ def main():
         state = {
             "sheet_idx": 0,
             "row_idx": 0,
-            "email_data": {"perfect": [], "updated": [], "new_rec": []},
+            "email_data": {"perfect":[], "updated": [], "new_rec":[]},
             "total_scanned": 0,
         }
 
@@ -118,11 +113,13 @@ def main():
 
     with open("EXCEL_FILE_ID.txt", "r") as f:
         main_excel_id = f.read().strip()
+    
+    # Open both sheets
     main_sh = gc.open_by_key(main_excel_id)
-
     check_excel_id = os.environ.get("CHECK_TITLES_EXCEL_ID")
     check_sh = gc.open_by_key(check_excel_id)
 
+    # Prepare Outbound Sheet
     try:
         ws_out = check_sh.worksheet("Check Titles")
         existing_df = get_as_dataframe(ws_out, evaluate_formulas=True).dropna(how="all")
@@ -139,7 +136,7 @@ def main():
                 "last_date": str(row.get("Last Update Date", TODAY_DATE)),
             }
 
-    sheets_to_process = [
+    sheets_to_process =[
         s.strip()
         for s in os.environ.get("SHEETS", "Sheet1;Sheet2").split(";")
         if s.strip()
@@ -187,7 +184,7 @@ def main():
             print(f"🔍 Checking [{fetches}/{MAX_FETCHES}]: {title} ({year})")
 
             aw_title, mdl_title, imdb_title = "N/A", "N/A", "N/A"
-            is_asian = lang.lower() in [
+            is_asian = lang.lower() in[
                 "korean",
                 "chinese",
                 "japanese",
@@ -290,7 +287,7 @@ def main():
                 state["row_idx"] = r_idx + 1
                 break
 
-    # Write back using UPSERT (Safe Appending & Overwriting only specific rows)
+    # Write back using UPSERT
     if results:
         new_df = pd.DataFrame(results)
         if not existing_df.empty and "Sheet Name" in existing_df.columns:
@@ -302,12 +299,11 @@ def main():
             existing_df.set_index(["Sheet Name", "Show ID"], inplace=True)
             new_df.set_index(["Sheet Name", "Show ID"], inplace=True)
 
-            # combine_first ensures old data stays, and new rows are either updated or appended
             combined_df = new_df.combine_first(existing_df).reset_index()
         else:
             combined_df = new_df
 
-        ws_out.clear()  # Safe now, because combined_df has EVERYTHING.
+        ws_out.clear() 
         set_with_dataframe(ws_out, combined_df.fillna("N/A"))
         print("✅ Successfully upserted this batch to the Google Sheet!")
 
@@ -321,7 +317,7 @@ def main():
         with open(STATE_FILE, "w", encoding="utf-8") as f:
             json.dump(state, f)
 
-        # Batch Output Body (will not be emailed yet, action suppresses email until done)
+        # Batch Output Body
         with open("email_body.txt", "w", encoding="utf-8") as f:
             f.write(
                 f"⏳ Title Validation is running in BATCH MODE. Paused at {state['total_scanned']} scanned titles."
@@ -365,6 +361,17 @@ def main():
         with open("email_body.txt", "w", encoding="utf-8") as f:
             f.write(body)
 
-
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as e:
+        print(f"❌ CRITICAL ERROR: {e}")
+        traceback.print_exc()
+        
+        # Guarantees the email action won't fail with ENOENT
+        with open("email_body.txt", "w", encoding="utf-8") as f:
+            f.write("❌ The Title Validation script encountered a critical error and crashed!\n\n")
+            f.write(f"Error Message:\n{str(e)}\n\n")
+            f.write("Please check your GitHub Actions log for the full traceback details.")
+        
+        sys.exit(1)
