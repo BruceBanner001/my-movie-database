@@ -4,7 +4,7 @@
 # ============================================================
 # Script: create_update_backup_delete.py
 # Author: [BruceBanner001]
-# Version: v11.1 (STRICT BATCH LOGGING & NO "NOT FOUND" EDITION)
+# Version: v11.2 (STRICT BATCH LOGGING & NO "NOT FOUND" EDITION - WITH YEARS)
 # ============================================================
 
 # ---------------------------- IMPORTS & GLOBALS ----------------------------
@@ -15,7 +15,7 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
-SCRIPT_VERSION = "v11.1"
+SCRIPT_VERSION = "v11.2"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames":[], "showImage": None,
@@ -982,7 +982,7 @@ def _scrape_cast_from_imdb(soup, **kwargs):
 
         data = _get_imdb_json_ld(soup)
         if data:
-            for role_key in ['director', 'creator']:
+            for role_key in['director', 'creator']:
                 if role_key in data:
                     entities = data[role_key] if isinstance(data[role_key], list) else [data[role_key]]
                     for e in entities:
@@ -1422,7 +1422,7 @@ def write_report(context, current_run_seconds, run_start_time, report_file_path)
                 seen_u = set()
                 for p in changes['updated']:
                     if p['new']['showID'] not in seen_u:
-                        lines.append(f"✍️ {p['new']['showID']} - {p['new']['showName']} -> {p['new']['updatedDetails']}")
+                        lines.append(f"✍️ {p['new']['showID']} - {p['new']['showName']} ({p['new'].get('releasedYear')}) -> {p['new']['updatedDetails']}")
                         seen_u.add(p['new']['showID'])
 
             if changes.get('refetched'): 
@@ -1430,7 +1430,7 @@ def write_report(context, current_run_seconds, run_start_time, report_file_path)
                 seen_r = set()
                 for o in changes['refetched']:
                     if o['id'] not in seen_r:
-                        lines.append(f"✨ {o['id']} - {o['name']} -> Fetched: {', '.join(o['fields'])}")
+                        lines.append(f"✨ {o['id']} - {o['name']} ({o.get('year')}) -> Fetched: {', '.join(o['fields'])}")
                         seen_r.add(o['id'])
 
             if changes.get('data_warnings'): 
@@ -1567,7 +1567,7 @@ def write_report(context, current_run_seconds, run_start_time, report_file_path)
 
 def process_and_distribute_cast(full_cast, artists_db, context):
     main_cast, support_cast, guest_cast = [],[],[]
-    crew_cast, other_crew_cast = [], []
+    crew_cast, other_crew_cast = [],[]
     context['new_artists_added'] =[]
     
     if not full_cast: return {}, {}
@@ -1780,7 +1780,7 @@ def main():
                     final_obj['updatedOn'] = now_ist().strftime('%d %B %Y')
                     report.setdefault('created',[]).append(final_obj)
                     if newly_fetched_fields: 
-                        report.setdefault('fetched_data',[]).append(f"- {sid} - {final_obj['showName']} -> Fetched: {', '.join(newly_fetched_fields)}")
+                        report.setdefault('fetched_data',[]).append(f"- {sid} - {final_obj['showName']} ({final_obj.get('releasedYear')}) -> Fetched: {', '.join(newly_fetched_fields)}")
                 else:
                     if excel_data_has_changed:
                         changes =[human_readable_field(k) for k, v in excel_obj.items() if normalize_list(old_obj_from_json.get(k)) != normalize_list(v) and k not in LOCKED_FIELDS_AFTER_CREATION]
@@ -1790,7 +1790,7 @@ def main():
                         create_diff_backup(old_obj_from_json, final_obj, context)
                     
                     if metadata_was_fetched and newly_fetched_fields:
-                        report.setdefault('refetched',[]).append({'id': sid, 'name': final_obj['showName'], 'fields': newly_fetched_fields})
+                        report.setdefault('refetched',[]).append({'id': sid, 'name': final_obj['showName'], 'year': final_obj.get('releasedYear'), 'fields': newly_fetched_fields})
                 
                 merged_by_id[sid] = final_obj
                 save_metadata_backup(final_obj, context)
@@ -1802,11 +1802,11 @@ def main():
                 # ⚠️ Keep reporting missing data if it remains unpopulated (so script tries again next time)
                 missing =[human_readable_field(k) for k in missing_fields if is_empty_val(final_obj.get(k)) and final_obj.get('sitePriorityUsed', {}).get(k) != "Manual"]
                 if missing: 
-                    report.setdefault('missing_warnings',[]).append(f"- {sid} - {final_obj['showName']} -> ⚠️ Missing: {', '.join(sorted(missing))}")
+                    report.setdefault('missing_warnings',[]).append(f"- {sid} - {final_obj['showName']} ({final_obj.get('releasedYear')}) -> ⚠️ Missing: {', '.join(sorted(missing))}")
                 
                 context['processed_ids_all_runs'].add(sid)
             else:
-                report.setdefault('skipped',[]).append(f"{sid} - {excel_obj['showName']}")
+                report.setdefault('skipped',[]).append(f"{sid} - {excel_obj['showName']} ({excel_obj.get('releasedYear')})")
                 context['processed_ids_all_runs'].add(sid)
 
     # --- REPORT FILENAME GENERATION ---
