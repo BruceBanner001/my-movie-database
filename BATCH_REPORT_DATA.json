@@ -1,0 +1,114 @@
+{
+    "global_start_time": "23 March 2026 - 09:20:50 AM",
+    "batch_run_count": 2,
+    "report_data": {
+        "Sheet1": {
+            "skipped": [
+                "101 - It's Okay to Not be Okay"
+            ],
+            "created": [
+                {
+                    "showID": 102,
+                    "showName": "Find Me in Your Memory",
+                    "otherNames": [],
+                    "showImage": "102.jpg",
+                    "watchStartedOn": "11-02-2023",
+                    "watchEndedOn": "12-02-2023",
+                    "releasedYear": 2020,
+                    "releaseDate": "Mar 18, 2020 - May 13, 2020",
+                    "totalEpisodes": 32,
+                    "showType": "Drama",
+                    "nativeLanguage": "Korean",
+                    "watchedLanguage": "Korean",
+                    "country": "South Korea",
+                    "comments": "Nice Drama. Ending Was Simple And Nice. One Of My Favourite Drama. I Love The OST.",
+                    "ratings": 10,
+                    "genres": [
+                        "Melodrama",
+                        "Romance",
+                        "Celebrity"
+                    ],
+                    "network": [
+                        "MBC"
+                    ],
+                    "againWatchedDates": [
+                        "21-12-2023",
+                        "07-05-2024",
+                        "30-08-2024",
+                        "07-01-2025",
+                        "29-04-2025",
+                        "28-08-2025"
+                    ],
+                    "updatedOn": "23 March 2026",
+                    "updatedDetails": "First Time Uploaded",
+                    "synopsis": null,
+                    "topRatings": 7000,
+                    "Duration": "35 mins",
+                    "director": [],
+                    "tags": [
+                        "Hyperthymesia",
+                        "Female Chases Male First",
+                        "Nice Female Lead",
+                        "Healing",
+                        "Smart Male Lead",
+                        "Trauma",
+                        "Nice Male Lead",
+                        "Entertainment Industry",
+                        "Death",
+                        "Heartbreak"
+                    ],
+                    "cast": {
+                        "Main Role": 2,
+                        "Support Role": 23,
+                        "Guest Role": 48,
+                        "Composer": 2,
+                        "Director": 2,
+                        "Screenwriter": 1
+                    },
+                    "airedOn": [
+                        "Wednesday",
+                        "Thursday"
+                    ],
+                    "sitePriorityUsed": {
+                        "showImage": "asianwiki (Fallback: mydramalist)",
+                        "releaseDate": "asianwiki (Fallback: mydramalist)",
+                        "otherNames": "Not Found",
+                        "Duration": "mydramalist",
+                        "synopsis": "Not Found",
+                        "director": "Not Found",
+                        "tags": "mydramalist",
+                        "cast": "mydramalist",
+                        "network": null,
+                        "airedOn": "mydramalist"
+                    }
+                }
+            ],
+            "fetched_data": [
+                "- 102 - Find Me in Your Memory -> Fetched: Aired On, Cast, Duration, Release Date, Show Image, Tags"
+            ]
+        }
+    },
+    "files_generated": {
+        "backups": [],
+        "show_images": [
+            "show-images/102.jpg"
+        ],
+        "artist_images": [],
+        "deleted_data": [],
+        "deleted_images": [],
+        "meta_backups": [
+            "backup-meta-data/META_23_March_2026_0920_102.json"
+        ],
+        "reports": [
+            "reports/23_March_2026_0920_PARTIAL_841_REPORT.txt"
+        ],
+        "archived_backups": [],
+        "archived_meta_backups": []
+    },
+    "cumulative_time_seconds": 24.03391,
+    "first_run_id": "841",
+    "processed_ids_all_runs": [
+        101,
+        102
+    ]
+}
