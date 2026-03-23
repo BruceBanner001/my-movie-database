@@ -69,7 +69,7 @@ jobs:
           python create_update_backup_delete.py 2>&1 | tee output.log
           exit_code=${PIPESTATUS[0]}
           
-          if[ -f "RESUME_FLAG.txt" ]; then
+          if [ -f "RESUME_FLAG.txt" ]; then
             echo "CONTINUE_BATCH=true" >> "$GITHUB_OUTPUT"
           else
             echo "CONTINUE_BATCH=false" >> "$GITHUB_OUTPUT"
