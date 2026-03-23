@@ -1,98 +1,84 @@
-✅ Partial Batch completed successfully
-⏳ Batch Processing in Progress...
+[DEBUG] Title Validation FAILED: Page Title 'Vincenzo (Korean Drama)' vs Expected 'Babel Tower' (Ratio: 0.18)
+✅ Workflow Batch completed successfully
+🏁 Final Batch Completed
 ══════════════════════════════════════════════════════
 📊 My Movie Database – Excel to JSON Workflow Report
 ══════════════════════════════════════════════════════
 
 🚀 Workflow Type : Manual
-🔁 RUN           : 854
-⏰ Start Time    : 23 March 2026 - 02:57:04 PM
-⏰ End Time      : 23 March 2026 - 02:57:55 PM
-⏱️ Run Time      : 51 Seconds
+🔁 RUN           : 855
+⏰ Start Time    : 23 March 2026 - 02:58:27 PM
+⏰ End Time      : 23 March 2026 - 02:58:44 PM
+⏱️ Run Time      : 16 Seconds
 ⚙️ Max Process   : 4 Row Per Run
-🔄 Current Batch : 2
+🔄 Current Batch : 3
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Sheet1 ===
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 🆕 Data Created:
-- 105 - She And Her Perfect Husband (2022) -> First Time Uploaded
-- 106 - Doom At Your Service (2021) -> First Time Uploaded
-- 107 - Shopping King Louis (Shopaholic Louis) (2016) -> First Time Uploaded
-- 108 - When I Fly Towards You (2023) -> First Time Uploaded
+- 109 - Babel Tower (2019) -> First Time Uploaded
 
 ⚠️ Data Validation Warnings:
 - Row 9: Invalid value '-' in 'ratings'. Using 0.
 
 🖼️ Fetched Data Details:
-- 105 - She And Her Perfect Husband (2022) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 106 - Doom At Your Service (2021) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 107 - Shopping King Louis (Shopaholic Louis) (2016) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 108 - When I Fly Towards You (2023) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 109 - Babel Tower (2019) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
 
 📊 Summary (Sheet: Sheet1)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🆕 Created: 4
+🆕 Created: 1
 🔁 Updated: 0
 🔍 Refetched: 0
 🚫 Skipped: 0
 ⚠️ Warnings: 1
-  Total Unique Rows: 4
+  Total Unique Rows: 1
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📊 Summary (Current Batch Only)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🆕 Total Created: 4
+🆕 Total Created: 1
 🔁 Total Updated: 0
 🔍 Total Refetched: 0
-🖼️ Show Images Updated: 4
-🧑‍🎨 New Artist Images Added: 221
+🖼️ Show Images Updated: 1
+🧑‍🎨 New Artist Images Added: 54
 🚫 Total Skipped: 0
 ❌ Total Deleted: 0
 🗄️ Total Archived Backups: 0
 ⚠️ Total Warnings: 1
 💾 Backup Files: 0
-  Grand Total Rows Processed: 4
+  Grand Total Rows Processed: 1
 
-💾 Metadata Backups: 4
+💾 Metadata Backups: 1
 
-📦 Total Objects in seriesData.json: 8
-📦 Total Objects in artists.json: 316
-📦 Total Objects in cast.json: 6
-📦 Total Objects in artists_lookup.json: 316
-🖼️ Total images in show-images: 8
-🧑‍🎨 Total images in artist-images: 316
+📦 Total Objects in seriesData.json: 9
+📦 Total Objects in artists.json: 370
+📦 Total Objects in cast.json: 7
+📦 Total Objects in artists_lookup.json: 370
+🖼️ Total images in show-images: 9
+🧑‍🎨 Total images in artist-images: 370
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ Folders Generated:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📁 show_images/ (Total: 4 files)
-    📄 105.jpg
-    📄 106.jpg
-    📄 107.jpg
-    📄 108.jpg
+📁 show_images/ (Total: 1 files)
+    📄 109.jpg
 
-📁 artist_images/ (Total: 221 files)
-    📄 57763.jpg
-    📄 31655.jpg
-    📄 46477.jpg
-    📄 41281.jpg
-    📄 46465.jpg
-    ... and 216 more files.
+📁 artist_images/ (Total: 54 files)
+    📄 45099.jpg
+    📄 18914.jpg
+    📄 22999.jpg
+    📄 608.jpg
+    📄 638.jpg
+    ... and 49 more files.
 
-📁 meta_backups/ (Total: 4 files)
-    📄 META_23_March_2026_1457_105.json
-    📄 META_23_March_2026_1457_106.json
-    📄 META_23_March_2026_1457_107.json
-    📄 META_23_March_2026_1457_108.json
+📁 meta_backups/ (Total: 1 files)
+    📄 META_23_March_2026_1458_109.json
 
 📁 reports/ (Total: 1 files)
-    📄 23_March_2026_1457_PARTIAL_854_REPORT.txt
+    📄 23_March_2026_1458_FINAL_853-855_REPORT.txt
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⚠️ BATCH LIMIT REACHED: The script paused safely.
-GitHub Actions will trigger next run automatically.
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🏁 Workflow finished successfully
 
-✅ Partial Report created at -> reports/23_March_2026_1457_PARTIAL_854_REPORT.txt
-   (Git will ignore this file due to .gitignore settings)
+✅ Final Master Report written -> reports/23_March_2026_1458_FINAL_853-855_REPORT.txt (Saved to Repo)
