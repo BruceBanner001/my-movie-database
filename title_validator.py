@@ -1,10 +1,14 @@
-import os, time, re, json, sys, traceback
+import os, time, re, json, sys, traceback, io
 from datetime import datetime, timedelta, timezone
 import pandas as pd
 from bs4 import BeautifulSoup
 import gspread
 from gspread_dataframe import set_with_dataframe, get_as_dataframe
 import cloudscraper
+
+from google.oauth2 import service_account
+from googleapiclient.discovery import build
+from googleapiclient.http import MediaIoBaseDownload
 
 try:
     from duckduckgo_search import DDGS
@@ -14,8 +18,10 @@ except ImportError:
 # Setup Timezone (IST)
 IST = timezone(timedelta(hours=5, minutes=30))
 
+
 def now_ist():
     return datetime.now(IST)
+
 
 TODAY_DATE = now_ist().strftime("%d-%m-%Y")
 
@@ -25,10 +31,12 @@ SCRAPER.headers.update({"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)
 
 STATE_FILE = "title_validator_state.json"
 
+
 def normalize_title(t):
     if not t or str(t).strip() == "N/A":
         return ""
     return re.sub(r"[^a-z0-9]", "", str(t).lower().strip())
+
 
 def search_and_get_title(search_term, year, site):
     clean_search = re.sub(
@@ -37,7 +45,7 @@ def search_and_get_title(search_term, year, site):
         str(search_term),
         flags=re.IGNORECASE,
     ).strip()
-    queries =[
+    queries = [
         f'"{search_term}" {year} site:{site}.com',
         f'"{clean_search}" {year} site:{site}.com',
     ]
@@ -49,7 +57,7 @@ def search_and_get_title(search_term, year, site):
                     url = res.get("href", "")
                     if any(
                         bad in url
-                        for bad in[
+                        for bad in [
                             "/reviews",
                             "/recs",
                             "/photos",
@@ -85,6 +93,29 @@ def search_and_get_title(search_term, year, site):
         print(f"Error searching {site}: {e}")
     return "N/A"
 
+
+def fetch_excel_from_gdrive_bytes(file_id, creds_path):
+    """Downloads an Excel file from Google Drive into memory."""
+    creds = service_account.Credentials.from_service_account_file(
+        creds_path, scopes=["https://www.googleapis.com/auth/drive.readonly"]
+    )
+    service = build("drive", "v3", credentials=creds)
+    try:
+        request = service.files().get_media(fileId=file_id)
+    except Exception:
+        request = service.files().export_media(
+            fileId=file_id,
+            mimeType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        )
+    fh = io.BytesIO()
+    downloader = MediaIoBaseDownload(fh, request)
+    done = False
+    while not done:
+        _, done = downloader.next_chunk()
+    fh.seek(0)
+    return fh
+
+
 def main():
     print(f"🚀 Starting Title Validation on {TODAY_DATE} (IST)")
 
@@ -104,18 +135,25 @@ def main():
         state = {
             "sheet_idx": 0,
             "row_idx": 0,
-            "email_data": {"perfect":[], "updated": [], "new_rec":[]},
+            "email_data": {"perfect": [], "updated": [], "new_rec": []},
             "total_scanned": 0,
         }
 
-    # Authenticate with Google Sheets
+    # Authenticate with Google Sheets (for writing output)
     gc = gspread.service_account(filename="GDRIVE_SERVICE_ACCOUNT.json")
 
     with open("EXCEL_FILE_ID.txt", "r") as f:
         main_excel_id = f.read().strip()
-    
-    # Open both sheets
-    main_sh = gc.open_by_key(main_excel_id)
+
+    # 📥 Download Main Excel file via Google Drive API instead of gspread
+    print("📥 Downloading Main Excel file into memory...")
+    excel_bytes = fetch_excel_from_gdrive_bytes(
+        main_excel_id, "GDRIVE_SERVICE_ACCOUNT.json"
+    )
+    if not excel_bytes:
+        raise Exception("Failed to fetch Main Excel file.")
+    xl = pd.ExcelFile(io.BytesIO(excel_bytes.getvalue()))
+
     check_excel_id = os.environ.get("CHECK_TITLES_EXCEL_ID")
     check_sh = gc.open_by_key(check_excel_id)
 
@@ -136,7 +174,7 @@ def main():
                 "last_date": str(row.get("Last Update Date", TODAY_DATE)),
             }
 
-    sheets_to_process =[
+    sheets_to_process = [
         s.strip()
         for s in os.environ.get("SHEETS", "Sheet1;Sheet2").split(";")
         if s.strip()
@@ -150,9 +188,28 @@ def main():
         sheet_name = sheets_to_process[s_idx]
 
         try:
-            ws_in = main_sh.worksheet(sheet_name)
-            df_in = get_as_dataframe(ws_in).dropna(how="all", subset=["Show ID", "No"])
-        except Exception:
+            # Find the correct sheet ignoring case/whitespace
+            target_sheet = next(
+                (
+                    s
+                    for s in xl.sheet_names
+                    if s.strip().lower() == sheet_name.strip().lower()
+                ),
+                None,
+            )
+            if not target_sheet:
+                print(f"⚠️ Sheet '{sheet_name}' not found in the Excel file.")
+                continue
+
+            # Read sheet to dataframe
+            df_in = pd.read_excel(xl, sheet_name=target_sheet)
+
+            # Drop empty rows dynamically based on available columns
+            subset_cols = [c for c in ["Show ID", "No"] if c in df_in.columns]
+            if subset_cols:
+                df_in = df_in.dropna(how="all", subset=subset_cols)
+        except Exception as e:
+            print(f"Error loading sheet {sheet_name}: {e}")
             continue
 
         # Resume from the exact row where the last batch left off
@@ -184,7 +241,7 @@ def main():
             print(f"🔍 Checking [{fetches}/{MAX_FETCHES}]: {title} ({year})")
 
             aw_title, mdl_title, imdb_title = "N/A", "N/A", "N/A"
-            is_asian = lang.lower() in[
+            is_asian = lang.lower() in [
                 "korean",
                 "chinese",
                 "japanese",
@@ -303,7 +360,7 @@ def main():
         else:
             combined_df = new_df
 
-        ws_out.clear() 
+        ws_out.clear()
         set_with_dataframe(ws_out, combined_df.fillna("N/A"))
         print("✅ Successfully upserted this batch to the Google Sheet!")
 
@@ -361,17 +418,22 @@ def main():
         with open("email_body.txt", "w", encoding="utf-8") as f:
             f.write(body)
 
+
 if __name__ == "__main__":
     try:
         main()
     except Exception as e:
         print(f"❌ CRITICAL ERROR: {e}")
         traceback.print_exc()
-        
+
         # Guarantees the email action won't fail with ENOENT
         with open("email_body.txt", "w", encoding="utf-8") as f:
-            f.write("❌ The Title Validation script encountered a critical error and crashed!\n\n")
+            f.write(
+                "❌ The Title Validation script encountered a critical error and crashed!\n\n"
+            )
             f.write(f"Error Message:\n{str(e)}\n\n")
-            f.write("Please check your GitHub Actions log for the full traceback details.")
-        
+            f.write(
+                "Please check your GitHub Actions log for the full traceback details."
+            )
+
         sys.exit(1)
