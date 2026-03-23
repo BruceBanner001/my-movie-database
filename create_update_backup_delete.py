@@ -237,18 +237,9 @@ def merge_batch_state(context):
         with open(BATCH_STATE_FILE, 'r', encoding='utf-8') as f:
             batch_state = json.load(f)
             
-        for sheet, data in batch_state.get('report_data', {}).items():
-            if sheet not in context['report_data']: 
-                context['report_data'][sheet] = {}
-            for key, lst in data.items():
-                if key not in context['report_data'][sheet]: 
-                    context['report_data'][sheet][key] = []
-                context['report_data'][sheet][key].extend(lst)
-                
-        for category, lst in batch_state.get('files_generated', {}).items():
-            if category not in context['files_generated']: 
-                context['files_generated'][category] = []
-            context['files_generated'][category].extend(lst)
+        # Instead of populating 'report_data', we populate 'previous_report_data'
+        context['previous_report_data'] = batch_state.get('report_data', {})
+        context['previous_files_generated'] = batch_state.get('files_generated', {})
             
         context['cumulative_time_seconds'] = batch_state.get('cumulative_time_seconds', 0)
         context['global_start_time'] = batch_state.get('global_start_time')
@@ -259,12 +250,30 @@ def merge_batch_state(context):
     except Exception as e: 
         logd(f"Failed to load batch state: {e}")
 
+def combine_reports(d1, d2):
+    res = {}
+    for k in set(d1.keys()).union(d2.keys()):
+        res[k] = {}
+        for sub_k in set(d1.get(k, {}).keys()).union(d2.get(k, {}).keys()):
+            res[k][sub_k] = d1.get(k, {}).get(sub_k, []) + d2.get(k, {}).get(sub_k,[])
+    return res
+
+def combine_files(d1, d2):
+    res = {}
+    for k in set(d1.keys()).union(d2.keys()):
+        lst = d1.get(k,[]) + d2.get(k, [])
+        res[k] = list(dict.fromkeys(lst))
+    return res
+
 def save_batch_state(context, current_run_seconds):
+    merged_report = combine_reports(context.get('previous_report_data', {}), context['report_data'])
+    merged_files = combine_files(context.get('previous_files_generated', {}), context['files_generated'])
+
     state = {
         'global_start_time': context['global_start_time'],
         'batch_run_count': context['batch_run_count'] + 1,
-        'report_data': context['report_data'], 
-        'files_generated': context['files_generated'],
+        'report_data': merged_report, 
+        'files_generated': merged_files,
         'cumulative_time_seconds': context['cumulative_time_seconds'] + current_run_seconds,
         'first_run_id': context.get('first_run_id'),
         'processed_ids_all_runs': list(context.get('processed_ids_all_runs', set()))
@@ -419,7 +428,7 @@ def get_soup_from_search(search_term, expected_name, show_year, site, language, 
                     if data:
                         imdb_type = data.get('@type', '')
                         if imdb_type == 'TVEpisode': continue
-                        if show_type in ['Drama', 'Mini Drama'] and imdb_type == 'Movie': continue
+                        if show_type in['Drama', 'Mini Drama'] and imdb_type == 'Movie': continue
                         if show_type == 'Movie' and imdb_type in ['TVSeries', 'TVMiniSeries']: continue
                 
                 is_valid_landmark = False
@@ -577,7 +586,7 @@ def _scrape_director_from_asianwiki(soup, **kwargs):
 # --- MYDRAMALIST SCRAPERS ---
 def _scrape_synopsis_from_mydramalist(soup, **kwargs):
     try:
-        synopsis_div = soup.select_one('.show-synopsis, [itemprop="description"]')
+        synopsis_div = soup.select_one('.show-synopsis,[itemprop="description"]')
         if not synopsis_div: return None
         text = synopsis_div.get_text(separator='\n', strip=True)
         paragraphs =[line.strip() for line in text.split('\n') if line.strip()]
@@ -632,7 +641,7 @@ def _scrape_release_date_from_mydramalist(soup, **kwargs):
 def _scrape_director_from_mydramalist(soup, **kwargs):
     try:
         text, _ = _extract_mdl_list_item(soup, r"^\s*Director.*")
-        if text: return [name.strip() for name in text.split(',') if name.strip()]
+        if text: return[name.strip() for name in text.split(',') if name.strip()]
     except Exception: pass
     return None
 
@@ -648,7 +657,7 @@ def _scrape_network_from_mydramalist(soup, **kwargs):
         if parent_tag:
             nets =[a.get_text(strip=True) for a in parent_tag.find_all('a')]
             if nets: return nets
-            return [n.strip() for n in text.split(',') if n.strip()]
+            return[n.strip() for n in text.split(',') if n.strip()]
     except Exception: pass
     return None
 
@@ -797,7 +806,7 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
         if main_role_count == 0 and len(full_cast_raw) > 0:
             promoted = 0
             for i in range(len(full_cast_raw)):
-                if full_cast_raw[i]['role'] in ['Support Role', 'Guest Role', 'Unknown']:
+                if full_cast_raw[i]['role'] in['Support Role', 'Guest Role', 'Unknown']:
                     full_cast_raw[i]['role'] = "Main Role"
                     promoted += 1
                     if promoted >= 6: break
@@ -930,7 +939,7 @@ def _scrape_tags_from_imdb(soup, **kwargs):
     try:
         data = _get_imdb_json_ld(soup)
         if data and 'genre' in data: 
-            return data['genre'] if isinstance(data['genre'], list) else [data['genre']]
+            return data['genre'] if isinstance(data['genre'], list) else[data['genre']]
     except Exception: pass
     return None
 
@@ -1031,7 +1040,7 @@ def fetch_and_populate_metadata(obj, context, artists_db):
     fields_to_check =[ 'synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast', 'network', 'airedOn' ]
     
     for field in fields_to_check:
-        if show_type == 'Movie' and field in ['airedOn', 'network']:
+        if show_type == 'Movie' and field in['airedOn', 'network']:
             continue
             
         # DO NOT re-fetch fields that were explicitly marked as Not Found online
@@ -1163,7 +1172,7 @@ def apply_manual_updates(xl, by_id, context):
         target = next((s for s in xl.sheet_names if s.strip().lower() == 'manual updates'), None)
         if not target: return {}
         df = pd.read_excel(xl, sheet_name=target, keep_default_na=False).replace({float('nan'): None, pd.NA: None})
-        df.columns = [c.strip().lower() for c in df.columns]
+        df.columns =[c.strip().lower() for c in df.columns]
     except Exception: return {}
     
     MAP = {
@@ -1196,7 +1205,7 @@ def apply_manual_updates(xl, by_id, context):
                         image_downloaded = True
                     else: continue
                 
-                elif key in ['otherNames', 'airedOn', 'director', 'tags']:
+                elif key in['otherNames', 'airedOn', 'director', 'tags']:
                     val = normalize_list(val)
                 
                 else: 
@@ -1228,7 +1237,7 @@ def excel_to_objects(xl, sheet):
         df.columns =[c.strip().lower() for c in df.columns]
     except Exception: return [],[]
     
-    warnings = []
+    warnings =[]
     try: 
         again_idx =[i for i, c in enumerate(df.columns) if "again watched" in c][0]
     except IndexError: 
@@ -1254,7 +1263,7 @@ def excel_to_objects(xl, sheet):
         
         if obj.get("showID", 0) != 0: obj['showID'] += base_id
         if not obj.get("showID") or not obj.get("showName"): continue
-        obj["againWatchedDates"] = [ddmmyyyy(d) for d in row[again_idx:] if ddmmyyyy(d)]
+        obj["againWatchedDates"] =[ddmmyyyy(d) for d in row[again_idx:] if ddmmyyyy(d)]
         
         sheet_lower = sheet.lower()
         obj["showType"] = "Movie" if "movie" in sheet_lower else "Mini Drama" if "mini" in sheet_lower else "Drama"
@@ -1329,8 +1338,22 @@ def create_diff_backup(old, new, context, explicit_changes=None):
 # ---------------------------- write_report ----------------------------
 
 def write_report(context, current_run_seconds, report_file_path):
-    
-    total_seconds = int(context['cumulative_time_seconds'] + current_run_seconds)
+    is_paused = context.get('paused')
+
+    # Determine which data to print (Partial Run vs Final Run)
+    if is_paused:
+        active_report_data = context.get('report_data', {})
+        active_files = context.get('files_generated', {})
+        total_seconds = int(current_run_seconds)
+        run_label = "⏱️ Run Time      : "
+        batch_label = f"🔄 Current Batch : {context.get('batch_run_count', 1)}"
+    else:
+        active_report_data = combine_reports(context.get('previous_report_data', {}), context.get('report_data', {}))
+        active_files = combine_files(context.get('previous_files_generated', {}), context.get('files_generated', {}))
+        total_seconds = int(context['cumulative_time_seconds'] + current_run_seconds)
+        run_label = "⏱️ Total Runtime : "
+        batch_label = f"🔄 Total Batches : {context.get('batch_run_count', 1)} Run{'s' if context.get('batch_run_count', 1) != 1 else ''}"
+
     hours = total_seconds // 3600
     minutes = (total_seconds % 3600) // 60
     seconds = total_seconds % 60
@@ -1347,8 +1370,8 @@ def write_report(context, current_run_seconds, report_file_path):
         
     end_time_ist = now_ist().strftime("%d %B %Y - %I:%M:%S %p")
     
-    if context.get('paused'):
-        status_msg = "✅ Workflow Batch completed successfully"
+    if is_paused:
+        status_msg = "✅ Partial Batch completed successfully"
         batch_msg = "⏳ Batch Processing in Progress..."
     else:
         status_msg = "✅ Workflow Batch completed successfully"
@@ -1369,16 +1392,16 @@ def write_report(context, current_run_seconds, report_file_path):
         f"🔁 RUN           : {run_display}",
         f"⏰ Start Time    : {context['global_start_time']}",
         f"⏰ End Time      : {end_time_ist}",
-        f"⏱️ Runtime       : {runtime_str}",
+        f"{run_label}{runtime_str}",
         f"⚙️ Max Process   : {os.environ.get('MAX_FETCHES', '50')} Row Per Run",
-        f"🔄 Total Batches : {context.get('batch_run_count', 1)} Run{'s' if context.get('batch_run_count', 1) != 1 else ''}",
+        batch_label,
         ""
     ]
 
     sep = "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
     stats = {'created': 0, 'updated': 0, 'skipped': 0, 'deleted': 0, 'warnings': 0, 'show_images': 0, 'artist_images': 0, 'rows': 0, 'refetched': 0, 'archived': 0}
     
-    for sheet, changes in context['report_data'].items():
+    for sheet, changes in active_report_data.items():
         if not any(v for k, v in changes.items()): continue
         display_sheet = sheet.replace("sheet", "Sheet ").title()
         lines.extend([sep, f"🗂️ === {display_sheet} ===", sep])
@@ -1417,9 +1440,13 @@ def write_report(context, current_run_seconds, report_file_path):
             lines.append("\n🖼️ Fetched Data Details:")
             for i in sorted(get_unique(changes['fetched_data'])): lines.append(i)
 
-        if changes.get('fetch_warnings'): 
+        if changes.get('not_found_warnings'): 
             lines.append("\n🕳️ Value Not Found:")
-            for i in sorted(get_unique(changes['fetch_warnings'])): lines.append(i)
+            for i in sorted(get_unique(changes['not_found_warnings'])): lines.append(i)
+
+        if changes.get('missing_warnings'): 
+            lines.append("\n⚠️ Missing Values (Still attempting to fetch):")
+            for i in sorted(get_unique(changes['missing_warnings'])): lines.append(i)
 
         if changes.get('artist_image_warnings'): 
             lines.append("\n🧑‍🎨 Artist Image Warnings:")
@@ -1433,7 +1460,7 @@ def write_report(context, current_run_seconds, report_file_path):
             lines.append("\n❌ Data Deleted:")
             for i in get_unique(changes['data_deleted']): lines.append(i)
         
-        if sheet not in ["Deleting Records", "Manual Updates"]:
+        if sheet not in["Deleting Records", "Manual Updates"]:
             s_created = len(set(o['showID'] for o in changes.get('created',[])))
             s_updated = len(set(o['new']['showID'] for o in changes.get('updated',[])))
             s_refetched = len(set(o['id'] for o in changes.get('refetched',[])))
@@ -1449,19 +1476,20 @@ def write_report(context, current_run_seconds, report_file_path):
             stats['show_images'] += sum(1 for i in get_unique(changes.get('fetched_data', [])) if "Show Image" in i)
             stats['rows'] += total_sheet
             
-            warn_count = len(get_unique(changes.get('data_warnings', []))) + \
-                         len(get_unique(changes.get('fetch_warnings',[]))) + \
-                         len(get_unique(changes.get('artist_image_warnings',[])))
+            warn_count = len(get_unique(changes.get('data_warnings',[]))) + \
+                         len(get_unique(changes.get('not_found_warnings',[]))) + \
+                         len(get_unique(changes.get('missing_warnings',[]))) + \
+                         len(get_unique(changes.get('artist_image_warnings', [])))
             stats['warnings'] += warn_count
             
             lines.extend([f"\n📊 Summary (Sheet: {display_sheet})", sep, f"🆕 Created: {s_created}", f"🔁 Updated: {s_updated}", f"🔍 Refetched: {s_refetched}", f"🚫 Skipped: {s_skipped}", f"⚠️ Warnings: {warn_count}", f"  Total Unique Rows: {total_sheet}"])
         lines.append("")
 
-    stats['deleted'] = len(context['files_generated'].get('deleted_data', []))
-    stats['artist_images'] = len(context['files_generated'].get('artist_images', []))
-    stats['archived'] = len(context['files_generated'].get('archived_backups', [])) + len(context['files_generated'].get('archived_meta_backups', []))
+    stats['deleted'] = len(active_files.get('deleted_data',[]))
+    stats['artist_images'] = len(active_files.get('artist_images',[]))
+    stats['archived'] = len(active_files.get('archived_backups',[])) + len(active_files.get('archived_meta_backups',[]))
     
-    lines.extend([sep, "📊 Cumulative Batch Summary" if not context.get('paused') else "📊 Overall Summary", sep, f"🆕 Total Created: {stats['created']}", f"🔁 Total Updated: {stats['updated']}", f"🔍 Total Refetched: {stats['refetched']}", f"🖼️ Show Images Updated: {stats['show_images']}", f"🧑‍🎨 New Artist Images Added: {stats['artist_images']}", f"🚫 Total Skipped: {stats['skipped']}", f"❌ Total Deleted: {stats['deleted']}", f"🗄️ Total Archived Backups: {stats['archived']}", f"⚠️ Total Warnings: {stats['warnings']}", f"💾 Backup Files: {len(context['files_generated'].get('backups', []))}", f"  Grand Total Rows Processed: {stats['rows']}", "", f"💾 Metadata Backups: {len(context['files_generated'].get('meta_backups',[]))}", ""])
+    lines.extend([sep, "📊 Current Batch Summary" if is_paused else "📊 Overall Cumulative Summary", sep, f"🆕 Total Created: {stats['created']}", f"🔁 Total Updated: {stats['updated']}", f"🔍 Total Refetched: {stats['refetched']}", f"🖼️ Show Images Updated: {stats['show_images']}", f"🧑‍🎨 New Artist Images Added: {stats['artist_images']}", f"🚫 Total Skipped: {stats['skipped']}", f"❌ Total Deleted: {stats['deleted']}", f"🗄️ Total Archived Backups: {stats['archived']}", f"⚠️ Total Warnings: {stats['warnings']}", f"💾 Backup Files: {len(active_files.get('backups',[]))}", f"  Grand Total Rows Processed: {stats['rows']}", "", f"💾 Metadata Backups: {len(active_files.get('meta_backups',[]))}", ""])
     
     for file in[SERIES_JSON_FILE, ARTISTS_JSON_FILE, CAST_JSON_FILE, ARTIST_LOOKUP_FILE]:
         try:
@@ -1479,7 +1507,7 @@ def write_report(context, current_run_seconds, report_file_path):
     except Exception: lines.append(f"🧑‍🎨 Total images in {ARTIST_IMAGES_DIR}: 0")
         
     lines.extend([sep, "🗂️ Folders Generated:", sep])
-    for folder, files in context['files_generated'].items():
+    for folder, files in active_files.items():
         if files: 
             unique_files = list(dict.fromkeys(files))
             total_files = len(unique_files)
@@ -1491,7 +1519,7 @@ def write_report(context, current_run_seconds, report_file_path):
                 lines.append(f"    ... and {total_files - 5} more files.")
             lines.append("")
             
-    if context.get('paused'):
+    if is_paused:
         lines.extend([sep, "⚠️ BATCH LIMIT REACHED: The script paused safely.", "GitHub Actions will trigger next run automatically.", sep])
     else:
         lines.extend([sep, "🏁 Workflow finished successfully"])
@@ -1500,7 +1528,7 @@ def write_report(context, current_run_seconds, report_file_path):
     with open(report_file_path, 'w', encoding='utf-8') as f: 
         f.write("\n".join(lines))
     
-    if context.get('paused'):
+    if is_paused:
         print(f"\n✅ Partial Report created at -> {report_file_path}")
         print("   (Git will ignore this file due to .gitignore settings)")
     else:
@@ -1514,7 +1542,7 @@ def write_report(context, current_run_seconds, report_file_path):
         ef.write(email_subject)
 
 def process_and_distribute_cast(full_cast, artists_db, context):
-    main_cast, support_cast, guest_cast = [], [],[]
+    main_cast, support_cast, guest_cast = [],[],[]
     crew_cast, other_crew_cast = [], []
     context['new_artists_added'] =[]
     
@@ -1625,10 +1653,12 @@ def main():
         'run_id': run_id_timestamp(), 'file_ts': filename_timestamp(),
         'report_data': {}, 
         'files_generated': {
-            'backups':[], 'show_images': [], 'artist_images': [], 'deleted_data':[], 
-            'deleted_images': [], 'meta_backups': [], 'reports': [], 'archived_backups':[], 
+            'backups':[], 'show_images': [], 'artist_images':[], 'deleted_data':[], 
+            'deleted_images': [], 'meta_backups':[], 'reports':[], 'archived_backups':[], 
             'archived_meta_backups':[]
         },
+        'previous_report_data': {},
+        'previous_files_generated': {},
         'cumulative_time_seconds': 0, 
         'global_start_time': run_start_time.strftime("%d %B %Y - %I:%M:%S %p"),
         'batch_run_count': 1, 'paused': False, 
@@ -1716,7 +1746,6 @@ def main():
                 final_obj['topRatings'] = (final_obj.get("ratings", 0)) * (len(final_obj.get("againWatchedDates",[])) + 1) * 100
                 
                 metadata_was_fetched = any(final_obj.get(k) != v for k, v in initial_metadata_state.items())
-                spu_changed = not is_new and final_obj.get('sitePriorityUsed') != old_data.get('sitePriorityUsed')
 
                 key_map = {'synopsis': 'Synopsis', 'showImage': 'Show Image', 'otherNames': 'Other Names', 'releaseDate': 'Release Date', 'Duration': 'Duration', 'director': 'Director', 'tags': 'Tags', 'cast': 'Cast', 'network': 'Network', 'airedOn': 'Aired On'}
 
@@ -1740,8 +1769,9 @@ def main():
                     if metadata_was_fetched and newly_fetched_fields:
                         report.setdefault('refetched',[]).append({'id': sid, 'name': final_obj['showName'], 'fields': newly_fetched_fields})
                     
-                    if not_found_fields:
-                        report.setdefault('fetch_warnings',[]).append(f"- {sid} - {final_obj['showName']} -> 🕳️ Marked Not Found: {', '.join(not_found_fields)}")
+                # 🕳️ This correctly processes 'Not Found' values for BOTH new and updated shows
+                if not_found_fields:
+                    report.setdefault('not_found_warnings',[]).append(f"- {sid} - {final_obj['showName']} -> 🕳️ Marked Not Found: {', '.join(not_found_fields)}")
                 
                 merged_by_id[sid] = final_obj
                 save_metadata_backup(final_obj, context)
@@ -1750,9 +1780,10 @@ def main():
                 if final_obj.get('showType') != 'Movie': 
                     missing_fields.update({'airedOn', 'network'})
                 
+                # ⚠️ This checks for empty fields that are NOT yet marked as "Not Found" (Script will try fetching them again)
                 missing =[human_readable_field(k) for k in missing_fields if is_empty_val(final_obj.get(k)) and final_obj.get('sitePriorityUsed', {}).get(k) not in["Not Found", "Manual"]]
                 if missing: 
-                    report.setdefault('fetch_warnings',[]).append(f"- {sid} - {final_obj['showName']} -> ⚠️ Missing: {', '.join(sorted(missing))}")
+                    report.setdefault('missing_warnings',[]).append(f"- {sid} - {final_obj['showName']} -> ⚠️ Missing: {', '.join(sorted(missing))}")
                 
                 context['processed_ids_all_runs'].add(sid)
             else:
