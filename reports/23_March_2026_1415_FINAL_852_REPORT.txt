@@ -8,9 +8,9 @@
 🔁 RUN           : 852
 ⏰ Start Time    : 23 March 2026 - 02:15:41 PM
 ⏰ End Time      : 23 March 2026 - 02:15:43 PM
-⏱️ Run Time      : 2 Seconds
+⏱️ Total Runtime : 2 Seconds
 ⚙️ Max Process   : 45 Row Per Run
-🔄 Current Batch : 1
+🔄 Total Batches : 1 Run
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Deleting Records ===
@@ -29,7 +29,7 @@
 - 110 -> Once We Get Married (2021) -> ✅ Deleted
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📊 Summary (Current Batch Only)
+📊 Overall Cumulative Summary
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🆕 Total Created: 0
 🔁 Total Updated: 0
@@ -54,6 +54,9 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ Folders Generated:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📁 reports/ (Total: 1 files)
+    📄 23_March_2026_1415_FINAL_852_REPORT.txt
+
 📁 deleted_data/ (Total: 10 files)
     📄 DELETED_23_March_2026_1415_101.json
     📄 DELETED_23_March_2026_1415_102.json
@@ -70,9 +73,6 @@
     📄 DELETED_23_March_2026_1415_105.jpg
     ... and 5 more files.
 
-📁 reports/ (Total: 1 files)
-    📄 23_March_2026_1415_FINAL_852_REPORT.txt
-
 📁 archived_meta_backups/ (Total: 11 files)
     📄 META_22_March_2026_1652_101.json
     📄 META_23_March_2026_1253_102.json
@@ -83,5 +83,3 @@
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🏁 Workflow finished successfully
-
-✅ Final Master Report written -> reports/23_March_2026_1415_FINAL_852_REPORT.txt (Saved to Repo)
