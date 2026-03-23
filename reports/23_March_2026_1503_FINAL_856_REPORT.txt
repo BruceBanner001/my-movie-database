@@ -8,9 +8,9 @@
 🔁 RUN           : 856
 ⏰ Start Time    : 23 March 2026 - 03:03:16 PM
 ⏰ End Time      : 23 March 2026 - 03:03:32 PM
-⏱️ Run Time      : 16 Seconds
+⏱️ Total Runtime : 16 Seconds
 ⚙️ Max Process   : 50 Row Per Run
-🔄 Current Batch : 1
+🔄 Total Batches : 1 Run
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Sheet1 ===
@@ -42,7 +42,7 @@
   Total Unique Rows: 9
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📊 Summary (Current Batch Only)
+📊 Overall Cumulative Summary
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🆕 Total Created: 0
 🔁 Total Updated: 0
@@ -67,6 +67,10 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ Folders Generated:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📁 meta_backups/ (Total: 2 files)
+    📄 META_23_March_2026_1503_103.json
+    📄 META_23_March_2026_1503_104.json
+
 📁 artist_images/ (Total: 39 files)
     📄 56033.jpg
     📄 53567.jpg
@@ -75,14 +79,8 @@
     📄 7206.jpg
     ... and 34 more files.
 
-📁 meta_backups/ (Total: 2 files)
-    📄 META_23_March_2026_1503_103.json
-    📄 META_23_March_2026_1503_104.json
-
 📁 reports/ (Total: 1 files)
     📄 23_March_2026_1503_FINAL_856_REPORT.txt
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🏁 Workflow finished successfully
-
-✅ Final Master Report written -> reports/23_March_2026_1503_FINAL_856_REPORT.txt (Saved to Repo)
