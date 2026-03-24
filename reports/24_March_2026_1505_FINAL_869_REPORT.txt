@@ -8,9 +8,9 @@
 🔁 RUN           : 869
 ⏰ Start Time    : 24 March 2026 - 03:05:26 PM
 ⏰ End Time      : 24 March 2026 - 03:05:29 PM
-⏱️ Run Time      : 2 Seconds
+⏱️ Total Runtime : 2 Seconds
 ⚙️ Max Process   : 50 Row Per Run
-🔄 Current Batch : 1
+🔄 Total Batches : 1 Run
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Deleting Records ===
@@ -77,7 +77,7 @@
 - 127 -> Crash Landing On You (2019) -> ✅ Deleted
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📊 Summary (Current Batch Only)
+📊 Overall Cumulative Summary
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🆕 Total Created: 0
 🔁 Total Updated: 0
@@ -102,6 +102,21 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ Folders Generated:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📁 reports/ (Total: 1 files)
+    📄 24_March_2026_1505_FINAL_869_REPORT.txt
+
+📁 archived_meta_backups/ (Total: 66 files)
+    📄 META_24_March_2026_1227_128.json
+    📄 META_24_March_2026_1227_129.json
+    📄 META_24_March_2026_1227_130.json
+    📄 META_24_March_2026_1227_131.json
+    📄 META_24_March_2026_1227_132.json
+    ... and 61 more files.
+
+📁 archived_backups/ (Total: 2 files)
+    📄 BACKUP_24_March_2026_1249_101.json
+    📄 BACKUP_24_March_2026_1249_102.json
+
 📁 deleted_data/ (Total: 58 files)
     📄 DELETED_24_March_2026_1505_128.json
     📄 DELETED_24_March_2026_1505_129.json
@@ -118,22 +133,5 @@
     📄 DELETED_24_March_2026_1505_132.jpg
     ... and 52 more files.
 
-📁 reports/ (Total: 1 files)
-    📄 24_March_2026_1505_FINAL_869_REPORT.txt
-
-📁 archived_backups/ (Total: 2 files)
-    📄 BACKUP_24_March_2026_1249_101.json
-    📄 BACKUP_24_March_2026_1249_102.json
-
-📁 archived_meta_backups/ (Total: 66 files)
-    📄 META_24_March_2026_1227_128.json
-    📄 META_24_March_2026_1227_129.json
-    📄 META_24_March_2026_1227_130.json
-    📄 META_24_March_2026_1227_131.json
-    📄 META_24_March_2026_1227_132.json
-    ... and 61 more files.
-
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🏁 Workflow finished successfully
-
-✅ Final Master Report written -> reports/24_March_2026_1505_FINAL_869_REPORT.txt (Saved to Repo)
