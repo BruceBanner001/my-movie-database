@@ -1,6 +1,6 @@
 # ==========================================
 # Excel → JSON Automation - Python Dependencies
-# Version 3.1 (Fixed Google API missing dependencies)
+# Version 3.0 (Feat: Added cloudscraper to defeat anti-bot measures)
 # ==========================================
 
 pandas>=2.0.0
@@ -12,5 +12,3 @@ cloudscraper>=1.2.71
 Pillow>=10.0.0
 google-api-python-client>=2.100.0
 google-auth>=2.23.0
-google-auth-httplib2>=0.2.0
-httplib2>=0.22.0
