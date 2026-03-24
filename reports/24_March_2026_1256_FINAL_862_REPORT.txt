@@ -1,6 +1,3 @@
-[DEBUG] Title Validation FAILED: Page Title 'Ko Kyu Pil' vs Expected 'I Miss You' (Ratio: 0.20)
-[DEBUG] Title Validation FAILED: Page Title 'Na Chul' vs Expected 'I Miss You' (Ratio: 0.24)
-[DEBUG] Title Validation FAILED: Page Title 'The main leads can't be together for some dramatic complications' vs Expected 'I Miss You' (Ratio: 0.16)
 ✅ Workflow Batch completed successfully
 🏁 Final Batch Completed
 ══════════════════════════════════════════════════════
@@ -11,9 +8,9 @@
 🔁 RUN           : 862
 ⏰ Start Time    : 24 March 2026 - 12:56:56 PM
 ⏰ End Time      : 24 March 2026 - 12:58:08 PM
-⏱️ Run Time      : 1 Minute 11 Seconds
+⏱️ Total Runtime : 1 Minute 11 Seconds
 ⚙️ Max Process   : 50 Row Per Run
-🔄 Current Batch : 1
+🔄 Total Batches : 1 Run
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Sheet1 ===
@@ -92,7 +89,7 @@
   Total Unique Rows: 53
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📊 Summary (Current Batch Only)
+📊 Overall Cumulative Summary
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🆕 Total Created: 0
 🔁 Total Updated: 0
@@ -117,10 +114,21 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ Folders Generated:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📁 meta_backups/ (Total: 6 files)
+    📄 META_24_March_2026_1256_118.json
+    📄 META_24_March_2026_1256_119.json
+    📄 META_24_March_2026_1256_123.json
+    📄 META_24_March_2026_1256_148.json
+    📄 META_24_March_2026_1256_152.json
+    📄 META_24_March_2026_1256_156.json
+
 📁 show_images/ (Total: 3 files)
     📄 118.jpg
     📄 119.jpg
     📄 148.jpg
+
+📁 reports/ (Total: 1 files)
+    📄 24_March_2026_1256_FINAL_862_REPORT.txt
 
 📁 artist_images/ (Total: 25 files)
     📄 18246.jpg
@@ -130,18 +138,5 @@
     📄 13834.jpg
     ... and 20 more files.
 
-📁 meta_backups/ (Total: 6 files)
-    📄 META_24_March_2026_1256_118.json
-    📄 META_24_March_2026_1256_119.json
-    📄 META_24_March_2026_1256_123.json
-    📄 META_24_March_2026_1256_148.json
-    📄 META_24_March_2026_1256_152.json
-    📄 META_24_March_2026_1256_156.json
-
-📁 reports/ (Total: 1 files)
-    📄 24_March_2026_1256_FINAL_862_REPORT.txt
-
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🏁 Workflow finished successfully
-
-✅ Final Master Report written -> reports/24_March_2026_1256_FINAL_862_REPORT.txt (Saved to Repo)
