@@ -1,6 +1,5 @@
 # ============================================================================
-# Workflow: Title Validation & Recommendation Engine
-# Purpose : Scans Excel titles against MDL, AsianWiki, and IMDb
+# Workflow: Title Validation & Recommendation Engine (Optimized)
 # ============================================================================
 
 name: Validate Drama Titles
@@ -11,15 +10,24 @@ on:
       sheets:
         description: 'Sheets to scan (separated by semicolon)'
         required: true
-        default: 'Sheet1'
-        # default: 'Sheet1;Sheet2'
+        default: 'Sheet1;Sheet2'
+      max_fetches:
+        description: 'Max New Rows to Fetch Per Run'
+        required: false
+        default: '50'
+  schedule:
+    - cron: "0 12 * * 0" # Runs automatically once a week on Sundays
+
+# PREVENT CONFLICTS: Only one run sequence can execute at a time
+concurrency:
+  group: title-validator-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   validate-titles:
     timeout-minutes: 50
     runs-on: ubuntu-latest
     
-    # REQUIRED for the relay-race to commit the state JSON file
     permissions:
       contents: write
       actions: write
@@ -47,61 +55,85 @@ jobs:
           printf '%s' "$GDRIVE_SERVICE_ACCOUNT" > GDRIVE_SERVICE_ACCOUNT.json
 
       - name: 5. Run Title Validator Script
+        id: run_script
         env:
           CHECK_TITLES_EXCEL_ID: ${{ secrets.CHECK_TITLES_EXCEL_ID }}
-          SHEETS: ${{ github.event.inputs.sheets }}
-          MAX_FETCHES: "50" # Forces script to pause, preventing timeouts & rate-limits
+          SHEETS: ${{ github.event.inputs.sheets || 'Sheet1;Sheet2' }}
+          MAX_FETCHES: ${{ github.event.inputs.max_fetches || '50' }}
         run: |
-          python title_validator.py
+          python title_validator.py 2>&1 | tee output.log
+          exit_code=${PIPESTATUS[0]}
+          
+          if[ -f "RESUME_FLAG.txt" ]; then
+            echo "CONTINUE_BATCH=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "CONTINUE_BATCH=false" >> "$GITHUB_OUTPUT"
+          fi
+          exit $exit_code
 
       - name: 6. Cleanup Secret Files
         if: always()
         run: |
           rm -f EXCEL_FILE_ID.txt GDRIVE_SERVICE_ACCOUNT.json
 
-      - name: 7. Commit, Push, and Trigger Next Batch
-        id: relay_race
+      - name: 7. Commit & Push Changes
         if: success() || failure()
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          CONTINUE_RUN=false
-          # FIXED: Added the space after 'if ['
-          if [ -f "RESUME_FLAG.txt" ]; then
-            CONTINUE_RUN=true
-            rm RESUME_FLAG.txt
-          fi
-          
-          # Output this variable to Step 8 to prevent early emails
-          echo "continue_batch=$CONTINUE_RUN" >> "$GITHUB_OUTPUT"
+          rm -f RESUME_FLAG.txt
           
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add -A --force
+          git add -A
           if git diff --cached --quiet; then
             echo "No state changes to commit."
           else
-            git commit -m "Automated title validation batch: $(date -u '+%Y-%m-%d %H:%M UTC')"
+            git commit -m "Automated title validation batch: $(TZ='Asia/Kolkata' date '+%Y-%m-%d %I:%M %p IST')"
             git push
           fi
+
+      - name: 8. Upload Artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: title-validator-results
+          path: |
+            output.log
+            reports/
+
+      - name: 9. Prepare Report for Email
+        if: always()
+        id: get_report
+        run: |
+          REPORT_PATH=$(ls -t reports/*_REPORT.txt 2>/dev/null | head -n1 || echo "")
+          echo "REPORT_PATH=$REPORT_PATH" >> $GITHUB_ENV
           
-          if [ "$CONTINUE_RUN" = true ]; then
-            echo "Batch paused. Triggering the next batch immediately..."
-            # Trigger itself automatically with the same user inputs!
-            gh workflow run "Validate Drama Titles" -f sheets="${{ github.event.inputs.sheets }}"
+          if [ -f "EMAIL_SUBJECT.txt" ]; then
+            SUBJECT=$(cat EMAIL_SUBJECT.txt)
+            echo "EMAIL_SUBJECT=$SUBJECT" >> $GITHUB_ENV
+          else
+            echo "EMAIL_SUBJECT=Drama Title Validation [${{ job.status }}]" >> $GITHUB_ENV
           fi
 
-      - name: 8. Send Final Email Notification
+      - name: 10. Trigger Next Batch
+        if: success() && steps.run_script.outputs.CONTINUE_BATCH == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "Batch paused. Triggering the next batch immediately..."
+          gh workflow run "Validate Drama Titles" --ref ${{ github.ref_name }} -f sheets="${{ github.event.inputs.sheets || 'Sheet1;Sheet2' }}" -f max_fetches="${{ github.event.inputs.max_fetches || '50' }}"
+
+      - name: 11. Send Final Email Notification
         # ONLY send the email if the relay race is COMPLETELY finished, OR if the script crashed.
-        if: always() && steps.relay_race.outputs.continue_batch != 'true'
+        if: always() && (steps.run_script.outputs.CONTINUE_BATCH == 'false' || job.status != 'success')
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: ${{ secrets.SMTP_SERVER }}
           server_port: ${{ secrets.SMTP_PORT }}
           username: ${{ secrets.SMTP_USERNAME }}
           password: ${{ secrets.SMTP_PASSWORD }}
-          subject: >
-            ${{ job.status == 'success' && '✅ Drama Title Validation Completed' || '❌ Title Validation FAILED' }}
-          body: file://email_body.txt
+          subject: ${{ env.EMAIL_SUBJECT }}
+          body: file://${{ env.REPORT_PATH }}
           to: ${{ secrets.NOTIFY_EMAIL }}
           from: ${{ secrets.SMTP_USERNAME }}
