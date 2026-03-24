@@ -1,0 +1,527 @@
+{
+    "scriptVersion": "v11.2",
+    "runID": "RUN_20260324_122706",
+    "timestamp": "24 March 2026 12:42 PM (IST)",
+    "showID": 132,
+    "showName": "Rich Man",
+    "fetchedFields": {
+        "showImage": {
+            "value": "132.jpg",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Rich_Man_(Korean_Drama)"
+        },
+        "releaseDate": {
+            "value": "May  9, 2018 - Jun 28, 2018",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/26135-rich-man-poor-woman"
+        },
+        "otherNames": {
+            "value": [
+                "Homem Rico",
+                "Poor Woman",
+                "Richimaen",
+                "Богатый мужчина"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/26135-rich-man-poor-woman"
+        },
+        "Duration": {
+            "value": "1 hr. 5 min.",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/26135-rich-man-poor-woman"
+        },
+        "synopsis": {
+            "value": "Lee Yoo-Chan (Suho) is the CEO of IT company Next In. He founded the company and it is now the most desirable place to work for young professionals. He is arrogant and does not trust people in general. Lee Yoo-Chan also suffers from an inability to recognize faces.\n\nKim Bo-Ra (Ha Yeon-Soo) was born in the countryside on Jeju Island. She is the pride of her family and famous in her hometown for being smart. She goes to Seoul to attend college and carries her family's high expectations for her. During her last year in college, Kim Bo-Ra experiences difficulties finding her job. Her dream is to work at Next In. Kim Bo-Ra meets Lee Yoo-Chan and their lives change.",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Rich_Man_(Korean_Drama)"
+        },
+        "director": {
+            "value": [
+                "Min Doo Shik"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/26135-rich-man-poor-woman"
+        },
+        "tags": {
+            "value": [
+                "Prosopagnosia",
+                "Rich Man/Poor Woman",
+                "Eccentric Male Lead",
+                "MDL Remake",
+                "Entrepreneur Male Lead",
+                "Friendship",
+                "Poor Female Lead",
+                "Slow Burn Romance",
+                "Rich Male Lead"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/26135-rich-man-poor-woman"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "16732",
+                    "artistName": "Min Doo Shik",
+                    "artistImageURL": "https://i.mydramalist.com/xkZjjm.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "16733",
+                    "artistName": "Hwang Jo Yoon",
+                    "artistImageURL": "https://i.mydramalist.com/D2eyqm.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "7248",
+                    "artistName": "Suho",
+                    "artistImageURL": "https://i.mydramalist.com/rNeBXN_5s.jpg",
+                    "characterName": "Yoo Chan",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "5122",
+                    "artistName": "Ha Yeon Soo",
+                    "artistImageURL": "https://i.mydramalist.com/01nyes.jpg",
+                    "characterName": "Kim Bo Ra",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "5178",
+                    "artistName": "Oh Chang Seok",
+                    "artistImageURL": "https://i.mydramalist.com/q7xjB_5s.jpg",
+                    "characterName": "Min Tae Joo",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "1572",
+                    "artistName": "Kim Ye Won",
+                    "artistImageURL": "https://i.mydramalist.com/1wLQBy_5s.jpg",
+                    "characterName": "Min Tae Ra",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "9515",
+                    "artistName": "Choi Kwang Il",
+                    "artistImageURL": "https://i.mydramalist.com/x4W1xq_5s.jpg",
+                    "characterName": "Director Nam Chul Woo",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5255",
+                    "artistName": "Park Sung Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/mONo42_5s.jpg",
+                    "characterName": "Cha Do Jin [Next In team]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1559",
+                    "artistName": "Lee Jae Jin",
+                    "artistImageURL": "https://i.mydramalist.com/x4jV1X_5s.jpg",
+                    "characterName": "Kang Chan Soo [Next In team]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3934",
+                    "artistName": "Kim Ian",
+                    "artistImageURL": "https://i.mydramalist.com/50opYs.jpg",
+                    "characterName": "Jang Do Il [Next In team]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2776",
+                    "artistName": "Kim Min Ji",
+                    "artistImageURL": "https://i.mydramalist.com/62bzPs.jpg",
+                    "characterName": "Kim Boon Hong",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "13880",
+                    "artistName": "Yoon Da Young",
+                    "artistImageURL": "https://i.mydramalist.com/LdNNbs.jpg",
+                    "characterName": "Park Min Soo [Bo Ra 's friend]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5876",
+                    "artistName": "Kim Jung Seok",
+                    "artistImageURL": "https://i.mydramalist.com/kXbLrs.jpg",
+                    "characterName": "Kim Il Gu [Bo Ra's father]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3267",
+                    "artistName": "Hwang Young Hee",
+                    "artistImageURL": "https://i.mydramalist.com/eYgQ0e_5s.jpg",
+                    "characterName": "Jo Yun Shil [Bo Ra's mother]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2926",
+                    "artistName": "Sung Byung Sook",
+                    "artistImageURL": "https://i.mydramalist.com/5v8XOe_5s.jpg",
+                    "characterName": "[Bo Ra's grandmother]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "844",
+                    "artistName": "Lee Jae Yong",
+                    "artistImageURL": "https://i.mydramalist.com/jx21z_5s.jpg",
+                    "characterName": "Chairman Min [Tae Joo's father]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "10526",
+                    "artistName": "Park Hyun Woo",
+                    "artistImageURL": "https://i.mydramalist.com/xn3Oj_5s.jpg",
+                    "characterName": "Father Michael",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3777",
+                    "artistName": "Choi Ji Na",
+                    "artistImageURL": "https://i.mydramalist.com/b22kVs.jpg",
+                    "characterName": "Vice Minister Young",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "21530",
+                    "artistName": "Jung Yo Han",
+                    "artistImageURL": "https://i.mydramalist.com/Z0gnJs.jpg",
+                    "characterName": "Steve Jo",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "21532",
+                    "artistName": "Han Jung Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/RW3oYs.jpg",
+                    "characterName": "Lee Dong Ha",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "21716",
+                    "artistName": "Nam Ki Won",
+                    "artistImageURL": "https://i.mydramalist.com/E88bzs.jpg",
+                    "characterName": "Yoo Chan [Young]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "21533",
+                    "artistName": "Kang Sang Won",
+                    "artistImageURL": "https://i.mydramalist.com/qq20Qs.jpg",
+                    "characterName": "Ko Kyung Chan",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4587",
+                    "artistName": "Choi Yoon Joon",
+                    "artistImageURL": "https://i.mydramalist.com/KABrJs.jpg",
+                    "characterName": "[Client]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "19488",
+                    "artistName": "Sung Chan Ho",
+                    "artistImageURL": "https://i.mydramalist.com/ndYqBs.jpg",
+                    "characterName": "[Shareholder] (Ep 11)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5817",
+                    "artistName": "Son Yeong Soon",
+                    "artistImageURL": "https://i.mydramalist.com/81dLjW_5s.jpg",
+                    "characterName": "[Shareholder] (Ep 11)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "19374",
+                    "artistName": "Hong Seung Beom",
+                    "artistImageURL": "https://i.mydramalist.com/mVEJms.jpg",
+                    "characterName": "[Interviewer]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21042",
+                    "artistName": "Jo Hye Joo",
+                    "artistImageURL": "https://i.mydramalist.com/YYnnxK_5s.jpg",
+                    "characterName": "[Bo Ra's friend] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "16975",
+                    "artistName": "Lee Tae Vin",
+                    "artistImageURL": "https://i.mydramalist.com/BdwJJ7_5s.jpg",
+                    "characterName": "Lee Jae Young",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "111361",
+                    "artistName": "Lee Hyun Seok",
+                    "artistImageURL": "https://i.mydramalist.com/kQKjk_5s.jpg",
+                    "characterName": "[Aide ]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "110423",
+                    "artistName": "Park Won Seok",
+                    "artistImageURL": "https://i.mydramalist.com/R1w7o_5s.jpg",
+                    "characterName": "Kim Bo Seong",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "38487",
+                    "artistName": "Yoo Young Bok",
+                    "artistImageURL": "https://i.mydramalist.com/RLE5r_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "16881",
+                    "artistName": "Im Joon Hyuk",
+                    "artistImageURL": "https://i.mydramalist.com/XdvZVd_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "6256",
+                    "artistName": "Lee Jung Sung",
+                    "artistImageURL": "https://i.mydramalist.com/dY4AAs.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "15736",
+                    "artistName": "Jo Sung Hee",
+                    "artistImageURL": "https://i.mydramalist.com/dAkKgs.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "21398",
+                    "artistName": "Gong Jae Won",
+                    "artistImageURL": "https://i.mydramalist.com/4jR1r_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "30759",
+                    "artistName": "Lee Yoon Soo",
+                    "artistImageURL": "https://i.mydramalist.com/2XZP2_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "39289",
+                    "artistName": "Son Seon Geun",
+                    "artistImageURL": "https://i.mydramalist.com/QYZo4_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "44631",
+                    "artistName": "Jang Joon Ho",
+                    "artistImageURL": "https://i.mydramalist.com/QPdzA_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "100629",
+                    "artistName": "Kang Seong Hwa",
+                    "artistImageURL": "https://i.mydramalist.com/rKVyD_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "86731",
+                    "artistName": "Gong Seo Young",
+                    "artistImageURL": "https://i.mydramalist.com/BdpBlz_5s.jpg",
+                    "characterName": "Oh Se Yeon",
+                    "role": "Support Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/26135-rich-man-poor-woman"
+        },
+        "network": {
+            "value": [
+                "MBN",
+                "DramaX"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/26135-rich-man-poor-woman"
+        },
+        "airedOn": {
+            "value": [
+                "Wednesday",
+                "Thursday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/26135-rich-man-poor-woman"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "16732",
+            "artistName": "Min Doo Shik",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "16733",
+            "artistName": "Hwang Jo Yoon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "7248",
+            "artistName": "Suho",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "5122",
+            "artistName": "Ha Yeon Soo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "5178",
+            "artistName": "Oh Chang Seok",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "1572",
+            "artistName": "Kim Ye Won",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "9515",
+            "artistName": "Choi Kwang Il",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "5255",
+            "artistName": "Park Sung Hoon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "1559",
+            "artistName": "Lee Jae Jin",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "3934",
+            "artistName": "Kim Ian",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "13880",
+            "artistName": "Yoon Da Young",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "5876",
+            "artistName": "Kim Jung Seok",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "2926",
+            "artistName": "Sung Byung Sook",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "10526",
+            "artistName": "Park Hyun Woo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "3777",
+            "artistName": "Choi Ji Na",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "21530",
+            "artistName": "Jung Yo Han",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "21532",
+            "artistName": "Han Jung Hoon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "21716",
+            "artistName": "Nam Ki Won",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "21533",
+            "artistName": "Kang Sang Won",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "19374",
+            "artistName": "Hong Seung Beom",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "21042",
+            "artistName": "Jo Hye Joo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "16975",
+            "artistName": "Lee Tae Vin",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "111361",
+            "artistName": "Lee Hyun Seok",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "110423",
+            "artistName": "Park Won Seok",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "16881",
+            "artistName": "Im Joon Hyuk",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "15736",
+            "artistName": "Jo Sung Hee",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "30759",
+            "artistName": "Lee Yoon Soo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "44631",
+            "artistName": "Jang Joon Ho",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "100629",
+            "artistName": "Kang Seong Hwa",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "86731",
+            "artistName": "Gong Seo Young",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "asianwiki",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": "mydramalist",
+        "airedOn": "mydramalist"
+    }
+}
