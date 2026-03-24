@@ -1,139 +1,75 @@
-✅ Workflow Batch completed successfully
-🏁 Final Batch Completed
+✅ Partial Batch completed successfully
+⏳ Batch Processing in Progress...
 ══════════════════════════════════════════════════════
 📊 My Movie Database – Excel to JSON Workflow Report
 ══════════════════════════════════════════════════════
 
 🚀 Workflow Type : Manual
-🔁 RUN           : 869
-⏰ Start Time    : 24 March 2026 - 03:05:26 PM
-⏰ End Time      : 24 March 2026 - 03:05:29 PM
-⏱️ Run Time      : 2 Seconds
-⚙️ Max Process   : 50 Row Per Run
+🔁 RUN           : 870
+⏰ Start Time    : 24 March 2026 - 03:11:11 PM
+⏰ End Time      : 24 March 2026 - 03:11:25 PM
+⏱️ Run Time      : 13 Seconds
+⚙️ Max Process   : 1 Row Per Run
 🔄 Current Batch : 1
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🗂️ === Deleting Records ===
+🗂️ === Sheet1 ===
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-❌ Data Deleted:
-- 128 -> The Interest of Love (2022) -> ✅ Deleted
-- 129 -> Falling Into Your Smile (2021) -> ✅ Deleted
-- 130 -> While You Were Sleeping (2017) -> ✅ Deleted
-- 131 -> My Strange Hero (2018) -> ✅ Deleted
-- 132 -> Rich Man (2018) -> ✅ Deleted
-- 133 -> Touch Your Heart (2019) -> ✅ Deleted
-- 134 -> 18 Again (2020) -> ✅ Deleted
-- 135 -> Oh My Ghost (2015) -> ✅ Deleted
-- 136 -> My Robot Boyfriend (2019) -> ✅ Deleted
-- 137 -> Lie To Me (2011) -> ✅ Deleted
-- 138 -> Dream High (2011) -> ✅ Deleted
-- 139 -> Cinderella And Fourn Knights (2020) -> ✅ Deleted
-- 140 -> Marriage, Not Dating (2014) -> ✅ Deleted
-- 141 -> New Life (Yeni Hayat) (2020) -> ✅ Deleted
-- 142 -> Marriage Contract (2016) -> ✅ Deleted
-- 143 -> King 2 Hearts (2012) -> ✅ Deleted
-- 144 -> Hotel King (2014) -> ✅ Deleted
-- 145 -> Tale of the Nine Tailed (2020) -> ✅ Deleted
-- 146 -> Cute Bodyguard (2022) -> ✅ Deleted
-- 147 -> Well Intended Love Season 1 (2019) -> ✅ Deleted
-- 148 -> Well Intended Love Season 2 (2020) -> ✅ Deleted
-- 149 -> Hello Mr.Gu (2021) -> ✅ Deleted
-- 150 -> Protect the Boss (2011) -> ✅ Deleted
-- 151 -> Oh My Venus (2015) -> ✅ Deleted
-- 152 -> I Love Lee Tae Ri (2012) -> ✅ Deleted
-- 153 -> Crazy Love (2022) -> ✅ Deleted
-- 154 -> About is Love (2018) -> ✅ Deleted
-- 155 -> Once We Get Married (2021) -> ✅ Deleted
-- 156 -> The Beauty Inside (2018) -> ✅ Deleted
-- 157 -> Secret Love Affair (2014) -> ✅ Deleted
-- 158 -> Love In Time (2020) -> ✅ Deleted
-- 101 -> It's Okay to Not be Okay (2020) -> ✅ Deleted
-- 102 -> It's Okay That's Love (2014) -> ✅ Deleted
-- 103 -> Descendant of the Sun (2016) -> ✅ Deleted
-- 104 -> Find Me in Your Memory (2020) -> ✅ Deleted
-- 105 -> Lawless Lawyer (2018) -> ✅ Deleted
-- 106 -> Love to Hate You (2023) -> ✅ Deleted
-- 107 -> Youth of May (2021) -> ✅ Deleted
-- 108 -> My Secret Romance (2017) -> ✅ Deleted
-- 109 -> Unforgettable Love (2021) -> ✅ Deleted
-- 110 -> Uncontrollably Fond (2016) -> ✅ Deleted
-- 111 -> The Law Cafe (2022) -> ✅ Deleted
-- 112 -> The World of Married (2020) -> ✅ Deleted
-- 113 -> Boys Over Flowers (2009) -> ✅ Deleted
-- 114 -> Oh! Master (2021) -> ✅ Deleted
-- 115 -> Because This Is My First Life (2017) -> ✅ Deleted
-- 116 -> Blood (2015) -> ✅ Deleted
-- 117 -> Now, We Are Breaking Up (2021) -> ✅ Deleted
-- 118 -> The Fox's Summer Season 1 ( Fox Fall in Love) (2017) -> ✅ Deleted
-- 119 -> The Fox's Summer Season 2 ( Fox Fall in Love) (2017) -> ✅ Deleted
-- 120 -> Meloholic (2017) -> ✅ Deleted
-- 121 -> Meteor Garden (2018) -> ✅ Deleted
-- 122 -> Miracle That We Met (2018) -> ✅ Deleted
-- 123 -> I Miss You (2014) -> ✅ Deleted
-- 124 -> Still 17 (2018) -> ✅ Deleted
-- 125 -> Personal Taste (2010) -> ✅ Deleted
-- 126 -> Angel Eyes (2014) -> ✅ Deleted
-- 127 -> Crash Landing On You (2019) -> ✅ Deleted
+🆕 Data Created:
+- 101 - It's Okay to Not be Okay (2020) -> First Time Uploaded
+
+🖼️ Fetched Data Details:
+- 101 - It's Okay to Not be Okay (2020) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+
+📊 Summary (Sheet: Sheet1)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Created: 1
+🔁 Updated: 0
+🔍 Refetched: 0
+🚫 Skipped: 0
+⚠️ Warnings: 0
+  Total Unique Rows: 1
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📊 Summary (Current Batch Only)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🆕 Total Created: 0
+🆕 Total Created: 1
 🔁 Total Updated: 0
 🔍 Total Refetched: 0
-🖼️ Show Images Updated: 0
+🖼️ Show Images Updated: 1
 🧑‍🎨 New Artist Images Added: 0
 🚫 Total Skipped: 0
-❌ Total Deleted: 58
-🗄️ Total Archived Backups: 68
+❌ Total Deleted: 0
+🗄️ Total Archived Backups: 0
 ⚠️ Total Warnings: 0
 💾 Backup Files: 0
-  Grand Total Rows Processed: 0
+  Grand Total Rows Processed: 1
 
-💾 Metadata Backups: 0
+💾 Metadata Backups: 1
 
-📦 Total Objects in seriesData.json: 0
+📦 Total Objects in seriesData.json: 1
 📦 Total Objects in artists.json: 2589
-📦 Total Objects in cast.json: 0
+📦 Total Objects in cast.json: 1
 📦 Total Objects in artists_lookup.json: 2589
-🖼️ Total images in show-images: 0
+🖼️ Total images in show-images: 1
 🧑‍🎨 Total images in artist-images: 2589
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ Folders Generated:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📁 deleted_data/ (Total: 58 files)
-    📄 DELETED_24_March_2026_1505_128.json
-    📄 DELETED_24_March_2026_1505_129.json
-    📄 DELETED_24_March_2026_1505_130.json
-    📄 DELETED_24_March_2026_1505_131.json
-    📄 DELETED_24_March_2026_1505_132.json
-    ... and 53 more files.
+📁 show_images/ (Total: 1 files)
+    📄 101.jpg
 
-📁 deleted_images/ (Total: 57 files)
-    📄 DELETED_24_March_2026_1505_128.jpg
-    📄 DELETED_24_March_2026_1505_129.jpg
-    📄 DELETED_24_March_2026_1505_130.jpg
-    📄 DELETED_24_March_2026_1505_131.jpg
-    📄 DELETED_24_March_2026_1505_132.jpg
-    ... and 52 more files.
+📁 meta_backups/ (Total: 1 files)
+    📄 META_24_March_2026_1511_101.json
 
 📁 reports/ (Total: 1 files)
-    📄 24_March_2026_1505_FINAL_869_REPORT.txt
-
-📁 archived_backups/ (Total: 2 files)
-    📄 BACKUP_24_March_2026_1249_101.json
-    📄 BACKUP_24_March_2026_1249_102.json
-
-📁 archived_meta_backups/ (Total: 66 files)
-    📄 META_24_March_2026_1227_128.json
-    📄 META_24_March_2026_1227_129.json
-    📄 META_24_March_2026_1227_130.json
-    📄 META_24_March_2026_1227_131.json
-    📄 META_24_March_2026_1227_132.json
-    ... and 61 more files.
+    📄 24_March_2026_1511_PARTIAL_870_REPORT.txt
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🏁 Workflow finished successfully
+⚠️ BATCH LIMIT REACHED: The script paused safely.
+GitHub Actions will trigger next run automatically.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-✅ Final Master Report written -> reports/24_March_2026_1505_FINAL_869_REPORT.txt (Saved to Repo)
+✅ Partial Report created at -> reports/24_March_2026_1511_PARTIAL_870_REPORT.txt
+   (Git will ignore this file due to .gitignore settings)
