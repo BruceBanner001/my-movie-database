@@ -98,6 +98,7 @@ jobs:
             echo "No changes to commit"
           else
             git commit -m "Automated Batch Update: $(TZ='Asia/Kolkata' date '+%Y-%m-%d %I:%M %p IST')"
+            git pull --rebase origin ${{ github.ref_name }}
             git push
           fi
           echo "::endgroup::"
