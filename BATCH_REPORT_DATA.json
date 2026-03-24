@@ -1,10 +1,14 @@
 {
     "global_start_time": "24 March 2026 - 03:11:11 PM",
-    "batch_run_count": 2,
+    "batch_run_count": 3,
     "report_data": {
         "Sheet1": {
+            "missing_warnings": [
+                "- 102 - It's Okay That's Love (2014) -> ⚠️ Missing: Aired On, Cast, Director, Duration, Other Names, Release Date, Tags"
+            ],
             "fetched_data": [
-                "- 101 - It's Okay to Not be Okay (2020) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags"
+                "- 101 - It's Okay to Not be Okay (2020) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags",
+                "- 102 - It's Okay That's Love (2014) -> Fetched: Show Image, Synopsis"
             ],
             "created": [
                 {
@@ -105,30 +109,85 @@
                         "network": null,
                         "airedOn": "mydramalist"
                     }
+                },
+                {
+                    "showID": 102,
+                    "showName": "It's Okay That's Love",
+                    "otherNames": [],
+                    "showImage": "102.jpg",
+                    "watchStartedOn": "08-02-2023",
+                    "watchEndedOn": "10-02-2023",
+                    "releasedYear": 2014,
+                    "releaseDate": null,
+                    "totalEpisodes": 16,
+                    "showType": "Drama",
+                    "nativeLanguage": "Korean",
+                    "watchedLanguage": "Korean",
+                    "country": "South Korea",
+                    "comments": "One Time Watchable. Ending Was Simple And Nice.",
+                    "ratings": 8,
+                    "genres": [
+                        "Psychology",
+                        "Comedy",
+                        "Romance",
+                        "Melodrama"
+                    ],
+                    "network": [
+                        "SBS"
+                    ],
+                    "againWatchedDates": [
+                        "03-02-2024",
+                        "24-09-2025"
+                    ],
+                    "updatedOn": "24 March 2026",
+                    "updatedDetails": "First Time Uploaded",
+                    "synopsis": "Jang Jae-Yeol is a mystery writer and radio DJ. He suffers from a obsession. Ji Hae-Soo is going through her first year fellowship in psychiatry at a University Hospital. She chose psychiatry because she doesn't want to perform surgeries. After she meets Jang Jae-Yeol, her life goes through big changes.",
+                    "topRatings": 2400,
+                    "Duration": null,
+                    "director": [],
+                    "tags": [],
+                    "cast": {},
+                    "airedOn": [],
+                    "sitePriorityUsed": {
+                        "showImage": "asianwiki",
+                        "releaseDate": null,
+                        "otherNames": null,
+                        "Duration": null,
+                        "synopsis": "asianwiki",
+                        "director": null,
+                        "tags": null,
+                        "cast": null,
+                        "network": null,
+                        "airedOn": null
+                    }
                 }
             ]
         }
     },
     "files_generated": {
+        "artist_images": [],
         "deleted_images": [],
+        "archived_backups": [],
+        "backups": [],
         "reports": [
-            "reports/24_March_2026_1511_PARTIAL_870_REPORT.txt"
+            "reports/24_March_2026_1511_PARTIAL_870_REPORT.txt",
+            "reports/24_March_2026_1511_PARTIAL_871_REPORT.txt"
+        ],
+        "show_images": [
+            "show-images/101.jpg",
+            "show-images/102.jpg"
         ],
         "deleted_data": [],
-        "show_images": [
-            "show-images/101.jpg"
-        ],
-        "artist_images": [],
-        "archived_meta_backups": [],
-        "backups": [],
-        "archived_backups": [],
         "meta_backups": [
-            "backup-meta-data/META_24_March_2026_1511_101.json"
-        ]
+            "backup-meta-data/META_24_March_2026_1511_101.json",
+            "backup-meta-data/META_24_March_2026_1511_102.json"
+        ],
+        "archived_meta_backups": []
     },
-    "cumulative_time_seconds": 13.202215,
+    "cumulative_time_seconds": 46.070264,
     "first_run_id": "870",
     "processed_ids_all_runs": [
-        101
+        101,
+        102
     ]
 }
