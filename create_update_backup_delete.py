@@ -3,8 +3,8 @@
 
 # ============================================================
 # Script: create_update_backup_delete.py
-# Author: [BruceBanner001]
-# Version: v11.2 (STRICT BATCH LOGGING & NO "NOT FOUND" EDITION - WITH YEARS)
+# Author:[BruceBanner001]
+# Version: v11.3 (STRICT BATCH LOGGING & EXPLICIT ERROR HANDLING)
 # ============================================================
 
 # ---------------------------- IMPORTS & GLOBALS ----------------------------
@@ -15,7 +15,7 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
-SCRIPT_VERSION = "v11.2"
+SCRIPT_VERSION = "v11.3"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames":[], "showImage": None,
@@ -1627,13 +1627,16 @@ def process_and_distribute_cast(full_cast, artists_db, context):
     return cast_summary, full_cast_dict
 
 def fetch_excel_from_gdrive_bytes(file_id, creds_path):
-    if not HAVE_GOOGLE_API: return None
+    if not HAVE_GOOGLE_API: 
+        print("❌ CRITICAL ERROR: Google API packages (google-auth, google-api-python-client) are not installed!")
+        return None
     try:
         creds = service_account.Credentials.from_service_account_file(creds_path, scopes=['https://www.googleapis.com/auth/drive.readonly'])
         service = build('drive', 'v3', credentials=creds)
         try: 
             request = service.files().get_media(fileId=file_id)
-        except Exception: 
+        except Exception as api_err: 
+            print(f"⚠️ Warning getting media, trying export... ({api_err})")
             request = service.files().export_media(fileId=file_id, mimeType='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
         fh = io.BytesIO()
         downloader = MediaIoBaseDownload(fh, request)
@@ -1641,7 +1644,9 @@ def fetch_excel_from_gdrive_bytes(file_id, creds_path):
         while not done: _, done = downloader.next_chunk()
         fh.seek(0)
         return fh
-    except Exception as e: return None
+    except Exception as e: 
+        print(f"❌ CRITICAL ERROR from Google Drive API: {e}")
+        return None
 
 def load_json_file(file_path):
     try:
@@ -1692,12 +1697,24 @@ def main():
     merge_batch_state(context)
 
     if not (os.path.exists(EXCEL_FILE_ID_TXT) and os.path.exists(SERVICE_ACCOUNT_FILE)): 
+        print(f"❌ CRITICAL ERROR: Secret files ({EXCEL_FILE_ID_TXT} or {SERVICE_ACCOUNT_FILE}) are missing!")
         sys.exit(1)
+        
     with open(EXCEL_FILE_ID_TXT, 'r') as f: 
         excel_id = f.read().strip()
+        
+    if not excel_id:
+        print("❌ CRITICAL ERROR: The EXCEL_FILE_ID secret is empty!")
+        sys.exit(1)
     
+    print(f"🚀 Attempting to connect to Google Drive for File ID: {excel_id}...")
     excel_bytes = fetch_excel_from_gdrive_bytes(excel_id, SERVICE_ACCOUNT_FILE)
-    if not excel_bytes: sys.exit(1)
+    
+    if not excel_bytes: 
+        print("❌ CRITICAL ERROR: Failed to download the Excel file. Script aborting.")
+        sys.exit(1)
+        
+    print("✅ Successfully downloaded Excel file from Google Drive!")
 
     xl = pd.ExcelFile(io.BytesIO(excel_bytes.getvalue()))
 
