@@ -1,146 +1,85 @@
-✅ Workflow Batch completed successfully
-🏁 Final Batch Completed
+✅ Partial Batch completed successfully
+⏳ Batch Processing in Progress...
 ══════════════════════════════════════════════════════
-📊 My Movie Database – Excel to JSON Workflow Report
+📊 Drama Title Validator – Execution Report
 ══════════════════════════════════════════════════════
 
 🚀 Workflow Type : Manual
-🔁 RUN           : 876
-⏰ Start Time    : 25 March 2026 - 08:49:41 AM
-⏰ End Time      : 25 March 2026 - 08:50:44 AM
-⏱️ Run Time      : 1 Minute 3 Seconds
+🔁 RUN           : 10
+⏰ Start Time    : 25 March 2026 - 09:14:56 AM
+⏰ End Time      : 25 March 2026 - 09:19:35 AM
+⏱️ Run Time      : 4 Minutes 38 Seconds
 ⚙️ Max Process   : 50 Row Per Run
-🔄 Current Batch : 1
+🔄 Current Batch : 2
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Sheet1 ===
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-🔍 Refetched Data:
-✨ 104 - Find Me in Your Memory (2020) -> Fetched: Director, Other Names
-✨ 105 - Lawless Lawyer (2018) -> Fetched: Director, Other Names
-✨ 118 - The Fox's Summer Season 1 ( Fox Fall in Love) (2017) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-✨ 119 - The Fox's Summer Season 2 ( Fox Fall in Love) (2017) -> Fetched: Aired On, Cast, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-✨ 121 - Meteor Garden (2018) -> Fetched: Show Image
-✨ 123 - I Miss You (2014) -> Fetched: Aired On, Release Date, Tags
-✨ 153 - Crazy Love (2022) -> Fetched: Director, Other Names
+✨ Brand New Recommendations Found (Action Required):
+- [ID 1] **It's Okay to Not be Okay** ➔ Recommend: It's Okay to Not Be Okay (Source: MyDramaList)
+- [ID 2] **It's Okay That's Love** ➔ Recommend: It's Okay, That's Love Episode 16 (Source: MyDramaList)
+- [ID 12] **The World of Married** ➔ Recommend: The World of the Married (Source: MyDramaList)
+- [ID 13] **Boys Over Flowers** ➔ Recommend: Boys over Flowers (Source: MyDramaList)
+- [ID 14] **Oh! Master** ➔ Recommend: Oh My Ladylord (Source: MyDramaList)
+- [ID 29] **Falling Into Your Smile** ➔ Recommend: Falling into Your Smile (Source: MyDramaList)
+- [ID 43] **King 2 Hearts** ➔ Recommend: The King 2 Hearts (Source: MyDramaList)
+- [ID 47] **Well Intended Love Season 1** ➔ Recommend: Well-Intended Love (Source: MyDramaList)
+- [ID 48] **Well Intended Love Season 2** ➔ Recommend: Well-Intended Love Season 2 (Source: MyDramaList)
+- [ID 49] **Hello Mr.Gu** ➔ Recommend: Hello Mr. Gu (Source: MyDramaList)
 
-⚠️ Missing Values (Still attempting to fetch):
-- 119 - The Fox's Summer Season 2 ( Fox Fall in Love) (2017) -> ⚠️ Missing: Director
-- 141 - New Life (Yeni Hayat) (2020) -> ⚠️ Missing: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 152 - I Love Lee Tae Ri (2012) -> ⚠️ Missing: Director
-- 159 - F4 Thailand: Boys Over Flowers (2021) -> ⚠️ Missing: Director
+✅ Perfect Matches (Newly Scanned - 100% Accurate!):
+-[ID 3] **Descendant of the Sun** -> Perfect!
+-[ID 4] **Find Me in Your Memory** -> Perfect!
+-[ID 5] **Lawless Lawyer** -> Perfect!
+-[ID 6] **Love to Hate You** -> Perfect!
+-[ID 7] **Youth of May** -> Perfect!
+-[ID 8] **My Secret Romance** -> Perfect!
+-[ID 9] **Unforgettable Love** -> Perfect!
+-[ID 10] **Uncontrollably Fond** -> Perfect!
+-[ID 11] **The Law Cafe** -> Perfect!
+-[ID 15] **Because This Is My First Life** -> Perfect!
+-[ID 16] **Blood** -> Perfect!
+-[ID 17] **Now, We Are Breaking Up** -> Perfect!
+-[ID 20] **Meloholic** -> Perfect!
+-[ID 21] **Meteor Garden** -> Perfect!
+-[ID 24] **Still 17** -> Perfect!
+-[ID 25] **Personal Taste** -> Perfect!
+-[ID 28] **The Interest of Love** -> Perfect!
+-[ID 30] **While You Were Sleeping** -> Perfect!
+-[ID 31] **My Strange Hero** -> Perfect!
+-[ID 32] **Rich Man** -> Perfect!
+-[ID 33] **Touch Your Heart** -> Perfect!
+-[ID 40] **Marriage, Not Dating** -> Perfect!
+-[ID 42] **Marriage Contract** -> Perfect!
+-[ID 46] **Cute Bodyguard** -> Perfect!
 
-🚫 Skipped (Unchanged):
-- 101 - It's Okay to Not be Okay (2020)
-- 102 - It's Okay That's Love (2014)
-- 103 - Descendant of the Sun (2016)
-- 106 - Love to Hate You (2023)
-- 107 - Youth of May (2021)
-- 108 - My Secret Romance (2017)
-- 109 - Unforgettable Love (2021)
-- 110 - Uncontrollably Fond (2016)
-- 111 - The Law Cafe (2022)
-- 112 - The World of Married (2020)
-- 113 - Boys Over Flowers (2009)
-- 114 - Oh! Master (2021)
-- 115 - Because This Is My First Life (2017)
-- 116 - Blood (2015)
-- 117 - Now, We Are Breaking Up (2021)
-- 120 - Meloholic (2017)
-- 122 - Miracle That We Met (2018)
-- 124 - Still 17 (2018)
-- 125 - Personal Taste (2010)
-- 126 - Angel Eyes (2014)
-- 127 - Crash Landing On You (2019)
-- 128 - The Interest of Love (2022)
-- 129 - Falling Into Your Smile (2021)
-- 130 - While You Were Sleeping (2017)
-- 131 - My Strange Hero (2018)
-- 132 - Rich Man (2018)
-- 133 - Touch Your Heart (2019)
-- 134 - 18 Again (2020)
-- 135 - Oh My Ghost (2015)
-- 136 - My Robot Boyfriend (2019)
-- 137 - Lie To Me (2011)
-- 138 - Dream High (2011)
-- 139 - Cinderella And Fourn Knights (2020)
-- 140 - Marriage, Not Dating (2014)
-- 142 - Marriage Contract (2016)
-- 143 - King 2 Hearts (2012)
-- 144 - Hotel King (2014)
-- 145 - Tale of the Nine Tailed (2020)
-- 146 - Cute Bodyguard (2022)
-- 147 - Well Intended Love Season 1 (2019)
-- 148 - Well Intended Love Season 2 (2020)
-- 149 - Hello Mr.Gu (2021)
-- 150 - Protect the Boss (2011)
-- 151 - Oh My Venus (2015)
-- 154 - About is Love (2018)
-- 155 - Once We Get Married (2021)
-- 156 - The Beauty Inside (2018)
-- 157 - Secret Love Affair (2014)
-- 158 - Love In Time (2020)
-- 160 - Crash Course in Romance (2023)
-- 161 - Mama Fairy and the Woodcutter (2018)
-- 162 - Shitting Star (Shooting Star) (2022)
-- 163 - That Winter, the Wind Blows (2013)
-- 164 - The Bride of Habaek (2017)
-- 165 - My Princess (2011)
-- 166 - Black Knight: The Man Who Gurards Me (2017)
-
-📊 Summary (Sheet: Sheet1)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🆕 Created: 0
-🔁 Updated: 0
-🔍 Refetched: 7
-🚫 Skipped: 56
-⚠️ Warnings: 4
-  Total Unique Rows: 63
+⚠️ Not Found Online (Could not find on MDL or AsianWiki):
+-[ID 18] **The Fox's Summer Season 1 ( Fox Fall in Love)** -> Please verify manually.
+-[ID 19] **The Fox's Summer Season 2 ( Fox Fall in Love)** -> Please verify manually.
+-[ID 22] **Miracle That We Met** -> Please verify manually.
+-[ID 23] **I Miss You** -> Please verify manually.
+-[ID 26] **Angel Eyes** -> Please verify manually.
+-[ID 27] **Crash Landing On You** -> Please verify manually.
+-[ID 34] **18 Again** -> Please verify manually.
+-[ID 35] **Oh My Ghost** -> Please verify manually.
+-[ID 36] **My Robot Boyfriend** -> Please verify manually.
+-[ID 37] **Lie To Me** -> Please verify manually.
+-[ID 38] **Dream High** -> Please verify manually.
+-[ID 39] **Cinderella And Fourn Knights** -> Please verify manually.
+-[ID 41] **New Life (Yeni Hayat)** -> Please verify manually.
+-[ID 44] **Hotel King** -> Please verify manually.
+-[ID 45] **Tale of the Nine Tailed** -> Please verify manually.
+-[ID 50] **Protect the Boss** -> Please verify manually.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📊 Summary (Current Batch Only)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🆕 Total Created: 0
-🔁 Total Updated: 0
-🔍 Total Refetched: 7
-🖼️ Show Images Updated: 0
-🧑‍🎨 New Artist Images Added: 0
-🚫 Total Skipped: 56
-❌ Total Deleted: 0
-🗄️ Total Archived Backups: 0
-⚠️ Total Warnings: 4
-💾 Backup Files: 0
-  Grand Total Rows Processed: 63
+🌐 Internet Fetches Used : 50 (Out of 50 limit)
+⏭️ Total Skipped Fast    : 0
+✨ Total Recommendations : 10
+✅ Total Perfect Matches : 24
+🔄 Total User Fixes Seen : 0
+⚠️ Total Not Found       : 16
 
-💾 Metadata Backups: 9
-
-📦 Total Objects in seriesData.json: 66
-📦 Total Objects in artists.json: 2919
-📦 Total Objects in cast.json: 65
-📦 Total Objects in artists_lookup.json: 2919
-🖼️ Total images in show-images: 65
-🧑‍🎨 Total images in artist-images: 2919
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🗂️ Folders Generated:
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📁 show_images/ (Total: 3 files)
-    📄 118.jpg
-    📄 119.jpg
-    📄 121.jpg
-
-📁 meta_backups/ (Total: 9 files)
-    📄 META_25_March_2026_0849_104.json
-    📄 META_25_March_2026_0849_105.json
-    📄 META_25_March_2026_0849_118.json
-    📄 META_25_March_2026_0849_119.json
-    📄 META_25_March_2026_0849_121.json
-    ... and 4 more files.
-
-📁 reports/ (Total: 1 files)
-    📄 25_March_2026_0849_FINAL_876_REPORT.txt
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🏁 Workflow finished successfully
-
-✅ Final Master Report written -> reports/25_March_2026_0849_FINAL_876_REPORT.txt (Saved to Repo)
+⚠️ BATCH LIMIT REACHED: The script paused safely.
