@@ -1,0 +1,509 @@
+{
+    "scriptVersion": "v11.2",
+    "runID": "RUN_20260325_080510",
+    "timestamp": "25 March 2026 08:23 AM (IST)",
+    "showID": 144,
+    "showName": "Hotel King",
+    "fetchedFields": {
+        "showImage": {
+            "value": "144.jpg",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Hotel_King"
+        },
+        "releaseDate": {
+            "value": "Apr  5, 2014 - Jul 27, 2014",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/9046-hotel-king"
+        },
+        "otherNames": {
+            "value": [
+                "O Rei do Hotel",
+                "Король отеля",
+                "호텔킹"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/9046-hotel-king"
+        },
+        "Duration": {
+            "value": "1 hr. 5 min.",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/9046-hotel-king"
+        },
+        "synopsis": {
+            "value": "As a child, Cha Jae-Wan (later played byLee Dong-Wook) was a beggar. He was also physically abused by the leader of a group of beggars that he belonged to. One day, Jae-Wan killed the leader of the group by accident and he passed out. When awoke, he found himself in a luxurious hotel. A man, Lee Joong-Goo (Lee Deok-Hwa), tells Cha Jae-Wan that his father, Ah Sung-Won, abandoned him and his mother. Jae-Wan vows to take revenge on his father for his deceased mother.\n\nNow, Cha Jae-Wan works as the general manager for HOTEL CIEL. The hotel is run by none other than Ah Sung-Won. One day, Cha Jae-Wan tells Ah Sung-Won that he is his father and he should reveal that publicly. Ah Sung-Won though reacts unexpectedly and dies. After his death, his only child, Ah Mo-Ne (Lee Da-Hae) appears at HOTEL CIEL. She acts arrogant, but others are unaware that Ah Mo-Ne is actually afraid of being alone and she is also suspicious of her father's death. Ah Mo-Ne struggles to keep HOTEL CIEL.",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Hotel_King"
+        },
+        "director": {
+            "value": [
+                "Kim Dae Jin",
+                "Jang Joon Ho",
+                "Ashbun"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/9046-hotel-king"
+        },
+        "tags": {
+            "value": [
+                "Revenge",
+                "Enemies To Lovers",
+                "Murder",
+                "Birth Secret",
+                "Inheritance Theft",
+                "Crime Against Morality",
+                "Crime Against A Property",
+                "Violence Against Children",
+                "Emotionally Strong Female Lead",
+                "Antihero Male Lead"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/9046-hotel-king"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "16296",
+                    "artistName": "Kim Dae Jin",
+                    "artistImageURL": "https://i.mydramalist.com/YY53Rg_5m.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "19707",
+                    "artistName": "Jang Joon Ho",
+                    "artistImageURL": "https://i.mydramalist.com/4q5KQ_5m.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "21037",
+                    "artistName": "Ashbun",
+                    "artistImageURL": "https://i.mydramalist.com/0beBYm.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "28689",
+                    "artistName": "Jo Eun Jung",
+                    "artistImageURL": "https://i.mydramalist.com/Qw2eQ_5m.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "274",
+                    "artistName": "Lee Dong Wook",
+                    "artistImageURL": "https://i.mydramalist.com/jQQJvv_5s.jpg",
+                    "characterName": "Cha Jae Wan / Hyun Woo",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "275",
+                    "artistName": "Lee Da Hae",
+                    "artistImageURL": "https://i.mydramalist.com/4z3Q6_5s.jpg",
+                    "characterName": "Ah Mo Nae",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "345",
+                    "artistName": "Im Seul Ong",
+                    "artistImageURL": "https://i.mydramalist.com/Xd4eLq_5s.jpg",
+                    "characterName": "Sun Woo Hyun",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "195",
+                    "artistName": "Wang Ji Hye",
+                    "artistImageURL": "https://i.mydramalist.com/exrgW_5s.jpg",
+                    "characterName": "Song Chae Kyung",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "1397",
+                    "artistName": "Lee Deok Hwa",
+                    "artistImageURL": "https://i.mydramalist.com/R3KXEs.jpg",
+                    "characterName": "Lee Joong Goo",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "3568",
+                    "artistName": "Kim Hae Sook",
+                    "artistImageURL": "https://i.mydramalist.com/Z8gXdk_5s.jpg",
+                    "characterName": "Baek Mi Nyeo",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "5623",
+                    "artistName": "Jin Tae Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/1xYd5_5s.jpg",
+                    "characterName": "Roman Lee / Ju Han",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "3564",
+                    "artistName": "Jung Suk Yong",
+                    "artistImageURL": "https://i.mydramalist.com/j2rBOs.jpg",
+                    "characterName": "Ko San [Hotel concierge]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1726",
+                    "artistName": "Park Cheol Min",
+                    "artistImageURL": "https://i.mydramalist.com/dKZEA_5s.jpg",
+                    "characterName": "Jang Ho Il [Guest room manager]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2541",
+                    "artistName": "Ji  Il Joo",
+                    "artistImageURL": "https://i.mydramalist.com/6qLYd_5s.jpg",
+                    "characterName": "Jin Jung Han [Front-desk concierge]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "7014",
+                    "artistName": "Kim Ye Won",
+                    "artistImageURL": "https://i.mydramalist.com/Z84BEJ_5s.jpg",
+                    "characterName": "Yoon Da Jung [Front-desk concierge]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4501",
+                    "artistName": "Gong Hyun Joo",
+                    "artistImageURL": "https://i.mydramalist.com/ebpDE_5s.jpg",
+                    "characterName": "Cha Soo An [Hotel VIP supervisor]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "817",
+                    "artistName": "Alex",
+                    "artistImageURL": "https://i.mydramalist.com/BdrRe7_5s.jpg",
+                    "characterName": "Yoo Joon Sung [Food & kitchen team leader]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "6303",
+                    "artistName": "Kim Sun Hyuk",
+                    "artistImageURL": "https://i.mydramalist.com/jAB78s.jpg",
+                    "characterName": "Hong Joon [Guest room team leader]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "6845",
+                    "artistName": "Go Yoon",
+                    "artistImageURL": "https://i.mydramalist.com/EQWpl_5s.jpg",
+                    "characterName": "Park Do Jin [Concierge team leader]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "8955",
+                    "artistName": "Kim Gyu Seon",
+                    "artistImageURL": "https://i.mydramalist.com/2D1LRs.jpg",
+                    "characterName": "Ha So Yeon [Hotel maid]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "6877",
+                    "artistName": "Cha Hak Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/eB16Y_5s.jpg",
+                    "characterName": "No Ah [Hotel employee]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "6895",
+                    "artistName": "Lee Do Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/rzZ0y_5s.jpg",
+                    "characterName": "Lee Ib Sae [Working-call-service]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "7230",
+                    "artistName": "Kim Sun Young",
+                    "artistImageURL": "https://i.mydramalist.com/BdZg7s.jpg",
+                    "characterName": "So Moon Jung [Hotel maid]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5718",
+                    "artistName": "Gu Bon Im",
+                    "artistImageURL": "https://i.mydramalist.com/jgx2v_5s.jpg",
+                    "characterName": "Mrs. Kim [Hotel maid]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4339",
+                    "artistName": "Seo Yi Ahn",
+                    "artistImageURL": "https://i.mydramalist.com/2g3Pds.jpg",
+                    "characterName": "Lee Da Bae [Jung Gu's daughter / Jae Wan's half sister]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "20042",
+                    "artistName": "Lee Sang Mi",
+                    "artistImageURL": "https://i.mydramalist.com/2wNXzO_5s.jpg",
+                    "characterName": "Yoon Ji Won [Joong Goo's wife / Da Bae's mother]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "7967",
+                    "artistName": "Yeo Woon",
+                    "artistImageURL": "https://i.mydramalist.com/km4wm_5s.jpg",
+                    "characterName": "Eun Yun Jae (Ep. 5-6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "2547",
+                    "artistName": "Jo Yoon Woo",
+                    "artistImageURL": "https://i.mydramalist.com/k8Jqv_5s.jpg",
+                    "characterName": "Yoo Joo Min (Ep. 17)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "4235",
+                    "artistName": "Lee Ju Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/pzwjb_5s.jpg",
+                    "characterName": "Chea Won (Ep. 31-32)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "3384",
+                    "artistName": "Choi Sung Min",
+                    "artistImageURL": "https://i.mydramalist.com/XBp1p_5s.jpg",
+                    "characterName": "Ray Kim",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5292",
+                    "artistName": "Na Gwang Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/AB4NqL_5s.jpg",
+                    "characterName": "Wang Li Qin",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "738",
+                    "artistName": "Yoo Geon",
+                    "artistImageURL": "https://i.mydramalist.com/d54VK_5s.jpg",
+                    "characterName": "John Howard",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "4558",
+                    "artistName": "Seo Yoon Ah",
+                    "artistImageURL": "https://i.mydramalist.com/EjJlW_5s.jpg",
+                    "characterName": "Gwang Nyeo",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "10917",
+                    "artistName": "Kim Sun Young",
+                    "artistImageURL": "https://i.mydramalist.com/qL0l5_5s.jpg",
+                    "characterName": "So Moon Jung",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6382",
+                    "artistName": "Lee Jong Goo",
+                    "artistImageURL": "https://i.mydramalist.com/RRmjY_5s.jpg",
+                    "characterName": "Yun Bak Sa [Doctor]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "15253",
+                    "artistName": "Jung Se Hyung",
+                    "artistImageURL": "https://i.mydramalist.com/Z00KWs.jpg",
+                    "characterName": "Min Sung Joo [Reporter]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "802",
+                    "artistName": "Choi Sang Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/QlmqW_5s.jpg",
+                    "characterName": "Ah Sung Won [Hotel chairman / Mo Ne's father]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "18879",
+                    "artistName": "Seo Kwang Jae",
+                    "artistImageURL": "https://i.mydramalist.com/4VWRK_5s.jpg",
+                    "characterName": "Doctor Heo",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "23835",
+                    "artistName": "Kwon Hyuk Soo",
+                    "artistImageURL": "https://i.mydramalist.com/724rLs.jpg",
+                    "characterName": "Director Park",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5593",
+                    "artistName": "Lee  Seon Jin",
+                    "artistImageURL": "https://i.mydramalist.com/p0Krrs.jpg",
+                    "characterName": "Manager Hwang",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5743",
+                    "artistName": "Park Hee Gun",
+                    "artistImageURL": "https://i.mydramalist.com/x4Ee7w_5s.jpg",
+                    "characterName": "Roman Lee [Young]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "24407",
+                    "artistName": "Choi Ha Ho",
+                    "artistImageURL": "https://i.mydramalist.com/kXeE8s.jpg",
+                    "characterName": "Cha Jae Wan [Young]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "4039",
+                    "artistName": "Choi Dae Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/X85nqs.jpg",
+                    "characterName": "Ah Sung Won [Young]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "8462",
+                    "artistName": "Kim Ha Rin",
+                    "artistImageURL": "https://i.mydramalist.com/xnLw3_5s.jpg",
+                    "characterName": "Baek Mi Nyeo [Young]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "281",
+                    "artistName": "Joo Jin Mo",
+                    "artistImageURL": "https://i.mydramalist.com/2KKJ2_5s.jpg",
+                    "characterName": "Lee Jung Gu [Young]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "3491",
+                    "artistName": "Lee Ju Seok",
+                    "artistImageURL": "https://i.mydramalist.com/44w6rs.jpg",
+                    "characterName": "Lee Jung Gu [Young]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "36647",
+                    "artistName": "Choi Hyun Woo",
+                    "artistImageURL": "https://i.mydramalist.com/Xd4wwx_5s.jpg",
+                    "characterName": "[Magician]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "3501",
+                    "artistName": "Park Young Ji",
+                    "artistImageURL": "https://i.mydramalist.com/ex3Wq_5s.jpg",
+                    "characterName": "President Son [Woo Hyun's father]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5613",
+                    "artistName": "Jung Jae Jin",
+                    "artistImageURL": "https://i.mydramalist.com/qqK72s.jpg",
+                    "characterName": "[Seong Won's friend]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "12188",
+                    "artistName": "Son Jang Woo",
+                    "artistImageURL": "https://i.mydramalist.com/ym56Ns.jpg",
+                    "characterName": "[Jae Wan & Mo Ne’s son]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "15255",
+                    "artistName": "Kim Yool Ho",
+                    "artistImageURL": "https://i.mydramalist.com/r3RLD_5s.jpg",
+                    "characterName": "[Mystery new employee]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5699",
+                    "artistName": "Joo Young Ho",
+                    "artistImageURL": "https://i.mydramalist.com/2oerds.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "17871",
+                    "artistName": "Park Su Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/ABAeqP_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "76307",
+                    "artistName": "Lee Jong Rae",
+                    "artistImageURL": "https://i.mydramalist.com/x1rdz_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6310",
+                    "artistName": "Lee Ha Neul",
+                    "artistImageURL": "https://i.mydramalist.com/d0ybpb_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "12260",
+                    "artistName": "Jo Eun Hyung",
+                    "artistImageURL": "https://i.mydramalist.com/6N47p_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "67589",
+                    "artistName": "Seo Woo Seung",
+                    "artistImageURL": "https://i.mydramalist.com/XRBBp_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "21088",
+                    "artistName": "Kim Jong Ho",
+                    "artistImageURL": "https://i.mydramalist.com/RRDBV_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "104261",
+                    "artistName": "Son Jung Rim",
+                    "artistImageURL": "https://i.mydramalist.com/vpzmW_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "129015",
+                    "artistName": "Shin Suk Min",
+                    "artistImageURL": "https://i.mydramalist.com/RBrWDz_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/9046-hotel-king"
+        },
+        "airedOn": {
+            "value": [
+                "Saturday",
+                "Sunday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/9046-hotel-king"
+        }
+    },
+    "sitePriorityUsed": {
+        "showImage": "asianwiki",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": null,
+        "airedOn": "mydramalist"
+    }
+}

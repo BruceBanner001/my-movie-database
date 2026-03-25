@@ -1,0 +1,589 @@
+{
+    "scriptVersion": "v11.2",
+    "runID": "RUN_20260325_080510",
+    "timestamp": "25 March 2026 08:14 AM (IST)",
+    "showID": 122,
+    "showName": "Miracle That We Met",
+    "fetchedFields": {
+        "showImage": {
+            "value": "122.jpg",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/The_Miracle_We_Met"
+        },
+        "releaseDate": {
+            "value": "Apr  2, 2018 - May 29, 2018",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/27184-miracle-that-we-met"
+        },
+        "otherNames": {
+            "value": [
+                "The Miracle We Met",
+                "Uriga Mannan Gijeok",
+                "Wooriga Mannan Kijeok"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/27184-miracle-that-we-met"
+        },
+        "Duration": {
+            "value": "60 mins",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/27184-miracle-that-we-met"
+        },
+        "synopsis": {
+            "value": "A man dies in a car crash, but awakes with his spirit in another person. He becomes the head of two families and he agonizes over his two different wives.",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/The_Miracle_We_Met"
+        },
+        "director": {
+            "value": [
+                "Lee Hyung Min",
+                "Jo Woong"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/27184-miracle-that-we-met"
+        },
+        "tags": {
+            "value": [
+                "Rags To Riches",
+                "Character Development",
+                "Spirit",
+                "Detective Supporting Character",
+                "Supernatural Being",
+                "Transmigration",
+                "Supernatural"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/27184-miracle-that-we-met"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "54533",
+                    "artistName": "Bae Kyung Soo",
+                    "artistImageURL": "https://i.mydramalist.com/j36j8_5m.jpg",
+                    "characterName": null,
+                    "role": "Chief Producer"
+                },
+                {
+                    "artistID": "94867",
+                    "artistName": "Mun Seong Nam",
+                    "artistImageURL": "https://i.mydramalist.com/0qwlN_5m.jpg",
+                    "characterName": null,
+                    "role": "Composer"
+                },
+                {
+                    "artistID": "17370",
+                    "artistName": "Lee Hyung Min",
+                    "artistImageURL": "https://i.mydramalist.com/rYRopm.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "21991",
+                    "artistName": "Jo Woong",
+                    "artistImageURL": "https://i.mydramalist.com/4V1eY_5m.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "16545",
+                    "artistName": "Baek Mi Kyung",
+                    "artistImageURL": "https://i.mydramalist.com/RemRxm.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "556",
+                    "artistName": "Kim Myung Min",
+                    "artistImageURL": "https://i.mydramalist.com/Wz3ml_5s.jpg",
+                    "characterName": "Song Hyun Cheol (A)",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "848",
+                    "artistName": "Kim Hyun Joo",
+                    "artistImageURL": "https://i.mydramalist.com/qEqvz_5s.jpg",
+                    "characterName": "Sun Hye Jin",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "3654",
+                    "artistName": "Ra Mi Ran",
+                    "artistImageURL": "https://i.mydramalist.com/0wOEn6_5s.jpg",
+                    "characterName": "Jo Yeon Hwa",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "2670",
+                    "artistName": "Ko Chang Seok",
+                    "artistImageURL": "https://i.mydramalist.com/RDd46_5s.jpg",
+                    "characterName": "Song Hyun Cheol [#B]",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "18110",
+                    "artistName": "Joseph Lee",
+                    "artistImageURL": "https://i.mydramalist.com/l0Z0kL_5s.jpg",
+                    "characterName": "Geum Sung Moo",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "10853",
+                    "artistName": "Park Sung Geun",
+                    "artistImageURL": "https://i.mydramalist.com/k3JNm_5s.jpg",
+                    "characterName": "Oh Jang Choon",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "6139",
+                    "artistName": "Park Keun Rok",
+                    "artistImageURL": "https://i.mydramalist.com/Z1nnJs.jpg",
+                    "characterName": "Park Jong Won [Shinhwa Bank Gangnam branch manager]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "7522",
+                    "artistName": "Lee Moo Saeng",
+                    "artistImageURL": "https://i.mydramalist.com/xnAqE_5s.jpg",
+                    "characterName": "Kim Chung Man [Shinhwa Bank Gangnam branch deputy manager]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "9615",
+                    "artistName": "Kim Ha Yoo",
+                    "artistImageURL": "https://i.mydramalist.com/rm1NDs.jpg",
+                    "characterName": "Song Mi Ho [Hyun Cheol (A)'s daughter]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5758",
+                    "artistName": "Seo Dong Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/bwwOLs.jpg",
+                    "characterName": "Song Kang Ho [Hyun Cheol (A)'s son]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3793",
+                    "artistName": "Hwang Seok Jeong",
+                    "artistImageURL": "https://i.mydramalist.com/2wmzlR_5s.jpg",
+                    "characterName": "Im Do Hee [Hye Jin's colleague]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3201",
+                    "artistName": "Kim Hwan Hee",
+                    "artistImageURL": "https://i.mydramalist.com/Qo8Q5_5s.jpg",
+                    "characterName": "Song Ji Soo [Hyun Cheol (B)'s daughter]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "9472",
+                    "artistName": "Kai",
+                    "artistImageURL": "https://i.mydramalist.com/xpm7w_5s.jpg",
+                    "characterName": "Messenger Ato [Reaper]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "10302",
+                    "artistName": "Yoon Seok Hwa",
+                    "artistImageURL": "https://i.mydramalist.com/rNkY6y_5s.jpg",
+                    "characterName": "Hwang Geum Nyeo [Hyun Cheol (A)'s mother]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2619",
+                    "artistName": "Lee Do Kyung",
+                    "artistImageURL": "https://i.mydramalist.com/QPEvg_5s.jpg",
+                    "characterName": "Song Mo Dong [Hyun Cheol (B)'s father]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2682",
+                    "artistName": "Jung Han Yong",
+                    "artistImageURL": "https://i.mydramalist.com/XeExOs.jpg",
+                    "characterName": "Kim Sang Jo [President of Shinhwa Bank]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "6278",
+                    "artistName": "Jeon Seok Ho",
+                    "artistImageURL": "https://i.mydramalist.com/YYj5OB_5s.jpg",
+                    "characterName": "Park Dong Soo [Detective]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3564",
+                    "artistName": "Jung Suk Yong",
+                    "artistImageURL": "https://i.mydramalist.com/j2rBOs.jpg",
+                    "characterName": "Yook Bang Woo [Shinhwa Bank Gangnam branch deputy manager]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "8388",
+                    "artistName": "Choi Byung Mo",
+                    "artistImageURL": "https://i.mydramalist.com/R3L1Es.jpg",
+                    "characterName": "Choi Tak Pur / Heo Dong Goo [Hyun Cheol's childhood friend]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2480",
+                    "artistName": "Yoon Ji Hye",
+                    "artistImageURL": "https://i.mydramalist.com/Z870dj_5s.jpg",
+                    "characterName": "Kwak Hyo Joo [Shinhwa Bank Gangnam branch loan team 1 deputy manager]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "10918",
+                    "artistName": "Choi Sung Won",
+                    "artistImageURL": "https://i.mydramalist.com/rNkNkZ_5s.jpg",
+                    "characterName": "Ha Soo Bin [Hyun Cheol (A)'s subordinate]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2577",
+                    "artistName": "Hwang Bo Ra",
+                    "artistImageURL": "https://i.mydramalist.com/2z6BP_5s.jpg",
+                    "characterName": "Song Sa Ran [Hyun Cheol (A)'s  younger sister]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "18028",
+                    "artistName": "Kim Jae Yong",
+                    "artistImageURL": "https://i.mydramalist.com/yWBdAn_5s.jpg",
+                    "characterName": "Mao [Chief of Shingye Guards]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "19372",
+                    "artistName": "Kim Ki Nam",
+                    "artistImageURL": "https://i.mydramalist.com/bKrYVs.jpg",
+                    "characterName": "[Shaman]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "17484",
+                    "artistName": "Ahn Chang Hwan",
+                    "artistImageURL": "https://i.mydramalist.com/r5eRD_5s.jpg",
+                    "characterName": "Tak Man Shik [Teacher]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3976",
+                    "artistName": "Lee Sang Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/Beqy1_5s.jpg",
+                    "characterName": "Detective Oh",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "20270",
+                    "artistName": "Lee Eun Saem",
+                    "artistImageURL": "https://i.mydramalist.com/eWngY_5s.jpg",
+                    "characterName": "Young Ju  [Ji Soo's friend]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "20812",
+                    "artistName": "Kim Mi Hwa",
+                    "artistImageURL": "https://i.mydramalist.com/wJK7rb_5s.jpg",
+                    "characterName": "[Jin Soo's mother, Yeon Hwa's associate]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1650",
+                    "artistName": "Park Min Ji",
+                    "artistImageURL": "https://i.mydramalist.com/deKyW_5s.jpg",
+                    "characterName": "Ha Jung [Bank employee]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "6220",
+                    "artistName": "Kim Jin Sung",
+                    "artistImageURL": "https://i.mydramalist.com/jllVvs.jpg",
+                    "characterName": "Im Ho Tak [Kang Ho's friend]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "21653",
+                    "artistName": "Jang Jae Won",
+                    "artistImageURL": "https://i.mydramalist.com/8YYrds.jpg",
+                    "characterName": "Heo Tae Won [Kang Ho's friend]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "15807",
+                    "artistName": "Park Seong Kyun",
+                    "artistImageURL": "https://i.mydramalist.com/xBdpz_5s.jpg",
+                    "characterName": "Woo Jang Chun [Shinhwa Bank Banpo branch manager]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "102181",
+                    "artistName": "Heo Jung Guk",
+                    "artistImageURL": "https://i.mydramalist.com/QV1Z7_5s.jpg",
+                    "characterName": "Lee Soon Oh [Chairman]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4553",
+                    "artistName": "Kim Won Hae",
+                    "artistImageURL": "https://i.mydramalist.com/mO1lyq_5s.jpg",
+                    "characterName": "[Ritual mortician] (Ep. 1, 3, 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "20510",
+                    "artistName": "Bae Yoon Kyung",
+                    "artistImageURL": "https://i.mydramalist.com/pVxzrs.jpg",
+                    "characterName": "Sun Hye Jin [Young]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5862",
+                    "artistName": "Choi Gyo Shik",
+                    "artistImageURL": "https://i.mydramalist.com/WXzRP_5s.jpg",
+                    "characterName": "[Car mechanic]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21707",
+                    "artistName": "Lee Won Jin",
+                    "artistImageURL": "https://i.mydramalist.com/Lw5pzx_5s.jpg",
+                    "characterName": "[Cellphone repairman] (Ep. 11)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21689",
+                    "artistName": "Goo Gyo Ik",
+                    "artistImageURL": "https://i.mydramalist.com/Avvw4s.jpg",
+                    "characterName": "Section Chief Jo [Geum's Team]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "1249",
+                    "artistName": "Kim Min Jong",
+                    "artistImageURL": "https://i.mydramalist.com/1wOmZK_5s.jpg",
+                    "characterName": "Kim Man Jong [Program MC] (Ep.11)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "2542",
+                    "artistName": "Kim Jae Kyung",
+                    "artistImageURL": "https://i.mydramalist.com/X6VEX_5s.jpg",
+                    "characterName": "[Mao's other personality] (Ep. 3, 4, 18)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "20031",
+                    "artistName": "Park Yong",
+                    "artistImageURL": "https://i.mydramalist.com/dxE2b_5s.jpg",
+                    "characterName": "[ER doctor] (Ep. 17-18)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "18448",
+                    "artistName": "Park Kwi Soon",
+                    "artistImageURL": "https://i.mydramalist.com/j4jgJs.jpg",
+                    "characterName": "[Monk] (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6024",
+                    "artistName": "Jung Sang Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/BwN11s.jpg",
+                    "characterName": "[Drama PD] (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "1108",
+                    "artistName": "Kim Soo Ro",
+                    "artistImageURL": "https://i.mydramalist.com/Bdr157_5s.jpg",
+                    "characterName": "[Priest] (Ep. 3, 11)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "19614",
+                    "artistName": "Lee Joon Hee",
+                    "artistImageURL": "https://i.mydramalist.com/Jx7wms.jpg",
+                    "characterName": "[Doctor] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "7886",
+                    "artistName": "Yoon Young Joo",
+                    "artistImageURL": "https://i.mydramalist.com/73Oejs.jpg",
+                    "characterName": "[Assaulted salesclerk] (Ep. 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "8957",
+                    "artistName": "Kim Soo Hong",
+                    "artistImageURL": "https://i.mydramalist.com/4gk71s.jpg",
+                    "characterName": "[Sa Ran's reporter friend]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21681",
+                    "artistName": "Min Dae Shik",
+                    "artistImageURL": "https://i.mydramalist.com/JKKgds.jpg",
+                    "characterName": "[CEO Geum's aide]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "12124",
+                    "artistName": "Ray Yang",
+                    "artistImageURL": "https://i.mydramalist.com/vOOqXs.jpg",
+                    "characterName": "Jessica [Trainer]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "18354",
+                    "artistName": "Kim Yoon Ho",
+                    "artistImageURL": "https://i.mydramalist.com/d44R5s.jpg",
+                    "characterName": "Song Hyun Cheol (A) [Young]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "3484",
+                    "artistName": "Yoon Da Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/BZK6A_5s.jpg",
+                    "characterName": "Seo Min Joon [Psychologist] (Ep. 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5186",
+                    "artistName": "Park Young Soo",
+                    "artistImageURL": "https://i.mydramalist.com/ZqP8O_5s.jpg",
+                    "characterName": "[Reporter] (Ep. 10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "22937",
+                    "artistName": "Kim Jae Il",
+                    "artistImageURL": "https://i.mydramalist.com/2X3bw_5s.jpg",
+                    "characterName": "Producer Go",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "25727",
+                    "artistName": "Han So Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/kN7xd_5s.jpg",
+                    "characterName": "[Woman]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "54777",
+                    "artistName": "Kim Jin Goo",
+                    "artistImageURL": "https://i.mydramalist.com/p3eRe_5s.jpg",
+                    "characterName": "[Real estate agent]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "18998",
+                    "artistName": "Kim Ji Hwan",
+                    "artistImageURL": "https://i.mydramalist.com/mO6R7k_5s.jpg",
+                    "characterName": "(Ep. 1-2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "61745",
+                    "artistName": "Jo Seung Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/R43xY_5s.jpg",
+                    "characterName": "[PD]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "44699",
+                    "artistName": "Kim Mi Hye",
+                    "artistImageURL": "https://i.mydramalist.com/EgnO0_5s.jpg",
+                    "characterName": "[Reporter]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "42191",
+                    "artistName": "Yoon Dan Bi",
+                    "artistImageURL": "https://i.mydramalist.com/VXR13E_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "39651",
+                    "artistName": "Seo Dong Oh",
+                    "artistImageURL": "https://i.mydramalist.com/25qo7_5s.jpg",
+                    "characterName": "Song Hyun Cheol (B) [Young]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "38567",
+                    "artistName": "Kang Suk Won",
+                    "artistImageURL": "https://i.mydramalist.com/2z3yR_5s.jpg",
+                    "characterName": "(Ep.13)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "29595",
+                    "artistName": "Lee Bom So Ri",
+                    "artistImageURL": "https://i.mydramalist.com/jkeZy_5s.jpg",
+                    "characterName": "Seo Hee Joo [Assistant Manager]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "4504",
+                    "artistName": "Jung Ae Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/0RBy6_5s.jpg",
+                    "characterName": "Yang Hyun Soo (Ep. 16)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "1508",
+                    "artistName": "Park Jun Gyu",
+                    "artistImageURL": "https://i.mydramalist.com/dx0K5_5s.jpg",
+                    "characterName": "[Song Hyeon Cheol (B)'s friend] (Ep. 9-10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "108951",
+                    "artistName": "Bae Kyung Min",
+                    "artistImageURL": "https://i.mydramalist.com/pwgkB_5s.jpg",
+                    "characterName": "[Bank Teller]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "45183",
+                    "artistName": "Seo Jung Wook",
+                    "artistImageURL": "https://i.mydramalist.com/6z5Kp_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "48813",
+                    "artistName": "Kim Chan Yi",
+                    "artistImageURL": "https://i.mydramalist.com/RQPVY_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/27184-miracle-that-we-met"
+        },
+        "airedOn": {
+            "value": [
+                "Monday",
+                "Tuesday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/27184-miracle-that-we-met"
+        }
+    },
+    "sitePriorityUsed": {
+        "showImage": "asianwiki",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": null,
+        "airedOn": "mydramalist"
+    }
+}
