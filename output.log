@@ -1,39 +1,79 @@
-✅ Workflow Batch completed successfully
-🏁 Final Batch Completed
+/home/runner/work/my-movie-database/my-movie-database/title_validator.py:57: XMLParsedAsHTMLWarning: It looks like you're using an HTML parser to parse an XML document.
+
+Assuming this really is an XML document, what you're doing might work, but you should know that using an XML parser will be more reliable. To parse this document as XML, make sure you have the Python package 'lxml' installed, and pass the keyword argument `features="xml"` into the BeautifulSoup constructor.
+
+If you want or need to use an HTML parser on this document, you can make this warning go away by filtering it. To do that, run this code before calling the BeautifulSoup constructor:
+
+    from bs4 import XMLParsedAsHTMLWarning
+    import warnings
+
+    warnings.filterwarnings("ignore", category=XMLParsedAsHTMLWarning)
+
+  soup = BeautifulSoup(r.text, "html.parser")
+✅ Partial Batch completed successfully
+⏳ Batch Processing in Progress...
 ══════════════════════════════════════════════════════
 📊 Drama Title Validator – Execution Report
 ══════════════════════════════════════════════════════
 
 🚀 Workflow Type : Manual
-🔁 RUN           : 10 - 11
-⏰ Start Time    : 25 March 2026 - 09:14:56 AM
-⏰ End Time      : 25 March 2026 - 09:20:52 AM
-⏱️ Total Runtime : 5 Minutes 27 Seconds
-⚙️ Max Process   : 50 Row Per Run
-🔄 Total Batches : 2 Runs
+🔁 RUN           : 12
+⏰ Start Time    : 25 March 2026 - 09:37:41 AM
+⏰ End Time      : 25 March 2026 - 09:49:59 AM
+⏱️ Run Time      : 12 Minutes 17 Seconds
+⚙️ Max Process   : 150 Row Per Run
+🔄 Current Batch : 2
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🗂️ === Sheet1 ===
+🗂️ === Feb 7 2023 Onwards ===
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✨ Brand New Recommendations Found (Action Required):
 - [ID 1] **It's Okay to Not be Okay** ➔ Recommend: It's Okay to Not Be Okay (Source: MyDramaList)
-- [ID 2] **It's Okay That's Love** ➔ Recommend: It's Okay, That's Love Episode 16 (Source: MyDramaList)
+- [ID 2] **It's Okay That's Love** ➔ Recommend: Jang Ki Yong (Source: MyDramaList)
+- [ID 3] **Descendant of the Sun** ➔ Recommend: Descendants of the Sun (Source: MyDramaList)
 - [ID 12] **The World of Married** ➔ Recommend: The World of the Married (Source: MyDramaList)
 - [ID 13] **Boys Over Flowers** ➔ Recommend: Boys over Flowers (Source: MyDramaList)
 - [ID 14] **Oh! Master** ➔ Recommend: Oh My Ladylord (Source: MyDramaList)
+- [ID 27] **Crash Landing On You** ➔ Recommend: Crash Landing on You (Source: MyDramaList)
 - [ID 29] **Falling Into Your Smile** ➔ Recommend: Falling into Your Smile (Source: MyDramaList)
+- [ID 39] **Cinderella And Fourn Knights** ➔ Recommend: Cinderella and the Four Knights (Source: MyDramaList)
 - [ID 43] **King 2 Hearts** ➔ Recommend: The King 2 Hearts (Source: MyDramaList)
-- [ID 47] **Well Intended Love Season 1** ➔ Recommend: Well-Intended Love (Source: MyDramaList)
+- [ID 45] **Tale of the Nine Tailed** ➔ Recommend: Tale of the Nine-Tailed (Source: MyDramaList)
 - [ID 48] **Well Intended Love Season 2** ➔ Recommend: Well-Intended Love Season 2 (Source: MyDramaList)
-- [ID 49] **Hello Mr.Gu** ➔ Recommend: Hello Mr. Gu (Source: MyDramaList)
-- [ID 54] **About is Love** ➔ Recommend: About Is Love (Source: MyDramaList)
 - [ID 58] **Love In Time** ➔ Recommend: Love in Time (Source: MyDramaList)
-- [ID 59] **F4 Thailand: Boys Over Flowers** ➔ Recommend: F4 Thailand: Boys over Flowers (Source: MyDramaList)
 - [ID 62] **Shitting Star (Shooting Star)** ➔ Recommend: Sh**ting Stars (Source: MyDramaList)
+- [ID 66] **Black Knight: The Man Who Gurards Me** ➔ Recommend: Black Knight: The Man Who Guards Me (Source: MyDramaList)
+- [ID 68] **The Day Of Becoming You** ➔ Recommend: The Day of Becoming You (Source: MyDramaList)
+- [ID 71] **Prime Minister And I** ➔ Recommend: Prime Minister and I (Source: MyDramaList)
+- [ID 73] **Romance Is A Bonus Book** ➔ Recommend: Romance Is a Bonus Book (Source: MyDramaList)
+- [ID 78] **So I Married an Anti-Fan** ➔ Recommend: So I Married the Anti-Fan (Source: MyDramaList)
+- [ID 91] **Island Season 2** ➔ Recommend: Island Part 2 (Source: MyDramaList)
+- [ID 96] **Go Go Squid** ➔ Recommend: Go Go Squid! (Source: MyDramaList)
+- [ID 98] **Fated To Love You** ➔ Recommend: You Are My Destiny (Source: MyDramaList)
+- [ID 101] **Hometown Cha Cha Cha** ➔ Recommend: Hometown Cha-Cha-Cha (Source: MyDramaList)
+- [ID 102] **Sweet Stranger And Me** ➔ Recommend: Sweet Stranger and Me (Source: MyDramaList)
+- [ID 103] **Go Into Your Heart** ➔ Recommend: GO into Your Heart (Source: MyDramaList)
+- [ID 113] **Skip A Beat** ➔ Recommend: Skip a Beat (Source: MyDramaList)
+- [ID 114] **Please Feel At Ease Mr.Ling** ➔ Recommend: Please Feel at Ease Mr. Ling (Source: MyDramaList)
+- [ID 116] **Kokdu Season Of Diety** ➔ Recommend: Kokdu: Season of Deity (Source: MyDramaList)
+- [ID 117] **Your Highness, The Class Monitor** ➔ Recommend: Your Highness, the Class Monitor (Source: MyDramaList)
+- [ID 119] **Only Side By Side With You** ➔ Recommend: Only Side by Side with You (Source: MyDramaList)
+- [ID 121] **True to Love (Bo-ra Deborah)** ➔ Recommend: True to Love (Source: MyDramaList)
+- [ID 123] **Suparburoot Jorm Jon** ➔ Recommend: Suparburoot Jorm Jon: Maturot Lohgan (Source: MyDramaList)
+- [ID 124] **Sweet And Cold** ➔ Recommend: Sweet and Cold (Source: MyDramaList)
+- [ID 127] **Link Eat Love Kill** ➔ Recommend: Link: Eat, Love, Kill (Source: MyDramaList)
+- [ID 131] **Love In Sadness** ➔ Recommend: Love in Sadness (Source: MyDramaList)
+- [ID 132] **Nevertheless** ➔ Recommend: Nevertheless, (Source: MyDramaList)
+- [ID 134] **Cheat On Me If You Can** ➔ Recommend: Cheat On Me, if You Can (Source: MyDramaList)
+- [ID 136] **Please Come Back Mister** ➔ Recommend: Come Back Alive (Source: MyDramaList)
+- [ID 138] **Fates And Furies** ➔ Recommend: Fates & Furies (Source: MyDramaList)
+- [ID 139] **You Are The Best** ➔ Recommend: You Are the Best! (Source: MyDramaList)
+- [ID 140] **Hotel Del Luna** ➔ Recommend: Hotel del Luna (Source: MyDramaList)
+- [ID 142] **The Bride of the Century** ➔ Recommend: Bride of the Century (Source: MyDramaList)
+- [ID 147] **See You In My 19th Life** ➔ Recommend: See You in My 19th Life (Source: MyDramaList)
 
 ✅ Perfect Matches (Newly Scanned - 100% Accurate!):
--[ID 3] **Descendant of the Sun** -> Perfect!
 -[ID 4] **Find Me in Your Memory** -> Perfect!
 -[ID 5] **Lawless Lawyer** -> Perfect!
 -[ID 6] **Love to Hate You** -> Perfect!
@@ -47,16 +87,17 @@
 -[ID 17] **Now, We Are Breaking Up** -> Perfect!
 -[ID 20] **Meloholic** -> Perfect!
 -[ID 21] **Meteor Garden** -> Perfect!
--[ID 24] **Still 17** -> Perfect!
--[ID 25] **Personal Taste** -> Perfect!
+-[ID 22] **Miracle That We Met** -> Perfect!
+-[ID 23] **I Miss You** -> Perfect!
 -[ID 28] **The Interest of Love** -> Perfect!
 -[ID 30] **While You Were Sleeping** -> Perfect!
 -[ID 31] **My Strange Hero** -> Perfect!
 -[ID 32] **Rich Man** -> Perfect!
--[ID 33] **Touch Your Heart** -> Perfect!
--[ID 40] **Marriage, Not Dating** -> Perfect!
+-[ID 35] **Oh My Ghost** -> Perfect!
+-[ID 38] **Dream High** -> Perfect!
 -[ID 42] **Marriage Contract** -> Perfect!
 -[ID 46] **Cute Bodyguard** -> Perfect!
+-[ID 50] **Protect the Boss** -> Perfect!
 -[ID 51] **Oh My Venus** -> Perfect!
 -[ID 52] **I Love Lee Tae Ri** -> Perfect!
 -[ID 53] **Crazy Love** -> Perfect!
@@ -64,38 +105,93 @@
 -[ID 56] **The Beauty Inside** -> Perfect!
 -[ID 57] **Secret Love Affair** -> Perfect!
 -[ID 60] **Crash Course in Romance** -> Perfect!
--[ID 61] **Mama Fairy and the Woodcutter** -> Perfect!
--[ID 63] **That Winter, the Wind Blows** -> Perfect!
--[ID 64] **The Bride of Habaek** -> Perfect!
 -[ID 65] **My Princess** -> Perfect!
+-[ID 67] **Blade Man** -> Perfect!
+-[ID 72] **Her Private Life** -> Perfect!
+-[ID 74] **Another Miss Oh** -> Perfect!
+-[ID 75] **Our Glamorous Time** -> Perfect!
+-[ID 77] **Black Knight** -> Perfect!
+-[ID 80] **Coffee Prince** -> Perfect!
+-[ID 82] **Level Up** -> Perfect!
+-[ID 85] **Kiss Sixth Sense** -> Perfect!
+-[ID 88] **Why Women Love** -> Perfect!
+-[ID 93] **Crazy Love** -> Perfect!
+-[ID 95] **The Love You Give Me** -> Perfect!
+-[ID 104] **Begin Again** -> Perfect!
+-[ID 106] **Please Be My Family** -> Perfect!
+-[ID 108] **Lucky Romance** -> Perfect!
+-[ID 109] **Plot Love** -> Perfect!
+-[ID 110] **You Are My Glory** -> Perfect!
+-[ID 112] **Missing 9** -> Perfect!
+-[ID 115] **Phoenix 2020** -> Perfect!
+-[ID 122] **Forget You Remember Love** -> Perfect!
+-[ID 129] **Oh My Boss** -> Perfect!
+-[ID 137] **Vincenzo** -> Perfect!
+-[ID 143] **Witch's Romance** -> Perfect!
+-[ID 144] **When My Love Blooms** -> Perfect!
+-[ID 148] **Intense Love** -> Perfect!
+-[ID 149] **My Dear Lady** -> Perfect!
+-[ID 150] **My Mister** -> Perfect!
 
 ⚠️ Not Found Online (Could not find on MDL or AsianWiki):
 -[ID 18] **The Fox's Summer Season 1 ( Fox Fall in Love)** -> Please verify manually.
 -[ID 19] **The Fox's Summer Season 2 ( Fox Fall in Love)** -> Please verify manually.
--[ID 22] **Miracle That We Met** -> Please verify manually.
--[ID 23] **I Miss You** -> Please verify manually.
+-[ID 24] **Still 17** -> Please verify manually.
+-[ID 25] **Personal Taste** -> Please verify manually.
 -[ID 26] **Angel Eyes** -> Please verify manually.
--[ID 27] **Crash Landing On You** -> Please verify manually.
+-[ID 33] **Touch Your Heart** -> Please verify manually.
 -[ID 34] **18 Again** -> Please verify manually.
--[ID 35] **Oh My Ghost** -> Please verify manually.
 -[ID 36] **My Robot Boyfriend** -> Please verify manually.
 -[ID 37] **Lie To Me** -> Please verify manually.
--[ID 38] **Dream High** -> Please verify manually.
--[ID 39] **Cinderella And Fourn Knights** -> Please verify manually.
+-[ID 40] **Marriage, Not Dating** -> Please verify manually.
 -[ID 41] **New Life (Yeni Hayat)** -> Please verify manually.
 -[ID 44] **Hotel King** -> Please verify manually.
--[ID 45] **Tale of the Nine Tailed** -> Please verify manually.
--[ID 50] **Protect the Boss** -> Please verify manually.
--[ID 66] **Black Knight: The Man Who Gurards Me** -> Please verify manually.
+-[ID 47] **Well Intended Love Season 1** -> Please verify manually.
+-[ID 49] **Hello Mr.Gu** -> Please verify manually.
+-[ID 54] **About is Love** -> Please verify manually.
+-[ID 59] **F4 Thailand: Boys Over Flowers** -> Please verify manually.
+-[ID 61] **Mama Fairy and the Woodcutter** -> Please verify manually.
+-[ID 63] **That Winter, the Wind Blows** -> Please verify manually.
+-[ID 64] **The Bride of Habaek** -> Please verify manually.
+-[ID 69] **The Most Beautiful You In The World** -> Please verify manually.
+-[ID 70] **The K2** -> Please verify manually.
+-[ID 76] **Jugglers** -> Please verify manually.
+-[ID 79] **Hyde, Jekyll, Me** -> Please verify manually.
+-[ID 81] **Monster** -> Please verify manually.
+-[ID 83] **Healer** -> Please verify manually.
+-[ID 84] **Radiant Office** -> Please verify manually.
+-[ID 86] **My Roomate Is A Gumiho** -> Please verify manually.
+-[ID 87] **The Heavely Idol** -> Please verify manually.
+-[ID 89] **Abyss** -> Please verify manually.
+-[ID 90] **Imitation** -> Please verify manually.
+-[ID 92] **Woori The Virgin** -> Please verify manually.
+-[ID 94] **Love At First Hate** -> Please verify manually.
+-[ID 97] **Buang Ruk Satan** -> Please verify manually.
+-[ID 99] **Young Lady And Gentleman** -> Please verify manually.
+-[ID 100] **Eve** -> Please verify manually.
+-[ID 105] **Love Scenery** -> Please verify manually.
+-[ID 107] **Money Flower** -> Please verify manually.
+-[ID 111] **Come And Hug Me** -> Please verify manually.
+-[ID 118] **Nothing But You** -> Please verify manually.
+-[ID 120] **My Girlfriend is an Alien Season 2** -> Please verify manually.
+-[ID 125] **Perfect and Casusal** -> Please verify manually.
+-[ID 126] **The King Eternal Monarch** -> Please verify manually.
+-[ID 128] **Your House Helper** -> Please verify manually.
+-[ID 130] **Tomorrow With You** -> Please verify manually.
+-[ID 133] **Love of Replica** -> Please verify manually.
+-[ID 135] **Madame Antoine** -> Please verify manually.
+-[ID 141] **Something In The Rain** -> Please verify manually.
+-[ID 145] **Love in the Moonlight** -> Please verify manually.
+-[ID 146] **The Greatest Seducer (Tempted)** -> Please verify manually.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📊 Overall Cumulative Summary
+📊 Summary (Current Batch Only)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🌐 Internet Fetches Used : 16 (Out of 50 limit)
+🌐 Internet Fetches Used : 150 (Out of 150 limit)
 ⏭️ Total Skipped Fast    : 0
-✨ Total Recommendations : 14
-✅ Total Perfect Matches : 35
+✨ Total Recommendations : 43
+✅ Total Perfect Matches : 58
 🔄 Total User Fixes Seen : 0
-⚠️ Total Not Found       : 17
+⚠️ Total Not Found       : 49
 
-🏁 Workflow finished successfully
+⚠️ BATCH LIMIT REACHED: The script paused safely.
