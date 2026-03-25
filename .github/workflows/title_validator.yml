@@ -10,11 +10,17 @@ on:
       sheets:
         description: 'Sheets to scan (separated by semicolon)'
         required: true
-        default: 'Sheet1;Sheet2'
+        default: 'Feb 7 2023 Onwards'
+        # default: 'Feb 7 2023 Onwards;Before Feb 7 2023 (Korean);Before Feb 7 2023 ( Korean Dub);Before Feb 7 2023;Mini Drama'
       max_fetches:
         description: 'Max New Rows to Fetch Per Run'
         required: false
         default: '50'
+      force_check:
+        description: 'Force re-check all rows? (true/false)'
+        required: false
+        type: boolean
+        default: false
   schedule:
     - cron: "0 12 * * 0" # Runs automatically once a week on Sundays
 
@@ -58,14 +64,14 @@ jobs:
         id: run_script
         env:
           CHECK_TITLES_EXCEL_ID: ${{ secrets.CHECK_TITLES_EXCEL_ID }}
-          SHEETS: ${{ github.event.inputs.sheets || 'Sheet1;Sheet2' }}
+          SHEETS: ${{ github.event.inputs.sheets || 'Feb 7 2023 Onwards' }}
           MAX_FETCHES: ${{ github.event.inputs.max_fetches || '50' }}
+          FORCE_CHECK: ${{ github.event.inputs.force_check || 'false' }}
         run: |
           python title_validator.py 2>&1 | tee output.log
           exit_code=${PIPESTATUS[0]}
           
-          # FIXED BASH SYNTAX ERROR (Space after 'if' and '[')
-          if [ -f "RESUME_FLAG.txt" ]; then
+          if[ -f "RESUME_FLAG.txt" ]; then
             echo "CONTINUE_BATCH=true" >> "$GITHUB_OUTPUT"
           else
             echo "CONTINUE_BATCH=false" >> "$GITHUB_OUTPUT"
@@ -123,7 +129,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "Batch paused. Triggering the next batch immediately..."
-          gh workflow run "Validate Drama Titles" --ref ${{ github.ref_name }} -f sheets="${{ github.event.inputs.sheets || 'Sheet1;Sheet2' }}" -f max_fetches="${{ github.event.inputs.max_fetches || '50' }}"
+          gh workflow run "Validate Drama Titles" --ref ${{ github.ref_name }} -f sheets="${{ github.event.inputs.sheets || 'Feb 7 2023 Onwards' }}" -f max_fetches="${{ github.event.inputs.max_fetches || '50' }}" -f force_check="${{ github.event.inputs.force_check || 'false' }}"
 
       - name: 11. Send Final Email Notification
         if: always() && (steps.run_script.outputs.CONTINUE_BATCH == 'false' || job.status != 'success')
