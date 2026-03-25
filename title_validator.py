@@ -10,10 +10,14 @@ from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseDownload
 
+# Safely import the new ddgs package
 try:
-    from duckduckgo_search import DDGS
+    from ddgs import DDGS
 except ImportError:
-    pass
+    try:
+        from duckduckgo_search import DDGS
+    except ImportError:
+        pass
 
 # Setup Timezone (IST)
 IST = timezone(timedelta(hours=5, minutes=30))
@@ -28,16 +32,17 @@ SCRAPER = cloudscraper.create_scraper()
 SCRAPER.headers.update({"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"})
 STATE_FILE = "title_validator_state.json"
 
-def normalize_title(t):
-    if not t or str(t).strip() == "N/A": return ""
-    return re.sub(r"[^a-z0-9]", "", str(t).lower().strip())
-
 def search_and_get_title(search_term, year, site):
-    clean_search = re.sub(r"\b(?:Season|Part|S)\s*\d+\b|\s+\d+$", "", str(search_term), flags=re.IGNORECASE).strip()
+    # Removes (Shooting Star) from "Shitting Star (Shooting Star)" to help DuckDuckGo find it
+    clean_search = re.sub(r"\(.*?\)", "", str(search_term)).strip()
+    clean_search = re.sub(r"\b(?:Season|Part|S)\s*\d+\b|\s+\d+$", "", clean_search, flags=re.IGNORECASE).strip()
+    
     queries =[
         f'"{search_term}" {year} site:{site}.com',
-        f'"{clean_search}" {year} site:{site}.com'
+        f'"{clean_search}" {year} site:{site}.com',
+        f'"{clean_search}" site:{site}.com'
     ]
+    
     try:
         with DDGS() as dd:
             for query in queries:
@@ -62,11 +67,13 @@ def search_and_get_title(search_term, year, site):
                             if h1: title = h1.get_text(strip=True)
 
                         if title:
+                            # Strip out the year if the site added it to the title
                             title = re.sub(r"\s*\(\d{4}\)$", "", title).strip()
                             return title, site
                 time.sleep(2) # Prevent Rate Limits
     except Exception as e:
         pass
+    
     return "N/A", site
 
 def fetch_excel_from_gdrive_bytes(file_id, creds_path):
@@ -129,10 +136,10 @@ def write_report(state, current_run_seconds, run_start_time, is_paused, max_fetc
         batch_label, ""
     ]
 
-    total_skipped = total_recs = total_perfect = total_fixed = 0
+    total_skipped = total_recs = total_perfect = total_fixed = total_not_found = 0
     
     for sheet, data in state["report"].items():
-        if not any([data["new_recs"], data["perfect"], data["user_fixed"], data["skipped"]]): continue
+        if not any([data["new_recs"], data["perfect"], data["user_fixed"], data["not_found"], data["skipped"]]): continue
         lines.extend(["━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", f"🗂️ === {sheet} ===", "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"])
         
         if data["new_recs"]:
@@ -141,7 +148,7 @@ def write_report(state, current_run_seconds, run_start_time, is_paused, max_fetc
             total_recs += len(data["new_recs"])
             
         if data["perfect"]:
-            lines.append("\n✅ Perfect Matches (Newly Scanned):")
+            lines.append("\n✅ Perfect Matches (Newly Scanned - 100% Accurate!):")
             lines.extend(data["perfect"])
             total_perfect += len(data["perfect"])
             
@@ -149,6 +156,11 @@ def write_report(state, current_run_seconds, run_start_time, is_paused, max_fetc
             lines.append("\n🔄 User Fixed & Re-Verified (You changed these in Excel1!):")
             lines.extend(data["user_fixed"])
             total_fixed += len(data["user_fixed"])
+
+        if data["not_found"]:
+            lines.append("\n⚠️ Not Found Online (Could not find on MDL or AsianWiki):")
+            lines.extend(data["not_found"])
+            total_not_found += len(data["not_found"])
             
         if data["skipped"] > 0:
             lines.append(f"\n⏭️ Skipped (Already Verified Previously):\n- {data['skipped']} dramas skipped instantly.")
@@ -163,6 +175,7 @@ def write_report(state, current_run_seconds, run_start_time, is_paused, max_fetc
         f"✨ Total Recommendations : {total_recs}",
         f"✅ Total Perfect Matches : {total_perfect}",
         f"🔄 Total User Fixes Seen : {total_fixed}",
+        f"⚠️ Total Not Found       : {total_not_found}",
         "\n🏁 Workflow finished successfully" if not is_paused else "\n⚠️ BATCH LIMIT REACHED: The script paused safely."
     ])
 
@@ -239,13 +252,13 @@ def main():
     for s_idx in range(state["sheet_idx"], len(sheets_to_process)):
         if limit_reached: break
         sheet_name = sheets_to_process[s_idx]
-        report_sheet = state["report"].setdefault(sheet_name, {"new_recs": [], "perfect":[], "user_fixed":[], "skipped": 0})
+        report_sheet = state["report"].setdefault(sheet_name, {"new_recs": [], "perfect":[], "user_fixed":[], "not_found":[], "skipped": 0})
 
         target_sheet = next((s for s in xl.sheet_names if s.strip().lower() == sheet_name.strip().lower()), None)
         if not target_sheet: continue
 
         df_in = pd.read_excel(xl, sheet_name=target_sheet)
-        subset_cols = [c for c in ["Show ID", "No"] if c in df_in.columns]
+        subset_cols = [c for c in["Show ID", "No"] if c in df_in.columns]
         if subset_cols: df_in = df_in.dropna(how="all", subset=subset_cols)
 
         start_r = state["row_idx"] if s_idx == state["sheet_idx"] else 0
@@ -267,20 +280,23 @@ def main():
 
             if sid == 0 or not title or title.lower() == "nan": continue
 
-            norm_title = normalize_title(title)
             cache_key = f"{sheet_name}_{sid}"
             cached_data = cache.get(cache_key)
 
+            # --- SMART CACHE / SKIP LOGIC ---
             if cached_data:
                 cached_title = cached_data["Show Name"]
                 cached_rec = cached_data["Recommended Title Name"]
                 
+                # If you haven't changed the title at all since last run, skip it!
                 if title == cached_title:
                     report_sheet["skipped"] += 1
                     continue
                 
-                if cached_rec != "N/A" and norm_title == normalize_title(cached_rec):
+                # If you DID change the Excel title, and it matches the old recommendation PERFECTLY:
+                if cached_rec != "N/A" and title == cached_rec:
                     report_sheet["user_fixed"].append(f"- [ID {sid}] **{cached_title}** -> Now perfectly matches: {title}")
+                    
                     updated_row = cached_data["row_data"].copy()
                     updated_row["Show Name"] = title
                     updated_row["Title Recommendation"] = "No"
@@ -289,11 +305,13 @@ def main():
                     results.append(updated_row)
                     continue
 
+            # --- INTERNET FETCHING ---
             fetches_used += 1
 
             is_asian = lang.lower() in ["korean", "chinese", "japanese", "thai", "taiwanese", "filipino"]
             aw_title, mdl_title, imdb_title = "N/A", "N/A", "N/A"
             source_used = ""
+            rec_title = "N/A"
 
             if is_asian:
                 mdl_title, _ = search_and_get_title(title, year, "mydramalist")
@@ -302,18 +320,25 @@ def main():
                     source_used = "MyDramaList"
                 else:
                     aw_title, _ = search_and_get_title(title, year, "asianwiki")
-                    rec_title = aw_title
-                    source_used = "AsianWiki"
+                    if aw_title != "N/A":
+                        rec_title = aw_title
+                        source_used = "AsianWiki"
             else:
                 imdb_title, _ = search_and_get_title(title, year, "imdb")
-                rec_title = imdb_title
-                source_used = "IMDb"
+                if imdb_title != "N/A":
+                    rec_title = imdb_title
+                    source_used = "IMDb"
 
-            needs_rec = "No" if normalize_title(rec_title) == norm_title else "Yes"
-            if needs_rec == "No" or rec_title == "N/A":
+            # --- STRICT MATCHING LOGIC ---
+            if rec_title == "N/A":
+                needs_rec = "No" # Keeps it empty so it doesn't overwrite your sheet with "N/A"
+                report_sheet["not_found"].append(f"-[ID {sid}] **{title}** -> Please verify manually.")
+            elif rec_title == title: # STRICT 100% MATCH
+                needs_rec = "No"
                 rec_title = "N/A"
                 report_sheet["perfect"].append(f"-[ID {sid}] **{title}** -> Perfect!")
             else:
+                needs_rec = "Yes"
                 report_sheet["new_recs"].append(f"- [ID {sid}] **{title}** ➔ Recommend: {rec_title} (Source: {source_used})")
 
             results.append({

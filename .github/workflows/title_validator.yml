@@ -1,5 +1,5 @@
 # ============================================================================
-# Workflow: Title Validation & Recommendation Engine (Optimized)
+# Workflow: Title Validation & Recommendation Engine (Strict Matching)
 # ============================================================================
 
 name: Validate Drama Titles
@@ -44,7 +44,7 @@ jobs:
       - name: 3. Install Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pandas bs4 cloudscraper duckduckgo-search gspread gspread-dataframe google-api-python-client google-auth-httplib2 google-auth-oauthlib openpyxl
+          pip install ddgs pandas bs4 cloudscraper gspread gspread-dataframe google-api-python-client google-auth-httplib2 google-auth-oauthlib openpyxl
 
       - name: 4. Configure Secrets
         env:
@@ -64,7 +64,8 @@ jobs:
           python title_validator.py 2>&1 | tee output.log
           exit_code=${PIPESTATUS[0]}
           
-          if[ -f "RESUME_FLAG.txt" ]; then
+          # FIXED BASH SYNTAX ERROR (Space after 'if' and '[')
+          if [ -f "RESUME_FLAG.txt" ]; then
             echo "CONTINUE_BATCH=true" >> "$GITHUB_OUTPUT"
           else
             echo "CONTINUE_BATCH=false" >> "$GITHUB_OUTPUT"
@@ -125,7 +126,6 @@ jobs:
           gh workflow run "Validate Drama Titles" --ref ${{ github.ref_name }} -f sheets="${{ github.event.inputs.sheets || 'Sheet1;Sheet2' }}" -f max_fetches="${{ github.event.inputs.max_fetches || '50' }}"
 
       - name: 11. Send Final Email Notification
-        # ONLY send the email if the relay race is COMPLETELY finished, OR if the script crashed.
         if: always() && (steps.run_script.outputs.CONTINUE_BATCH == 'false' || job.status != 'success')
         uses: dawidd6/action-send-mail@v3
         with:
