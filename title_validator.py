@@ -1,4 +1,4 @@
-import os, time, re, json, sys, traceback, io
+import os, time, re, json, sys, traceback, io, random
 from datetime import datetime, timedelta, timezone
 import pandas as pd
 from bs4 import BeautifulSoup
@@ -35,44 +35,63 @@ SCRAPER.headers.update({"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)
 STATE_FILE = "title_validator_state.json"
 
 def search_and_get_title(search_term, year, site):
-    # Removes (Shooting Star) from "Shitting Star (Shooting Star)" to help DuckDuckGo find it
+    # Base clean up
     clean_search = re.sub(r"\(.*?\)", "", str(search_term)).strip()
-    clean_search = re.sub(r"\b(?:Season|Part|S)\s*\d+\b|\s+\d+$", "", clean_search, flags=re.IGNORECASE).strip()
     
+    # Strip Season for IMDb to improve hit rate for Western shows
+    if site == "imdb":
+        clean_search = re.sub(r"\b(?:Season|Part|S)\s*\d+\b|\s+\d+$", "", clean_search, flags=re.IGNORECASE).strip()
+    
+    # Removed strict quotes for better fuzzy matching
     queries =[
-        f'"{search_term}" {year} site:{site}.com',
-        f'"{clean_search}" {year} site:{site}.com',
-        f'"{clean_search}" site:{site}.com'
+        f'{clean_search} {year} site:{site}.com',
+        f'{clean_search} site:{site}.com'
     ]
     
-    try:
-        with DDGS() as dd:
-            for query in queries:
-                results = list(dd.text(query, max_results=3))
-                for res in results:
-                    url = res.get("href", "")
-                    if any(bad in url for bad in["/reviews", "/recs", "/photos", "?lang=", "/characters", "/episodes"]):
-                        continue
+    for query in queries:
+        results =[]
+        # Anti-Ban Mechanism: Try up to 2 times per query with backoff
+        for attempt in range(2):
+            try:
+                with DDGS() as dd:
+                    results = list(dd.text(query, max_results=4))
+                if results: break # Break attempt loop if we got results
+            except Exception:
+                time.sleep(5 * (attempt + 1)) # Backoff delay if blocked
+                
+        for res in results:
+            url = res.get("href", "")
+            
+            # STRICT URL VALIDATION to prevent scraping Actors or Articles
+            if site == "mydramalist":
+                if not re.search(r'mydramalist\.com/[0-9]+-', url): continue
+                if any(bad in url for bad in["/people/", "/article/", "/list/", "/reviews", "/recs", "?lang="]): continue
+            elif site == "imdb":
+                if '/title/tt' not in url: continue
+                if any(bad in url for bad in["/reviews", "/characters", "/episodes", "/quotes", "/fullcredits"]): continue
 
-                    r = SCRAPER.get(url, timeout=10)
-                    if r.status_code == 200:
-                        soup = BeautifulSoup(r.text, "html.parser")
-                        title = None
-                        
-                        if site == "mydramalist":
-                            h1 = soup.find("h1", class_="film-title")
-                            if h1: title = h1.get_text(strip=True)
-                        elif site == "imdb":
-                            h1 = soup.find("h1")
-                            if h1: title = h1.get_text(strip=True)
+            try:
+                r = SCRAPER.get(url, timeout=10)
+                if r.status_code == 200:
+                    soup = BeautifulSoup(r.text, "html.parser")
+                    title = None
+                    
+                    if site == "mydramalist":
+                        h1 = soup.find("h1", class_="film-title")
+                        if h1: title = h1.get_text(strip=True)
+                    elif site == "imdb":
+                        h1 = soup.find("h1")
+                        if h1: title = h1.get_text(strip=True)
 
-                        if title:
-                            # Strip out the year if the site added it to the title
-                            title = re.sub(r"\s*\(\d{4}\)$", "", title).strip()
-                            return title, site
-                time.sleep(2) # Prevent Rate Limits
-    except Exception as e:
-        pass
+                    if title:
+                        # Strip out the year if the site added it to the title
+                        title = re.sub(r"\s*\(\d{4}\)$", "", title).strip()
+                        return title, site
+            except Exception:
+                pass
+                
+        # Randomized delay between queries to mimic human behavior
+        time.sleep(random.uniform(2.5, 4.5))
     
     return "N/A", site
 
@@ -95,9 +114,10 @@ def combine_reports(d1, d2):
     for k in set(d1.keys()).union(d2.keys()):
         res[k] = {
             "new_recs": d1.get(k, {}).get("new_recs",[]) + d2.get(k, {}).get("new_recs",[]),
-            "perfect": d1.get(k, {}).get("perfect", 0) + d2.get(k, {}).get("perfect", 0), # Now purely math (addition)
+            "perfect": d1.get(k, {}).get("perfect", 0) + d2.get(k, {}).get("perfect", 0),
             "user_fixed": d1.get(k, {}).get("user_fixed",[]) + d2.get(k, {}).get("user_fixed",[]),
-            "not_found": d1.get(k, {}).get("not_found",[]) + d2.get(k, {}).get("not_found",[]),
+            "not_found_asian": d1.get(k, {}).get("not_found_asian",[]) + d2.get(k, {}).get("not_found_asian",[]),
+            "not_found_non_asian": d1.get(k, {}).get("not_found_non_asian",[]) + d2.get(k, {}).get("not_found_non_asian",[]),
             "skipped": d1.get(k, {}).get("skipped", 0) + d2.get(k, {}).get("skipped", 0)
         }
     return res
@@ -158,7 +178,7 @@ def write_report(current_report, state, current_run_seconds, run_start_time, is_
         total_skipped = total_recs = total_perfect = total_fixed = total_not_found = 0
         
         for sheet, data in rep_data.items():
-            if not any([data["new_recs"], data["perfect"], data["user_fixed"], data["not_found"], data["skipped"]]): continue
+            if not any([data["new_recs"], data["perfect"], data["user_fixed"], data["not_found_asian"], data["not_found_non_asian"], data["skipped"]]): continue
             lines.extend(["━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", f"🗂️ === {sheet} ===", "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"])
             
             if data["new_recs"]:
@@ -167,7 +187,6 @@ def write_report(current_report, state, current_run_seconds, run_start_time, is_
                 total_recs += len(data["new_recs"])
                 
             if data["perfect"] > 0:
-                # ONLY PRINTS THE SUMMARY COUNT
                 lines.append(f"\n✅ Perfect Matches (Newly Scanned - 100% Accurate!):\n- {data['perfect']} records matched perfectly.")
                 total_perfect += data["perfect"]
                 
@@ -176,10 +195,15 @@ def write_report(current_report, state, current_run_seconds, run_start_time, is_
                 for i in data["user_fixed"]: lines.append(i)
                 total_fixed += len(data["user_fixed"])
 
-            if data["not_found"]:
-                lines.append("\n⚠️ Not Found Online (Could not find on MDL or IMDb):")
-                for i in data["not_found"]: lines.append(i)
-                total_not_found += len(data["not_found"])
+            if data["not_found_asian"]:
+                lines.append("\n⚠️ Not Found (Asian / MyDramaList):")
+                for i in data["not_found_asian"]: lines.append(i)
+                total_not_found += len(data["not_found_asian"])
+                
+            if data["not_found_non_asian"]:
+                lines.append("\n⚠️ Not Found (Non-Asian / IMDb):")
+                for i in data["not_found_non_asian"]: lines.append(i)
+                total_not_found += len(data["not_found_non_asian"])
                 
             if data["skipped"] > 0:
                 lines.append(f"\n⏭️ Skipped Fast (Already Verified Previously):\n- {data['skipped']} dramas skipped instantly.")
@@ -187,8 +211,6 @@ def write_report(current_report, state, current_run_seconds, run_start_time, is_
             lines.append("")
 
         summary_title = "📊 Overall Cumulative Summary" if is_cumulative else "📊 Summary (Current Batch Only)"
-        
-        # Calculates internet fetch stats specifically for cumulative or current batch
         internet_scanned = total_recs + total_perfect + total_not_found
         
         lines.extend([
@@ -208,7 +230,6 @@ def write_report(current_report, state, current_run_seconds, run_start_time, is_
 
         return "\n".join(lines)
 
-    # 1. GENERATE CURRENT BATCH REPORT (For Console & Step Summary)
     console_output = build_report_text(current_report, is_cumulative=False)
     print(console_output)
 
@@ -217,33 +238,25 @@ def write_report(current_report, state, current_run_seconds, run_start_time, is_
         with open(step_summary, 'a', encoding='utf-8') as f:
             f.write(f"### 📊 Title Validation Output (Run: {current_gh_run})\n```text\n" + console_output + "\n```\n")
 
-    # 2. FILE SAVING LOGIC
     os.makedirs(REPORTS_DIR, exist_ok=True)
     ts = now_ist().strftime("%d_%B_%Y_%H%M")
     
     cumulative_report = combine_reports(state.get("report_data", {}), current_report)
 
     if is_paused:
-        # Save ONLY current batch as a PARTIAL file (Git will ignore it, but used for summary if needed)
         report_name = f"{ts}_PARTIAL_{current_gh_run}_REPORT.txt"
         report_path = os.path.join(REPORTS_DIR, report_name)
-        with open(report_path, "w", encoding="utf-8") as f:
-            f.write(console_output)
+        with open(report_path, "w", encoding="utf-8") as f: f.write(console_output)
     else:
-        # Save CUMULATIVE report as the FINAL file (Git will commit this)
         first_run = state.get('first_run_id', current_gh_run)
         report_name = f"{ts}_FINAL_{first_run}-{current_gh_run}_REPORT.txt" if str(first_run) != str(current_gh_run) else f"{ts}_FINAL_{current_gh_run}_REPORT.txt"
         report_path = os.path.join(REPORTS_DIR, report_name)
-        
         file_output = build_report_text(cumulative_report, is_cumulative=True)
-        with open(report_path, "w", encoding="utf-8") as f:
-            f.write(file_output)
+        with open(report_path, "w", encoding="utf-8") as f: f.write(file_output)
 
-    # 3. EMAIL SUBJECT
     mail_date = now_ist().strftime("%d %B %Y %I:%M %p IST")
     email_subject = f"[{trigger_type}] Title Validation {mail_date} Report"
-    with open("EMAIL_SUBJECT.txt", "w", encoding='utf-8') as ef: 
-        ef.write(email_subject)
+    with open("EMAIL_SUBJECT.txt", "w", encoding='utf-8') as ef: ef.write(email_subject)
 
 def main():
     run_start_time = now_ist()
@@ -293,9 +306,8 @@ def main():
     for s_idx in range(state["sheet_idx"], len(sheets_to_process)):
         if limit_reached: break
         
-        # NOTE: "perfect" is now initialized as an integer 0 instead of a list[]
         sheet_name = sheets_to_process[s_idx]
-        report_sheet = current_report.setdefault(sheet_name, {"new_recs": [], "perfect": 0, "user_fixed": [], "not_found":[], "skipped": 0})
+        report_sheet = current_report.setdefault(sheet_name, {"new_recs": [], "perfect": 0, "user_fixed": [], "not_found_asian":[], "not_found_non_asian":[], "skipped": 0})
 
         target_sheet = next((s for s in xl.sheet_names if s.strip().lower() == sheet_name.strip().lower()), None)
         if not target_sheet: continue
@@ -326,17 +338,15 @@ def main():
             cache_key = f"{sheet_name}_{sid}"
             cached_data = cache.get(cache_key)
 
-            # --- SMART CACHE / SKIP LOGIC (IGNORED IF FORCE_CHECK IS TRUE) ---
+            # --- SMART CACHE / SKIP LOGIC ---
             if cached_data and not FORCE_CHECK:
                 cached_title = cached_data["Show Name"]
                 cached_rec = cached_data["Recommended Title Name"]
                 
-                # If you haven't changed the title at all since last run, skip it!
                 if title == cached_title:
                     report_sheet["skipped"] += 1
                     continue
                 
-                # If you DID change the Excel title, and it matches the old recommendation PERFECTLY:
                 if cached_rec != "N/A" and title == cached_rec:
                     report_sheet["user_fixed"].append(f"-[ID {sid}] **{cached_title}** -> Now perfectly matches: {title}")
                     
@@ -369,26 +379,51 @@ def main():
 
             # --- STRICT MATCHING LOGIC ---
             if rec_title == "N/A":
-                needs_rec = "No" # Keeps it empty so it doesn't overwrite your sheet with "N/A"
-                report_sheet["not_found"].append(f"-[ID {sid}] **{title}** -> Please verify manually.")
-            elif rec_title == title: # STRICT 100% MATCH
+                needs_rec = "No" 
+                if is_asian:
+                    report_sheet["not_found_asian"].append(f"-[ID {sid}] **{title}** -> Please verify manually.")
+                else:
+                    report_sheet["not_found_non_asian"].append(f"-[ID {sid}] **{title}** -> Please verify manually.")
+            elif rec_title == title:
                 needs_rec = "No"
                 rec_title = "N/A"
-                report_sheet["perfect"] += 1 # ADD 1 TO THE COUNTER INSTEAD OF SAVING TEXT
+                report_sheet["perfect"] += 1
             else:
                 needs_rec = "Yes"
                 report_sheet["new_recs"].append(f"- [ID {sid}] **{title}** ➔ Recommend: {rec_title} (Source: {source_used})")
 
             results.append({
-                "Sheet Name": sheet_name, "Show ID": sid, "Show Name": title,
-                "Released Year": year, "Language": lang, "Last Update Date": TODAY_DATE,
-                "asianwiki": "N/A", "mydramalist": mdl_title, "imdb": imdb_title, # asianwiki kept as N/A to preserve sheet columns
-                "Title Recommendation": needs_rec, "Recommended Title Name": rec_title
+                "Sheet Name": sheet_name, 
+                "Show ID": sid, 
+                "Show Name": title,
+                "Released Year": year, 
+                "Recommended Title Name": rec_title, # Reordered exactly where you asked
+                "Language": lang, 
+                "Last Update Date": TODAY_DATE,
+                "mydramalist": mdl_title, 
+                "imdb": imdb_title, 
+                "Title Recommendation": needs_rec
             })
 
     if results:
         new_df = pd.DataFrame(results)
+        
+        # Enforce exact column order (and AsianWiki is completely gone)
+        ordered_cols =["Sheet Name", "Show ID", "Show Name", "Released Year", "Recommended Title Name", "Language", "Last Update Date", "mydramalist", "imdb", "Title Recommendation"]
+        
+        # Ensure all columns exist before sorting
+        for col in ordered_cols:
+            if col not in new_df.columns:
+                new_df[col] = "N/A"
+        new_df = new_df[ordered_cols]
+
         if not existing_df.empty and "Sheet Name" in existing_df.columns:
+            # Ensure existing_df also has only our desired columns
+            for col in ordered_cols:
+                if col not in existing_df.columns:
+                    existing_df[col] = "N/A"
+            existing_df = existing_df[ordered_cols]
+            
             existing_df["Show ID"] = pd.to_numeric(existing_df["Show ID"], errors="coerce")
             new_df["Show ID"] = pd.to_numeric(new_df["Show ID"], errors="coerce")
             existing_df.set_index(["Sheet Name", "Show ID"], inplace=True)
@@ -397,12 +432,14 @@ def main():
         else:
             combined_df = new_df
         
+        # Re-enforce ordering one last time after combining
+        combined_df = combined_df[ordered_cols]
+        
         ws_out.clear()
         set_with_dataframe(ws_out, combined_df.fillna("N/A"))
 
     current_run_seconds = (now_ist() - run_start_time).total_seconds()
 
-    # Merge Current Data into Cumulative State Data
     state["report_data"] = combine_reports(state.get("report_data", {}), current_report)
 
     if limit_reached:

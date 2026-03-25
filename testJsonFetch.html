@@ -26,7 +26,7 @@
             "https://brucebanner001.github.io/my-movie-database/seriesData.json",
           );
           const data = await requestData.json();
-          console.log(data); //Logging Fetched Data
+          // console.log(data); //Logging Fetched Data
           const fetched = data.find((item) => item.showID === id);
           console.log(fetched); //Getting the Particular Array
           const showNameElement = document.getElementById("showName");
@@ -39,9 +39,7 @@
           const tagsElement = document.getElementById("tags");
           showNameElement.textContent = fetched.showName;
           showIDElement.textContent = `Show ID: ${fetched.showID}`;
-          //   https://brucebanner001.github.io/my-movie-database/show-images/101.jpg
-          // showImageElement.src = fetched.showImage;
-          showImageElement.src = `https://brucebanner001.github.io/my-movie-database/show-images/{fetched.showImage}`;
+          showImageElement.src = `https://brucebanner001.github.io/my-movie-database/show-images/${fetched.showImage}`;
           releaseDateElement.textContent = `Release Date : ${fetched.releaseDate}`;
           synopsisElement.textContent = fetched.synopsis;
           synopsisElement.style.whiteSpace = "pre-line";
@@ -60,7 +58,7 @@
           console.error("Fetch Error:", err);
         }
       }
-      fetchData(103);
+      fetchData(148);
     </script>
   </body>
 </html>
