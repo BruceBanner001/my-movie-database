@@ -8,9 +8,9 @@
 🔁 RUN           : 877
 ⏰ Start Time    : 26 March 2026 - 12:47:23 PM
 ⏰ End Time      : 26 March 2026 - 12:47:25 PM
-⏱️ Run Time      : 2 Seconds
+⏱️ Total Runtime : 2 Seconds
 ⚙️ Max Process   : 50 Row Per Run
-🔄 Current Batch : 1
+🔄 Total Batches : 1 Run
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Deleting Records ===
@@ -85,7 +85,7 @@
 - 127 -> Crash Landing On You (2019) -> ✅ Deleted
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📊 Summary (Current Batch Only)
+📊 Overall Cumulative Summary
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🆕 Total Created: 0
 🔁 Total Updated: 0
@@ -110,6 +110,12 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ Folders Generated:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📁 reports/ (Total: 1 files)
+    📄 26_March_2026_1247_FINAL_877_REPORT.txt
+
+📁 archived_backups/ (Total: 1 files)
+    📄 BACKUP_25_March_2026_0805_103.json
+
 📁 deleted_data/ (Total: 66 files)
     📄 DELETED_26_March_2026_1247_128.json
     📄 DELETED_26_March_2026_1247_129.json
@@ -126,12 +132,6 @@
     📄 DELETED_26_March_2026_1247_132.jpg
     ... and 60 more files.
 
-📁 reports/ (Total: 1 files)
-    📄 26_March_2026_1247_FINAL_877_REPORT.txt
-
-📁 archived_backups/ (Total: 1 files)
-    📄 BACKUP_25_March_2026_0805_103.json
-
 📁 archived_meta_backups/ (Total: 74 files)
     📄 META_25_March_2026_0805_128.json
     📄 META_25_March_2026_0805_129.json
@@ -142,5 +142,3 @@
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🏁 Workflow finished successfully
-
-✅ Final Master Report written -> reports/26_March_2026_1247_FINAL_877_REPORT.txt (Saved to Repo)
