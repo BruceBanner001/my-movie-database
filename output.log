@@ -1,53 +1,81 @@
-✅ Partial Batch completed successfully
-⏳ Batch Processing in Progress...
-══════════════════════════════════════════════════════
-📊 Drama Title Validator – Execution Report (FORCE CHECK ON 🚨)
-══════════════════════════════════════════════════════
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py", line 787, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py", line 534, in _make_request
+    response = conn.getresponse()
+               ^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connection.py", line 571, in getresponse
+    httplib_response = super().getresponse()
+                       ^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/http/client.py", line 1415, in getresponse
+    response.begin()
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/http/client.py", line 330, in begin
+    version, status, reason = self._read_status()
+                              ^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/http/client.py", line 299, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+http.client.RemoteDisconnected: Remote end closed connection without response
 
-🚀 Workflow Type : Manual
-🔁 RUN           : 52
-⏰ Start Time    : 28 March 2026 - 02:12:40 PM
-⏰ End Time      : 28 March 2026 - 02:16:31 PM
-⏱️ Run Time      : 3 Minutes 51 Seconds
-⚙️ Max Process   : 50 Row Per Run
-🔄 Current Batch : 8
+During handling of the above exception, another exception occurred:
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🗂️ === Feb 7 2023 Onwards ===
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/adapters.py", line 645, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py", line 841, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/util/retry.py", line 490, in increment
+    raise reraise(type(error), error, _stacktrace)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/util/util.py", line 38, in reraise
+    raise value.with_traceback(tb)
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py", line 787, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connectionpool.py", line 534, in _make_request
+    response = conn.getresponse()
+               ^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/urllib3/connection.py", line 571, in getresponse
+    httplib_response = super().getresponse()
+                       ^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/http/client.py", line 1415, in getresponse
+    response.begin()
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/http/client.py", line 330, in begin
+    version, status, reason = self._read_status()
+                              ^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/http/client.py", line 299, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+urllib3.exceptions.ProtocolError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
 
-✅ Perfect Matches (Newly Scanned - 100% Accurate!):
-- 34 records matched perfectly.
+During handling of the above exception, another exception occurred:
 
-⚠️ Not Found (Asian / MyDramaList):
--[ID 315] **Love Me Like I Do** -> Please verify manually.
--[ID 317] **Frankly Speaking** -> Please verify manually.
--[ID 336] **Dare to Love Me** -> Please verify manually.
--[ID 347] **Miss Night and Day** -> Please verify manually.
-
-⚠️ Not Found (Non-Asian / IMDb):
--[ID 328] **Game of Thrones Season 1** -> Please verify manually.
--[ID 329] **Game of Thrones Season 2** -> Please verify manually.
--[ID 330] **Game of Thrones Season 3** -> Please verify manually.
--[ID 331] **Game of Thrones Season 4** -> Please verify manually.
--[ID 332] **Game of Thrones Season 5** -> Please verify manually.
--[ID 333] **Game of Thrones Season 6** -> Please verify manually.
--[ID 334] **Game of Thrones Season 7** -> Please verify manually.
--[ID 335] **Game of Thrones Season 8** -> Please verify manually.
--[ID 341] **Stranger Things Season 1** -> Please verify manually.
--[ID 342] **Stranger Things Season 2** -> Please verify manually.
--[ID 343] **Stranger Things Season 3** -> Please verify manually.
--[ID 344] **Stranger Things Season 4** -> Please verify manually.
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📊 Summary (Current Batch Only)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🌐 Internet Scans Done   : 50
-⏭️ Total Skipped Fast    : 0
-✨ Total Recommendations : 0
-✅ Total Perfect Matches : 34
-🔄 Total User Fixes Seen : 0
-⚠️ Total Not Found       : 16
-
-⚠️ BATCH LIMIT REACHED: The script paused safely.
-GitHub Actions will trigger next run automatically.
+Traceback (most recent call last):
+  File "/home/runner/work/my-movie-database/my-movie-database/title_validator.py", line 504, in <module>
+    try: main()
+         ^^^^^^
+  File "/home/runner/work/my-movie-database/my-movie-database/title_validator.py", line 487, in main
+    ws_out.clear()
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/gspread/worksheet.py", line 2211, in clear
+    return self.client.values_clear(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/gspread/http_client.py", line 204, in values_clear
+    r = self.request("post", url)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/gspread/http_client.py", line 114, in request
+    response = self.session.request(
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/google/auth/transport/requests.py", line 543, in request
+    response = super(AuthorizedSession, self).request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/sessions.py", line 592, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/sessions.py", line 706, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/requests/adapters.py", line 660, in send
+    raise ConnectionError(err, request=request)
+requests.exceptions.ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+❌ CRITICAL ERROR: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
