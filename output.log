@@ -5,27 +5,28 @@
 ══════════════════════════════════════════════════════
 
 🚀 Workflow Type : Manual
-🔁 RUN           : 60
-⏰ Start Time    : 28 March 2026 - 03:23:02 PM
-⏰ End Time      : 28 March 2026 - 03:25:57 PM
-⏱️ Run Time      : 2 Minutes 54 Seconds
+🔁 RUN           : 61
+⏰ Start Time    : 28 March 2026 - 03:26:35 PM
+⏰ End Time      : 28 March 2026 - 03:28:54 PM
+⏱️ Run Time      : 2 Minutes 19 Seconds
 ⚙️ Max Process   : 50 Row Per Run
-🔄 Current Batch : 4
+🔄 Current Batch : 5
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Feb 7 2023 Onwards ===
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✅ Perfect Matches (Newly Scanned - 100% Accurate!):
-- 44 records matched perfectly.
+- 45 records matched perfectly.
 
 ⚠️ Not Found (Asian / MyDramaList):
--[ID 130] **Tomorrow with You** -> Not Found `(Reason: Only found sub-pages or invalid URLs)`
--[ID 134] **Cheat On Me, if You Can** -> Not Found `(Reason: Only found sub-pages (cast/episodes) or invalid URLs)`
--[ID 139] **You Are the Best!** -> Not Found `(Reason: Only found sub-pages (cast/episodes) or invalid URLs)`
--[ID 143] **Witch's Romance** -> Not Found `(Reason: Only found sub-pages (cast/episodes) or invalid URLs)`
--[ID 146] **Tempted** -> Not Found `(Reason: Only found sub-pages (cast/episodes) or invalid URLs)`
--[ID 150] **My Mister** -> Not Found `(Reason: Only found sub-pages or invalid URLs)`
+-[ID 187] **Hello, Me!** -> Not Found `(Reason: Only found sub-pages (cast/episodes) or invalid URLs)`
+
+⚠️ Not Found (Non-Asian / IMDb):
+-[ID 195] **12 Monkeys Season 1** -> Not Found `(Reason: Website blocked connection (Status 202))`
+-[ID 196] **12 Monkeys Season 2** -> Not Found `(Reason: Website blocked connection (Status 202))`
+-[ID 197] **12 Monkeys Season 3** -> Not Found `(Reason: Only found sub-pages or invalid URLs)`
+-[ID 198] **12 Monkeys Season 4** -> Not Found `(Reason: Only found sub-pages (episodes/credits) or invalid URLs)`
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📊 Summary (Current Batch Only)
@@ -33,9 +34,9 @@
 🌐 Internet Scans Done   : 50
 ⏭️ Total Skipped Fast    : 0
 ✨ Total Recommendations : 0
-✅ Total Perfect Matches : 44
+✅ Total Perfect Matches : 45
 🔄 Total User Fixes Seen : 0
-⚠️ Total Not Found       : 6
+⚠️ Total Not Found       : 5
 
 ⚠️ BATCH LIMIT REACHED: The script paused safely.
 GitHub Actions will trigger next run automatically.
