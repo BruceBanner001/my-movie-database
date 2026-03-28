@@ -55,6 +55,7 @@ def search_and_verify_title(search_term, expected_year, lang, site):
     queries.append(f'{clean_search} site:{site}.com')
     
     expected_country = LANG_TO_COUNTRY.get(str(lang).lower().strip())
+    best_reason = "No results found on search engine"
 
     for query in queries:
         results =[]
@@ -69,12 +70,21 @@ def search_and_verify_title(search_term, expected_year, lang, site):
         for res in results:
             url = res.get("href", "")
             
-            # --- STRICT URL VALIDATION ---
+            # --- STRICT URL VALIDATION (FIXED FOR IMDB TRACKING LINKS) ---
             if site == "mydramalist":
-                if re.search(r'/(?:cast|episodes|reviews|recs|characters|article|people|list)', url.lower()): continue
-                if not re.search(r'mydramalist\.com/[0-9]+-[^/]+/?$', url.lower()): continue
+                if re.search(r'/(?:cast|episodes|reviews|recs|characters|article|people|list)', url.lower()): 
+                    best_reason = "Only found sub-pages (cast/episodes) or invalid URLs"
+                    continue
+                if not re.search(r'mydramalist\.com/[0-9]+-', url.lower()): 
+                    best_reason = "Only found sub-pages or invalid URLs"
+                    continue
             elif site == "imdb":
-                if not re.search(r'imdb\.com/title/tt[0-9]+/?$', url.lower()): continue
+                if 'imdb.com/title/tt' not in url.lower(): 
+                    best_reason = "Only found sub-pages or invalid URLs"
+                    continue
+                if any(bad in url.lower() for bad in["/episodes", "/fullcredits", "/reviews", "/characters", "/quotes"]): 
+                    best_reason = "Only found sub-pages (episodes/credits) or invalid URLs"
+                    continue
 
             try:
                 r = SCRAPER.get(url, timeout=10)
@@ -89,11 +99,12 @@ def search_and_verify_title(search_term, expected_year, lang, site):
                         h1 = soup.find("h1", class_="film-title")
                         if h1: title = h1.get_text(strip=True)
                         
-                        country_tag = soup.find('b', string='Country:')
+                        # FIXED: Regex spaces/newlines issue for Country Tag
+                        country_tag = soup.find('b', string=re.compile(r'Country:?'))
                         if country_tag and country_tag.next_sibling:
-                            scraped_country = country_tag.next_sibling.strip().lower()
+                            scraped_country = re.sub(r'\s+', ' ', str(country_tag.next_sibling)).strip().lower()
                             
-                        aired_tag = soup.find('b', string='Aired:')
+                        aired_tag = soup.find('b', string=re.compile(r'Aired:?'))
                         if aired_tag and aired_tag.parent:
                             match = re.search(r'\b(19|20)\d{2}\b', aired_tag.parent.get_text())
                             if match: scraped_year = int(match.group())
@@ -102,30 +113,39 @@ def search_and_verify_title(search_term, expected_year, lang, site):
                         h1 = soup.find("h1")
                         if h1: title = h1.get_text(strip=True)
                         
-                        title_text = soup.get_text()
-                        match = re.search(r'\b(19|20)\d{2}\b', title_text)
-                        if match: scraped_year = int(match.group())
+                        # Fetch year directly from IMDb page title tag to be safer
+                        if soup.title:
+                            match = re.search(r'\b(19|20)\d{2}\b', soup.title.get_text())
+                            if match: scraped_year = int(match.group())
 
-                    if not title: continue
+                    if not title: 
+                        best_reason = "Failed to parse page title"
+                        continue
+                        
                     title = re.sub(r"\s*\(\d{4}\)$", "", title).strip()
 
                     # 1. VERIFY COUNTRY
                     if site == "mydramalist" and expected_country:
                         if expected_country.lower() not in scraped_country:
+                            best_reason = f"Country Mismatch - Expected '{expected_country}', Found '{scraped_country.title()}'"
                             continue 
 
                     # 2. VERIFY YEAR (Tolerance of ±1 year)
                     if expected_year != 0 and scraped_year != 0:
                         if abs(expected_year - scraped_year) > 1:
+                            best_reason = f"Year Mismatch - Expected '{expected_year}', Found '{scraped_year}'"
                             continue 
 
-                    return title, site, url
+                    return title, site, url, "Success"
+                else:
+                    best_reason = f"Website blocked connection (Status {r.status_code})"
             except Exception:
+                best_reason = "Website blocked connection / Timeout"
                 pass
                 
         time.sleep(random.uniform(2.5, 4.5))
     
-    return "N/A", site, "N/A"
+    return "N/A", site, "N/A", best_reason
 
 def fetch_excel_from_gdrive_bytes(file_id, creds_path):
     creds = service_account.Credentials.from_service_account_file(creds_path, scopes=["https://www.googleapis.com/auth/drive.readonly"])
@@ -359,7 +379,7 @@ def main():
         if not target_sheet: continue
 
         df_in = pd.read_excel(xl, sheet_name=target_sheet)
-        subset_cols =[c for c in ["Show ID", "No"] if c in df_in.columns]
+        subset_cols = [c for c in ["Show ID", "No"] if c in df_in.columns]
         if subset_cols: df_in = df_in.dropna(how="all", subset=subset_cols)
 
         start_r = state["row_idx"] if s_idx == state["sheet_idx"] else 0
@@ -415,13 +435,14 @@ def main():
             source_used = ""
             rec_title = "N/A"
             source_link = "N/A"
+            reason = ""
 
             if is_asian:
-                mdl_title, source_used, source_link = search_and_verify_title(title, year, lang, "mydramalist")
+                mdl_title, source_used, source_link, reason = search_and_verify_title(title, year, lang, "mydramalist")
                 if mdl_title != "N/A":
                     rec_title = mdl_title
             else:
-                imdb_title, source_used, source_link = search_and_verify_title(title, year, lang, "imdb")
+                imdb_title, source_used, source_link, reason = search_and_verify_title(title, year, lang, "imdb")
                 if imdb_title != "N/A":
                     rec_title = imdb_title
                     
@@ -431,10 +452,11 @@ def main():
             # --- STRICT MATCHING LOGIC ---
             if rec_title == "N/A":
                 needs_rec = "No" 
+                msg = f"-[ID {sid}] **{title}** -> Not Found `(Reason: {reason})`"
                 if is_asian:
-                    report_sheet["not_found_asian"].append(f"-[ID {sid}] **{title}** -> Please verify manually.")
+                    report_sheet["not_found_asian"].append(msg)
                 else:
-                    report_sheet["not_found_non_asian"].append(f"-[ID {sid}] **{title}** -> Please verify manually.")
+                    report_sheet["not_found_non_asian"].append(msg)
             elif rec_title == title:
                 needs_rec = "No"
                 rec_title = "N/A"
