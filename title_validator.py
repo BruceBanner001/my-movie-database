@@ -61,7 +61,6 @@ def search_and_verify_title(search_term, expected_year, lang, site):
         for attempt in range(2):
             try:
                 with DDGS() as dd:
-                    # Fetching top 5 to give us room to find the exact match
                     results = list(dd.text(query, max_results=5)) 
                 if results: break 
             except Exception:
@@ -72,11 +71,9 @@ def search_and_verify_title(search_term, expected_year, lang, site):
             
             # --- STRICT URL VALIDATION ---
             if site == "mydramalist":
-                # Must be the main title page. Rejects cast, episodes, reviews, people, lists.
                 if re.search(r'/(?:cast|episodes|reviews|recs|characters|article|people|list)', url.lower()): continue
                 if not re.search(r'mydramalist\.com/[0-9]+-[^/]+/?$', url.lower()): continue
             elif site == "imdb":
-                # Must be the main title page. Rejects episodes, fullcredits, reviews.
                 if not re.search(r'imdb\.com/title/tt[0-9]+/?$', url.lower()): continue
 
             try:
@@ -92,12 +89,10 @@ def search_and_verify_title(search_term, expected_year, lang, site):
                         h1 = soup.find("h1", class_="film-title")
                         if h1: title = h1.get_text(strip=True)
                         
-                        # Extract Country
                         country_tag = soup.find('b', string='Country:')
                         if country_tag and country_tag.next_sibling:
                             scraped_country = country_tag.next_sibling.strip().lower()
                             
-                        # Extract Year
                         aired_tag = soup.find('b', string='Aired:')
                         if aired_tag and aired_tag.parent:
                             match = re.search(r'\b(19|20)\d{2}\b', aired_tag.parent.get_text())
@@ -107,7 +102,6 @@ def search_and_verify_title(search_term, expected_year, lang, site):
                         h1 = soup.find("h1")
                         if h1: title = h1.get_text(strip=True)
                         
-                        # Extract Year from IMDb
                         title_text = soup.get_text()
                         match = re.search(r'\b(19|20)\d{2}\b', title_text)
                         if match: scraped_year = int(match.group())
@@ -115,17 +109,16 @@ def search_and_verify_title(search_term, expected_year, lang, site):
                     if not title: continue
                     title = re.sub(r"\s*\(\d{4}\)$", "", title).strip()
 
-                    # 1. VERIFY COUNTRY (Only applies to MyDramaList / Asian dramas)
+                    # 1. VERIFY COUNTRY
                     if site == "mydramalist" and expected_country:
                         if expected_country.lower() not in scraped_country:
-                            continue # Wrong country, skip to next link!
+                            continue 
 
                     # 2. VERIFY YEAR (Tolerance of ±1 year)
                     if expected_year != 0 and scraped_year != 0:
                         if abs(expected_year - scraped_year) > 1:
-                            continue # Wrong year, skip to next link!
+                            continue 
 
-                    # If it passes validation, return the good data!
                     return title, site, url
             except Exception:
                 pass
@@ -323,13 +316,23 @@ def main():
     excel_bytes = fetch_excel_from_gdrive_bytes(main_excel_id, "GDRIVE_SERVICE_ACCOUNT.json")
     xl = pd.ExcelFile(io.BytesIO(excel_bytes.getvalue()))
 
-    check_sh = gc.open_by_key(os.environ.get("CHECK_TITLES_EXCEL_ID"))
-    try:
-        ws_out = check_sh.worksheet("Check Titles")
-        existing_df = get_as_dataframe(ws_out, evaluate_formulas=True).dropna(how="all")
-    except gspread.exceptions.WorksheetNotFound:
-        ws_out = check_sh.add_worksheet(title="Check Titles", rows="1000", cols="20")
-        existing_df = pd.DataFrame()
+    # --- RETRY LOGIC ADDED FOR INITIALIZING GOOGLE SHEETS ---
+    for attempt in range(3):
+        try:
+            check_sh = gc.open_by_key(os.environ.get("CHECK_TITLES_EXCEL_ID"))
+            try:
+                ws_out = check_sh.worksheet("Check Titles")
+                existing_df = get_as_dataframe(ws_out, evaluate_formulas=True).dropna(how="all")
+            except gspread.exceptions.WorksheetNotFound:
+                ws_out = check_sh.add_worksheet(title="Check Titles", rows="1000", cols="20")
+                existing_df = pd.DataFrame()
+            break
+        except Exception as e:
+            if attempt < 2:
+                print(f"⚠️ Google API Connection Issue (Init). Retrying in 5 seconds...")
+                time.sleep(5)
+            else:
+                raise e
 
     cache = {}
     if not existing_df.empty and "Sheet Name" in existing_df.columns:
@@ -350,7 +353,7 @@ def main():
         if limit_reached: break
         
         sheet_name = sheets_to_process[s_idx]
-        report_sheet = current_report.setdefault(sheet_name, {"new_recs": [], "perfect": 0, "user_fixed":[], "not_found_asian":[], "not_found_non_asian":[], "skipped": 0})
+        report_sheet = current_report.setdefault(sheet_name, {"new_recs":[], "perfect": 0, "user_fixed":[], "not_found_asian":[], "not_found_non_asian":[], "skipped": 0})
 
         target_sheet = next((s for s in xl.sheet_names if s.strip().lower() == sheet_name.strip().lower()), None)
         if not target_sheet: continue
@@ -484,8 +487,18 @@ def main():
         
         combined_df = combined_df[ordered_cols]
         
-        ws_out.clear()
-        set_with_dataframe(ws_out, combined_df.fillna("N/A"))
+        # --- RETRY LOGIC ADDED FOR SAVING TO GOOGLE SHEETS ---
+        for attempt in range(3):
+            try:
+                ws_out.clear()
+                set_with_dataframe(ws_out, combined_df.fillna("N/A"))
+                break # Success!
+            except Exception as e:
+                if attempt < 2:
+                    print(f"⚠️ Google API Connection Issue (Write). Retrying in 5 seconds...")
+                    time.sleep(5)
+                else:
+                    raise e # Re-raise error if it fails 3 times
 
     current_run_seconds = (now_ist() - run_start_time).total_seconds()
     state["report_data"] = combine_reports(state.get("report_data", {}), current_report)
