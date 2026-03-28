@@ -5,28 +5,26 @@
 ══════════════════════════════════════════════════════
 
 🚀 Workflow Type : Manual
-🔁 RUN           : 61
-⏰ Start Time    : 28 March 2026 - 03:26:35 PM
-⏰ End Time      : 28 March 2026 - 03:28:54 PM
-⏱️ Run Time      : 2 Minutes 19 Seconds
+🔁 RUN           : 62
+⏰ Start Time    : 28 March 2026 - 03:29:21 PM
+⏰ End Time      : 28 March 2026 - 03:31:10 PM
+⏱️ Run Time      : 1 Minute 48 Seconds
 ⚙️ Max Process   : 50 Row Per Run
-🔄 Current Batch : 5
+🔄 Current Batch : 6
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Feb 7 2023 Onwards ===
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✅ Perfect Matches (Newly Scanned - 100% Accurate!):
-- 45 records matched perfectly.
+- 47 records matched perfectly.
 
 ⚠️ Not Found (Asian / MyDramaList):
--[ID 187] **Hello, Me!** -> Not Found `(Reason: Only found sub-pages (cast/episodes) or invalid URLs)`
+-[ID 217] **Destined with You** -> Not Found `(Reason: Country Mismatch - Expected 'South Korea', Found '')`
 
 ⚠️ Not Found (Non-Asian / IMDb):
--[ID 195] **12 Monkeys Season 1** -> Not Found `(Reason: Website blocked connection (Status 202))`
--[ID 196] **12 Monkeys Season 2** -> Not Found `(Reason: Website blocked connection (Status 202))`
--[ID 197] **12 Monkeys Season 3** -> Not Found `(Reason: Only found sub-pages or invalid URLs)`
--[ID 198] **12 Monkeys Season 4** -> Not Found `(Reason: Only found sub-pages (episodes/credits) or invalid URLs)`
+-[ID 220] **Star Trek: New Strange Worlds Season 2** -> Not Found `(Reason: Only found sub-pages (episodes/credits) or invalid URLs)`
+-[ID 225] **Reacher Season 1** -> Not Found `(Reason: Only found sub-pages (episodes/credits) or invalid URLs)`
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📊 Summary (Current Batch Only)
@@ -34,9 +32,9 @@
 🌐 Internet Scans Done   : 50
 ⏭️ Total Skipped Fast    : 0
 ✨ Total Recommendations : 0
-✅ Total Perfect Matches : 45
+✅ Total Perfect Matches : 47
 🔄 Total User Fixes Seen : 0
-⚠️ Total Not Found       : 5
+⚠️ Total Not Found       : 3
 
 ⚠️ BATCH LIMIT REACHED: The script paused safely.
 GitHub Actions will trigger next run automatically.
