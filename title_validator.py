@@ -34,66 +34,105 @@ SCRAPER = cloudscraper.create_scraper()
 SCRAPER.headers.update({"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"})
 STATE_FILE = "title_validator_state.json"
 
-def search_and_get_title(search_term, year, site):
-    # Base clean up
+LANG_TO_COUNTRY = {
+    "korean": "South Korea",
+    "chinese": "China",
+    "japanese": "Japan",
+    "thai": "Thailand",
+    "taiwanese": "Taiwan",
+    "filipino": "Philippines"
+}
+
+def search_and_verify_title(search_term, expected_year, lang, site):
     clean_search = re.sub(r"\(.*?\)", "", str(search_term)).strip()
     
-    # Strip Season for IMDb to improve hit rate for Western shows
     if site == "imdb":
         clean_search = re.sub(r"\b(?:Season|Part|S)\s*\d+\b|\s+\d+$", "", clean_search, flags=re.IGNORECASE).strip()
     
-    # Removed strict quotes for better fuzzy matching
-    queries =[
-        f'{clean_search} {year} site:{site}.com',
-        f'{clean_search} site:{site}.com'
-    ]
+    queries =[]
+    if expected_year and expected_year != 0:
+        queries.append(f'{clean_search} {expected_year} site:{site}.com')
+    queries.append(f'{clean_search} site:{site}.com')
     
+    expected_country = LANG_TO_COUNTRY.get(str(lang).lower().strip())
+
     for query in queries:
         results =[]
-        # Anti-Ban Mechanism: Try up to 2 times per query with backoff
         for attempt in range(2):
             try:
                 with DDGS() as dd:
-                    results = list(dd.text(query, max_results=4))
-                if results: break # Break attempt loop if we got results
+                    # Fetching top 5 to give us room to find the exact match
+                    results = list(dd.text(query, max_results=5)) 
+                if results: break 
             except Exception:
-                time.sleep(5 * (attempt + 1)) # Backoff delay if blocked
+                time.sleep(5 * (attempt + 1)) 
                 
         for res in results:
             url = res.get("href", "")
             
-            # STRICT URL VALIDATION to prevent scraping Actors or Articles
+            # --- STRICT URL VALIDATION ---
             if site == "mydramalist":
-                if not re.search(r'mydramalist\.com/[0-9]+-', url): continue
-                if any(bad in url for bad in["/people/", "/article/", "/list/", "/reviews", "/recs", "?lang="]): continue
+                # Must be the main title page. Rejects cast, episodes, reviews, people, lists.
+                if re.search(r'/(?:cast|episodes|reviews|recs|characters|article|people|list)', url.lower()): continue
+                if not re.search(r'mydramalist\.com/[0-9]+-[^/]+/?$', url.lower()): continue
             elif site == "imdb":
-                if '/title/tt' not in url: continue
-                if any(bad in url for bad in["/reviews", "/characters", "/episodes", "/quotes", "/fullcredits"]): continue
+                # Must be the main title page. Rejects episodes, fullcredits, reviews.
+                if not re.search(r'imdb\.com/title/tt[0-9]+/?$', url.lower()): continue
 
             try:
                 r = SCRAPER.get(url, timeout=10)
                 if r.status_code == 200:
                     soup = BeautifulSoup(r.text, "html.parser")
                     title = None
+                    scraped_year = 0
+                    scraped_country = ""
                     
+                    # --- DEEP VERIFICATION LOGIC ---
                     if site == "mydramalist":
                         h1 = soup.find("h1", class_="film-title")
                         if h1: title = h1.get_text(strip=True)
+                        
+                        # Extract Country
+                        country_tag = soup.find('b', string='Country:')
+                        if country_tag and country_tag.next_sibling:
+                            scraped_country = country_tag.next_sibling.strip().lower()
+                            
+                        # Extract Year
+                        aired_tag = soup.find('b', string='Aired:')
+                        if aired_tag and aired_tag.parent:
+                            match = re.search(r'\b(19|20)\d{2}\b', aired_tag.parent.get_text())
+                            if match: scraped_year = int(match.group())
+
                     elif site == "imdb":
                         h1 = soup.find("h1")
                         if h1: title = h1.get_text(strip=True)
+                        
+                        # Extract Year from IMDb
+                        title_text = soup.get_text()
+                        match = re.search(r'\b(19|20)\d{2}\b', title_text)
+                        if match: scraped_year = int(match.group())
 
-                    if title:
-                        # Strip out the year if the site added it to the title
-                        title = re.sub(r"\s*\(\d{4}\)$", "", title).strip()
-                        return title, site
+                    if not title: continue
+                    title = re.sub(r"\s*\(\d{4}\)$", "", title).strip()
+
+                    # 1. VERIFY COUNTRY (Only applies to MyDramaList / Asian dramas)
+                    if site == "mydramalist" and expected_country:
+                        if expected_country.lower() not in scraped_country:
+                            continue # Wrong country, skip to next link!
+
+                    # 2. VERIFY YEAR (Tolerance of ±1 year)
+                    if expected_year != 0 and scraped_year != 0:
+                        if abs(expected_year - scraped_year) > 1:
+                            continue # Wrong year, skip to next link!
+
+                    # If it passes validation, return the good data!
+                    return title, site, url
             except Exception:
                 pass
                 
-        # Randomized delay between queries to mimic human behavior
         time.sleep(random.uniform(2.5, 4.5))
     
-    return "N/A", site
+    return "N/A", site, "N/A"
 
 def fetch_excel_from_gdrive_bytes(file_id, creds_path):
     creds = service_account.Credentials.from_service_account_file(creds_path, scopes=["https://www.googleapis.com/auth/drive.readonly"])
@@ -109,15 +148,18 @@ def fetch_excel_from_gdrive_bytes(file_id, creds_path):
     fh.seek(0)
     return fh
 
+def unique_list(lst):
+    return list(dict.fromkeys(lst))
+
 def combine_reports(d1, d2):
     res = {}
     for k in set(d1.keys()).union(d2.keys()):
         res[k] = {
-            "new_recs": d1.get(k, {}).get("new_recs",[]) + d2.get(k, {}).get("new_recs",[]),
+            "new_recs": unique_list(d1.get(k, {}).get("new_recs",[]) + d2.get(k, {}).get("new_recs",[])),
             "perfect": d1.get(k, {}).get("perfect", 0) + d2.get(k, {}).get("perfect", 0),
-            "user_fixed": d1.get(k, {}).get("user_fixed",[]) + d2.get(k, {}).get("user_fixed",[]),
-            "not_found_asian": d1.get(k, {}).get("not_found_asian",[]) + d2.get(k, {}).get("not_found_asian",[]),
-            "not_found_non_asian": d1.get(k, {}).get("not_found_non_asian",[]) + d2.get(k, {}).get("not_found_non_asian",[]),
+            "user_fixed": unique_list(d1.get(k, {}).get("user_fixed",[]) + d2.get(k, {}).get("user_fixed",[])),
+            "not_found_asian": unique_list(d1.get(k, {}).get("not_found_asian",[]) + d2.get(k, {}).get("not_found_asian",[])),
+            "not_found_non_asian": unique_list(d1.get(k, {}).get("not_found_non_asian",[]) + d2.get(k, {}).get("not_found_non_asian",[])),
             "skipped": d1.get(k, {}).get("skipped", 0) + d2.get(k, {}).get("skipped", 0)
         }
     return res
@@ -183,8 +225,8 @@ def write_report(current_report, state, current_run_seconds, run_start_time, is_
             
             if data["new_recs"]:
                 lines.append("\n✨ Brand New Recommendations Found (Action Required):")
-                for i in data["new_recs"]: lines.append(i)
-                total_recs += len(data["new_recs"])
+                for i in unique_list(data["new_recs"]): lines.append(i)
+                total_recs += len(unique_list(data["new_recs"]))
                 
             if data["perfect"] > 0:
                 lines.append(f"\n✅ Perfect Matches (Newly Scanned - 100% Accurate!):\n- {data['perfect']} records matched perfectly.")
@@ -192,18 +234,18 @@ def write_report(current_report, state, current_run_seconds, run_start_time, is_
                 
             if data["user_fixed"]:
                 lines.append("\n🔄 User Fixed & Re-Verified (You changed these in Excel!):")
-                for i in data["user_fixed"]: lines.append(i)
-                total_fixed += len(data["user_fixed"])
+                for i in unique_list(data["user_fixed"]): lines.append(i)
+                total_fixed += len(unique_list(data["user_fixed"]))
 
             if data["not_found_asian"]:
                 lines.append("\n⚠️ Not Found (Asian / MyDramaList):")
-                for i in data["not_found_asian"]: lines.append(i)
-                total_not_found += len(data["not_found_asian"])
+                for i in unique_list(data["not_found_asian"]): lines.append(i)
+                total_not_found += len(unique_list(data["not_found_asian"]))
                 
             if data["not_found_non_asian"]:
                 lines.append("\n⚠️ Not Found (Non-Asian / IMDb):")
-                for i in data["not_found_non_asian"]: lines.append(i)
-                total_not_found += len(data["not_found_non_asian"])
+                for i in unique_list(data["not_found_non_asian"]): lines.append(i)
+                total_not_found += len(unique_list(data["not_found_non_asian"]))
                 
             if data["skipped"] > 0:
                 lines.append(f"\n⏭️ Skipped Fast (Already Verified Previously):\n- {data['skipped']} dramas skipped instantly.")
@@ -302,18 +344,19 @@ def main():
     sheets_to_process =[s.strip() for s in os.environ.get("SHEETS", "Sheet1;Sheet2").split(";") if s.strip()]
     results =[]
     current_report = {}
+    processed_ids_this_run = set()
     
     for s_idx in range(state["sheet_idx"], len(sheets_to_process)):
         if limit_reached: break
         
         sheet_name = sheets_to_process[s_idx]
-        report_sheet = current_report.setdefault(sheet_name, {"new_recs": [], "perfect": 0, "user_fixed": [], "not_found_asian":[], "not_found_non_asian":[], "skipped": 0})
+        report_sheet = current_report.setdefault(sheet_name, {"new_recs": [], "perfect": 0, "user_fixed":[], "not_found_asian":[], "not_found_non_asian":[], "skipped": 0})
 
         target_sheet = next((s for s in xl.sheet_names if s.strip().lower() == sheet_name.strip().lower()), None)
         if not target_sheet: continue
 
         df_in = pd.read_excel(xl, sheet_name=target_sheet)
-        subset_cols = [c for c in["Show ID", "No"] if c in df_in.columns]
+        subset_cols =[c for c in ["Show ID", "No"] if c in df_in.columns]
         if subset_cols: df_in = df_in.dropna(how="all", subset=subset_cols)
 
         start_r = state["row_idx"] if s_idx == state["sheet_idx"] else 0
@@ -334,8 +377,11 @@ def main():
             except ValueError: continue
 
             if sid == 0 or not title or title.lower() == "nan": continue
-
+            
             cache_key = f"{sheet_name}_{sid}"
+            if cache_key in processed_ids_this_run: continue
+            processed_ids_this_run.add(cache_key)
+
             cached_data = cache.get(cache_key)
 
             # --- SMART CACHE / SKIP LOGIC ---
@@ -365,17 +411,19 @@ def main():
             mdl_title, imdb_title = "N/A", "N/A"
             source_used = ""
             rec_title = "N/A"
+            source_link = "N/A"
 
             if is_asian:
-                mdl_title, _ = search_and_get_title(title, year, "mydramalist")
+                mdl_title, source_used, source_link = search_and_verify_title(title, year, lang, "mydramalist")
                 if mdl_title != "N/A":
                     rec_title = mdl_title
-                    source_used = "MyDramaList"
             else:
-                imdb_title, _ = search_and_get_title(title, year, "imdb")
+                imdb_title, source_used, source_link = search_and_verify_title(title, year, lang, "imdb")
                 if imdb_title != "N/A":
                     rec_title = imdb_title
-                    source_used = "IMDb"
+                    
+            if source_used == "mydramalist": source_used = "MyDramaList"
+            if source_used == "imdb": source_used = "IMDb"
 
             # --- STRICT MATCHING LOGIC ---
             if rec_title == "N/A":
@@ -390,14 +438,15 @@ def main():
                 report_sheet["perfect"] += 1
             else:
                 needs_rec = "Yes"
-                report_sheet["new_recs"].append(f"- [ID {sid}] **{title}** ➔ Recommend: {rec_title} (Source: {source_used})")
+                report_sheet["new_recs"].append(f"-[ID {sid}] **{title}** ➔ Recommend: {rec_title} (Source: {source_used})")
 
             results.append({
                 "Sheet Name": sheet_name, 
                 "Show ID": sid, 
                 "Show Name": title,
                 "Released Year": year, 
-                "Recommended Title Name": rec_title, # Reordered exactly where you asked
+                "Recommended Title Name": rec_title,
+                "Source Link": source_link,
                 "Language": lang, 
                 "Last Update Date": TODAY_DATE,
                 "mydramalist": mdl_title, 
@@ -408,17 +457,18 @@ def main():
     if results:
         new_df = pd.DataFrame(results)
         
-        # Enforce exact column order (and AsianWiki is completely gone)
-        ordered_cols =["Sheet Name", "Show ID", "Show Name", "Released Year", "Recommended Title Name", "Language", "Last Update Date", "mydramalist", "imdb", "Title Recommendation"]
+        ordered_cols =[
+            "Sheet Name", "Show ID", "Show Name", "Released Year", 
+            "Recommended Title Name", "Source Link", "Language", 
+            "Last Update Date", "mydramalist", "imdb", "Title Recommendation"
+        ]
         
-        # Ensure all columns exist before sorting
         for col in ordered_cols:
             if col not in new_df.columns:
                 new_df[col] = "N/A"
         new_df = new_df[ordered_cols]
 
         if not existing_df.empty and "Sheet Name" in existing_df.columns:
-            # Ensure existing_df also has only our desired columns
             for col in ordered_cols:
                 if col not in existing_df.columns:
                     existing_df[col] = "N/A"
@@ -432,14 +482,12 @@ def main():
         else:
             combined_df = new_df
         
-        # Re-enforce ordering one last time after combining
         combined_df = combined_df[ordered_cols]
         
         ws_out.clear()
         set_with_dataframe(ws_out, combined_df.fillna("N/A"))
 
     current_run_seconds = (now_ist() - run_start_time).total_seconds()
-
     state["report_data"] = combine_reports(state.get("report_data", {}), current_report)
 
     if limit_reached:
