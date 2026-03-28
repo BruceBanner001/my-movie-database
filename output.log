@@ -1,14 +1,14 @@
-✅ Partial Batch completed successfully
-⏳ Batch Processing in Progress...
+✅ Workflow Batch completed successfully
+🏁 Final Batch Completed
 ══════════════════════════════════════════════════════
 📊 Drama Title Validator – Execution Report (FORCE CHECK ON 🚨)
 ══════════════════════════════════════════════════════
 
 🚀 Workflow Type : Manual
-🔁 RUN           : 67
-⏰ Start Time    : 28 March 2026 - 03:44:24 PM
-⏰ End Time      : 28 March 2026 - 03:46:09 PM
-⏱️ Run Time      : 1 Minute 44 Seconds
+🔁 RUN           : 68
+⏰ Start Time    : 28 March 2026 - 03:46:34 PM
+⏰ End Time      : 28 March 2026 - 03:47:30 PM
+⏱️ Run Time      : 55 Seconds
 ⚙️ Max Process   : 50 Row Per Run
 🔄 Current Batch : 11
 
@@ -16,25 +16,26 @@
 🗂️ === Feb 7 2023 Onwards ===
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+✨ Brand New Recommendations Found (Action Required):
+-[ID 530] **The Snow Queen** ➔ Recommend: Yu Hee, the Witch (Source: MyDramaList)
+
 ✅ Perfect Matches (Newly Scanned - 100% Accurate!):
-- 47 records matched perfectly.
+- 28 records matched perfectly.
 
 ⚠️ Not Found (Asian / MyDramaList):
--[ID 453] **The First Night with the Duke** -> Not Found `(Reason: Only found sub-pages or invalid URLs)`
--[ID 493] **First Lady** -> Not Found `(Reason: Only found sub-pages (cast/episodes) or invalid URLs)`
+-[ID 520] **The Glory Part 2** -> Not Found `(Reason: Only found sub-pages or invalid URLs)`
 
 ⚠️ Not Found (Non-Asian / IMDb):
--[ID 499] **The Day of the Jackal** -> Not Found `(Reason: Only found sub-pages (episodes/credits) or invalid URLs)`
+-[ID 514] **Breaking Bad Season 1** -> Not Found `(Reason: Only found sub-pages or invalid URLs)`
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📊 Summary (Current Batch Only)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🌐 Internet Scans Done   : 50
+🌐 Internet Scans Done   : 31
 ⏭️ Total Skipped Fast    : 0
-✨ Total Recommendations : 0
-✅ Total Perfect Matches : 47
+✨ Total Recommendations : 1
+✅ Total Perfect Matches : 28
 🔄 Total User Fixes Seen : 0
-⚠️ Total Not Found       : 3
+⚠️ Total Not Found       : 2
 
-⚠️ BATCH LIMIT REACHED: The script paused safely.
-GitHub Actions will trigger next run automatically.
+🏁 Workflow finished successfully
