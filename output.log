@@ -1,100 +1,68 @@
-✅ Partial Batch completed successfully
-⏳ Batch Processing in Progress...
+✅ Workflow Batch completed successfully
+🏁 Final Batch Completed
 ══════════════════════════════════════════════════════
 📊 Drama Title Validator – Execution Report (FORCE CHECK ON 🚨)
 ══════════════════════════════════════════════════════
 
 🚀 Workflow Type : Manual
-🔁 RUN           : 82
-⏰ Start Time    : 30 March 2026 - 10:42:34 AM
-⏰ End Time      : 30 March 2026 - 10:46:09 AM
-⏱️ Run Time      : 3 Minutes 34 Seconds
+🔁 RUN           : 83
+⏰ Start Time    : 30 March 2026 - 10:46:39 AM
+⏰ End Time      : 30 March 2026 - 10:49:08 AM
+⏱️ Run Time      : 2 Minutes 28 Seconds
 ⚙️ Max Process   : 100 Row Per Run
 🔄 Current Batch : 7
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🗂️ === Feb 7 2023 Onwards ===
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✅ Perfect Matches (Newly Scanned - 100% Accurate!):
-- 29 records matched perfectly.
-
-⚠️ Not Found (Asian / MyDramaList):
--[ID 503] **Squid Game Season 2** -> Not Found `(Reason: Only found non-drama pages (actors/articles))`
-
-⚠️ Not Found (Non-Asian / IMDb):
--[ID 514] **Breaking Bad Season 1** -> Not Found `(Reason: Website blocked connection (Status 202))`
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🗂️ === Before Feb 7 2023 (Korean) ===
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✨ Brand New Recommendations Found (Action Required):
--[ID 4] **What's Wrong With The Secretary Kim** ➔ Recommend: What's Wrong with Secretary Kim (Source: MyDramaList)
--[ID 5] **Love In Contract** ➔ Recommend: Love in Contract (Source: MyDramaList)
--[ID 8] **Island Season 1** ➔ Recommend: Island (Source: MyDramaList)
--[ID 12] **The Penthouse Season 3** ➔ Recommend: The Penthouse Season 3: War in Life (Source: MyDramaList)
--[ID 15] **The Secret Garden** ➔ Recommend: Secret Garden (Source: MyDramaList)
--[ID 16] **My Love From the Star** ➔ Recommend: My Love from the Star (Source: MyDramaList)
--[ID 19] **Strong Woman Do Bong Soon** ➔ Recommend: Strong Girl Bong Soon (Source: MyDramaList)
--[ID 22] **The One And Only** ➔ Recommend: The One and Only (Source: MyDramaList)
--[ID 23] **All Of Us Are Dead** ➔ Recommend: All of Us Are Dead (Source: MyDramaList)
-
-✅ Perfect Matches (Newly Scanned - 100% Accurate!):
-- 13 records matched perfectly.
-
-⚠️ Not Found (Asian / MyDramaList):
--[ID 7] **School** -> Not Found `(Reason: Year Mismatch - Expected '2017', Found '2014')`
--[ID 24] **Hellbound** -> Not Found `(Reason: Only found non-drama pages (actors/articles))`
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🗂️ === Before Feb 7 2023 ( Korean Dub) ===
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✨ Brand New Recommendations Found (Action Required):
--[ID 1] **The Penthouse Season 1** ➔ Recommend: The Penthouse: War in Life (Source: MyDramaList)
--[ID 2] **The Penthouse Season 2** ➔ Recommend: The Penthouse Season 2: War in Life (Source: MyDramaList)
--[ID 6] **Dr. Romantic Season 1** ➔ Recommend: Dr. Romantic (Source: MyDramaList)
--[ID 11] **To All The Guys Who Loved Me** ➔ Recommend: To All the Guys Who Loved Me (Source: MyDramaList)
--[ID 13] **Meow, The Secret Boy** ➔ Recommend: Meow, the Secret Boy (Source: MyDramaList)
--[ID 14] **Into The Ring** ➔ Recommend: Into the Ring (Source: MyDramaList)
--[ID 19] **Angel's Last Mission Love** ➔ Recommend: Angel's Last Mission: Love (Source: MyDramaList)
--[ID 20] **The Mask** ➔ Recommend: Mask (Source: MyDramaList)
--[ID 26] **Innocent Defendant** ➔ Recommend: Defendant (Source: MyDramaList)
--[ID 30] **One The Woman** ➔ Recommend: One the Woman (Source: MyDramaList)
--[ID 32] **Kill Me Heal Me** ➔ Recommend: Kill Me, Heal Me (Source: MyDramaList)
--[ID 33] **Guardian The Lonely and Great God (Goblin)** ➔ Recommend: Guardian: The Lonely and Great God (Source: MyDramaList)
--[ID 36] **Something About 1%** ➔ Recommend: Something about 1 Percent (Source: MyDramaList)
--[ID 38] **Light On Me** ➔ Recommend: Light on Me (Source: MyDramaList)
--[ID 43] **My Girlfriend is a Gumiho** ➔ Recommend: My Girlfriend Is a Gumiho (Source: MyDramaList)
-
-✅ Perfect Matches (Newly Scanned - 100% Accurate!):
-- 23 records matched perfectly.
-
-⚠️ Not Found (Asian / MyDramaList):
--[ID 23] **Untouchable** -> Not Found `(Reason: Year Mismatch - Expected '2022', Found '2017')`
--[ID 31] **Flower of Evil** -> Not Found `(Reason: Year Mismatch - Expected '2022', Found '2020')`
--[ID 37] **Squid Game** -> Not Found `(Reason: Only found non-drama pages (actors/articles))`
--[ID 40] **Listen To Love** -> Not Found `(Reason: Country Mismatch - Expected 'South Korea', Found 'China')`
--[ID 41] **Rain or Shine (Just Between Lovers)** -> Not Found `(Reason: Year Mismatch - Expected '2022', Found '2017')`
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Before Feb 7 2023 ===
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✨ Brand New Recommendations Found (Action Required):
--[ID 1] **My Girlfriend is an Alien** ➔ Recommend: My Girlfriend Is an Alien (Source: MyDramaList)
--[ID 2] **Put Your Head On My Shoulder** ➔ Recommend: Put Your Head on My Shoulder (Source: MyDramaList)
+-[ID 3] **Love Of Thousand Years** ➔ Recommend: Love of Thousand Years (Source: MyDramaList)
+-[ID 5] **The Love By Hyptonic** ➔ Recommend: The Love by Hypnotic (Source: MyDramaList)
+-[ID 7] **Dream Back to Qing Dynasty** ➔ Recommend: Dreaming Back to the Qing Dynasty (Source: MyDramaList)
+
+✅ Perfect Matches (Newly Scanned - 100% Accurate!):
+- 3 records matched perfectly.
+
+⚠️ Not Found (Non-Asian / IMDb):
+-[ID 13] **Beauty and The Beast Season 1** -> Not Found `(Reason: Website blocked connection (Status 202))`
+-[ID 14] **Beauty and The Beast Season 2** -> Not Found `(Reason: Website blocked connection (Status 202))`
+-[ID 15] **Beauty and The Beast Season 3** -> Not Found `(Reason: Website blocked connection (Status 202))`
+-[ID 16] **Beauty and The Beast Season 4** -> Not Found `(Reason: Website blocked connection (Status 202))`
+-[ID 17] **Price of Passion** -> Not Found `(Reason: Website blocked connection (Status 202))`
+-[ID 18] **Lucifer Season 1** -> Not Found `(Reason: Website blocked connection (Status 202))`
+-[ID 19] **Lucifer Season 2** -> Not Found `(Reason: Website blocked connection (Status 202))`
+-[ID 20] **Lucifer Season 3** -> Not Found `(Reason: Website blocked connection (Status 202))`
+-[ID 21] **Lucifer Season 4** -> Not Found `(Reason: Website blocked connection (Status 202))`
+-[ID 22] **Lucifer Season 5** -> Not Found `(Reason: Website blocked connection (Status 202))`
+-[ID 23] **Lucifer Season 6** -> Not Found `(Reason: Website blocked connection (Status 202))`
+-[ID 24] **Peaky Blinders Season 1** -> Not Found `(Reason: Website blocked connection (Status 202))`
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Mini Drama ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✨ Brand New Recommendations Found (Action Required):
+-[ID 3] **Don't Mess With My Ex-Girlfriend** ➔ Recommend: Don’t Mess with Ex-Girlfriend (Source: MyDramaList)
+-[ID 5] **Love Me In Three Days** ➔ Recommend: Love Me in Three Days (Source: MyDramaList)
+-[ID 6] **High-End Crush** ➔ Recommend: High-end Crush (Source: MyDramaList)
+-[ID 7] **Love Your Self Evident** ➔ Recommend: Love You Self-Evident (Source: MyDramaList)
+-[ID 8] **Fanletter Please** ➔ Recommend: Fanletter, Please (Source: MyDramaList)
+-[ID 11] **Mad For Each Other** ➔ Recommend: Mad for Each Other (Source: MyDramaList)
+-[ID 14] **1122 For a Happy Marriage** ➔ Recommend: 1122: For a Happy Marriage (Source: MyDramaList)
+-[ID 16] **Hello Nice to Meet You Let's Get Divorced** ➔ Recommend: Business Marriage (Source: MyDramaList)
+
+✅ Perfect Matches (Newly Scanned - 100% Accurate!):
+- 10 records matched perfectly.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📊 Summary (Current Batch Only)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🌐 Internet Scans Done   : 100
+🌐 Internet Scans Done   : 36
 ⏭️ Total Skipped Fast    : 0
-✨ Total Recommendations : 26
-✅ Total Perfect Matches : 65
+✨ Total Recommendations : 11
+✅ Total Perfect Matches : 13
 🔄 Total User Fixes Seen : 0
-⚠️ Total Not Found       : 9
+⚠️ Total Not Found       : 12
 
-⚠️ BATCH LIMIT REACHED: The script paused safely.
-GitHub Actions will trigger next run automatically.
+🏁 Workflow finished successfully
