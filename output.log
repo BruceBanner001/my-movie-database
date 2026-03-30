@@ -5,37 +5,39 @@
 ══════════════════════════════════════════════════════
 
 🚀 Workflow Type : Manual
-🔁 RUN           : 84
-⏰ Start Time    : 30 March 2026 - 02:22:12 PM
-⏰ End Time      : 30 March 2026 - 02:28:12 PM
-⏱️ Run Time      : 5 Minutes 59 Seconds
+🔁 RUN           : 85
+⏰ Start Time    : 30 March 2026 - 02:28:38 PM
+⏰ End Time      : 30 March 2026 - 02:34:12 PM
+⏱️ Run Time      : 5 Minutes 34 Seconds
 ⚙️ Max Process   : 150 Row Per Run
-🔄 Current Batch : 2
+🔄 Current Batch : 3
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Feb 7 2023 Onwards ===
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✅ PERFECT MATCHES (100% Accurate):
-- 144 records matched perfectly.
+- 140 records matched perfectly.
 
 ⚠️ NOT FOUND (Asian / MyDramaList):
 
-📌 Reason: Country Mismatch
-[ID  23] I Miss You                     ➔ ❌ Expected: South Korea | Found: China
-
-📌 Reason: Year Mismatch
-[ID  39] Cinderella and the Four Knights ➔ ❌ Expected: 2020 | Found: 2016
-
 📌 Reason: Connection or URL Issues
-[ID  70] The K2                         ➔ ❌ Only found non-drama pages (actors/articles)
-[ID  97] Buang Ruk Satan                ➔ ❌ Only found non-drama pages (actors/articles)
-[ID 115] Phoenix 2020                   ➔ ❌ Only found non-drama pages (actors/articles)
+[ID 160] King the Land                  ➔ ❌ Only found non-drama pages (actors/articles)
 
 ⚠️ NOT FOUND (Non-Asian / IMDb):
 
+📌 Reason: Website Blocked Connection (Status 202/403)
+[ID 195] 12 Monkeys Season 1            ➔ ❌ Status Code: 202
+[ID 196] 12 Monkeys Season 2            ➔ ❌ Status Code: 202
+[ID 198] 12 Monkeys Season 4            ➔ ❌ Status Code: 202
+[ID 225] Reacher Season 1               ➔ ❌ Status Code: 202
+[ID 298] Love is in The Air             ➔ ❌ Status Code: 202
+
 📌 Reason: Connection or URL Issues
-[ID  41] New Life (Yeni Hayat)          ➔ ❌ Only found non-title pages
+[ID 197] 12 Monkeys Season 3            ➔ ❌ Only found non-title pages
+[ID 220] Star Trek: New Strange Worlds Season 2 ➔ ❌ Only found non-title pages
+[ID 253] Reacher Season 2               ➔ ❌ Only found non-title pages
+[ID 300] Day Dreamer                    ➔ ❌ Only found non-title pages
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📊 Summary (Current Batch Only)
@@ -43,8 +45,8 @@
 🌐 Internet Scans Done   : 150
 ⏭️ Total Skipped Fast    : 0
 ✨ Total Recommendations : 0
-✅ Total Perfect Matches : 144
-⚠️ Total Not Found       : 6
+✅ Total Perfect Matches : 140
+⚠️ Total Not Found       : 10
 
 ⚠️ BATCH LIMIT REACHED: The script paused safely.
 GitHub Actions will trigger next run automatically.
