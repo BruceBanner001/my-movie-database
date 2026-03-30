@@ -1,5 +1,6 @@
 import os, time, re, json, sys, traceback, io, random
 from datetime import datetime, timedelta, timezone
+from difflib import SequenceMatcher
 import pandas as pd
 from bs4 import BeautifulSoup
 import gspread
@@ -30,7 +31,7 @@ REPORTS_DIR = "reports"
 
 FORCE_CHECK = os.environ.get("FORCE_CHECK", "false").lower() == "true"
 
-# Anti-Blocker: Spoof a real Windows Chrome browser to bypass Status 202/403
+# Anti-Blocker: Spoof a real Windows Chrome browser
 SCRAPER = cloudscraper.create_scraper(
     browser={
         'browser': 'chrome',
@@ -50,7 +51,16 @@ LANG_TO_COUNTRY = {
     "filipino": "Philippines"
 }
 
-def search_and_verify_title(search_term, expected_year, lang, expected_eps, sheet_name, site):
+def names_are_similar(expected, scraped):
+    if not expected or not scraped: return False
+    e_clean = re.sub(r'\b(?:season|part|s)\s*\d+\b|\s+\d+$', '', expected.lower()).strip()
+    s_clean = re.sub(r'\b(?:season|part|s)\s*\d+\b|\s+\d+$', '', scraped.lower()).strip()
+    
+    if e_clean in s_clean or s_clean in e_clean: return True
+    ratio = SequenceMatcher(None, e_clean, s_clean).ratio()
+    return ratio >= 0.4
+
+def search_and_verify_title(search_term, expected_year, lang, sheet_name, site):
     clean_search = re.sub(r"\(.*?\)", "", str(search_term)).strip()
     
     # Strip Season for IMDb (Western Shows) to find the Master Page
@@ -65,8 +75,8 @@ def search_and_verify_title(search_term, expected_year, lang, expected_eps, shee
     expected_country = LANG_TO_COUNTRY.get(str(lang).lower().strip())
     expected_type = "movie" if "movie" in sheet_name.lower() else "drama"
     
-    generic_reason = "No results found on search engine"
-    deep_failure_reason = "" # Stores the exact reason if we open a page and it fails
+    fail_category = "Connection or URL Issues"
+    fail_detail = "No valid results found on search engine"
 
     for query in queries:
         results =[]
@@ -88,14 +98,16 @@ def search_and_verify_title(search_term, expected_year, lang, expected_eps, shee
                 if match:
                     url = "https://" + match.group(1)
                 else:
-                    generic_reason = "Only found non-drama pages (actors/articles)"
+                    fail_category = "Connection or URL Issues"
+                    fail_detail = "Only found non-drama pages (actors/articles)"
                     continue
             elif site == "imdb":
                 match = re.search(r'(imdb\.com/title/tt[0-9]+)', raw_url)
                 if match:
                     url = "https://www." + match.group(1) + "/"
                 else:
-                    generic_reason = "Only found non-title pages"
+                    fail_category = "Connection or URL Issues"
+                    fail_detail = "Only found non-title pages"
                     continue
 
             try:
@@ -106,34 +118,24 @@ def search_and_verify_title(search_term, expected_year, lang, expected_eps, shee
                     scraped_year = 0
                     scraped_country = ""
                     scraped_type = ""
-                    scraped_eps = 0
                     
-                    # --- DEEP VERIFICATION LOGIC ---
+                    # --- SCRAPING LOGIC ---
                     if site == "mydramalist":
                         h1 = soup.find("h1", class_="film-title")
                         if h1: title = h1.get_text(strip=True)
                         
-                        # 1. Scrape Country
                         country_tag = soup.find('b', string=re.compile(r'Country:?'))
                         if country_tag and country_tag.next_sibling:
                             scraped_country = re.sub(r'\s+', ' ', str(country_tag.next_sibling)).strip().lower()
                             
-                        # 2. Scrape Year
                         aired_tag = soup.find('b', string=re.compile(r'Aired:?'))
                         if aired_tag and aired_tag.parent:
                             match = re.search(r'\b(19|20)\d{2}\b', aired_tag.parent.get_text())
                             if match: scraped_year = int(match.group())
                             
-                        # 3. Scrape Type
                         type_tag = soup.find('b', string=re.compile(r'Type:?'))
                         if type_tag and type_tag.next_sibling:
                             scraped_type = type_tag.next_sibling.strip().lower()
-                            
-                        # 4. Scrape Episodes
-                        eps_tag = soup.find('b', string=re.compile(r'Episodes:?'))
-                        if eps_tag and eps_tag.next_sibling:
-                            match = re.search(r'\d+', str(eps_tag.next_sibling))
-                            if match: scraped_eps = int(match.group())
 
                     elif site == "imdb":
                         h1 = soup.find("h1")
@@ -144,7 +146,8 @@ def search_and_verify_title(search_term, expected_year, lang, expected_eps, shee
                             if match: scraped_year = int(match.group())
 
                     if not title: 
-                        deep_failure_reason = "Failed to parse page title"
+                        fail_category = "Connection or URL Issues"
+                        fail_detail = "Failed to parse page title"
                         continue
                         
                     title = re.sub(r"\s*\(\d{4}\)$", "", title).strip()
@@ -153,54 +156,52 @@ def search_and_verify_title(search_term, expected_year, lang, expected_eps, shee
                     # THE ULTIMATE SECURITY CHECKPOINT
                     # ==========================================
                     
-                    # A. VERIFY COUNTRY
+                    # 1. VERIFY NAME SIMILARITY
+                    if not names_are_similar(str(search_term), title):
+                        fail_category = "Title Similarity Failed"
+                        fail_detail = f"Found website title: '{title}'"
+                        continue
+
+                    # 2. VERIFY COUNTRY
                     if site == "mydramalist" and expected_country:
-                        if expected_country.lower() not in scraped_country:
-                            deep_failure_reason = f"Country Mismatch - Expected '{expected_country}', Found '{scraped_country.title()}'"
+                        valid_countries = ["china", "taiwan"] if expected_country == "China" else[expected_country.lower()]
+                        if not any(vc in scraped_country for vc in valid_countries):
+                            fail_category = "Country Mismatch"
+                            fail_detail = f"Expected: {expected_country} | Found: {scraped_country.title()}"
                             continue 
 
-                    # B. VERIFY YEAR (Tolerance of ±1 year)
+                    # 3. VERIFY YEAR (Tolerance of ±1 year)
                     if expected_year != 0 and scraped_year != 0:
                         if abs(expected_year - scraped_year) > 1:
-                            deep_failure_reason = f"Year Mismatch - Expected '{expected_year}', Found '{scraped_year}'"
+                            fail_category = "Year Mismatch"
+                            fail_detail = f"Expected: {expected_year} | Found: {scraped_year}"
                             continue 
 
-                    # C. VERIFY TYPE (Only for MDL)
+                    # 4. VERIFY TYPE (Only for MDL)
                     if site == "mydramalist":
                         if expected_type == "movie" and "movie" not in scraped_type:
-                            deep_failure_reason = f"Type Mismatch - Expected Movie, Found {scraped_type.title()}"
+                            fail_category = "Type Mismatch"
+                            fail_detail = f"Expected Movie, Found {scraped_type.title()}"
                             continue
                         if expected_type == "drama":
-                            # Reject explicitly wrong types
                             if "movie" in scraped_type or "special" in scraped_type or "tv show" in scraped_type:
-                                deep_failure_reason = f"Type Mismatch - Expected Drama, Found {scraped_type.title()}"
+                                fail_category = "Type Mismatch"
+                                fail_detail = f"Expected Drama, Found {scraped_type.title()}"
                                 continue
 
-                    # D. VERIFY EPISODES (Smart Tolerance)
-                    if site == "mydramalist" and expected_eps > 0 and scraped_eps > 0:
-                        if expected_eps == scraped_eps:
-                            pass # Exact Match
-                        elif expected_eps == scraped_eps * 2 or scraped_eps == expected_eps * 2:
-                            pass # Netflix Split / Double Match
-                        elif abs(expected_eps - scraped_eps) <= 2:
-                            pass # Censorship Cut Match
-                        else:
-                            deep_failure_reason = f"Episodes Mismatch - Expected '{expected_eps}', Found '{scraped_eps}'"
-                            continue
-
-                    # If it survives the gauntlet, it's the correct drama!
-                    return title, site, url, "Success"
+                    # If it survives, it's the correct drama!
+                    return title, site, url, "Success", ""
                 else:
-                    deep_failure_reason = f"Website blocked connection (Status {r.status_code})"
+                    fail_category = "Website Blocked Connection (Status 202/403)"
+                    fail_detail = f"Status Code: {r.status_code}"
             except Exception:
-                deep_failure_reason = "Website blocked connection / Timeout"
+                fail_category = "Website Blocked Connection (Status 202/403)"
+                fail_detail = "Timeout / Security Block"
                 pass
                 
         time.sleep(random.uniform(2.5, 4.5))
     
-    # Return the most specific reason found, or the generic reason
-    final_reason = deep_failure_reason if deep_failure_reason else generic_reason
-    return "N/A", site, "N/A", final_reason
+    return "N/A", site, "N/A", fail_category, fail_detail
 
 def fetch_excel_from_gdrive_bytes(file_id, creds_path):
     creds = service_account.Credentials.from_service_account_file(creds_path, scopes=["https://www.googleapis.com/auth/drive.readonly"])
@@ -217,15 +218,22 @@ def fetch_excel_from_gdrive_bytes(file_id, creds_path):
     return fh
 
 def unique_list(lst):
-    return list(dict.fromkeys(lst))
+    # For lists of dictionaries, we must make them unique based on 'id' or 'title'
+    seen = set()
+    unique =[]
+    for item in lst:
+        identifier = item.get('id', str(item)) if isinstance(item, dict) else str(item)
+        if identifier not in seen:
+            seen.add(identifier)
+            unique.append(item)
+    return unique
 
 def combine_reports(d1, d2):
     res = {}
     for k in set(d1.keys()).union(d2.keys()):
         res[k] = {
-            "new_recs": unique_list(d1.get(k, {}).get("new_recs",[]) + d2.get(k, {}).get("new_recs",[])),
+            "new_recs": unique_list(d1.get(k, {}).get("new_recs", []) + d2.get(k, {}).get("new_recs",[])),
             "perfect": d1.get(k, {}).get("perfect", 0) + d2.get(k, {}).get("perfect", 0),
-            "user_fixed": unique_list(d1.get(k, {}).get("user_fixed",[]) + d2.get(k, {}).get("user_fixed",[])),
             "not_found_asian": unique_list(d1.get(k, {}).get("not_found_asian",[]) + d2.get(k, {}).get("not_found_asian",[])),
             "not_found_non_asian": unique_list(d1.get(k, {}).get("not_found_non_asian",[]) + d2.get(k, {}).get("not_found_non_asian",[])),
             "skipped": d1.get(k, {}).get("skipped", 0) + d2.get(k, {}).get("skipped", 0)
@@ -285,40 +293,42 @@ def write_report(current_report, state, current_run_seconds, run_start_time, is_
             batch_label, ""
         ]
 
-        total_skipped = total_recs = total_perfect = total_fixed = total_not_found = 0
+        total_skipped = total_recs = total_perfect = total_not_found = 0
         
         for sheet, data in rep_data.items():
-            if not any([data["new_recs"], data["perfect"], data["user_fixed"], data["not_found_asian"], data["not_found_non_asian"], data["skipped"]]): continue
-            lines.extend(["━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", f"🗂️ === {sheet} ===", "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"])
+            if not any([data["new_recs"], data["perfect"], data["not_found_asian"], data["not_found_non_asian"], data["skipped"]]): continue
+            lines.extend(["━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", f"🗂️ === {sheet} ===", "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━", ""])
             
             if data["new_recs"]:
-                lines.append("\n✨ Brand New Recommendations Found (Action Required):")
-                for i in unique_list(data["new_recs"]): lines.append(i)
+                lines.append("✨ BRAND NEW RECOMMENDATIONS (Action Required):")
+                for i in unique_list(data["new_recs"]): 
+                    lines.append(f"[ID {i['id']:>3}] {i['title']}\n   ↳ Recommend: {i['rec']} (Source: {i['source']})\n")
                 total_recs += len(unique_list(data["new_recs"]))
                 
             if data["perfect"] > 0:
-                lines.append(f"\n✅ Perfect Matches (Newly Scanned - 100% Accurate!):\n- {data['perfect']} records matched perfectly.")
+                lines.append(f"✅ PERFECT MATCHES (100% Accurate):\n- {data['perfect']} records matched perfectly.\n")
                 total_perfect += data["perfect"]
-                
-            if data["user_fixed"]:
-                lines.append("\n🔄 User Fixed & Re-Verified (You changed these in Excel!):")
-                for i in unique_list(data["user_fixed"]): lines.append(i)
-                total_fixed += len(unique_list(data["user_fixed"]))
 
-            if data["not_found_asian"]:
-                lines.append("\n⚠️ Not Found (Asian / MyDramaList):")
-                for i in unique_list(data["not_found_asian"]): lines.append(i)
-                total_not_found += len(unique_list(data["not_found_asian"]))
+            def print_grouped_not_found(nf_list, title):
+                if not nf_list: return 0
+                lines.append(f"⚠️ {title}:")
+                grouped = {}
+                for item in nf_list:
+                    grouped.setdefault(item['category'],[]).append(item)
                 
-            if data["not_found_non_asian"]:
-                lines.append("\n⚠️ Not Found (Non-Asian / IMDb):")
-                for i in unique_list(data["not_found_non_asian"]): lines.append(i)
-                total_not_found += len(unique_list(data["not_found_non_asian"]))
+                for cat, items in grouped.items():
+                    lines.append(f"\n📌 Reason: {cat}")
+                    for i in items:
+                        lines.append(f"[ID {i['id']:>3}] {i['title']:<30} ➔ ❌ {i['detail']}")
+                lines.append("")
+                return len(nf_list)
+
+            total_not_found += print_grouped_not_found(unique_list(data["not_found_asian"]), "NOT FOUND (Asian / MyDramaList)")
+            total_not_found += print_grouped_not_found(unique_list(data["not_found_non_asian"]), "NOT FOUND (Non-Asian / IMDb)")
                 
             if data["skipped"] > 0:
-                lines.append(f"\n⏭️ Skipped Fast (Already Verified Previously):\n- {data['skipped']} dramas skipped instantly.")
+                lines.append(f"⏭️ Skipped Fast (Already Verified Previously):\n- {data['skipped']} dramas skipped instantly.\n")
                 total_skipped += data["skipped"]
-            lines.append("")
 
         summary_title = "📊 Overall Cumulative Summary" if is_cumulative else "📊 Summary (Current Batch Only)"
         internet_scanned = total_recs + total_perfect + total_not_found
@@ -329,7 +339,6 @@ def write_report(current_report, state, current_run_seconds, run_start_time, is_
             f"⏭️ Total Skipped Fast    : {total_skipped}",
             f"✨ Total Recommendations : {total_recs}",
             f"✅ Total Perfect Matches : {total_perfect}",
-            f"🔄 Total User Fixes Seen : {total_fixed}",
             f"⚠️ Total Not Found       : {total_not_found}"
         ])
 
@@ -391,7 +400,7 @@ def main():
     excel_bytes = fetch_excel_from_gdrive_bytes(main_excel_id, "GDRIVE_SERVICE_ACCOUNT.json")
     xl = pd.ExcelFile(io.BytesIO(excel_bytes.getvalue()))
 
-    # --- RETRY LOGIC ADDED FOR INITIALIZING GOOGLE SHEETS ---
+    # --- RETRY LOGIC FOR GOOGLE SHEETS ---
     for attempt in range(3):
         try:
             check_sh = gc.open_by_key(os.environ.get("CHECK_TITLES_EXCEL_ID"))
@@ -428,7 +437,7 @@ def main():
         if limit_reached: break
         
         sheet_name = sheets_to_process[s_idx]
-        report_sheet = current_report.setdefault(sheet_name, {"new_recs":[], "perfect": 0, "user_fixed":[], "not_found_asian":[], "not_found_non_asian":[], "skipped": 0})
+        report_sheet = current_report.setdefault(sheet_name, {"new_recs":[], "perfect": 0, "not_found_asian":[], "not_found_non_asian":[], "skipped": 0})
 
         target_sheet = next((s for s in xl.sheet_names if s.strip().lower() == sheet_name.strip().lower()), None)
         if not target_sheet: continue
@@ -452,12 +461,6 @@ def main():
                 title = str(row.get("Series Title") or row.get("Show Name", "")).strip()
                 year = int(row.get("Year") or row.get("Released Year", 0))
                 lang = str(row.get("Original Language") or row.get("Native Language", "Korean")).strip().capitalize()
-                
-                # Dynamic fetch for Total Episodes
-                eps_val = row.get("Total Episodes", 0)
-                try: expected_eps = int(eps_val)
-                except ValueError: expected_eps = 0
-
             except ValueError: continue
 
             if sid == 0 or not title or title.lower() == "nan": continue
@@ -478,8 +481,8 @@ def main():
                     continue
                 
                 if cached_rec != "N/A" and title == cached_rec:
-                    report_sheet["user_fixed"].append(f"-[ID {sid}] **{cached_title}** -> Now perfectly matches: {title}")
-                    
+                    # User updated Excel based on previous recommendation! Treated as skipped now.
+                    report_sheet["skipped"] += 1
                     updated_row = cached_data["row_data"].copy()
                     updated_row["Show Name"] = title
                     updated_row["Title Recommendation"] = "No"
@@ -491,19 +494,20 @@ def main():
             # --- INTERNET FETCHING ---
             fetches_used += 1
 
-            is_asian = lang.lower() in ["korean", "chinese", "japanese", "thai", "taiwanese", "filipino"]
+            is_asian = lang.lower() in["korean", "chinese", "japanese", "thai", "taiwanese", "filipino"]
             mdl_title, imdb_title = "N/A", "N/A"
             source_used = ""
             rec_title = "N/A"
             source_link = "N/A"
-            reason = ""
+            fail_cat = ""
+            fail_det = ""
 
             if is_asian:
-                mdl_title, source_used, source_link, reason = search_and_verify_title(title, year, lang, expected_eps, sheet_name, "mydramalist")
+                mdl_title, source_used, source_link, fail_cat, fail_det = search_and_verify_title(title, year, lang, sheet_name, "mydramalist")
                 if mdl_title != "N/A":
                     rec_title = mdl_title
             else:
-                imdb_title, source_used, source_link, reason = search_and_verify_title(title, year, lang, expected_eps, sheet_name, "imdb")
+                imdb_title, source_used, source_link, fail_cat, fail_det = search_and_verify_title(title, year, lang, sheet_name, "imdb")
                 if imdb_title != "N/A":
                     rec_title = imdb_title
                     
@@ -513,18 +517,18 @@ def main():
             # --- STRICT MATCHING LOGIC ---
             if rec_title == "N/A":
                 needs_rec = "No" 
-                msg = f"-[ID {sid}] **{title}** -> Not Found `(Reason: {reason})`"
+                error_obj = {"id": sid, "title": title, "category": fail_cat, "detail": fail_det}
                 if is_asian:
-                    report_sheet["not_found_asian"].append(msg)
+                    report_sheet["not_found_asian"].append(error_obj)
                 else:
-                    report_sheet["not_found_non_asian"].append(msg)
+                    report_sheet["not_found_non_asian"].append(error_obj)
             elif rec_title == title:
                 needs_rec = "No"
                 rec_title = "N/A"
                 report_sheet["perfect"] += 1
             else:
                 needs_rec = "Yes"
-                report_sheet["new_recs"].append(f"-[ID {sid}] **{title}** ➔ Recommend: {rec_title} (Source: {source_used})")
+                report_sheet["new_recs"].append({"id": sid, "title": title, "rec": rec_title, "source": source_used})
 
             results.append({
                 "Sheet Name": sheet_name, 
@@ -570,18 +574,18 @@ def main():
         
         combined_df = combined_df[ordered_cols]
         
-        # --- RETRY LOGIC ADDED FOR SAVING TO GOOGLE SHEETS ---
+        # --- RETRY LOGIC FOR SAVING TO GOOGLE SHEETS ---
         for attempt in range(3):
             try:
                 ws_out.clear()
                 set_with_dataframe(ws_out, combined_df.fillna("N/A"))
-                break # Success!
+                break 
             except Exception as e:
                 if attempt < 2:
                     print(f"⚠️ Google API Connection Issue (Write). Retrying in 5 seconds...")
                     time.sleep(5)
                 else:
-                    raise e # Re-raise error if it fails 3 times
+                    raise e 
 
     current_run_seconds = (now_ist() - run_start_time).total_seconds()
     state["report_data"] = combine_reports(state.get("report_data", {}), current_report)
