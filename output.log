@@ -5,39 +5,39 @@
 ══════════════════════════════════════════════════════
 
 🚀 Workflow Type : Manual
-🔁 RUN           : 89
-⏰ Start Time    : 30 March 2026 - 04:05:04 PM
-⏰ End Time      : 30 March 2026 - 04:12:20 PM
-⏱️ Run Time      : 7 Minutes 16 Seconds
+🔁 RUN           : 90
+⏰ Start Time    : 30 March 2026 - 04:12:54 PM
+⏰ End Time      : 30 March 2026 - 04:18:46 PM
+⏱️ Run Time      : 5 Minutes 52 Seconds
 ⚙️ Max Process   : 150 Row Per Run
-🔄 Current Batch : 2
+🔄 Current Batch : 3
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Feb 7 2023 Onwards ===
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✅ PERFECT MATCHES (100% Accurate):
-- 142 records matched perfectly.
+- 140 records matched perfectly.
 
 ⚠️ NOT FOUND (Asian / MyDramaList):
 
-📌 Reason: Country Mismatch
-[ID  23] I Miss You                     ➔ ❌ Expected: South Korea | Found: Thailand
-
-📌 Reason: Year Mismatch
-[ID  39] Cinderella and the Four Knights ➔ ❌ Expected: 2020 | Found: 2016
-
 📌 Reason: Connection or URL Issues
-[ID  70] The K2                         ➔ ❌ Only found non-drama pages (actors/articles)
-[ID  97] Buang Ruk Satan                ➔ ❌ Only found non-drama pages (actors/articles)
-[ID 112] Missing 9                      ➔ ❌ Only found non-drama pages (actors/articles)
-[ID 115] Phoenix 2020                   ➔ ❌ Only found non-drama pages (actors/articles)
-[ID 134] Cheat On Me, if You Can        ➔ ❌ Only found non-drama pages (actors/articles)
+[ID 224] W                              ➔ ❌ Only found non-drama pages (actors/articles)
 
 ⚠️ NOT FOUND (Non-Asian / IMDb):
 
 📌 Reason: Website Blocked Connection (Status 202/403)
-[ID  41] New Life (Yeni Hayat)          ➔ ❌ Status Code: 202
+[ID 195] 12 Monkeys                     ➔ ❌ Status Code: 202
+[ID 196] 12 Monkeys                     ➔ ❌ Status Code: 202
+[ID 197] 12 Monkeys                     ➔ ❌ Status Code: 202
+[ID 198] 12 Monkeys                     ➔ ❌ Status Code: 202
+[ID 220] Star Trek: New Strange Worlds  ➔ ❌ Status Code: 202
+[ID 225] Reacher                        ➔ ❌ Status Code: 202
+[ID 298] Love is in The Air             ➔ ❌ Status Code: 202
+
+📌 Reason: Connection or URL Issues
+[ID 253] Reacher                        ➔ ❌ Only found non-title pages
+[ID 300] Day Dreamer                    ➔ ❌ Only found non-title pages
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📊 Summary (Current Batch Only)
@@ -45,8 +45,8 @@
 🌐 Internet Scans Done   : 150
 ⏭️ Total Skipped Fast    : 0
 ✨ Total Recommendations : 0
-✅ Total Perfect Matches : 142
-⚠️ Total Not Found       : 8
+✅ Total Perfect Matches : 140
+⚠️ Total Not Found       : 10
 
 ⚠️ BATCH LIMIT REACHED: The script paused safely.
 GitHub Actions will trigger next run automatically.
