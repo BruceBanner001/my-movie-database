@@ -1,85 +1,57 @@
-✅ Partial Batch completed successfully
-⏳ Batch Processing in Progress...
+✅ Workflow Batch completed successfully
+🏁 Final Batch Completed
 ══════════════════════════════════════════════════════
 📊 Drama Title Validator – Execution Report (FORCE CHECK ON 🚨)
 ══════════════════════════════════════════════════════
 
 🚀 Workflow Type : Manual
-🔁 RUN           : 92
-⏰ Start Time    : 30 March 2026 - 04:28:13 PM
-⏰ End Time      : 30 March 2026 - 04:34:40 PM
-⏱️ Run Time      : 6 Minutes 26 Seconds
+🔁 RUN           : 93
+⏰ Start Time    : 30 March 2026 - 04:35:13 PM
+⏰ End Time      : 30 March 2026 - 04:38:07 PM
+⏱️ Run Time      : 2 Minutes 53 Seconds
 ⚙️ Max Process   : 150 Row Per Run
 🔄 Current Batch : 5
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🗂️ === Feb 7 2023 Onwards ===
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✅ PERFECT MATCHES (100% Accurate):
-- 79 records matched perfectly.
-
-⚠️ NOT FOUND (Asian / MyDramaList):
-
-📌 Reason: Connection or URL Issues
-[ID 493] First Lady                     ➔ ❌ Only found non-drama pages (actors/articles)
-
-⚠️ NOT FOUND (Non-Asian / IMDb):
-
-📌 Reason: Connection or URL Issues
-[ID 499] The Day of the Jackal          ➔ ❌ Only found non-title pages
-
-📌 Reason: Website Blocked Connection (Status 202/403)
-[ID 514] Breaking Bad                   ➔ ❌ Status Code: 202
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🗂️ === Before Feb 7 2023 (Korean) ===
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✨ BRAND NEW RECOMMENDATIONS (Action Required):
-[ID  20] Introverted Boss
-   ↳ Recommend: Introverted Boss Special (Source: MyDramaList)
-
-✅ PERFECT MATCHES (100% Accurate):
-- 23 records matched perfectly.
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🗂️ === Before Feb 7 2023 ( Korean Dub) ===
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✅ PERFECT MATCHES (100% Accurate):
-- 38 records matched perfectly.
-
-⚠️ NOT FOUND (Asian / MyDramaList):
-
-📌 Reason: Title Similarity Failed
-[ID  10] VIP                            ➔ ❌ Found website title: 'Meet You at the Blossom'
-[ID  40] Listen To Love                 ➔ ❌ Found website title: 'I Told Sunset about You'
-
-📌 Reason: Country Mismatch
-[ID  23] Untouchable                    ➔ ❌ Expected: South Korea | Found: China
-
-📌 Reason: Year Mismatch
-[ID  31] Flower of Evil                 ➔ ❌ Expected: 2022 | Found: 2020
-
-📌 Reason: Connection or URL Issues
-[ID  41] Rain or Shine (Just Between Lovers) ➔ ❌ Only found non-drama pages (actors/articles)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Before Feb 7 2023 ===
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✅ PERFECT MATCHES (100% Accurate):
-- 1 records matched perfectly.
+- 7 records matched perfectly.
+
+⚠️ NOT FOUND (Non-Asian / IMDb):
+
+📌 Reason: Website Blocked Connection (Status 202/403)
+[ID  12] Limitless                      ➔ ❌ Status Code: 202
+[ID  14] Beauty and the Beast           ➔ ❌ Status Code: 202
+[ID  16] Beauty and the Beast           ➔ ❌ Status Code: 202
+[ID  17] Price of Passion               ➔ ❌ Status Code: 202
+[ID  20] Lucifer                        ➔ ❌ Status Code: 202
+[ID  21] Lucifer                        ➔ ❌ Status Code: 202
+[ID  23] Lucifer                        ➔ ❌ Status Code: 202
+[ID  24] Peaky Blinders                 ➔ ❌ Status Code: 202
+
+📌 Reason: Connection or URL Issues
+[ID  13] Beauty and the Beast           ➔ ❌ Only found non-title pages
+[ID  15] Beauty and the Beast           ➔ ❌ Only found non-title pages
+[ID  18] Lucifer                        ➔ ❌ Only found non-title pages
+[ID  19] Lucifer                        ➔ ❌ Only found non-title pages
+[ID  22] Lucifer                        ➔ ❌ Only found non-title pages
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Mini Drama ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ PERFECT MATCHES (100% Accurate):
+- 18 records matched perfectly.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📊 Summary (Current Batch Only)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🌐 Internet Scans Done   : 150
+🌐 Internet Scans Done   : 38
 ⏭️ Total Skipped Fast    : 0
-✨ Total Recommendations : 1
-✅ Total Perfect Matches : 141
-⚠️ Total Not Found       : 8
+✨ Total Recommendations : 0
+✅ Total Perfect Matches : 25
+⚠️ Total Not Found       : 13
 
-⚠️ BATCH LIMIT REACHED: The script paused safely.
-GitHub Actions will trigger next run automatically.
+🏁 Workflow finished successfully
