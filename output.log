@@ -1,32 +1,51 @@
-✅ Workflow Batch completed successfully
-🏁 Final Batch Completed
+✅ Partial Batch completed successfully
+⏳ Batch Processing in Progress...
 ══════════════════════════════════════════════════════
-📊 Drama Title Validator – Execution Report
+📊 Drama Title Validator – Execution Report (FORCE CHECK ON 🚨)
 ══════════════════════════════════════════════════════
 
-🚀 Workflow Type : Automatic
-🔁 RUN           : 69
-⏰ Start Time    : 29 March 2026 - 06:33:22 PM
-⏰ End Time      : 29 March 2026 - 06:33:26 PM
-⏱️ Run Time      : 3 Seconds
-⚙️ Max Process   : 50 Row Per Run
-🔄 Current Batch : 1
+🚀 Workflow Type : Manual
+🔁 RUN           : 70
+⏰ Start Time    : 30 March 2026 - 07:43:35 AM
+⏰ End Time      : 30 March 2026 - 07:48:33 AM
+⏱️ Run Time      : 4 Minutes 58 Seconds
+⚙️ Max Process   : 100 Row Per Run
+🔄 Current Batch : 2
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Feb 7 2023 Onwards ===
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-⏭️ Skipped Fast (Already Verified Previously):
-- 531 dramas skipped instantly.
+✅ Perfect Matches (Newly Scanned - 100% Accurate!):
+- 86 records matched perfectly.
+
+⚠️ Not Found (Asian / MyDramaList):
+-[ID 24] **Still 17** -> Not Found `(Reason: Only found sub-pages (cast/episodes) or invalid URLs)`
+-[ID 28] **The Interest of Love** -> Not Found `(Reason: Only found sub-pages (cast/episodes) or invalid URLs)`
+-[ID 34] **18 Again** -> Not Found `(Reason: Country Mismatch - Expected 'South Korea', Found '')`
+-[ID 39] **Cinderella and the Four Knights** -> Not Found `(Reason: Year Mismatch - Expected '2020', Found '2016')`
+-[ID 43] **The King 2 Hearts** -> Not Found `(Reason: Only found sub-pages (cast/episodes) or invalid URLs)`
+-[ID 49] **Hello Mr. Gu** -> Not Found `(Reason: Only found sub-pages or invalid URLs)`
+-[ID 58] **Love in Time** -> Not Found `(Reason: Only found sub-pages or invalid URLs)`
+-[ID 70] **The K2** -> Not Found `(Reason: Only found sub-pages (cast/episodes) or invalid URLs)`
+-[ID 73] **Romance Is a Bonus Book** -> Not Found `(Reason: Country Mismatch - Expected 'South Korea', Found '')`
+-[ID 74] **Another Miss Oh** -> Not Found `(Reason: Only found sub-pages or invalid URLs)`
+-[ID 91] **Island Part 2** -> Not Found `(Reason: Only found sub-pages or invalid URLs)`
+-[ID 94] **Love at First Hate** -> Not Found `(Reason: Only found sub-pages or invalid URLs)`
+-[ID 95] **The Love You Give Me** -> Not Found `(Reason: Only found sub-pages (cast/episodes) or invalid URLs)`
+
+⚠️ Not Found (Non-Asian / IMDb):
+-[ID 41] **New Life (Yeni Hayat)** -> Not Found `(Reason: Website blocked connection (Status 202))`
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📊 Summary (Current Batch Only)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🌐 Internet Scans Done   : 0
-⏭️ Total Skipped Fast    : 531
+🌐 Internet Scans Done   : 100
+⏭️ Total Skipped Fast    : 0
 ✨ Total Recommendations : 0
-✅ Total Perfect Matches : 0
+✅ Total Perfect Matches : 86
 🔄 Total User Fixes Seen : 0
-⚠️ Total Not Found       : 0
+⚠️ Total Not Found       : 14
 
-🏁 Workflow finished successfully
+⚠️ BATCH LIMIT REACHED: The script paused safely.
+GitHub Actions will trigger next run automatically.
