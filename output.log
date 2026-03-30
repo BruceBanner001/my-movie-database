@@ -5,48 +5,75 @@
 ══════════════════════════════════════════════════════
 
 🚀 Workflow Type : Manual
-🔁 RUN           : 85
-⏰ Start Time    : 30 March 2026 - 02:28:38 PM
-⏰ End Time      : 30 March 2026 - 02:34:12 PM
-⏱️ Run Time      : 5 Minutes 34 Seconds
+🔁 RUN           : 86
+⏰ Start Time    : 30 March 2026 - 02:34:42 PM
+⏰ End Time      : 30 March 2026 - 02:43:01 PM
+⏱️ Run Time      : 8 Minutes 18 Seconds
 ⚙️ Max Process   : 150 Row Per Run
-🔄 Current Batch : 3
+🔄 Current Batch : 4
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Feb 7 2023 Onwards ===
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+✨ BRAND NEW RECOMMENDATIONS (Action Required):
+[ID 315] Love Me Like I Do
+   ↳ Recommend: Love Me, Love My Voice (Source: MyDramaList)
+
+[ID 446] I Do, I Do
+   ↳ Recommend: I  Do, I Do (Source: MyDramaList)
+
 ✅ PERFECT MATCHES (100% Accurate):
-- 140 records matched perfectly.
+- 122 records matched perfectly.
 
 ⚠️ NOT FOUND (Asian / MyDramaList):
 
 📌 Reason: Connection or URL Issues
-[ID 160] King the Land                  ➔ ❌ Only found non-drama pages (actors/articles)
+[ID 357] Bad Memory Eraser              ➔ ❌ Only found non-drama pages (actors/articles)
+[ID 371] When a Man Falls in Love       ➔ ❌ Only found non-drama pages (actors/articles)
+[ID 388] I Know I Love You              ➔ ❌ Only found non-drama pages (actors/articles)
+
+📌 Reason: Country Mismatch
+[ID 398] Ski into Love                  ➔ ❌ Expected: South Korea | Found: China
+
+📌 Reason: Year Mismatch
+[ID 432] Brilliant Legacy               ➔ ❌ Expected: 2009 | Found: 2020
 
 ⚠️ NOT FOUND (Non-Asian / IMDb):
 
-📌 Reason: Website Blocked Connection (Status 202/403)
-[ID 195] 12 Monkeys Season 1            ➔ ❌ Status Code: 202
-[ID 196] 12 Monkeys Season 2            ➔ ❌ Status Code: 202
-[ID 198] 12 Monkeys Season 4            ➔ ❌ Status Code: 202
-[ID 225] Reacher Season 1               ➔ ❌ Status Code: 202
-[ID 298] Love is in The Air             ➔ ❌ Status Code: 202
-
 📌 Reason: Connection or URL Issues
-[ID 197] 12 Monkeys Season 3            ➔ ❌ Only found non-title pages
-[ID 220] Star Trek: New Strange Worlds Season 2 ➔ ❌ Only found non-title pages
-[ID 253] Reacher Season 2               ➔ ❌ Only found non-title pages
-[ID 300] Day Dreamer                    ➔ ❌ Only found non-title pages
+[ID 328] Game of Thrones Season 1       ➔ ❌ Only found non-title pages
+[ID 329] Game of Thrones Season 2       ➔ ❌ Only found non-title pages
+[ID 332] Game of Thrones Season 5       ➔ ❌ Only found non-title pages
+[ID 333] Game of Thrones Season 6       ➔ ❌ Only found non-title pages
+[ID 334] Game of Thrones Season 7       ➔ ❌ Only found non-title pages
+[ID 335] Game of Thrones Season 8       ➔ ❌ Only found non-title pages
+[ID 341] Stranger Things Season 1       ➔ ❌ Only found non-title pages
+[ID 343] Stranger Things Season 3       ➔ ❌ Only found non-title pages
+[ID 364] Under The Dome Season 1        ➔ ❌ Only found non-title pages
+[ID 365] Under The Dome Season 2        ➔ ❌ Only found non-title pages
+[ID 366] Under The Dome Season 3        ➔ ❌ Only found non-title pages
+[ID 442] Manifest Season  1             ➔ ❌ Only found non-title pages
+[ID 444] Manifest Season  3             ➔ ❌ Only found non-title pages
+
+📌 Reason: Website Blocked Connection (Status 202/403)
+[ID 330] Game of Thrones Season 3       ➔ ❌ Status Code: 202
+[ID 331] Game of Thrones Season 4       ➔ ❌ Status Code: 202
+[ID 342] Stranger Things Season 2       ➔ ❌ Status Code: 202
+[ID 344] Stranger Things Season 4       ➔ ❌ Status Code: 202
+[ID 382] Gotham Season 1                ➔ ❌ Status Code: 202
+[ID 399] Reacher Season 3               ➔ ❌ Status Code: 202
+[ID 443] Manifest Season  2             ➔ ❌ Status Code: 202
+[ID 445] Manifest Season  4             ➔ ❌ Status Code: 202
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📊 Summary (Current Batch Only)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🌐 Internet Scans Done   : 150
 ⏭️ Total Skipped Fast    : 0
-✨ Total Recommendations : 0
-✅ Total Perfect Matches : 140
-⚠️ Total Not Found       : 10
+✨ Total Recommendations : 2
+✅ Total Perfect Matches : 122
+⚠️ Total Not Found       : 26
 
 ⚠️ BATCH LIMIT REACHED: The script paused safely.
 GitHub Actions will trigger next run automatically.
