@@ -1,68 +1,43 @@
-✅ Workflow Batch completed successfully
-🏁 Final Batch Completed
+✅ Partial Batch completed successfully
+⏳ Batch Processing in Progress...
 ══════════════════════════════════════════════════════
 📊 Drama Title Validator – Execution Report (FORCE CHECK ON 🚨)
 ══════════════════════════════════════════════════════
 
 🚀 Workflow Type : Manual
-🔁 RUN           : 76
-⏰ Start Time    : 30 March 2026 - 08:22:58 AM
-⏰ End Time      : 30 March 2026 - 08:25:32 AM
-⏱️ Run Time      : 2 Minutes 33 Seconds
+🔁 RUN           : 77
+⏰ Start Time    : 30 March 2026 - 10:16:46 AM
+⏰ End Time      : 30 March 2026 - 10:20:25 AM
+⏱️ Run Time      : 3 Minutes 39 Seconds
 ⚙️ Max Process   : 100 Row Per Run
-🔄 Current Batch : 7
+🔄 Current Batch : 2
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🗂️ === Before Feb 7 2023 ===
+🗂️ === Feb 7 2023 Onwards ===
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✨ Brand New Recommendations Found (Action Required):
--[ID 3] **Love Of Thousand Years** ➔ Recommend: Love of Thousand Years (Source: MyDramaList)
--[ID 5] **The Love By Hyptonic** ➔ Recommend: The Love by Hypnotic (Source: MyDramaList)
--[ID 7] **Dream Back to Qing Dynasty** ➔ Recommend: Dreaming Back to the Qing Dynasty (Source: MyDramaList)
 
 ✅ Perfect Matches (Newly Scanned - 100% Accurate!):
-- 3 records matched perfectly.
+- 94 records matched perfectly.
+
+⚠️ Not Found (Asian / MyDramaList):
+-[ID 18] **The Fox's Summer** -> Not Found `(Reason: Country Mismatch - Expected 'China', Found 'Taiwan')`
+-[ID 19] **The Fox's Summer Season 2** -> Not Found `(Reason: Only found non-drama pages (actors/articles))`
+-[ID 23] **I Miss You** -> Not Found `(Reason: Country Mismatch - Expected 'South Korea', Found 'Thailand')`
+-[ID 39] **Cinderella and the Four Knights** -> Not Found `(Reason: Year Mismatch - Expected '2020', Found '2016')`
+-[ID 95] **The Love You Give Me** -> Not Found `(Reason: Only found non-drama pages (actors/articles))`
 
 ⚠️ Not Found (Non-Asian / IMDb):
--[ID 13] **Beauty and The Beast Season 1** -> Not Found `(Reason: Website blocked connection (Status 202))`
--[ID 14] **Beauty and The Beast Season 2** -> Not Found `(Reason: Only found sub-pages (episodes/credits) or invalid URLs)`
--[ID 15] **Beauty and The Beast Season 3** -> Not Found `(Reason: Only found sub-pages or invalid URLs)`
--[ID 16] **Beauty and The Beast Season 4** -> Not Found `(Reason: Website blocked connection (Status 202))`
--[ID 17] **Price of Passion** -> Not Found `(Reason: Only found sub-pages or invalid URLs)`
--[ID 18] **Lucifer Season 1** -> Not Found `(Reason: Only found sub-pages or invalid URLs)`
--[ID 19] **Lucifer Season 2** -> Not Found `(Reason: Only found sub-pages or invalid URLs)`
--[ID 20] **Lucifer Season 3** -> Not Found `(Reason: Website blocked connection (Status 202))`
--[ID 21] **Lucifer Season 4** -> Not Found `(Reason: Only found sub-pages or invalid URLs)`
--[ID 22] **Lucifer Season 5** -> Not Found `(Reason: Only found sub-pages (episodes/credits) or invalid URLs)`
--[ID 23] **Lucifer Season 6** -> Not Found `(Reason: Website blocked connection (Status 202))`
--[ID 24] **Peaky Blinders Season 1** -> Not Found `(Reason: Website blocked connection (Status 202))`
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🗂️ === Mini Drama ===
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✨ Brand New Recommendations Found (Action Required):
--[ID 3] **Don't Mess With My Ex-Girlfriend** ➔ Recommend: Don’t Mess with Ex-Girlfriend (Source: MyDramaList)
--[ID 5] **Love Me In Three Days** ➔ Recommend: Love Me in Three Days (Source: MyDramaList)
--[ID 6] **High-End Crush** ➔ Recommend: High-end Crush (Source: MyDramaList)
--[ID 7] **Love Your Self Evident** ➔ Recommend: Love You Self-Evident (Source: MyDramaList)
--[ID 8] **Fanletter Please** ➔ Recommend: Fanletter, Please (Source: MyDramaList)
--[ID 11] **Mad For Each Other** ➔ Recommend: Mad for Each Other (Source: MyDramaList)
--[ID 14] **1122 For a Happy Marriage** ➔ Recommend: 1122: For a Happy Marriage (Source: MyDramaList)
--[ID 16] **Hello Nice to Meet You Let's Get Divorced** ➔ Recommend: Hello, Nice to Meet You. Let's Get Divorced. (Source: MyDramaList)
-
-✅ Perfect Matches (Newly Scanned - 100% Accurate!):
-- 10 records matched perfectly.
+-[ID 41] **New Life (Yeni Hayat)** -> Not Found `(Reason: Website blocked connection (Status 202))`
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📊 Summary (Current Batch Only)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🌐 Internet Scans Done   : 36
+🌐 Internet Scans Done   : 100
 ⏭️ Total Skipped Fast    : 0
-✨ Total Recommendations : 11
-✅ Total Perfect Matches : 13
+✨ Total Recommendations : 0
+✅ Total Perfect Matches : 94
 🔄 Total User Fixes Seen : 0
-⚠️ Total Not Found       : 12
+⚠️ Total Not Found       : 6
 
-🏁 Workflow finished successfully
+⚠️ BATCH LIMIT REACHED: The script paused safely.
+GitHub Actions will trigger next run automatically.
