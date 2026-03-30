@@ -1,68 +1,50 @@
-✅ Workflow Batch completed successfully
-🏁 Final Batch Completed
+✅ Partial Batch completed successfully
+⏳ Batch Processing in Progress...
 ══════════════════════════════════════════════════════
 📊 Drama Title Validator – Execution Report (FORCE CHECK ON 🚨)
 ══════════════════════════════════════════════════════
 
 🚀 Workflow Type : Manual
-🔁 RUN           : 83
-⏰ Start Time    : 30 March 2026 - 10:46:39 AM
-⏰ End Time      : 30 March 2026 - 10:49:08 AM
-⏱️ Run Time      : 2 Minutes 28 Seconds
-⚙️ Max Process   : 100 Row Per Run
-🔄 Current Batch : 7
+🔁 RUN           : 84
+⏰ Start Time    : 30 March 2026 - 02:22:12 PM
+⏰ End Time      : 30 March 2026 - 02:28:12 PM
+⏱️ Run Time      : 5 Minutes 59 Seconds
+⚙️ Max Process   : 150 Row Per Run
+🔄 Current Batch : 2
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🗂️ === Before Feb 7 2023 ===
+🗂️ === Feb 7 2023 Onwards ===
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-✨ Brand New Recommendations Found (Action Required):
--[ID 3] **Love Of Thousand Years** ➔ Recommend: Love of Thousand Years (Source: MyDramaList)
--[ID 5] **The Love By Hyptonic** ➔ Recommend: The Love by Hypnotic (Source: MyDramaList)
--[ID 7] **Dream Back to Qing Dynasty** ➔ Recommend: Dreaming Back to the Qing Dynasty (Source: MyDramaList)
+✅ PERFECT MATCHES (100% Accurate):
+- 144 records matched perfectly.
 
-✅ Perfect Matches (Newly Scanned - 100% Accurate!):
-- 3 records matched perfectly.
+⚠️ NOT FOUND (Asian / MyDramaList):
 
-⚠️ Not Found (Non-Asian / IMDb):
--[ID 13] **Beauty and The Beast Season 1** -> Not Found `(Reason: Website blocked connection (Status 202))`
--[ID 14] **Beauty and The Beast Season 2** -> Not Found `(Reason: Website blocked connection (Status 202))`
--[ID 15] **Beauty and The Beast Season 3** -> Not Found `(Reason: Website blocked connection (Status 202))`
--[ID 16] **Beauty and The Beast Season 4** -> Not Found `(Reason: Website blocked connection (Status 202))`
--[ID 17] **Price of Passion** -> Not Found `(Reason: Website blocked connection (Status 202))`
--[ID 18] **Lucifer Season 1** -> Not Found `(Reason: Website blocked connection (Status 202))`
--[ID 19] **Lucifer Season 2** -> Not Found `(Reason: Website blocked connection (Status 202))`
--[ID 20] **Lucifer Season 3** -> Not Found `(Reason: Website blocked connection (Status 202))`
--[ID 21] **Lucifer Season 4** -> Not Found `(Reason: Website blocked connection (Status 202))`
--[ID 22] **Lucifer Season 5** -> Not Found `(Reason: Website blocked connection (Status 202))`
--[ID 23] **Lucifer Season 6** -> Not Found `(Reason: Website blocked connection (Status 202))`
--[ID 24] **Peaky Blinders Season 1** -> Not Found `(Reason: Website blocked connection (Status 202))`
+📌 Reason: Country Mismatch
+[ID  23] I Miss You                     ➔ ❌ Expected: South Korea | Found: China
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🗂️ === Mini Drama ===
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📌 Reason: Year Mismatch
+[ID  39] Cinderella and the Four Knights ➔ ❌ Expected: 2020 | Found: 2016
 
-✨ Brand New Recommendations Found (Action Required):
--[ID 3] **Don't Mess With My Ex-Girlfriend** ➔ Recommend: Don’t Mess with Ex-Girlfriend (Source: MyDramaList)
--[ID 5] **Love Me In Three Days** ➔ Recommend: Love Me in Three Days (Source: MyDramaList)
--[ID 6] **High-End Crush** ➔ Recommend: High-end Crush (Source: MyDramaList)
--[ID 7] **Love Your Self Evident** ➔ Recommend: Love You Self-Evident (Source: MyDramaList)
--[ID 8] **Fanletter Please** ➔ Recommend: Fanletter, Please (Source: MyDramaList)
--[ID 11] **Mad For Each Other** ➔ Recommend: Mad for Each Other (Source: MyDramaList)
--[ID 14] **1122 For a Happy Marriage** ➔ Recommend: 1122: For a Happy Marriage (Source: MyDramaList)
--[ID 16] **Hello Nice to Meet You Let's Get Divorced** ➔ Recommend: Business Marriage (Source: MyDramaList)
+📌 Reason: Connection or URL Issues
+[ID  70] The K2                         ➔ ❌ Only found non-drama pages (actors/articles)
+[ID  97] Buang Ruk Satan                ➔ ❌ Only found non-drama pages (actors/articles)
+[ID 115] Phoenix 2020                   ➔ ❌ Only found non-drama pages (actors/articles)
 
-✅ Perfect Matches (Newly Scanned - 100% Accurate!):
-- 10 records matched perfectly.
+⚠️ NOT FOUND (Non-Asian / IMDb):
+
+📌 Reason: Connection or URL Issues
+[ID  41] New Life (Yeni Hayat)          ➔ ❌ Only found non-title pages
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📊 Summary (Current Batch Only)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🌐 Internet Scans Done   : 36
+🌐 Internet Scans Done   : 150
 ⏭️ Total Skipped Fast    : 0
-✨ Total Recommendations : 11
-✅ Total Perfect Matches : 13
-🔄 Total User Fixes Seen : 0
-⚠️ Total Not Found       : 12
+✨ Total Recommendations : 0
+✅ Total Perfect Matches : 144
+⚠️ Total Not Found       : 6
 
-🏁 Workflow finished successfully
+⚠️ BATCH LIMIT REACHED: The script paused safely.
+GitHub Actions will trigger next run automatically.
