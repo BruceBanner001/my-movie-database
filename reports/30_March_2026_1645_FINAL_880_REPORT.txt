@@ -1,9 +1,3 @@
-[DEBUG] Title Validation FAILED: Page Title 'Kim Hee-Ae' vs Expected 'Secret Love Affair' (Ratio: 0.07)
-[DEBUG] Title Validation FAILED: Page Title 'An Pan-Seok (director)' vs Expected 'Secret Love Affair' (Ratio: 0.30)
-[DEBUG] Title Validation FAILED: Page Title 'Baek Ji-Won' vs Expected 'Secret Love Affair' (Ratio: 0.14)
-[DEBUG] Title Validation FAILED: Page Title 'Shining Inheritance' vs Expected 'Brilliant Legacy' (Ratio: 0.29)
-[DEBUG] Title Validation FAILED: Page Title 'So Hyun Kyung' vs Expected 'Brilliant Legacy' (Ratio: 0.14)
-[DEBUG] Title Validation FAILED: Page Title 'Han Hyo Joo' vs Expected 'Brilliant Legacy' (Ratio: 0.30)
 ✅ Workflow Batch completed successfully
 🏁 Final Batch Completed
 ══════════════════════════════════════════════════════
@@ -14,9 +8,41 @@
 🔁 RUN           : 880
 ⏰ Start Time    : 30 March 2026 - 04:45:19 PM
 ⏰ End Time      : 30 March 2026 - 04:49:08 PM
-⏱️ Run Time      : 3 Minutes 48 Seconds
+⏱️ Total Runtime : 3 Minutes 48 Seconds
 ⚙️ Max Process   : 50 Row Per Run
-🔄 Current Batch : 1
+🔄 Total Batches : 1 Run
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Sheet2 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🆕 Data Created:
+- 3001 - Secret Garden (2010) -> First Time Uploaded
+- 3002 - Limitless (22) -> First Time Uploaded
+- 3003 - Beauty and the Beast (22) -> First Time Uploaded
+- 3004 - Price of Passion (96) -> First Time Uploaded
+- 3005 - Lucifer (13) -> First Time Uploaded
+- 3006 - Peaky Blinders (6) -> First Time Uploaded
+
+🖼️ Fetched Data Details:
+- 3001 - Secret Garden (2010) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis
+
+⚠️ Missing Values (Still attempting to fetch):
+- 3001 - Secret Garden (2010) -> ⚠️ Missing: Tags
+- 3002 - Limitless (22) -> ⚠️ Missing: Aired On, Cast, Director, Duration, Network, Other Names, Release Date, Show Image, Synopsis, Tags
+- 3003 - Beauty and the Beast (22) -> ⚠️ Missing: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 3004 - Price of Passion (96) -> ⚠️ Missing: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 3005 - Lucifer (13) -> ⚠️ Missing: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 3006 - Peaky Blinders (6) -> ⚠️ Missing: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+
+📊 Summary (Sheet: Sheet2)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Created: 6
+🔁 Updated: 0
+🔍 Refetched: 0
+🚫 Skipped: 0
+⚠️ Warnings: 6
+  Total Unique Rows: 6
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Sheet1 ===
@@ -79,39 +105,7 @@
   Total Unique Rows: 19
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🗂️ === Sheet2 ===
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-🆕 Data Created:
-- 3001 - Secret Garden (2010) -> First Time Uploaded
-- 3002 - Limitless (22) -> First Time Uploaded
-- 3003 - Beauty and the Beast (22) -> First Time Uploaded
-- 3004 - Price of Passion (96) -> First Time Uploaded
-- 3005 - Lucifer (13) -> First Time Uploaded
-- 3006 - Peaky Blinders (6) -> First Time Uploaded
-
-🖼️ Fetched Data Details:
-- 3001 - Secret Garden (2010) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis
-
-⚠️ Missing Values (Still attempting to fetch):
-- 3001 - Secret Garden (2010) -> ⚠️ Missing: Tags
-- 3002 - Limitless (22) -> ⚠️ Missing: Aired On, Cast, Director, Duration, Network, Other Names, Release Date, Show Image, Synopsis, Tags
-- 3003 - Beauty and the Beast (22) -> ⚠️ Missing: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 3004 - Price of Passion (96) -> ⚠️ Missing: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 3005 - Lucifer (13) -> ⚠️ Missing: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 3006 - Peaky Blinders (6) -> ⚠️ Missing: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-
-📊 Summary (Sheet: Sheet2)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🆕 Created: 6
-🔁 Updated: 0
-🔍 Refetched: 0
-🚫 Skipped: 0
-⚠️ Warnings: 6
-  Total Unique Rows: 6
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📊 Summary (Current Batch Only)
+📊 Overall Cumulative Summary
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🆕 Total Created: 25
 🔁 Total Updated: 0
@@ -136,13 +130,8 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ Folders Generated:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📁 show_images/ (Total: 10 files)
-    📄 101.jpg
-    📄 102.jpg
-    📄 103.jpg
-    📄 104.jpg
-    📄 105.jpg
-    ... and 5 more files.
+📁 reports/ (Total: 1 files)
+    📄 30_March_2026_1645_FINAL_880_REPORT.txt
 
 📁 artist_images/ (Total: 145 files)
     📄 43065.jpg
@@ -152,6 +141,14 @@
     📄 12886.jpg
     ... and 140 more files.
 
+📁 show_images/ (Total: 10 files)
+    📄 101.jpg
+    📄 102.jpg
+    📄 103.jpg
+    📄 104.jpg
+    📄 105.jpg
+    ... and 5 more files.
+
 📁 meta_backups/ (Total: 10 files)
     📄 META_30_March_2026_1645_101.json
     📄 META_30_March_2026_1645_102.json
@@ -160,10 +157,5 @@
     📄 META_30_March_2026_1645_105.json
     ... and 5 more files.
 
-📁 reports/ (Total: 1 files)
-    📄 30_March_2026_1645_FINAL_880_REPORT.txt
-
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🏁 Workflow finished successfully
-
-✅ Final Master Report written -> reports/30_March_2026_1645_FINAL_880_REPORT.txt (Saved to Repo)
