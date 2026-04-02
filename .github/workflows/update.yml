@@ -1,6 +1,6 @@
 # ============================================================================
 # Workflow: Excel → JSON Update (Relay-Race Edition)
-# Version : 9.1 (Strict Batch Logging & Clean Summary)
+# Version : 9.2 (Force Refetch Added)
 # ============================================================================
 
 name: Excel → JSON Update
@@ -12,6 +12,10 @@ on:
         description: "Max Rows per Batch"
         required: false
         default: "50"
+      force_refetch:
+        description: "Force Refetch IDs (e.g. ALL, 10-20, 1,2,3)"
+        required: false
+        default: ""
   schedule:
     - cron: "30 18 * * 6"
 
@@ -64,6 +68,7 @@ jobs:
         id: run_script
         env:
           MAX_FETCHES: ${{ github.event.inputs.max_fetches || '50' }}
+          FORCE_REFETCH: ${{ github.event.inputs.force_refetch || '' }}
         run: |
           echo "::group::🚀 Processing Data"
           python create_update_backup_delete.py 2>&1 | tee output.log
@@ -133,10 +138,9 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "::notice::Limit hit. Restarting for next batch..."
-          gh workflow run "Excel → JSON Update" --ref ${{ github.ref_name }} -f max_fetches=${{ github.event.inputs.max_fetches || '50' }}
+          gh workflow run "Excel → JSON Update" --ref ${{ github.ref_name }} -f max_fetches="${{ github.event.inputs.max_fetches || '50' }}" -f force_refetch="${{ github.event.inputs.force_refetch || '' }}"
 
       - name: 11. Send Email Notification
-        # Send email ONLY on Final Success (Relay Finished) or any Failure
         if: always() && (steps.run_script.outputs.CONTINUE_BATCH == 'false' || job.status != 'success')
         uses: dawidd6/action-send-mail@v3
         with:

@@ -4,7 +4,7 @@
 # ============================================================
 # Script: create_update_backup_delete.py
 # Author: [BruceBanner001]
-# Version: v11.4 (Asian/Non-Asian Split & Comprehensive MDL Cast Fix)
+# Version: v11.5 (Force Refetch, True Sheet Ordering, IMDb Anti-Bot Bypass)
 # ============================================================
 
 # ---------------------------- IMPORTS & GLOBALS ----------------------------
@@ -15,7 +15,7 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
-SCRIPT_VERSION = "v11.4"
+SCRIPT_VERSION = "v11.5"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames":[], "showImage": None,
@@ -108,6 +108,25 @@ def filename_timestamp():
 
 def run_id_timestamp(): 
     return now_ist().strftime("RUN_%Y%m%d_%H%M%S")
+
+# --- Force Refetch Logic ---
+def parse_force_refetch(refetch_str):
+    refetch_str = refetch_str.strip().upper()
+    if not refetch_str: return set(), False
+    if refetch_str == "ALL": return set(), True
+    
+    ids = set()
+    parts = refetch_str.split(',')
+    for part in parts:
+        part = part.strip()
+        if '-' in part:
+            try:
+                start, end = map(int, part.split('-'))
+                ids.update(range(start, end + 1))
+            except: pass
+        elif part.isdigit():
+            ids.add(int(part))
+    return ids, False
 
 # --- Ensures partial reports never pollute the Github Repo ---
 def setup_gitignore_for_partials():
@@ -254,10 +273,18 @@ def merge_batch_state(context):
 
 def combine_reports(d1, d2):
     res = {}
-    for k in set(d1.keys()).union(d2.keys()):
+    keys = list(d1.keys())
+    for k in d2.keys():
+        if k not in keys: keys.append(k)
+        
+    for k in keys:
         res[k] = {}
-        for sub_k in set(d1.get(k, {}).keys()).union(d2.get(k, {}).keys()):
-            res[k][sub_k] = d1.get(k, {}).get(sub_k,[]) + d2.get(k, {}).get(sub_k,[])
+        sub_keys = list(d1.get(k, {}).keys())
+        for sk in d2.get(k, {}).keys():
+            if sk not in sub_keys: sub_keys.append(sk)
+            
+        for sk in sub_keys:
+            res[k][sk] = d1.get(k, {}).get(sk, []) + d2.get(k, {}).get(sk, [])
     return res
 
 def combine_files(d1, d2):
@@ -388,10 +415,10 @@ def get_soup_from_search(search_term, expected_name, show_year, site, language, 
 
     if site == "imdb":
         entity_hint = "TV Series" if "Drama" in show_type else "Movie"
-        # REMOVED STRICT QUOTES so DuckDuckGo returns accurate IMDb links
-        search_queries =[f'{search_term} {entity_hint} site:imdb.com/title/', f'{search_term} {show_year} site:imdb.com/title/']
+        # ⚠️ FIX: Removed quotes and `site:` for DuckDuckGo to prevent filtering blocks
+        search_queries = [f'{search_term} {entity_hint} imdb', f'{search_term} {show_year} imdb']
         if clean_name != search_term:
-            search_queries.extend([f'{clean_name} {entity_hint} site:imdb.com/title/', f'{clean_name} {show_year} site:imdb.com/title/'])
+            search_queries.extend([f'{clean_name} {entity_hint} imdb', f'{clean_name} {show_year} imdb'])
     else:
         search_queries =[ f'"{search_term}" {show_year} {language} site:{site}.com', f'"{search_term}" {show_year} site:{site}.com', f'"{search_term}" site:{site}.com' ]
         if clean_name != search_term:
@@ -417,15 +444,21 @@ def get_soup_from_search(search_term, expected_name, show_year, site, language, 
             if site == "asianwiki" and ("/File:" in url or "/index.php?title=File:" in url): 
                 continue
             
+            # ⚠️ FIX: Manually verify the duckduckgo URL is an imdb title page
             if site == "imdb":
+                if "imdb.com/title/tt" not in url: continue
                 tt_match = re.search(r'/title/(tt\d+)', url)
                 if not tt_match: continue
                 url = f"https://www.imdb.com/title/{tt_match.group(1)}/"
 
-            # Temporary custom session for IMDb to avoid Cloudscraper 202 bugs
+            # ⚠️ FIX: Heavy Chrome headers via requests to bypass IMDb AWS block
             temp_session = requests.Session() if site == 'imdb' else SCRAPER
             if site == 'imdb':
-                temp_session.headers.update({'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'})
+                temp_session.headers.update({
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+                    'Accept-Language': 'en-US,en;q=0.5'
+                })
 
             try:
                 r = temp_session.get(url, timeout=15)
@@ -709,7 +742,6 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
 
         if not items: return None
 
-        # ADDED ALL THE SPECIAL MDL TAGS HERE
         cast_keywords = ['cast', 'main', 'support', 'guest', 'cameo', 'bit part', 'actor', 'actress', 'voice actor', 'dubber', 'dubbing', 'narrator', 'special appearance', 'host', 'regular member', 'guest member']
         crew_keywords = ['crew', 'director', 'writer', 'screenwriter', 'producer', 'production', 'music', 'composer', 'art', 'editing', 'editor', 'cinematograph', 'original', 'staff', 'lighting', 'ost', 'sound', 'action', 'martial']
 
@@ -796,13 +828,11 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
                     for txt in role_texts:
                         txt_lower = txt.lower()
                         
-                        # CAPTURE ALL ROLES PROPERLY
                         if re.search(r'\b(main role|main cast|host|regular member)\b', txt_lower): final_role = 'Main Role'
                         elif re.search(r'\b(support role|supporting cast)\b', txt_lower): final_role = 'Support Role'
                         elif re.search(r'\b(guest role|guest cast|cameo|bit part|special appearance|guest member)\b', txt_lower): final_role = 'Guest Role'
                         elif re.search(r'\b(voice actor|dubber|dubbing|narrator)\b', txt_lower): final_role = 'Voice Actor'
                         
-                        # STRIP ALL TAGS OUT SO CHARACTER NAME IS PURE
                         clean_char = re.sub(r'\b(main role|main cast|support role|supporting cast|guest role|guest cast|cameo|bit part|voice actor|dubber|dubbing|narrator|special appearance|host|regular member|guest member)\b', '', txt, flags=re.IGNORECASE)
                         clean_char = re.sub(r'^[,:\-\s]+|[,:\-\s]+$', '', clean_char).strip()
                         if clean_char and clean_char.lower() not in['role', 'cast', 'unknown', artist_name.lower()]: 
@@ -858,7 +888,11 @@ def _scrape_image_from_imdb(soup, **kwargs):
         if m:
             season_num = m.group(1)
             season_url = kwargs['url'].rstrip('/') + f"/episodes/?season={season_num}"
-            r = SCRAPER.get(season_url, timeout=15)
+            
+            temp_session = requests.Session()
+            temp_session.headers.update({'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'})
+            r = temp_session.get(season_url, timeout=15)
+            
             if r.status_code == 200:
                 target_soup = BeautifulSoup(r.text, "html.parser")
         
@@ -885,7 +919,11 @@ def _scrape_release_date_from_imdb(soup, **kwargs):
         if m:
             season_num = m.group(1)
             season_url = kwargs['url'].rstrip('/') + f"/episodes/?season={season_num}"
-            r = SCRAPER.get(season_url, timeout=15)
+            
+            temp_session = requests.Session()
+            temp_session.headers.update({'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'})
+            r = temp_session.get(season_url, timeout=15)
+            
             if r.status_code == 200:
                 season_soup = BeautifulSoup(r.text, "html.parser")
                 script = season_soup.find('script', type='application/ld+json')
@@ -1128,8 +1166,6 @@ def fetch_and_populate_metadata(obj, context, artists_db):
                             fetched_successfully = True
                             break 
             
-            # SAFEGUARD: If we tried to fetch an empty field but absolutely nothing was found online
-            # We explicitly leave it empty (None), so the system will automatically re-try scraping it next time!
             if not fetched_successfully and is_empty:
                 spu[field] = None
                             
@@ -1405,6 +1441,11 @@ def write_report(context, current_run_seconds, run_start_time, report_file_path)
         else:
             run_display = f"{current_gh_run}"
 
+        # ⚠️ FIX: Ensure exact sheet ordering in report output
+        ordered_sheets = [s.strip() for s in os.environ.get("SHEETS", "Sheet1").split(';') if s.strip()]
+        all_rep_keys = list(rep_data.keys())
+        sorted_rep_keys = [s for s in ordered_sheets if s in all_rep_keys] + [k for k in all_rep_keys if k not in ordered_sheets]
+
         lines =[
             status_msg,
             batch_msg,
@@ -1425,7 +1466,8 @@ def write_report(context, current_run_seconds, run_start_time, report_file_path)
         sep = "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
         stats = {'created': 0, 'updated': 0, 'skipped': 0, 'deleted': 0, 'warnings': 0, 'show_images': 0, 'artist_images': 0, 'rows': 0, 'refetched': 0, 'archived': 0}
         
-        for sheet, changes in rep_data.items():
+        for sheet in sorted_rep_keys:
+            changes = rep_data[sheet]
             if not any(v for k, v in changes.items()): continue
             display_sheet = sheet.replace("sheet", "Sheet ").title()
             lines.extend([sep, f"🗂️ === {display_sheet} ===", sep])
@@ -1464,7 +1506,6 @@ def write_report(context, current_run_seconds, run_start_time, report_file_path)
                 lines.append("\n🖼️ Fetched Data Details:")
                 for i in sorted(get_unique(changes['fetched_data'])): lines.append(i)
 
-            # --- Asian vs Non-Asian Warning Split ---
             if changes.get('missing_warnings_asian'): 
                 lines.append("\n⚠️ Missing Values (Asian Dramas):")
                 for i in sorted(get_unique(changes['missing_warnings_asian'])): lines.append(i)
@@ -1569,7 +1610,6 @@ def write_report(context, current_run_seconds, run_start_time, report_file_path)
         with open(report_file_path, 'w', encoding='utf-8') as f: 
             f.write(console_output)
         print(f"\n✅ Partial Report created at -> {report_file_path}")
-        print("   (Git will ignore this file due to .gitignore settings)")
     else:
         cumulative_report_data = combine_reports(context.get('previous_report_data', {}), current_report_data)
         cumulative_files = combine_files(context.get('previous_files_generated', {}), current_files)
@@ -1614,8 +1654,6 @@ def process_and_distribute_cast(full_cast, artists_db, context):
         char_name = artist.get('characterName') 
         
         role_lower = role.lower()
-        
-        # Comprehensive Sorting Logic Based on newly mapped MDL tags
         if 'main' in role_lower or 'host' in role_lower or 'regular member' in role_lower: 
             role = 'Main Role'
         elif 'support' in role_lower: 
@@ -1653,7 +1691,6 @@ def process_and_distribute_cast(full_cast, artists_db, context):
         r = c['role']
         cast_summary[r] = cast_summary.get(r, 0) + 1
     for c in other_crew_cast:
-        # Voice Actors, Narrators, etc. will go into otherCrewMembers count
         cast_summary['otherCrewMembers'] = cast_summary.get('otherCrewMembers', 0) + 1
     
     return cast_summary, full_cast_dict
@@ -1697,6 +1734,11 @@ def main():
     setup_gitignore_for_partials()
     
     MAX_FETCHES = int(os.environ.get("MAX_FETCHES", "50"))
+    
+    # --- Parse Force Refetch Logic ---
+    force_refetch_str = os.environ.get("FORCE_REFETCH", "")
+    force_ids, force_all = parse_force_refetch(force_refetch_str)
+    
     total_heavy_fetches = 0
     limit_reached = False
 
@@ -1765,7 +1807,10 @@ def main():
             excel_data_has_changed = not is_new and objects_differ(old_obj_from_json, excel_obj)
             metadata_is_missing = not is_new and has_missing_metadata(old_obj_from_json)
             
-            if is_new or excel_data_has_changed or metadata_is_missing:
+            # ⚠️ Force Refetch Check
+            is_forced = force_all or (sid in force_ids)
+            
+            if is_new or excel_data_has_changed or metadata_is_missing or is_forced:
                 if MAX_FETCHES > 0 and total_heavy_fetches >= MAX_FETCHES:
                     limit_reached = True
                     context['paused'] = True
@@ -1774,6 +1819,15 @@ def main():
                 total_heavy_fetches += 1
                 base_template = copy.deepcopy(JSON_OBJECT_TEMPLATE)
                 old_data = copy.deepcopy(old_obj_from_json) if old_obj_from_json else {}
+                
+                # ⚠️ If this is a forced refetch, clear out metadata so it triggers scraping again
+                if is_forced and not is_new:
+                    for forced_field in ['synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast', 'network', 'airedOn']:
+                        # Skip if they explicitly set it to Manual
+                        if old_data.get('sitePriorityUsed', {}).get(forced_field) == "Manual":
+                            continue
+                        old_data[forced_field] = None
+                        
                 final_obj = {**base_template, **old_data, **excel_obj}
                 
                 for k in LOCKED_FIELDS_AFTER_CREATION:
@@ -1821,6 +1875,8 @@ def main():
                     
                     if metadata_was_fetched and newly_fetched_fields:
                         report.setdefault('refetched',[]).append({'id': sid, 'name': final_obj['showName'], 'year': final_obj.get('releasedYear'), 'fields': newly_fetched_fields})
+                    elif is_forced and not excel_data_has_changed and not newly_fetched_fields:
+                        report.setdefault('refetched',[]).append({'id': sid, 'name': final_obj['showName'], 'year': final_obj.get('releasedYear'), 'fields': ["Force Refetch Verified (No changes found)"]})
                 
                 merged_by_id[sid] = final_obj
                 save_metadata_backup(final_obj, context)
