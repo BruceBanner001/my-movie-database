@@ -1,5 +1,3 @@
-[DEBUG] Title Validation FAILED: Page Title 'So Hyun Kyung' vs Expected 'Brilliant Legacy' (Ratio: 0.14)
-[DEBUG] Title Validation FAILED: Page Title 'Liu Yin Jun' vs Expected 'Love Me Like I Do' (Ratio: 0.36)
 ✅ Workflow Batch completed successfully
 🏁 Final Batch Completed
 ══════════════════════════════════════════════════════
@@ -10,9 +8,9 @@
 🔁 RUN           : 881
 ⏰ Start Time    : 02 April 2026 - 08:46:17 AM
 ⏰ End Time      : 02 April 2026 - 08:48:23 AM
-⏱️ Run Time      : 2 Minutes 6 Seconds
+⏱️ Total Runtime : 2 Minutes 6 Seconds
 ⚙️ Max Process   : 50 Row Per Run
-🔄 Current Batch : 1
+🔄 Total Batches : 1 Run
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Sheet1 ===
@@ -76,7 +74,7 @@
   Total Unique Rows: 1
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📊 Summary (Current Batch Only)
+📊 Overall Cumulative Summary
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🆕 Total Created: 0
 🔁 Total Updated: 0
@@ -112,5 +110,3 @@
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🏁 Workflow finished successfully
-
-✅ Final Master Report written -> reports/02_April_2026_0846_FINAL_881_REPORT.txt (Saved to Repo)
