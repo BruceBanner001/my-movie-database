@@ -1467,5 +1467,185 @@
                 "role": "Director"
             }
         ]
+    },
+    "104": {
+        "mainRoles": [
+            {
+                "artistID": "300",
+                "characterName": "Ko Eun Seong",
+                "role": "Main Role"
+            },
+            {
+                "artistID": "387",
+                "characterName": "Seon U Hwan",
+                "role": "Main Role"
+            },
+            {
+                "artistID": "398",
+                "characterName": "Park Jun Se",
+                "role": "Main Role"
+            },
+            {
+                "artistID": "1220",
+                "characterName": "Yoo Seung Mi",
+                "role": "Main Role"
+            },
+            {
+                "artistID": "1151",
+                "characterName": "Jang Suk Ja",
+                "role": "Main Role"
+            }
+        ],
+        "supportRoles": [
+            {
+                "artistID": "1727",
+                "characterName": "Pyo Seung Cheol",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "1845",
+                "characterName": "Ko Eun U",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "2486",
+                "characterName": "Ko Pyeong Jung",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "2768",
+                "characterName": "Lee Hye Ri",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "3760",
+                "characterName": "Jung In Yeong",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "3927",
+                "characterName": "Lee Jun Yeong",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "1666",
+                "characterName": "Paek Seong Hui",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "1126",
+                "characterName": "Park Tae Su",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "1124",
+                "characterName": "O Yeong Ran",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "950",
+                "characterName": "Lee Hyeong Jin",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "948",
+                "characterName": "Seon U Jeong",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "805",
+                "characterName": "Jin Yeong Seok",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "115611",
+                "characterName": "Park Su Jae [Waiter]",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "30823",
+                "characterName": "Kim Yong Ho",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "6256",
+                "characterName": "[Genuine Food director]",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "15807",
+                "characterName": "[Hotel staff]",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "69563",
+                "characterName": "Unknown",
+                "role": "Support Role"
+            }
+        ],
+        "guestRoles": [
+            {
+                "artistID": "845",
+                "characterName": "[U Hwan's friend] (Ep. 7)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "5817",
+                "characterName": "[Grandmother with seolleongtang]",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "121301",
+                "characterName": "[Store manager]",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "6659",
+                "characterName": "[Quarrelsome guest]",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "6698",
+                "characterName": "[Waiter]",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "86265",
+                "characterName": "[Waiter]",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "53889",
+                "characterName": "[Asked Seong Hui about florist sales]",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "124041",
+                "characterName": "[Woman who lends money to Pyeong Jung]",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "1714",
+                "characterName": "[Bar customer]",
+                "role": "Guest Role"
+            }
+        ],
+        "crew": [
+            {
+                "artistID": "93295",
+                "characterName": null,
+                "role": "Composer"
+            },
+            {
+                "artistID": "16191",
+                "characterName": null,
+                "role": "Director"
+            },
+            {
+                "artistID": "16143",
+                "characterName": null,
+                "role": "Screenwriter"
+            }
+        ]
     }
 }

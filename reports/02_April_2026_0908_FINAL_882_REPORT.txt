@@ -8,9 +8,9 @@
 🔁 RUN           : 882
 ⏰ Start Time    : 02 April 2026 - 09:08:25 AM
 ⏰ End Time      : 02 April 2026 - 09:10:21 AM
-⏱️ Run Time      : 1 Minute 56 Seconds
+⏱️ Total Runtime : 1 Minute 56 Seconds
 ⚙️ Max Process   : 50 Row Per Run
-🔄 Current Batch : 1
+🔄 Total Batches : 1 Run
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Sheet1 ===
@@ -77,7 +77,7 @@
   Total Unique Rows: 1
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📊 Summary (Current Batch Only)
+📊 Overall Cumulative Summary
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🆕 Total Created: 0
 🔁 Total Updated: 1
@@ -122,5 +122,3 @@
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🏁 Workflow finished successfully
-
-✅ Final Master Report written -> reports/02_April_2026_0908_FINAL_882_REPORT.txt (Saved to Repo)
