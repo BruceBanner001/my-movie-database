@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup
 import gspread
 from gspread_dataframe import set_with_dataframe, get_as_dataframe
 import cloudscraper
+import requests
 
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
@@ -31,7 +32,7 @@ REPORTS_DIR = "reports"
 
 FORCE_CHECK = os.environ.get("FORCE_CHECK", "false").lower() == "true"
 
-# Anti-Blocker: Spoof a real Windows Chrome browser
+# Anti-Blocker: Spoof a real Windows Chrome browser for MDL
 SCRAPER = cloudscraper.create_scraper(
     browser={
         'browser': 'chrome',
@@ -67,10 +68,17 @@ def search_and_verify_title(search_term, expected_year, lang, sheet_name, site):
     if site == "imdb":
         clean_search = re.sub(r"\b(?:Season|Part|S)\s*\d+\b|\s+\d+$", "", clean_search, flags=re.IGNORECASE).strip()
     
-    queries =[]
+    queries = []
     if expected_year and expected_year != 0:
-        queries.append(f'{clean_search} {expected_year} site:{site}.com')
-    queries.append(f'{clean_search} site:{site}.com')
+        if site == "imdb":
+            queries.append(f'{clean_search} {expected_year} site:imdb.com/title/')
+        else:
+            queries.append(f'{clean_search} {expected_year} site:{site}.com')
+            
+    if site == "imdb":
+        queries.append(f'{clean_search} site:imdb.com/title/')
+    else:
+        queries.append(f'{clean_search} site:{site}.com')
     
     expected_country = LANG_TO_COUNTRY.get(str(lang).lower().strip())
     expected_type = "movie" if "movie" in sheet_name.lower() else "drama"
@@ -79,7 +87,7 @@ def search_and_verify_title(search_term, expected_year, lang, sheet_name, site):
     fail_detail = "No valid results found on search engine"
 
     for query in queries:
-        results =[]
+        results = []
         for attempt in range(2):
             try:
                 with DDGS() as dd:
@@ -111,7 +119,14 @@ def search_and_verify_title(search_term, expected_year, lang, sheet_name, site):
                     continue
 
             try:
-                r = SCRAPER.get(url, timeout=12)
+                # IMDb AWS WAF blocks Cloudscraper but allows standard requests headers
+                if site == "imdb":
+                    temp_session = requests.Session()
+                    temp_session.headers.update({'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'})
+                    r = temp_session.get(url, timeout=12)
+                else:
+                    r = SCRAPER.get(url, timeout=12)
+
                 if r.status_code == 200:
                     soup = BeautifulSoup(r.text, "html.parser")
                     title = None
@@ -220,7 +235,7 @@ def fetch_excel_from_gdrive_bytes(file_id, creds_path):
 def unique_list(lst):
     # For lists of dictionaries, we must make them unique based on 'id' or 'title'
     seen = set()
-    unique =[]
+    unique = []
     for item in lst:
         identifier = item.get('id', str(item)) if isinstance(item, dict) else str(item)
         if identifier not in seen:
@@ -314,7 +329,7 @@ def write_report(current_report, state, current_run_seconds, run_start_time, is_
                 lines.append(f"⚠️ {title}:")
                 grouped = {}
                 for item in nf_list:
-                    grouped.setdefault(item['category'],[]).append(item)
+                    grouped.setdefault(item['category'], []).append(item)
                 
                 for cat, items in grouped.items():
                     lines.append(f"\n📌 Reason: {cat}")
@@ -428,8 +443,8 @@ def main():
                 "row_data": row.to_dict()
             }
 
-    sheets_to_process =[s.strip() for s in os.environ.get("SHEETS", "Sheet1;Sheet2").split(";") if s.strip()]
-    results =[]
+    sheets_to_process = [s.strip() for s in os.environ.get("SHEETS", "Sheet1;Sheet2").split(";") if s.strip()]
+    results = []
     current_report = {}
     processed_ids_this_run = set()
     
@@ -437,7 +452,7 @@ def main():
         if limit_reached: break
         
         sheet_name = sheets_to_process[s_idx]
-        report_sheet = current_report.setdefault(sheet_name, {"new_recs":[], "perfect": 0, "not_found_asian":[], "not_found_non_asian":[], "skipped": 0})
+        report_sheet = current_report.setdefault(sheet_name, {"new_recs": [], "perfect": 0, "not_found_asian": [], "not_found_non_asian": [], "skipped": 0})
 
         target_sheet = next((s for s in xl.sheet_names if s.strip().lower() == sheet_name.strip().lower()), None)
         if not target_sheet: continue
@@ -494,7 +509,7 @@ def main():
             # --- INTERNET FETCHING ---
             fetches_used += 1
 
-            is_asian = lang.lower() in["korean", "chinese", "japanese", "thai", "taiwanese", "filipino"]
+            is_asian = lang.lower() in ["korean", "chinese", "japanese", "thai", "taiwanese", "filipino"]
             mdl_title, imdb_title = "N/A", "N/A"
             source_used = ""
             rec_title = "N/A"
@@ -547,7 +562,7 @@ def main():
     if results:
         new_df = pd.DataFrame(results)
         
-        ordered_cols =[
+        ordered_cols = [
             "Sheet Name", "Show ID", "Show Name", "Released Year", 
             "Recommended Title Name", "Source Link", "Language", 
             "Last Update Date", "mydramalist", "imdb", "Title Recommendation"

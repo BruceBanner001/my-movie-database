@@ -4,7 +4,7 @@
 # ============================================================
 # Script: create_update_backup_delete.py
 # Author: [BruceBanner001]
-# Version: v11.2 (STRICT BATCH LOGGING & NO "NOT FOUND" EDITION - WITH YEARS)
+# Version: v11.4 (Asian/Non-Asian Split & Comprehensive MDL Cast Fix)
 # ============================================================
 
 # ---------------------------- IMPORTS & GLOBALS ----------------------------
@@ -15,7 +15,7 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
-SCRIPT_VERSION = "v11.2"
+SCRIPT_VERSION = "v11.4"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames":[], "showImage": None,
@@ -192,8 +192,12 @@ def is_empty_val(v):
     return False
 
 def has_missing_metadata(obj):
-    fields_to_check =['synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast']
-    if obj.get('showType') != 'Movie':
+    lang = obj.get('nativeLanguage', '').lower()
+    is_asian = lang in ['korean', 'chinese', 'japanese', 'thai', 'taiwanese', 'filipino']
+    
+    fields_to_check = ['synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast']
+    # Skip AiredOn & Network for Non-Asian Dramas
+    if obj.get('showType') != 'Movie' and is_asian:
         fields_to_check.extend(['airedOn', 'network'])
         
     spu = obj.get('sitePriorityUsed', {})
@@ -384,9 +388,10 @@ def get_soup_from_search(search_term, expected_name, show_year, site, language, 
 
     if site == "imdb":
         entity_hint = "TV Series" if "Drama" in show_type else "Movie"
-        search_queries =[f'"{search_term}" {entity_hint} site:imdb.com/title/', f'"{search_term}" {show_year} site:imdb.com/title/']
+        # REMOVED STRICT QUOTES so DuckDuckGo returns accurate IMDb links
+        search_queries =[f'{search_term} {entity_hint} site:imdb.com/title/', f'{search_term} {show_year} site:imdb.com/title/']
         if clean_name != search_term:
-            search_queries.extend([f'"{clean_name}" {entity_hint} site:imdb.com/title/', f'"{clean_name}" {show_year} site:imdb.com/title/'])
+            search_queries.extend([f'{clean_name} {entity_hint} site:imdb.com/title/', f'{clean_name} {show_year} site:imdb.com/title/'])
     else:
         search_queries =[ f'"{search_term}" {show_year} {language} site:{site}.com', f'"{search_term}" {show_year} site:{site}.com', f'"{search_term}" site:{site}.com' ]
         if clean_name != search_term:
@@ -417,37 +422,45 @@ def get_soup_from_search(search_term, expected_name, show_year, site, language, 
                 if not tt_match: continue
                 url = f"https://www.imdb.com/title/{tt_match.group(1)}/"
 
-            r = SCRAPER.get(url, timeout=15)
-            if r.status_code == 200:
-                soup = BeautifulSoup(r.text, "html.parser")
-                
-                if site == "imdb":
-                    data = _get_imdb_json_ld(soup)
-                    if data:
-                        imdb_type = data.get('@type', '')
-                        if imdb_type == 'TVEpisode': continue
-                        if show_type in['Drama', 'Mini Drama'] and imdb_type == 'Movie': continue
-                        if show_type == 'Movie' and imdb_type in['TVSeries', 'TVMiniSeries']: continue
-                
-                is_valid_landmark = False
-                if site == "asianwiki" and soup.find(id='Profile'): 
-                    is_valid_landmark = True
-                elif site == "mydramalist" and soup.find('div', class_='box-body'): 
-                    is_valid_landmark = True
-                elif site == "imdb" and soup.find('h1'): 
-                    is_valid_landmark = True
-                
-                if is_valid_landmark:
-                    if expected_country and site != 'imdb':
-                        scraped_country = _scrape_country(soup, site)
-                        if scraped_country and expected_country not in scraped_country: 
-                            continue
-                    
-                    if not _validate_page_title(soup, expected_name, site, url): 
-                        continue
+            # Temporary custom session for IMDb to avoid Cloudscraper 202 bugs
+            temp_session = requests.Session() if site == 'imdb' else SCRAPER
+            if site == 'imdb':
+                temp_session.headers.update({'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'})
 
-                    soup_cache[cache_key] = (soup, url)
-                    return soup, url
+            try:
+                r = temp_session.get(url, timeout=15)
+                if r.status_code == 200:
+                    soup = BeautifulSoup(r.text, "html.parser")
+                    
+                    if site == "imdb":
+                        data = _get_imdb_json_ld(soup)
+                        if data:
+                            imdb_type = data.get('@type', '')
+                            if imdb_type == 'TVEpisode': continue
+                            if show_type in['Drama', 'Mini Drama'] and imdb_type == 'Movie': continue
+                            if show_type == 'Movie' and imdb_type in['TVSeries', 'TVMiniSeries']: continue
+                    
+                    is_valid_landmark = False
+                    if site == "asianwiki" and soup.find(id='Profile'): 
+                        is_valid_landmark = True
+                    elif site == "mydramalist" and soup.find('div', class_='box-body'): 
+                        is_valid_landmark = True
+                    elif site == "imdb" and soup.find('h1'): 
+                        is_valid_landmark = True
+                    
+                    if is_valid_landmark:
+                        if expected_country and site != 'imdb':
+                            scraped_country = _scrape_country(soup, site)
+                            if scraped_country and expected_country not in scraped_country: 
+                                continue
+                        
+                        if not _validate_page_title(soup, expected_name, site, url): 
+                            continue
+
+                        soup_cache[cache_key] = (soup, url)
+                        return soup, url
+            except Exception:
+                pass
 
     soup_cache[cache_key] = (None, None)
     return None, None
@@ -696,6 +709,10 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
 
         if not items: return None
 
+        # ADDED ALL THE SPECIAL MDL TAGS HERE
+        cast_keywords = ['cast', 'main', 'support', 'guest', 'cameo', 'bit part', 'actor', 'actress', 'voice actor', 'dubber', 'dubbing', 'narrator', 'special appearance', 'host', 'regular member', 'guest member']
+        crew_keywords = ['crew', 'director', 'writer', 'screenwriter', 'producer', 'production', 'music', 'composer', 'art', 'editing', 'editor', 'cinematograph', 'original', 'staff', 'lighting', 'ost', 'sound', 'action', 'martial']
+
         main_role_count = 0
         for item in items:
             try:
@@ -750,9 +767,6 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
                     raw_header_text = prev_header.get_text(" ", strip=True)
                     header_text = raw_header_text.lower()
                 
-                crew_keywords =['crew', 'director', 'writer', 'screenwriter', 'producer', 'production', 'music', 'composer', 'art', 'editing', 'editor', 'cinematograph', 'original', 'staff', 'lighting', 'ost', 'sound', 'action', 'martial']
-                cast_keywords =['cast', 'main', 'support', 'guest', 'cameo', 'bit part', 'actor', 'actress']
-                
                 if any(cast_kw in header_text for cast_kw in cast_keywords): 
                     is_crew = False
                 elif any(kw in header_text for kw in crew_keywords): 
@@ -761,7 +775,7 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
                 combined_text = " ".join(role_texts).lower()
                 if re.search(r'\b(director|writer|screenwriter|producer|composer|cinematographer|editor|music|crew|staff|art|lighting|original|ost|sound|action|martial)\b', combined_text): 
                     is_crew = True
-                if re.search(r'\b(main role|main cast|support role|supporting cast|guest role|guest cast|cameo|bit part)\b', combined_text): 
+                if re.search(r'\b(main role|main cast|support role|supporting cast|guest role|guest cast|cameo|bit part|voice actor|dubber|dubbing|narrator|special appearance|host|regular member|guest member)\b', combined_text): 
                     is_crew = False
 
                 if is_crew:
@@ -776,16 +790,20 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
                     character_name = "Unknown"
                     final_role = "Support Role"
                     if not role_texts and raw_header_text:
-                        if re.search(r'\b(main)\b', header_text): final_role = 'Main Role'
-                        elif re.search(r'\b(guest|cameo|bit part)\b', header_text): final_role = 'Guest Role'
+                        if re.search(r'\b(main|host|regular member)\b', header_text): final_role = 'Main Role'
+                        elif re.search(r'\b(guest|cameo|bit part|special appearance)\b', header_text): final_role = 'Guest Role'
                             
                     for txt in role_texts:
                         txt_lower = txt.lower()
-                        if re.search(r'\b(main role|main cast)\b', txt_lower): final_role = 'Main Role'
-                        elif re.search(r'\b(support role|supporting cast)\b', txt_lower): final_role = 'Support Role'
-                        elif re.search(r'\b(guest role|guest cast|cameo|bit part)\b', txt_lower): final_role = 'Guest Role'
                         
-                        clean_char = re.sub(r'\b(main role|main cast|support role|supporting cast|guest role|guest cast|cameo|bit part)\b', '', txt, flags=re.IGNORECASE)
+                        # CAPTURE ALL ROLES PROPERLY
+                        if re.search(r'\b(main role|main cast|host|regular member)\b', txt_lower): final_role = 'Main Role'
+                        elif re.search(r'\b(support role|supporting cast)\b', txt_lower): final_role = 'Support Role'
+                        elif re.search(r'\b(guest role|guest cast|cameo|bit part|special appearance|guest member)\b', txt_lower): final_role = 'Guest Role'
+                        elif re.search(r'\b(voice actor|dubber|dubbing|narrator)\b', txt_lower): final_role = 'Voice Actor'
+                        
+                        # STRIP ALL TAGS OUT SO CHARACTER NAME IS PURE
+                        clean_char = re.sub(r'\b(main role|main cast|support role|supporting cast|guest role|guest cast|cameo|bit part|voice actor|dubber|dubbing|narrator|special appearance|host|regular member|guest member)\b', '', txt, flags=re.IGNORECASE)
                         clean_char = re.sub(r'^[,:\-\s]+|[,:\-\s]+$', '', clean_char).strip()
                         if clean_char and clean_char.lower() not in['role', 'cast', 'unknown', artist_name.lower()]: 
                             character_name = clean_char
@@ -1033,12 +1051,18 @@ def fetch_and_populate_metadata(obj, context, artists_db):
     spu = obj.setdefault('sitePriorityUsed', {})
     show_type = obj.get('showType', 'Drama')
     
+    is_asian = lang.lower() in ['korean', 'chinese', 'japanese', 'thai', 'taiwanese', 'filipino']
+    
     context['source_links_temp'] = {}
     soup_cache = {}
     fields_to_check =[ 'synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast', 'network', 'airedOn' ]
     
     for field in fields_to_check:
         if show_type == 'Movie' and field in['airedOn', 'network']:
+            continue
+            
+        # Skip AiredOn & Network entirely for Western Shows (IMDb)
+        if not is_asian and field in ['airedOn', 'network']:
             continue
             
         # DO NOT re-fetch fields that were explicitly marked as Manual
@@ -1440,9 +1464,14 @@ def write_report(context, current_run_seconds, run_start_time, report_file_path)
                 lines.append("\n🖼️ Fetched Data Details:")
                 for i in sorted(get_unique(changes['fetched_data'])): lines.append(i)
 
-            if changes.get('missing_warnings'): 
-                lines.append("\n⚠️ Missing Values (Still attempting to fetch):")
-                for i in sorted(get_unique(changes['missing_warnings'])): lines.append(i)
+            # --- Asian vs Non-Asian Warning Split ---
+            if changes.get('missing_warnings_asian'): 
+                lines.append("\n⚠️ Missing Values (Asian Dramas):")
+                for i in sorted(get_unique(changes['missing_warnings_asian'])): lines.append(i)
+
+            if changes.get('missing_warnings_non_asian'): 
+                lines.append("\n⚠️ Missing Values (Non-Asian / Western Shows):")
+                for i in sorted(get_unique(changes['missing_warnings_non_asian'])): lines.append(i)
 
             if changes.get('artist_image_warnings'): 
                 lines.append("\n🧑‍🎨 Artist Image Warnings:")
@@ -1473,7 +1502,8 @@ def write_report(context, current_run_seconds, run_start_time, report_file_path)
                 stats['rows'] += total_sheet
                 
                 warn_count = len(get_unique(changes.get('data_warnings',[]))) + \
-                             len(get_unique(changes.get('missing_warnings',[]))) + \
+                             len(get_unique(changes.get('missing_warnings_asian',[]))) + \
+                             len(get_unique(changes.get('missing_warnings_non_asian',[]))) + \
                              len(get_unique(changes.get('artist_image_warnings', [])))
                 stats['warnings'] += warn_count
                 
@@ -1521,15 +1551,12 @@ def write_report(context, current_run_seconds, run_start_time, report_file_path)
             
         return "\n".join(lines)
 
-    # --- 1. Define Data to Print ---
     current_report_data = context.get('report_data', {})
     current_files = context.get('files_generated', {})
     
-    # --- 2. ALWAYS Generate Current Batch Output ---
     console_output = build_report_text(current_report_data, current_files, is_cumulative=False)
     print(console_output)
 
-    # Write to GITHUB_STEP_SUMMARY explicitly here so we don't rely on YAML cat'ing the wrong file
     step_summary_file = os.environ.get('GITHUB_STEP_SUMMARY')
     if step_summary_file:
         with open(step_summary_file, 'a', encoding='utf-8') as f:
@@ -1538,9 +1565,7 @@ def write_report(context, current_run_seconds, run_start_time, report_file_path)
             f.write(console_output)
             f.write("\n```\n")
 
-    # --- 3. Save to Text File (For GitHub Repo & Summary/Email) ---
     if is_paused:
-        # Partial run -> Write current batch text to file (This file is ignored by Git, but used by GitHub summary)
         with open(report_file_path, 'w', encoding='utf-8') as f: 
             f.write(console_output)
         print(f"\n✅ Partial Report created at -> {report_file_path}")
@@ -1549,13 +1574,11 @@ def write_report(context, current_run_seconds, run_start_time, report_file_path)
         cumulative_report_data = combine_reports(context.get('previous_report_data', {}), current_report_data)
         cumulative_files = combine_files(context.get('previous_files_generated', {}), current_files)
 
-        # Final run -> Write MASTER CUMULATIVE batch text to file (Committed to Git, emailed, and added to summary)
         file_output = build_report_text(cumulative_report_data, cumulative_files, is_cumulative=True)
         with open(report_file_path, 'w', encoding='utf-8') as f: 
             f.write(file_output)
         print(f"\n✅ Final Master Report written -> {report_file_path} (Saved to Repo)")
 
-    # --- EMAIL SUBJECT ---
     is_manual = os.environ.get('GITHUB_EVENT_NAME') == 'workflow_dispatch'
     trigger_type = "Manual" if is_manual else "Automatic"
     mail_trigger = f"[{trigger_type}]"
@@ -1591,10 +1614,18 @@ def process_and_distribute_cast(full_cast, artists_db, context):
         char_name = artist.get('characterName') 
         
         role_lower = role.lower()
-        if 'main' in role_lower and ('role' in role_lower or 'cast' in role_lower): role = 'Main Role'
-        elif 'support' in role_lower: role = 'Support Role'
-        elif 'guest' in role_lower or 'cameo' in role_lower or 'bit part' in role_lower: role = 'Guest Role'
-        else: role = role.title()
+        
+        # Comprehensive Sorting Logic Based on newly mapped MDL tags
+        if 'main' in role_lower or 'host' in role_lower or 'regular member' in role_lower: 
+            role = 'Main Role'
+        elif 'support' in role_lower: 
+            role = 'Support Role'
+        elif 'guest' in role_lower or 'cameo' in role_lower or 'bit part' in role_lower or 'special appearance' in role_lower: 
+            role = 'Guest Role'
+        elif 'voice actor' in role_lower or 'dubber' in role_lower or 'narrator' in role_lower: 
+            role = 'Voice Actor'
+        else: 
+            role = role.title()
         
         cast_member = {"artistID": artist_id, "characterName": char_name, "role": role}
         
@@ -1622,6 +1653,7 @@ def process_and_distribute_cast(full_cast, artists_db, context):
         r = c['role']
         cast_summary[r] = cast_summary.get(r, 0) + 1
     for c in other_crew_cast:
+        # Voice Actors, Narrators, etc. will go into otherCrewMembers count
         cast_summary['otherCrewMembers'] = cast_summary.get('otherCrewMembers', 0) + 1
     
     return cast_summary, full_cast_dict
@@ -1662,7 +1694,6 @@ def save_json_file(file_path, data):
 
 def main():
     
-    # 🌟 Keep Git clean by ensuring partial reports are ALWAYS ignored 🌟
     setup_gitignore_for_partials()
     
     MAX_FETCHES = int(os.environ.get("MAX_FETCHES", "50"))
@@ -1794,14 +1825,21 @@ def main():
                 merged_by_id[sid] = final_obj
                 save_metadata_backup(final_obj, context)
                 
+                lang = final_obj.get('nativeLanguage', '').lower()
+                is_asian = lang in ['korean', 'chinese', 'japanese', 'thai', 'taiwanese', 'filipino']
+                
                 missing_fields = {'synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast'}
-                if final_obj.get('showType') != 'Movie': 
+                if final_obj.get('showType') != 'Movie' and is_asian: 
                     missing_fields.update({'airedOn', 'network'})
                 
-                # ⚠️ Keep reporting missing data if it remains unpopulated (so script tries again next time)
+                # Report missing data split into Asian vs Non-Asian
                 missing =[human_readable_field(k) for k in missing_fields if is_empty_val(final_obj.get(k)) and final_obj.get('sitePriorityUsed', {}).get(k) != "Manual"]
                 if missing: 
-                    report.setdefault('missing_warnings',[]).append(f"- {sid} - {final_obj['showName']} ({final_obj.get('releasedYear')}) -> ⚠️ Missing: {', '.join(sorted(missing))}")
+                    warning_str = f"- {sid} - {final_obj['showName']} ({final_obj.get('releasedYear')}) -> ⚠️ Missing: {', '.join(sorted(missing))}"
+                    if is_asian:
+                        report.setdefault('missing_warnings_asian',[]).append(warning_str)
+                    else:
+                        report.setdefault('missing_warnings_non_asian',[]).append(warning_str)
                 
                 context['processed_ids_all_runs'].add(sid)
             else:
@@ -1814,10 +1852,8 @@ def main():
     first_run = context.get('first_run_id', current_gh_run)
     
     if limit_reached:
-        # ⚠️ This filename triggers the .gitignore exception!
         report_name = f"{ts}_PARTIAL_{current_gh_run}_REPORT.txt"
     else:
-        # 🏁 Final Run! (Hyphen format if multiple runs, standard if single)
         if str(first_run) != str(current_gh_run):
             report_name = f"{ts}_FINAL_{first_run}-{current_gh_run}_REPORT.txt"
         else:
