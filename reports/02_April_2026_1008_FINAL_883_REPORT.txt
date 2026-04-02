@@ -1,5 +1,3 @@
-/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:168: UserWarning: Parsing dates in %d-%m-%Y format when dayfirst=False (the default) was specified. Pass `dayfirst=True` or specify a format to silence this warning.
-  dt = pd.to_datetime(str(val).strip(), errors='coerce')
 ✅ Workflow Batch completed successfully
 🏁 Final Batch Completed
 ══════════════════════════════════════════════════════
@@ -10,9 +8,37 @@
 🔁 RUN           : 883
 ⏰ Start Time    : 02 April 2026 - 10:08:23 AM
 ⏰ End Time      : 02 April 2026 - 10:10:27 AM
-⏱️ Run Time      : 2 Minutes 4 Seconds
+⏱️ Total Runtime : 2 Minutes 4 Seconds
 ⚙️ Max Process   : 50 Row Per Run
-🔄 Current Batch : 1
+🔄 Total Batches : 1 Run
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Sheet2 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🔁 Data Updated:
+✍️ 3001 - Secret Garden (2010) -> Again Watched Dates Updated
+✍️ 3002 - Limitless (2015) -> Released Year, Total Episodes Updated
+✍️ 3003 - Beauty and the Beast (2012) -> Released Year, Total Episodes, Again Watched Dates Updated
+✍️ 3004 - Price of Passion (2017) -> Released Year, Total Episodes, Again Watched Dates Updated
+✍️ 3005 - Lucifer (2016) -> Released Year, Total Episodes, Again Watched Dates Updated
+✍️ 3006 - Peaky Blinders (2013) -> Released Year, Total Episodes, Again Watched Dates Updated
+
+⚠️ Missing Values (Non-Asian / Western Shows):
+- 3002 - Limitless (2015) -> ⚠️ Missing: Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 3003 - Beauty and the Beast (2012) -> ⚠️ Missing: Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 3004 - Price of Passion (2017) -> ⚠️ Missing: Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 3005 - Lucifer (2016) -> ⚠️ Missing: Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 3006 - Peaky Blinders (2013) -> ⚠️ Missing: Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+
+📊 Summary (Sheet: Sheet2)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Created: 0
+🔁 Updated: 6
+🔍 Refetched: 0
+🚫 Skipped: 0
+⚠️ Warnings: 5
+  Total Unique Rows: 6
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Sheet1 ===
@@ -60,35 +86,7 @@
   Total Unique Rows: 9
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🗂️ === Sheet2 ===
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-🔁 Data Updated:
-✍️ 3001 - Secret Garden (2010) -> Again Watched Dates Updated
-✍️ 3002 - Limitless (2015) -> Released Year, Total Episodes Updated
-✍️ 3003 - Beauty and the Beast (2012) -> Released Year, Total Episodes, Again Watched Dates Updated
-✍️ 3004 - Price of Passion (2017) -> Released Year, Total Episodes, Again Watched Dates Updated
-✍️ 3005 - Lucifer (2016) -> Released Year, Total Episodes, Again Watched Dates Updated
-✍️ 3006 - Peaky Blinders (2013) -> Released Year, Total Episodes, Again Watched Dates Updated
-
-⚠️ Missing Values (Non-Asian / Western Shows):
-- 3002 - Limitless (2015) -> ⚠️ Missing: Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 3003 - Beauty and the Beast (2012) -> ⚠️ Missing: Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 3004 - Price of Passion (2017) -> ⚠️ Missing: Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 3005 - Lucifer (2016) -> ⚠️ Missing: Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 3006 - Peaky Blinders (2013) -> ⚠️ Missing: Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-
-📊 Summary (Sheet: Sheet2)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🆕 Created: 0
-🔁 Updated: 6
-🔍 Refetched: 0
-🚫 Skipped: 0
-⚠️ Warnings: 5
-  Total Unique Rows: 6
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📊 Summary (Current Batch Only)
+📊 Overall Cumulative Summary
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🆕 Total Created: 1
 🔁 Total Updated: 6
@@ -113,24 +111,8 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ Folders Generated:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📁 backups/ (Total: 6 files)
-    📄 BACKUP_02_April_2026_1008_3001.json
-    📄 BACKUP_02_April_2026_1008_3002.json
-    📄 BACKUP_02_April_2026_1008_3003.json
-    📄 BACKUP_02_April_2026_1008_3004.json
-    📄 BACKUP_02_April_2026_1008_3005.json
-    📄 BACKUP_02_April_2026_1008_3006.json
-
 📁 show_images/ (Total: 1 files)
     📄 120.jpg
-
-📁 artist_images/ (Total: 41 files)
-    📄 22158.jpg
-    📄 22944.jpg
-    📄 21122.jpg
-    📄 512.jpg
-    📄 34481.jpg
-    ... and 36 more files.
 
 📁 meta_backups/ (Total: 3 files)
     📄 META_02_April_2026_1008_109.json
@@ -140,7 +122,21 @@
 📁 reports/ (Total: 1 files)
     📄 02_April_2026_1008_FINAL_883_REPORT.txt
 
+📁 backups/ (Total: 6 files)
+    📄 BACKUP_02_April_2026_1008_3001.json
+    📄 BACKUP_02_April_2026_1008_3002.json
+    📄 BACKUP_02_April_2026_1008_3003.json
+    📄 BACKUP_02_April_2026_1008_3004.json
+    📄 BACKUP_02_April_2026_1008_3005.json
+    📄 BACKUP_02_April_2026_1008_3006.json
+
+📁 artist_images/ (Total: 41 files)
+    📄 22158.jpg
+    📄 22944.jpg
+    📄 21122.jpg
+    📄 512.jpg
+    📄 34481.jpg
+    ... and 36 more files.
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🏁 Workflow finished successfully
-
-✅ Final Master Report written -> reports/02_April_2026_1008_FINAL_883_REPORT.txt (Saved to Repo)
