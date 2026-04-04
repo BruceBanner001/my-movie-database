@@ -4,19 +4,19 @@
 # ============================================================
 # Script: create_update_backup_delete.py
 # Author: [BruceBanner001]
-# Version: v11.8 (The GitHub Actions Proxy Tunnel Edition)
+# Version: v11.9 (The Pure JSON IMDBot API Edition)
 # ============================================================
 
 # ---------------------------- IMPORTS & GLOBALS ----------------------------
 import os, re, sys, json, io, shutil, traceback, copy, time, hashlib
-import urllib.parse
+import urllib.parse, urllib.request
 from datetime import datetime, timedelta, timezone
 from difflib import SequenceMatcher
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
-SCRIPT_VERSION = "v11.8"
+SCRIPT_VERSION = "v11.9"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames":[], "showImage": None,
@@ -162,8 +162,7 @@ ARCHIVED_META_DIR = "archived-backup-meta-data"
 SERVICE_ACCOUNT_FILE = "GDRIVE_SERVICE_ACCOUNT.json"
 EXCEL_FILE_ID_TXT = "EXCEL_FILE_ID.txt"
 
-# ---------------------------- SCRAPERS & WAF BYPASS TUNNEL ----------------------------
-
+# ---------------------------- CLOUDSCRAPER ----------------------------
 SCRAPER = cloudscraper.create_scraper() if HAVE_SCRAPER else requests.Session()
 SCRAPER.headers.update({
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
@@ -171,45 +170,10 @@ SCRAPER.headers.update({
     'Cookie': 'lc-main=en_US'
 })
 
-def fetch_with_proxies(url, is_json=False):
-    """
-    Bypasses Amazon AWS WAF blocking GitHub Actions IP addresses.
-    Routes the IMDb request through public CORS proxy endpoints to mask the IP.
-    """
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
-        'Accept-Language': 'en-US,en;q=0.9'
-    }
-    
-    # 1. Direct Attempt (in case WAF is temporarily disabled or running locally)
-    try:
-        r = requests.get(url, headers=headers, timeout=10)
-        if r.status_code == 200 and 'verify you are human' not in r.text.lower():
-            return r.json() if is_json else r.text
-    except Exception: pass
-    
-    # 2. AllOrigins Proxy Tunnel
-    try:
-        proxy_url = f"https://api.allorigins.win/raw?url={urllib.parse.quote(url)}"
-        r = requests.get(proxy_url, headers=headers, timeout=15)
-        if r.status_code == 200 and 'verify you are human' not in r.text.lower():
-            return r.json() if is_json else r.text
-    except Exception: pass
-    
-    # 3. CORSProxy Tunnel
-    try:
-        proxy_url = f"https://corsproxy.io/?{urllib.parse.quote(url)}"
-        r = requests.get(proxy_url, headers=headers, timeout=15)
-        if r.status_code == 200 and 'verify you are human' not in r.text.lower():
-            return r.json() if is_json else r.text
-    except Exception: pass
-
-    logd(f"All proxy attempts failed for URL: {url}")
-    return None
-
 def search_imdb_api(search_term, expected_year, show_type):
     """
-    Directly queries IMDb's high-speed internal frontend API via Proxy.
+    Queries IMDb's official high-speed search suggestion API. 
+    This API requires no auth and is virtually never blocked by AWS WAF.
     """
     clean_term = re.sub(r'[^a-zA-Z0-9 ]', '', search_term).strip().lower()
     if not clean_term: return None
@@ -217,20 +181,25 @@ def search_imdb_api(search_term, expected_year, show_type):
     encoded_term = urllib.parse.quote(clean_term)
     url = f"https://v3.sg.media-imdb.com/suggestion/{first_char}/{encoded_term}.json"
     
-    data = fetch_with_proxies(url, is_json=True)
-    if data and 'd' in data:
-        for item in data['d']:
-            if item.get('id', '').startswith('tt'):
-                item_type = item.get('q', '').lower()
-                
-                if show_type == 'Movie' and 'tv' in item_type: continue
-                if show_type != 'Movie' and item_type in ['feature', 'video game', 'podcast']: continue
-                
-                if expected_year and expected_year != 0:
-                    if abs(item.get('y', 0) - expected_year) <= 1:
-                        return f"https://www.imdb.com/title/{item['id']}/"
-                else:
-                    return f"https://www.imdb.com/title/{item['id']}/"
+    try:
+        r = requests.get(url, headers={'User-Agent': 'Mozilla/5.0'}, timeout=10)
+        if r.status_code == 200:
+            data = r.json()
+            if 'd' in data:
+                for item in data['d']:
+                    if item.get('id', '').startswith('tt'):
+                        item_type = item.get('q', '').lower()
+                        
+                        if show_type == 'Movie' and 'tv' in item_type: continue
+                        if show_type != 'Movie' and item_type in['feature', 'video game', 'podcast']: continue
+                        
+                        if expected_year and expected_year != 0:
+                            if abs(item.get('y', 0) - expected_year) <= 1:
+                                return item['id']
+                        else:
+                            return item['id']
+    except Exception as e:
+        logd(f"IMDb API Search failed: {e}")
     return None
 
 LANG_TO_COUNTRY_MAP = {
@@ -275,9 +244,9 @@ def is_empty_val(v):
 
 def has_missing_metadata(obj):
     lang = obj.get('nativeLanguage', '').lower()
-    is_asian = lang in ['korean', 'chinese', 'japanese', 'thai', 'taiwanese', 'filipino']
+    is_asian = lang in['korean', 'chinese', 'japanese', 'thai', 'taiwanese', 'filipino']
     
-    fields_to_check = ['synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast']
+    fields_to_check =['synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast']
     # Skip AiredOn & Network for Non-Asian Dramas
     if obj.get('showType') != 'Movie' and is_asian:
         fields_to_check.extend(['airedOn', 'network'])
@@ -347,7 +316,7 @@ def combine_reports(d1, d2):
             if sk not in sub_keys: sub_keys.append(sk)
             
         for sk in sub_keys:
-            res[k][sk] = d1.get(k, {}).get(sk, []) + d2.get(k, {}).get(sk, [])
+            res[k][sk] = d1.get(k, {}).get(sk,[]) + d2.get(k, {}).get(sk,[])
     return res
 
 def combine_files(d1, d2):
@@ -373,6 +342,74 @@ def save_batch_state(context, current_run_seconds):
     with open(BATCH_STATE_FILE, 'w', encoding='utf-8') as f: 
         json.dump(state, f, indent=4, ensure_ascii=False)
 
+def _validate_page_title(soup, expected_name, site, url):
+    try:
+        page_title = ""
+        if site == "asianwiki":
+            h1 = soup.find('h1', class_='firstHeading') or soup.find('h1')
+            if h1: page_title = h1.get_text(strip=True)
+        elif site == "mydramalist":
+            h1 = soup.find('h1', class_='film-title') or soup.find('h1')
+            if h1: page_title = h1.get_text(strip=True)
+
+        if not page_title: return True
+        
+        def extract_season(text):
+            m = re.search(r'\b(?:Season|Part|S)\s*(\d+)\b', text, re.IGNORECASE)
+            if m: return int(m.group(1))
+            m2 = re.search(r'\s+(\d+)$', re.sub(r'\(\d{4}\)', '', text).strip())
+            if m2 and int(m2.group(1)) < 20: 
+                return int(m2.group(1))
+            return None
+
+        page_s = extract_season(page_title)
+        exp_s = extract_season(expected_name)
+        
+        if page_s is None:
+            m_url = re.search(r'(?:season|part)[-_]*(\d+)', url, re.IGNORECASE)
+            if m_url: page_s = int(m_url.group(1))
+            
+        exp_s = exp_s if exp_s is not None else 1
+        
+        if page_s is not None and exp_s != page_s:
+            logd(f"Title Validation FAILED: Season mismatch. Expected S{exp_s}, Page has S{page_s} ({page_title})")
+            return False
+            
+        if exp_s > 1 and page_s is None:
+            base_expected = re.sub(r'\b(?:Season|Part|S)\s*\d+\b|\s+\d+$', '', expected_name, flags=re.IGNORECASE).strip().lower()
+            base_page = re.sub(r'\(.*?\)', '', page_title).lower().strip()
+            if base_expected in base_page or base_page in base_expected:
+                logd(f"Title Validation FAILED: Expected S{exp_s}, but found base S1 ('{page_title}')")
+                return False
+
+        t1 = re.sub(r'\(\d{4}\)', '', page_title).lower().strip()
+        t2 = re.sub(r'\(\d{4}\)', '', expected_name).lower().strip()
+        
+        t1_core = re.sub(r'\b(?:season|part|s)\s*\d+\b|\s+\d+$', '', t1).strip()
+        t2_core = re.sub(r'\b(?:season|part|s)\s*\d+\b|\s+\d+$', '', t2).strip()
+
+        ratio = SequenceMatcher(None, t1_core, t2_core).ratio()
+        if ratio < 0.4 and t2_core not in t1_core and t1_core not in t2_core:
+            logd(f"Title Validation FAILED: Page Title '{page_title}' vs Expected '{expected_name}' (Ratio: {ratio:.2f})")
+            return False
+        return True
+    except Exception as e: 
+        return True
+
+def _scrape_country(soup, site):
+    try:
+        if site == 'asianwiki':
+            tag = soup.find('b', string='Country:')
+            if tag and tag.parent: 
+                return tag.parent.get_text(strip=True).replace('Country:', '').strip()
+        elif site == 'mydramalist':
+            tag = soup.find('b', string='Country:')
+            if tag and tag.parent: 
+                return tag.parent.get_text(strip=True).replace('Country:', '').strip()
+    except Exception: 
+        pass
+    return None
+
 def get_soup_from_search(search_term, expected_name, show_year, site, language, show_type, soup_cache):
     cache_key = f"{expected_name}_{search_term}_{show_year}_{site}_{language}_{show_type}"
     if cache_key in soup_cache: 
@@ -381,19 +418,25 @@ def get_soup_from_search(search_term, expected_name, show_year, site, language, 
     expected_country = LANG_TO_COUNTRY_MAP.get(language.lower())
     clean_name = re.sub(r'\b(?:Season|Part|S)\s*\d+\b|\s+\d+$', '', search_term, flags=re.IGNORECASE).strip()
 
-    # 🌟 NEW IMDb API PROXY TUNNEL 🌟
+    # 🌟 NEW: THE IMDBOT API BYPASS 🌟
+    # Completely ignores HTML parsing, WAF blocks, and CORS proxies.
     if site == "imdb":
-        url = search_imdb_api(search_term, show_year, show_type)
-        if not url and clean_name != search_term:
-            url = search_imdb_api(clean_name, show_year, show_type)
+        tt_id = search_imdb_api(search_term, show_year, show_type)
+        if not tt_id and clean_name != search_term:
+            tt_id = search_imdb_api(clean_name, show_year, show_type)
 
-        if url:
-            html = fetch_with_proxies(url)
-            if html:
-                soup = BeautifulSoup(html, "html.parser")
-                # Removed _validate_page_title check for IMDb since the exact IMDb ID was matched via API Year/Type
-                soup_cache[cache_key] = (soup, url)
-                return soup, url
+        if tt_id:
+            api_url = f"https://search.imdbot.workers.dev/?tt={tt_id}"
+            try:
+                r = requests.get(api_url, timeout=15)
+                if r.status_code == 200:
+                    json_data = r.json()
+                    # Store the pure JSON dict in soup_cache instead of BeautifulSoup!
+                    imdb_url = f"https://www.imdb.com/title/{tt_id}/"
+                    soup_cache[cache_key] = (json_data, imdb_url)
+                    return json_data, imdb_url
+            except Exception as e:
+                logd(f"IMDBot fetch failed: {e}")
 
         soup_cache[cache_key] = (None, None)
         return None, None
@@ -439,6 +482,9 @@ def get_soup_from_search(search_term, expected_name, show_year, site, language, 
                             if scraped_country and expected_country not in scraped_country: 
                                 continue
                         
+                        if not _validate_page_title(soup, expected_name, site, url): 
+                            continue
+
                         soup_cache[cache_key] = (soup, url)
                         return soup, url
             except Exception: pass
@@ -449,7 +495,7 @@ def get_soup_from_search(search_term, expected_name, show_year, site, language, 
 def download_and_save_image(url, local_path, is_artist=False):
     if not HAVE_PIL or not url: return False
     
-    dummy_keywords =['default', 'nopicture', 'no-poster', 'avatar', 'blank', 'null', 'data:image']
+    dummy_keywords =['default', 'nopicture', 'no-poster', 'avatar', 'blank', 'null', 'data:image', 'corsproxy']
     if any(kw in url.lower() for kw in dummy_keywords):
         return False
 
@@ -457,7 +503,7 @@ def download_and_save_image(url, local_path, is_artist=False):
     try:
         url = re.sub(r'_[24]c\.jpg$', '.jpg', url) if not is_artist else url
         
-        # IMDb/Amazon CDNs don't block images as strictly, standard requests is fine
+        # Amazon image CDN is safe to request directly.
         r = requests.get(url, stream=True, timeout=20)
         
         if r.status_code == 200 and r.headers.get("content-type", "").startswith("image"):
@@ -674,8 +720,7 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
             cast_url = base_url if base_url.endswith('/cast') else base_url + '/cast'
             try:
                 time.sleep(4.0) 
-                headers = { "Referer": url, "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8" }
-                r = SCRAPER.get(cast_url, headers=headers, timeout=20)
+                r = SCRAPER.get(cast_url, timeout=20)
                 if r.status_code == 200 and '/people/' in r.text:
                     cast_soup = BeautifulSoup(r.text, "html.parser")
                     if cast_soup.select('a[href*="/people/"]'): 
@@ -692,8 +737,8 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
 
         if not items: return None
 
-        cast_keywords = ['cast', 'main', 'support', 'guest', 'cameo', 'bit part', 'actor', 'actress', 'voice actor', 'dubber', 'dubbing', 'narrator', 'special appearance', 'host', 'regular member', 'guest member']
-        crew_keywords = ['crew', 'director', 'writer', 'screenwriter', 'producer', 'production', 'music', 'composer', 'art', 'editing', 'editor', 'cinematograph', 'original', 'staff', 'lighting', 'ost', 'sound', 'action', 'martial']
+        cast_keywords =['cast', 'main', 'support', 'guest', 'cameo', 'bit part', 'actor', 'actress', 'voice actor', 'dubber', 'dubbing', 'narrator', 'special appearance', 'host', 'regular member', 'guest member']
+        crew_keywords =['crew', 'director', 'writer', 'screenwriter', 'producer', 'production', 'music', 'composer', 'art', 'editing', 'editor', 'cinematograph', 'original', 'staff', 'lighting', 'ost', 'sound', 'action', 'martial']
 
         main_role_count = 0
         for item in items:
@@ -815,201 +860,132 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
         logd(f"Fatal error in _scrape_cast_from_mydramalist: {e}")
         return None
 
-# --- IMDB SCRAPERS ---
+# --- IMDB PURE JSON API SCRAPERS ---
+# NOTE: "soup" here is actually the pure JSON dict returned by IMDBot API!
 def _scrape_synopsis_from_imdb(soup, **kwargs):
-    try:
-        data = _get_imdb_json_ld(soup)
-        synopsis = None
-        if data and 'description' in data: 
-            synopsis = data['description']
-        else:
-            desc = soup.select_one('[data-testid^="plot"]')
-            if desc: synopsis = desc.get_text(strip=True)
-            
-        if synopsis: synopsis = re.sub(r'[\s\(\-\[\]\,]+$', '', synopsis).strip()
-        return synopsis
-    except Exception: pass
+    if isinstance(soup, dict) and 'short' in soup:
+        synopsis = soup['short'].get('description')
+        if synopsis: return re.sub(r'[\s\(\-\[\]\,]+$', '', str(synopsis)).strip()
     return None
 
 def _scrape_image_from_imdb(soup, **kwargs):
-    try:
-        target_soup = soup
-        m = re.search(r'\b(?:Season|Part)\s*(\d+)\b', kwargs.get('show_name', ''), re.IGNORECASE)
-        if m:
-            season_num = m.group(1)
-            season_url = kwargs['url'].rstrip('/') + f"/episodes/?season={season_num}"
-            html = fetch_with_proxies(season_url)
-            if html: target_soup = BeautifulSoup(html, "html.parser")
-        
-        meta_img = target_soup.find('meta', property='og:image')
-        if meta_img and 'content' in meta_img.attrs:
-            url = meta_img['content']
-            if "title_hero_default" not in url and "imdb_fb_logo" not in url:
-                image_path = os.path.join(SHOW_IMAGES_DIR, f"{kwargs['sid']}.jpg")
-                if download_and_save_image(url, image_path): 
-                    return os.path.basename(image_path)
-
-        data = _get_imdb_json_ld(soup)
-        if data and 'image' in data:
-            url = data['image']
+    if isinstance(soup, dict) and 'short' in soup:
+        url = soup['short'].get('image')
+        if url:
             image_path = os.path.join(SHOW_IMAGES_DIR, f"{kwargs['sid']}.jpg")
             if download_and_save_image(url, image_path): 
                 return os.path.basename(image_path)
-    except Exception: pass
     return None
 
 def _scrape_release_date_from_imdb(soup, **kwargs):
-    try:
-        m = re.search(r'\b(?:Season|Part)\s*(\d+)\b', kwargs.get('show_name', ''), re.IGNORECASE)
-        if m:
-            season_num = m.group(1)
-            season_url = kwargs['url'].rstrip('/') + f"/episodes/?season={season_num}"
-            html = fetch_with_proxies(season_url)
-            if html:
-                season_soup = BeautifulSoup(html, "html.parser")
-                script = season_soup.find('script', type='application/ld+json')
-                if script:
-                    data = json.loads(script.string)
-                    if isinstance(data, list): data = data[0]
-                    if data.get('@type') == 'ItemList' and 'itemListElement' in data:
-                        elements = data['itemListElement']
-                        if len(elements) > 0:
-                            first_ep = elements[0].get('item', {})
-                            if 'datePublished' in first_ep: 
-                                return first_ep['datePublished']
-
-        data = _get_imdb_json_ld(soup)
-        if data and 'datePublished' in data: 
-            return data['datePublished']
-    except Exception: pass
+    if isinstance(soup, dict) and 'short' in soup:
+        return soup['short'].get('datePublished')
     return None
 
 def _scrape_duration_from_imdb(soup, **kwargs):
-    try:
-        data = _get_imdb_json_ld(soup)
-        if data and 'duration' in data:
-            dur = data['duration']
-            match = re.match(r'PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?', dur.upper())
+    if isinstance(soup, dict) and 'short' in soup:
+        dur = soup['short'].get('duration')
+        if dur:
+            match = re.match(r'PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?', str(dur).upper())
             if match:
                 h = int(match.group(1)) if match.group(1) else 0
                 m = int(match.group(2)) if match.group(2) else 0
                 total_mins = (h * 60) + m
                 if total_mins > 0: return f"{total_mins} mins"
-                
-        runtime_tag = soup.find('li', attrs={'data-testid': 'title-techspec_runtime'})
-        if runtime_tag and (div := runtime_tag.find('div')):
-            text = div.get_text(strip=True).lower()
-            m = re.search(r'(\d+)\s*m', text)
-            if m: return f"{m.group(1)} mins"
-    except Exception: pass
     return None
 
 def _scrape_othernames_from_imdb(soup, **kwargs):
-    try:
-        aka_tag = soup.find('li', attrs={'data-testid': 'title-details-akas'})
-        if aka_tag and (div := aka_tag.find('div')):
-            text_content = div.get_text(separator=', ', strip=True)
-            names =[n.strip() for n in text_content.split(',') if n.strip()]
-            return _clean_other_names(names)
-    except Exception: pass
+    if isinstance(soup, dict):
+        aka = soup.get('short', {}).get('alternateName')
+        if aka:
+            if isinstance(aka, list):
+                return _clean_other_names(aka)
+            return _clean_other_names([aka])
     return None
 
 def _scrape_director_from_imdb(soup, **kwargs):
-    try:
+    if isinstance(soup, dict) and 'short' in soup:
         dirs =[]
-        data = _get_imdb_json_ld(soup)
-        if data:
-            for key in['director', 'creator']:
-                if key in data:
-                    entities = data[key]
-                    if not isinstance(entities, list): entities = [entities]
-                    for e in entities:
-                        if e.get('@type') == 'Person' and 'name' in e: 
-                            dirs.append(e['name'])
+        for key in['director', 'creator']:
+            items = soup['short'].get(key,[])
+            if isinstance(items, dict): items = [items]
+            for item in items:
+                if item.get('@type') == 'Person' and item.get('name'):
+                    dirs.append(item.get('name'))
         if dirs: return list(dict.fromkeys(dirs))
-    except Exception: pass
     return None
 
 def _scrape_tags_from_imdb(soup, **kwargs):
-    try:
-        data = _get_imdb_json_ld(soup)
-        if data and 'genre' in data: 
-            return data['genre'] if isinstance(data['genre'], list) else[data['genre']]
-    except Exception: pass
+    if isinstance(soup, dict) and 'short' in soup:
+        genre = soup['short'].get('genre')
+        if genre: return genre if isinstance(genre, list) else [genre]
     return None
 
 def _scrape_network_from_imdb(soup, **kwargs):
     return None
 
 def _scrape_cast_from_imdb(soup, **kwargs):
-    try:
-        full_cast_raw =[]
-        seen_ids = set()
-        cards = soup.select('div[data-testid="title-cast-item"]')
-        
-        for idx, card in enumerate(cards[:20]): 
-            try:
-                a_tag = card.select_one('a[data-testid="title-cast-item__actor"]')
-                if not a_tag: continue
-                name = a_tag.get_text(strip=True)
-                url = a_tag['href']
-                artist_id = re.search(r'(nm\d+)', url).group(1)
-                
-                seen_ids.add(artist_id)
-                img_tag = card.select_one('img')
-                img_url = img_tag['src'] if img_tag else None
-                
-                char_span = card.select_one('.cast-item-characters-link, .title-cast-item__characters')
-                char_name = char_span.get_text(" ", strip=True) if char_span else "Unknown"
-                
-                char_name = re.sub(r'\s*\d+\s*episodes?.*', '', char_name, flags=re.IGNORECASE).strip()
-                char_name = re.sub(r'\s*\d{4}\s*-\s*\d{4}.*', '', char_name).strip()
-                if not char_name: char_name = "Unknown"
-                
-                role = "Main Role"
-                if idx >= 6: role = "Support Role"
-                if idx >= 15: role = "Guest Role"
-                
-                full_cast_raw.append({
-                    "artistID": artist_id, "artistName": name, "artistImageURL": img_url,
-                    "characterName": char_name, "role": role 
-                })
-            except Exception: continue
+    if not isinstance(soup, dict): return None
+    full_cast_raw =[]
+    seen_ids = set()
 
-        data = _get_imdb_json_ld(soup)
-        if data:
-            for role_key in['director', 'creator']:
-                if role_key in data:
-                    entities = data[role_key] if isinstance(data[role_key], list) else [data[role_key]]
-                    for e in entities:
-                        if e.get('@type') == 'Person' and 'name' in e:
-                            artist_name = e['name']
-                            a_id = None
-                            
-                            if 'url' in e:
-                                match = re.search(r'(nm\d+)', e['url'])
-                                if match: a_id = match.group(1)
-                                
-                            if not a_id:
-                                html_link = soup.find('a', string=re.compile(f"^{re.escape(artist_name)}$", re.IGNORECASE), href=re.compile(r'/name/nm\d+'))
-                                if html_link:
-                                    a_id = re.search(r'(nm\d+)', html_link['href']).group(1)
-                                    
-                            if not a_id:
-                                a_id = "unk_" + hashlib.md5(artist_name.lower().encode('utf-8')).hexdigest()[:8]
+    # 1. Parse official Actors from the 'main' deep-dive API node
+    edges = soup.get('main', {}).get('cast', {}).get('edges',[])
+    for idx, edge in enumerate(edges[:20]):
+        try:
+            node = edge.get('node', {})
+            name_obj = node.get('name', {})
+            
+            artist_id = name_obj.get('id')
+            if not artist_id or artist_id in seen_ids: continue
+            
+            artist_name = name_obj.get('nameText', {}).get('text')
+            if not artist_name: continue
+            
+            seen_ids.add(artist_id)
+            
+            img_obj = name_obj.get('primaryImage')
+            img_url = img_obj.get('url') if img_obj else None
+            
+            chars = node.get('characters',[])
+            char_name = chars[0].get('name') if chars else "Unknown"
+            char_name = re.sub(r'\s*\d+\s*episodes?.*', '', char_name, flags=re.IGNORECASE).strip()
+            char_name = re.sub(r'\s*\d{4}\s*-\s*\d{4}.*', '', char_name).strip()
+            
+            role = "Main Role" if idx < 6 else "Support Role" if idx < 15 else "Guest Role"
+            
+            full_cast_raw.append({
+                "artistID": artist_id, "artistName": artist_name, "artistImageURL": img_url,
+                "characterName": char_name, "role": role 
+            })
+        except Exception: continue
 
-                            if a_id not in seen_ids:
-                                seen_ids.add(a_id)
-                                full_cast_raw.append({
-                                    "artistID": a_id, "artistName": artist_name, "artistImageURL": None,
-                                    "characterName": None, "role": role_key.title()
-                                })
+    # 2. Add Directors / Creators from 'short' node
+    for role_key in['director', 'creator']:
+        items = soup.get('short', {}).get(role_key, [])
+        if isinstance(items, dict): items = [items]
+        for item in items:
+            if item.get('@type') == 'Person':
+                a_name = item.get('name')
+                if not a_name: continue
+                
+                a_url = item.get('url', '')
+                a_id = None
+                tt_match = re.search(r'(nm\d+)', a_url)
+                if tt_match: a_id = tt_match.group(1)
+                if not a_id: a_id = "unk_" + hashlib.md5(a_name.lower().encode('utf-8')).hexdigest()[:8]
+                
+                if a_id not in seen_ids:
+                    seen_ids.add(a_id)
+                    full_cast_raw.append({
+                        "artistID": a_id, "artistName": a_name, "artistImageURL": None,
+                        "characterName": None, "role": role_key.title()
+                    })
 
-        if full_cast_raw:
-             if 'context' in kwargs and 'source_links_temp' in kwargs['context']:
-                kwargs['context']['source_links_temp']['raw_cast'] = full_cast_raw
-             return full_cast_raw
-    except Exception: pass
+    if full_cast_raw:
+        if 'context' in kwargs and 'source_links_temp' in kwargs['context']:
+            kwargs['context']['source_links_temp']['raw_cast'] = full_cast_raw
+        return full_cast_raw
     return None
 
 SCRAPE_MAP = {
@@ -1030,7 +1006,7 @@ def fetch_and_populate_metadata(obj, context, artists_db):
     spu = obj.setdefault('sitePriorityUsed', {})
     show_type = obj.get('showType', 'Drama')
     
-    is_asian = lang.lower() in ['korean', 'chinese', 'japanese', 'thai', 'taiwanese', 'filipino']
+    is_asian = lang.lower() in['korean', 'chinese', 'japanese', 'thai', 'taiwanese', 'filipino']
     
     context['source_links_temp'] = {}
     soup_cache = {}
@@ -1380,9 +1356,9 @@ def write_report(context, current_run_seconds, run_start_time, report_file_path)
         else:
             run_display = f"{current_gh_run}"
 
-        ordered_sheets = [s.strip() for s in os.environ.get("SHEETS", "Sheet1").split(';') if s.strip()]
+        ordered_sheets =[s.strip() for s in os.environ.get("SHEETS", "Sheet1").split(';') if s.strip()]
         all_rep_keys = list(rep_data.keys())
-        sorted_rep_keys = [s for s in ordered_sheets if s in all_rep_keys] + [k for k in all_rep_keys if k not in ordered_sheets]
+        sorted_rep_keys =[s for s in ordered_sheets if s in all_rep_keys] +[k for k in all_rep_keys if k not in ordered_sheets]
 
         lines =[
             status_msg,
@@ -1757,7 +1733,7 @@ def main():
                 old_data = copy.deepcopy(old_obj_from_json) if old_obj_from_json else {}
                 
                 if is_forced and not is_new:
-                    for forced_field in ['synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast', 'network', 'airedOn']:
+                    for forced_field in['synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast', 'network', 'airedOn']:
                         if old_data.get('sitePriorityUsed', {}).get(forced_field) == "Manual":
                             continue
                         old_data[forced_field] = None
@@ -1816,7 +1792,7 @@ def main():
                 save_metadata_backup(final_obj, context)
                 
                 lang = final_obj.get('nativeLanguage', '').lower()
-                is_asian = lang in ['korean', 'chinese', 'japanese', 'thai', 'taiwanese', 'filipino']
+                is_asian = lang in['korean', 'chinese', 'japanese', 'thai', 'taiwanese', 'filipino']
                 
                 missing_fields = {'synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast'}
                 if final_obj.get('showType') != 'Movie' and is_asian: 
