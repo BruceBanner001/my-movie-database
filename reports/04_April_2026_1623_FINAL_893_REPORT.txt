@@ -8,9 +8,9 @@
 🔁 RUN           : 893
 ⏰ Start Time    : 04 April 2026 - 04:23:41 PM
 ⏰ End Time      : 04 April 2026 - 04:23:44 PM
-⏱️ Run Time      : 2 Seconds
+⏱️ Total Runtime : 2 Seconds
 ⚙️ Max Process   : 50 Row Per Run
-🔄 Current Batch : 1
+🔄 Total Batches : 1 Run
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Deleting Records ===
@@ -33,7 +33,7 @@
 - 114 -> Love Me Like I Do (2023) -> ✅ Deleted
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📊 Summary (Current Batch Only)
+📊 Overall Cumulative Summary
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🆕 Total Created: 0
 🔁 Total Updated: 0
@@ -66,6 +66,13 @@
     📄 DELETED_04_April_2026_1623_105.json
     ... and 9 more files.
 
+📁 archived_meta_backups/ (Total: 5 files)
+    📄 META_04_April_2026_1547_101.json
+    📄 META_04_April_2026_1547_102.json
+    📄 META_04_April_2026_1606_103.json
+    📄 META_04_April_2026_1547_103.json
+    📄 META_04_April_2026_1606_114.json
+
 📁 deleted_images/ (Total: 4 files)
     📄 DELETED_04_April_2026_1623_101.jpg
     📄 DELETED_04_April_2026_1623_102.jpg
@@ -75,14 +82,5 @@
 📁 reports/ (Total: 1 files)
     📄 04_April_2026_1623_FINAL_893_REPORT.txt
 
-📁 archived_meta_backups/ (Total: 5 files)
-    📄 META_04_April_2026_1547_101.json
-    📄 META_04_April_2026_1547_102.json
-    📄 META_04_April_2026_1606_103.json
-    📄 META_04_April_2026_1547_103.json
-    📄 META_04_April_2026_1606_114.json
-
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🏁 Workflow finished successfully
-
-✅ Final Master Report written -> reports/04_April_2026_1623_FINAL_893_REPORT.txt (Saved to Repo)
