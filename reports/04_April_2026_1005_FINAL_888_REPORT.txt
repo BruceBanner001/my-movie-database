@@ -1,5 +1,3 @@
-/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:250: UserWarning: Parsing dates in %d-%m-%Y format when dayfirst=False (the default) was specified. Pass `dayfirst=True` or specify a format to silence this warning.
-  dt = pd.to_datetime(str(val).strip(), errors='coerce')
 ✅ Workflow Batch completed successfully
 🏁 Final Batch Completed
 ══════════════════════════════════════════════════════
@@ -10,9 +8,9 @@
 🔁 RUN           : 888
 ⏰ Start Time    : 04 April 2026 - 10:05:48 AM
 ⏰ End Time      : 04 April 2026 - 10:07:49 AM
-⏱️ Run Time      : 2 Minutes 1 Second
+⏱️ Total Runtime : 2 Minutes 1 Second
 ⚙️ Max Process   : 50 Row Per Run
-🔄 Current Batch : 1
+🔄 Total Batches : 1 Run
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Sheet1 ===
@@ -89,7 +87,7 @@
   Total Unique Rows: 4
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📊 Summary (Current Batch Only)
+📊 Overall Cumulative Summary
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🆕 Total Created: 0
 🔁 Total Updated: 0
@@ -124,6 +122,9 @@
     📄 3003.jpg
     📄 3004.jpg
 
+📁 reports/ (Total: 1 files)
+    📄 04_April_2026_1005_FINAL_888_REPORT.txt
+
 📁 meta_backups/ (Total: 9 files)
     📄 META_04_April_2026_1005_109.json
     📄 META_04_April_2026_1005_110.json
@@ -132,10 +133,5 @@
     📄 META_04_April_2026_1005_115.json
     ... and 4 more files.
 
-📁 reports/ (Total: 1 files)
-    📄 04_April_2026_1005_FINAL_888_REPORT.txt
-
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🏁 Workflow finished successfully
-
-✅ Final Master Report written -> reports/04_April_2026_1005_FINAL_888_REPORT.txt (Saved to Repo)
