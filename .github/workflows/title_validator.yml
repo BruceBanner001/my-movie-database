@@ -11,7 +11,7 @@ on:
         description: 'Sheets to scan (separated by semicolon)'
         required: true
         default: 'Feb 7 2023 Onwards'
-        # default: 'Feb 7 2023 Onwards;Before Feb 7 2023 (Korean);Before Feb 7 2023 ( Korean Dub);Before Feb 7 2023;Mini Drama'
+        # default: 'Feb 7 2023 Onwards;Before Feb 7 2023 (Korean);Before Feb 7 2023 (Korean Dub);Before Feb 7 2023;Mini Drama'
       max_fetches:
         description: 'Max New Rows to Fetch Per Run'
         required: false
