@@ -4,7 +4,7 @@
 # ============================================================
 # Script: create_update_backup_delete.py
 # Author: [BruceBanner001]
-# Version: v12.0 (Asian Drama Exclusive Fetcher / Clean Tracking)
+# Version: v12.1 (Non-Asian Ignored Section Edition)
 # ============================================================
 
 # ---------------------------- IMPORTS & GLOBALS ----------------------------
@@ -15,7 +15,7 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
-SCRIPT_VERSION = "v12.0"
+SCRIPT_VERSION = "v12.1"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames":[], "showImage": None,
@@ -820,9 +820,9 @@ def fetch_and_populate_metadata(obj, context, artists_db):
     spu = obj.setdefault('sitePriorityUsed', {})
     show_type = obj.get('showType', 'Drama')
     
-    is_asian = lang.lower() in['korean', 'chinese', 'japanese', 'thai', 'taiwanese', 'filipino']
+    is_asian = lang.lower() in ['korean', 'chinese', 'japanese', 'thai', 'taiwanese', 'filipino']
     
-    # 🌟 NEW LOGIC: Instantly skip fetching if it's a Western show
+    # 🌟 INSTANTLY SKIP WESTERN SHOWS 🌟
     if not is_asian:
         return obj
         
@@ -1170,7 +1170,7 @@ def write_report(context, current_run_seconds, run_start_time, report_file_path)
 
         ordered_sheets =[s.strip() for s in os.environ.get("SHEETS", "Sheet1").split(';') if s.strip()]
         all_rep_keys = list(rep_data.keys())
-        sorted_rep_keys =[s for s in ordered_sheets if s in all_rep_keys] + [k for k in all_rep_keys if k not in ordered_sheets]
+        sorted_rep_keys =[s for s in ordered_sheets if s in all_rep_keys] +[k for k in all_rep_keys if k not in ordered_sheets]
 
         lines =[
             status_msg,
@@ -1190,7 +1190,7 @@ def write_report(context, current_run_seconds, run_start_time, report_file_path)
         ]
 
         sep = "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-        stats = {'created': 0, 'updated': 0, 'skipped': 0, 'deleted': 0, 'warnings': 0, 'show_images': 0, 'artist_images': 0, 'rows': 0, 'refetched': 0, 'archived': 0}
+        stats = {'created': 0, 'updated': 0, 'skipped': 0, 'ignored': 0, 'deleted': 0, 'warnings': 0, 'show_images': 0, 'artist_images': 0, 'rows': 0, 'refetched': 0, 'archived': 0}
         
         for sheet in sorted_rep_keys:
             changes = rep_data[sheet]
@@ -1243,6 +1243,11 @@ def write_report(context, current_run_seconds, run_start_time, report_file_path)
             if changes.get('skipped'): 
                 lines.append("\n🚫 Skipped (Unchanged):")
                 for i in sorted(get_unique(changes['skipped'])): lines.append(f"- {i}")
+                
+            # 🌟 NEW: Ignored Non-Asian Section 🌟
+            if changes.get('ignored_non_asian'): 
+                lines.append("\n🙈 Ignored (Non-Asian / Western Shows):")
+                for i in sorted(get_unique(changes['ignored_non_asian'])): lines.append(f"- {i}")
 
             if changes.get('data_deleted'): 
                 lines.append("\n❌ Data Deleted:")
@@ -1253,12 +1258,14 @@ def write_report(context, current_run_seconds, run_start_time, report_file_path)
                 s_updated = len(set(o['new']['showID'] for o in changes.get('updated',[])))
                 s_refetched = len(set(o['id'] for o in changes.get('refetched',[])))
                 s_skipped = len(set(i.split(' - ')[0] for i in changes.get('skipped',[])))
+                s_ignored = len(set(i.split(' - ')[0] for i in changes.get('ignored_non_asian',[])))
                 
-                total_sheet = s_created + s_updated + s_refetched + s_skipped
+                total_sheet = s_created + s_updated + s_refetched + s_skipped + s_ignored
                 
                 stats['created'] += s_created
                 stats['updated'] += s_updated
                 stats['skipped'] += s_skipped
+                stats['ignored'] += s_ignored
                 stats['refetched'] += s_refetched
                 
                 stats['show_images'] += sum(1 for i in get_unique(changes.get('fetched_data',[])) if "Show Image" in i)
@@ -1266,17 +1273,17 @@ def write_report(context, current_run_seconds, run_start_time, report_file_path)
                 
                 warn_count = len(get_unique(changes.get('data_warnings',[]))) + \
                              len(get_unique(changes.get('missing_warnings_asian',[]))) + \
-                             len(get_unique(changes.get('artist_image_warnings', [])))
+                             len(get_unique(changes.get('artist_image_warnings',[])))
                 stats['warnings'] += warn_count
                 
-                lines.extend([f"\n📊 Summary (Sheet: {display_sheet})", sep, f"🆕 Created: {s_created}", f"🔁 Updated: {s_updated}", f"🔍 Refetched: {s_refetched}", f"🚫 Skipped: {s_skipped}", f"⚠️ Warnings: {warn_count}", f"  Total Unique Rows: {total_sheet}"])
+                lines.extend([f"\n📊 Summary (Sheet: {display_sheet})", sep, f"🆕 Created: {s_created}", f"🔁 Updated: {s_updated}", f"🔍 Refetched: {s_refetched}", f"🚫 Skipped (Asian): {s_skipped}", f"🙈 Ignored (Non-Asian): {s_ignored}", f"⚠️ Warnings: {warn_count}", f"  Total Unique Rows: {total_sheet}"])
             lines.append("")
 
         stats['deleted'] = len(files_data.get('deleted_data',[]))
         stats['artist_images'] = len(files_data.get('artist_images',[]))
         stats['archived'] = len(files_data.get('archived_backups',[])) + len(files_data.get('archived_meta_backups',[]))
         
-        lines.extend([sep, "📊 Overall Cumulative Summary" if is_cumulative else "📊 Summary (Current Batch Only)", sep, f"🆕 Total Created: {stats['created']}", f"🔁 Total Updated: {stats['updated']}", f"🔍 Total Refetched: {stats['refetched']}", f"🖼️ Show Images Updated: {stats['show_images']}", f"🧑‍🎨 New Artist Images Added: {stats['artist_images']}", f"🚫 Total Skipped: {stats['skipped']}", f"❌ Total Deleted: {stats['deleted']}", f"🗄️ Total Archived Backups: {stats['archived']}", f"⚠️ Total Warnings: {stats['warnings']}", f"💾 Backup Files: {len(files_data.get('backups',[]))}", f"  Grand Total Rows Processed: {stats['rows']}", "", f"💾 Metadata Backups: {len(files_data.get('meta_backups',[]))}", ""])
+        lines.extend([sep, "📊 Overall Cumulative Summary" if is_cumulative else "📊 Summary (Current Batch Only)", sep, f"🆕 Total Created: {stats['created']}", f"🔁 Total Updated: {stats['updated']}", f"🔍 Total Refetched: {stats['refetched']}", f"🖼️ Show Images Updated: {stats['show_images']}", f"🧑‍🎨 New Artist Images Added: {stats['artist_images']}", f"🚫 Total Skipped (Asian): {stats['skipped']}", f"🙈 Total Ignored (Non-Asian): {stats['ignored']}", f"❌ Total Deleted: {stats['deleted']}", f"🗄️ Total Archived Backups: {stats['archived']}", f"⚠️ Total Warnings: {stats['warnings']}", f"💾 Backup Files: {len(files_data.get('backups',[]))}", f"  Grand Total Rows Processed: {stats['rows']}", "", f"💾 Metadata Backups: {len(files_data.get('meta_backups',[]))}", ""])
         
         for file in[SERIES_JSON_FILE, ARTISTS_JSON_FILE, CAST_JSON_FILE, ARTIST_LOOKUP_FILE]:
             try:
@@ -1560,7 +1567,7 @@ def main():
                 initial_metadata_state = {k: final_obj.get(k) for k in['synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast', 'network', 'airedOn']}
                 context['new_artists_added'] =[] 
                 
-                # IMPORTANT: Skip the heavy internet fetching for Non-Asian shows
+                # 🌟 ONLY fetch for Asian Shows 🌟
                 lang = final_obj.get('nativeLanguage', '').lower()
                 is_asian = lang in['korean', 'chinese', 'japanese', 'thai', 'taiwanese', 'filipino']
                 
@@ -1615,7 +1622,13 @@ def main():
                 
                 context['processed_ids_all_runs'].add(sid)
             else:
-                report.setdefault('skipped',[]).append(f"{sid} - {excel_obj['showName']} ({excel_obj.get('releasedYear')})")
+                # 🌟 NEW LOGIC: Splitting Skipped vs Ignored
+                lang = excel_obj.get('nativeLanguage', '').lower()
+                is_asian = lang in['korean', 'chinese', 'japanese', 'thai', 'taiwanese', 'filipino']
+                if is_asian:
+                    report.setdefault('skipped',[]).append(f"{sid} - {excel_obj['showName']} ({excel_obj.get('releasedYear')})")
+                else:
+                    report.setdefault('ignored_non_asian',[]).append(f"{sid} - {excel_obj['showName']} ({excel_obj.get('releasedYear')})")
                 context['processed_ids_all_runs'].add(sid)
 
     # --- REPORT FILENAME GENERATION ---
