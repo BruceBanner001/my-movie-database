@@ -1,114 +1,52 @@
-/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:187: UserWarning: Parsing dates in %d-%m-%Y format when dayfirst=False (the default) was specified. Pass `dayfirst=True` or specify a format to silence this warning.
-  dt = pd.to_datetime(str(val).strip(), errors='coerce')
-✅ Workflow Batch completed successfully
-🏁 Final Batch Completed
+✅ Partial Batch completed successfully
+⏳ Batch Processing in Progress...
 ══════════════════════════════════════════════════════
-📊 My Movie Database – Excel to JSON Workflow Report
+📊 Drama Title Validator – Execution Report (FORCE CHECK ON 🚨)
 ══════════════════════════════════════════════════════
 
 🚀 Workflow Type : Manual
-🔁 RUN           : 885
-⏰ Start Time    : 02 April 2026 - 02:55:22 PM
-⏰ End Time      : 02 April 2026 - 02:57:12 PM
-⏱️ Run Time      : 1 Minute 49 Seconds
-⚙️ Max Process   : 50 Row Per Run
-🔄 Current Batch : 1
+🔁 RUN           : 98
+⏰ Start Time    : 04 April 2026 - 09:04:58 AM
+⏰ End Time      : 04 April 2026 - 09:11:03 AM
+⏱️ Run Time      : 6 Minutes 5 Seconds
+⚙️ Max Process   : 150 Row Per Run
+🔄 Current Batch : 2
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🗂️ === Sheet1 ===
+🗂️ === Feb 7 2023 Onwards ===
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-⚠️ Missing Values (Asian Dramas):
-- 109 - Love Me Like I Do (2023) -> ⚠️ Missing: Director
+✅ PERFECT MATCHES (100% Accurate):
+- 142 records matched perfectly.
 
-⚠️ Missing Values (Non-Asian / Western Shows):
-- 110 - 12 Monkeys (2015) -> ⚠️ Missing: Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 111 - Star Trek: New Strange Worlds (2023) -> ⚠️ Missing: Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 112 - Reacher (2022) -> ⚠️ Missing: Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 113 - Game of Thrones (2011) -> ⚠️ Missing: Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 114 - Stranger Things (2016) -> ⚠️ Missing: Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 115 - Under The Dome (2013) -> ⚠️ Missing: Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 116 - Gotham (2014) -> ⚠️ Missing: Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 117 - Manifest (2018) -> ⚠️ Missing: Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 118 - The Day of the Jackal (2024) -> ⚠️ Missing: Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 119 - Breaking Bad (2008) -> ⚠️ Missing: Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+⚠️ NOT FOUND (Asian / MyDramaList):
 
-🚫 Skipped (Unchanged):
-- 101 - Girlfriend (2020)
-- 102 - Secret Love Affair (2014)
-- 103 - Big (2012)
-- 104 - Shining Inheritance (2009)
-- 105 - Bitch X Rich Season 2 (2025)
-- 106 - My Youth (2025)
-- 107 - Hold Me Tight (2018)
-- 108 - Love in the Moonlight (2016)
-- 120 - Young Lady and Gentleman (2021)
+📌 Reason: Connection or URL Issues
+[ID  23] I Miss You                     ➔ ❌ Only found non-drama pages (actors/articles)
+[ID  70] The K2                         ➔ ❌ Only found non-drama pages (actors/articles)
+[ID  91] Island Part 2                  ➔ ❌ Only found non-drama pages (actors/articles)
+[ID  97] Buang Ruk Satan                ➔ ❌ Only found non-drama pages (actors/articles)
+[ID 139] You Are the Best!              ➔ ❌ Only found non-drama pages (actors/articles)
 
-📊 Summary (Sheet: Sheet1)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🆕 Created: 0
-🔁 Updated: 0
-🔍 Refetched: 0
-🚫 Skipped: 9
-⚠️ Warnings: 11
-  Total Unique Rows: 9
+📌 Reason: Year Mismatch
+[ID  39] Cinderella and the Four Knights ➔ ❌ Expected: 2020 | Found: 2016
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🗂️ === Sheet2 ===
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📌 Reason: Country Mismatch
+[ID  81] Monster                        ➔ ❌ Expected: South Korea | Found: Thailand
 
-⚠️ Missing Values (Non-Asian / Western Shows):
-- 3002 - Limitless (2015) -> ⚠️ Missing: Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 3003 - Beauty and the Beast (2012) -> ⚠️ Missing: Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 3004 - Price of Passion (2017) -> ⚠️ Missing: Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 3005 - Lucifer (2016) -> ⚠️ Missing: Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 3006 - Peaky Blinders (2013) -> ⚠️ Missing: Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+⚠️ NOT FOUND (Non-Asian / IMDb):
 
-🚫 Skipped (Unchanged):
-- 3001 - Secret Garden (2010)
-
-📊 Summary (Sheet: Sheet2)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🆕 Created: 0
-🔁 Updated: 0
-🔍 Refetched: 0
-🚫 Skipped: 1
-⚠️ Warnings: 5
-  Total Unique Rows: 1
+📌 Reason: Website Blocked Connection (Status 202/403)
+[ID  41] New Life (Yeni Hayat)          ➔ ❌ Status Code: 202
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📊 Summary (Current Batch Only)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🆕 Total Created: 0
-🔁 Total Updated: 0
-🔍 Total Refetched: 0
-🖼️ Show Images Updated: 0
-🧑‍🎨 New Artist Images Added: 0
-🚫 Total Skipped: 10
-❌ Total Deleted: 0
-🗄️ Total Archived Backups: 0
-⚠️ Total Warnings: 16
-💾 Backup Files: 0
-  Grand Total Rows Processed: 10
+🌐 Internet Scans Done   : 150
+⏭️ Total Skipped Fast    : 0
+✨ Total Recommendations : 0
+✅ Total Perfect Matches : 142
+⚠️ Total Not Found       : 8
 
-💾 Metadata Backups: 1
-
-📦 Total Objects in seriesData.json: 26
-📦 Total Objects in artists.json: 3125
-📦 Total Objects in cast.json: 11
-📦 Total Objects in artists_lookup.json: 3125
-🖼️ Total images in show-images: 11
-🧑‍🎨 Total images in artist-images: 3125
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🗂️ Folders Generated:
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📁 meta_backups/ (Total: 1 files)
-    📄 META_02_April_2026_1455_109.json
-
-📁 reports/ (Total: 1 files)
-    📄 02_April_2026_1455_FINAL_885_REPORT.txt
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🏁 Workflow finished successfully
-
-✅ Final Master Report written -> reports/02_April_2026_1455_FINAL_885_REPORT.txt (Saved to Repo)
+⚠️ BATCH LIMIT REACHED: The script paused safely.
+GitHub Actions will trigger next run automatically.
