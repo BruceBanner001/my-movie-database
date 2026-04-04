@@ -8,9 +8,9 @@
 🔁 RUN           : 889
 ⏰ Start Time    : 04 April 2026 - 03:28:18 PM
 ⏰ End Time      : 04 April 2026 - 03:28:20 PM
-⏱️ Run Time      : 2 Seconds
+⏱️ Total Runtime : 2 Seconds
 ⚙️ Max Process   : 50 Row Per Run
-🔄 Current Batch : 1
+🔄 Total Batches : 1 Run
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Deleting Records ===
@@ -45,7 +45,7 @@
 - 120 -> Young Lady and Gentleman (2021) -> ✅ Deleted
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📊 Summary (Current Batch Only)
+📊 Overall Cumulative Summary
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🆕 Total Created: 0
 🔁 Total Updated: 0
@@ -70,22 +70,6 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ Folders Generated:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📁 deleted_data/ (Total: 26 files)
-    📄 DELETED_04_April_2026_1528_3001.json
-    📄 DELETED_04_April_2026_1528_3002.json
-    📄 DELETED_04_April_2026_1528_3003.json
-    📄 DELETED_04_April_2026_1528_3004.json
-    📄 DELETED_04_April_2026_1528_3005.json
-    ... and 21 more files.
-
-📁 deleted_images/ (Total: 19 files)
-    📄 DELETED_04_April_2026_1528_3001.jpg
-    📄 DELETED_04_April_2026_1528_3002.jpg
-    📄 DELETED_04_April_2026_1528_3003.jpg
-    📄 DELETED_04_April_2026_1528_3004.jpg
-    📄 DELETED_04_April_2026_1528_101.jpg
-    ... and 14 more files.
-
 📁 reports/ (Total: 1 files)
     📄 04_April_2026_1528_FINAL_889_REPORT.txt
 
@@ -98,6 +82,14 @@
     📄 BACKUP_02_April_2026_1008_3006.json
     📄 BACKUP_02_April_2026_0908_104.json
 
+📁 deleted_images/ (Total: 19 files)
+    📄 DELETED_04_April_2026_1528_3001.jpg
+    📄 DELETED_04_April_2026_1528_3002.jpg
+    📄 DELETED_04_April_2026_1528_3003.jpg
+    📄 DELETED_04_April_2026_1528_3004.jpg
+    📄 DELETED_04_April_2026_1528_101.jpg
+    ... and 14 more files.
+
 📁 archived_meta_backups/ (Total: 33 files)
     📄 META_02_April_2026_0846_3001.json
     📄 META_02_April_2026_1008_3001.json
@@ -106,7 +98,13 @@
     📄 META_04_April_2026_1005_3003.json
     ... and 28 more files.
 
+📁 deleted_data/ (Total: 26 files)
+    📄 DELETED_04_April_2026_1528_3001.json
+    📄 DELETED_04_April_2026_1528_3002.json
+    📄 DELETED_04_April_2026_1528_3003.json
+    📄 DELETED_04_April_2026_1528_3004.json
+    📄 DELETED_04_April_2026_1528_3005.json
+    ... and 21 more files.
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🏁 Workflow finished successfully
-
-✅ Final Master Report written -> reports/04_April_2026_1528_FINAL_889_REPORT.txt (Saved to Repo)
