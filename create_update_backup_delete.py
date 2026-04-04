@@ -4,19 +4,18 @@
 # ============================================================
 # Script: create_update_backup_delete.py
 # Author: [BruceBanner001]
-# Version: v11.9 (The Pure JSON IMDBot API Edition)
+# Version: v12.0 (Asian Drama Exclusive Fetcher / Clean Tracking)
 # ============================================================
 
 # ---------------------------- IMPORTS & GLOBALS ----------------------------
 import os, re, sys, json, io, shutil, traceback, copy, time, hashlib
-import urllib.parse, urllib.request
 from datetime import datetime, timedelta, timezone
 from difflib import SequenceMatcher
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
-SCRIPT_VERSION = "v11.9"
+SCRIPT_VERSION = "v12.0"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames":[], "showImage": None,
@@ -41,7 +40,7 @@ SITE_PRIORITY_BY_LANGUAGE = {
     "thai": { "synopsis": "mydramalist", "showImage": "mydramalist", "otherNames": "mydramalist", "Duration": "mydramalist", "releaseDate": "mydramalist", "director": "mydramalist", "tags": "mydramalist", "cast": "mydramalist", "network": "mydramalist", "airedOn": "mydramalist" },
     "taiwanese": { "synopsis": "mydramalist", "showImage": "mydramalist", "otherNames": "mydramalist", "Duration": "mydramalist", "releaseDate": "mydramalist", "director": "mydramalist", "tags": "mydramalist", "cast": "mydramalist", "network": "mydramalist", "airedOn": "mydramalist" },
     "filipino": { "synopsis": "mydramalist", "showImage": "mydramalist", "otherNames": "mydramalist", "Duration": "mydramalist", "releaseDate": "mydramalist", "director": "mydramalist", "tags": "mydramalist", "cast": "mydramalist", "network": "mydramalist", "airedOn": "mydramalist" },
-    "default": { "synopsis": "imdb", "showImage": "imdb", "otherNames": "imdb", "Duration": "imdb", "releaseDate": "imdb", "director": "imdb", "tags": "imdb", "cast": "imdb", "network": "imdb", "airedOn": "imdb" },
+    "default": {} # IMDb removed. Western shows will not trigger internet fetches.
 }
 
 FIELD_NAME_MAP = { 
@@ -110,7 +109,6 @@ def filename_timestamp():
 def run_id_timestamp(): 
     return now_ist().strftime("RUN_%Y%m%d_%H%M%S")
 
-# --- Force Refetch Logic ---
 def parse_force_refetch(refetch_str):
     refetch_str = refetch_str.strip().upper()
     if not refetch_str: return set(), False
@@ -170,41 +168,9 @@ SCRAPER.headers.update({
     'Cookie': 'lc-main=en_US'
 })
 
-def search_imdb_api(search_term, expected_year, show_type):
-    """
-    Queries IMDb's official high-speed search suggestion API. 
-    This API requires no auth and is virtually never blocked by AWS WAF.
-    """
-    clean_term = re.sub(r'[^a-zA-Z0-9 ]', '', search_term).strip().lower()
-    if not clean_term: return None
-    first_char = clean_term[0] if clean_term[0].isalnum() else 'a'
-    encoded_term = urllib.parse.quote(clean_term)
-    url = f"https://v3.sg.media-imdb.com/suggestion/{first_char}/{encoded_term}.json"
-    
-    try:
-        r = requests.get(url, headers={'User-Agent': 'Mozilla/5.0'}, timeout=10)
-        if r.status_code == 200:
-            data = r.json()
-            if 'd' in data:
-                for item in data['d']:
-                    if item.get('id', '').startswith('tt'):
-                        item_type = item.get('q', '').lower()
-                        
-                        if show_type == 'Movie' and 'tv' in item_type: continue
-                        if show_type != 'Movie' and item_type in['feature', 'video game', 'podcast']: continue
-                        
-                        if expected_year and expected_year != 0:
-                            if abs(item.get('y', 0) - expected_year) <= 1:
-                                return item['id']
-                        else:
-                            return item['id']
-    except Exception as e:
-        logd(f"IMDb API Search failed: {e}")
-    return None
-
 LANG_TO_COUNTRY_MAP = {
     "korean": "South Korea", "chinese": "China", "japanese": "Japan", 
-    "thai": "Thailand", "taiwanese": "Taiwan", "filipino": "Philippines", "english": "USA"
+    "thai": "Thailand", "taiwanese": "Taiwan", "filipino": "Philippines"
 }
 
 def logd(msg):
@@ -246,9 +212,11 @@ def has_missing_metadata(obj):
     lang = obj.get('nativeLanguage', '').lower()
     is_asian = lang in['korean', 'chinese', 'japanese', 'thai', 'taiwanese', 'filipino']
     
+    # If it's a Western show, it never has "missing metadata" because we don't fetch it anymore.
+    if not is_asian: return False
+    
     fields_to_check =['synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast']
-    # Skip AiredOn & Network for Non-Asian Dramas
-    if obj.get('showType') != 'Movie' and is_asian:
+    if obj.get('showType') != 'Movie':
         fields_to_check.extend(['airedOn', 'network'])
         
     spu = obj.get('sitePriorityUsed', {})
@@ -418,29 +386,6 @@ def get_soup_from_search(search_term, expected_name, show_year, site, language, 
     expected_country = LANG_TO_COUNTRY_MAP.get(language.lower())
     clean_name = re.sub(r'\b(?:Season|Part|S)\s*\d+\b|\s+\d+$', '', search_term, flags=re.IGNORECASE).strip()
 
-    # 🌟 NEW: THE IMDBOT API BYPASS 🌟
-    # Completely ignores HTML parsing, WAF blocks, and CORS proxies.
-    if site == "imdb":
-        tt_id = search_imdb_api(search_term, show_year, show_type)
-        if not tt_id and clean_name != search_term:
-            tt_id = search_imdb_api(clean_name, show_year, show_type)
-
-        if tt_id:
-            api_url = f"https://search.imdbot.workers.dev/?tt={tt_id}"
-            try:
-                r = requests.get(api_url, timeout=15)
-                if r.status_code == 200:
-                    json_data = r.json()
-                    # Store the pure JSON dict in soup_cache instead of BeautifulSoup!
-                    imdb_url = f"https://www.imdb.com/title/{tt_id}/"
-                    soup_cache[cache_key] = (json_data, imdb_url)
-                    return json_data, imdb_url
-            except Exception as e:
-                logd(f"IMDBot fetch failed: {e}")
-
-        soup_cache[cache_key] = (None, None)
-        return None, None
-
     # 🌟 ASIAN SITES (MDL/AsianWiki) VIA DUCKDUCKGO 🌟
     if not HAVE_DDGS: return None, None
     search_queries =[ f'"{search_term}" {show_year} {language} site:{site}.com', f'"{search_term}" {show_year} site:{site}.com', f'"{search_term}" site:{site}.com' ]
@@ -495,16 +440,14 @@ def get_soup_from_search(search_term, expected_name, show_year, site, language, 
 def download_and_save_image(url, local_path, is_artist=False):
     if not HAVE_PIL or not url: return False
     
-    dummy_keywords =['default', 'nopicture', 'no-poster', 'avatar', 'blank', 'null', 'data:image', 'corsproxy']
+    dummy_keywords =['default', 'nopicture', 'no-poster', 'avatar', 'blank', 'null', 'data:image']
     if any(kw in url.lower() for kw in dummy_keywords):
         return False
 
     os.makedirs(os.path.dirname(local_path), exist_ok=True)
     try:
         url = re.sub(r'_[24]c\.jpg$', '.jpg', url) if not is_artist else url
-        
-        # Amazon image CDN is safe to request directly.
-        r = requests.get(url, stream=True, timeout=20)
+        r = SCRAPER.get(url, stream=True, timeout=20)
         
         if r.status_code == 200 and r.headers.get("content-type", "").startswith("image"):
             with Image.open(r.raw) as img:
@@ -720,7 +663,8 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
             cast_url = base_url if base_url.endswith('/cast') else base_url + '/cast'
             try:
                 time.sleep(4.0) 
-                r = SCRAPER.get(cast_url, timeout=20)
+                headers = { "Referer": url, "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8" }
+                r = SCRAPER.get(cast_url, headers=headers, timeout=20)
                 if r.status_code == 200 and '/people/' in r.text:
                     cast_soup = BeautifulSoup(r.text, "html.parser")
                     if cast_soup.select('a[href*="/people/"]'): 
@@ -860,144 +804,14 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
         logd(f"Fatal error in _scrape_cast_from_mydramalist: {e}")
         return None
 
-# --- IMDB PURE JSON API SCRAPERS ---
-# NOTE: "soup" here is actually the pure JSON dict returned by IMDBot API!
-def _scrape_synopsis_from_imdb(soup, **kwargs):
-    if isinstance(soup, dict) and 'short' in soup:
-        synopsis = soup['short'].get('description')
-        if synopsis: return re.sub(r'[\s\(\-\[\]\,]+$', '', str(synopsis)).strip()
-    return None
-
-def _scrape_image_from_imdb(soup, **kwargs):
-    if isinstance(soup, dict) and 'short' in soup:
-        url = soup['short'].get('image')
-        if url:
-            image_path = os.path.join(SHOW_IMAGES_DIR, f"{kwargs['sid']}.jpg")
-            if download_and_save_image(url, image_path): 
-                return os.path.basename(image_path)
-    return None
-
-def _scrape_release_date_from_imdb(soup, **kwargs):
-    if isinstance(soup, dict) and 'short' in soup:
-        return soup['short'].get('datePublished')
-    return None
-
-def _scrape_duration_from_imdb(soup, **kwargs):
-    if isinstance(soup, dict) and 'short' in soup:
-        dur = soup['short'].get('duration')
-        if dur:
-            match = re.match(r'PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?', str(dur).upper())
-            if match:
-                h = int(match.group(1)) if match.group(1) else 0
-                m = int(match.group(2)) if match.group(2) else 0
-                total_mins = (h * 60) + m
-                if total_mins > 0: return f"{total_mins} mins"
-    return None
-
-def _scrape_othernames_from_imdb(soup, **kwargs):
-    if isinstance(soup, dict):
-        aka = soup.get('short', {}).get('alternateName')
-        if aka:
-            if isinstance(aka, list):
-                return _clean_other_names(aka)
-            return _clean_other_names([aka])
-    return None
-
-def _scrape_director_from_imdb(soup, **kwargs):
-    if isinstance(soup, dict) and 'short' in soup:
-        dirs =[]
-        for key in['director', 'creator']:
-            items = soup['short'].get(key,[])
-            if isinstance(items, dict): items = [items]
-            for item in items:
-                if item.get('@type') == 'Person' and item.get('name'):
-                    dirs.append(item.get('name'))
-        if dirs: return list(dict.fromkeys(dirs))
-    return None
-
-def _scrape_tags_from_imdb(soup, **kwargs):
-    if isinstance(soup, dict) and 'short' in soup:
-        genre = soup['short'].get('genre')
-        if genre: return genre if isinstance(genre, list) else [genre]
-    return None
-
-def _scrape_network_from_imdb(soup, **kwargs):
-    return None
-
-def _scrape_cast_from_imdb(soup, **kwargs):
-    if not isinstance(soup, dict): return None
-    full_cast_raw =[]
-    seen_ids = set()
-
-    # 1. Parse official Actors from the 'main' deep-dive API node
-    edges = soup.get('main', {}).get('cast', {}).get('edges',[])
-    for idx, edge in enumerate(edges[:20]):
-        try:
-            node = edge.get('node', {})
-            name_obj = node.get('name', {})
-            
-            artist_id = name_obj.get('id')
-            if not artist_id or artist_id in seen_ids: continue
-            
-            artist_name = name_obj.get('nameText', {}).get('text')
-            if not artist_name: continue
-            
-            seen_ids.add(artist_id)
-            
-            img_obj = name_obj.get('primaryImage')
-            img_url = img_obj.get('url') if img_obj else None
-            
-            chars = node.get('characters',[])
-            char_name = chars[0].get('name') if chars else "Unknown"
-            char_name = re.sub(r'\s*\d+\s*episodes?.*', '', char_name, flags=re.IGNORECASE).strip()
-            char_name = re.sub(r'\s*\d{4}\s*-\s*\d{4}.*', '', char_name).strip()
-            
-            role = "Main Role" if idx < 6 else "Support Role" if idx < 15 else "Guest Role"
-            
-            full_cast_raw.append({
-                "artistID": artist_id, "artistName": artist_name, "artistImageURL": img_url,
-                "characterName": char_name, "role": role 
-            })
-        except Exception: continue
-
-    # 2. Add Directors / Creators from 'short' node
-    for role_key in['director', 'creator']:
-        items = soup.get('short', {}).get(role_key, [])
-        if isinstance(items, dict): items = [items]
-        for item in items:
-            if item.get('@type') == 'Person':
-                a_name = item.get('name')
-                if not a_name: continue
-                
-                a_url = item.get('url', '')
-                a_id = None
-                tt_match = re.search(r'(nm\d+)', a_url)
-                if tt_match: a_id = tt_match.group(1)
-                if not a_id: a_id = "unk_" + hashlib.md5(a_name.lower().encode('utf-8')).hexdigest()[:8]
-                
-                if a_id not in seen_ids:
-                    seen_ids.add(a_id)
-                    full_cast_raw.append({
-                        "artistID": a_id, "artistName": a_name, "artistImageURL": None,
-                        "characterName": None, "role": role_key.title()
-                    })
-
-    if full_cast_raw:
-        if 'context' in kwargs and 'source_links_temp' in kwargs['context']:
-            kwargs['context']['source_links_temp']['raw_cast'] = full_cast_raw
-        return full_cast_raw
-    return None
-
 SCRAPE_MAP = {
     'asianwiki': {'synopsis': _scrape_synopsis_from_asianwiki, 'showImage': _scrape_image_from_asianwiki, 'otherNames': _scrape_othernames_from_asianwiki, 'Duration': lambda **kwargs: None, 'releaseDate': _scrape_release_date_from_asianwiki, 'director': _scrape_director_from_asianwiki, 'tags': lambda **kwargs: None, 'cast': lambda **kwargs: None, 'network': _scrape_network_from_asianwiki, 'airedOn': lambda **kwargs: None},
-    'mydramalist': {'synopsis': _scrape_synopsis_from_mydramalist, 'showImage': _scrape_image_from_mydramalist, 'otherNames': _scrape_othernames_from_mydramalist, 'Duration': _scrape_duration_from_mydramalist, 'releaseDate': _scrape_release_date_from_mydramalist, 'director': _scrape_director_from_mydramalist, 'tags': _scrape_tags_from_mydramalist, 'cast': _scrape_cast_from_mydramalist, 'network': _scrape_network_from_mydramalist, 'airedOn': _scrape_airedon_from_mydramalist},
-    'imdb': {'synopsis': _scrape_synopsis_from_imdb, 'showImage': _scrape_image_from_imdb, 'otherNames': _scrape_othernames_from_imdb, 'Duration': _scrape_duration_from_imdb, 'releaseDate': _scrape_release_date_from_imdb, 'director': _scrape_director_from_imdb, 'tags': _scrape_tags_from_imdb, 'cast': _scrape_cast_from_imdb, 'network': _scrape_network_from_imdb, 'airedOn': lambda **kwargs: None}
+    'mydramalist': {'synopsis': _scrape_synopsis_from_mydramalist, 'showImage': _scrape_image_from_mydramalist, 'otherNames': _scrape_othernames_from_mydramalist, 'Duration': _scrape_duration_from_mydramalist, 'releaseDate': _scrape_release_date_from_mydramalist, 'director': _scrape_director_from_mydramalist, 'tags': _scrape_tags_from_mydramalist, 'cast': _scrape_cast_from_mydramalist, 'network': _scrape_network_from_mydramalist, 'airedOn': _scrape_airedon_from_mydramalist}
 }
 
 FALLBACK_ORDER = {
     'asianwiki':['asianwiki', 'mydramalist'],
-    'mydramalist':['mydramalist'],
-    'imdb': ['imdb']
+    'mydramalist':['mydramalist']
 }
 
 def fetch_and_populate_metadata(obj, context, artists_db):
@@ -1008,15 +822,16 @@ def fetch_and_populate_metadata(obj, context, artists_db):
     
     is_asian = lang.lower() in['korean', 'chinese', 'japanese', 'thai', 'taiwanese', 'filipino']
     
+    # 🌟 NEW LOGIC: Instantly skip fetching if it's a Western show
+    if not is_asian:
+        return obj
+        
     context['source_links_temp'] = {}
     soup_cache = {}
     fields_to_check =[ 'synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast', 'network', 'airedOn' ]
     
     for field in fields_to_check:
         if show_type == 'Movie' and field in['airedOn', 'network']:
-            continue
-            
-        if not is_asian and field in ['airedOn', 'network']:
             continue
             
         if spu.get(field) == "Manual":
@@ -1034,9 +849,6 @@ def fetch_and_populate_metadata(obj, context, artists_db):
             fetched_successfully = False
             
             for current_site in sites_to_try:
-                if current_site == 'imdb' and field == 'airedOn':
-                    continue
-                
                 search_terms =[s_name, re.sub(r'\b(?:Season|Part|S)\s*\d+\b|\s+\d+$', '', s_name, flags=re.IGNORECASE).strip()]
                 soup, url = None, None
                 
@@ -1358,7 +1170,7 @@ def write_report(context, current_run_seconds, run_start_time, report_file_path)
 
         ordered_sheets =[s.strip() for s in os.environ.get("SHEETS", "Sheet1").split(';') if s.strip()]
         all_rep_keys = list(rep_data.keys())
-        sorted_rep_keys =[s for s in ordered_sheets if s in all_rep_keys] +[k for k in all_rep_keys if k not in ordered_sheets]
+        sorted_rep_keys =[s for s in ordered_sheets if s in all_rep_keys] + [k for k in all_rep_keys if k not in ordered_sheets]
 
         lines =[
             status_msg,
@@ -1424,10 +1236,6 @@ def write_report(context, current_run_seconds, run_start_time, report_file_path)
                 lines.append("\n⚠️ Missing Values (Asian Dramas):")
                 for i in sorted(get_unique(changes['missing_warnings_asian'])): lines.append(i)
 
-            if changes.get('missing_warnings_non_asian'): 
-                lines.append("\n⚠️ Missing Values (Non-Asian / Western Shows):")
-                for i in sorted(get_unique(changes['missing_warnings_non_asian'])): lines.append(i)
-
             if changes.get('artist_image_warnings'): 
                 lines.append("\n🧑‍🎨 Artist Image Warnings:")
                 for i in sorted(get_unique(changes['artist_image_warnings'])): lines.append(i)
@@ -1458,7 +1266,6 @@ def write_report(context, current_run_seconds, run_start_time, report_file_path)
                 
                 warn_count = len(get_unique(changes.get('data_warnings',[]))) + \
                              len(get_unique(changes.get('missing_warnings_asian',[]))) + \
-                             len(get_unique(changes.get('missing_warnings_non_asian',[]))) + \
                              len(get_unique(changes.get('artist_image_warnings', [])))
                 stats['warnings'] += warn_count
                 
@@ -1753,7 +1560,12 @@ def main():
                 initial_metadata_state = {k: final_obj.get(k) for k in['synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast', 'network', 'airedOn']}
                 context['new_artists_added'] =[] 
                 
-                final_obj = fetch_and_populate_metadata(final_obj, context, artists_data)
+                # IMPORTANT: Skip the heavy internet fetching for Non-Asian shows
+                lang = final_obj.get('nativeLanguage', '').lower()
+                is_asian = lang in['korean', 'chinese', 'japanese', 'thai', 'taiwanese', 'filipino']
+                
+                if is_asian:
+                    final_obj = fetch_and_populate_metadata(final_obj, context, artists_data)
                 
                 if 'cast' in final_obj and isinstance(final_obj['cast'], list):
                     cast_summary, full_cast_dict = process_and_distribute_cast(final_obj['cast'], artists_data, context)
@@ -1786,25 +1598,20 @@ def main():
                     if metadata_was_fetched and newly_fetched_fields:
                         report.setdefault('refetched',[]).append({'id': sid, 'name': final_obj['showName'], 'year': final_obj.get('releasedYear'), 'fields': newly_fetched_fields})
                     elif is_forced and not excel_data_has_changed and not newly_fetched_fields:
-                        report.setdefault('refetched',[]).append({'id': sid, 'name': final_obj['showName'], 'year': final_obj.get('releasedYear'), 'fields': ["Force Refetch Verified (No changes found)"]})
+                        report.setdefault('refetched',[]).append({'id': sid, 'name': final_obj['showName'], 'year': final_obj.get('releasedYear'), 'fields':["Force Refetch Verified (No changes found)"]})
                 
                 merged_by_id[sid] = final_obj
                 save_metadata_backup(final_obj, context)
                 
-                lang = final_obj.get('nativeLanguage', '').lower()
-                is_asian = lang in['korean', 'chinese', 'japanese', 'thai', 'taiwanese', 'filipino']
-                
-                missing_fields = {'synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast'}
-                if final_obj.get('showType') != 'Movie' and is_asian: 
-                    missing_fields.update({'airedOn', 'network'})
-                
-                missing =[human_readable_field(k) for k in missing_fields if is_empty_val(final_obj.get(k)) and final_obj.get('sitePriorityUsed', {}).get(k) != "Manual"]
-                if missing: 
-                    warning_str = f"- {sid} - {final_obj['showName']} ({final_obj.get('releasedYear')}) -> ⚠️ Missing: {', '.join(sorted(missing))}"
-                    if is_asian:
+                if is_asian:
+                    missing_fields = {'synopsis', 'showImage', 'otherNames', 'releaseDate', 'Duration', 'director', 'tags', 'cast'}
+                    if final_obj.get('showType') != 'Movie': 
+                        missing_fields.update({'airedOn', 'network'})
+                    
+                    missing =[human_readable_field(k) for k in missing_fields if is_empty_val(final_obj.get(k)) and final_obj.get('sitePriorityUsed', {}).get(k) != "Manual"]
+                    if missing: 
+                        warning_str = f"- {sid} - {final_obj['showName']} ({final_obj.get('releasedYear')}) -> ⚠️ Missing: {', '.join(sorted(missing))}"
                         report.setdefault('missing_warnings_asian',[]).append(warning_str)
-                    else:
-                        report.setdefault('missing_warnings_non_asian',[]).append(warning_str)
                 
                 context['processed_ids_all_runs'].add(sid)
             else:
