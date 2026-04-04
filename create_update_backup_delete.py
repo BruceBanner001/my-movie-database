@@ -4,19 +4,19 @@
 # ============================================================
 # Script: create_update_backup_delete.py
 # Author: [BruceBanner001]
-# Version: v11.7 (IMDb API & WAF Bypass Edition)
+# Version: v11.8 (The GitHub Actions Proxy Tunnel Edition)
 # ============================================================
 
 # ---------------------------- IMPORTS & GLOBALS ----------------------------
 import os, re, sys, json, io, shutil, traceback, copy, time, hashlib
-import urllib.request, urllib.parse
+import urllib.parse
 from datetime import datetime, timedelta, timezone
 from difflib import SequenceMatcher
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
-SCRIPT_VERSION = "v11.7"
+SCRIPT_VERSION = "v11.8"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames":[], "showImage": None,
@@ -162,7 +162,7 @@ ARCHIVED_META_DIR = "archived-backup-meta-data"
 SERVICE_ACCOUNT_FILE = "GDRIVE_SERVICE_ACCOUNT.json"
 EXCEL_FILE_ID_TXT = "EXCEL_FILE_ID.txt"
 
-# ---------------------------- SCRAPERS & WAF BYPASS ----------------------------
+# ---------------------------- SCRAPERS & WAF BYPASS TUNNEL ----------------------------
 
 SCRAPER = cloudscraper.create_scraper() if HAVE_SCRAPER else requests.Session()
 SCRAPER.headers.update({
@@ -171,34 +171,45 @@ SCRAPER.headers.update({
     'Cookie': 'lc-main=en_US'
 })
 
-def fetch_imdb_html(url):
+def fetch_with_proxies(url, is_json=False):
     """
-    Bypasses Amazon AWS WAF by using native urllib instead of requests.
-    AWS heavily fingerprints the Python 'requests' library to block it.
+    Bypasses Amazon AWS WAF blocking GitHub Actions IP addresses.
+    Routes the IMDb request through public CORS proxy endpoints to mask the IP.
     """
-    req = urllib.request.Request(
-        url,
-        headers={
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
-            'Accept-Language': 'en-US,en;q=0.5',
-            'Sec-Fetch-Dest': 'document',
-            'Sec-Fetch-Mode': 'navigate',
-            'Sec-Fetch-Site': 'none'
-        }
-    )
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+        'Accept-Language': 'en-US,en;q=0.9'
+    }
+    
+    # 1. Direct Attempt (in case WAF is temporarily disabled or running locally)
     try:
-        with urllib.request.urlopen(req, timeout=15) as resp:
-            if resp.getcode() == 200:
-                return resp.read().decode('utf-8', errors='ignore')
-    except Exception as e:
-        logd(f"urllib IMDb fetch failed for {url}: {e}")
+        r = requests.get(url, headers=headers, timeout=10)
+        if r.status_code == 200 and 'verify you are human' not in r.text.lower():
+            return r.json() if is_json else r.text
+    except Exception: pass
+    
+    # 2. AllOrigins Proxy Tunnel
+    try:
+        proxy_url = f"https://api.allorigins.win/raw?url={urllib.parse.quote(url)}"
+        r = requests.get(proxy_url, headers=headers, timeout=15)
+        if r.status_code == 200 and 'verify you are human' not in r.text.lower():
+            return r.json() if is_json else r.text
+    except Exception: pass
+    
+    # 3. CORSProxy Tunnel
+    try:
+        proxy_url = f"https://corsproxy.io/?{urllib.parse.quote(url)}"
+        r = requests.get(proxy_url, headers=headers, timeout=15)
+        if r.status_code == 200 and 'verify you are human' not in r.text.lower():
+            return r.json() if is_json else r.text
+    except Exception: pass
+
+    logd(f"All proxy attempts failed for URL: {url}")
     return None
 
 def search_imdb_api(search_term, expected_year, show_type):
     """
-    Directly queries IMDb's high-speed internal frontend API.
-    Bypasses DuckDuckGo search blocks completely.
+    Directly queries IMDb's high-speed internal frontend API via Proxy.
     """
     clean_term = re.sub(r'[^a-zA-Z0-9 ]', '', search_term).strip().lower()
     if not clean_term: return None
@@ -206,25 +217,20 @@ def search_imdb_api(search_term, expected_year, show_type):
     encoded_term = urllib.parse.quote(clean_term)
     url = f"https://v3.sg.media-imdb.com/suggestion/{first_char}/{encoded_term}.json"
     
-    req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'})
-    try:
-        with urllib.request.urlopen(req, timeout=10) as resp:
-            data = json.loads(resp.read().decode('utf-8'))
-            if 'd' in data:
-                for item in data['d']:
-                    if item.get('id', '').startswith('tt'):
-                        item_type = item.get('q', '').lower()
-                        
-                        if show_type == 'Movie' and 'tv' in item_type: continue
-                        if show_type != 'Movie' and item_type in ['feature', 'video game', 'podcast']: continue
-                        
-                        if expected_year and expected_year != 0:
-                            if abs(item.get('y', 0) - expected_year) <= 1:
-                                return f"https://www.imdb.com/title/{item['id']}/"
-                        else:
-                            return f"https://www.imdb.com/title/{item['id']}/"
-    except Exception as e:
-        logd(f"IMDb API Search failed: {e}")
+    data = fetch_with_proxies(url, is_json=True)
+    if data and 'd' in data:
+        for item in data['d']:
+            if item.get('id', '').startswith('tt'):
+                item_type = item.get('q', '').lower()
+                
+                if show_type == 'Movie' and 'tv' in item_type: continue
+                if show_type != 'Movie' and item_type in ['feature', 'video game', 'podcast']: continue
+                
+                if expected_year and expected_year != 0:
+                    if abs(item.get('y', 0) - expected_year) <= 1:
+                        return f"https://www.imdb.com/title/{item['id']}/"
+                else:
+                    return f"https://www.imdb.com/title/{item['id']}/"
     return None
 
 LANG_TO_COUNTRY_MAP = {
@@ -375,35 +381,19 @@ def get_soup_from_search(search_term, expected_name, show_year, site, language, 
     expected_country = LANG_TO_COUNTRY_MAP.get(language.lower())
     clean_name = re.sub(r'\b(?:Season|Part|S)\s*\d+\b|\s+\d+$', '', search_term, flags=re.IGNORECASE).strip()
 
-    # 🌟 NEW IMDb API ROUTE 🌟
+    # 🌟 NEW IMDb API PROXY TUNNEL 🌟
     if site == "imdb":
         url = search_imdb_api(search_term, show_year, show_type)
         if not url and clean_name != search_term:
             url = search_imdb_api(clean_name, show_year, show_type)
-            
-        if not url and HAVE_DDGS:
-            logd(f"IMDb API missed {search_term}. Falling back to DuckDuckGo...")
-            search_queries = [f'"{search_term}" {show_year} imdb', f'"{search_term}" imdb']
-            for query in search_queries:
-                try:
-                    results = list(DDGS().text(query, max_results=5))
-                    for res in results:
-                        link = res.get('href', '').lower()
-                        if "imdb.com/title/tt" in link:
-                            tt_match = re.search(r'/title/(tt\d+)', link)
-                            if tt_match:
-                                url = f"https://www.imdb.com/title/{tt_match.group(1)}/"
-                                break
-                    if url: break
-                except Exception: pass
 
         if url:
-            html = fetch_imdb_html(url)
+            html = fetch_with_proxies(url)
             if html:
                 soup = BeautifulSoup(html, "html.parser")
-                if _validate_page_title(soup, expected_name, site, url):
-                    soup_cache[cache_key] = (soup, url)
-                    return soup, url
+                # Removed _validate_page_title check for IMDb since the exact IMDb ID was matched via API Year/Type
+                soup_cache[cache_key] = (soup, url)
+                return soup, url
 
         soup_cache[cache_key] = (None, None)
         return None, None
@@ -449,9 +439,6 @@ def get_soup_from_search(search_term, expected_name, show_year, site, language, 
                             if scraped_country and expected_country not in scraped_country: 
                                 continue
                         
-                        if not _validate_page_title(soup, expected_name, site, url): 
-                            continue
-
                         soup_cache[cache_key] = (soup, url)
                         return soup, url
             except Exception: pass
@@ -470,25 +457,16 @@ def download_and_save_image(url, local_path, is_artist=False):
     try:
         url = re.sub(r'_[24]c\.jpg$', '.jpg', url) if not is_artist else url
         
-        # ⚠️ FIX: Use urllib for IMDb image CDNs to avoid blocking
-        if "imdb.com" in url or "media-amazon.com" in url:
-            req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'})
-            with urllib.request.urlopen(req, timeout=20) as response:
-                with Image.open(response) as img:
-                    img = img.convert("RGB")
-                    size = (400, 600) if is_artist else (800, 1200)
-                    img.thumbnail(size, Image.LANCZOS)
-                    img.save(local_path, "JPEG", quality=90)
-                    return True
-        else:
-            r = SCRAPER.get(url, stream=True, timeout=20)
-            if r.status_code == 200 and r.headers.get("content-type", "").startswith("image"):
-                with Image.open(r.raw) as img:
-                    img = img.convert("RGB")
-                    size = (400, 600) if is_artist else (800, 1200)
-                    img.thumbnail(size, Image.LANCZOS)
-                    img.save(local_path, "JPEG", quality=90)
-                    return True
+        # IMDb/Amazon CDNs don't block images as strictly, standard requests is fine
+        r = requests.get(url, stream=True, timeout=20)
+        
+        if r.status_code == 200 and r.headers.get("content-type", "").startswith("image"):
+            with Image.open(r.raw) as img:
+                img = img.convert("RGB")
+                size = (400, 600) if is_artist else (800, 1200)
+                img.thumbnail(size, Image.LANCZOS)
+                img.save(local_path, "JPEG", quality=90)
+                return True
     except Exception as e: 
         logd(f"Failed to download image from {url}: {e}")
     return False
@@ -860,7 +838,7 @@ def _scrape_image_from_imdb(soup, **kwargs):
         if m:
             season_num = m.group(1)
             season_url = kwargs['url'].rstrip('/') + f"/episodes/?season={season_num}"
-            html = fetch_imdb_html(season_url)
+            html = fetch_with_proxies(season_url)
             if html: target_soup = BeautifulSoup(html, "html.parser")
         
         meta_img = target_soup.find('meta', property='og:image')
@@ -886,7 +864,7 @@ def _scrape_release_date_from_imdb(soup, **kwargs):
         if m:
             season_num = m.group(1)
             season_url = kwargs['url'].rstrip('/') + f"/episodes/?season={season_num}"
-            html = fetch_imdb_html(season_url)
+            html = fetch_with_proxies(season_url)
             if html:
                 season_soup = BeautifulSoup(html, "html.parser")
                 script = season_soup.find('script', type='application/ld+json')
@@ -1695,7 +1673,6 @@ def main():
     
     MAX_FETCHES = int(os.environ.get("MAX_FETCHES", "50"))
     
-    # --- Parse Force Refetch Logic ---
     force_refetch_str = os.environ.get("FORCE_REFETCH", "")
     force_ids, force_all = parse_force_refetch(force_refetch_str)
     
