@@ -4,7 +4,7 @@
 # ============================================================
 # Script: create_update_backup_delete.py
 # Author: [BruceBanner001]
-# Version: v11.5 (Force Refetch, True Sheet Ordering, IMDb Anti-Bot Bypass)
+# Version: v11.6 (The Ultimate Anti-Bot & Refetch Edition)
 # ============================================================
 
 # ---------------------------- IMPORTS & GLOBALS ----------------------------
@@ -15,7 +15,7 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
-SCRIPT_VERSION = "v11.5"
+SCRIPT_VERSION = "v11.6"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None, "showName": None, "otherNames":[], "showImage": None,
@@ -162,12 +162,25 @@ ARCHIVED_META_DIR = "archived-backup-meta-data"
 SERVICE_ACCOUNT_FILE = "GDRIVE_SERVICE_ACCOUNT.json"
 EXCEL_FILE_ID_TXT = "EXCEL_FILE_ID.txt"
 
+# ---------------------------- SESSION HANDLERS ----------------------------
 SCRAPER = cloudscraper.create_scraper() if HAVE_SCRAPER else requests.Session()
-
 SCRAPER.headers.update({
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
     'Accept-Language': 'en-US,en;q=0.9',
     'Cookie': 'lc-main=en_US'
+})
+
+# THE MASTER KEY: Dedicated IMDb Session to perfectly bypass AWS WAF
+IMDB_SESSION = requests.Session()
+IMDB_SESSION.headers.update({
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+    'Accept-Language': 'en-US,en;q=0.9',
+    'Sec-Fetch-Dest': 'document',
+    'Sec-Fetch-Mode': 'navigate',
+    'Sec-Fetch-Site': 'none',
+    'Sec-Fetch-User': '?1',
+    'Upgrade-Insecure-Requests': '1'
 })
 
 LANG_TO_COUNTRY_MAP = {
@@ -415,10 +428,10 @@ def get_soup_from_search(search_term, expected_name, show_year, site, language, 
 
     if site == "imdb":
         entity_hint = "TV Series" if "Drama" in show_type else "Movie"
-        # ⚠️ FIX: Removed quotes and `site:` for DuckDuckGo to prevent filtering blocks
-        search_queries = [f'{search_term} {entity_hint} imdb', f'{search_term} {show_year} imdb']
+        # ⚠️ FIX: Removed DDG `site:` operator. Using strict quotes for title + "imdb" string to force DDG to yield correct organic results
+        search_queries = [f'"{search_term}" {show_year} imdb', f'"{search_term}" imdb']
         if clean_name != search_term:
-            search_queries.extend([f'{clean_name} {entity_hint} imdb', f'{clean_name} {show_year} imdb'])
+            search_queries.extend([f'"{clean_name}" {show_year} imdb', f'"{clean_name}" imdb'])
     else:
         search_queries =[ f'"{search_term}" {show_year} {language} site:{site}.com', f'"{search_term}" {show_year} site:{site}.com', f'"{search_term}" site:{site}.com' ]
         if clean_name != search_term:
@@ -444,24 +457,22 @@ def get_soup_from_search(search_term, expected_name, show_year, site, language, 
             if site == "asianwiki" and ("/File:" in url or "/index.php?title=File:" in url): 
                 continue
             
-            # ⚠️ FIX: Manually verify the duckduckgo URL is an imdb title page
+            # ⚠️ FIX: Manually verify the organic DDG result is a true imdb title page
             if site == "imdb":
-                if "imdb.com/title/tt" not in url: continue
+                if "imdb.com/title/tt" not in url: 
+                    continue
                 tt_match = re.search(r'/title/(tt\d+)', url)
-                if not tt_match: continue
+                if not tt_match: 
+                    continue
                 url = f"https://www.imdb.com/title/{tt_match.group(1)}/"
 
-            # ⚠️ FIX: Heavy Chrome headers via requests to bypass IMDb AWS block
-            temp_session = requests.Session() if site == 'imdb' else SCRAPER
-            if site == 'imdb':
-                temp_session.headers.update({
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-                    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-                    'Accept-Language': 'en-US,en;q=0.5'
-                })
-
             try:
-                r = temp_session.get(url, timeout=15)
+                # ⚠️ FIX: Always use IMDB_SESSION for IMDb to bypass 202 Accepted blocks
+                if site == "imdb":
+                    r = IMDB_SESSION.get(url, timeout=15)
+                else:
+                    r = SCRAPER.get(url, timeout=15)
+
                 if r.status_code == 200:
                     soup = BeautifulSoup(r.text, "html.parser")
                     
@@ -508,7 +519,12 @@ def download_and_save_image(url, local_path, is_artist=False):
     os.makedirs(os.path.dirname(local_path), exist_ok=True)
     try:
         url = re.sub(r'_[24]c\.jpg$', '.jpg', url) if not is_artist else url
-        r = SCRAPER.get(url, stream=True, timeout=20)
+        
+        # ⚠️ FIX: Use the strong IMDb session for Amazon/IMDb image CDNs to avoid hotlink blocks
+        if "imdb.com" in url or "media-amazon.com" in url:
+            r = IMDB_SESSION.get(url, stream=True, timeout=20)
+        else:
+            r = SCRAPER.get(url, stream=True, timeout=20)
         
         if r.status_code == 200 and r.headers.get("content-type", "").startswith("image"):
             with Image.open(r.raw) as img:
@@ -889,10 +905,8 @@ def _scrape_image_from_imdb(soup, **kwargs):
             season_num = m.group(1)
             season_url = kwargs['url'].rstrip('/') + f"/episodes/?season={season_num}"
             
-            temp_session = requests.Session()
-            temp_session.headers.update({'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'})
-            r = temp_session.get(season_url, timeout=15)
-            
+            # ⚠️ FIX: Use IMDB_SESSION instead of SCRAPER
+            r = IMDB_SESSION.get(season_url, timeout=15)
             if r.status_code == 200:
                 target_soup = BeautifulSoup(r.text, "html.parser")
         
@@ -920,10 +934,8 @@ def _scrape_release_date_from_imdb(soup, **kwargs):
             season_num = m.group(1)
             season_url = kwargs['url'].rstrip('/') + f"/episodes/?season={season_num}"
             
-            temp_session = requests.Session()
-            temp_session.headers.update({'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'})
-            r = temp_session.get(season_url, timeout=15)
-            
+            # ⚠️ FIX: Use IMDB_SESSION instead of SCRAPER
+            r = IMDB_SESSION.get(season_url, timeout=15)
             if r.status_code == 200:
                 season_soup = BeautifulSoup(r.text, "html.parser")
                 script = season_soup.find('script', type='application/ld+json')
@@ -1654,6 +1666,8 @@ def process_and_distribute_cast(full_cast, artists_db, context):
         char_name = artist.get('characterName') 
         
         role_lower = role.lower()
+        
+        # Comprehensive Sorting Logic Based on newly mapped MDL tags
         if 'main' in role_lower or 'host' in role_lower or 'regular member' in role_lower: 
             role = 'Main Role'
         elif 'support' in role_lower: 
@@ -1691,6 +1705,7 @@ def process_and_distribute_cast(full_cast, artists_db, context):
         r = c['role']
         cast_summary[r] = cast_summary.get(r, 0) + 1
     for c in other_crew_cast:
+        # Voice Actors, Narrators, etc. will go into otherCrewMembers count
         cast_summary['otherCrewMembers'] = cast_summary.get('otherCrewMembers', 0) + 1
     
     return cast_summary, full_cast_dict
