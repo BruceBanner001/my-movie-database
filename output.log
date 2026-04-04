@@ -5,48 +5,60 @@
 ══════════════════════════════════════════════════════
 
 🚀 Workflow Type : Manual
-🔁 RUN           : 98
-⏰ Start Time    : 04 April 2026 - 09:04:58 AM
-⏰ End Time      : 04 April 2026 - 09:11:03 AM
-⏱️ Run Time      : 6 Minutes 5 Seconds
+🔁 RUN           : 99
+⏰ Start Time    : 04 April 2026 - 09:11:33 AM
+⏰ End Time      : 04 April 2026 - 09:18:04 AM
+⏱️ Run Time      : 6 Minutes 30 Seconds
 ⚙️ Max Process   : 150 Row Per Run
-🔄 Current Batch : 2
+🔄 Current Batch : 3
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Feb 7 2023 Onwards ===
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+✨ BRAND NEW RECOMMENDATIONS (Action Required):
+[ID 165] Don't Dare to Dream
+   ↳ Recommend: Heart to Heart (Source: MyDramaList)
+
+[ID 191] Taste of Love
+   ↳ Recommend: A Taste of First Love (Source: MyDramaList)
+
 ✅ PERFECT MATCHES (100% Accurate):
-- 142 records matched perfectly.
+- 133 records matched perfectly.
 
 ⚠️ NOT FOUND (Asian / MyDramaList):
 
 📌 Reason: Connection or URL Issues
-[ID  23] I Miss You                     ➔ ❌ Only found non-drama pages (actors/articles)
-[ID  70] The K2                         ➔ ❌ Only found non-drama pages (actors/articles)
-[ID  91] Island Part 2                  ➔ ❌ Only found non-drama pages (actors/articles)
-[ID  97] Buang Ruk Satan                ➔ ❌ Only found non-drama pages (actors/articles)
-[ID 139] You Are the Best!              ➔ ❌ Only found non-drama pages (actors/articles)
+[ID 160] King the Land                  ➔ ❌ Only found non-drama pages (actors/articles)
+[ID 162] She Is the One                 ➔ ❌ Only found non-drama pages (actors/articles)
+[ID 171] Lucky with You                 ➔ ❌ Only found non-drama pages (actors/articles)
+[ID 224] W                              ➔ ❌ Only found non-drama pages (actors/articles)
+[ID 228] You Are My Destiny             ➔ ❌ Only found non-drama pages (actors/articles)
 
-📌 Reason: Year Mismatch
-[ID  39] Cinderella and the Four Knights ➔ ❌ Expected: 2020 | Found: 2016
-
-📌 Reason: Country Mismatch
-[ID  81] Monster                        ➔ ❌ Expected: South Korea | Found: Thailand
+📌 Reason: Title Similarity Failed
+[ID 284] Love in Time                   ➔ ❌ Found website title: 'The Scholar Who Walks the Night'
 
 ⚠️ NOT FOUND (Non-Asian / IMDb):
 
 📌 Reason: Website Blocked Connection (Status 202/403)
-[ID  41] New Life (Yeni Hayat)          ➔ ❌ Status Code: 202
+[ID 195] 12 Monkeys                     ➔ ❌ Status Code: 202
+[ID 196] 12 Monkeys                     ➔ ❌ Status Code: 202
+[ID 197] 12 Monkeys                     ➔ ❌ Status Code: 202
+[ID 198] 12 Monkeys                     ➔ ❌ Status Code: 202
+[ID 220] Star Trek: New Strange Worlds  ➔ ❌ Status Code: 202
+[ID 225] Reacher                        ➔ ❌ Status Code: 202
+[ID 253] Reacher                        ➔ ❌ Status Code: 202
+[ID 298] Love is in The Air             ➔ ❌ Status Code: 202
+[ID 300] Day Dreamer                    ➔ ❌ Status Code: 202
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📊 Summary (Current Batch Only)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🌐 Internet Scans Done   : 150
 ⏭️ Total Skipped Fast    : 0
-✨ Total Recommendations : 0
-✅ Total Perfect Matches : 142
-⚠️ Total Not Found       : 8
+✨ Total Recommendations : 2
+✅ Total Perfect Matches : 133
+⚠️ Total Not Found       : 15
 
 ⚠️ BATCH LIMIT REACHED: The script paused safely.
 GitHub Actions will trigger next run automatically.
