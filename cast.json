@@ -410,5 +410,73 @@
                 "role": "Screenwriter"
             }
         ]
+    },
+    "114": {
+        "mainRoles": [
+            {
+                "artistID": "28197",
+                "characterName": "Liu Xi Lai",
+                "role": "Main Role"
+            },
+            {
+                "artistID": "62839",
+                "characterName": "Tian Tian",
+                "role": "Main Role"
+            }
+        ],
+        "supportRoles": [
+            {
+                "artistID": "25225",
+                "characterName": "Wen Xian",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "19534",
+                "characterName": "Liu Xi Zhao",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "66581",
+                "characterName": "Luo Ci",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "17075",
+                "characterName": "Li Huai",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "85291",
+                "characterName": "Brother Gou",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "123977",
+                "characterName": "Jiang Jiang",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "143489",
+                "characterName": "Miss Qian",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "136325",
+                "characterName": "Tang Sai [Xi Lai's assistant]",
+                "role": "Support Role"
+            }
+        ],
+        "otherCrewMembers": [
+            {
+                "artistID": "151078",
+                "characterName": "Liu Jing",
+                "role": "Voice Actor"
+            },
+            {
+                "artistID": "136441",
+                "characterName": "Liu Xi Lai",
+                "role": "Voice Actor"
+            }
+        ]
     }
 }
