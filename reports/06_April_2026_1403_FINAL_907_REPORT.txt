@@ -1,8 +1,3 @@
-/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:331: UserWarning: Parsing dates in %d-%m-%Y format when dayfirst=False (the default) was specified. Pass `dayfirst=True` or specify a format to silence this warning.
-  dt = pd.to_datetime(str(val).strip(), errors="coerce")
-/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:331: UserWarning: Parsing dates in %d-%m-%Y format when dayfirst=False (the default) was specified. Pass `dayfirst=True` or specify a format to silence this warning.
-  dt = pd.to_datetime(str(val).strip(), errors="coerce")
-[DEBUG] Title Validation FAILED: Expected Year 2016 (±1) not found on page 'Secret Love Affair Episode 16'.
 ✅ Workflow Batch completed successfully
 🏁 Final Batch Completed
 ══════════════════════════════════════════════════════
@@ -13,9 +8,9 @@
 🔁 RUN           : 907
 ⏰ Start Time    : 06 April 2026 - 02:03:45 PM
 ⏰ End Time      : 06 April 2026 - 02:04:10 PM
-⏱️ Run Time      : 24 Seconds
+⏱️ Total Runtime : 24 Seconds
 ⚙️ Max Process   : 50 Row Per Run
-🔄 Current Batch : 1
+🔄 Total Batches : 1 Run
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Sheet1 ===
@@ -103,7 +98,7 @@
   Total Unique Rows: 12
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📊 Summary (Current Batch Only)
+📊 Overall Cumulative Summary
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🆕 Total Created: 0
 🔁 Total Updated: 0
@@ -129,6 +124,9 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ Folders Generated:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📁 reports/ (Total: 1 files)
+    📄 06_April_2026_1403_FINAL_907_REPORT.txt
+
 📁 show_images/ (Total: 1 files)
     📄 102.jpg
 
@@ -138,10 +136,5 @@
     📄 META_06_April_2026_1403_127.json
     📄 META_06_April_2026_1403_132.json
 
-📁 reports/ (Total: 1 files)
-    📄 06_April_2026_1403_FINAL_907_REPORT.txt
-
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🏁 Workflow finished successfully
-
-✅ Final Master Report written -> reports/06_April_2026_1403_FINAL_907_REPORT.txt (Saved to Repo)
