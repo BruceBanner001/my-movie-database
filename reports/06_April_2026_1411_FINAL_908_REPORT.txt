@@ -8,9 +8,9 @@
 🔁 RUN           : 908
 ⏰ Start Time    : 06 April 2026 - 02:11:54 PM
 ⏰ End Time      : 06 April 2026 - 02:11:55 PM
-⏱️ Run Time      : 1 Second
+⏱️ Total Runtime : 1 Second
 ⚙️ Max Process   : 50 Row Per Run
-🔄 Current Batch : 1
+🔄 Total Batches : 1 Run
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Deleting Records ===
@@ -63,7 +63,7 @@
 - 127 -> First Lady (2025) -> ✅ Deleted
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📊 Summary (Current Batch Only)
+📊 Overall Cumulative Summary
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🆕 Total Created: 0
 🔁 Total Updated: 0
@@ -89,22 +89,6 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ Folders Generated:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📁 deleted_data/ (Total: 44 files)
-    📄 DELETED_06_April_2026_1411_128.json
-    📄 DELETED_06_April_2026_1411_129.json
-    📄 DELETED_06_April_2026_1411_130.json
-    📄 DELETED_06_April_2026_1411_131.json
-    📄 DELETED_06_April_2026_1411_132.json
-    ... and 39 more files.
-
-📁 deleted_images/ (Total: 26 files)
-    📄 DELETED_06_April_2026_1411_131.jpg
-    📄 DELETED_06_April_2026_1411_132.jpg
-    📄 DELETED_06_April_2026_1411_3001.jpg
-    📄 DELETED_06_April_2026_1411_3007.jpg
-    📄 DELETED_06_April_2026_1411_3008.jpg
-    ... and 21 more files.
-
 📁 reports/ (Total: 1 files)
     📄 06_April_2026_1411_FINAL_908_REPORT.txt
 
@@ -126,7 +110,21 @@
     📄 META_06_April_2026_1238_132.json
     ... and 95 more files.
 
+📁 deleted_images/ (Total: 26 files)
+    📄 DELETED_06_April_2026_1411_131.jpg
+    📄 DELETED_06_April_2026_1411_132.jpg
+    📄 DELETED_06_April_2026_1411_3001.jpg
+    📄 DELETED_06_April_2026_1411_3007.jpg
+    📄 DELETED_06_April_2026_1411_3008.jpg
+    ... and 21 more files.
+
+📁 deleted_data/ (Total: 44 files)
+    📄 DELETED_06_April_2026_1411_128.json
+    📄 DELETED_06_April_2026_1411_129.json
+    📄 DELETED_06_April_2026_1411_130.json
+    📄 DELETED_06_April_2026_1411_131.json
+    📄 DELETED_06_April_2026_1411_132.json
+    ... and 39 more files.
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🏁 Workflow finished successfully
-
-✅ Final Master Report written -> reports/06_April_2026_1411_FINAL_908_REPORT.txt (Saved to Repo)
