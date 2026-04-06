@@ -5,45 +5,62 @@
 ══════════════════════════════════════════════════════
 
 🚀 Workflow Type : Manual
-🔁 RUN           : 103
-⏰ Start Time    : 06 April 2026 - 06:02:56 PM
-⏰ End Time      : 06 April 2026 - 06:09:48 PM
-⏱️ Run Time      : 6 Minutes 51 Seconds
+🔁 RUN           : 104
+⏰ Start Time    : 06 April 2026 - 06:10:16 PM
+⏰ End Time      : 06 April 2026 - 06:19:21 PM
+⏱️ Run Time      : 9 Minutes 5 Seconds
 ⚙️ Max Process   : 150 Row Per Run
-🔄 Current Batch : 3
+🔄 Current Batch : 4
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Feb 7 2023 Onwards ===
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-✨ BRAND NEW RECOMMENDATIONS (Action Required):
-[ID 191] Taste of Love
-   ↳ Recommend: A Taste of First Love (Source: MyDramaList)
-
 ✅ PERFECT MATCHES (100% Accurate):
-- 140 records matched perfectly.
+- 126 records matched perfectly.
+
+⚠️ NOT FOUND (Asian / MyDramaList):
+
+📌 Reason: Country Mismatch
+[ID 408] Big                            ➔ ❌ Expected: South Korea | Found: China
+[ID 446] I Do, I Do                     ➔ ❌ Expected: South Korea | Found: Taiwan
+
+📌 Reason: Connection or URL Issues
+[ID 421] Live Up to Your Name           ➔ ❌ Only found non-drama pages (actors/articles)
 
 ⚠️ NOT FOUND (Non-Asian / IMDb):
 
 📌 Reason: Website Blocked Connection (Status 202/403)
-[ID 195] 12 Monkeys                     ➔ ❌ Status Code: 202
-[ID 196] 12 Monkeys                     ➔ ❌ Status Code: 202
-[ID 197] 12 Monkeys                     ➔ ❌ Status Code: 202
-[ID 198] 12 Monkeys                     ➔ ❌ Status Code: 202
-[ID 220] Star Trek: New Strange Worlds  ➔ ❌ Status Code: 202
-[ID 225] Reacher                        ➔ ❌ Status Code: 202
-[ID 253] Reacher                        ➔ ❌ Status Code: 202
-[ID 298] Sen Çal Kapimi                 ➔ ❌ Status Code: 202
-[ID 300] Erkenci Kus                    ➔ ❌ Status Code: 202
+[ID 328] Game of Thrones                ➔ ❌ Status Code: 202
+[ID 329] Game of Thrones                ➔ ❌ Status Code: 202
+[ID 330] Game of Thrones                ➔ ❌ Status Code: 202
+[ID 331] Game of Thrones                ➔ ❌ Status Code: 202
+[ID 332] Game of Thrones                ➔ ❌ Status Code: 202
+[ID 333] Game of Thrones                ➔ ❌ Status Code: 202
+[ID 334] Game of Thrones                ➔ ❌ Status Code: 202
+[ID 335] Game of Thrones                ➔ ❌ Status Code: 202
+[ID 341] Stranger Things                ➔ ❌ Status Code: 202
+[ID 342] Stranger Things                ➔ ❌ Status Code: 202
+[ID 343] Stranger Things                ➔ ❌ Status Code: 202
+[ID 344] Stranger Things                ➔ ❌ Status Code: 202
+[ID 364] Under The Dome                 ➔ ❌ Status Code: 202
+[ID 365] Under The Dome                 ➔ ❌ Status Code: 202
+[ID 366] Under The Dome                 ➔ ❌ Status Code: 202
+[ID 382] Gotham                         ➔ ❌ Status Code: 202
+[ID 399] Reacher                        ➔ ❌ Status Code: 202
+[ID 442] Manifest                       ➔ ❌ Status Code: 202
+[ID 443] Manifest                       ➔ ❌ Status Code: 202
+[ID 444] Manifest                       ➔ ❌ Status Code: 202
+[ID 445] Manifest                       ➔ ❌ Status Code: 202
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📊 Summary (Current Batch Only)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🌐 Internet Scans Done   : 150
 ⏭️ Total Skipped Fast    : 0
-✨ Total Recommendations : 1
-✅ Total Perfect Matches : 140
-⚠️ Total Not Found       : 9
+✨ Total Recommendations : 0
+✅ Total Perfect Matches : 126
+⚠️ Total Not Found       : 24
 
 ⚠️ BATCH LIMIT REACHED: The script paused safely.
 GitHub Actions will trigger next run automatically.
