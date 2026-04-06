@@ -1531,8 +1531,17 @@
     {
         "showID": 125,
         "showName": "Missing 9",
-        "otherNames": null,
-        "showImage": null,
+        "otherNames": [
+            "9 Desaparecidos",
+            "Gaia",
+            "Missing Nine",
+            "Picnic",
+            "Пропавшая девятка",
+            "가이아",
+            "미씽9",
+            "피크닉"
+        ],
+        "showImage": "125.jpg",
         "watchStartedOn": "21-06-2023",
         "watchEndedOn": "22-06-2023",
         "releasedYear": 2017,
@@ -1557,22 +1566,44 @@
         "updatedDetails": "First Time Uploaded",
         "synopsis": "Journalist Kim shares what he knows about Joon Oh's drunk driving incident, and then they go looking for Tae Ho.",
         "topRatings": 900,
-        "Duration": null,
-        "director": null,
-        "tags": null,
-        "cast": null,
-        "airedOn": null,
+        "Duration": "60 mins",
+        "director": [
+            "Ashbun"
+        ],
+        "tags": [
+            "Survival",
+            "Murder",
+            "Nice Male Lead",
+            "Disaster",
+            "Slight Romance",
+            "Amnesia",
+            "Melodrama",
+            "Emotionally Strong Female Lead",
+            "Aviation Accident",
+            "Island Setting"
+        ],
+        "cast": {
+            "Main Role": 2,
+            "Support Role": 19,
+            "Guest Role": 23,
+            "Director": 1,
+            "Screenwriter": 1
+        },
+        "airedOn": [
+            "Wednesday",
+            "Thursday"
+        ],
         "sitePriorityUsed": {
-            "showImage": null,
+            "showImage": "asianwiki (Fallback: mydramalist)",
             "releaseDate": "mydramalist",
-            "otherNames": null,
-            "Duration": null,
+            "otherNames": "mydramalist",
+            "Duration": "mydramalist",
             "synopsis": "asianwiki (Fallback: mydramalist)",
-            "director": null,
-            "tags": null,
-            "cast": null,
+            "director": "mydramalist",
+            "tags": "mydramalist",
+            "cast": "mydramalist",
             "network": null,
-            "airedOn": null
+            "airedOn": "mydramalist"
         }
     },
     {
@@ -1947,8 +1978,17 @@
     {
         "showID": 132,
         "showName": "Taste of Love",
-        "otherNames": null,
-        "showImage": null,
+        "otherNames": [
+            "Blackmailed by Bossy CEO",
+            "Blackmailed by the Bossy President",
+            "Jue Pei Su Xin Tang",
+            "Perfect Match for Tang Su",
+            "Wo Bei Zong Cai Hei Shang Le",
+            "Wo Bei ZongCai Hei ShangLe",
+            "我被总裁黑上了",
+            "絕配酥心唐"
+        ],
+        "showImage": "132.jpg",
         "watchStartedOn": "01-09-2023",
         "watchEndedOn": "01-09-2023",
         "releasedYear": 2023,
@@ -1973,7 +2013,7 @@
         "againWatchedDates": [],
         "updatedOn": "06 April 2026",
         "updatedDetails": "First Time Uploaded",
-        "synopsis": null,
+        "synopsis": "When a popular idol loses everything and ends up becoming the employee of her biggest anti-fan, it marks the start of a hilarious story of an anti becoming her true love.\n\nGirl group member Tang Su is forced out of a job due to misconceptions about her and subsequently gains a lot of weight. She becomes the personal nanny of Huang Fu Jue, the president of the entertainment company who is afflicted\n\nwith face blindness. Alas, she realizes that he is her biggest anti-fan! She decided to continue her life as the best servant in his house.",
         "topRatings": 600,
         "Duration": "25 mins",
         "director": null,
@@ -1989,7 +2029,11 @@
             "Web Series",
             "Cold Man/Warm Woman"
         ],
-        "cast": null,
+        "cast": {
+            "Main Role": 2,
+            "Support Role": 12,
+            "Guest Role": 1
+        },
         "airedOn": [
             "Monday",
             "Tuesday",
@@ -2000,14 +2044,14 @@
             "Sunday"
         ],
         "sitePriorityUsed": {
-            "showImage": null,
+            "showImage": "mydramalist",
             "releaseDate": "mydramalist",
-            "otherNames": null,
+            "otherNames": "mydramalist",
             "Duration": "mydramalist",
-            "synopsis": null,
+            "synopsis": "mydramalist",
             "director": null,
             "tags": "mydramalist",
-            "cast": null,
+            "cast": "mydramalist",
             "network": null,
             "airedOn": "mydramalist"
         }
