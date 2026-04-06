@@ -1,16 +1,3 @@
-/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:331: UserWarning: Parsing dates in %d-%m-%Y format when dayfirst=False (the default) was specified. Pass `dayfirst=True` or specify a format to silence this warning.
-  dt = pd.to_datetime(str(val).strip(), errors="coerce")
-[DEBUG] Title Validation FAILED: Page Title 'Secret Affair (Korean Drama)' vs Expected 'Secret Love Affair' (Ratio: 0.57 & No Alias Match)
-[DEBUG] Title Validation FAILED: Detected Actor Profile (birthdate:) instead of Drama/Movie on page.
-[DEBUG] Title Validation FAILED: Detected Actor Profile (born:) instead of Drama/Movie on page.
-[DEBUG] Title Validation FAILED: Detected Actor Profile (born:) instead of Drama/Movie on page.
-[DEBUG] Title Validation FAILED: Detected Actor Profile (born:) instead of Drama/Movie on page.
-[DEBUG] Title Validation FAILED: Detected Actor Profile (birthdate:) instead of Drama/Movie on page.
-[DEBUG] Title Validation FAILED: Page Title 'Love Affairs in the Afternoon (Korean Drama)' vs Expected 'Secret Love Affair' (Ratio: 0.35 & No Alias Match)
-[DEBUG] Title Validation FAILED: Detected Actor Profile (born:) instead of Drama/Movie on page.
-[DEBUG] Title Validation FAILED: Detected Actor Profile (born:) instead of Drama/Movie on page.
-[DEBUG] Title Validation FAILED: Page Title 'Secret Affair (Korean Drama)' vs Expected 'Secret Love Affair' (Ratio: 0.57 & No Alias Match)
-[DEBUG] Title Validation FAILED: Detected Actor Profile (born:) instead of Drama/Movie on page.
 ✅ Workflow Batch completed successfully
 🏁 Final Batch Completed
 ══════════════════════════════════════════════════════
@@ -21,9 +8,9 @@
 🔁 RUN           : 909
 ⏰ Start Time    : 06 April 2026 - 02:17:07 PM
 ⏰ End Time      : 06 April 2026 - 02:17:35 PM
-⏱️ Run Time      : 27 Seconds
+⏱️ Total Runtime : 27 Seconds
 ⚙️ Max Process   : 50 Row Per Run
-🔄 Current Batch : 1
+🔄 Total Batches : 1 Run
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Sheet1 ===
@@ -46,7 +33,7 @@
   Total Unique Rows: 1
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📊 Summary (Current Batch Only)
+📊 Overall Cumulative Summary
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🆕 Total Created: 1
 🔁 Total Updated: 0
@@ -83,5 +70,3 @@
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🏁 Workflow finished successfully
-
-✅ Final Master Report written -> reports/06_April_2026_1417_FINAL_909_REPORT.txt (Saved to Repo)
