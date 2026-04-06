@@ -1,7 +1,3 @@
-/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:331: UserWarning: Parsing dates in %d-%m-%Y format when dayfirst=False (the default) was specified. Pass `dayfirst=True` or specify a format to silence this warning.
-  dt = pd.to_datetime(str(val).strip(), errors="coerce")
-/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:331: UserWarning: Parsing dates in %d-%m-%Y format when dayfirst=False (the default) was specified. Pass `dayfirst=True` or specify a format to silence this warning.
-  dt = pd.to_datetime(str(val).strip(), errors="coerce")
 ✅ Workflow Batch completed successfully
 🏁 Final Batch Completed
 ══════════════════════════════════════════════════════
@@ -12,9 +8,9 @@
 🔁 RUN           : 901
 ⏰ Start Time    : 06 April 2026 - 12:21:34 PM
 ⏰ End Time      : 06 April 2026 - 12:21:47 PM
-⏱️ Run Time      : 13 Seconds
+⏱️ Total Runtime : 13 Seconds
 ⚙️ Max Process   : 40 Row Per Run
-🔄 Current Batch : 1
+🔄 Total Batches : 1 Run
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Sheet1 ===
@@ -59,7 +55,7 @@
   Total Unique Rows: 2
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📊 Summary (Current Batch Only)
+📊 Overall Cumulative Summary
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🆕 Total Created: 0
 🔁 Total Updated: 0
@@ -88,13 +84,11 @@
 📁 show_images/ (Total: 1 files)
     📄 104.jpg
 
-📁 meta_backups/ (Total: 1 files)
-    📄 META_06_April_2026_1221_104.json
-
 📁 reports/ (Total: 1 files)
     📄 06_April_2026_1221_FINAL_901_REPORT.txt
 
+📁 meta_backups/ (Total: 1 files)
+    📄 META_06_April_2026_1221_104.json
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🏁 Workflow finished successfully
-
-✅ Final Master Report written -> reports/06_April_2026_1221_FINAL_901_REPORT.txt (Saved to Repo)
