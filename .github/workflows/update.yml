@@ -32,8 +32,7 @@ jobs:
       actions: write
 
     env:
-      SHEETS: "Sheet1;Sheet2"
-      # SHEETS: "Feb 7 2023 Onwards;Before Feb 7 2023 (Korean);Before Feb 7 2023 (Korean Dub);Before Feb 7 2023;Mini Drama"
+      SHEETS: "Feb 7 2023 Onwards;Before Feb 7 2023 (Korean);Before Feb 7 2023 (Korean Dub);Before Feb 7 2023;Mini Drama"
       GITHUB_PAGES_URL: "https://brucebanner001.github.io/my-movie-database"
       DEBUG_FETCH: "true"
 

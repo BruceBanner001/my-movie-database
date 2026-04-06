@@ -1692,9 +1692,13 @@ def excel_to_objects(xl, sheet):
         "original network": "network",
         "comments": "comments",
     }
-    base_id = {"sheet1": 100, "feb 7 2023 onwards": 1000, "sheet2": 3000}.get(
-        sheet.lower(), 0
-    )
+    base_id = {
+        "feb 7 2023 onwards": 1000,
+        "before feb 7 2023 (korean)": 100,
+        "before feb 7 2023 (korean dub)": 200,
+        "before feb 7 2023": 300,
+        "mini drama": 400,
+    }.get(sheet.lower(), 0)
     processed = []
     for index, row in df.iterrows():
         obj, row_num = index + 2, index + 2
@@ -1871,7 +1875,7 @@ def write_report(context, current_run_seconds, run_start_time, report_file_path)
 
         ordered_sheets = [
             s.strip()
-            for s in os.environ.get("SHEETS", "Sheet1").split(";")
+            for s in os.environ.get("SHEETS", "Feb 7 2023 Onwards").split(";")
             if s.strip()
         ]
         all_rep_keys = list(rep_data.keys())
@@ -2392,7 +2396,7 @@ def main():
     if manual_report:
         context["report_data"]["Manual Updates"] = manual_report
     sheets_to_process = [
-        s.strip() for s in os.environ.get("SHEETS", "Sheet1").split(";") if s.strip()
+        s.strip() for s in os.environ.get("SHEETS", "Feb 7 2023 Onwards").split(";") if s.strip()
     ]
 
     for sheet in sheets_to_process:
