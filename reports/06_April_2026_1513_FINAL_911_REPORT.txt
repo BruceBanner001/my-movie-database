@@ -8,9 +8,9 @@
 🔁 RUN           : 911
 ⏰ Start Time    : 06 April 2026 - 03:13:32 PM
 ⏰ End Time      : 06 April 2026 - 03:13:34 PM
-⏱️ Run Time      : 2 Seconds
+⏱️ Total Runtime : 2 Seconds
 ⚙️ Max Process   : 50 Row Per Run
-🔄 Current Batch : 1
+🔄 Total Batches : 1 Run
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Deleting Records ===
@@ -21,7 +21,7 @@
 - 102 -> Young Lady and Gentleman (2021) -> ✅ Deleted
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📊 Summary (Current Batch Only)
+📊 Overall Cumulative Summary
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🆕 Total Created: 0
 🔁 Total Updated: 0
@@ -47,22 +47,20 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ Folders Generated:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📁 deleted_data/ (Total: 2 files)
-    📄 DELETED_06_April_2026_1513_101.json
-    📄 DELETED_06_April_2026_1513_102.json
+📁 reports/ (Total: 1 files)
+    📄 06_April_2026_1513_FINAL_911_REPORT.txt
 
 📁 deleted_images/ (Total: 2 files)
     📄 DELETED_06_April_2026_1513_101.jpg
     📄 DELETED_06_April_2026_1513_102.jpg
 
-📁 reports/ (Total: 1 files)
-    📄 06_April_2026_1513_FINAL_911_REPORT.txt
-
 📁 archived_meta_backups/ (Total: 2 files)
     📄 META_06_April_2026_1417_101.json
     📄 META_06_April_2026_1459_102.json
 
+📁 deleted_data/ (Total: 2 files)
+    📄 DELETED_06_April_2026_1513_101.json
+    📄 DELETED_06_April_2026_1513_102.json
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🏁 Workflow finished successfully
-
-✅ Final Master Report written -> reports/06_April_2026_1513_FINAL_911_REPORT.txt (Saved to Repo)
