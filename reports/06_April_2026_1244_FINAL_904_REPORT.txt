@@ -1,11 +1,3 @@
-/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:331: UserWarning: Parsing dates in %d-%m-%Y format when dayfirst=False (the default) was specified. Pass `dayfirst=True` or specify a format to silence this warning.
-  dt = pd.to_datetime(str(val).strip(), errors="coerce")
-/home/runner/work/my-movie-database/my-movie-database/create_update_backup_delete.py:331: UserWarning: Parsing dates in %d-%m-%Y format when dayfirst=False (the default) was specified. Pass `dayfirst=True` or specify a format to silence this warning.
-  dt = pd.to_datetime(str(val).strip(), errors="coerce")
-[DEBUG] Title Validation FAILED: Expected Year 2012 (±1) not found on page 'Missing You (Korean Movie)'.
-[DEBUG] Title Validation FAILED: Page Title 'Listen To Love' vs Expected 'My Wife’s Having an Affair This Week' (Ratio: 0.16)
-[DEBUG] Title Validation FAILED: Page Title 'Listen To Love' vs Expected 'My Wife’s Having an Affair This Week' (Ratio: 0.16)
-[DEBUG] Title Validation FAILED: Page Title 'Listen To Love' vs Expected 'My Wife’s Having an Affair This Week' (Ratio: 0.16)
 ✅ Workflow Batch completed successfully
 🏁 Final Batch Completed
 ══════════════════════════════════════════════════════
@@ -16,9 +8,9 @@
 🔁 RUN           : 904
 ⏰ Start Time    : 06 April 2026 - 12:44:08 PM
 ⏰ End Time      : 06 April 2026 - 12:49:15 PM
-⏱️ Run Time      : 5 Minutes 7 Seconds
+⏱️ Total Runtime : 5 Minutes 7 Seconds
 ⚙️ Max Process   : 50 Row Per Run
-🔄 Current Batch : 1
+🔄 Total Batches : 1 Run
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Sheet1 ===
@@ -115,7 +107,7 @@
 ✍️ 101 - Girlfriend (2020) -> Show Image Updated Manually
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📊 Summary (Current Batch Only)
+📊 Overall Cumulative Summary
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🆕 Total Created: 0
 🔁 Total Updated: 0
@@ -130,7 +122,7 @@
 💾 Backup Files: 1
   Grand Total Rows Processed: 44
 
-💾 Metadata Backups: 27
+💾 Metadata Backups: 26
 
 📦 Total Objects in seriesData.json: 44
 📦 Total Objects in artists.json: 1041
@@ -141,9 +133,6 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ Folders Generated:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📁 backups/ (Total: 1 files)
-    📄 BACKUP_06_April_2026_1244_101.json
-
 📁 show_images/ (Total: 25 files)
     📄 101.jpg
     📄 102.jpg
@@ -152,10 +141,16 @@
     📄 105.jpg
     ... and 20 more files.
 
+📁 backups/ (Total: 1 files)
+    📄 BACKUP_06_April_2026_1244_101.json
+
 📁 artist_images/ (Total: 3 files)
     📄 19834.jpg
     📄 3296.jpg
     📄 2608.jpg
+
+📁 reports/ (Total: 1 files)
+    📄 06_April_2026_1244_FINAL_904_REPORT.txt
 
 📁 meta_backups/ (Total: 26 files)
     📄 META_06_April_2026_1244_101.json
@@ -165,10 +160,5 @@
     📄 META_06_April_2026_1244_105.json
     ... and 21 more files.
 
-📁 reports/ (Total: 1 files)
-    📄 06_April_2026_1244_FINAL_904_REPORT.txt
-
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🏁 Workflow finished successfully
-
-✅ Final Master Report written -> reports/06_April_2026_1244_FINAL_904_REPORT.txt (Saved to Repo)

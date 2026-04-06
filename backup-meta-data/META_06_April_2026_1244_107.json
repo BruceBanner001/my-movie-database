@@ -1,0 +1,321 @@
+{
+    "scriptVersion": "v12.1.1",
+    "runID": "RUN_20260406_124408",
+    "timestamp": "06 April 2026 12:45 PM (IST)",
+    "showID": 107,
+    "showName": "Hold Me Tight",
+    "fetchedFields": {
+        "showImage": {
+            "value": "107.jpg",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Hold_Me_Tight"
+        },
+        "releaseDate": {
+            "value": "Mar 21, 2018 - May 10, 2018",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/26816-let-s-hold-hands-tightly-and-watch-the-sunset"
+        },
+        "otherNames": {
+            "value": [
+                "Let's Hold Hands Tightly and Watch the Sunset",
+                "Let's Watch the Sunset",
+                "Let’s Look at the Sunset Holding Hands",
+                "Son Ggok Jabgo Jineun Seokyangeul Baraboja",
+                "Son Kkog Jabgo Jineun Seogyangeul Balaboja"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/26816-let-s-hold-hands-tightly-and-watch-the-sunset"
+        },
+        "Duration": {
+            "value": "35 mins",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/26816-let-s-hold-hands-tightly-and-watch-the-sunset"
+        },
+        "synopsis": {
+            "value": "A married couple faces a crisis involving death. They look back at their past together and recognize the importance of love between them and their family.\n\nNam Hyun-Joo (Han Hye-Jin) married her university senior Kim Do-Young (Yoon Sang-Hyun). They live a happy life as a husband and wife. Kim Do-Young works as an architect and was once thought of as a genius in his field. His refusal to make compromises and stick to his style has caused difficulties with his job. One day, Nam Hyun-Joo asks for a divorce and Kim Do-Young's first love Shin Da-Hye (Yu In-Young) appears.",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Hold_Me_Tight"
+        },
+        "director": {
+            "value": [
+                "Kim Sung Yong",
+                "Jung Ji In"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/26816-let-s-hold-hands-tightly-and-watch-the-sunset"
+        },
+        "tags": {
+            "value": [
+                "Architecture Industry",
+                "Hospital Setting",
+                "Death Of A Husband",
+                "Death Of A Mother",
+                "Widow Female Lead",
+                "Housewife Female Lead",
+                "Doctor Male Lead",
+                "Competent Female Lead",
+                "Grandpa-Granddaughter Relationship",
+                "Flashback To Past"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/26816-let-s-hold-hands-tightly-and-watch-the-sunset"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "87687",
+                    "artistName": "Noh Hyeong Woo",
+                    "artistImageURL": "https://i.mydramalist.com/15Egb_5m.jpg",
+                    "characterName": null,
+                    "role": "Composer"
+                },
+                {
+                    "artistID": "20796",
+                    "artistName": "Kim Sung Yong",
+                    "artistImageURL": "https://i.mydramalist.com/N7d1Em.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "47205",
+                    "artistName": "Jung Ji In",
+                    "artistImageURL": "https://i.mydramalist.com/pzZwQ_5m.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "16025",
+                    "artistName": "Jung Ha Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/b26dLm.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "796",
+                    "artistName": "Han Hye Jin",
+                    "artistImageURL": "https://i.mydramalist.com/Z8zKAq_5s.jpg",
+                    "characterName": "Nam Hyun Joo",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "188",
+                    "artistName": "Yoon Sang Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/VXPgnQ_5s.jpg",
+                    "characterName": "Kim Do Yeong",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "834",
+                    "artistName": "Yoo In Young",
+                    "artistImageURL": "https://i.mydramalist.com/EyBdp_5s.jpg",
+                    "characterName": "Shin Da Hye",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "1070",
+                    "artistName": "Kim Tae Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/JBe7ej_5s.jpg",
+                    "characterName": "Jang Seok Joon",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "14243",
+                    "artistName": "Lee Na Yoon",
+                    "artistImageURL": "https://i.mydramalist.com/A75oqs.jpg",
+                    "characterName": "Kim Saet Byeol [Do Yeong and Hyeon Ju's daughter]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3078",
+                    "artistName": "Lee Mi Do",
+                    "artistImageURL": "https://i.mydramalist.com/zBJBEJ_5s.jpg",
+                    "characterName": "Yun Hong Suk [Hyeon Ju's best friend]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "405",
+                    "artistName": "Jang Yong",
+                    "artistImageURL": "https://i.mydramalist.com/NdQ2ys.jpg",
+                    "characterName": "Nam Jin Tae [Hyeon Ju's father]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4317",
+                    "artistName": "Gong Jung Hwan",
+                    "artistImageURL": "https://i.mydramalist.com/E37em_5s.jpg",
+                    "characterName": "Park Yeong Geun",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3461",
+                    "artistName": "Heo Tae Hee",
+                    "artistImageURL": "https://i.mydramalist.com/Ez5Pz_5s.jpg",
+                    "characterName": "Choi Jun",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4528",
+                    "artistName": "Kim Min Soo",
+                    "artistImageURL": "https://i.mydramalist.com/p32Rr_5s.jpg",
+                    "characterName": "Sin Hyeon Pil [Da Hye's brother]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "9301",
+                    "artistName": "Kim Ye Jun",
+                    "artistImageURL": "https://i.mydramalist.com/03gq6_5s.jpg",
+                    "characterName": "Heo Seong Gu [Saet Byeol's friend]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "15617",
+                    "artistName": "Joey Albright",
+                    "artistImageURL": "https://i.mydramalist.com/Bgk4z_5s.jpg",
+                    "characterName": "Raymond",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2909",
+                    "artistName": "Kim Yong Gun",
+                    "artistImageURL": "https://i.mydramalist.com/QJplL5_5s.jpg",
+                    "characterName": "Kim Jung Min [Hospital director]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "20038",
+                    "artistName": "Han Kyu Won",
+                    "artistImageURL": "https://i.mydramalist.com/xQ3jjs.jpg",
+                    "characterName": "Bae Hui Jun",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "22615",
+                    "artistName": "Sung Ryung",
+                    "artistImageURL": "https://i.mydramalist.com/JKgbYs.jpg",
+                    "characterName": "Kim Eun Mi",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "39511",
+                    "artistName": "Kim Soo Kyung",
+                    "artistImageURL": "https://i.mydramalist.com/vXnR3g_5s.jpg",
+                    "characterName": "Yang Mi Yeong",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "45279",
+                    "artistName": "Han Seung Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/r5ABp_5s.jpg",
+                    "characterName": "[Da Hye's bodyguard]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3247",
+                    "artistName": "Son Sung Yoon",
+                    "artistImageURL": "https://i.mydramalist.com/60rE32_5s.jpg",
+                    "characterName": "Kim Hye Gyeong [Seok Jun's wife]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "19918",
+                    "artistName": "Jason Scott Nelson",
+                    "artistImageURL": "https://i.mydramalist.com/ABXzN4_5s.jpg",
+                    "characterName": "Jason [Party guest]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6662",
+                    "artistName": "Park Seo Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/rmyQjs.jpg",
+                    "characterName": "Nam Hyeon Ju [Young]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "104729",
+                    "artistName": "Jung Min Joo",
+                    "artistImageURL": "https://i.mydramalist.com/WpELR_5s.jpg",
+                    "characterName": "[Saet Byeol's friend]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "57811",
+                    "artistName": "Kim Si Eun",
+                    "artistImageURL": "https://i.mydramalist.com/vXQWN8_5s.jpg",
+                    "characterName": "[Young girl]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "44699",
+                    "artistName": "Kim Mi Hye",
+                    "artistImageURL": "https://i.mydramalist.com/EgnO0_5s.jpg",
+                    "characterName": "[Flight attendant]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "31165",
+                    "artistName": "Im Jae Geun",
+                    "artistImageURL": "https://i.mydramalist.com/QYLyY_5s.jpg",
+                    "characterName": "[Flight passenger to Bali]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "23233",
+                    "artistName": "Jeong Young Do",
+                    "artistImageURL": "https://i.mydramalist.com/Ql1Dv_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "44603",
+                    "artistName": "Byun Gun Woo",
+                    "artistImageURL": "https://i.mydramalist.com/v5nlq_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4495",
+                    "artistName": "Han Yeo Wool",
+                    "artistImageURL": "https://i.mydramalist.com/5vbrnB_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "60525",
+                    "artistName": "Bret Allan Lindquist",
+                    "artistImageURL": "https://i.mydramalist.com/ELByQ_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "76355",
+                    "artistName": "Park Kyung Bok",
+                    "artistImageURL": "https://i.mydramalist.com/E4d0Q_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/26816-let-s-hold-hands-tightly-and-watch-the-sunset"
+        },
+        "airedOn": {
+            "value": [
+                "Wednesday",
+                "Thursday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/26816-let-s-hold-hands-tightly-and-watch-the-sunset"
+        }
+    },
+    "sitePriorityUsed": {
+        "showImage": "asianwiki",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": null,
+        "airedOn": "mydramalist"
+    }
+}

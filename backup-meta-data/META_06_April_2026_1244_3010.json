@@ -1,0 +1,395 @@
+{
+    "scriptVersion": "v12.1.1",
+    "runID": "RUN_20260406_124408",
+    "timestamp": "06 April 2026 12:48 PM (IST)",
+    "showID": 3010,
+    "showName": "Untouchable",
+    "fetchedFields": {
+        "showImage": {
+            "value": "3010.jpg",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Untouchable_(Korean_Drama)"
+        },
+        "releaseDate": {
+            "value": "Nov 24, 2017 - Jan 20, 2018",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/24359-untouchable"
+        },
+        "otherNames": {
+            "value": [
+                "Eonteocheobool",
+                "Intocáveis",
+                "언터쳐블"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/24359-untouchable"
+        },
+        "Duration": {
+            "value": "60 mins",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/24359-untouchable"
+        },
+        "synopsis": {
+            "value": "The city of Bukcheon has been dominated by the Jang family for 3 generations. Jang Joon-Seo (Jin Goo) is the second son of family leader Jang Beom-Ho. A woman who Jang Joon-Seo loves dies. After that, he tries to reveal the truth about her death and a secret from his family.",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Untouchable_(Korean_Drama)"
+        },
+        "director": {
+            "value": [
+                "Jo Nam Gook"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/24359-untouchable"
+        },
+        "tags": {
+            "value": [
+                "Investigation",
+                "Suspense",
+                "Law",
+                "Staged Death",
+                "Physically Strong Male Lead",
+                "Emotionally Strong Female Lead",
+                "Tyrant Supporting Character",
+                "Police Officer Male Lead",
+                "Prosecutor Female Lead",
+                "White Truck Of Doom"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/24359-untouchable"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "65445",
+                    "artistName": "Park Se Jun",
+                    "artistImageURL": "https://i.mydramalist.com/v1loD_5m.jpg",
+                    "characterName": null,
+                    "role": "Composer"
+                },
+                {
+                    "artistID": "20962",
+                    "artistName": "Jo Nam Gook",
+                    "artistImageURL": "https://i.mydramalist.com/ZWV8Y_5m.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "20963",
+                    "artistName": "Choi Jin Won",
+                    "artistImageURL": "https://i.mydramalist.com/wJe0qn_5m.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "1334",
+                    "artistName": "Jin Goo",
+                    "artistImageURL": "https://i.mydramalist.com/64JeXs.jpg",
+                    "characterName": "Jang Joon Seo",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "3044",
+                    "artistName": "Kim Sung Kyun",
+                    "artistImageURL": "https://i.mydramalist.com/ABLNZZ_5s.jpg",
+                    "characterName": "Jang Ki Seo",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "3843",
+                    "artistName": "Jung Eun Ji",
+                    "artistImageURL": "https://i.mydramalist.com/LwRVkx_5s.jpg",
+                    "characterName": "Seo Yi Ra",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "1157",
+                    "artistName": "Go Joon Hee",
+                    "artistImageURL": "https://i.mydramalist.com/1yQg7_5s.jpg",
+                    "characterName": "Gu Ja Kyung",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "3273",
+                    "artistName": "Park Geun Hyung",
+                    "artistImageURL": "https://i.mydramalist.com/BDO46_5s.jpg",
+                    "characterName": "Jang Beom Ho [Jun Seo's father]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "6184",
+                    "artistName": "Choi Jong Won",
+                    "artistImageURL": "https://i.mydramalist.com/xxVpq_5s.jpg",
+                    "characterName": "Gu Yong Chan [Ja Kyung's father]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3174",
+                    "artistName": "Jin Kyung",
+                    "artistImageURL": "https://i.mydramalist.com/Xe7vJs.jpg",
+                    "characterName": "Jung Yoon Mi [Yi Ra's mother]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2645",
+                    "artistName": "Shin Jung Keun",
+                    "artistImageURL": "https://i.mydramalist.com/wJm6xJ_5s.jpg",
+                    "characterName": "Yong Hak Soo [Beom Ho's right-hand man]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "9446",
+                    "artistName": "Son Jong Hak",
+                    "artistImageURL": "https://i.mydramalist.com/g0KPqP_5s.jpg",
+                    "characterName": "Jang Beom Shik [Beom Ho's brother]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4562",
+                    "artistName": "Lee Jae Won",
+                    "artistImageURL": "https://i.mydramalist.com/By7eb_5s.jpg",
+                    "characterName": "Jang Gyu Ho [Beom Shik's son}",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5904",
+                    "artistName": "Kim Min Sang",
+                    "artistImageURL": "https://i.mydramalist.com/2kqL7_5s.jpg",
+                    "characterName": "No Ji Hwan [Police chief]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1509",
+                    "artistName": "Park Won Sang",
+                    "artistImageURL": "https://i.mydramalist.com/DkJoJq_5s.jpg",
+                    "characterName": "Go Soo Chang [Detective]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5554",
+                    "artistName": "Park Jin U",
+                    "artistImageURL": "https://i.mydramalist.com/rzXb7_5s.jpg",
+                    "characterName": "Park Tae Jin [Head detective]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "14228",
+                    "artistName": "Park Ji Hwan",
+                    "artistImageURL": "https://i.mydramalist.com/Z83mZ7_5s.jpg",
+                    "characterName": "Koo Do Su [Detective]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3130",
+                    "artistName": "Lim Hyun Sung",
+                    "artistImageURL": "https://i.mydramalist.com/wloK1s.jpg",
+                    "characterName": "Lee Seong Gyun [Ex-detective]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "7794",
+                    "artistName": "Bae Yoo Ram",
+                    "artistImageURL": "https://i.mydramalist.com/jJ7Pw_5s.jpg",
+                    "characterName": "Choi Jae Ho [Joon Seo's Seoul PD colleague]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5625",
+                    "artistName": "Jo Jae Ryong",
+                    "artistImageURL": "https://i.mydramalist.com/wNry1_5s.jpg",
+                    "characterName": "Joo Tae Seop",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2390",
+                    "artistName": "Kim Byung Chun",
+                    "artistImageURL": "https://i.mydramalist.com/ZqYOq_5s.jpg",
+                    "characterName": "Prosecutor Ji",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3036",
+                    "artistName": "Ye Soo Jung",
+                    "artistImageURL": "https://i.mydramalist.com/eEPQes.jpg",
+                    "characterName": "Madam Park [Joon Seo's mother]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "23589",
+                    "artistName": "Choi Yoon Ra",
+                    "artistImageURL": "https://i.mydramalist.com/QmQQWs.jpg",
+                    "characterName": "Yoo Na Na [Ki Seo's girlfriend]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "44699",
+                    "artistName": "Kim Mi Hye",
+                    "artistImageURL": "https://i.mydramalist.com/EgnO0_5s.jpg",
+                    "characterName": "[Reporter] (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21590",
+                    "artistName": "Jeon Woon Jong",
+                    "artistImageURL": "https://i.mydramalist.com/Y3w4Ws.jpg",
+                    "characterName": "Dr. Yoo Je Seung (Ep. 13-15)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "4175",
+                    "artistName": "Yoon Sang Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/Zodk7s.jpg",
+                    "characterName": "Detective Sun",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "2690",
+                    "artistName": "Gyeong Su Jin",
+                    "artistImageURL": "https://i.mydramalist.com/x4wpzj_5s.jpg",
+                    "characterName": "Yun Jeong Hae / Jo Min Ju",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "25179",
+                    "artistName": "Park Soo Oh",
+                    "artistImageURL": "https://i.mydramalist.com/b3yD7V_5s.jpg",
+                    "characterName": "Jang Gi Seo [Young]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "53679",
+                    "artistName": "Guk Ji Yong",
+                    "artistImageURL": "https://i.mydramalist.com/ENQpp_5s.jpg",
+                    "characterName": "Ahn Ji Man [Detective]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "31851",
+                    "artistName": "Cho Yu Ha",
+                    "artistImageURL": "https://i.mydramalist.com/b3rBBw_5s.jpg",
+                    "characterName": "Yoon Jung Hye [Young]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "10659",
+                    "artistName": "Kim Ji Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/RQOdV_5s.jpg",
+                    "characterName": "Kang Mo Shik [Truck driver]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6266",
+                    "artistName": "Jung Byung Ho",
+                    "artistImageURL": "https://i.mydramalist.com/xXdXzs.jpg",
+                    "characterName": "Kim Sa Jang [Bukcheon News]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "2478",
+                    "artistName": "Jung In Ki",
+                    "artistImageURL": "https://i.mydramalist.com/627A2s.jpg",
+                    "characterName": "Yoon Dong Pil [Jung Hae's father]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "19690",
+                    "artistName": "Son Kyung Won",
+                    "artistImageURL": "https://i.mydramalist.com/qd5k5_5s.jpg",
+                    "characterName": "[Instigator man]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "50747",
+                    "artistName": "Kwon Ban Suk",
+                    "artistImageURL": "https://i.mydramalist.com/v3LyD_5s.jpg",
+                    "characterName": "[Gang subordinate]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "23835",
+                    "artistName": "Kwon Hyuk Soo",
+                    "artistImageURL": "https://i.mydramalist.com/724rLs.jpg",
+                    "characterName": "[President of South Korea]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "22963",
+                    "artistName": "Kim Dae Kook",
+                    "artistImageURL": "https://i.mydramalist.com/EgBJm_5s.jpg",
+                    "characterName": "[Bukcheon city hall public official]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "23563",
+                    "artistName": "Kim Dae Heung",
+                    "artistImageURL": "https://i.mydramalist.com/r0jWNs.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "23520",
+                    "artistName": "Mi Seok",
+                    "artistImageURL": "https://i.mydramalist.com/bwrNVs.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21609",
+                    "artistName": "Park Choong Hwan",
+                    "artistImageURL": "https://i.mydramalist.com/WmY13s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21602",
+                    "artistName": "Kim Kyung Il",
+                    "artistImageURL": "https://i.mydramalist.com/weDJY_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "19066",
+                    "artistName": "Lee Dong Yong",
+                    "artistImageURL": "https://i.mydramalist.com/2x2bws.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "20031",
+                    "artistName": "Park Yong",
+                    "artistImageURL": "https://i.mydramalist.com/dxE2b_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "44751",
+                    "artistName": "Joo In Young",
+                    "artistImageURL": "https://i.mydramalist.com/Kpy5zq_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/24359-untouchable"
+        },
+        "airedOn": {
+            "value": [
+                "Friday",
+                "Saturday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/24359-untouchable"
+        }
+    },
+    "sitePriorityUsed": {
+        "showImage": "asianwiki",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": null,
+        "airedOn": "mydramalist"
+    }
+}
