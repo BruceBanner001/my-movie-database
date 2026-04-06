@@ -4,7 +4,7 @@
 # ============================================================
 # Script: create_update_backup_delete.py
 # Author: [BruceBanner001]
-# Version: v12.1 (Non-Asian Ignored Section Edition)
+# Version: v12.1.1 (Patched: Strict Validation Edition)
 # ============================================================
 
 # ---------------------------- IMPORTS & GLOBALS ----------------------------
@@ -15,7 +15,7 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
-SCRIPT_VERSION = "v12.1"
+SCRIPT_VERSION = "v12.1.1"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None,
@@ -502,7 +502,7 @@ def save_batch_state(context, current_run_seconds):
         json.dump(state, f, indent=4, ensure_ascii=False)
 
 
-def _validate_page_title(soup, expected_name, site, url):
+def _validate_page_title(soup, expected_name, expected_year, site, url):
     try:
         page_title = ""
         if site == "asianwiki":
@@ -516,6 +516,20 @@ def _validate_page_title(soup, expected_name, site, url):
 
         if not page_title:
             return True
+
+        # --- STRICT YEAR VALIDATION WITH +/- 1 TOLERANCE ---
+        if expected_year and int(expected_year) > 0:
+            page_text = soup.get_text(separator=" ", strip=True)
+            year_int = int(expected_year)
+            if (
+                str(year_int) not in page_text
+                and str(year_int - 1) not in page_text
+                and str(year_int + 1) not in page_text
+            ):
+                logd(
+                    f"Title Validation FAILED: Expected Year {year_int} (±1) not found on page '{page_title}'."
+                )
+                return False
 
         def extract_season(text):
             m = re.search(r"\b(?:Season|Part|S)\s*(\d+)\b", text, re.IGNORECASE)
@@ -567,7 +581,15 @@ def _validate_page_title(soup, expected_name, site, url):
         t2_core = re.sub(r"\b(?:season|part|s)\s*\d+\b|\s+\d+$", "", t2).strip()
 
         ratio = SequenceMatcher(None, t1_core, t2_core).ratio()
-        if ratio < 0.4 and t2_core not in t1_core and t1_core not in t2_core:
+
+        # --- IMPROVED: Higher Threshold + Alternative Name Failsafe ---
+        if ratio < 0.65 and t2_core not in t1_core and t1_core not in t2_core:
+            if (
+                expected_name.lower()
+                in soup.get_text(separator=" ", strip=True).lower()
+            ):
+                return True
+
             logd(
                 f"Title Validation FAILED: Page Title '{page_title}' vs Expected '{expected_name}' (Ratio: {ratio:.2f})"
             )
@@ -679,7 +701,9 @@ def get_soup_from_search(
                             ):
                                 continue
 
-                        if not _validate_page_title(soup, expected_name, site, url):
+                        if not _validate_page_title(
+                            soup, expected_name, show_year, site, url
+                        ):
                             continue
 
                         soup_cache[cache_key] = (soup, url)
@@ -1958,7 +1982,6 @@ def write_report(context, current_run_seconds, run_start_time, report_file_path)
                 for i in sorted(get_unique(changes["skipped"])):
                     lines.append(f"- {i}")
 
-            # 🌟 NEW: Ignored Non-Asian Section 🌟
             if changes.get("ignored_non_asian"):
                 lines.append("\n🙈 Ignored (Non-Asian / Western Shows):")
                 for i in sorted(get_unique(changes["ignored_non_asian"])):
