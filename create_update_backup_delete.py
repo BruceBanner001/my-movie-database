@@ -3,8 +3,8 @@
 
 # ============================================================
 # Script: create_update_backup_delete.py
-# Author: [BruceBanner001]
-# Version: v12.1.1 (Patched: Strict Validation Edition)
+# Author:[BruceBanner001]
+# Version: v12.1.2 (Strict Actor & Alias Patch)
 # ============================================================
 
 # ---------------------------- IMPORTS & GLOBALS ----------------------------
@@ -15,7 +15,7 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
-SCRIPT_VERSION = "v12.1.1"
+SCRIPT_VERSION = "v12.1.2"
 
 JSON_OBJECT_TEMPLATE = {
     "showID": None,
@@ -372,7 +372,6 @@ def has_missing_metadata(obj):
         "filipino",
     ]
 
-    # If it's a Western show, it never has "missing metadata" because we don't fetch it anymore.
     if not is_asian:
         return False
 
@@ -427,8 +426,6 @@ def _clean_other_names(names_list):
 
 
 # ---------------------------- BATCH STATE LOGIC ----------------------------
-
-
 def merge_batch_state(context):
     if not os.path.exists(BATCH_STATE_FILE):
         return
@@ -438,7 +435,6 @@ def merge_batch_state(context):
 
         context["previous_report_data"] = batch_state.get("report_data", {})
         context["previous_files_generated"] = batch_state.get("files_generated", {})
-
         context["cumulative_time_seconds"] = batch_state.get(
             "cumulative_time_seconds", 0
         )
@@ -505,11 +501,26 @@ def save_batch_state(context, current_run_seconds):
 def _validate_page_title(soup, expected_name, expected_year, site, url):
     try:
         page_title = ""
+
+        # --- NEW: STRICT ACTOR/PROFILE REJECTION ---
         if site == "asianwiki":
+            for b_tag in soup.find_all("b"):
+                b_text = b_tag.get_text(strip=True).lower()
+                if b_text in ["born:", "birthdate:", "birth name:", "blood type:"]:
+                    logd(
+                        f"Title Validation FAILED: Detected Actor Profile ({b_text}) instead of Drama/Movie on page."
+                    )
+                    return False
+
             h1 = soup.find("h1", class_="firstHeading") or soup.find("h1")
             if h1:
                 page_title = h1.get_text(strip=True)
+
         elif site == "mydramalist":
+            if "/people/" in url or "/article/" in url or "/list/" in url:
+                logd("Title Validation FAILED: URL indicates non-drama page.")
+                return False
+
             h1 = soup.find("h1", class_="film-title") or soup.find("h1")
             if h1:
                 page_title = h1.get_text(strip=True)
@@ -582,18 +593,76 @@ def _validate_page_title(soup, expected_name, expected_year, site, url):
 
         ratio = SequenceMatcher(None, t1_core, t2_core).ratio()
 
-        # --- IMPROVED: Higher Threshold + Alternative Name Failsafe ---
+        # --- NEW: STRICT ALIAS VALIDATION ---
         if ratio < 0.65 and t2_core not in t1_core and t1_core not in t2_core:
-            if (
-                expected_name.lower()
-                in soup.get_text(separator=" ", strip=True).lower()
-            ):
+            aliases = []
+
+            # Look exclusively in the "Also Known As" / "Romaji" / "Native Title" sections
+            if site == "asianwiki":
+                for b_tag in soup.find_all("b"):
+                    b_text = b_tag.get_text(strip=True).lower()
+                    if any(
+                        kw in b_text
+                        for kw in [
+                            "also known as",
+                            "romaji",
+                            "literal title",
+                            "chinese title",
+                            "japanese title",
+                            "hangul",
+                        ]
+                    ):
+                        for parent in b_tag.find_parents(["li", "div", "p", "td"]):
+                            full_text = parent.get_text(" ", strip=True)
+                            val = (
+                                full_text.replace(b_tag.get_text(strip=True), "")
+                                .replace(":", "")
+                                .strip()
+                            )
+                            if val:
+                                aliases.extend(re.split(r"[/,]", val))
+                                break
+            elif site == "mydramalist":
+                for b_tag in soup.find_all(
+                    "b",
+                    string=re.compile(
+                        r"^\s*(Also Known As|Native Title).*", re.IGNORECASE
+                    ),
+                ):
+                    for parent in b_tag.find_parents(["li", "div", "p"]):
+                        full_text = parent.get_text(" ", strip=True)
+                        val = (
+                            full_text.replace(b_tag.get_text(strip=True), "")
+                            .replace(":", "")
+                            .strip()
+                        )
+                        if val:
+                            aliases.extend(val.split(","))
+                            break
+
+            clean_aliases = [
+                re.sub(r"\(\d{4}\)", "", a).lower().strip()
+                for a in aliases
+                if a.strip()
+            ]
+            match_found = False
+            for alias in clean_aliases:
+                if (
+                    t2_core in alias
+                    or alias in t2_core
+                    or SequenceMatcher(None, alias, t2_core).ratio() >= 0.75
+                ):
+                    match_found = True
+                    break
+
+            if match_found:
                 return True
 
             logd(
-                f"Title Validation FAILED: Page Title '{page_title}' vs Expected '{expected_name}' (Ratio: {ratio:.2f})"
+                f"Title Validation FAILED: Page Title '{page_title}' vs Expected '{expected_name}' (Ratio: {ratio:.2f} & No Alias Match)"
             )
             return False
+
         return True
     except Exception as e:
         return True
@@ -628,9 +697,9 @@ def get_soup_from_search(
         r"\b(?:Season|Part|S)\s*\d+\b|\s+\d+$", "", search_term, flags=re.IGNORECASE
     ).strip()
 
-    # 🌟 ASIAN SITES (MDL/AsianWiki) VIA DUCKDUCKGO 🌟
     if not HAVE_DDGS:
         return None, None
+
     search_queries = [
         f'"{search_term}" {show_year} {language} site:{site}.com',
         f'"{search_term}" {show_year} site:{site}.com',
@@ -660,26 +729,36 @@ def get_soup_from_search(
 
         for res in results:
             url = res.get("href", "")
+
+            # --- NEW: STRICT URL BLOCKING ---
+            bad_url_keywords = [
+                "/reviews",
+                "/recs",
+                "?lang=",
+                "/photos",
+                "/video",
+                "/trivia",
+                "/people/",
+                "/article/",
+                "/list/",
+                "/cast",
+                "/episodes",
+            ]
             if (
                 not url
                 or "bing.com" in url
-                or any(
-                    bad in url
-                    for bad in [
-                        "/reviews",
-                        "/recs",
-                        "?lang=",
-                        "/photos",
-                        "/video",
-                        "/trivia",
-                    ]
-                )
+                or any(bad in url.lower() for bad in bad_url_keywords)
             ):
                 continue
-            if site == "asianwiki" and (
-                "/File:" in url or "/index.php?title=File:" in url
-            ):
-                continue
+
+            if site == "asianwiki":
+                url_lower = url.lower()
+                if (
+                    "category:" in url_lower
+                    or "file:" in url_lower
+                    or "/index.php" in url_lower
+                ):
+                    continue
 
             try:
                 r = SCRAPER.get(url, timeout=15)
@@ -763,19 +842,6 @@ def _extract_mdl_list_item(soup, label_regex):
     return None, None
 
 
-def _extract_aw_list_item(soup, label_regex):
-    b_tag = soup.find("b", string=re.compile(label_regex, re.IGNORECASE))
-    if b_tag:
-        for parent in b_tag.find_parents(["li", "div", "p", "td", "tr"]):
-            full_text = parent.get_text(" ", strip=True)
-            b_text = b_tag.get_text(" ", strip=True)
-            text = full_text.replace(b_text, "").strip()
-            text = re.sub(r"^[:\s]+", "", text).strip()
-            if text:
-                return text
-    return None
-
-
 # --- ASIANWIKI SCRAPERS ---
 def _scrape_synopsis_from_asianwiki(soup, **kwargs):
     try:
@@ -835,76 +901,6 @@ def _scrape_image_from_asianwiki(soup, **kwargs):
             return os.path.basename(image_path)
     except Exception:
         return None
-
-
-def _scrape_othernames_from_asianwiki(soup, **kwargs):
-    try:
-        names = []
-        target_keywords = [
-            "also known as",
-            "romaji",
-            "pinyin",
-            "literal title",
-            "chinese title",
-            "japanese title",
-            "hangul",
-        ]
-        for b_tag in soup.find_all("b"):
-            text = b_tag.get_text(strip=True).lower()
-            if any(keyword in text for keyword in target_keywords):
-                val = ""
-                for parent in b_tag.find_parents(["li", "div", "p", "td"]):
-                    full_text = parent.get_text(" ", strip=True)
-                    val = (
-                        full_text.replace(b_tag.get_text(strip=True), "")
-                        .replace(":", "")
-                        .strip()
-                    )
-                    if val:
-                        break
-                if val and val.lower() != kwargs.get("show_name", "").lower():
-                    raw_names = re.split(r"[/,]", val)
-                    names.extend(
-                        [
-                            n.strip()
-                            for n in raw_names
-                            if n.strip() and len(n.strip()) > 1
-                        ]
-                    )
-        return _clean_other_names(names) if names else None
-    except Exception:
-        pass
-    return None
-
-
-def _scrape_release_date_from_asianwiki(soup, **kwargs):
-    try:
-        text = _extract_aw_list_item(soup, r"^\s*Release Date.*")
-        if text:
-            return text
-    except Exception:
-        pass
-    return None
-
-
-def _scrape_network_from_asianwiki(soup, **kwargs):
-    try:
-        text = _extract_aw_list_item(soup, r"^\s*Network.*")
-        if text:
-            return [n.strip() for n in text.split(",") if n.strip()]
-    except Exception:
-        pass
-    return None
-
-
-def _scrape_director_from_asianwiki(soup, **kwargs):
-    try:
-        text = _extract_aw_list_item(soup, r"^\s*Director.*")
-        if text:
-            return [n.strip() for n in text.split(",") if n.strip()]
-    except Exception:
-        pass
-    return None
 
 
 # --- MYDRAMALIST SCRAPERS ---
@@ -1314,17 +1310,19 @@ def _scrape_cast_from_mydramalist(soup, **kwargs):
         return None
 
 
+# --- NEW: CLEANED UP SCRAPE MAP ---
 SCRAPE_MAP = {
     "asianwiki": {
         "synopsis": _scrape_synopsis_from_asianwiki,
         "showImage": _scrape_image_from_asianwiki,
-        "otherNames": _scrape_othernames_from_asianwiki,
+        # Completely disabled unused Asianwiki scraping features to prevent overrides
+        "otherNames": lambda **kwargs: None,
         "Duration": lambda **kwargs: None,
-        "releaseDate": _scrape_release_date_from_asianwiki,
-        "director": _scrape_director_from_asianwiki,
+        "releaseDate": lambda **kwargs: None,
+        "director": lambda **kwargs: None,
         "tags": lambda **kwargs: None,
         "cast": lambda **kwargs: None,
-        "network": _scrape_network_from_asianwiki,
+        "network": lambda **kwargs: None,
         "airedOn": lambda **kwargs: None,
     },
     "mydramalist": {
@@ -1369,7 +1367,6 @@ def fetch_and_populate_metadata(obj, context, artists_db):
         "filipino",
     ]
 
-    # 🌟 INSTANTLY SKIP WESTERN SHOWS 🌟
     if not is_asian:
         return obj
 
@@ -1737,7 +1734,6 @@ def excel_to_objects(xl, sheet):
             if "movie" in sheet_lower
             else "Mini Drama" if "mini" in sheet_lower else "Drama"
         )
-
         obj["nativeLanguage"] = obj.get("nativeLanguage", "").strip().capitalize()
         lang = obj.get("nativeLanguage", "").lower()
         if lang in ("korean", "korea"):
@@ -1822,8 +1818,6 @@ def create_diff_backup(old, new, context, explicit_changes=None):
 
 
 # ---------------------------- write_report ----------------------------
-
-
 def write_report(context, current_run_seconds, run_start_time, report_file_path):
     is_paused = context.get("paused")
 
@@ -2004,7 +1998,6 @@ def write_report(context, current_run_seconds, run_start_time, report_file_path)
                 s_ignored = len(
                     set(i.split(" - ")[0] for i in changes.get("ignored_non_asian", []))
                 )
-
                 total_sheet = (
                     s_created + s_updated + s_refetched + s_skipped + s_ignored
                 )
@@ -2072,7 +2065,7 @@ def write_report(context, current_run_seconds, run_start_time, report_file_path)
                 f"💾 Backup Files: {len(files_data.get('backups',[]))}",
                 f"  Grand Total Rows Processed: {stats['rows']}",
                 "",
-                f"💾 Metadata Backups: {len(files_data.get('meta_backups',[]))}",
+                f"💾 Metadata Backups: {len(files_data.get('meta_backups', []))}",
                 "",
             ]
         )
@@ -2147,8 +2140,7 @@ def write_report(context, current_run_seconds, run_start_time, report_file_path)
     step_summary_file = os.environ.get("GITHUB_STEP_SUMMARY")
     if step_summary_file:
         with open(step_summary_file, "a", encoding="utf-8") as f:
-            f.write("### 📊 Workflow Execution Report (Current Batch)\n")
-            f.write("```text\n")
+            f.write("### 📊 Workflow Execution Report (Current Batch)\n```text\n")
             f.write(console_output)
             f.write("\n```\n")
 
@@ -2163,7 +2155,6 @@ def write_report(context, current_run_seconds, run_start_time, report_file_path)
         cumulative_files = combine_files(
             context.get("previous_files_generated", {}), current_files
         )
-
         file_output = build_report_text(
             cumulative_report_data, cumulative_files, is_cumulative=True
         )
@@ -2232,8 +2223,8 @@ def process_and_distribute_cast(full_cast, artists_db, context):
 
         role = artist["role"]
         char_name = artist.get("characterName")
-
         role_lower = role.lower()
+
         if (
             "main" in role_lower
             or "host" in role_lower
@@ -2345,20 +2336,13 @@ def save_json_file(file_path, data):
 
 
 # ---------------------------- MAIN ENGINE ----------------------------
-
-
 def main():
-
     setup_gitignore_for_partials()
-
     MAX_FETCHES = int(os.environ.get("MAX_FETCHES", "50"))
-
     force_refetch_str = os.environ.get("FORCE_REFETCH", "")
     force_ids, force_all = parse_force_refetch(force_refetch_str)
-
     total_heavy_fetches = 0
     limit_reached = False
-
     run_start_time = now_ist()
     current_gh_run = os.environ.get("GITHUB_RUN_NUMBER", "Local")
 
@@ -2397,21 +2381,16 @@ def main():
     excel_bytes = fetch_excel_from_gdrive_bytes(excel_id, SERVICE_ACCOUNT_FILE)
     if not excel_bytes:
         sys.exit(1)
-
     xl = pd.ExcelFile(io.BytesIO(excel_bytes.getvalue()))
-
     process_deletions(xl, context)
 
     series_data = load_json_file(SERIES_JSON_FILE)
     artists_data = load_json_file(ARTISTS_JSON_FILE)
     cast_data = load_json_file(CAST_JSON_FILE)
-
     merged_by_id = {int(o["showID"]): o for o in series_data if o.get("showID")}
-
     manual_report = apply_manual_updates(xl, merged_by_id, context)
     if manual_report:
         context["report_data"]["Manual Updates"] = manual_report
-
     sheets_to_process = [
         s.strip() for s in os.environ.get("SHEETS", "Sheet1").split(";") if s.strip()
     ]
@@ -2436,7 +2415,6 @@ def main():
                 old_obj_from_json, excel_obj
             )
             metadata_is_missing = not is_new and has_missing_metadata(old_obj_from_json)
-
             is_forced = force_all or (sid in force_ids)
 
             if is_new or excel_data_has_changed or metadata_is_missing or is_forced:
@@ -2444,7 +2422,6 @@ def main():
                     limit_reached = True
                     context["paused"] = True
                     break
-
                 total_heavy_fetches += 1
                 base_template = copy.deepcopy(JSON_OBJECT_TEMPLATE)
                 old_data = copy.deepcopy(old_obj_from_json) if old_obj_from_json else {}
@@ -2470,7 +2447,6 @@ def main():
                         old_data[forced_field] = None
 
                 final_obj = {**base_template, **old_data, **excel_obj}
-
                 for k in LOCKED_FIELDS_AFTER_CREATION:
                     if k in old_data and (
                         old_data[k] or isinstance(old_data[k], (list, dict))
@@ -2513,7 +2489,6 @@ def main():
                 }
                 context["new_artists_added"] = []
 
-                # 🌟 ONLY fetch for Asian Shows 🌟
                 lang = final_obj.get("nativeLanguage", "").lower()
                 is_asian = lang in [
                     "korean",
@@ -2528,7 +2503,6 @@ def main():
                     final_obj = fetch_and_populate_metadata(
                         final_obj, context, artists_data
                     )
-
                 if "cast" in final_obj and isinstance(final_obj["cast"], list):
                     cast_summary, full_cast_dict = process_and_distribute_cast(
                         final_obj["cast"], artists_data, context
@@ -2543,7 +2517,6 @@ def main():
                     * (len(final_obj.get("againWatchedDates", [])) + 1)
                     * 100
                 )
-
                 metadata_was_fetched = any(
                     final_obj.get(k) != v for k, v in initial_metadata_state.items()
                 )
@@ -2560,7 +2533,6 @@ def main():
                     "network": "Network",
                     "airedOn": "Aired On",
                 }
-
                 newly_fetched_fields = sorted(
                     [
                         key_map[k]
@@ -2632,7 +2604,6 @@ def main():
                     }
                     if final_obj.get("showType") != "Movie":
                         missing_fields.update({"airedOn", "network"})
-
                     missing = [
                         human_readable_field(k)
                         for k in missing_fields
@@ -2640,24 +2611,20 @@ def main():
                         and final_obj.get("sitePriorityUsed", {}).get(k) != "Manual"
                     ]
                     if missing:
-                        warning_str = f"- {sid} - {final_obj['showName']} ({final_obj.get('releasedYear')}) -> ⚠️ Missing: {', '.join(sorted(missing))}"
                         report.setdefault("missing_warnings_asian", []).append(
-                            warning_str
+                            f"- {sid} - {final_obj['showName']} ({final_obj.get('releasedYear')}) -> ⚠️ Missing: {', '.join(sorted(missing))}"
                         )
-
                 context["processed_ids_all_runs"].add(sid)
             else:
-                # 🌟 NEW LOGIC: Splitting Skipped vs Ignored
                 lang = excel_obj.get("nativeLanguage", "").lower()
-                is_asian = lang in [
+                if lang in [
                     "korean",
                     "chinese",
                     "japanese",
                     "thai",
                     "taiwanese",
                     "filipino",
-                ]
-                if is_asian:
+                ]:
                     report.setdefault("skipped", []).append(
                         f"{sid} - {excel_obj['showName']} ({excel_obj.get('releasedYear')})"
                     )
@@ -2667,25 +2634,21 @@ def main():
                     )
                 context["processed_ids_all_runs"].add(sid)
 
-    # --- REPORT FILENAME GENERATION ---
     os.makedirs(REPORTS_DIR, exist_ok=True)
     ts = context["file_ts"]
     first_run = context.get("first_run_id", current_gh_run)
-
     if limit_reached:
         report_name = f"{ts}_PARTIAL_{current_gh_run}_REPORT.txt"
     else:
-        if str(first_run) != str(current_gh_run):
-            report_name = f"{ts}_FINAL_{first_run}-{current_gh_run}_REPORT.txt"
-        else:
-            report_name = f"{ts}_FINAL_{current_gh_run}_REPORT.txt"
-
+        report_name = (
+            f"{ts}_FINAL_{first_run}-{current_gh_run}_REPORT.txt"
+            if str(first_run) != str(current_gh_run)
+            else f"{ts}_FINAL_{current_gh_run}_REPORT.txt"
+        )
     report_path = os.path.join(REPORTS_DIR, report_name)
     context["files_generated"]["reports"].append(report_path)
 
-    # FINALIZATION
     duration = (now_ist() - run_start_time).total_seconds()
-
     if limit_reached:
         save_batch_state(context, current_run_seconds=duration)
         with open("RESUME_FLAG.txt", "w") as rf:
