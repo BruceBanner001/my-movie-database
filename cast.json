@@ -1,1 +1,614 @@
-{}
+{
+    "101": {
+        "mainRoles": [
+            {
+                "artistID": "14659",
+                "characterName": "Ye Fei Mo",
+                "role": "Main Role"
+            },
+            {
+                "artistID": "19328",
+                "characterName": "Wen Xiao Nuan",
+                "role": "Main Role"
+            }
+        ],
+        "supportRoles": [
+            {
+                "artistID": "12886",
+                "characterName": "Gu Yun Zhou",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "41739",
+                "characterName": "Wang Jia Yi [Xiao Nuan's friend / Actress]",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "22890",
+                "characterName": "Han Hui [Fei Mo's ex-girlfriend]",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "40909",
+                "characterName": "Jiang Fang [Xiao Nuan's ex-boyfriend]",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "5060",
+                "characterName": "Cheng An Ya [Fei Mo's mother]",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "33781",
+                "characterName": "Li Can",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "34527",
+                "characterName": "Jiang Ling Er",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "42565",
+                "characterName": "Zhou Xiao Jing",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "27967",
+                "characterName": "Mo Xiao Bai",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "42991",
+                "characterName": "Mai Qi",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "15528",
+                "characterName": "Wen Kai",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "39815",
+                "characterName": "Zhao Di",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "43051",
+                "characterName": "Xiao Mei",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "43057",
+                "characterName": "Linda",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "43063",
+                "characterName": "Bai Xiu Wen",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "74311",
+                "characterName": "Lin Zheng",
+                "role": "Support Role"
+            }
+        ],
+        "guestRoles": [
+            {
+                "artistID": "43053",
+                "characterName": "CEO Xu",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "104717",
+                "characterName": "Gao Ming",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "18724",
+                "characterName": "[Yun Zhou's mother]",
+                "role": "Guest Role"
+            }
+        ],
+        "crew": [
+            {
+                "artistID": "43065",
+                "characterName": null,
+                "role": "Director"
+            },
+            {
+                "artistID": "47171",
+                "characterName": null,
+                "role": "Producer"
+            }
+        ],
+        "otherCrewMembers": [
+            {
+                "artistID": "140405",
+                "characterName": "Wen Xiao Nuan",
+                "role": "Voice Actor"
+            },
+            {
+                "artistID": "149014",
+                "characterName": "Ye Fei Mo",
+                "role": "Voice Actor"
+            },
+            {
+                "artistID": "55989",
+                "characterName": "Gu Yun Zhou",
+                "role": "Voice Actor"
+            },
+            {
+                "artistID": "143427",
+                "characterName": "Wang Jia Yi",
+                "role": "Voice Actor"
+            },
+            {
+                "artistID": "142193",
+                "characterName": "Li Can",
+                "role": "Voice Actor"
+            },
+            {
+                "artistID": "146598",
+                "characterName": "Jiang Ling Er",
+                "role": "Voice Actor"
+            },
+            {
+                "artistID": "148704",
+                "characterName": "Linda",
+                "role": "Voice Actor"
+            },
+            {
+                "artistID": "149572",
+                "characterName": "Cheng An Ya",
+                "role": "Voice Actor"
+            },
+            {
+                "artistID": "140411",
+                "characterName": "Wen Kai",
+                "role": "Voice Actor"
+            },
+            {
+                "artistID": "143741",
+                "characterName": "Lin Zheng",
+                "role": "Voice Actor"
+            },
+            {
+                "artistID": "146912",
+                "characterName": "Mo Xiao Bai",
+                "role": "Voice Actor"
+            },
+            {
+                "artistID": "146910",
+                "characterName": "Zhou Xiao Jing",
+                "role": "Voice Actor"
+            },
+            {
+                "artistID": "146596",
+                "characterName": "Maggie",
+                "role": "Voice Actor"
+            },
+            {
+                "artistID": "147958",
+                "characterName": "Zhao Di",
+                "role": "Voice Actor"
+            },
+            {
+                "artistID": "147178",
+                "characterName": "Mother Gu",
+                "role": "Voice Actor"
+            },
+            {
+                "artistID": "55835",
+                "characterName": "Mo Yao",
+                "role": "Voice Actor"
+            },
+            {
+                "artistID": "152210",
+                "characterName": "Unknown",
+                "role": "Voice Actor"
+            },
+            {
+                "artistID": "150318",
+                "characterName": "Unknown",
+                "role": "Voice Actor"
+            },
+            {
+                "artistID": "152930",
+                "characterName": "Unknown",
+                "role": "Voice Actor"
+            },
+            {
+                "artistID": "147172",
+                "characterName": "Unknown",
+                "role": "Voice Actor"
+            },
+            {
+                "artistID": "153526",
+                "characterName": "Unknown",
+                "role": "Voice Actor"
+            },
+            {
+                "artistID": "147910",
+                "characterName": "Unknown",
+                "role": "Voice Actor"
+            },
+            {
+                "artistID": "149018",
+                "characterName": "Unknown",
+                "role": "Voice Actor"
+            }
+        ]
+    },
+    "3001": {
+        "mainRoles": [
+            {
+                "artistID": "183",
+                "characterName": "Kim Joo Won",
+                "role": "Main Role"
+            },
+            {
+                "artistID": "187",
+                "characterName": "Gil Ra Im",
+                "role": "Main Role"
+            },
+            {
+                "artistID": "188",
+                "characterName": "\"OSKA\" / Choi Woo Young",
+                "role": "Main Role"
+            },
+            {
+                "artistID": "189",
+                "characterName": "Yoon Seul",
+                "role": "Main Role"
+            }
+        ],
+        "supportRoles": [
+            {
+                "artistID": "190",
+                "characterName": "Im Jong Soo",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "4269",
+                "characterName": "Lee Ji Hyun [Psychologist]",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "633",
+                "characterName": "Ah Young",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "2625",
+                "characterName": "Moon Bun Hon [Ju Won's mother]",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "845",
+                "characterName": "Secretary Kim Sung Woo",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "1741",
+                "characterName": "Choi Dong Kyu",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "3168",
+                "characterName": "Hwang Jung Hwan",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "1695",
+                "characterName": "Park Bong Ho",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "6886",
+                "characterName": "Moon Chang Soo [Joo Won's grandfather]",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "1210",
+                "characterName": "Kim Hee Won [Joo Won's sister]",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "191",
+                "characterName": "Mun Yeon Hong [Oska's mother]",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "2478",
+                "characterName": "[Gil Ra Im's father]",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "6823",
+                "characterName": "Sang Min [Member of action school]",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "900",
+                "characterName": "Han Tae Seon / \"Sseon\"",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "1696",
+                "characterName": "Park Chae Rin",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "2926",
+                "characterName": "Park Bong Hee",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "5727",
+                "characterName": "Yoo Jong Hun [Oska's manager]",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "3198",
+                "characterName": "[Director]",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "4503",
+                "characterName": "[Yoon Seul's friend]",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "123777",
+                "characterName": "Yoo Jong Heon",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "20515",
+                "characterName": "Unknown",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "5543",
+                "characterName": "Unknown",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "5984",
+                "characterName": "Unknown",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "121387",
+                "characterName": "Unknown",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "2874",
+                "characterName": "Unknown",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "54419",
+                "characterName": "Unknown",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "48163",
+                "characterName": "Unknown",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "46663",
+                "characterName": "Unknown",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "143209",
+                "characterName": "Unknown",
+                "role": "Support Role"
+            },
+            {
+                "artistID": "128633",
+                "characterName": "Unknown",
+                "role": "Support Role"
+            }
+        ],
+        "guestRoles": [
+            {
+                "artistID": "293",
+                "characterName": "[Herself] (Ep. 20)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "1292",
+                "characterName": "[Top Star in giveaway event]",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "1572",
+                "characterName": "Kim Shin Ah (Ep. 20)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "2715",
+                "characterName": "[Photographer] (Ep. 3)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "843",
+                "characterName": "Himself (Ep. 8)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "1693",
+                "characterName": "[Old lady from the guest house] (Ep. 5-6)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "5834",
+                "characterName": "Unknown",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "5072",
+                "characterName": "[Ra Im's son]",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "1892",
+                "characterName": "[Singer]",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "6125",
+                "characterName": "Director Nam",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "3796",
+                "characterName": "[Gang member of \"Eungalchi\"/Cutlassfish group]",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "3793",
+                "characterName": "[Sauna receptionist](Ep.6)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "18646",
+                "characterName": "(Ep.13)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "15548",
+                "characterName": "Unknown",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "11193",
+                "characterName": "[Woman with bag in theater]",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "4542",
+                "characterName": "Manager Choi",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "22847",
+                "characterName": "[Restaurant Hostess]",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "2622",
+                "characterName": "[pervert in department store] (Ep.8-9)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "7275",
+                "characterName": "[Director] (Ep. 10)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "20069",
+                "characterName": "[Stunt Auditionee](Ep. 2)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "33223",
+                "characterName": "[Prisoner] (Ep. 9)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "3461",
+                "characterName": "[Rude party guest]",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "5541",
+                "characterName": "(Ep. 4)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "38387",
+                "characterName": "Unknown",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "1505",
+                "characterName": "Oska's fan (Ep. 10)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "3215",
+                "characterName": "[Smoking man]",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "948",
+                "characterName": "Cherry (Ep.15)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "4653",
+                "characterName": "Unknown",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "10717",
+                "characterName": "[Action School Senior]",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "124041",
+                "characterName": "[A sauna client] (Ep 5-6)",
+                "role": "Guest Role"
+            },
+            {
+                "artistID": "3505",
+                "characterName": "[Assistant director]",
+                "role": "Guest Role"
+            }
+        ],
+        "crew": [
+            {
+                "artistID": "74267",
+                "characterName": null,
+                "role": "Composer"
+            },
+            {
+                "artistID": "80605",
+                "characterName": null,
+                "role": "Composer"
+            },
+            {
+                "artistID": "16189",
+                "characterName": null,
+                "role": "Director"
+            },
+            {
+                "artistID": "16190",
+                "characterName": null,
+                "role": "Director"
+            },
+            {
+                "artistID": "17104",
+                "characterName": null,
+                "role": "Director"
+            },
+            {
+                "artistID": "6643",
+                "characterName": null,
+                "role": "Martial Arts Director"
+            },
+            {
+                "artistID": "15905",
+                "characterName": null,
+                "role": "Screenwriter"
+            }
+        ]
+    }
+}
