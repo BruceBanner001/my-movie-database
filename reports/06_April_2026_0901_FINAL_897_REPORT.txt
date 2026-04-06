@@ -8,9 +8,9 @@
 🔁 RUN           : 897
 ⏰ Start Time    : 06 April 2026 - 09:01:45 AM
 ⏰ End Time      : 06 April 2026 - 09:01:47 AM
-⏱️ Run Time      : 2 Seconds
+⏱️ Total Runtime : 2 Seconds
 ⚙️ Max Process   : 50 Row Per Run
-🔄 Current Batch : 1
+🔄 Total Batches : 1 Run
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Deleting Records ===
@@ -63,7 +63,7 @@
 - 127 -> First Lady (2025) -> ✅ Deleted
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📊 Summary (Current Batch Only)
+📊 Overall Cumulative Summary
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🆕 Total Created: 0
 🔁 Total Updated: 0
@@ -89,14 +89,6 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ Folders Generated:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📁 deleted_data/ (Total: 44 files)
-    📄 DELETED_06_April_2026_0901_128.json
-    📄 DELETED_06_April_2026_0901_129.json
-    📄 DELETED_06_April_2026_0901_130.json
-    📄 DELETED_06_April_2026_0901_131.json
-    📄 DELETED_06_April_2026_0901_132.json
-    ... and 39 more files.
-
 📁 deleted_images/ (Total: 26 files)
     📄 DELETED_06_April_2026_0901_131.jpg
     📄 DELETED_06_April_2026_0901_132.jpg
@@ -104,9 +96,6 @@
     📄 DELETED_06_April_2026_0901_3007.jpg
     📄 DELETED_06_April_2026_0901_3008.jpg
     ... and 21 more files.
-
-📁 reports/ (Total: 1 files)
-    📄 06_April_2026_0901_FINAL_897_REPORT.txt
 
 📁 archived_meta_backups/ (Total: 38 files)
     📄 META_04_April_2026_1638_131.json
@@ -116,7 +105,16 @@
     📄 META_05_April_2026_0038_3001.json
     ... and 33 more files.
 
+📁 deleted_data/ (Total: 44 files)
+    📄 DELETED_06_April_2026_0901_128.json
+    📄 DELETED_06_April_2026_0901_129.json
+    📄 DELETED_06_April_2026_0901_130.json
+    📄 DELETED_06_April_2026_0901_131.json
+    📄 DELETED_06_April_2026_0901_132.json
+    ... and 39 more files.
+
+📁 reports/ (Total: 1 files)
+    📄 06_April_2026_0901_FINAL_897_REPORT.txt
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🏁 Workflow finished successfully
-
-✅ Final Master Report written -> reports/06_April_2026_0901_FINAL_897_REPORT.txt (Saved to Repo)
