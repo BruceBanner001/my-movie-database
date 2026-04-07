@@ -1,0 +1,913 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260407_202620",
+    "timestamp": "07 April 2026 08:29 PM (IST)",
+    "showID": 1363,
+    "showName": "The Judge from Hell",
+    "fetchedFields": {
+        "showImage": {
+            "value": "1363.jpg",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/The_Judge_from_Hell"
+        },
+        "releaseDate": {
+            "value": "Sep 21, 2024 - Nov  2, 2024",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/758169-the-judge-from-hell"
+        },
+        "otherNames": {
+            "value": [
+                "A Juíza do Inferno",
+                "Cehennemden Gelen Yargıç",
+                "Jiokeseo On Pansa",
+                "Judge from Hell",
+                "The Judge from Hell (2024)",
+                "The Judge from Hell ห้องพิจารณาคดีแห่งปีศาจ",
+                "Суддя з пекла",
+                "Судья из ада",
+                "שופטת מהגיהנום"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/758169-the-judge-from-hell"
+        },
+        "Duration": {
+            "value": "1 hr. 10 min.",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/758169-the-judge-from-hell"
+        },
+        "synopsis": {
+            "value": "Kang Bit-Na (Park Shin-Hye) is an elite judge with a beautiful appearance, but she is actually a demon.\nHer mission as a demon is to kill evil people who lead other people to their deaths and don't reflect on their actions and are unforgiven for their actions. She sends these people to Hell afterwards. One day, Kang Bit-Na meets Han Da-On (Kim Jae-Young). He has a friendly and gentle personality. As a detective, his mind is sharp and he has a keen sense of observation. But, internally, he carries pain in his mind that nobody knows about. After Kang Bit-Na and Han Da-On meet with each other, their lives change greatly.",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/The_Judge_from_Hell"
+        },
+        "director": {
+            "value": [
+                "Park Jin Pyo"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/758169-the-judge-from-hell"
+        },
+        "tags": {
+            "value": [
+                "Judge Female Lead",
+                "Detective Male Lead",
+                "Demon",
+                "Murder",
+                "Supernatural",
+                "Death",
+                "Demon Female Lead",
+                "Insensitive Female Lead",
+                "Character Development",
+                "Warm Man/Cold Woman"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/758169-the-judge-from-hell"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "68071",
+                    "artistName": "Park Jin Pyo",
+                    "artistImageURL": "https://i.mydramalist.com/BlWvA_5m.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "144495",
+                    "artistName": "Cho I Su",
+                    "artistImageURL": "https://i.mydramalist.com/vXxJkD_5m.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "210",
+                    "artistName": "Park Shin Hye",
+                    "artistImageURL": "https://i.mydramalist.com/Q3Nz7_5s.jpg",
+                    "characterName": "Kang Bit Na / Justitia",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "8232",
+                    "artistName": "Kim Jae Yeong",
+                    "artistImageURL": "https://i.mydramalist.com/g0r4v1_5s.jpg",
+                    "characterName": "Han Da On",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "1628",
+                    "artistName": "Kim In Kwon",
+                    "artistImageURL": "https://i.mydramalist.com/l0nk2N_5s.jpg",
+                    "characterName": "Koo Man Do / Valak [Bit Na's assistant]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "84395",
+                    "artistName": "Kim Ah Young",
+                    "artistImageURL": "https://i.mydramalist.com/QJnB5W_5s.jpg",
+                    "characterName": "Lee A Rong / Gremory [Bit Na's assistant]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "20230",
+                    "artistName": "Lee Joong Ok",
+                    "artistImageURL": "https://i.mydramalist.com/j4n3ys.jpg",
+                    "characterName": "Kim Jae Hyun [Cleaning service]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "23790",
+                    "artistName": "Ha Kyung Min",
+                    "artistImageURL": "https://i.mydramalist.com/N7VLAs.jpg",
+                    "characterName": "Moon Dong Ju [Cleaning service]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4461",
+                    "artistName": "Kim Jae Hwa",
+                    "artistImageURL": "https://i.mydramalist.com/j2N88s.jpg",
+                    "characterName": "Jung Myeong Suk [Hwangcheon villa resident]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1150",
+                    "artistName": "Kim Young Ok",
+                    "artistImageURL": "https://i.mydramalist.com/XnV7g_5s.jpg",
+                    "characterName": "O Mi Ja [Hwangcheon villa resident]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5786",
+                    "artistName": "Park Ji Yun",
+                    "artistImageURL": "https://i.mydramalist.com/we7Xb_5s.jpg",
+                    "characterName": "Yoo Jung Im [Hwangcheon villa resident]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "18931",
+                    "artistName": "Oh Han Kyul",
+                    "artistImageURL": "https://i.mydramalist.com/w2Z08s.jpg",
+                    "characterName": "Yoo Min Jun [Jung Im’s son]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4462",
+                    "artistName": "Kim Hye Hwa",
+                    "artistImageURL": "https://i.mydramalist.com/QB7xW_5s.jpg",
+                    "characterName": "Kim So Yeong [Da On's superior]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "10659",
+                    "artistName": "Kim Ji Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/RQOdV_5s.jpg",
+                    "characterName": "Park Dong Hun [Detective]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "33797",
+                    "artistName": "Park Ji Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/XKLxXs.jpg",
+                    "characterName": "Ko Eun Seop [Detective]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "6320",
+                    "artistName": "Kim Hong Pa",
+                    "artistImageURL": "https://i.mydramalist.com/Egvrz_5s.jpg",
+                    "characterName": "Jung Jae Gul [Assemblyman]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1190",
+                    "artistName": "Lee Kyu Han",
+                    "artistImageURL": "https://i.mydramalist.com/rNYnLE_5s.jpg",
+                    "characterName": "Jung Tae Gyu [Jae Gul’s son]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "9697",
+                    "artistName": "Choi Dong Goo",
+                    "artistImageURL": "https://i.mydramalist.com/QJXW6Y_5s.jpg",
+                    "characterName": "Jung Sun Ho [Jae Gul’s son]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "23540",
+                    "artistName": "Lee Kyu Hoe",
+                    "artistImageURL": "https://i.mydramalist.com/Qb7QA_5s.jpg",
+                    "characterName": "Na Yeong Jin [Seoul Central district court director]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "939",
+                    "artistName": "Kim Kwang Gyu",
+                    "artistImageURL": "https://i.mydramalist.com/vgy5q_5s.jpg",
+                    "characterName": "An Dae Yong [Criminal chamber 17 judge]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3078",
+                    "artistName": "Lee Mi Do",
+                    "artistImageURL": "https://i.mydramalist.com/zBJBEJ_5s.jpg",
+                    "characterName": "Seo Hwa Seon [Criminal chamber 16 judge]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "120723",
+                    "artistName": "Do Eun Ha",
+                    "artistImageURL": "https://i.mydramalist.com/2wOyrR_5s.jpg",
+                    "characterName": "Choi Won Gyeong [Bit Na’s secretary]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1904",
+                    "artistName": "Han Sang Jin",
+                    "artistImageURL": "https://i.mydramalist.com/W6KBR_5s.jpg",
+                    "characterName": "Joo Hyeong Seok [So Yeong's husband]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "43229",
+                    "artistName": "Lee Ga Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/eYy6zW_5s.jpg",
+                    "characterName": "Joo Da Hui [So Yeong’s daughter]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3564",
+                    "artistName": "Jung Suk Yong",
+                    "artistImageURL": "https://i.mydramalist.com/j2rBOs.jpg",
+                    "characterName": "Yoo Hong Cheol [Nobong Violent Crimes Unit 2 new team leader]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2915",
+                    "artistName": "Oh Na Ra",
+                    "artistImageURL": "https://i.mydramalist.com/nOZJmL_5s.jpg",
+                    "characterName": "Justitia [Goddess of Justice] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "18733",
+                    "artistName": "Kim Sang Woo",
+                    "artistImageURL": "https://i.mydramalist.com/0J0rY_5s.jpg",
+                    "characterName": "Valak [Judge's assistant, murderers hell] (Ep. 1, 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "104301",
+                    "artistName": "Lee So Yi",
+                    "artistImageURL": "https://i.mydramalist.com/wJWbpg_5s.jpg",
+                    "characterName": "[Teacher] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "23115",
+                    "artistName": "Yoo Yong",
+                    "artistImageURL": "https://i.mydramalist.com/5v7qB0_5s.jpg",
+                    "characterName": "[Lawyer] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "93207",
+                    "artistName": "Jung Hyun Woo",
+                    "artistImageURL": "https://i.mydramalist.com/jmeNy_5s.jpg",
+                    "characterName": "[Murderer] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "122205",
+                    "artistName": "Lee Jun I",
+                    "artistImageURL": "https://i.mydramalist.com/XdKmon_5s.jpg",
+                    "characterName": "[Prosecutor] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "40947",
+                    "artistName": "Myung Jae Hwan",
+                    "artistImageURL": "https://i.mydramalist.com/0ApqKs.jpg",
+                    "characterName": "[Prosecutor] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "39649",
+                    "artistName": "Moon Yong Il",
+                    "artistImageURL": "https://i.mydramalist.com/j3AlJ_5s.jpg",
+                    "characterName": "[Questioner] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "64885",
+                    "artistName": "Kim Jae Ho",
+                    "artistImageURL": "https://i.mydramalist.com/pY0vQ_5s.jpg",
+                    "characterName": "[Police officer] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "42187",
+                    "artistName": "Park Jung Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/j4LnJs.jpg",
+                    "characterName": "Cha Min Jeong (Ep. 1-2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "34497",
+                    "artistName": "Jang Do Ha",
+                    "artistImageURL": "https://i.mydramalist.com/0Nmbrs.jpg",
+                    "characterName": "Moon Jeong Jun (Ep. 1-2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "2478",
+                    "artistName": "Jung In Ki",
+                    "artistImageURL": "https://i.mydramalist.com/627A2s.jpg",
+                    "characterName": "[Min Jeong's dad] (Ep. 1-2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6701",
+                    "artistName": "Park Myung Shin",
+                    "artistImageURL": "https://i.mydramalist.com/g0jd1O_5s.jpg",
+                    "characterName": "[Min Jeong's mom] (Ep. 1-2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "1488",
+                    "artistName": "Shin Sung Rok",
+                    "artistImageURL": "https://i.mydramalist.com/j50eO_5s.jpg",
+                    "characterName": "Bael [Director of Hell] (Ep. 1, 3, 10-12)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "9521",
+                    "artistName": "Jung Ha Dam",
+                    "artistImageURL": "https://i.mydramalist.com/5v7gXL_5s.jpg",
+                    "characterName": "Gremory [Warden of district 3, Fake Hell] (Ep. 1, 3-4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "13907",
+                    "artistName": "Dong Hyo Hee",
+                    "artistImageURL": "https://i.mydramalist.com/1PKxK_5s.jpg",
+                    "characterName": "[Psychiatrist] (Ep. 1, 3, 5, 9, 11)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "145138",
+                    "artistName": "Yang Hui Sang",
+                    "artistImageURL": "https://i.mydramalist.com/mOvEkQ_5s.jpg",
+                    "characterName": "Yoo Ji Ho (Ep. 3-4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "14469",
+                    "artistName": "Im Se Ju",
+                    "artistImageURL": "https://i.mydramalist.com/d7BRg_5s.jpg",
+                    "characterName": "Bae Ja Yeong (Ep. 3-4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5687",
+                    "artistName": "Nam Neung Mi",
+                    "artistImageURL": "https://i.mydramalist.com/l0DQ7b_5s.jpg",
+                    "characterName": "Jang Sun Hui (Ep. 3-4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "103217",
+                    "artistName": "Jin Sung Min",
+                    "artistImageURL": "https://i.mydramalist.com/BJRXA_5s.jpg",
+                    "characterName": "Yoo Hyeon Su (Ep. 3-4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "58699",
+                    "artistName": "Park Hye Young",
+                    "artistImageURL": "https://i.mydramalist.com/Z2zw7_5s.jpg",
+                    "characterName": "[Lawyer] (Ep. 3-4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "81023",
+                    "artistName": "Jeon Ah Hee",
+                    "artistImageURL": "https://i.mydramalist.com/p6LOr_5s.jpg",
+                    "characterName": "[Police officer] (Ep. 3-4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "66129",
+                    "artistName": "Kim Shi Woo",
+                    "artistImageURL": "https://i.mydramalist.com/4AZkQ_5s.jpg",
+                    "characterName": "Han Da On [Child] (Ep. 3, 5)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5862",
+                    "artistName": "Choi Gyo Shik",
+                    "artistImageURL": "https://i.mydramalist.com/WXzRP_5s.jpg",
+                    "characterName": "[Mailman] (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "53527",
+                    "artistName": "Jung Young Keum",
+                    "artistImageURL": "https://i.mydramalist.com/mO16J2_5s.jpg",
+                    "characterName": "[Passerby] (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "42413",
+                    "artistName": "Lee Kyung Oh",
+                    "artistImageURL": "https://i.mydramalist.com/1ENl6s.jpg",
+                    "characterName": "[Ex-husband] (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "80287",
+                    "artistName": "Jang Yong Hee",
+                    "artistImageURL": "https://i.mydramalist.com/ELQYb_5s.jpg",
+                    "characterName": "[Alley passerby] (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "126971",
+                    "artistName": "Seo Eun Joo",
+                    "artistImageURL": "https://i.mydramalist.com/E5lqnQ_5s.jpg",
+                    "characterName": "[Jae Gul’s housekeeper] (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "105349",
+                    "artistName": "Cho Seung Gu",
+                    "artistImageURL": "https://i.mydramalist.com/b31L5N_5s.jpg",
+                    "characterName": "[Demon] (Ep. 5)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "90673",
+                    "artistName": "Noh Young Joo",
+                    "artistImageURL": "https://i.mydramalist.com/1eWdQ_5s.jpg",
+                    "characterName": "[Demon] (Ep. 5)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "44155",
+                    "artistName": "Jin Shi Won",
+                    "artistImageURL": "https://i.mydramalist.com/eB8oq_5s.jpg",
+                    "characterName": "[Dispatcher] (Ep. 5)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "7906",
+                    "artistName": "Kim Bong Su",
+                    "artistImageURL": "https://i.mydramalist.com/b31Yme_5s.jpg",
+                    "characterName": "[Senior citizen] (Ep. 5)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "53999",
+                    "artistName": "Ahn Jung Ho",
+                    "artistImageURL": "https://i.mydramalist.com/j6zrB_5s.jpg",
+                    "characterName": "An Jung Ho (Ep. 5-6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "27069",
+                    "artistName": "Yang Kyung Won",
+                    "artistImageURL": "https://i.mydramalist.com/pOO1Vs.jpg",
+                    "characterName": "Yang Seung Bin (Ep. 5-6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "30269",
+                    "artistName": "Kim Dong Hyuk",
+                    "artistImageURL": "https://i.mydramalist.com/ROjYE_5s.jpg",
+                    "characterName": "Ko Yun Seung [Demon] (Ep. 5-6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "38565",
+                    "artistName": "Nam Jung Woo",
+                    "artistImageURL": "https://i.mydramalist.com/E4327_5s.jpg",
+                    "characterName": "[Lawyer] (Ep. 5-6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "145750",
+                    "artistName": "Lee Ho Jin",
+                    "artistImageURL": "https://i.mydramalist.com/NdNkoy_5s.jpg",
+                    "characterName": "[Eun Ju’s sister] (Ep. 5-6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "123267",
+                    "artistName": "Jeon Jae Hyeong",
+                    "artistImageURL": "https://i.mydramalist.com/vXQ70p_5s.jpg",
+                    "characterName": "[Prosecutor] (Ep. 5-6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "121061",
+                    "artistName": "Jo Kyung Chan",
+                    "artistImageURL": "https://i.mydramalist.com/JB8kpy_5s.jpg",
+                    "characterName": "[Associate judge] (Ep. 5-6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "13943",
+                    "artistName": "Won Mi Won",
+                    "artistImageURL": "https://i.mydramalist.com/4NvRr_5s.jpg",
+                    "characterName": "[Seung Bin’s mother-in-law] (Ep. 5-6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "42491",
+                    "artistName": "Kang Tae Joo",
+                    "artistImageURL": "https://i.mydramalist.com/eKJ5Q_5s.jpg",
+                    "characterName": "[Seung Bin's son] (Ep. 6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "60941",
+                    "artistName": "Lee So Yoon",
+                    "artistImageURL": "https://i.mydramalist.com/mOP87J_5s.jpg",
+                    "characterName": "[Seung Bin's daughter] (Ep. 6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "70129",
+                    "artistName": "Jung Se Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/vl82W_5s.jpg",
+                    "characterName": "[Passerby] (Ep. 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "40943",
+                    "artistName": "Bae Seong Il",
+                    "artistImageURL": "https://i.mydramalist.com/73bdOD_5s.jpg",
+                    "characterName": "[Union member] (Ep. 7-8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "103541",
+                    "artistName": "Choi Yo Woon",
+                    "artistImageURL": "https://i.mydramalist.com/rpk4y_5s.jpg",
+                    "characterName": "[Bully girl’s mom] (Ep. 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "126531",
+                    "artistName": "Yang Yoon Hee",
+                    "artistImageURL": "https://i.mydramalist.com/eYnWbW_5s.jpg",
+                    "characterName": "[Bully girl’s mom] (Ep. 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6326",
+                    "artistName": "Lee Seung Chul",
+                    "artistImageURL": "https://i.mydramalist.com/ZBYLW_5s.jpg",
+                    "characterName": "Mr. Choi (Ep. 7-8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "10197",
+                    "artistName": "Oh Eui Shik",
+                    "artistImageURL": "https://i.mydramalist.com/5v7D6y_5s.jpg",
+                    "characterName": "Choi Won Jung (Ep. 7-8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "2391",
+                    "artistName": "Kang Shin Il",
+                    "artistImageURL": "https://i.mydramalist.com/kVZqms.jpg",
+                    "characterName": "Won Chang Seon (Ep. 7-8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "68499",
+                    "artistName": "Fila Lee",
+                    "artistImageURL": "https://i.mydramalist.com/4Ompk_5s.jpg",
+                    "characterName": "[Lawyer] (Ep. 7-8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "4380",
+                    "artistName": "Han Song Hee",
+                    "artistImageURL": "https://i.mydramalist.com/40dQ1s.jpg",
+                    "characterName": "Jo A Ran [Reporter] (Ep. 7-8, 11)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "10852",
+                    "artistName": "Kim Nam Jin",
+                    "artistImageURL": "https://i.mydramalist.com/qBX2B_5s.jpg",
+                    "characterName": "[Chang Seon’s wife] (Ep. 7-8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "108089",
+                    "artistName": "Park Soo Jin",
+                    "artistImageURL": "https://i.mydramalist.com/XYJyp_5s.jpg",
+                    "characterName": "[Doctor] (Ep. 8-9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "87655",
+                    "artistName": "Yoon Hyo Sik",
+                    "artistImageURL": "https://i.mydramalist.com/xqgKz_5s.jpg",
+                    "characterName": "[Police officer] (Ep. 8-9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "122313",
+                    "artistName": "Yeom Ji Hye",
+                    "artistImageURL": "https://i.mydramalist.com/2wd25d_5s.jpg",
+                    "characterName": "[Anchorwoman] (Ep. 8-9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21771",
+                    "artistName": "Kim Hyun Mok",
+                    "artistImageURL": "https://i.mydramalist.com/pXQ68_5s.jpg",
+                    "characterName": "Gabriel (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "65915",
+                    "artistName": "Yoon Bok Sung",
+                    "artistImageURL": "https://i.mydramalist.com/0lVwY_5s.jpg",
+                    "characterName": "[Police chief] (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "120521",
+                    "artistName": "Jo Jae Kyung",
+                    "artistImageURL": "https://i.mydramalist.com/Bdryg5_5s.jpg",
+                    "characterName": "[Café employee] (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "9724",
+                    "artistName": "Kim Ha Jin",
+                    "artistImageURL": "https://i.mydramalist.com/Jj7Xys.jpg",
+                    "characterName": "[Ophthalmologist] (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "44145",
+                    "artistName": "Kim Han Sang",
+                    "artistImageURL": "https://i.mydramalist.com/0g86O_5s.jpg",
+                    "characterName": "[Restaurant owner] (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "4039",
+                    "artistName": "Choi Dae Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/X85nqs.jpg",
+                    "characterName": "Jang Mun Jae [Detective] | Paimon [Demon] (Ep. 9-10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "29629",
+                    "artistName": "Kim Kwi Seon",
+                    "artistImageURL": "https://i.mydramalist.com/rbevjs.jpg",
+                    "characterName": "[Lawyer] (Ep. 9-10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5809",
+                    "artistName": "Kwon Oh Jin",
+                    "artistImageURL": "https://i.mydramalist.com/XOB3J_5s.jpg",
+                    "characterName": "Ha Yeong Seok (Ep. 10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "23496",
+                    "artistName": "Kim Seung Hwa",
+                    "artistImageURL": "https://i.mydramalist.com/dXpq0_5s.jpg",
+                    "characterName": "Jung Ju Eun [Myeong Suk's daughter] (Ep. 10, 13)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "59251",
+                    "artistName": "Kim Deok Ju",
+                    "artistImageURL": "https://i.mydramalist.com/73b8Je_5s.jpg",
+                    "characterName": "[Realtor] (Ep. 10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "25685",
+                    "artistName": "Heo Seon Haeng",
+                    "artistImageURL": "https://i.mydramalist.com/yWnepN_5s.jpg",
+                    "characterName": "[Victims’ relative] (Ep. 10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "91361",
+                    "artistName": "Ahn Hyun Jung",
+                    "artistImageURL": "https://i.mydramalist.com/jL7Rv_5s.jpg",
+                    "characterName": "[Victims’ relative] (Ep. 10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "10727",
+                    "artistName": "Park Ho San",
+                    "artistImageURL": "https://i.mydramalist.com/Rnb0z_5s.jpg",
+                    "characterName": "Satan (Ep. 12)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "68199",
+                    "artistName": "Yang Ha Yoon",
+                    "artistImageURL": "https://i.mydramalist.com/QZ6yv_5s.jpg",
+                    "characterName": "Kim Ho Rang (Ep. 13)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5560",
+                    "artistName": "Cha Jong Ho",
+                    "artistImageURL": "https://i.mydramalist.com/2kXzP_5s.jpg",
+                    "characterName": "[Professor] (Ep. 13)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6291",
+                    "artistName": "Park Yoo Mil",
+                    "artistImageURL": "https://i.mydramalist.com/73bdVb_5s.jpg",
+                    "characterName": "[Prosecutor] (Ep. 13)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "84557",
+                    "artistName": "Ahn Chan Woong",
+                    "artistImageURL": "https://i.mydramalist.com/kppKw_5s.jpg",
+                    "characterName": "[Prison guard] (Ep. 13)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "23674",
+                    "artistName": "Yang Hee Woo",
+                    "artistImageURL": "https://i.mydramalist.com/qgnO0_5s.jpg",
+                    "characterName": "[Office worker] (Ep. 13)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "71027",
+                    "artistName": "Lee Joo Ye",
+                    "artistImageURL": "https://i.mydramalist.com/XmnPO_5s.jpg",
+                    "characterName": "[Anchorwoman] (Ep. 13)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "130941",
+                    "artistName": "Park Woo Bin",
+                    "artistImageURL": "https://i.mydramalist.com/2wqNRE_5s.jpg",
+                    "characterName": "[University student] (Ep. 13)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "149748",
+                    "artistName": "Kim Yeol",
+                    "artistImageURL": "https://i.mydramalist.com/mODORb_5s.jpg",
+                    "characterName": "[Lawyer] (Ep. 7-8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "123169",
+                    "artistName": "Jung Jae Bin",
+                    "artistImageURL": "https://i.mydramalist.com/1wo5BK_5s.jpg",
+                    "characterName": "Son-in-Law Lee (Ep. 13-14)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "154594",
+                    "artistName": "Yoon Tae Ha",
+                    "artistImageURL": "https://i.mydramalist.com/oQlYox_5s.jpg",
+                    "characterName": "Paimon",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "94141",
+                    "artistName": "Song A Kyung",
+                    "artistImageURL": "https://i.mydramalist.com/6O1gO_5s.jpg",
+                    "characterName": "[Doctor] (Ep. 13-14)",
+                    "role": "Guest Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/758169-the-judge-from-hell"
+        },
+        "airedOn": {
+            "value": [
+                "Friday",
+                "Saturday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/758169-the-judge-from-hell"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "68071",
+            "artistName": "Park Jin Pyo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "144495",
+            "artistName": "Cho I Su",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "6320",
+            "artistName": "Kim Hong Pa",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "120723",
+            "artistName": "Do Eun Ha",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "43229",
+            "artistName": "Lee Ga Yeon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "104301",
+            "artistName": "Lee So Yi",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "5687",
+            "artistName": "Nam Neung Mi",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "80287",
+            "artistName": "Jang Yong Hee",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "105349",
+            "artistName": "Cho Seung Gu",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "30269",
+            "artistName": "Kim Dong Hyuk",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "123267",
+            "artistName": "Jeon Jae Hyeong",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "121061",
+            "artistName": "Jo Kyung Chan",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "42491",
+            "artistName": "Kang Tae Joo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "4380",
+            "artistName": "Han Song Hee",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "5560",
+            "artistName": "Cha Jong Ho",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "71027",
+            "artistName": "Lee Joo Ye",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "149748",
+            "artistName": "Kim Yeol",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "154594",
+            "artistName": "Yoon Tae Ha",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "asianwiki",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": null,
+        "airedOn": "mydramalist"
+    }
+}
