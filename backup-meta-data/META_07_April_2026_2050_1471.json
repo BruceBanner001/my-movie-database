@@ -1,0 +1,793 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260407_205045",
+    "timestamp": "07 April 2026 08:55 PM (IST)",
+    "showID": 1471,
+    "showName": "Lovers of the Red Sky",
+    "fetchedFields": {
+        "showImage": {
+            "value": "1471.jpg",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Lovers_of_the_Red_Sky"
+        },
+        "releaseDate": {
+            "value": "Aug 30, 2021 - Oct 26, 2021",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/22680-hong-chun-gi"
+        },
+        "otherNames": {
+            "value": [
+                "Céu Vermelho",
+                "Ciel rouge",
+                "Hong Chun Gi",
+                "Hongcheongi",
+                "Hongcheonki",
+                "Red Sky",
+                "Алые небеса",
+                "عشاق السماء الحمراء",
+                "红天机"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/22680-hong-chun-gi"
+        },
+        "Duration": {
+            "value": "1 hr. 10 min.",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/22680-hong-chun-gi"
+        },
+        "synopsis": {
+            "value": "Set during the Joseon era, Hong Cheon-Ki (Kim You-Jung) is a female painter with genius like painting talent. She is picked as the first female painter of the Dohwaseo (Korean Royal Academy of Painting).  Hong Cheon-Ki also has a beautiful appearance and bright personality. For her, painting is everything. One day, she meets Ha Ram.\n\nHa Ram (Ahn Hyo-Seop) is an officer at the Seowoongwan, an office in charge of astronomy, geography, art of divination, meteorology. When he was young, an accident caused him to become blind.\nHong Cheon-Ki falls in love with him and she does not care that he is blind. Hong Cheon-Ki keeps appearing in front of Ha Ram and he finds himself waiting for her.",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Lovers_of_the_Red_Sky"
+        },
+        "director": {
+            "value": [
+                "Jang Tae Yoo",
+                "Nam Tae Jin"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/22680-hong-chun-gi"
+        },
+        "tags": {
+            "value": [
+                "Fated Love",
+                "Demon",
+                "Adapted From A Novel",
+                "Age Gap [Real Life]",
+                "Painting",
+                "Blind Male Lead",
+                "Protective Male Lead",
+                "Hidden Identity",
+                "Nice Male Lead",
+                "Double Identity"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/22680-hong-chun-gi"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "15976",
+                    "artistName": "Jang Tae Yoo",
+                    "artistImageURL": "https://i.mydramalist.com/KDY84m.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "84129",
+                    "artistName": "Nam Tae Jin",
+                    "artistImageURL": "https://i.mydramalist.com/pX6jD_5m.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "50273",
+                    "artistName": "Jung Eun Gwol",
+                    "artistImageURL": "https://i.mydramalist.com/RQdPV_5m.jpg",
+                    "characterName": null,
+                    "role": "Original Creator"
+                },
+                {
+                    "artistID": "28779",
+                    "artistName": "Kim Yeong Yeong",
+                    "artistImageURL": "https://i.mydramalist.com/ELWml_5m.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "1894",
+                    "artistName": "Kim You Jung",
+                    "artistImageURL": "https://i.mydramalist.com/nOZLQ8_5s.jpg",
+                    "characterName": "Hong Cheon Ki",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "11001",
+                    "artistName": "Ahn Hyo Seop",
+                    "artistImageURL": "https://i.mydramalist.com/2wk2NP_5s.jpg",
+                    "characterName": "Ha Ram / Ilwolseong",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "6777",
+                    "artistName": "Gong Myung",
+                    "artistImageURL": "https://i.mydramalist.com/NdLRwA_5s.jpg",
+                    "characterName": "Grand Prince Yang Myung / Lee Yul",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "7009",
+                    "artistName": "Kwak Shi Yang",
+                    "artistImageURL": "https://i.mydramalist.com/xeApr_5s.jpg",
+                    "characterName": "Grand Prince Ju Hyang / Lee Hoo",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "9515",
+                    "artistName": "Choi Kwang Il",
+                    "artistImageURL": "https://i.mydramalist.com/x4W1xq_5s.jpg",
+                    "characterName": "Hong Eun O [Cheon Ki's father]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "939",
+                    "artistName": "Kim Kwang Gyu",
+                    "artistImageURL": "https://i.mydramalist.com/vgy5q_5s.jpg",
+                    "characterName": "Choi Won Ho [Baekgyu Institute headmaster]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "18086",
+                    "artistName": "Yoon Sa Bong",
+                    "artistImageURL": "https://i.mydramalist.com/j4nJvs.jpg",
+                    "characterName": "Kyun Joo Daek [Baekgyu Institute housekeeper]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5901",
+                    "artistName": "Jung Yeong Gi",
+                    "artistImageURL": "https://i.mydramalist.com/vzYQg_5s.jpg",
+                    "characterName": "Kang Chun Bok [Baekgyu Institute steward]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "23560",
+                    "artistName": "Hong Jin Ki",
+                    "artistImageURL": "https://i.mydramalist.com/RNolV_5s.jpg",
+                    "characterName": "Cha Young Wook [Cheon Ki's best friend]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "15693",
+                    "artistName": "Hong Kyung",
+                    "artistImageURL": "https://i.mydramalist.com/O82gkY_5s.jpg",
+                    "characterName": "Choi Jeong [Baekyu painter]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1476",
+                    "artistName": "Jang Hyun Sung",
+                    "artistImageURL": "https://i.mydramalist.com/1LJLds.jpg",
+                    "characterName": "Ahn Gyeon [Master of Gohwawon]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "10691",
+                    "artistName": "Go Wook",
+                    "artistImageURL": "https://i.mydramalist.com/rNO6d7_5s.jpg",
+                    "characterName": "Moo Young [Ha Ram's bodyguard]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "21771",
+                    "artistName": "Kim Hyun Mok",
+                    "artistImageURL": "https://i.mydramalist.com/pXQ68_5s.jpg",
+                    "characterName": "Man Soo [Ha Ram's servant]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5835",
+                    "artistName": "Ri Min",
+                    "artistImageURL": "https://i.mydramalist.com/nE60xs.jpg",
+                    "characterName": "Jang Uk Jin [Seomungwan Astronomy supervisor]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "33035",
+                    "artistName": "Bae Myung Jin",
+                    "artistImageURL": "https://i.mydramalist.com/q6XEK_5s.jpg",
+                    "characterName": "Park Sa Ryuk [Seomungwan Astronomy historian]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "9680",
+                    "artistName": "Yang Hyun Min",
+                    "artistImageURL": "https://i.mydramalist.com/jlPVJs.jpg",
+                    "characterName": "Jung Soen Nae [Wolseongdang]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2880",
+                    "artistName": "Cho Seong Ha",
+                    "artistImageURL": "https://i.mydramalist.com/NdnJLW_5s.jpg",
+                    "characterName": "King Seong Jo",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "10173",
+                    "artistName": "Ko Kyu Pil",
+                    "artistImageURL": "https://i.mydramalist.com/Lw8q2x_5s.jpg",
+                    "characterName": "Go Pil [Lee Yul's chief butler]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "9308",
+                    "artistName": "Chae Gook Hee",
+                    "artistImageURL": "https://i.mydramalist.com/KpKXOv_5s.jpg",
+                    "characterName": "Mi Soo [Royal shaman]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "20208",
+                    "artistName": "Jung Dong Geun",
+                    "artistImageURL": "https://i.mydramalist.com/6zXQK_5s.jpg",
+                    "characterName": "Ahn Young Hoe [Lee Hoo's aide]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "22649",
+                    "artistName": "Lee Sang Woon",
+                    "artistImageURL": "https://i.mydramalist.com/ED3W7s.jpg",
+                    "characterName": "Seo Ki Jung [Lee Hoo's scholar]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "6236",
+                    "artistName": "Jo Won Hee",
+                    "artistImageURL": "https://i.mydramalist.com/4WVeZ_5s.jpg",
+                    "characterName": "Sung Jin Ki [Court minister]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "10230",
+                    "artistName": "Park Seon Woo",
+                    "artistImageURL": "https://i.mydramalist.com/kxwym_5s.jpg",
+                    "characterName": "Kim Hong Seo [Court minister]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "44941",
+                    "artistName": "Ha Nam Woo",
+                    "artistImageURL": "https://i.mydramalist.com/E34rz_5s.jpg",
+                    "characterName": "Shim Jung Woo [Minister]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3569",
+                    "artistName": "Kim Joo Young",
+                    "artistImageURL": "https://i.mydramalist.com/en0vns.jpg",
+                    "characterName": "Lee Hyun Mo [Minister]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "9832",
+                    "artistName": "Moon Sook",
+                    "artistImageURL": "https://i.mydramalist.com/Qy8Nv_5s.jpg",
+                    "characterName": "Samshin [Goddess of Life]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "22433",
+                    "artistName": "Cho Ye Lin",
+                    "artistImageURL": "https://i.mydramalist.com/0ne4r_5s.jpg",
+                    "characterName": "Ho Ryung [Tiger Goddess / Palace protector]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2831",
+                    "artistName": "Kim Ik Tae",
+                    "artistImageURL": "https://i.mydramalist.com/Lw8KEg_5s.jpg",
+                    "characterName": "Kang Hee [King Seong Jo's advisor]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "27121",
+                    "artistName": "Kim Geum Soon",
+                    "artistImageURL": "https://i.mydramalist.com/RNoEP_5s.jpg",
+                    "characterName": "Wol Seon [Head shaman, Shamanist Bureau]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "44293",
+                    "artistName": "Ha Yul Ri",
+                    "artistImageURL": "https://i.mydramalist.com/x4YL6X_5s.jpg",
+                    "characterName": "Mae Hyang [Gisaeng, Ha Ram's spy]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "73809",
+                    "artistName": "Cha Ji Hyuk",
+                    "artistImageURL": "https://i.mydramalist.com/0VYYK_5s.jpg",
+                    "characterName": "[Lee Hoo's bodyguard]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "42503",
+                    "artistName": "Jang Yong Bok",
+                    "artistImageURL": "https://i.mydramalist.com/E3qqp_5s.jpg",
+                    "characterName": "[Chief eunuch]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "117073",
+                    "artistName": "Woo Tae Ha",
+                    "artistImageURL": "https://i.mydramalist.com/RBBYnY_5s.jpg",
+                    "characterName": "[Fortress company]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "103547",
+                    "artistName": "Hwang Hyun Bin",
+                    "artistImageURL": "https://i.mydramalist.com/QV5nA_5s.jpg",
+                    "characterName": "Wol Ryeong (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "51155",
+                    "artistName": "Yun Seo Jeong",
+                    "artistImageURL": "https://i.mydramalist.com/18rX6_5s.jpg",
+                    "characterName": "Kim Deok Shim [Cheon Ki's mother] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "25179",
+                    "artistName": "Park Soo Oh",
+                    "artistImageURL": "https://i.mydramalist.com/b3yD7V_5s.jpg",
+                    "characterName": "Lee Hu [Young] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "25275",
+                    "artistName": "Kim Jung Chul",
+                    "artistImageURL": "https://i.mydramalist.com/qqBp0s.jpg",
+                    "characterName": "Lee Yul [Young] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "84113",
+                    "artistName": "Son Seung Taek",
+                    "artistImageURL": "https://i.mydramalist.com/Xxkxw_5s.jpg",
+                    "characterName": "[Drumming taoist] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "2620",
+                    "artistName": "Jeon Gook Hwan",
+                    "artistImageURL": "https://i.mydramalist.com/xXNAEs.jpg",
+                    "characterName": "King Yeong Jong (Ep. 1-2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "51867",
+                    "artistName": "Lee Nam Gyeong",
+                    "artistImageURL": "https://i.mydramalist.com/W62lP_5s.jpg",
+                    "characterName": "Hong Cheon Ki [Young] (Ep. 1-2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "81127",
+                    "artistName": "Han Ji Eun",
+                    "artistImageURL": "https://i.mydramalist.com/BLzWb_5s.jpg",
+                    "characterName": "[Ha Ram's mother] (Ep. 1-2, 5)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "1904",
+                    "artistName": "Han Sang Jin",
+                    "artistImageURL": "https://i.mydramalist.com/W6KBR_5s.jpg",
+                    "characterName": "Ha Seong Jin [Ha Ram's father] (Ep. 1-2, 5, 15)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "9303",
+                    "artistName": "Choi Seung Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/jQAkr8_5s.jpg",
+                    "characterName": "Ha Ram [Young] (Ep. 1-2, 15)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "13935",
+                    "artistName": "Park Ji Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/Z0vP8s.jpg",
+                    "characterName": "Kim Gong Rae [Lee Hoo's commander] (Ep. 1-2, 5-7, 15)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "3924",
+                    "artistName": "Park Jung Hak",
+                    "artistImageURL": "https://i.mydramalist.com/oQk7qx_5s.jpg",
+                    "characterName": "Gan Yun Gook / Hwacha [Green-eyed goblin] (Ep. 1, 10, 15-16)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "42117",
+                    "artistName": "Seo Myung Chan",
+                    "artistImageURL": "https://i.mydramalist.com/l01nQJ_5s.jpg",
+                    "characterName": "Maeng Ja Hyung [King Seong Jo's advisor] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "64865",
+                    "artistName": "Lee Eun Kang",
+                    "artistImageURL": "https://i.mydramalist.com/jD6Zz_5s.jpg",
+                    "characterName": "[Blacksmith] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "30575",
+                    "artistName": "Jung Chung Gu",
+                    "artistImageURL": "https://i.mydramalist.com/l01NkJ_5s.jpg",
+                    "characterName": "[Oriental medicine seller] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "84941",
+                    "artistName": "Park Ung Sun",
+                    "artistImageURL": "https://i.mydramalist.com/WD2kP_5s.jpg",
+                    "characterName": "[Famous Chinese painter] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "92135",
+                    "artistName": "Nam Do Yoon",
+                    "artistImageURL": "https://i.mydramalist.com/nO2K02_5s.jpg",
+                    "characterName": "[Student] (Ep. 2-3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "44493",
+                    "artistName": "Park Jong Wook",
+                    "artistImageURL": "https://i.mydramalist.com/dDEW5_5s.jpg",
+                    "characterName": "Wal Pae 2 [Soen Nae's thug] (Ep. 2-3, 5, 16)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "39651",
+                    "artistName": "Seo Dong Oh",
+                    "artistImageURL": "https://i.mydramalist.com/25qo7_5s.jpg",
+                    "characterName": "Wal Pae 1 [Soen Nae's thug] (Ep. 2-3, 5, 16)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "22358",
+                    "artistName": "Jung Yeun",
+                    "artistImageURL": "https://i.mydramalist.com/vXg04e_5s.jpg",
+                    "characterName": "[Imperial guard] (Ep. 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "55131",
+                    "artistName": "Hwang Dae Ki",
+                    "artistImageURL": "https://i.mydramalist.com/6ZAZp_5s.jpg",
+                    "characterName": "[Imperial guard killed by Wa Mang] (Ep. 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "92139",
+                    "artistName": "Ahn Yeon Ji",
+                    "artistImageURL": "https://i.mydramalist.com/d5wke_5s.jpg",
+                    "characterName": "Yeon Ji [Gisaeng] (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "12180",
+                    "artistName": "Baek Seo Yi",
+                    "artistImageURL": "https://i.mydramalist.com/BL6oV_5s.jpg",
+                    "characterName": "Myeong Wol [Gisaeng] (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "92141",
+                    "artistName": "Bae An Na",
+                    "artistImageURL": "https://i.mydramalist.com/EOJRQ_5s.jpg",
+                    "characterName": "[Gisaeng] (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "25685",
+                    "artistName": "Heo Seon Haeng",
+                    "artistImageURL": "https://i.mydramalist.com/yWnepN_5s.jpg",
+                    "characterName": "[Eun O's doctor] (Ep. 4, 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "10577",
+                    "artistName": "Choi Yeon Ho",
+                    "artistImageURL": "https://i.mydramalist.com/wb6Zk_5s.jpg",
+                    "characterName": "Yoo Si Saeng [Leader of Cheongyuhwadan] (Ep. 5-6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "54495",
+                    "artistName": "Shin Jae Hwan",
+                    "artistImageURL": "https://i.mydramalist.com/QLb6Y_5s.jpg",
+                    "characterName": "Man Yu [Monk / Painting contestant] (Ep. 5-6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "12546",
+                    "artistName": "Kwak Hyun Jun",
+                    "artistImageURL": "https://i.mydramalist.com/XBPBZ_5s.jpg",
+                    "characterName": "Kang Hee Yeon / \"Godly brushstroke\" [Painting contestant] (Ep. 5-6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "17873",
+                    "artistName": "Jang Won Hyung",
+                    "artistImageURL": "https://i.mydramalist.com/k6j2w_5s.jpg",
+                    "characterName": "Shim Dae Yu [Painting contestant] (Ep. 5-8, 16)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "70873",
+                    "artistName": "Kwon Dong Won",
+                    "artistImageURL": "https://i.mydramalist.com/kZqbr_5s.jpg",
+                    "characterName": "[Painting judge] (Ep. 5-6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "33917",
+                    "artistName": "Bae Gi Beom",
+                    "artistImageURL": "https://i.mydramalist.com/W7Kn3_5s.jpg",
+                    "characterName": "Im Jang Hyun [Master of Physiognomy] (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "55503",
+                    "artistName": "Kim Sung Yong",
+                    "artistImageURL": "https://i.mydramalist.com/2LD1w_5s.jpg",
+                    "characterName": "[Man giving directions] (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "94245",
+                    "artistName": "Yoo Byung Soo",
+                    "artistImageURL": "https://i.mydramalist.com/v2p3p_5s.jpg",
+                    "characterName": "[Jang Hyun's client] (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6382",
+                    "artistName": "Lee Jong Goo",
+                    "artistImageURL": "https://i.mydramalist.com/RRmjY_5s.jpg",
+                    "characterName": "Heo Yu [Royal physician] (Ep. 11-13)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6184",
+                    "artistName": "Choi Jong Won",
+                    "artistImageURL": "https://i.mydramalist.com/xxVpq_5s.jpg",
+                    "characterName": "Ha Dam / \"Seer\" [Old prisoner] (Ep. 11-12, 14-15)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "132201",
+                    "artistName": "Jang Ma Ru",
+                    "artistImageURL": "https://i.mydramalist.com/0w1DDY_5s.jpg",
+                    "characterName": "Se Ja [Young] (Ep. 12)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5960",
+                    "artistName": "Kim Bup Rae",
+                    "artistImageURL": "https://i.mydramalist.com/WP5QRX_5s.jpg",
+                    "characterName": "Ma Wang [Voice]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "43839",
+                    "artistName": "Lee Dong Hee",
+                    "artistImageURL": "https://i.mydramalist.com/0PglE_5s.jpg",
+                    "characterName": "Pil Bang Ju",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "3022",
+                    "artistName": "Lee Bo Hee",
+                    "artistImageURL": "https://i.mydramalist.com/g06OrO_5s.jpg",
+                    "characterName": "Queen So Heon",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "92143",
+                    "artistName": "Cho Yi An",
+                    "artistImageURL": "https://i.mydramalist.com/eegmY_5s.jpg",
+                    "characterName": "[Boy]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "92137",
+                    "artistName": "Kim Woo Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/pPnAQ_5s.jpg",
+                    "characterName": "[Baekyu painter]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "91795",
+                    "artistName": "Noh Jung Hwan",
+                    "artistImageURL": "https://i.mydramalist.com/rDN0D_5s.jpg",
+                    "characterName": "[Baekyu painter]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "67423",
+                    "artistName": "Hong Eun Jeong",
+                    "artistImageURL": "https://i.mydramalist.com/yWnplN_5s.jpg",
+                    "characterName": "[Junior shaman]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "42405",
+                    "artistName": "Jung Chul Soon",
+                    "artistImageURL": "https://i.mydramalist.com/6JlQg_5s.jpg",
+                    "characterName": "[Seomungwan Astronomy trainee]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "96937",
+                    "artistName": "Kim Ki Bum",
+                    "artistImageURL": "https://i.mydramalist.com/eZp1q_5s.jpg",
+                    "characterName": "[Baekyu painter]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "91785",
+                    "artistName": "Lee Soo Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/pPxon_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "106735",
+                    "artistName": "Kim Ha Ru",
+                    "artistImageURL": "https://i.mydramalist.com/j5Kzw_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "106307",
+                    "artistName": "Choi Young Do",
+                    "artistImageURL": "https://i.mydramalist.com/XLmld_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "105039",
+                    "artistName": "Yang Joon Seok",
+                    "artistImageURL": "https://i.mydramalist.com/RBAPyg_5s.jpg",
+                    "characterName": "[Painter] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "111357",
+                    "artistName": "Byun Hong Jun",
+                    "artistImageURL": "https://i.mydramalist.com/4X70w_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "3729",
+                    "artistName": "Im Ji Eun",
+                    "artistImageURL": "https://i.mydramalist.com/nOJvQs.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "81125",
+                    "artistName": "Park Jung In",
+                    "artistImageURL": "https://i.mydramalist.com/Qq4A4_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "18600",
+                    "artistName": "Nam Yi An",
+                    "artistImageURL": "https://i.mydramalist.com/xY1p3s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "25727",
+                    "artistName": "Han So Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/kN7xd_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/22680-hong-chun-gi"
+        },
+        "airedOn": {
+            "value": [
+                "Monday",
+                "Tuesday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/22680-hong-chun-gi"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "15976",
+            "artistName": "Jang Tae Yoo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "50273",
+            "artistName": "Jung Eun Gwol",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "28779",
+            "artistName": "Kim Yeong Yeong",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "22433",
+            "artistName": "Cho Ye Lin",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "51867",
+            "artistName": "Lee Nam Gyeong",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "92141",
+            "artistName": "Bae An Na",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "92137",
+            "artistName": "Kim Woo Hyun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "96937",
+            "artistName": "Kim Ki Bum",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "91785",
+            "artistName": "Lee Soo Yeon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "106307",
+            "artistName": "Choi Young Do",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "111357",
+            "artistName": "Byun Hong Jun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "18600",
+            "artistName": "Nam Yi An",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "asianwiki",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": null,
+        "airedOn": "mydramalist"
+    }
+}
