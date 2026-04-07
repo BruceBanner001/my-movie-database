@@ -1,0 +1,622 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260407_200745",
+    "timestamp": "07 April 2026 08:09 PM (IST)",
+    "showID": 1260,
+    "showName": "Forest",
+    "fetchedFields": {
+        "showImage": {
+            "value": "1260.jpg",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Forest_(Korean_Drama)"
+        },
+        "releaseDate": {
+            "value": "Jan 29, 2020 - Mar 19, 2020",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/33186-secret"
+        },
+        "otherNames": {
+            "value": [
+                "Bos",
+                "Floresta",
+                "Poreseuteu",
+                "Secret",
+                "Sikeulis",
+                "Sikeurit",
+                "Wald",
+                "Лес",
+                "시크릿"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/33186-secret"
+        },
+        "Duration": {
+            "value": "31 mins",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/33186-secret"
+        },
+        "synopsis": {
+            "value": "Kang San-Hyeok (Park Hae-Jin) is a member of the 119 special rescue team. He is handsome and smart, but he does not remember his childhood. Jung Young-Jae (Cho Bo-Ah) is an enthusiastic surgical resident.\n\nKang San-Hyeok and Jung Young-Jae meet at a mysterious forest. Even though they do not want to, they must live together in the mysterious forest. Living there, they discover small pleasures. Kang San-Hyeok and Jung Young-Jae soon uncover a secret about themselves and the forest.",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Forest_(Korean_Drama)"
+        },
+        "director": {
+            "value": [
+                "Oh Jong Rok"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/33186-secret"
+        },
+        "tags": {
+            "value": [
+                "Amnesia",
+                "Rich Male Lead",
+                "Trauma",
+                "Cohabitation",
+                "Dissociative Amnesia",
+                "Love/Hate Relationship",
+                "Orphan Male Lead",
+                "Successful Male Lead",
+                "Healing",
+                "Hardworking Female Lead"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/33186-secret"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "74267",
+                    "artistName": "Choi Seong Gwon",
+                    "artistImageURL": "https://i.mydramalist.com/e11EQ_5m.jpg",
+                    "characterName": null,
+                    "role": "Composer"
+                },
+                {
+                    "artistID": "20207",
+                    "artistName": "Oh Jong Rok",
+                    "artistImageURL": "https://i.mydramalist.com/Kp05oR_5m.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "37409",
+                    "artistName": "Lee Sun Young",
+                    "artistImageURL": "https://i.mydramalist.com/QLvBA_5m.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "645",
+                    "artistName": "Park Hae Jin",
+                    "artistImageURL": "https://i.mydramalist.com/JBelwY_5s.jpg",
+                    "characterName": "Kang San Hyuk",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "2213",
+                    "artistName": "Jo Bo Ah",
+                    "artistImageURL": "https://i.mydramalist.com/ABAY0v_5s.jpg",
+                    "characterName": "Jung Young Jae",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "2383",
+                    "artistName": "Jung Yeon Joo",
+                    "artistImageURL": "https://i.mydramalist.com/18NpQ_5s.jpg",
+                    "characterName": "Oh Bo Mi",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "23631",
+                    "artistName": "Noh Kwang Shik",
+                    "artistImageURL": "https://i.mydramalist.com/2kynR_5s.jpg",
+                    "characterName": "Choi Chang",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "1230",
+                    "artistName": "Ryu Seung Soo",
+                    "artistImageURL": "https://i.mydramalist.com/BDeR7_5s.jpg",
+                    "characterName": "Bong Dae Yong [Aviation Rescue Team Leader]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5675",
+                    "artistName": "Woo Jung Kook",
+                    "artistImageURL": "https://i.mydramalist.com/nO1DDN_5s.jpg",
+                    "characterName": "Ki Pil Young [Aviation Rescue Team]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "15801",
+                    "artistName": "Geum Kwang San",
+                    "artistImageURL": "https://i.mydramalist.com/pWB0rs.jpg",
+                    "characterName": "Yang Chul Shik [Aviation rescue team]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "23539",
+                    "artistName": "Kim Eun Soo",
+                    "artistImageURL": "https://i.mydramalist.com/XOLed_5s.jpg",
+                    "characterName": "Kook Soon Tae [Aviation Rescue Team]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "12002",
+                    "artistName": "Ahn Sang Woo",
+                    "artistImageURL": "https://i.mydramalist.com/RQDz6_5s.jpg",
+                    "characterName": "Park Jin Man [Internal Medicine Doctor]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2638",
+                    "artistName": "Go Soo Hee",
+                    "artistImageURL": "https://i.mydramalist.com/18X0d_5s.jpg",
+                    "characterName": "Nurse Kim",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "20486",
+                    "artistName": "Lee Nam Hee",
+                    "artistImageURL": "https://i.mydramalist.com/6KXOW_5s.jpg",
+                    "characterName": "[Hospital Director]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "19198",
+                    "artistName": "Lee Si Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/lyZQNs.jpg",
+                    "characterName": "Park Hyun Soo [San Hyuk's Aide]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2938",
+                    "artistName": "Kim Soo Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/2k2BW_5s.jpg",
+                    "characterName": "Chairman Jang",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "15258",
+                    "artistName": "Jung Soo Kyo",
+                    "artistImageURL": "https://i.mydramalist.com/0RyNY_5s.jpg",
+                    "characterName": "Han Ji Yong [Head of Investment Division 2]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "9515",
+                    "artistName": "Choi Kwang Il",
+                    "artistImageURL": "https://i.mydramalist.com/x4W1xq_5s.jpg",
+                    "characterName": "Kwon Joo Han [Managing Director, Taesung Group]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2807",
+                    "artistName": "Kim Young Pil",
+                    "artistImageURL": "https://i.mydramalist.com/vnzlZs.jpg",
+                    "characterName": "Jo Kwang Pil [Team Leader, Taesung Group]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3218",
+                    "artistName": "Park Ji Il",
+                    "artistImageURL": "https://i.mydramalist.com/xnDgX_5s.jpg",
+                    "characterName": "[Young Jae's father]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2619",
+                    "artistName": "Lee Do Kyung",
+                    "artistImageURL": "https://i.mydramalist.com/QPEvg_5s.jpg",
+                    "characterName": "Choi Jung Mok [President of Miryeong Forestry]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "21513",
+                    "artistName": "Jung Myung Joon",
+                    "artistImageURL": "https://i.mydramalist.com/QP6q7_5s.jpg",
+                    "characterName": "Shin Joon Young [Psychiatrist]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "9429",
+                    "artistName": "Heo Ji Won",
+                    "artistImageURL": "https://i.mydramalist.com/ABX7EZ_5s.jpg",
+                    "characterName": "Cha Jin Woo [Doctor, Young Jae’s ex-boyfriend]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "17259",
+                    "artistName": "Kim Min Seok",
+                    "artistImageURL": "https://i.mydramalist.com/EoL4l_5s.jpg",
+                    "characterName": "Doctor [Young Jae’s friend]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "10605",
+                    "artistName": "Han Chul Woo",
+                    "artistImageURL": "https://i.mydramalist.com/EQeYz_5s.jpg",
+                    "characterName": "Son Dong Il [Forestry Department Team Leader]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5994",
+                    "artistName": "Lee Chang",
+                    "artistImageURL": "https://i.mydramalist.com/ZBZjJ_5s.jpg",
+                    "characterName": "Haengwoon Development Rep",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "10253",
+                    "artistName": "Lee Go Eun",
+                    "artistImageURL": "https://i.mydramalist.com/x4QevX_5s.jpg",
+                    "characterName": "Jung Young Jae [Young]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "9303",
+                    "artistName": "Choi Seung Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/jQAkr8_5s.jpg",
+                    "characterName": "Kang San Hyeok (Young)",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "20229",
+                    "artistName": "Kwon Ye Eun",
+                    "artistImageURL": "https://i.mydramalist.com/0ZYWN_5s.jpg",
+                    "characterName": "Kang San Yoo [San Hyuk’s sister]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "40947",
+                    "artistName": "Myung Jae Hwan",
+                    "artistImageURL": "https://i.mydramalist.com/0ApqKs.jpg",
+                    "characterName": "Kim Man Soo [Aviation Rescue Team]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "7593",
+                    "artistName": "Kim Young Jae",
+                    "artistImageURL": "https://i.mydramalist.com/qg0QD_5s.jpg",
+                    "characterName": "Jung Young Jae's ex-boyfriend (Ep 13)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "11807",
+                    "artistName": "Kwon Young Min",
+                    "artistImageURL": "https://i.mydramalist.com/4q6V1_5s.jpg",
+                    "characterName": "Jung Young Jae's ex-boyfriend (Ep 13)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "10526",
+                    "artistName": "Park Hyun Woo",
+                    "artistImageURL": "https://i.mydramalist.com/xn3Oj_5s.jpg",
+                    "characterName": "[Yeong Jae's ex-boyfriend] (Ep. 13)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "31999",
+                    "artistName": "Lim Jung Min",
+                    "artistImageURL": "https://i.mydramalist.com/6KJ32_5s.jpg",
+                    "characterName": "[Taesung Executive]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "3215",
+                    "artistName": "Min Joon Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/xmADXs.jpg",
+                    "characterName": "[Naseong Development Representative] (Ep 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6684",
+                    "artistName": "Yeo Moo Young",
+                    "artistImageURL": "https://i.mydramalist.com/6zYoK_5s.jpg",
+                    "characterName": "Yoo Min Sik [Executive Director, Myungsung University Hospital]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21556",
+                    "artistName": "Kang Moon Kyung",
+                    "artistImageURL": "https://i.mydramalist.com/rgPqy_5s.jpg",
+                    "characterName": "Assemblyman Kim (Ep 12)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "38335",
+                    "artistName": "Kim Geon Ho",
+                    "artistImageURL": "https://i.mydramalist.com/b3yDpL_5s.jpg",
+                    "characterName": "Park Hyeong Shik [ER Crazed father] (Ep 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "44699",
+                    "artistName": "Kim Mi Hye",
+                    "artistImageURL": "https://i.mydramalist.com/EgnO0_5s.jpg",
+                    "characterName": "[Nurse]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5694",
+                    "artistName": "Park Hye Jin",
+                    "artistImageURL": "https://i.mydramalist.com/B1o3V_5s.jpg",
+                    "characterName": "Soon Hae [San Hyuk’s Grandmother]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "20844",
+                    "artistName": "Min Kyung Ok",
+                    "artistImageURL": "https://i.mydramalist.com/xw7Xr_5s.jpg",
+                    "characterName": "[Villager]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "10562",
+                    "artistName": "Park Seung Tae",
+                    "artistImageURL": "https://i.mydramalist.com/1zery_5s.jpg",
+                    "characterName": "[Villager]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "13502",
+                    "artistName": "Yoo Soon Chul",
+                    "artistImageURL": "https://i.mydramalist.com/B2Xl5s.jpg",
+                    "characterName": "Heo Choon Shik [Villager]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21350",
+                    "artistName": "Go Jin Myung",
+                    "artistImageURL": "https://i.mydramalist.com/YYgX7K_5s.jpg",
+                    "characterName": "[Villager]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6432",
+                    "artistName": "Choi Bum Ho",
+                    "artistImageURL": "https://i.mydramalist.com/4Ny1d_5s.jpg",
+                    "characterName": "Seo Seok Yong [Aviation Rescue Team Commander]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "4494",
+                    "artistName": "Im Byung Ki",
+                    "artistImageURL": "https://i.mydramalist.com/rm8e7s.jpg",
+                    "characterName": "Chairman Hwang Seok Ho [Haeseong Precision] (Ep.18)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "23835",
+                    "artistName": "Kwon Hyuk Soo",
+                    "artistImageURL": "https://i.mydramalist.com/724rLs.jpg",
+                    "characterName": "Governor Do",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "4438",
+                    "artistName": "Kim Jong Gu",
+                    "artistImageURL": "https://i.mydramalist.com/kq2gd_5s.jpg",
+                    "characterName": "Chairman Kwon, Taesung Group",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6187",
+                    "artistName": "Lee Yoon Sang",
+                    "artistImageURL": "https://i.mydramalist.com/v5BPX_5s.jpg",
+                    "characterName": "Senior Managing Director, Hitech",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "124925",
+                    "artistName": "Shin Tae Yang",
+                    "artistImageURL": "https://i.mydramalist.com/jQrzEr_5s.jpg",
+                    "characterName": "[Kid]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "106329",
+                    "artistName": "Ahn Ryeo Jin",
+                    "artistImageURL": "https://i.mydramalist.com/XLJLx_5s.jpg",
+                    "characterName": "[Secretary (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "8118",
+                    "artistName": "Kim Jin Ho",
+                    "artistImageURL": "https://i.mydramalist.com/en0zWs.jpg",
+                    "characterName": "[Gangland Boss] (Ep 32)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "18879",
+                    "artistName": "Seo Kwang Jae",
+                    "artistImageURL": "https://i.mydramalist.com/4VWRK_5s.jpg",
+                    "characterName": "Lee Seok Woo [Professor doing Geological Research funded by Taesung] (Ep. 27)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21488",
+                    "artistName": "Go Man Kyu",
+                    "artistImageURL": "https://i.mydramalist.com/XO00Z_5s.jpg",
+                    "characterName": "[Taesung Group's Thug]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "31787",
+                    "artistName": "Lee Joong Yul",
+                    "artistImageURL": "https://i.mydramalist.com/QB847_5s.jpg",
+                    "characterName": "[Hiker] (Ep 15)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "68355",
+                    "artistName": "Oh Seung Chan",
+                    "artistImageURL": "https://i.mydramalist.com/17Bv5_5s.jpg",
+                    "characterName": "[Detective]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21479",
+                    "artistName": "In Sung Ho",
+                    "artistImageURL": "https://i.mydramalist.com/Q7dyvs.jpg",
+                    "characterName": "Pres. Park Dong Geun [HS Eng] (Ep 30)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "15807",
+                    "artistName": "Park Seong Kyun",
+                    "artistImageURL": "https://i.mydramalist.com/xBdpz_5s.jpg",
+                    "characterName": "[Prosecutor] (Ep. 32)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "46811",
+                    "artistName": "Choi Chung Ja",
+                    "artistImageURL": "https://i.mydramalist.com/EQxDz_5s.jpg",
+                    "characterName": "[Villager]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21016",
+                    "artistName": "Song Kyung Eui",
+                    "artistImageURL": "https://i.mydramalist.com/WWLoP_5s.jpg",
+                    "characterName": "[Coroner] (Ep 15)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "44631",
+                    "artistName": "Jang Joon Ho",
+                    "artistImageURL": "https://i.mydramalist.com/QPdzA_5s.jpg",
+                    "characterName": "[Young Jae's Senior Professor]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5863",
+                    "artistName": "Jung Dong Gyu",
+                    "artistImageURL": "https://i.mydramalist.com/eWD6n_5s.jpg",
+                    "characterName": "[Judge] (Ep 32)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "86057",
+                    "artistName": "Shim Hye Rim",
+                    "artistImageURL": "https://i.mydramalist.com/73JYgj_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "27067",
+                    "artistName": "Kim Sang Il",
+                    "artistImageURL": "https://i.mydramalist.com/QNA5vs.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "24789",
+                    "artistName": "Im Ho Joon",
+                    "artistImageURL": "https://i.mydramalist.com/RrpBxs.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "128333",
+                    "artistName": "Lee Ah Jin",
+                    "artistImageURL": "https://i.mydramalist.com/RBZD2z_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/33186-secret"
+        },
+        "airedOn": {
+            "value": [
+                "Wednesday",
+                "Thursday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/33186-secret"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "20207",
+            "artistName": "Oh Jong Rok",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "37409",
+            "artistName": "Lee Sun Young",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "2383",
+            "artistName": "Jung Yeon Joo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "23631",
+            "artistName": "Noh Kwang Shik",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "23539",
+            "artistName": "Kim Eun Soo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "2638",
+            "artistName": "Go Soo Hee",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "20486",
+            "artistName": "Lee Nam Hee",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "2938",
+            "artistName": "Kim Soo Hyun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "9429",
+            "artistName": "Heo Ji Won",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "7593",
+            "artistName": "Kim Young Jae",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "11807",
+            "artistName": "Kwon Young Min",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "13502",
+            "artistName": "Yoo Soon Chul",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "46811",
+            "artistName": "Choi Chung Ja",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "asianwiki",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": null,
+        "airedOn": "mydramalist"
+    }
+}

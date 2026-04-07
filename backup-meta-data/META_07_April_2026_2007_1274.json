@@ -1,0 +1,660 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260407_200745",
+    "timestamp": "07 April 2026 08:12 PM (IST)",
+    "showID": 1274,
+    "showName": "My Boss",
+    "fetchedFields": {
+        "showImage": {
+            "value": "1274.jpg",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/70241-ni-ye-you-jin-tian"
+        },
+        "releaseDate": {
+            "value": "Jan  4, 2024 - Jan 26, 2024",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/70241-ni-ye-you-jin-tian"
+        },
+        "otherNames": {
+            "value": [
+                "Ni Ye You Jin Tian"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/70241-ni-ye-you-jin-tian"
+        },
+        "Duration": {
+            "value": "45 mins",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/70241-ni-ye-you-jin-tian"
+        },
+        "synopsis": {
+            "value": "Are Cheng Yao's dreams of becoming a top lawyer about to come true? It seems so, when she is unexpectedly recruited by a leading legal firm. Excited, she moves house so she can be near her new office. She moves in, full of hope, and soon encounters her new roommate, Qian Heng. However, a surprise awaits her on her first day at work.\n\nQian Heng turns out to be her direct superior\n\nat the office, and he proves to be incredibly hard to please! Her training period quickly turns into a baptism of fire, and she starts to feel as though he is trying to chase her out of the company. But Cheng Yao won’t be so easily deterred. She redoubles her efforts, determined to prove she’s got what it takes. Could her zeal send this duo on the path to harmony and even love?",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/70241-ni-ye-you-jin-tian"
+        },
+        "director": {
+            "value": [
+                "Chen Ming Zhang",
+                "Chen Shi Yi"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/70241-ni-ye-you-jin-tian"
+        },
+        "tags": {
+            "value": [
+                "Lawyer Male Lead",
+                "Lawyer Female Lead",
+                "Arrogant Male Lead",
+                "Cohabitation",
+                "Boss-Employee Relationship",
+                "Cold Man/Warm Woman",
+                "Naive Female Lead",
+                "Workplace Setting",
+                "Workplace Romance",
+                "Secondary Couple"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/70241-ni-ye-you-jin-tian"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "18876",
+                    "artistName": "Chen Ming Zhang",
+                    "artistImageURL": "https://i.mydramalist.com/AB4JKL_5m.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "51741",
+                    "artistName": "Chen Shi Yi",
+                    "artistImageURL": "https://i.mydramalist.com/zBD3AP_5m.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "56225",
+                    "artistName": "Xu Xiao Ou",
+                    "artistImageURL": "https://i.mydramalist.com/RgP3E_5m.jpg",
+                    "characterName": null,
+                    "role": "Executive Producer"
+                },
+                {
+                    "artistID": "57401",
+                    "artistName": "Ye Fei Ran",
+                    "artistImageURL": "https://i.mydramalist.com/Rd50z_5m.jpg",
+                    "characterName": null,
+                    "role": "Original Creator"
+                },
+                {
+                    "artistID": "62775",
+                    "artistName": "Li Jing Ling",
+                    "artistImageURL": "https://i.mydramalist.com/ABRKAE_5m.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "14043",
+                    "artistName": "Chen Xing Xu",
+                    "artistImageURL": "https://i.mydramalist.com/oQplKk_5s.jpg",
+                    "characterName": "Qian Heng",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "21425",
+                    "artistName": "Zhang Ruo Nan",
+                    "artistImageURL": "https://i.mydramalist.com/DkmWqN_5s.jpg",
+                    "characterName": "Cheng Yao",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "20473",
+                    "artistName": "Chen Xiao Yun",
+                    "artistImageURL": "https://i.mydramalist.com/26oD2_5s.jpg",
+                    "characterName": "Cheng Xi",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "18860",
+                    "artistName": "Li Jun Xian",
+                    "artistImageURL": "https://i.mydramalist.com/PxPbk5_5s.jpg",
+                    "characterName": "Wu Jun",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "54007",
+                    "artistName": "He Wen Jun",
+                    "artistImageURL": "https://i.mydramalist.com/p3PyD_5s.jpg",
+                    "characterName": "Bao Rui",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "70605",
+                    "artistName": "Li Dian Zun",
+                    "artistImageURL": "https://i.mydramalist.com/Ezn85_5s.jpg",
+                    "characterName": "Yu Fei",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "19743",
+                    "artistName": "Chen Hao Lan",
+                    "artistImageURL": "https://i.mydramalist.com/ZkWQJs.jpg",
+                    "characterName": "Tan Ying",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "53291",
+                    "artistName": "Fan Shuai Qi",
+                    "artistImageURL": "https://i.mydramalist.com/rNVNWy_5s.jpg",
+                    "characterName": "Liang Yi Ran",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "20012",
+                    "artistName": "Ye Xiao Wei",
+                    "artistImageURL": "https://i.mydramalist.com/Xd4EPJ_5s.jpg",
+                    "characterName": "Gu Bei Qing",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "13544",
+                    "artistName": "Gavin Xie",
+                    "artistImageURL": "https://i.mydramalist.com/qoLR5s.jpg",
+                    "characterName": "Deng Ming",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "75485",
+                    "artistName": "Shao Yi Fan",
+                    "artistImageURL": "https://i.mydramalist.com/QJ0o3v_5s.jpg",
+                    "characterName": "Lin Lan",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "20640",
+                    "artistName": "Liu Ya Peng",
+                    "artistImageURL": "https://i.mydramalist.com/pDzZe_5s.jpg",
+                    "characterName": "Chairman Zhang",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "19650",
+                    "artistName": "Tan Li Min",
+                    "artistImageURL": "https://i.mydramalist.com/wyYpn_5s.jpg",
+                    "characterName": "Consort Heng",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "26063",
+                    "artistName": "Zhu Jian",
+                    "artistImageURL": "https://i.mydramalist.com/NdZwvY_5s.jpg",
+                    "characterName": "Director Wang",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "40447",
+                    "artistName": "Luo Lei",
+                    "artistImageURL": "https://i.mydramalist.com/1w4AZ7_5s.jpg",
+                    "characterName": "Chairman Chen",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "18710",
+                    "artistName": "Jiang Zhuo Jun",
+                    "artistImageURL": "https://i.mydramalist.com/05wO6_5s.jpg",
+                    "characterName": "Li Meng Ting",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "38965",
+                    "artistName": "Li Qin Fei",
+                    "artistImageURL": "https://i.mydramalist.com/4eoBK1_5s.jpg",
+                    "characterName": "Mrs. Wang",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "119445",
+                    "artistName": "Wang Kun",
+                    "artistImageURL": "https://i.mydramalist.com/vXNgKB_5s.jpg",
+                    "characterName": "Auntie Zhong",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "119373",
+                    "artistName": "Chen Yu Zhe",
+                    "artistImageURL": "https://i.mydramalist.com/0w4dl7_5s.jpg",
+                    "characterName": "Cheng Xiao He",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "78187",
+                    "artistName": "Zhu Li",
+                    "artistImageURL": "https://i.mydramalist.com/65m5j_5s.jpg",
+                    "characterName": "Liang Jing Jing",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "68371",
+                    "artistName": "Zhong Wei Lun",
+                    "artistImageURL": "https://i.mydramalist.com/6AlQ0_5s.jpg",
+                    "characterName": "Xie Ming",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "14328",
+                    "artistName": "Leng Hai Ming",
+                    "artistImageURL": "https://i.mydramalist.com/BZKoz_5s.jpg",
+                    "characterName": "Yao Feng",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "53023",
+                    "artistName": "Liu Lei",
+                    "artistImageURL": "https://i.mydramalist.com/Z80EJ1_5s.jpg",
+                    "characterName": "Zhang Hao",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "67545",
+                    "artistName": "Lan Hai Meng",
+                    "artistImageURL": "https://i.mydramalist.com/EqEW7_5s.jpg",
+                    "characterName": "Xue Ming",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "14303",
+                    "artistName": "Katherine Yang",
+                    "artistImageURL": "https://i.mydramalist.com/kDqwb_5s.jpg",
+                    "characterName": "Liang Liang",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "15611",
+                    "artistName": "Jiang Yan",
+                    "artistImageURL": "https://i.mydramalist.com/p4Lges.jpg",
+                    "characterName": "Bai Xing Meng",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "43171",
+                    "artistName": "Zhou Xiao Li",
+                    "artistImageURL": "https://i.mydramalist.com/q44n2_5s.jpg",
+                    "characterName": "Wu Jie",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "40337",
+                    "artistName": "Zhai Guan Hua",
+                    "artistImageURL": "https://i.mydramalist.com/LwoeD3_5s.jpg",
+                    "characterName": "Lin Feng Juan",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "42133",
+                    "artistName": "Du Ya Fei",
+                    "artistImageURL": "https://i.mydramalist.com/JBLBpj_5s.jpg",
+                    "characterName": "Lu Jian",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "45337",
+                    "artistName": "Gong Jin Guo",
+                    "artistImageURL": "https://i.mydramalist.com/e5yLE_5s.jpg",
+                    "characterName": "Old Mister Dong",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "39031",
+                    "artistName": "Ming Yue",
+                    "artistImageURL": "https://i.mydramalist.com/4ey3Jw_5s.jpg",
+                    "characterName": "Chen Qing Mei",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "43917",
+                    "artistName": "Xiong Rui Ling",
+                    "artistImageURL": "https://i.mydramalist.com/rXWeE_5s.jpg",
+                    "characterName": "Jiang Wen Xiu",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "87899",
+                    "artistName": "Li Chuan Ying",
+                    "artistImageURL": "https://i.mydramalist.com/Bd7B26_5s.jpg",
+                    "characterName": "Dong Shan [Dong Min's father]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "14291",
+                    "artistName": "Wang Zi Xuan",
+                    "artistImageURL": "https://i.mydramalist.com/wJjNon_5s.jpg",
+                    "characterName": "Dong Min [Dong Shan's daughter]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "14673",
+                    "artistName": "Tang Qun",
+                    "artistImageURL": "https://i.mydramalist.com/0Nzy6s.jpg",
+                    "characterName": "Huang Ran",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "19272",
+                    "artistName": "Wang Yuan Ke",
+                    "artistImageURL": "https://i.mydramalist.com/qe8zd_5s.jpg",
+                    "characterName": "Chen Lin Li",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "59881",
+                    "artistName": "Zheng Jia Bin",
+                    "artistImageURL": "https://i.mydramalist.com/BZnV7_5s.jpg",
+                    "characterName": "Xu Jun",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "515",
+                    "artistName": "Ming Dao",
+                    "artistImageURL": "https://i.mydramalist.com/vXo028_5s.jpg",
+                    "characterName": "Boss Chen",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "49805",
+                    "artistName": "Zhang Chen",
+                    "artistImageURL": "https://i.mydramalist.com/eNbZq_5s.jpg",
+                    "characterName": "Li Cheng Xuan",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "60915",
+                    "artistName": "Guo Xiao Yuan",
+                    "artistImageURL": "https://i.mydramalist.com/XylQq_5s.jpg",
+                    "characterName": "Deng Zi Si",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "34515",
+                    "artistName": "Du He Qian",
+                    "artistImageURL": "https://i.mydramalist.com/2JPYE_5s.jpg",
+                    "characterName": "Judge Meng",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "7069",
+                    "artistName": "Yue Yao Li",
+                    "artistImageURL": "https://i.mydramalist.com/vyNxZs.jpg",
+                    "characterName": "[Qian Heng's father]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "7954",
+                    "artistName": "Yvonne Yung",
+                    "artistImageURL": "https://i.mydramalist.com/ABdJL4_5s.jpg",
+                    "characterName": "[Qian Heng's mother]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "56753",
+                    "artistName": "Lan Cheng",
+                    "artistImageURL": "https://i.mydramalist.com/xezyr_5s.jpg",
+                    "characterName": "[Cheng Yao's father]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "13843",
+                    "artistName": "Liu Jie",
+                    "artistImageURL": "https://i.mydramalist.com/2wDmOV_5s.jpg",
+                    "characterName": "[Cheng Yao's mother]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "39817",
+                    "artistName": "Zhao Wen Ming",
+                    "artistImageURL": "https://i.mydramalist.com/XnW4d_5s.jpg",
+                    "characterName": "[Wu Jie’s ex-husband]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "50905",
+                    "artistName": "Qin Yue",
+                    "artistImageURL": "https://i.mydramalist.com/088gN_5s.jpg",
+                    "characterName": "[Deng Ming’s mother]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "44115",
+                    "artistName": "Li Yi Ze",
+                    "artistImageURL": "https://i.mydramalist.com/b3k3Lw_5s.jpg",
+                    "characterName": "[Doctor]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "44071",
+                    "artistName": "Li Hong Lei",
+                    "artistImageURL": "https://i.mydramalist.com/vXoPpg_5s.jpg",
+                    "characterName": "[Psychiatrist]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "52219",
+                    "artistName": "Han Xiu Yi",
+                    "artistImageURL": "https://i.mydramalist.com/XWWxO_5s.jpg",
+                    "characterName": "[Landlord]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "22300",
+                    "artistName": "Frankie Guo",
+                    "artistImageURL": "https://i.mydramalist.com/WPBrX3_5s.jpg",
+                    "characterName": "[Emperor]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "26545",
+                    "artistName": "Zhang Qing Qing",
+                    "artistImageURL": "https://i.mydramalist.com/Qrv14_5s.jpg",
+                    "characterName": "[Dog walker]",
+                    "role": "Support Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/70241-ni-ye-you-jin-tian"
+        },
+        "airedOn": {
+            "value": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/70241-ni-ye-you-jin-tian"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "18876",
+            "artistName": "Chen Ming Zhang",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "57401",
+            "artistName": "Ye Fei Ran",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "62775",
+            "artistName": "Li Jing Ling",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "14043",
+            "artistName": "Chen Xing Xu",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "21425",
+            "artistName": "Zhang Ruo Nan",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "20473",
+            "artistName": "Chen Xiao Yun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "18860",
+            "artistName": "Li Jun Xian",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "54007",
+            "artistName": "He Wen Jun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "70605",
+            "artistName": "Li Dian Zun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "19743",
+            "artistName": "Chen Hao Lan",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "53291",
+            "artistName": "Fan Shuai Qi",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "20012",
+            "artistName": "Ye Xiao Wei",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "13544",
+            "artistName": "Gavin Xie",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "19650",
+            "artistName": "Tan Li Min",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "26063",
+            "artistName": "Zhu Jian",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "18710",
+            "artistName": "Jiang Zhuo Jun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "119373",
+            "artistName": "Chen Yu Zhe",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "67545",
+            "artistName": "Lan Hai Meng",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "14303",
+            "artistName": "Katherine Yang",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "15611",
+            "artistName": "Jiang Yan",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "40337",
+            "artistName": "Zhai Guan Hua",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "42133",
+            "artistName": "Du Ya Fei",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "45337",
+            "artistName": "Gong Jin Guo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "39031",
+            "artistName": "Ming Yue",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "43917",
+            "artistName": "Xiong Rui Ling",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "14673",
+            "artistName": "Tang Qun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "19272",
+            "artistName": "Wang Yuan Ke",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "59881",
+            "artistName": "Zheng Jia Bin",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "49805",
+            "artistName": "Zhang Chen",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "60915",
+            "artistName": "Guo Xiao Yuan",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "50905",
+            "artistName": "Qin Yue",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "44115",
+            "artistName": "Li Yi Ze",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "52219",
+            "artistName": "Han Xiu Yi",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "22300",
+            "artistName": "Frankie Guo",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "mydramalist",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "mydramalist",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": null,
+        "airedOn": "mydramalist"
+    }
+}

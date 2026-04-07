@@ -1,0 +1,364 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260407_200745",
+    "timestamp": "07 April 2026 08:09 PM (IST)",
+    "showID": 1257,
+    "showName": "Twelve Nights",
+    "fetchedFields": {
+        "showImage": {
+            "value": "1257.jpg",
+            "source": "asianwiki (Fallback: mydramalist)",
+            "source_link": "https://mydramalist.com/29387-12-nights"
+        },
+        "releaseDate": {
+            "value": "Oct 12, 2018 - Dec 28, 2018",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/29387-12-nights"
+        },
+        "otherNames": {
+            "value": [
+                "12 Days of Night",
+                "12 Nights",
+                "Yeoldoobam",
+                "Yeoldubam"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/29387-12-nights"
+        },
+        "Duration": {
+            "value": "1 hr. 15 min.",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/29387-12-nights"
+        },
+        "synopsis": {
+            "value": "Is it just a coincidence, or is it fate?\n\nA man and a woman meet time and time again over the span of 8 years. Han Yoo Kyung is an aspiring photographer who graduated from college in New York. After a painful breakup from her boyfriend, she travels to Seoul. There, she meets Cha Hyun Oh, a man who aspires to be a dancer. He quit his job in Japan and took\n\nan impulsive trip to Korea for 4 days. After sharing some time together, they part ways.\n\nBut not for long, as Yoo Kyung and Hyun Oh somehow keep encountering each other many times on three different trips and spend 12 nights together. Is there a special meaning behind each time they meet, and will all of this time spent with each other develop into more than an encounter?",
+            "source": "asianwiki (Fallback: mydramalist)",
+            "source_link": "https://mydramalist.com/29387-12-nights"
+        },
+        "director": {
+            "value": [
+                "Jung Hun Soo"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/29387-12-nights"
+        },
+        "tags": {
+            "value": [
+                "Ex Comes Back",
+                "Photographer Female Lead",
+                "Ballet Dancer Male Lead",
+                "Chasing A Dream",
+                "Meet Again",
+                "Time Skip",
+                "Strong Male Lead",
+                "Eccentric Female Lead",
+                "Second Chance Romance",
+                "Photography"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/29387-12-nights"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "40025",
+                    "artistName": "Jung Hun Soo",
+                    "artistImageURL": "https://i.mydramalist.com/RJzWom.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "40031",
+                    "artistName": "Hwang Sook Mi",
+                    "artistImageURL": "https://i.mydramalist.com/QAbx4_5m.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "5154",
+                    "artistName": "Han Seung Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/Z6zpW_5s.jpg",
+                    "characterName": "Han Yoo Kyung",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "11423",
+                    "artistName": "Shin Hyun Soo",
+                    "artistImageURL": "https://i.mydramalist.com/2zRWV_5s.jpg",
+                    "characterName": "Cha Hyun Oh",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "1476",
+                    "artistName": "Jang Hyun Sung",
+                    "artistImageURL": "https://i.mydramalist.com/1LJLds.jpg",
+                    "characterName": "Lee Baek Man",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "13344",
+                    "artistName": "Lee Ye Eun",
+                    "artistImageURL": "https://i.mydramalist.com/mVZBqs.jpg",
+                    "characterName": "Kang Chae Won",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3036",
+                    "artistName": "Ye Soo Jung",
+                    "artistImageURL": "https://i.mydramalist.com/eEPQes.jpg",
+                    "characterName": "Lee Ri",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "17806",
+                    "artistName": "Seo Eun Woo",
+                    "artistImageURL": "https://i.mydramalist.com/mjYX1s.jpg",
+                    "characterName": "Moon Hye Ran",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "10759",
+                    "artistName": "Yoo Joon Hong",
+                    "artistImageURL": "https://i.mydramalist.com/AvEbZs.jpg",
+                    "characterName": "Ban Gu Wol",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "18446",
+                    "artistName": "Kim Bum Jin",
+                    "artistImageURL": "https://i.mydramalist.com/BwDK7s.jpg",
+                    "characterName": "Kwon Gi Tae",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "8134",
+                    "artistName": "Hwang So Hee",
+                    "artistImageURL": "https://i.mydramalist.com/PxPO8s.jpg",
+                    "characterName": "Park Se Jeong",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "19873",
+                    "artistName": "Lee Gun Woo",
+                    "artistImageURL": "https://i.mydramalist.com/Jxmmos.jpg",
+                    "characterName": "Kang Eun Pyo",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "19961",
+                    "artistName": "Isle Han",
+                    "artistImageURL": "https://i.mydramalist.com/WmmYms.jpg",
+                    "characterName": "Chun Da Young",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4296",
+                    "artistName": "Kim Young Joon",
+                    "artistImageURL": "https://i.mydramalist.com/VBngms.jpg",
+                    "characterName": "Kang Suk",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2624",
+                    "artistName": "Cha Su Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/BLgkl_5s.jpg",
+                    "characterName": "Yoon Hong Joo",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5165",
+                    "artistName": "Hwang Jae Won",
+                    "artistImageURL": "https://i.mydramalist.com/6p1jds.jpg",
+                    "characterName": "Yoon Chan [Young]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "17102",
+                    "artistName": "Kim Do Wan",
+                    "artistImageURL": "https://i.mydramalist.com/Qe5m5_5s.jpg",
+                    "characterName": "Yoon Chan (teenager)",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1442",
+                    "artistName": "Sung Chang Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/Eyw6O_5s.jpg",
+                    "characterName": "Kim Jae Wook",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "10754",
+                    "artistName": "Han Ji Eun",
+                    "artistImageURL": "https://i.mydramalist.com/rNO717_5s.jpg",
+                    "characterName": "Park Sun Joo",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "36839",
+                    "artistName": "Amy Aleha",
+                    "artistImageURL": "https://i.mydramalist.com/wlPxJs.jpg",
+                    "characterName": "Rachel",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "32411",
+                    "artistName": "Kim Yi Kyeong",
+                    "artistImageURL": "https://i.mydramalist.com/jQjN5z_5s.jpg",
+                    "characterName": "Joo Ah Reum",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "61745",
+                    "artistName": "Jo Seung Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/R43xY_5s.jpg",
+                    "characterName": "[homeroom teacher]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "14057",
+                    "artistName": "Woo Gi Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/0d1WO_5s.jpg",
+                    "characterName": "Gong Min Soo [Ah Reum's boyfriend]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "23233",
+                    "artistName": "Jeong Young Do",
+                    "artistImageURL": "https://i.mydramalist.com/Ql1Dv_5s.jpg",
+                    "characterName": "[Incheon Airport Immigration Bureau]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "42071",
+                    "artistName": "Lee Joo Young",
+                    "artistImageURL": "https://i.mydramalist.com/nO800N_5s.jpg",
+                    "characterName": "Sophia",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "6660",
+                    "artistName": "Lee Young Eun",
+                    "artistImageURL": "https://i.mydramalist.com/vPyZW_5s.jpg",
+                    "characterName": "Kang Chae Won [Young]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6662",
+                    "artistName": "Park Seo Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/rmyQjs.jpg",
+                    "characterName": "Han Yoo Kyung [Young]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "23782",
+                    "artistName": "Go Han Min",
+                    "artistImageURL": "https://i.mydramalist.com/vnEEXs.jpg",
+                    "characterName": "[Policeman]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "123525",
+                    "artistName": "Kim Young Joon",
+                    "artistImageURL": "https://i.mydramalist.com/2wN0Ek_5s.jpg",
+                    "characterName": "Kang Seok",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "23560",
+                    "artistName": "Hong Jin Ki",
+                    "artistImageURL": "https://i.mydramalist.com/RNolV_5s.jpg",
+                    "characterName": "Cha Hyun Oh [Young]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "60525",
+                    "artistName": "Bret Allan Lindquist",
+                    "artistImageURL": "https://i.mydramalist.com/ELByQ_5s.jpg",
+                    "characterName": "Thomas (Ep. 5-6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21707",
+                    "artistName": "Lee Won Jin",
+                    "artistImageURL": "https://i.mydramalist.com/Lw5pzx_5s.jpg",
+                    "characterName": "[Guide]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "52031",
+                    "artistName": "Moon Chang Jun",
+                    "artistImageURL": "https://i.mydramalist.com/0jKWO_5s.jpg",
+                    "characterName": "[Dancer]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21452",
+                    "artistName": "Joo Byung Ha",
+                    "artistImageURL": "https://i.mydramalist.com/6Ldy0s.jpg",
+                    "characterName": "[Dancer]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "51461",
+                    "artistName": "Jin Ga Min",
+                    "artistImageURL": "https://i.mydramalist.com/q3kn0_5s.jpg",
+                    "characterName": "[Detective] (Ep.8)",
+                    "role": "Guest Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/29387-12-nights"
+        },
+        "airedOn": {
+            "value": [
+                "Friday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/29387-12-nights"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "40025",
+            "artistName": "Jung Hun Soo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "40031",
+            "artistName": "Hwang Sook Mi",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "19873",
+            "artistName": "Lee Gun Woo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "5165",
+            "artistName": "Hwang Jae Won",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "14057",
+            "artistName": "Woo Gi Hoon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "123525",
+            "artistName": "Kim Young Joon",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "asianwiki (Fallback: mydramalist)",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki (Fallback: mydramalist)",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": null,
+        "airedOn": "mydramalist"
+    }
+}
