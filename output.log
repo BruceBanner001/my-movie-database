@@ -1,24 +1,20 @@
-[DEBUG] Title Validation FAILED: Page Title '12 Nights (Korean Drama)' vs Expected 'Twelve Nights' (Ratio: 0.38 & No Alias Match)
-[DEBUG] Title Validation FAILED: Detected Actor Profile (born:) instead of Drama/Movie on page.
-[DEBUG] Title Validation FAILED: Page Title '12 Nights (Korean Drama)' vs Expected 'Twelve Nights' (Ratio: 0.38 & No Alias Match)
-[DEBUG] Title Validation FAILED: Detected Actor Profile (birthdate:) instead of Drama/Movie on page.
-[DEBUG] Title Validation FAILED: Page Title '12 Nights (Korean Drama)' vs Expected 'Twelve Nights' (Ratio: 0.38 & No Alias Match)
-[DEBUG] Title Validation FAILED: Page Title 'Hundred Million Stars From the Sky (Korean Drama)' vs Expected 'The Smile Has Left Your Eyes' (Ratio: 0.21 & No Alias Match)
-[DEBUG] Title Validation FAILED: Page Title 'Hundred Million Stars From the Sky (Korean Drama)' vs Expected 'The Smile Has Left Your Eyes' (Ratio: 0.21 & No Alias Match)
-[DEBUG] Title Validation FAILED: Page Title 'Hundred Million Stars From the Sky (Korean Drama)' vs Expected 'The Smile Has Left Your Eyes' (Ratio: 0.21 & No Alias Match)
-[DEBUG] Title Validation FAILED: Page Title '2023 KBS Drama Awards' vs Expected 'My Perfect Stranger' (Ratio: 0.25 & No Alias Match)
+[DEBUG] Title Validation FAILED: Page Title '2024 (60th) BaekSang Arts Awards' vs Expected 'Queen of Tears' (Ratio: 0.26 & No Alias Match)
+[DEBUG] Title Validation FAILED: Page Title '2024 (60th) BaekSang Arts Awards' vs Expected 'Queen of Tears' (Ratio: 0.26 & No Alias Match)
+[DEBUG] Title Validation FAILED: Detected Actor Profile (birth name:) instead of Drama/Movie on page.
 [DEBUG] Title Validation FAILED: Detected Actor Profile (born:) instead of Drama/Movie on page.
 [DEBUG] Title Validation FAILED: Detected Actor Profile (born:) instead of Drama/Movie on page.
-[DEBUG] Title Validation FAILED: Page Title '2023 KBS Drama Awards' vs Expected 'My Perfect Stranger' (Ratio: 0.25 & No Alias Match)
 [DEBUG] Title Validation FAILED: Detected Actor Profile (born:) instead of Drama/Movie on page.
-[DEBUG] Title Validation FAILED: Page Title '2023 KBS Drama Awards' vs Expected 'My Perfect Stranger' (Ratio: 0.25 & No Alias Match)
+[DEBUG] Title Validation FAILED: Detected Actor Profile (birth name:) instead of Drama/Movie on page.
 [DEBUG] Title Validation FAILED: Detected Actor Profile (born:) instead of Drama/Movie on page.
-[DEBUG] Title Validation FAILED: Page Title 'Plerng Naree' vs Expected 'The Crown Princess' (Ratio: 0.13 & No Alias Match)
 [DEBUG] Title Validation FAILED: Detected Actor Profile (born:) instead of Drama/Movie on page.
-[DEBUG] Title Validation FAILED: Page Title '2015 SBS Drama Awards' vs Expected 'The Time We Were Not in Love' (Ratio: 0.16 & No Alias Match)
-[DEBUG] Title Validation FAILED: Page Title '2015 (4th) APAN Star Awards' vs Expected 'The Time We Were Not in Love' (Ratio: 0.18 & No Alias Match)
-[DEBUG] Title Validation FAILED: Season mismatch. Expected S1, Page has S2 (My Special Girl Episode 2)
-[DEBUG] Title Validation FAILED: Page Title 'inyoureyes' vs Expected 'My Special Girl' (Ratio: 0.16 & No Alias Match)
+[DEBUG] Title Validation FAILED: Detected Actor Profile (born:) instead of Drama/Movie on page.
+[DEBUG] Title Validation FAILED: Detected Actor Profile (born:) instead of Drama/Movie on page.
+[DEBUG] Title Validation FAILED: Detected Actor Profile (born:) instead of Drama/Movie on page.
+[DEBUG] Title Validation FAILED: Detected Actor Profile (born:) instead of Drama/Movie on page.
+[DEBUG] Title Validation FAILED: Detected Actor Profile (born:) instead of Drama/Movie on page.
+[DEBUG] Title Validation FAILED: Detected Actor Profile (birth name:) instead of Drama/Movie on page.
+[DEBUG] Title Validation FAILED: Detected Actor Profile (born:) instead of Drama/Movie on page.
+[DEBUG] Title Validation FAILED: Detected Actor Profile (birth name:) instead of Drama/Movie on page.
 ✅ Partial Batch completed successfully
 ⏳ Batch Processing in Progress...
 ══════════════════════════════════════════════════════
@@ -26,124 +22,112 @@
 ══════════════════════════════════════════════════════
 
 🚀 Workflow Type : Manual
-🔁 RUN           : 917
-⏰ Start Time    : 07 April 2026 - 08:07:45 PM
-⏰ End Time      : 07 April 2026 - 08:16:40 PM
-⏱️ Run Time      : 8 Minutes 54 Seconds
+🔁 RUN           : 918
+⏰ Start Time    : 07 April 2026 - 08:17:17 PM
+⏰ End Time      : 07 April 2026 - 08:25:43 PM
+⏱️ Run Time      : 8 Minutes 26 Seconds
 ⚙️ Max Process   : 50 Row Per Run
-🔄 Current Batch : 6
+🔄 Current Batch : 7
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Feb 7 2023 Onwards ===
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 🆕 Data Created:
-- 1251 - Welcome to Samdal-ri (2023) -> First Time Uploaded
-- 1252 - Tell Me That You Love Me (2023) -> First Time Uploaded
-- 1253 - Reacher Season 2 (2023) -> First Time Uploaded
-- 1254 - Ghost Doctor (2022) -> First Time Uploaded
-- 1255 - Derailment (2023) -> First Time Uploaded
-- 1256 - Good Doctor (2013) -> First Time Uploaded
-- 1257 - Twelve Nights (2018) -> First Time Uploaded
-- 1258 - Husband in Disguise (2022) -> First Time Uploaded
-- 1259 - My Lethal Man (2023) -> First Time Uploaded
-- 1260 - Forest (2020) -> First Time Uploaded
-- 1261 - To Ship Someone (2023) -> First Time Uploaded
-- 1262 - Marry My Husband (2024) -> First Time Uploaded
-- 1263 - When a Snail Falls in Love (2023) -> First Time Uploaded
-- 1264 - On the Way to the Airport (2016) -> First Time Uploaded
-- 1265 - A Shop for Killers (2024) -> First Time Uploaded
-- 1266 - Before We Get Married (2019) -> First Time Uploaded
-- 1267 - The Smile Has Left Your Eyes (2018) -> First Time Uploaded
-- 1268 - First Romance (2020) -> First Time Uploaded
-- 1269 - Intern in My Heart (2024) -> First Time Uploaded
-- 1270 - My Perfect Stranger (2023) -> First Time Uploaded
-- 1271 - Queen of Divorce (2024) -> First Time Uploaded
-- 1272 - Run On (2020) -> First Time Uploaded
-- 1273 - Fireworks of My Heart (2023) -> First Time Uploaded
-- 1274 - My Boss (2024) -> First Time Uploaded
-- 1275 - Got a Crush on You (2023) -> First Time Uploaded
-- 1276 - When I Was the Most Beautiful (2020) -> First Time Uploaded
-- 1277 - Amidst a Snowstorm of Love (2024) -> First Time Uploaded
-- 1278 - Love Is Panacea (2023) -> First Time Uploaded
-- 1279 - Only for Love (2023) -> First Time Uploaded
-- 1280 - The Girl Who Sees Smells (2023) -> First Time Uploaded
-- 1281 - Doctor Slump (2024) -> First Time Uploaded
-- 1282 - Golden House Hidden Love (2024) -> First Time Uploaded
-- 1283 - The Crown Princess (2018) -> First Time Uploaded
-- 1284 - Love in Time (2022) -> First Time Uploaded
-- 1285 - Bad Romeo (2022) -> First Time Uploaded
-- 1286 - A Piece of Your Mind (2020) -> First Time Uploaded
-- 1287 - My Romance From Far Away (2022) -> First Time Uploaded
-- 1288 - Road Home (2023) -> First Time Uploaded
-- 1289 - Dating in the Kitchen (2020) -> First Time Uploaded
-- 1290 - Find Yourself (2020) -> First Time Uploaded
-- 1291 - Timeless Love (2021) -> First Time Uploaded
-- 1292 - My Fated Boy (2021) -> First Time Uploaded
-- 1293 - Orange Marmalade (2015) -> First Time Uploaded
-- 1294 - Beautiful Reborn Flower (2020) -> First Time Uploaded
-- 1295 - You Are My Spring (2021) -> First Time Uploaded
-- 1296 - The Time We Were Not in Love (2015) -> First Time Uploaded
-- 1297 - Flavour It's Yours (2019) -> First Time Uploaded
-- 1298 - Love is in the Air (2020) -> First Time Uploaded
-- 1299 - My Special Girl (2024) -> First Time Uploaded
-- 1300 - Day Dreamer (2018) -> First Time Uploaded
+- 1301 - Eye Love You (2024) -> First Time Uploaded
+- 1302 - Queen of Tears (2024) -> First Time Uploaded
+- 1303 - Well Dominated Love (2020) -> First Time Uploaded
+- 1304 - Ab Ruk Online (2015) -> First Time Uploaded
+- 1305 - Again My Life (2022) -> First Time Uploaded
+- 1306 - Wedding Impossible (2024) -> First Time Uploaded
+- 1307 - Fight for My Way (2017) -> First Time Uploaded
+- 1308 - The Midnight Studio (2024) -> First Time Uploaded
+- 1309 - Naeil's Cantabile (2014) -> First Time Uploaded
+- 1310 - Boss & Me (2014) -> First Time Uploaded
+- 1311 - Dhevaprom: Kwanruetai (2024) -> First Time Uploaded
+- 1312 - Hello, I'm at Your Service (2023) -> First Time Uploaded
+- 1313 - If You Wish Upon Me (2022) -> First Time Uploaded
+- 1314 - Lovely Runner (2024) -> First Time Uploaded
+- 1315 - Love Me Like I Do (2023) -> First Time Uploaded
+- 1316 - Twinkling Watermelon (2023) -> First Time Uploaded
+- 1317 - Frankly Speaking (2024) -> First Time Uploaded
+- 1318 - The Atypical Family (2024) -> First Time Uploaded
+- 1319 - Parallel Love (2020) -> First Time Uploaded
+- 1320 - Mr Honesty (2020) -> First Time Uploaded
+- 1321 - Missing Crown Prince (2024) -> First Time Uploaded
+- 1322 - Branding in Seongsu (2024) -> First Time Uploaded
+- 1323 - Hierarchy (2024) -> First Time Uploaded
+- 1324 - Twenty Five Twenty One (2022) -> First Time Uploaded
+- 1325 - Girlfriend (2020) -> First Time Uploaded
+- 1326 - Dreaming of a Freaking Fairytale (2024) -> First Time Uploaded
+- 1327 - The Midnight Romance in Hagwon (2024) -> First Time Uploaded
+- 1328 - Game of Thrones Season 1 (2011) -> First Time Uploaded
+- 1329 - Game of Thrones Season 2 (2012) -> First Time Uploaded
+- 1330 - Game of Thrones Season 3 (2013) -> First Time Uploaded
+- 1331 - Game of Thrones Season 4 (2014) -> First Time Uploaded
+- 1332 - Game of Thrones Season 5 (2015) -> First Time Uploaded
+- 1333 - Game of Thrones Season 6 (2016) -> First Time Uploaded
+- 1334 - Game of Thrones Season 7 (2017) -> First Time Uploaded
+- 1335 - Game of Thrones Season 8 (2019) -> First Time Uploaded
+- 1336 - Dare to Love Me (2024) -> First Time Uploaded
+- 1337 - Moon Lovers: Scarlet Heart Ryeo (2016) -> First Time Uploaded
+- 1338 - You Are My Heartbeat (2022) -> First Time Uploaded
+- 1339 - My Military Valentine (2024) -> First Time Uploaded
+- 1340 - Sweet First Love (2020) -> First Time Uploaded
+- 1341 - Stranger Things Season 1 (2016) -> First Time Uploaded
+- 1342 - Stranger Things Season 2 (2017) -> First Time Uploaded
+- 1343 - Stranger Things Season 3 (2019) -> First Time Uploaded
+- 1344 - Stranger Things Season 4 (2022) -> First Time Uploaded
+- 1345 - My Sweet Mobster (2024) -> First Time Uploaded
+- 1346 - The Impossible Heir (2024) -> First Time Uploaded
+- 1347 - Miss Night and Day (2024) -> First Time Uploaded
+- 1348 - Red Swan (2024) -> First Time Uploaded
+- 1349 - Oops! Mr. Superstar Hit on Me (2022) -> First Time Uploaded
+- 1350 - Liars in Love (2024) -> First Time Uploaded
 
 🖼️ Fetched Data Details:
-- 1251 - Welcome to Samdal-ri (2023) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1252 - Tell Me That You Love Me (2023) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1254 - Ghost Doctor (2022) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1255 - Derailment (2023) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1256 - Good Doctor (2013) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1257 - Twelve Nights (2018) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1258 - Husband in Disguise (2022) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1259 - My Lethal Man (2023) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1260 - Forest (2020) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1261 - To Ship Someone (2023) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1262 - Marry My Husband (2024) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1263 - When a Snail Falls in Love (2023) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1264 - On the Way to the Airport (2016) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1265 - A Shop for Killers (2024) -> Fetched: Aired On, Cast, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1266 - Before We Get Married (2019) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1267 - The Smile Has Left Your Eyes (2018) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1268 - First Romance (2020) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1269 - Intern in My Heart (2024) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1270 - My Perfect Stranger (2023) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1271 - Queen of Divorce (2024) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1272 - Run On (2020) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1273 - Fireworks of My Heart (2023) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1274 - My Boss (2024) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1275 - Got a Crush on You (2023) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1276 - When I Was the Most Beautiful (2020) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1277 - Amidst a Snowstorm of Love (2024) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1278 - Love Is Panacea (2023) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1279 - Only for Love (2023) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1280 - The Girl Who Sees Smells (2023) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1281 - Doctor Slump (2024) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1282 - Golden House Hidden Love (2024) -> Fetched: Aired On, Cast, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1283 - The Crown Princess (2018) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1284 - Love in Time (2022) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1285 - Bad Romeo (2022) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1286 - A Piece of Your Mind (2020) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1287 - My Romance From Far Away (2022) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1288 - Road Home (2023) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1289 - Dating in the Kitchen (2020) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1290 - Find Yourself (2020) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1291 - Timeless Love (2021) -> Fetched: Aired On, Duration, Release Date, Show Image, Tags
-- 1292 - My Fated Boy (2021) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1293 - Orange Marmalade (2015) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1294 - Beautiful Reborn Flower (2020) -> Fetched: Aired On, Cast, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1295 - You Are My Spring (2021) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1296 - The Time We Were Not in Love (2015) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1297 - Flavour It's Yours (2019) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1299 - My Special Girl (2024) -> Fetched: Show Image
+- 1301 - Eye Love You (2024) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1302 - Queen of Tears (2024) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1303 - Well Dominated Love (2020) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1304 - Ab Ruk Online (2015) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1305 - Again My Life (2022) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1306 - Wedding Impossible (2024) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1307 - Fight for My Way (2017) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1308 - The Midnight Studio (2024) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1309 - Naeil's Cantabile (2014) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1310 - Boss & Me (2014) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1311 - Dhevaprom: Kwanruetai (2024) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1312 - Hello, I'm at Your Service (2023) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1313 - If You Wish Upon Me (2022) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1314 - Lovely Runner (2024) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1315 - Love Me Like I Do (2023) -> Fetched: Aired On, Cast, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1316 - Twinkling Watermelon (2023) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1317 - Frankly Speaking (2024) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1318 - The Atypical Family (2024) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1319 - Parallel Love (2020) -> Fetched: Aired On, Cast, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1320 - Mr Honesty (2020) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1321 - Missing Crown Prince (2024) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1322 - Branding in Seongsu (2024) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1323 - Hierarchy (2024) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1324 - Twenty Five Twenty One (2022) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1325 - Girlfriend (2020) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1326 - Dreaming of a Freaking Fairytale (2024) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1327 - The Midnight Romance in Hagwon (2024) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1336 - Dare to Love Me (2024) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1337 - Moon Lovers: Scarlet Heart Ryeo (2016) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1338 - You Are My Heartbeat (2022) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1339 - My Military Valentine (2024) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1340 - Sweet First Love (2020) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1345 - My Sweet Mobster (2024) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1346 - The Impossible Heir (2024) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1347 - Miss Night and Day (2024) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1348 - Red Swan (2024) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1349 - Oops! Mr. Superstar Hit on Me (2022) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1350 - Liars in Love (2024) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
 
 ⚠️ Missing Values (Asian Dramas):
-- 1265 - A Shop for Killers (2024) -> ⚠️ Missing: Director
-- 1282 - Golden House Hidden Love (2024) -> ⚠️ Missing: Director
-- 1291 - Timeless Love (2021) -> ⚠️ Missing: Cast, Director, Other Names, Synopsis
-- 1294 - Beautiful Reborn Flower (2020) -> ⚠️ Missing: Director
-- 1299 - My Special Girl (2024) -> ⚠️ Missing: Aired On, Cast, Director, Duration, Other Names, Release Date, Synopsis, Tags
+- 1315 - Love Me Like I Do (2023) -> ⚠️ Missing: Director
+- 1319 - Parallel Love (2020) -> ⚠️ Missing: Director
 
 📊 Summary (Sheet: Feb 7 2023 Onwards)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -152,7 +136,7 @@
 🔍 Refetched: 0
 🚫 Skipped (Asian): 0
 🙈 Ignored (Non-Asian): 0
-⚠️ Warnings: 5
+⚠️ Warnings: 2
   Total Unique Rows: 50
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -161,57 +145,57 @@
 🆕 Total Created: 50
 🔁 Total Updated: 0
 🔍 Total Refetched: 0
-🖼️ Show Images Updated: 47
-🧑‍🎨 New Artist Images Added: 1019
+🖼️ Show Images Updated: 38
+🧑‍🎨 New Artist Images Added: 785
 🚫 Total Skipped (Asian): 0
 🙈 Total Ignored (Non-Asian): 0
 ❌ Total Deleted: 0
 🗄️ Total Archived Backups: 0
-⚠️ Total Warnings: 5
+⚠️ Total Warnings: 2
 💾 Backup Files: 0
   Grand Total Rows Processed: 50
 
-💾 Metadata Backups: 47
+💾 Metadata Backups: 38
 
-📦 Total Objects in seriesData.json: 300
-📦 Total Objects in artists.json: 7561
-📦 Total Objects in cast.json: 265
-📦 Total Objects in artists_lookup.json: 7561
-🖼️ Total images in show-images: 286
-🧑‍🎨 Total images in artist-images: 7561
+📦 Total Objects in seriesData.json: 350
+📦 Total Objects in artists.json: 8346
+📦 Total Objects in cast.json: 303
+📦 Total Objects in artists_lookup.json: 8346
+🖼️ Total images in show-images: 324
+🧑‍🎨 Total images in artist-images: 8346
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ Folders Generated:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📁 show_images/ (Total: 47 files)
-    📄 1251.jpg
-    📄 1252.jpg
-    📄 1254.jpg
-    📄 1255.jpg
-    📄 1256.jpg
-    ... and 42 more files.
+📁 show_images/ (Total: 38 files)
+    📄 1301.jpg
+    📄 1302.jpg
+    📄 1303.jpg
+    📄 1304.jpg
+    📄 1305.jpg
+    ... and 33 more files.
 
-📁 artist_images/ (Total: 1019 files)
-    📄 127071.jpg
-    📄 9469.jpg
-    📄 69891.jpg
-    📄 123653.jpg
-    📄 26161.jpg
-    ... and 1014 more files.
+📁 artist_images/ (Total: 785 files)
+    📄 22485.jpg
+    📄 21212.jpg
+    📄 128915.jpg
+    📄 67229.jpg
+    📄 103479.jpg
+    ... and 780 more files.
 
-📁 meta_backups/ (Total: 47 files)
-    📄 META_07_April_2026_2007_1251.json
-    📄 META_07_April_2026_2007_1252.json
-    📄 META_07_April_2026_2007_1254.json
-    📄 META_07_April_2026_2007_1255.json
-    📄 META_07_April_2026_2007_1256.json
-    ... and 42 more files.
+📁 meta_backups/ (Total: 38 files)
+    📄 META_07_April_2026_2017_1301.json
+    📄 META_07_April_2026_2017_1302.json
+    📄 META_07_April_2026_2017_1303.json
+    📄 META_07_April_2026_2017_1304.json
+    📄 META_07_April_2026_2017_1305.json
+    ... and 33 more files.
 
 📁 reports/ (Total: 1 files)
-    📄 07_April_2026_2007_PARTIAL_917_REPORT.txt
+    📄 07_April_2026_2017_PARTIAL_918_REPORT.txt
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ⚠️ BATCH LIMIT REACHED: The script paused safely.
 GitHub Actions will trigger next run automatically.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-✅ Partial Report created at -> reports/07_April_2026_2007_PARTIAL_917_REPORT.txt
+✅ Partial Report created at -> reports/07_April_2026_2017_PARTIAL_918_REPORT.txt
