@@ -1,0 +1,397 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260407_230944",
+    "timestamp": "07 April 2026 11:17 PM (IST)",
+    "showID": 1401,
+    "showName": "You Complete Me",
+    "fetchedFields": {
+        "showImage": {
+            "value": "1401.jpg",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/55061-rose-in-the-storm"
+        },
+        "releaseDate": {
+            "value": "December 02, 2020",
+            "source": "mydramalist"
+        },
+        "otherNames": {
+            "value": [
+                "Little Storm",
+                "Rose in the Storm",
+                "Tú Me Complementas",
+                "Você Me Completa",
+                "Xiao Feng Bao Zhi Shi Jian De Mei Gui",
+                "Ты дополняешь меня"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/55061-rose-in-the-storm"
+        },
+        "Duration": {
+            "value": "45 mins",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/55061-rose-in-the-storm"
+        },
+        "synopsis": {
+            "value": "Lin Wo is trying hard to get her client the job in a investment company, she is very ambitious to the point of competing with her own boyfriend who is working in the same company and wants to land the same job for his client.\n\nAfter some turbulations Lin Wo succeeds in her mission but gets misunderstood by Gao Shan, the other candidate for the job, to have sabotaged his chances and playing dirty.\n\nLin  Wo can‘t let herself be misunderstood and tries to prove her clean and fair work with helping Gao Shan lend another job by all means.",
+            "source": "mydramalist"
+        },
+        "director": {
+            "value": [
+                "Dai Xiao Zhe"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/55061-rose-in-the-storm"
+        },
+        "tags": {
+            "value": [
+                "Revenge",
+                "Adapted From A Novel",
+                "Web Series",
+                "Smart Female Lead",
+                "Male Chases Female First",
+                "Suicide",
+                "Father-Daughter Relationship",
+                "Enemies To Lovers",
+                "Cold Male Lead",
+                "Headhunter Female Lead"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/55061-rose-in-the-storm"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "78795",
+                    "artistName": "Dai Xiao Zhe",
+                    "artistImageURL": "https://i.mydramalist.com/REDWY_5m.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "52331",
+                    "artistName": "Gao Ming Qian",
+                    "artistImageURL": "https://i.mydramalist.com/Xz3ZO_5m.jpg",
+                    "characterName": null,
+                    "role": "Producer"
+                },
+                {
+                    "artistID": "31247",
+                    "artistName": "Gary Sing",
+                    "artistImageURL": "https://i.mydramalist.com/RdykR_5m.jpg",
+                    "characterName": null,
+                    "role": "Producer"
+                },
+                {
+                    "artistID": "57829",
+                    "artistName": "Zhang Na",
+                    "artistImageURL": "https://i.mydramalist.com/d1Ny5_5m.jpg",
+                    "characterName": null,
+                    "role": "Producer"
+                },
+                {
+                    "artistID": "75119",
+                    "artistName": "Pan Xiao Chen",
+                    "artistImageURL": "https://i.mydramalist.com/0XX3r_5m.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "15612",
+                    "artistName": "Hu Yi Tian",
+                    "artistImageURL": "https://i.mydramalist.com/vP7OW_5s.jpg",
+                    "characterName": "Gao Shan",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "12008",
+                    "artistName": "Qiao Xin",
+                    "artistImageURL": "https://i.mydramalist.com/60ePW2_5s.jpg",
+                    "characterName": "Lin Wo",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "20585",
+                    "artistName": "Sean Zheng",
+                    "artistImageURL": "https://i.mydramalist.com/YY1WLP_5s.jpg",
+                    "characterName": "Su Yuan",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "15424",
+                    "artistName": "Zhong Qi",
+                    "artistImageURL": "https://i.mydramalist.com/81o5X2_5s.jpg",
+                    "characterName": "Wu Dong Na / Alisa",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "19680",
+                    "artistName": "Hu Hao Bo",
+                    "artistImageURL": "https://i.mydramalist.com/ryxgj_5s.jpg",
+                    "characterName": "Bei Xiao Rong",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "71271",
+                    "artistName": "Wang Da Yu",
+                    "artistImageURL": "https://i.mydramalist.com/4XDY6_5s.jpg",
+                    "characterName": "Qin Sheng Sheng",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2323",
+                    "artistName": "Liu Xiao Ye",
+                    "artistImageURL": "https://i.mydramalist.com/xyzBq_5s.jpg",
+                    "characterName": "Zheng Wan Ying",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "59959",
+                    "artistName": "Yin Zhi Xuan",
+                    "artistImageURL": "https://i.mydramalist.com/4ZRYr_5s.jpg",
+                    "characterName": "Deng Li",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "22369",
+                    "artistName": "Wang Yi Fan",
+                    "artistImageURL": "https://i.mydramalist.com/qDAEP_5s.jpg",
+                    "characterName": "Sun Li",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "23067",
+                    "artistName": "Ren Bin",
+                    "artistImageURL": "https://i.mydramalist.com/YYezng_5s.jpg",
+                    "characterName": "Wan Jia He",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "30013",
+                    "artistName": "Wang Yi Zhou",
+                    "artistImageURL": "https://i.mydramalist.com/PxmkEZ_5s.jpg",
+                    "characterName": "Tao Yao Feng",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "14253",
+                    "artistName": "Wang Rui Zi",
+                    "artistImageURL": "https://i.mydramalist.com/mO5323_5s.jpg",
+                    "characterName": "Vivian",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "20297",
+                    "artistName": "Hu Ling Meng",
+                    "artistImageURL": "https://i.mydramalist.com/edK2q_5s.jpg",
+                    "characterName": "Sun Miao",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "17858",
+                    "artistName": "Xiang Hao",
+                    "artistImageURL": "https://i.mydramalist.com/10QQ7s.jpg",
+                    "characterName": "Du Fei [Mo Tian Team A]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "51889",
+                    "artistName": "Wang Xing Yue",
+                    "artistImageURL": "https://i.mydramalist.com/kA38er_5s.jpg",
+                    "characterName": "Gu Xiao Bing [Mo Tian team B]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "21933",
+                    "artistName": "Chang Kai Ning",
+                    "artistImageURL": "https://i.mydramalist.com/E0VAb_5s.jpg",
+                    "characterName": "Gao Feng",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "14546",
+                    "artistName": "Chen Jia Min",
+                    "artistImageURL": "https://i.mydramalist.com/17DD6_5s.jpg",
+                    "characterName": "Amy",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "45595",
+                    "artistName": "Wang Ya Ting",
+                    "artistImageURL": "https://i.mydramalist.com/eeL3n_5s.jpg",
+                    "characterName": "[Su Yuan's mother]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "21932",
+                    "artistName": "Zhang Yao Yu",
+                    "artistImageURL": "https://i.mydramalist.com/WvXkRs.jpg",
+                    "characterName": "Wu Nan",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "111219",
+                    "artistName": "Li Xiang",
+                    "artistImageURL": "https://i.mydramalist.com/oQwOQO_5s.jpg",
+                    "characterName": "Uncle Zhang",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "111199",
+                    "artistName": "Li Wen",
+                    "artistImageURL": "https://i.mydramalist.com/Xn15J_5s.jpg",
+                    "characterName": "Su Mei He [Chairman of Yijia]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "77101",
+                    "artistName": "Time Liu",
+                    "artistImageURL": "https://i.mydramalist.com/r8zj2_5s.jpg",
+                    "characterName": "Kang Ming",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "77093",
+                    "artistName": "Li Yan Feng",
+                    "artistImageURL": "https://i.mydramalist.com/r8zlE_5s.jpg",
+                    "characterName": "Tang Xiao Yun",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "111285",
+                    "artistName": "Liu Meng Meng",
+                    "artistImageURL": "https://i.mydramalist.com/xVyly_5s.jpg",
+                    "characterName": "Tracey Liu",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "119473",
+                    "artistName": "Zhong Xuan Kai",
+                    "artistImageURL": "https://i.mydramalist.com/kA083b_5s.jpg",
+                    "characterName": "Feng Xin",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "113917",
+                    "artistName": "Yang Fan",
+                    "artistImageURL": "https://i.mydramalist.com/BdvK4A_5s.jpg",
+                    "characterName": "Chen Hong Yu",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "113753",
+                    "artistName": "Zhu Guo Yu",
+                    "artistImageURL": "https://i.mydramalist.com/0Z22e_5s.jpg",
+                    "characterName": "Director Wang Peng",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "51095",
+                    "artistName": "Jin Qi Cheng",
+                    "artistImageURL": "https://i.mydramalist.com/73ZAqR_5s.jpg",
+                    "characterName": "Xiao Bao [Sun Miao's son]",
+                    "role": "Guest Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/55061-rose-in-the-storm"
+        },
+        "airedOn": {
+            "value": [
+                "Wednesday",
+                "Thursday",
+                "Friday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/55061-rose-in-the-storm"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "78795",
+            "artistName": "Dai Xiao Zhe",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "31247",
+            "artistName": "Gary Sing",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "75119",
+            "artistName": "Pan Xiao Chen",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "20585",
+            "artistName": "Sean Zheng",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "15424",
+            "artistName": "Zhong Qi",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "23067",
+            "artistName": "Ren Bin",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "14253",
+            "artistName": "Wang Rui Zi",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "20297",
+            "artistName": "Hu Ling Meng",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "17858",
+            "artistName": "Xiang Hao",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "21933",
+            "artistName": "Chang Kai Ning",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "14546",
+            "artistName": "Chen Jia Min",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "21932",
+            "artistName": "Zhang Yao Yu",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "111219",
+            "artistName": "Li Xiang",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "111199",
+            "artistName": "Li Wen",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "113917",
+            "artistName": "Yang Fan",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "mydramalist",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "mydramalist",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": null,
+        "airedOn": "mydramalist"
+    }
+}

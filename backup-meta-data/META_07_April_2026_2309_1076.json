@@ -1,0 +1,538 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260407_230944",
+    "timestamp": "07 April 2026 11:11 PM (IST)",
+    "showID": 1076,
+    "showName": "Jugglers",
+    "fetchedFields": {
+        "showImage": {
+            "value": "1076.jpg",
+            "source": "asianwiki"
+        },
+        "releaseDate": {
+            "value": "Dec  4, 2017 - Jan 23, 2018",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/25733-jugglers"
+        },
+        "otherNames": {
+            "value": [
+                "Jeogeulreosu",
+                "Malabaristas",
+                "Жонглёры"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/25733-jugglers"
+        },
+        "Duration": {
+            "value": "1 hr. 3 min.",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/25733-jugglers"
+        },
+        "synopsis": {
+            "value": "Yoon-Yi (Baek Jin-Hee) works as a secretary and has held her job for the past 5 years. She is loyal and devoted to her work. Yoon-Yi also runs an internet community website for secretaries. One day, her boss's wife mistakenly assumes her husband is having an affair with Yoon-Yi. The scandal spreads throughout her company. Her boss though does not correct the misunderstanding to coverup his own real affair he is having with someone else. Yoon-Yi is placed on a waiting list for a new position and she is devastated.\n\nMeanwhile, Chi-Won (Daniel Choi) is scouted for a managing director position in the Video Business Department at YB Ad. He carries a trauma related to a fire incident when he was young. He is not interested in socializing with other people and he does not a have a secretary. Yoon-Yi is assigned to work as Chi-Won's secretary at YB Ad, but Chi-Won tells her that he does not need her. Yoon-Yi tells him otherwise and that she will work hard for him. One evening, Chi-Won's boss invites him and Yoon-Yi out for dinner. Yoon-Yi gets drunk and Chi-Won takes her home. It turns out the house where she lives is the same house where the traumatic fire incident occurred when Chi-Won was a child. Next to the front door, he sees a flyer looking for a tenant for a second floor room. Chi-Won decides to rent the room to overcome his trauma.",
+            "source": "asianwiki"
+        },
+        "director": {
+            "value": [
+                "Kim Jung Hyun",
+                "Kang Soo Yeon"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/25733-jugglers"
+        },
+        "tags": {
+            "value": [
+                "Boss-Employee Relationship",
+                "Hardworking Female Lead",
+                "Calm Male Lead",
+                "Eccentric Male Lead",
+                "Oblivious Male Lead",
+                "Frenemy",
+                "Smart Male Lead",
+                "Hardworking Male Lead",
+                "Successful Male Lead",
+                "Nerdy Male Lead"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/25733-jugglers"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "19834",
+                    "artistName": "Moon Joon Ha",
+                    "artistImageURL": "https://i.mydramalist.com/6yY22m.jpg",
+                    "characterName": null,
+                    "role": "Chief Producer"
+                },
+                {
+                    "artistID": "94867",
+                    "artistName": "Mun Seong Nam",
+                    "artistImageURL": "https://i.mydramalist.com/0qwlN_5m.jpg",
+                    "characterName": null,
+                    "role": "Composer"
+                },
+                {
+                    "artistID": "22573",
+                    "artistName": "Kim Jung Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/AvNL3m.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "35953",
+                    "artistName": "Kang Soo Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/BdpBPR_5m.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "21200",
+                    "artistName": "Jo Yong",
+                    "artistImageURL": "https://i.mydramalist.com/wwADJm.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "629",
+                    "artistName": "Choi Daniel",
+                    "artistImageURL": "https://i.mydramalist.com/nOnz1L_5s.jpg",
+                    "characterName": "Nam Chi Won",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "1652",
+                    "artistName": "Baek Jin Hee",
+                    "artistImageURL": "https://i.mydramalist.com/Qzdnv_5s.jpg",
+                    "characterName": "Jwa Yoon Yi",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "1987",
+                    "artistName": "Lee Won Keun",
+                    "artistImageURL": "https://i.mydramalist.com/WoXxW_5s.jpg",
+                    "characterName": "Hwang Bo Yool",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "277",
+                    "artistName": "Kang Hye Jung",
+                    "artistImageURL": "https://i.mydramalist.com/BgLd1_5s.jpg",
+                    "characterName": "Wang Jung Ae",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "4238",
+                    "artistName": "Choi Dae Chul",
+                    "artistImageURL": "https://i.mydramalist.com/4eeNXZ_5s.jpg",
+                    "characterName": "Director Bong Jang Woo / \"Dimwit\"",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "10758",
+                    "artistName": "Min Jin Woong",
+                    "artistImageURL": "https://i.mydramalist.com/BbnrAs.jpg",
+                    "characterName": "Woo Chang Soo",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "15693",
+                    "artistName": "Hong Kyung",
+                    "artistImageURL": "https://i.mydramalist.com/O82gkY_5s.jpg",
+                    "characterName": "Jwa Tae I",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "10627",
+                    "artistName": "Cha Joo Young",
+                    "artistImageURL": "https://i.mydramalist.com/DkLWKy_5s.jpg",
+                    "characterName": "Ma Bo Na",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "6145",
+                    "artistName": "Jung Joon Won",
+                    "artistImageURL": "https://i.mydramalist.com/XrZqps.jpg",
+                    "characterName": "Park Geon Woo",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "8762",
+                    "artistName": "Jung Hye In",
+                    "artistImageURL": "https://i.mydramalist.com/60rXoX_5s.jpg",
+                    "characterName": "Park Kyung Rye",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3652",
+                    "artistName": "Kim Gi Bang",
+                    "artistImageURL": "https://i.mydramalist.com/dvmD5s.jpg",
+                    "characterName": "Park Chi Soo [Image Op. Div., Deputy]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2919",
+                    "artistName": "Jung  Soo Young",
+                    "artistImageURL": "https://i.mydramalist.com/BQ6z5_5s.jpg",
+                    "characterName": "Moon Soon Young [Image Op. Div., Deputy]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "11485",
+                    "artistName": "Jung Sung Ho",
+                    "artistImageURL": "https://i.mydramalist.com/QJnoq7_5s.jpg",
+                    "characterName": "Gong Yoo [Image Op. Div., Dept. Head]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "10446",
+                    "artistName": "Cha Soon Bae",
+                    "artistImageURL": "https://i.mydramalist.com/4q3j1_5s.jpg",
+                    "characterName": "Baek Soon Bae [Sport Op. Div., Dept. Head]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1197",
+                    "artistName": "In Gyo Jin",
+                    "artistImageURL": "https://i.mydramalist.com/pOZeEs.jpg",
+                    "characterName": "Jo  Sang Moo [Executive director]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1905",
+                    "artistName": "Kim Chang Wan",
+                    "artistImageURL": "https://i.mydramalist.com/6xQPg_5s.jpg",
+                    "characterName": "Do Tae Geun [Vice president]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "13881",
+                    "artistName": "Park Kyung Hye",
+                    "artistImageURL": "https://i.mydramalist.com/QJBrog_5s.jpg",
+                    "characterName": "Goo Kye Young [Sport Op. Div., Deputy]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "10797",
+                    "artistName": "Song Ji Ho",
+                    "artistImageURL": "https://i.mydramalist.com/jlzwrs.jpg",
+                    "characterName": "Go Myung Suk",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "17806",
+                    "artistName": "Seo Eun Woo",
+                    "artistImageURL": "https://i.mydramalist.com/mjYX1s.jpg",
+                    "characterName": "Do Do Hee",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "21213",
+                    "artistName": "Moon Ji Hoo",
+                    "artistImageURL": "https://i.mydramalist.com/dj4EK_5s.jpg",
+                    "characterName": "Min Deul Re",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "18537",
+                    "artistName": "Lee Ji Ha",
+                    "artistImageURL": "https://i.mydramalist.com/EDgKms.jpg",
+                    "characterName": "Kang Soon Deok",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "23053",
+                    "artistName": "Jo Yong Jin",
+                    "artistImageURL": "https://i.mydramalist.com/Xqykg_5s.jpg",
+                    "characterName": "Nam Chi Won [Young]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "12610",
+                    "artistName": "Lee Hyun Wook",
+                    "artistImageURL": "https://i.mydramalist.com/183gy_5s.jpg",
+                    "characterName": "Yoo In Sang",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "58935",
+                    "artistName": "Shin Min Kyung",
+                    "artistImageURL": "https://i.mydramalist.com/QyjQ2_5s.jpg",
+                    "characterName": "Go Shi Won",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "64513",
+                    "artistName": "Kim Ra Hee",
+                    "artistImageURL": "https://i.mydramalist.com/Wo18D_5s.jpg",
+                    "characterName": "Shim Hye Jin",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3506",
+                    "artistName": "Kim Soo Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/2W3wd_5s.jpg",
+                    "characterName": "Wang Mi Ae [Wang Jung Ae's sister]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "546",
+                    "artistName": "Sung Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/nOZvrQ_5s.jpg",
+                    "characterName": "Lee Kyung Joon (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "8470",
+                    "artistName": "Hwang Seung Eon",
+                    "artistImageURL": "https://i.mydramalist.com/vXQXNW_5s.jpg",
+                    "characterName": "Secretary Kang (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "17136",
+                    "artistName": "Jung Young Joo",
+                    "artistImageURL": "https://i.mydramalist.com/73dRzD_5s.jpg",
+                    "characterName": "\"Misery\" [Bong Jang Woo's wife] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "1326",
+                    "artistName": "Choi Yeo Jin",
+                    "artistImageURL": "https://i.mydramalist.com/18Kgd_5s.jpg",
+                    "characterName": "[CEO's secretary] (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "23592",
+                    "artistName": "Jung Jong Woo",
+                    "artistImageURL": "https://i.mydramalist.com/qExd5_5s.jpg",
+                    "characterName": "[Passing out leaflets] (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "279",
+                    "artistName": "Yoo Ji Tae",
+                    "artistImageURL": "https://i.mydramalist.com/eeyxe_5s.jpg",
+                    "characterName": "Choi Kang Woo (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6278",
+                    "artistName": "Jeon Seok Ho",
+                    "artistImageURL": "https://i.mydramalist.com/YYj5OB_5s.jpg",
+                    "characterName": "Park Joon Pyo [Wang Jung Ae's husband] (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "40729",
+                    "artistName": "Min Chae Eun",
+                    "artistImageURL": "https://i.mydramalist.com/rQeeN_5s.jpg",
+                    "characterName": "[Secretary]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "19546",
+                    "artistName": "Oh Jin Ha",
+                    "artistImageURL": "https://i.mydramalist.com/60vLxP_5s.jpg",
+                    "characterName": "[Secretary]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "44699",
+                    "artistName": "Kim Mi Hye",
+                    "artistImageURL": "https://i.mydramalist.com/EgnO0_5s.jpg",
+                    "characterName": "[Secretary]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "42061",
+                    "artistName": "Seo Joon Hyung",
+                    "artistImageURL": "https://i.mydramalist.com/W36yRs.jpg",
+                    "characterName": "[Delinquent student 1]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21681",
+                    "artistName": "Min Dae Shik",
+                    "artistImageURL": "https://i.mydramalist.com/JKKgds.jpg",
+                    "characterName": "[Chi Won's uncle]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "8995",
+                    "artistName": "Lee Woo Joo",
+                    "artistImageURL": "https://i.mydramalist.com/nO6y5B_5s.jpg",
+                    "characterName": "Nam Chi Won [Child]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "20457",
+                    "artistName": "Alberto Mondi",
+                    "artistImageURL": "https://i.mydramalist.com/Z85yQO_5s.jpg",
+                    "characterName": "Henry (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "9860",
+                    "artistName": "Ok Joo Ri",
+                    "artistImageURL": "https://i.mydramalist.com/EDWnOs.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "9360",
+                    "artistName": "Kim Hak Seon",
+                    "artistImageURL": "https://i.mydramalist.com/Bz1V6_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "4495",
+                    "artistName": "Han Yeo Wool",
+                    "artistImageURL": "https://i.mydramalist.com/5vbrnB_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5994",
+                    "artistName": "Lee Chang",
+                    "artistImageURL": "https://i.mydramalist.com/ZBZjJ_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "31121",
+                    "artistName": "Kang Dong Yup",
+                    "artistImageURL": "https://i.mydramalist.com/4rgg1s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "42191",
+                    "artistName": "Yoon Dan Bi",
+                    "artistImageURL": "https://i.mydramalist.com/VXR13E_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "128899",
+                    "artistName": "Kim Se Rin",
+                    "artistImageURL": "https://i.mydramalist.com/XdrZVn_5s.jpg",
+                    "characterName": "Joo Pan Mi",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "44229",
+                    "artistName": "Kim Young Mi",
+                    "artistImageURL": "https://i.mydramalist.com/QJmzJg_5s.jpg",
+                    "characterName": "[HR employee]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "47729",
+                    "artistName": "Lee So Mi",
+                    "artistImageURL": "https://i.mydramalist.com/6EO4P_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "30873",
+                    "artistName": "Song Yo Sep",
+                    "artistImageURL": "https://i.mydramalist.com/xQmBzs.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "14668",
+                    "artistName": "Choi Young",
+                    "artistImageURL": "https://i.mydramalist.com/1odwKs.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "106529",
+                    "artistName": "Cha U Yeong",
+                    "artistImageURL": "https://i.mydramalist.com/j5BzJ_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "128641",
+                    "artistName": "Gu Da Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/XdrdAZ_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "6432",
+                    "artistName": "Choi Bum Ho",
+                    "artistImageURL": "https://i.mydramalist.com/4Ny1d_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "128897",
+                    "artistName": "Park Young Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/RBr0VE_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/25733-jugglers"
+        },
+        "airedOn": {
+            "value": [
+                "Monday",
+                "Tuesday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/25733-jugglers"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "277",
+            "artistName": "Kang Hye Jung",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "12610",
+            "artistName": "Lee Hyun Wook",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "58935",
+            "artistName": "Shin Min Kyung",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "64513",
+            "artistName": "Kim Ra Hee",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "3506",
+            "artistName": "Kim Soo Yeon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "128897",
+            "artistName": "Park Young Hoon",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "asianwiki",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": null,
+        "airedOn": "mydramalist"
+    }
+}
