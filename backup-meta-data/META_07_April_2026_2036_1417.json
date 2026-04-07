@@ -1,0 +1,416 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260407_203633",
+    "timestamp": "07 April 2026 08:40 PM (IST)",
+    "showID": 1417,
+    "showName": "Heo's Diner",
+    "fetchedFields": {
+        "showImage": {
+            "value": "1417.jpg",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Heo's_Diner"
+        },
+        "releaseDate": {
+            "value": "Mar 24, 2025 - Apr 22, 2025",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/763951-heo-s-restaurant"
+        },
+        "otherNames": {
+            "value": [
+                "Heo's Restaurant",
+                "Heosikdang",
+                "Hur's Restaurant",
+                "Ресторан Хо"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/763951-heo-s-restaurant"
+        },
+        "Duration": {
+            "value": "50 mins",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/763951-heo-s-restaurant"
+        },
+        "synopsis": {
+            "value": "Heo Gyun (Xiumin) is recognized as a genius, with extremely good writing skills and esthetic sense. He is the first food columnist of the Joseon Dynasty, but something happens that sends him into exile. One night, assassins visit Heo Gyun and try to kill him. While running away from the assassins, he ends up traveling through 400 years in time and arriving in the present day. Heo Gyun, who is starving, is found by Bong Eun-Sil (Chu So-Jung) in front of a small restaurant. The restaurant is run by Bong Eun-Sil's mother. Due to Bong Eun-Sil’s mother's situation, Heo Gyun and Bong Eun-Sil begin to run the restaurant together.",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Heo's_Diner"
+        },
+        "director": {
+            "value": [
+                "Oh Hwan Min",
+                "Kim Gyeong Eun"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/763951-heo-s-restaurant"
+        },
+        "tags": {
+            "value": [
+                "Neighborhood Setting",
+                "Adapted From A Web Novel",
+                "Restaurant Setting",
+                "Villain Supporting Character",
+                "Restaurateur Supporting Character",
+                "Restaurateur Female Lead",
+                "Neighbors' Relationship",
+                "Chef Supporting Character",
+                "Chef Male Lead",
+                "Detective Supporting Character"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/763951-heo-s-restaurant"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "153852",
+                    "artistName": "Kim Gyeong Eun",
+                    "artistImageURL": "https://i.mydramalist.com/LwLJ5D_5m.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "80107",
+                    "artistName": "Oh Hwan Min",
+                    "artistImageURL": "https://i.mydramalist.com/E5PQBm_5m.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "153854",
+                    "artistName": "Seong So Hyeon",
+                    "artistImageURL": "https://i.mydramalist.com/NdLAKR_5m.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "9498",
+                    "artistName": "Xiumin",
+                    "artistImageURL": "https://i.mydramalist.com/E5vANQ_5s.jpg",
+                    "characterName": "Heo Gyun",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "10939",
+                    "artistName": "EXY",
+                    "artistImageURL": "https://i.mydramalist.com/4QlVw_5s.jpg",
+                    "characterName": "Eun Sil",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "24283",
+                    "artistName": "Lee Sae On",
+                    "artistImageURL": "https://i.mydramalist.com/603x5O_5s.jpg",
+                    "characterName": "Lee I Cheom | Yi Hyeok",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "12046",
+                    "artistName": "Lee Soo Min",
+                    "artistImageURL": "https://i.mydramalist.com/nODnrL_5s.jpg",
+                    "characterName": "Mae Chang | Jung Mi Sol",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "1122",
+                    "artistName": "Oh Ji Ho",
+                    "artistImageURL": "https://i.mydramalist.com/qoXnzs.jpg",
+                    "characterName": "Kang Ji Su [Detective]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4300",
+                    "artistName": "Woo Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/EEq45_5s.jpg",
+                    "characterName": "[Mysterious man]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3199",
+                    "artistName": "Kim Hee Jung",
+                    "artistImageURL": "https://i.mydramalist.com/jgOKb_5s.jpg",
+                    "characterName": "[Eun Sil's mother]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "37311",
+                    "artistName": "Moon Jung Gi",
+                    "artistImageURL": "https://i.mydramalist.com/X6OXO_5s.jpg",
+                    "characterName": "[Mi Sol's manager]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "62381",
+                    "artistName": "Yang Taek Ho",
+                    "artistImageURL": "https://i.mydramalist.com/2EExW_5s.jpg",
+                    "characterName": "Director Ko [Eun Sil's boss] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "147818",
+                    "artistName": "Park Seong Hun",
+                    "artistImageURL": "https://i.mydramalist.com/PxroA8_5s.jpg",
+                    "characterName": "[Lowborn boy] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "44221",
+                    "artistName": "Jo Yi Haeng",
+                    "artistImageURL": "https://i.mydramalist.com/Ze3A1_5s.jpg",
+                    "characterName": "[Magistrate] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "10036",
+                    "artistName": "Choi Won Myung",
+                    "artistImageURL": "https://i.mydramalist.com/g07Y8O_5s.jpg",
+                    "characterName": "Prince Gwang Hae (Ep. 1, 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "126933",
+                    "artistName": "Lee Si On",
+                    "artistImageURL": "https://i.mydramalist.com/b3krjE_5s.jpg",
+                    "characterName": "Lee Hyeok [Child] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "38505",
+                    "artistName": "Jang Eui Don",
+                    "artistImageURL": "https://i.mydramalist.com/ENxZO_5s.jpg",
+                    "characterName": "[Investor] (Ep. 2, 5, 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "122857",
+                    "artistName": "Lin Da Jeon",
+                    "artistImageURL": "https://i.mydramalist.com/E5YDr0_5s.jpg",
+                    "characterName": "[Investor] (Ep. 2, 5, 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "25567",
+                    "artistName": "Kang Jun Young",
+                    "artistImageURL": "https://i.mydramalist.com/jxB4B_5s.jpg",
+                    "characterName": "[Investor] (Ep. 2, 5, 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "143213",
+                    "artistName": "Kim Hak Soo",
+                    "artistImageURL": "https://i.mydramalist.com/RBbeXg_5s.jpg",
+                    "characterName": "[Government official] (Ep. 3, 8, 10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "133971",
+                    "artistName": "Ryu Jae Hyuk",
+                    "artistImageURL": "https://i.mydramalist.com/rNE4oZ_5s.jpg",
+                    "characterName": "[Sous-chef] (Ep. 3-4, 6-7, 10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "112091",
+                    "artistName": "Shin Yeon Woo",
+                    "artistImageURL": "https://i.mydramalist.com/2wD5gR_5s.jpg",
+                    "characterName": "Jung Mi Sol [Young] (Ep. 4, 6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "120641",
+                    "artistName": "Choi Eun Jun",
+                    "artistImageURL": "https://i.mydramalist.com/WPJwRR_5s.jpg",
+                    "characterName": "Heo Gyun [Child] (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "120151",
+                    "artistName": "Kim Doo Eun",
+                    "artistImageURL": "https://i.mydramalist.com/d0y5bW_5s.jpg",
+                    "characterName": "[Fish seller] (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "126529",
+                    "artistName": "Choi Seung Won",
+                    "artistImageURL": "https://i.mydramalist.com/yWw7Kn_5s.jpg",
+                    "characterName": "[Diner] (Ep. 5-6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "122751",
+                    "artistName": "Kim Hye Ran",
+                    "artistImageURL": "https://i.mydramalist.com/kAoYlg_5s.jpg",
+                    "characterName": "[Reporter] (Ep. 5, 10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "504",
+                    "artistName": "Lee Jung Jin",
+                    "artistImageURL": "https://i.mydramalist.com/NdLdgo_5s.jpg",
+                    "characterName": "[Secretary general] (Ep. 6, 9, 10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "145038",
+                    "artistName": "Yoo Hyo Jong",
+                    "artistImageURL": "https://i.mydramalist.com/ABX7yX_5s.jpg",
+                    "characterName": "[Government official] (Ep. 9-10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "131899",
+                    "artistName": "Park Joon Hwan",
+                    "artistImageURL": "https://i.mydramalist.com/d0V3ZK_5s.jpg",
+                    "characterName": "[Government official] (Ep. 10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "153848",
+                    "artistName": "Lee Seop",
+                    "artistImageURL": "https://i.mydramalist.com/mO6352_5s.jpg",
+                    "characterName": "[Lawyer] (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "153846",
+                    "artistName": "Koo Yu Jin",
+                    "artistImageURL": "https://i.mydramalist.com/JBLlYw_5s.jpg",
+                    "characterName": "Sang Eun [Eun Sil's friend] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "153844",
+                    "artistName": "Seo Dan",
+                    "artistImageURL": "https://i.mydramalist.com/l063Y4_5s.jpg",
+                    "characterName": "[Nurse]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "153840",
+                    "artistName": "Sim Hye Ju",
+                    "artistImageURL": "https://i.mydramalist.com/KpYw00_5s.jpg",
+                    "characterName": "[Villager] (Ep. 1, 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "161078",
+                    "artistName": "Kim Chan Ho",
+                    "artistImageURL": "https://i.mydramalist.com/73JBPD_5s.jpg",
+                    "characterName": "[Hotel ㄷmployee]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "153850",
+                    "artistName": "Kang Ye Chan",
+                    "artistImageURL": "https://i.mydramalist.com/3ogePV_5s.jpg",
+                    "characterName": "Mal Bok [Lowborn boy] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "154022",
+                    "artistName": "Oh Ga Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/73xbLB_5s.jpg",
+                    "characterName": "[Gisaeng]",
+                    "role": "Support Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/763951-heo-s-restaurant"
+        },
+        "network": {
+            "value": [
+                "tvN",
+                "MBN"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/763951-heo-s-restaurant"
+        },
+        "airedOn": {
+            "value": [
+                "Monday",
+                "Tuesday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/763951-heo-s-restaurant"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "153852",
+            "artistName": "Kim Gyeong Eun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "153854",
+            "artistName": "Seong So Hyeon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "9498",
+            "artistName": "Xiumin",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "10939",
+            "artistName": "EXY",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "24283",
+            "artistName": "Lee Sae On",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "10036",
+            "artistName": "Choi Won Myung",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "25567",
+            "artistName": "Kang Jun Young",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "133971",
+            "artistName": "Ryu Jae Hyuk",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "153848",
+            "artistName": "Lee Seop",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "153846",
+            "artistName": "Koo Yu Jin",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "153844",
+            "artistName": "Seo Dan",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "153840",
+            "artistName": "Sim Hye Ju",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "154022",
+            "artistName": "Oh Ga Yeon",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "asianwiki",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": "mydramalist",
+        "airedOn": "mydramalist"
+    }
+}

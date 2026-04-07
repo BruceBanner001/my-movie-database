@@ -1,0 +1,452 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260407_203633",
+    "timestamp": "07 April 2026 08:38 PM (IST)",
+    "showID": 1409,
+    "showName": "The Potato Lab",
+    "fetchedFields": {
+        "showImage": {
+            "value": "1409.jpg",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/The_Potato_Lab"
+        },
+        "releaseDate": {
+            "value": "Mar  1, 2025 - Apr  6, 2025",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/766273-potato-research-center"
+        },
+        "otherNames": {
+            "value": [
+                "Amor e Batatas",
+                "Gamjayeonguso",
+                "Láska a brambory",
+                "Potato Research Center",
+                "Potato Research Institute",
+                "Институт исследования картофеля",
+                "مختبر البطاطس",
+                "ปลูกรักนักวิจัย"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/766273-potato-research-center"
+        },
+        "Duration": {
+            "value": "1 hr. 15 min.",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/766273-potato-research-center"
+        },
+        "synopsis": {
+            "value": "Kim Mi-Kyung (Lee Sun-Bin) is a researcher at the Potato Research Institute in a mountain valley. She has been working at the institute for 12 years and she is serious about her work. Her life is simple, but things change after So Baek-Ho (Kang Tae-Oh) appears at the Potato Research Institute. So Baek-Ho has a good looking appearance with a bright smile, but he can be a cold-blooded capitalist. Kim Mi-Kyung and So Baek-Ho don’t get along and they have conflicts on pretty much everything.",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/The_Potato_Lab"
+        },
+        "director": {
+            "value": [
+                "Kang Il Soo",
+                "Shim Jae Hyun"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/766273-potato-research-center"
+        },
+        "tags": {
+            "value": [
+                "Remorseful Male Lead",
+                "Retail Industry",
+                "Emotionally Strong Female Lead",
+                "Ostracized Female Lead",
+                "Research Center Setting",
+                "Passionate Female Lead",
+                "Guest House Setting",
+                "Intern Supporting Character",
+                "Starting Over",
+                "Bickering Mains' Relationship"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/766273-potato-research-center"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "28719",
+                    "artistName": "Kang Il Soo",
+                    "artistImageURL": "https://i.mydramalist.com/we88k_5m.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "44129",
+                    "artistName": "Shim Jae Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/RgZ1V_5m.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "28705",
+                    "artistName": "Kim Ho Soo",
+                    "artistImageURL": "https://i.mydramalist.com/BLv71_5m.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "12160",
+                    "artistName": "Lee Sun Bin",
+                    "artistImageURL": "https://i.mydramalist.com/kAkzNr_5s.jpg",
+                    "characterName": "Kim Mi Gyeong",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "6776",
+                    "artistName": "Kang Tae Oh",
+                    "artistImageURL": "https://i.mydramalist.com/qv3mz_5s.jpg",
+                    "characterName": "So Baek Ho",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "9890",
+                    "artistName": "Lee Hak Joo",
+                    "artistImageURL": "https://i.mydramalist.com/do6KDs.jpg",
+                    "characterName": "Park Gi Se",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "2392",
+                    "artistName": "Kim Ga Eun",
+                    "artistImageURL": "https://i.mydramalist.com/pdgEpy_5s.jpg",
+                    "characterName": "Lee Ong Ju [Mi Gyeong's friend]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "51673",
+                    "artistName": "Shin Hyun Seung",
+                    "artistImageURL": "https://i.mydramalist.com/eOrKW_5s.jpg",
+                    "characterName": "Kim Hwan Gyeong [USB guest house owner]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "19474",
+                    "artistName": "Jung Shin Hye",
+                    "artistImageURL": "https://i.mydramalist.com/EydnW_5s.jpg",
+                    "characterName": "Yun Hui Jin [Gi Se's ex-wife]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5484",
+                    "artistName": "Yoo Seung Mok",
+                    "artistImageURL": "https://i.mydramalist.com/Lw5eBB_5s.jpg",
+                    "characterName": "Bu Jae Jung [Research team's head]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "25273",
+                    "artistName": "Woo Jeong Won",
+                    "artistImageURL": "https://i.mydramalist.com/BwOw5s.jpg",
+                    "characterName": "Ju Seung Hui [Research team's deputy director]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "18520",
+                    "artistName": "Kwak Ja Hyung",
+                    "artistImageURL": "https://i.mydramalist.com/EDNwls.jpg",
+                    "characterName": "Ko Jeong Hae [Research team's manager]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "127665",
+                    "artistName": "Kim Ji A",
+                    "artistImageURL": "https://i.mydramalist.com/d0Y2rz_5s.jpg",
+                    "characterName": "Jang Seul Gi [Representative]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "14802",
+                    "artistName": "Yoon Jung Sub",
+                    "artistImageURL": "https://i.mydramalist.com/QYK8Y_5s.jpg",
+                    "characterName": "Lee Chung Hyeon [Researcher]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "27717",
+                    "artistName": "Nam Hyun Woo",
+                    "artistImageURL": "https://i.mydramalist.com/Z8ERN7_5s.jpg",
+                    "characterName": "Kwon Hui Dong [Intern]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1651",
+                    "artistName": "Lee Dae Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/3oApzD_5s.jpg",
+                    "characterName": "Seong Ju [Monk / Mi Gyeong's father]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1724",
+                    "artistName": "Kim Kyu Chul",
+                    "artistImageURL": "https://i.mydramalist.com/rmynps.jpg",
+                    "characterName": "Hong Sun Ik [Former director]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "86055",
+                    "artistName": "Kim Cha Yoon",
+                    "artistImageURL": "https://i.mydramalist.com/127w6_5s.jpg",
+                    "characterName": "Choi Ji Hyeon",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5802",
+                    "artistName": "Jang Yoo",
+                    "artistImageURL": "https://i.mydramalist.com/djQRz_5s.jpg",
+                    "characterName": "Byeon I Jang [Village chief]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "72479",
+                    "artistName": "Son Ji Yoon",
+                    "artistImageURL": "https://i.mydramalist.com/O878nx_5s.jpg",
+                    "characterName": "Chairman Yun",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "135497",
+                    "artistName": "Jin Ga Eun",
+                    "artistImageURL": "https://i.mydramalist.com/E5DK3b_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "10370",
+                    "artistName": "Heo Jung Do",
+                    "artistImageURL": "https://i.mydramalist.com/rZ7Oy_5s.jpg",
+                    "characterName": "Mr. Cho (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "10025",
+                    "artistName": "Ryu Tae Ho",
+                    "artistImageURL": "https://i.mydramalist.com/QY785_5s.jpg",
+                    "characterName": "Mr. Choi (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "40947",
+                    "artistName": "Myung Jae Hwan",
+                    "artistImageURL": "https://i.mydramalist.com/0ApqKs.jpg",
+                    "characterName": "Michael Lee (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "38327",
+                    "artistName": "Jiyun Kim Huong",
+                    "artistImageURL": "https://i.mydramalist.com/2bVY2_5s.jpg",
+                    "characterName": "[Farmer] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "23115",
+                    "artistName": "Yoo Yong",
+                    "artistImageURL": "https://i.mydramalist.com/5v7qB0_5s.jpg",
+                    "characterName": "[HR employee] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "106685",
+                    "artistName": "Han Myung Chul",
+                    "artistImageURL": "https://i.mydramalist.com/2LyyW_5s.jpg",
+                    "characterName": "[Joongchan-ri farmer] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "1853",
+                    "artistName": "Lee  Han Wi",
+                    "artistImageURL": "https://i.mydramalist.com/2WjyV_5s.jpg",
+                    "characterName": "[Joongchan-ri farmer] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "107809",
+                    "artistName": "Jung Ja Young",
+                    "artistImageURL": "https://i.mydramalist.com/rPv6D_5s.jpg",
+                    "characterName": "[Sunnyeo Food employee] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "144823",
+                    "artistName": "Jeon Seong A",
+                    "artistImageURL": "https://i.mydramalist.com/wJr2D8_5s.jpg",
+                    "characterName": "[Jung Hae’s wife] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "122857",
+                    "artistName": "Lin Da Jeon",
+                    "artistImageURL": "https://i.mydramalist.com/E5YDr0_5s.jpg",
+                    "characterName": "[Hairstylist] (Ep. 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "46461",
+                    "artistName": "Jun Joon Woo",
+                    "artistImageURL": "https://i.mydramalist.com/O8LORk_5s.jpg",
+                    "characterName": "Kim Jin Su (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "29687",
+                    "artistName": "Lee Seung Min",
+                    "artistImageURL": "https://i.mydramalist.com/Z1Vy7s.jpg",
+                    "characterName": "[Surfer] (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "122247",
+                    "artistName": "Won Gun Su",
+                    "artistImageURL": "https://i.mydramalist.com/RB01W6_5s.jpg",
+                    "characterName": "[Comic donor] (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "25597",
+                    "artistName": "Lee Seung Chul",
+                    "artistImageURL": "https://i.mydramalist.com/27NQds.jpg",
+                    "characterName": "[Sunnyeo shaman] (Ep. 5)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "55463",
+                    "artistName": "Kim Young Sun",
+                    "artistImageURL": "https://i.mydramalist.com/XzLlX_5s.jpg",
+                    "characterName": "[Restaurant employee] (Ep. 5, 10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "44699",
+                    "artistName": "Kim Mi Hye",
+                    "artistImageURL": "https://i.mydramalist.com/EgnO0_5s.jpg",
+                    "characterName": "[Sweet potato lab staff] (Ep. 10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "22847",
+                    "artistName": "Kim Joo Ah",
+                    "artistImageURL": "https://i.mydramalist.com/73b4dB_5s.jpg",
+                    "characterName": "Byun Chang Suk  (Ep. 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "10198",
+                    "artistName": "Lee Jung Eun",
+                    "artistImageURL": "https://i.mydramalist.com/02kxr_5s.jpg",
+                    "characterName": "[Gi Se’s mom] (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "145200",
+                    "artistName": "Kwak Yeong Seon",
+                    "artistImageURL": "https://i.mydramalist.com/zBrJyy_5s.jpg",
+                    "characterName": "[Ong Ju’s dad] (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "102137",
+                    "artistName": "Cha Young Mi",
+                    "artistImageURL": "https://i.mydramalist.com/E5PdpO_5s.jpg",
+                    "characterName": "[Ong Ju’s mom] (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "110791",
+                    "artistName": "Shim Ji Yoo",
+                    "artistImageURL": "https://i.mydramalist.com/Xnrpp_5s.jpg",
+                    "characterName": "Ko Su Jin [Jeong Hae's daughter] (Ep. 10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "114743",
+                    "artistName": "Yoon Seong Won",
+                    "artistImageURL": "https://i.mydramalist.com/pEl2B_5s.jpg",
+                    "characterName": "[Sweet potato lab staff] (Ep. 10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "3200",
+                    "artistName": "Sung Ji Ru",
+                    "artistImageURL": "https://i.mydramalist.com/jb8Yb_5s.jpg",
+                    "characterName": "[Sweet potato lab staff] (Ep. 10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "33131",
+                    "artistName": "Choi Ga In",
+                    "artistImageURL": "https://i.mydramalist.com/BxOZ7s.jpg",
+                    "characterName": "[Farmer] (Ep. 11)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "2215",
+                    "artistName": "Kim Min Seok",
+                    "artistImageURL": "https://i.mydramalist.com/0LVrK_5s.jpg",
+                    "characterName": "Chairman Kang [Youngsan] (Ep. 12)",
+                    "role": "Guest Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/766273-potato-research-center"
+        },
+        "airedOn": {
+            "value": [
+                "Saturday",
+                "Sunday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/766273-potato-research-center"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "28719",
+            "artistName": "Kang Il Soo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "44129",
+            "artistName": "Shim Jae Hyun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "28705",
+            "artistName": "Kim Ho Soo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "5802",
+            "artistName": "Jang Yoo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "72479",
+            "artistName": "Son Ji Yoon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "29687",
+            "artistName": "Lee Seung Min",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "114743",
+            "artistName": "Yoon Seong Won",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "asianwiki",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": null,
+        "airedOn": "mydramalist"
+    }
+}

@@ -1,0 +1,616 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260407_203633",
+    "timestamp": "07 April 2026 08:40 PM (IST)",
+    "showID": 1418,
+    "showName": "Good Manager",
+    "fetchedFields": {
+        "showImage": {
+            "value": "1418.jpg",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Good_Manager"
+        },
+        "releaseDate": {
+            "value": "Jan 25, 2017 - Mar 30, 2017",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/20340-good-manager"
+        },
+        "otherNames": {
+            "value": [
+                "Chefe Kim",
+                "Chief Kim",
+                "Kim Gwajang",
+                "Kimgwajang",
+                "Manager Kim",
+                "Mister Kim",
+                "Шеф Ким",
+                "نقطة بيضاء في ملفي",
+                "キム課長"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/20340-good-manager"
+        },
+        "Duration": {
+            "value": "60 mins",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/20340-good-manager"
+        },
+        "synopsis": {
+            "value": "Kim Sung-Ryong (Namkoong Min) used to manage money for gangs, but by an accidental opportunity, he begins to works as the chief of an accounting department for TQ Company. He struggles to save the decaying TC Company, fighting against corruption and \nirrationality in the company.",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Good_Manager"
+        },
+        "director": {
+            "value": [
+                "Lee Jae Hoon",
+                "Choi Yoon Seok"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/20340-good-manager"
+        },
+        "tags": {
+            "value": [
+                "Eccentric Male Lead",
+                "Corruption",
+                "Social Satire",
+                "Bromance",
+                "Smart Male Lead",
+                "Revenge",
+                "Enemy Mine",
+                "Smart Female Lead",
+                "Character Development",
+                "Scheme"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/20340-good-manager"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "21295",
+                    "artistName": "Kim Sung Geun",
+                    "artistImageURL": "https://i.mydramalist.com/OxB6Ym.jpg",
+                    "characterName": null,
+                    "role": "Chief Producer"
+                },
+                {
+                    "artistID": "86391",
+                    "artistName": "Kim Gwang Su",
+                    "artistImageURL": "https://i.mydramalist.com/12W1z_5m.jpg",
+                    "characterName": null,
+                    "role": "Cinematography"
+                },
+                {
+                    "artistID": "16224",
+                    "artistName": "Lee Jae Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/Aze1vm.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "22938",
+                    "artistName": "Choi Yoon Seok",
+                    "artistImageURL": "https://i.mydramalist.com/RoK8r_5m.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "16201",
+                    "artistName": "Lee Jang Su",
+                    "artistImageURL": "https://i.mydramalist.com/JByZkX_5m.jpg",
+                    "characterName": null,
+                    "role": "Executive Producer"
+                },
+                {
+                    "artistID": "87689",
+                    "artistName": "Lee Pil Ho",
+                    "artistImageURL": "https://i.mydramalist.com/jB2gB_5m.jpg",
+                    "characterName": null,
+                    "role": "Music Editor"
+                },
+                {
+                    "artistID": "19910",
+                    "artistName": "Lee Eun Jin",
+                    "artistImageURL": "https://i.mydramalist.com/g2vR1m.jpg",
+                    "characterName": null,
+                    "role": "Producer"
+                },
+                {
+                    "artistID": "19618",
+                    "artistName": "Park Jae Bum",
+                    "artistImageURL": "https://i.mydramalist.com/vXXVrW_5m.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "513",
+                    "artistName": "Namkoong Min",
+                    "artistImageURL": "https://i.mydramalist.com/JBDVOp_5s.jpg",
+                    "characterName": "Kim Sung Ryong",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "956",
+                    "artistName": "Nam Sang Mi",
+                    "artistImageURL": "https://i.mydramalist.com/dB82b_5s.jpg",
+                    "characterName": "Yoon Ha Kyung",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "5043",
+                    "artistName": "Lee Jun Ho",
+                    "artistImageURL": "https://i.mydramalist.com/jQjpmd_5s.jpg",
+                    "characterName": "Seo Yool",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "8032",
+                    "artistName": "Jung Hye Sung",
+                    "artistImageURL": "https://i.mydramalist.com/E5Y8EQ_5s.jpg",
+                    "characterName": "Hong Ga Eun",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "4553",
+                    "artistName": "Kim Won Hae",
+                    "artistImageURL": "https://i.mydramalist.com/mO1lyq_5s.jpg",
+                    "characterName": "Choon Nam Ho",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5931",
+                    "artistName": "Kim Kang Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/wzV2b_5s.jpg",
+                    "characterName": "Lee Jae Joon",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "12162",
+                    "artistName": "Jo Hyun Sik",
+                    "artistImageURL": "https://i.mydramalist.com/KpvoAJ_5s.jpg",
+                    "characterName": "Won Ki Ok",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5906",
+                    "artistName": "Ryu Hye Rin",
+                    "artistImageURL": "https://i.mydramalist.com/xkrYXs.jpg",
+                    "characterName": "Bing Hee Jin",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "15244",
+                    "artistName": "Kim Seon Ho",
+                    "artistImageURL": "https://i.mydramalist.com/mOE622_5s.jpg",
+                    "characterName": "Seon Sang Tae",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1531",
+                    "artistName": "Park Young Gyu",
+                    "artistImageURL": "https://i.mydramalist.com/qYVEqQ_5s.jpg",
+                    "characterName": "Park Hyun Do",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "9351",
+                    "artistName": "Seo Jung Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/73dV0b_5s.jpg",
+                    "characterName": "Jo Min Young",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3564",
+                    "artistName": "Jung Suk Yong",
+                    "artistImageURL": "https://i.mydramalist.com/j2rBOs.jpg",
+                    "characterName": "Ko Man Geun",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5670",
+                    "artistName": "Jung Moon Sung",
+                    "artistImageURL": "https://i.mydramalist.com/5v8XXw_5s.jpg",
+                    "characterName": "Han Dong Hoon",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "6253",
+                    "artistName": "Nam Sung Joon",
+                    "artistImageURL": "https://i.mydramalist.com/QdoK5s.jpg",
+                    "characterName": "Lee Seok Soo",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5904",
+                    "artistName": "Kim Min Sang",
+                    "artistImageURL": "https://i.mydramalist.com/2kqL7_5s.jpg",
+                    "characterName": "Lee Gang Shik",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4033",
+                    "artistName": "Park Joo Hyung",
+                    "artistImageURL": "https://i.mydramalist.com/RR17P_5s.jpg",
+                    "characterName": "Chief Park [TQ Accounting Dept]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5836",
+                    "artistName": "Im Hwa Young",
+                    "artistImageURL": "https://i.mydramalist.com/prenr_5s.jpg",
+                    "characterName": "Oh Gwang Sook",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4461",
+                    "artistName": "Kim Jae Hwa",
+                    "artistImageURL": "https://i.mydramalist.com/j2N88s.jpg",
+                    "characterName": "Na Hee Yong",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2387",
+                    "artistName": "Lee Il Hwa",
+                    "artistImageURL": "https://i.mydramalist.com/nODnn4_5s.jpg",
+                    "characterName": "Jang Yoo Seon",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "8548",
+                    "artistName": "Kim Kang Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/XJ6qq_5s.jpg",
+                    "characterName": "Kim Sung Ryong [Young]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3045",
+                    "artistName": "Dong Ha",
+                    "artistImageURL": "https://i.mydramalist.com/EQBd0_5s.jpg",
+                    "characterName": "Park Myung Seok [Chairman Park's son]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3267",
+                    "artistName": "Hwang Young Hee",
+                    "artistImageURL": "https://i.mydramalist.com/eYgQ0e_5s.jpg",
+                    "characterName": "Uhm Geum Shim",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "9936",
+                    "artistName": "Lee Seung Jun",
+                    "artistImageURL": "https://i.mydramalist.com/jArbOs.jpg",
+                    "characterName": "[Security team leader]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "49087",
+                    "artistName": "Shim Young Eun",
+                    "artistImageURL": "https://i.mydramalist.com/WlZnX_5s.jpg",
+                    "characterName": "Kang Joo Seon",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5608",
+                    "artistName": "Lee Hwang Ui",
+                    "artistImageURL": "https://i.mydramalist.com/XJXbX_5s.jpg",
+                    "characterName": "Park In Hyuk",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "19066",
+                    "artistName": "Lee Dong Yong",
+                    "artistImageURL": "https://i.mydramalist.com/2x2bws.jpg",
+                    "characterName": "[Factory owner]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "14668",
+                    "artistName": "Choi Young",
+                    "artistImageURL": "https://i.mydramalist.com/1odwKs.jpg",
+                    "characterName": "Oh Gil Seong",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "21513",
+                    "artistName": "Jung Myung Joon",
+                    "artistImageURL": "https://i.mydramalist.com/QP6q7_5s.jpg",
+                    "characterName": "Jang Seok Hyun",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "9717",
+                    "artistName": "Hong Seo Joon",
+                    "artistImageURL": "https://i.mydramalist.com/v5dPD_5s.jpg",
+                    "characterName": "[Park Hyun Do's lawyer]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "12144",
+                    "artistName": "Lee Sung Wook",
+                    "artistImageURL": "https://i.mydramalist.com/B0Qz5s.jpg",
+                    "characterName": "Sang Hyuk",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "19874",
+                    "artistName": "Kim Jun Won",
+                    "artistImageURL": "https://i.mydramalist.com/r5XJZ_5s.jpg",
+                    "characterName": "Kwok In Ho",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "10136",
+                    "artistName": "Hong Sung Duk",
+                    "artistImageURL": "https://i.mydramalist.com/6KRR2_5s.jpg",
+                    "characterName": "Head of department Oh",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "25685",
+                    "artistName": "Heo Seon Haeng",
+                    "artistImageURL": "https://i.mydramalist.com/yWnepN_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "89251",
+                    "artistName": "Kang Jung Goo",
+                    "artistImageURL": "https://i.mydramalist.com/26nwR_5s.jpg",
+                    "characterName": "[TQ Company employee]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21144",
+                    "artistName": "Seo Wang Seok",
+                    "artistImageURL": "https://i.mydramalist.com/4rX7Q_5s.jpg",
+                    "characterName": "[Jailmate] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21053",
+                    "artistName": "Jang Tae Min",
+                    "artistImageURL": "https://i.mydramalist.com/eoZmQs.jpg",
+                    "characterName": "[Manager] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "30873",
+                    "artistName": "Song Yo Sep",
+                    "artistImageURL": "https://i.mydramalist.com/xQmBzs.jpg",
+                    "characterName": "[Gang member] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5862",
+                    "artistName": "Choi Gyo Shik",
+                    "artistImageURL": "https://i.mydramalist.com/WXzRP_5s.jpg",
+                    "characterName": "[Gang member] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "20003",
+                    "artistName": "Park Gwang Jae",
+                    "artistImageURL": "https://i.mydramalist.com/b3YOEL_5s.jpg",
+                    "characterName": "[Gang member] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "38731",
+                    "artistName": "Kang Ro Chae",
+                    "artistImageURL": "https://i.mydramalist.com/Zoo7Ls.jpg",
+                    "characterName": "[Elevator girl] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "2828",
+                    "artistName": "Kim Eung Soo",
+                    "artistImageURL": "https://i.mydramalist.com/xxXKN_5s.jpg",
+                    "characterName": "Bae Duk Po [Gang head] (Ep. 1, 20)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21145",
+                    "artistName": "Kim Sung Gang",
+                    "artistImageURL": "https://i.mydramalist.com/JKkjJs.jpg",
+                    "characterName": "[Chinese investor] (Ep. 5-6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "29859",
+                    "artistName": "Chuk Jae Hee",
+                    "artistImageURL": "https://i.mydramalist.com/EQzx7_5s.jpg",
+                    "characterName": "[Chinese investor] (Ep. 5-6, 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6452",
+                    "artistName": "Keum Dong Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/g0jq11_5s.jpg",
+                    "characterName": "[TQ Delivery executive] (Ep. 5)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6148",
+                    "artistName": "Sun Dong Hyuk",
+                    "artistImageURL": "https://i.mydramalist.com/E2bqWs.jpg",
+                    "characterName": "[Ki Ok's father] (Ep. 5-6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "1912",
+                    "artistName": "Jung Kyung Ho",
+                    "artistImageURL": "https://i.mydramalist.com/E3gbQ_5s.jpg",
+                    "characterName": "[Black mailer] (Ep. 6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "1849",
+                    "artistName": "Ha Seung Ri",
+                    "artistImageURL": "https://i.mydramalist.com/jXod8s.jpg",
+                    "characterName": "Min Ji [Convenience store staff] (Ep. 13)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "13064",
+                    "artistName": "Seo Ye Hwa",
+                    "artistImageURL": "https://i.mydramalist.com/WWZBR_5s.jpg",
+                    "characterName": "Je Ri [Gwang Sook's actress friend] (Ep. 13)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "31239",
+                    "artistName": "Eom Ji Man",
+                    "artistImageURL": "https://i.mydramalist.com/dJ5pW_5s.jpg",
+                    "characterName": "Neo [Sung Ryong's bodyguard] (Ep. 15)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "15801",
+                    "artistName": "Geum Kwang San",
+                    "artistImageURL": "https://i.mydramalist.com/pWB0rs.jpg",
+                    "characterName": "Morpheus [Sung Ryong's bodyguard] (Ep. 15)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "3541",
+                    "artistName": "Lee Dae Ro",
+                    "artistImageURL": "https://i.mydramalist.com/2XqyW_5s.jpg",
+                    "characterName": "Cha Ki Woo [Kingmaker] (Ep. 19)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "23592",
+                    "artistName": "Jung Jong Woo",
+                    "artistImageURL": "https://i.mydramalist.com/qExd5_5s.jpg",
+                    "characterName": "[Spy from car] (Ep. 19)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "39545",
+                    "artistName": "Im Yong Soon",
+                    "artistImageURL": "https://i.mydramalist.com/EQgOm_5s.jpg",
+                    "characterName": "[Representative] (Ep. 19)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "194",
+                    "artistName": "Lee Si Eon",
+                    "artistImageURL": "https://i.mydramalist.com/kWqmds.jpg",
+                    "characterName": "Park Yong Tae [Prosecutor] (Ep. 20)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "44699",
+                    "artistName": "Kim Mi Hye",
+                    "artistImageURL": "https://i.mydramalist.com/EgnO0_5s.jpg",
+                    "characterName": "[Reporter]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "15348",
+                    "artistName": "Lee Dal",
+                    "artistImageURL": "https://i.mydramalist.com/rXvWg_5s.jpg",
+                    "characterName": "[Drunkard]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "19071",
+                    "artistName": "Kwon Hyuk",
+                    "artistImageURL": "https://i.mydramalist.com/X65lJ_5s.jpg",
+                    "characterName": "Lee Eun Seok [Manager]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "3218",
+                    "artistName": "Park Ji Il",
+                    "artistImageURL": "https://i.mydramalist.com/xnDgX_5s.jpg",
+                    "characterName": "General Manager Choi",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "154524",
+                    "artistName": "Kwon Sun Mi",
+                    "artistImageURL": "https://i.mydramalist.com/mOYgvJ_5s.jpg",
+                    "characterName": "[Employee]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "2917",
+                    "artistName": "Choi Jae Sub",
+                    "artistImageURL": "https://i.mydramalist.com/pVwYV_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "67807",
+                    "artistName": "Kim In Cheol",
+                    "artistImageURL": "https://i.mydramalist.com/E5D8Bl_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "28391",
+                    "artistName": "Kim Byung Chul",
+                    "artistImageURL": "https://i.mydramalist.com/EN8L0_5s.jpg",
+                    "characterName": "[Gunsan police station detective]",
+                    "role": "Guest Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/20340-good-manager"
+        },
+        "airedOn": {
+            "value": [
+                "Wednesday",
+                "Thursday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/20340-good-manager"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "22938",
+            "artistName": "Choi Yoon Seok",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "956",
+            "artistName": "Nam Sang Mi",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "5836",
+            "artistName": "Im Hwa Young",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "10136",
+            "artistName": "Hong Sung Duk",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "6148",
+            "artistName": "Sun Dong Hyuk",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "3541",
+            "artistName": "Lee Dae Ro",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "asianwiki",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": null,
+        "airedOn": "mydramalist"
+    }
+}
