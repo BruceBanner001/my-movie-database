@@ -1,66 +1,61 @@
-✅ Workflow Batch completed successfully
-🏁 Final Batch Completed
+✅ Partial Batch completed successfully
+⏳ Batch Processing in Progress...
 ══════════════════════════════════════════════════════
 📊 Drama Title Validator – Execution Report (FORCE CHECK ON 🚨)
 ══════════════════════════════════════════════════════
 
 🚀 Workflow Type : Manual
-🔁 RUN           : 106
-⏰ Start Time    : 06 April 2026 - 06:25:23 PM
-⏰ End Time      : 06 April 2026 - 06:28:34 PM
-⏱️ Run Time      : 3 Minutes 10 Seconds
-⚙️ Max Process   : 150 Row Per Run
-🔄 Current Batch : 5
+🔁 RUN           : 107
+⏰ Start Time    : 07 April 2026 - 10:49:30 AM
+⏰ End Time      : 07 April 2026 - 10:56:42 AM
+⏱️ Run Time      : 7 Minutes 11 Seconds
+⚙️ Max Process   : 200 Row Per Run
+🔄 Current Batch : 2
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🗂️ === Before Feb 7 2023 (Korean Dub) ===
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✅ PERFECT MATCHES (100% Accurate):
-- 1 records matched perfectly.
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🗂️ === Before Feb 7 2023 ===
+🗂️ === Feb 7 2023 Onwards ===
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✨ BRAND NEW RECOMMENDATIONS (Action Required):
-[ID   9] Knock On The Happiness Door
-   ↳ Recommend: Knock on the Happiness Door (Source: MyDramaList)
+[ID  46] Cute  Bodyguard
+   ↳ Recommend: Cute Bodyguard (Source: MyDramaList)
+
+[ID 191] Taste of Love
+   ↳ Recommend: A Taste of First Love (Source: MyDramaList)
 
 ✅ PERFECT MATCHES (100% Accurate):
-- 10 records matched perfectly.
+- 186 records matched perfectly.
+
+⚠️ NOT FOUND (Asian / MyDramaList):
+
+📌 Reason: Connection or URL Issues
+[ID  18] The Fox's Summer               ➔ ❌ Only found non-drama pages (actors/articles)
+[ID  70] The K2                         ➔ ❌ Only found non-drama pages (actors/articles)
+[ID  97] Buang Ruk Satan                ➔ ❌ Only found non-drama pages (actors/articles)
+[ID 151] Welcome 2 Life                 ➔ ❌ Only found non-drama pages (actors/articles)
+[ID 162] She Is the One                 ➔ ❌ Only found non-drama pages (actors/articles)
+[ID 171] Lucky with You                 ➔ ❌ Only found non-drama pages (actors/articles)
+
+📌 Reason: Country Mismatch
+[ID  81] Monster                        ➔ ❌ Expected: South Korea | Found: Thailand
 
 ⚠️ NOT FOUND (Non-Asian / IMDb):
 
 📌 Reason: Website Blocked Connection (Status 202/403)
-[ID  12] Limitless                      ➔ ❌ Status Code: 202
-[ID  13] Beauty and the Beast           ➔ ❌ Status Code: 202
-[ID  14] Beauty and the Beast           ➔ ❌ Status Code: 202
-[ID  15] Beauty and the Beast           ➔ ❌ Status Code: 202
-[ID  16] Beauty and the Beast           ➔ ❌ Status Code: 202
-[ID  17] Price of Passion               ➔ ❌ Status Code: 202
-[ID  18] Lucifer                        ➔ ❌ Status Code: 202
-[ID  19] Lucifer                        ➔ ❌ Status Code: 202
-[ID  20] Lucifer                        ➔ ❌ Status Code: 202
-[ID  21] Lucifer                        ➔ ❌ Status Code: 202
-[ID  22] Lucifer                        ➔ ❌ Status Code: 202
-[ID  23] Lucifer                        ➔ ❌ Status Code: 202
-[ID  24] Peaky Blinders                 ➔ ❌ Status Code: 202
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🗂️ === Mini Drama ===
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✅ PERFECT MATCHES (100% Accurate):
-- 18 records matched perfectly.
+[ID  41] Yeni Hayat                     ➔ ❌ Status Code: 202
+[ID 195] 12 Monkeys                     ➔ ❌ Status Code: 202
+[ID 196] 12 Monkeys                     ➔ ❌ Status Code: 202
+[ID 197] 12 Monkeys                     ➔ ❌ Status Code: 202
+[ID 198] 12 Monkeys                     ➔ ❌ Status Code: 202
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📊 Summary (Current Batch Only)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🌐 Internet Scans Done   : 43
+🌐 Internet Scans Done   : 200
 ⏭️ Total Skipped Fast    : 0
-✨ Total Recommendations : 1
-✅ Total Perfect Matches : 29
-⚠️ Total Not Found       : 13
+✨ Total Recommendations : 2
+✅ Total Perfect Matches : 186
+⚠️ Total Not Found       : 12
 
-🏁 Workflow finished successfully
+⚠️ BATCH LIMIT REACHED: The script paused safely.
+GitHub Actions will trigger next run automatically.
