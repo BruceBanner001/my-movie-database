@@ -1,0 +1,508 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260407_192007",
+    "timestamp": "07 April 2026 07:24 PM (IST)",
+    "showID": 1071,
+    "showName": "Prime Minister and I",
+    "fetchedFields": {
+        "showImage": {
+            "value": "1071.jpg",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/The_Prime_Minister_and_I"
+        },
+        "releaseDate": {
+            "value": "Dec  9, 2013 - Feb  4, 2014",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/8129-prime-minister-and-i"
+        },
+        "otherNames": {
+            "value": [
+                "Chongliwa Na",
+                "Chongriwa Na",
+                "O Primeiro Ministro está Namorando",
+                "Prime Minister is Dating",
+                "The Prime Minister and I",
+                "The Prime Minister Is Dating",
+                "Премьер-министр и я"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/8129-prime-minister-and-i"
+        },
+        "Duration": {
+            "value": "60 mins",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/8129-prime-minister-and-i"
+        },
+        "synopsis": {
+            "value": "Prime Minister Kwon Yool (Lee Beom-Soo) works well at his office, but he struggles to raise his three children alone. Nam Nam Da-Jung (Lim Yoon-A) is a reporter full of enthusiasm at work, but she always ends up missing big scoops. Nam Da-Jung comes to Kwon Yool and his three kids like a Christmas present.",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/The_Prime_Minister_and_I"
+        },
+        "director": {
+            "value": [
+                "Lee So Yeon"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/8129-prime-minister-and-i"
+        },
+        "tags": {
+            "value": [
+                "Contract Relationship",
+                "Journalism",
+                "Older Man/Younger Woman",
+                "Single Father Male Lead",
+                "Car Accident",
+                "Death Of A Mother",
+                "Prime Minister Male Lead",
+                "Age Gap [Drama Life]",
+                "Age Gap [Real Life]",
+                "Family Relationship"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/8129-prime-minister-and-i"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "20953",
+                    "artistName": "Lee So Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/ZnJ7L_5m.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "19838",
+                    "artistName": "Park Man Young",
+                    "artistImageURL": "https://i.mydramalist.com/Y0WkQm.jpg",
+                    "characterName": null,
+                    "role": "Producer"
+                },
+                {
+                    "artistID": "16614",
+                    "artistName": "Kim Eun Hee",
+                    "artistImageURL": "https://i.mydramalist.com/rbnzgm.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "21112",
+                    "artistName": "Yoon Eun Kyung",
+                    "artistImageURL": "https://i.mydramalist.com/OxBgkm.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "972",
+                    "artistName": "Lim Yoon A",
+                    "artistImageURL": "https://i.mydramalist.com/l0drLv_5s.jpg",
+                    "characterName": "Nam Da Jung",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "319",
+                    "artistName": "Lee Bum Soo",
+                    "artistImageURL": "https://i.mydramalist.com/j5rgb_5s.jpg",
+                    "characterName": "Kwon Yul",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "395",
+                    "artistName": "Yoon Shi Yoon",
+                    "artistImageURL": "https://i.mydramalist.com/43zLws.jpg",
+                    "characterName": "Kang In Ho",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "442",
+                    "artistName": "Chae Jung An",
+                    "artistImageURL": "https://i.mydramalist.com/E0VP5_5s.jpg",
+                    "characterName": "Seo Hye Joo",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "611",
+                    "artistName": "Ryu Jin",
+                    "artistImageURL": "https://i.mydramalist.com/RB2EpV_5s.jpg",
+                    "characterName": "Park Joon Ki",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3394",
+                    "artistName": "Yoon Hae Young",
+                    "artistImageURL": "https://i.mydramalist.com/QJ05k6_5s.jpg",
+                    "characterName": "Na Yun Hee [Joon Gi's wife]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "258",
+                    "artistName": "Choi Soo Han",
+                    "artistImageURL": "https://i.mydramalist.com/XrRrgs.jpg",
+                    "characterName": "Kwon Woo Ri [Kwon Yul’s Son]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4441",
+                    "artistName": "Lee Do Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/AEmgqs.jpg",
+                    "characterName": "Kwon Man Se [Kwon Yul’s son]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2554",
+                    "artistName": "Jeon Min Seo",
+                    "artistImageURL": "https://i.mydramalist.com/n0q6Ns.jpg",
+                    "characterName": "Kwon Na Ra [Kwon Yul’s daughter]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3977",
+                    "artistName": "Min Sung Wook",
+                    "artistImageURL": "https://i.mydramalist.com/4V651_5s.jpg",
+                    "characterName": "Byun Woo Chul",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3956",
+                    "artistName": "Lee Young Bum",
+                    "artistImageURL": "https://i.mydramalist.com/qOL42s.jpg",
+                    "characterName": "Sim Seong Il",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4440",
+                    "artistName": "Jang Hee Woong",
+                    "artistImageURL": "https://i.mydramalist.com/xgLnzs.jpg",
+                    "characterName": "Bae In Kwon [Joon Ki's chief secretary]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4504",
+                    "artistName": "Jung Ae Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/0RBy6_5s.jpg",
+                    "characterName": "Park Na Young",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4573",
+                    "artistName": "Song Min Hyung",
+                    "artistImageURL": "https://i.mydramalist.com/pz8rn_5s.jpg",
+                    "characterName": "Kim Tae Man [President]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5811",
+                    "artistName": "Ko Ju Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/aVnOJs.jpg",
+                    "characterName": "Lu Ri",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3710",
+                    "artistName": "Jeon Won Joo",
+                    "artistImageURL": "https://i.mydramalist.com/Xd3rKJ_5s.jpg",
+                    "characterName": "Na Young Soon",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1253",
+                    "artistName": "Lee Tae Ri",
+                    "artistImageURL": "https://i.mydramalist.com/AB44gL_5s.jpg",
+                    "characterName": "Park Hee Chul",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1853",
+                    "artistName": "Lee  Han Wi",
+                    "artistImageURL": "https://i.mydramalist.com/2WjyV_5s.jpg",
+                    "characterName": "Nam Yu Sik",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2389",
+                    "artistName": "Choi Duk Moon",
+                    "artistImageURL": "https://i.mydramalist.com/YYj5lK_5s.jpg",
+                    "characterName": "Go Dal Pyo",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "21781",
+                    "artistName": "Kim Ji Wan",
+                    "artistImageURL": "https://i.mydramalist.com/WP5oyX_5s.jpg",
+                    "characterName": "Kang Soo Ho",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "21156",
+                    "artistName": "Lee Yong Yi",
+                    "artistImageURL": "https://i.mydramalist.com/2zL7w_5s.jpg",
+                    "characterName": "Lee Dal Ja",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "11779",
+                    "artistName": "Song Bo Eun",
+                    "artistImageURL": "https://i.mydramalist.com/g2ROXs.jpg",
+                    "characterName": "[Bodyguard]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "25313",
+                    "artistName": "Lee Jae Woon",
+                    "artistImageURL": "https://i.mydramalist.com/XwjEqs.jpg",
+                    "characterName": "[Prime Minister's guard]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "10173",
+                    "artistName": "Ko Kyu Pil",
+                    "artistImageURL": "https://i.mydramalist.com/Lw8q2x_5s.jpg",
+                    "characterName": "[Prime Minister's Bodyguard]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "7248",
+                    "artistName": "Suho",
+                    "artistImageURL": "https://i.mydramalist.com/rNeBXN_5s.jpg",
+                    "characterName": "Han Tae Woong (Ep. 10-12)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "1179",
+                    "artistName": "Oh Man Seok",
+                    "artistImageURL": "https://i.mydramalist.com/xOy30_5s.jpg",
+                    "characterName": "[Gangster boss] (Ep. 12)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "1103",
+                    "artistName": "Jung Da Bin",
+                    "artistImageURL": "https://i.mydramalist.com/k3lgg_5s.jpg",
+                    "characterName": "Hye Joo [Young] (Ep. 6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "7264",
+                    "artistName": "Baek Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/WnVmPs.jpg",
+                    "characterName": "Spy",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "9676",
+                    "artistName": "Lee Ja Min",
+                    "artistImageURL": "https://i.mydramalist.com/5Qq8Ls.jpg",
+                    "characterName": "[Journalist]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "4409",
+                    "artistName": "Ryu Eui Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/pVjKQ_5s.jpg",
+                    "characterName": "Hyeon Seo",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "1397",
+                    "artistName": "Lee Deok Hwa",
+                    "artistImageURL": "https://i.mydramalist.com/R3KXEs.jpg",
+                    "characterName": "Chairman Na",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "36457",
+                    "artistName": "Lee Hyun Jung",
+                    "artistImageURL": "https://i.mydramalist.com/j8m0vs.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "95499",
+                    "artistName": "Im Jung Ok",
+                    "artistImageURL": "https://i.mydramalist.com/R7k36_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5786",
+                    "artistName": "Park Ji Yun",
+                    "artistImageURL": "https://i.mydramalist.com/we7Xb_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "69139",
+                    "artistName": "Ha Jung Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/QkJD5_5s.jpg",
+                    "characterName": "{Skating rink child}",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "43845",
+                    "artistName": "Yoon Jong Won",
+                    "artistImageURL": "https://i.mydramalist.com/B1pZR_5s.jpg",
+                    "characterName": "[Agent ]",
+                    "role": "Guest Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/8129-prime-minister-and-i"
+        },
+        "airedOn": {
+            "value": [
+                "Monday",
+                "Tuesday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/8129-prime-minister-and-i"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "20953",
+            "artistName": "Lee So Yeon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "19838",
+            "artistName": "Park Man Young",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "16614",
+            "artistName": "Kim Eun Hee",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "21112",
+            "artistName": "Yoon Eun Kyung",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "319",
+            "artistName": "Lee Bum Soo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "395",
+            "artistName": "Yoon Shi Yoon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "442",
+            "artistName": "Chae Jung An",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "611",
+            "artistName": "Ryu Jin",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "3394",
+            "artistName": "Yoon Hae Young",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "258",
+            "artistName": "Choi Soo Han",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "4441",
+            "artistName": "Lee Do Hyun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "3956",
+            "artistName": "Lee Young Bum",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "4440",
+            "artistName": "Jang Hee Woong",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "4573",
+            "artistName": "Song Min Hyung",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "5811",
+            "artistName": "Ko Ju Yeon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "3710",
+            "artistName": "Jeon Won Joo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "11779",
+            "artistName": "Song Bo Eun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "25313",
+            "artistName": "Lee Jae Woon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "7248",
+            "artistName": "Suho",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "1103",
+            "artistName": "Jung Da Bin",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "7264",
+            "artistName": "Baek Hyun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "9676",
+            "artistName": "Lee Ja Min",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "4409",
+            "artistName": "Ryu Eui Hyun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "36457",
+            "artistName": "Lee Hyun Jung",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "95499",
+            "artistName": "Im Jung Ok",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "69139",
+            "artistName": "Ha Jung Hoon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "43845",
+            "artistName": "Yoon Jong Won",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "asianwiki",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": null,
+        "airedOn": "mydramalist"
+    }
+}

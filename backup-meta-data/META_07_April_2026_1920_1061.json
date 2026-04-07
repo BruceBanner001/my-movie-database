@@ -1,0 +1,875 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260407_192007",
+    "timestamp": "07 April 2026 07:22 PM (IST)",
+    "showID": 1061,
+    "showName": "Mama Fairy and the Woodcutter",
+    "fetchedFields": {
+        "showImage": {
+            "value": "1061.jpg",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Mama_Fairy_and_the_Woodcutter"
+        },
+        "releaseDate": {
+            "value": "Nov  5, 2018 - Dec 25, 2018",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/27887-tale-of-gyerong-fairy"
+        },
+        "otherNames": {
+            "value": [
+                "gye-ryong-seon-nyeo-jeon",
+                "Gyeryong Fairy Tale",
+                "Gyeryongsunnyeojeon",
+                "Mamãe Fada e o Lenhador",
+                "Tale of Gyeryong Fairy",
+                "The Fairy and the Woodcutter",
+                "The Woodcutter And the Fairy",
+                "Сказка о фее Керён",
+                "雞龍仙女傳"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/27887-tale-of-gyerong-fairy"
+        },
+        "Duration": {
+            "value": "1 hr. 3 min.",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/27887-tale-of-gyerong-fairy"
+        },
+        "synopsis": {
+            "value": "In the Goryeo period, Sun Ok-Nam was a fairy. She came down to this world and took a bath at a waterfall on Gyeryong Mountain. While she took the bath, a woodcutter took her fairy clothes and hid them. Because of this, Sun Ok-Nam could not go back to Heaven. She then married the woodcutter and they had two children together, but her husband died from falling off of a cliff. Sun Ok-Nam tried to find her fairy clothes, but she still could not locate it. Needing her fairy clothes, she decides to wait for husband to be reincarnated.\n\nNow in the present day, she makes coffee at a cafe on Gyeryong Mountain and waits for her reincarnated husband. Finally, after 699 years, she gets a feeling that one of the two men visiting her cafe from Seoul is her reincarnated husband. Sun Ok-Nam is not sure which one of the two men is her husband. She deicides to follow them to Seoul to find out.",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Mama_Fairy_and_the_Woodcutter"
+        },
+        "director": {
+            "value": [
+                "Kim Yoon Cheol"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/27887-tale-of-gyerong-fairy"
+        },
+        "tags": {
+            "value": [
+                "Reincarnation",
+                "Adapted From A Webtoon",
+                "Bromance",
+                "Friendship",
+                "Love Triangle",
+                "Transformation",
+                "Pre-Produced",
+                "Difficult Adulthood",
+                "Fairy Female Lead",
+                "Age Gap [Drama Life]"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/27887-tale-of-gyerong-fairy"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "17007",
+                    "artistName": "Kim Yoon Cheol",
+                    "artistImageURL": "https://i.mydramalist.com/BpQPlm.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "21330",
+                    "artistName": "Yoo Kyung Sun",
+                    "artistImageURL": "https://i.mydramalist.com/RlQDx_5m.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "1220",
+                    "artistName": "Moon Chae Won",
+                    "artistImageURL": "https://i.mydramalist.com/Xqy8Z_5s.jpg",
+                    "characterName": "Sun Ok Nam [Young]",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "1659",
+                    "artistName": "Go Doo Shim",
+                    "artistImageURL": "https://i.mydramalist.com/RJnePs.jpg",
+                    "characterName": "Seon Ok Nam [Old]",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "5395",
+                    "artistName": "Yoon Hyun Min",
+                    "artistImageURL": "https://i.mydramalist.com/B450A_5s.jpg",
+                    "characterName": "Jung Yi Hyun",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "12436",
+                    "artistName": "Seo Ji Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/xK7bqs.jpg",
+                    "characterName": "Kim Geum",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "15435",
+                    "artistName": "Kang Mi Na",
+                    "artistImageURL": "https://i.mydramalist.com/WPNg1W_5s.jpg",
+                    "characterName": "Jeom Soon",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "865",
+                    "artistName": "Ahn Kil Kang",
+                    "artistImageURL": "https://i.mydramalist.com/O8LKVy_5s.jpg",
+                    "characterName": "Teacher Goo",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3267",
+                    "artistName": "Hwang Young Hee",
+                    "artistImageURL": "https://i.mydramalist.com/eYgQ0e_5s.jpg",
+                    "characterName": "Fairy Oh Seon Nyeo",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "14806",
+                    "artistName": "Go Geon Han",
+                    "artistImageURL": "https://i.mydramalist.com/yWnejk_5s.jpg",
+                    "characterName": "Park Shin Seon [Hermit]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5483",
+                    "artistName": "Jeon Soo Jin",
+                    "artistImageURL": "https://i.mydramalist.com/qer8Q_5s.jpg",
+                    "characterName": "Lee Ham Sook [Professor]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4372",
+                    "artistName": "Ahn Young Mi",
+                    "artistImageURL": "https://i.mydramalist.com/jQj3rr_5s.jpg",
+                    "characterName": "Jo Bong Dae",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1694",
+                    "artistName": "Im Ha Ryong",
+                    "artistImageURL": "https://i.mydramalist.com/eV4dQs.jpg",
+                    "characterName": "King Buk Du",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "13951",
+                    "artistName": "Ahn Seung Gyun",
+                    "artistImageURL": "https://i.mydramalist.com/10xkbs.jpg",
+                    "characterName": "Oh Kyung Shik [Lab pupil]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "21661",
+                    "artistName": "Kim Sung Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/pdVKvE_5s.jpg",
+                    "characterName": "Um Kyung Sul",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "21528",
+                    "artistName": "Yoo Ah Reum",
+                    "artistImageURL": "https://i.mydramalist.com/g22dXs.jpg",
+                    "characterName": "Ahn Jeong Min [Lab Pupil]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "11249",
+                    "artistName": "Baek Hyeon Ju",
+                    "artistImageURL": "https://i.mydramalist.com/73583b_5s.jpg",
+                    "characterName": "[Kim Geum's mother]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1502",
+                    "artistName": "Yoon So Yi",
+                    "artistImageURL": "https://i.mydramalist.com/jVLxBs.jpg",
+                    "characterName": "Lee Ji [Black Star Fairy]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "21768",
+                    "artistName": "Han Da Hee",
+                    "artistImageURL": "https://i.mydramalist.com/oEEwks.jpg",
+                    "characterName": "[Prof. Jung’s student #1]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "15323",
+                    "artistName": "Son Dong Hwa",
+                    "artistImageURL": "https://i.mydramalist.com/50oNes.jpg",
+                    "characterName": "[Park’s Teaching Asst.]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "21767",
+                    "artistName": "Kim Bit Na Ri",
+                    "artistImageURL": "https://i.mydramalist.com/Y33Wds.jpg",
+                    "characterName": "[Prof. Jung’s student #2]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "22225",
+                    "artistName": "Jung Ji Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/6Ojd2_5s.jpg",
+                    "characterName": "Jung Yi Hyun [Young]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "17136",
+                    "artistName": "Jung Young Joo",
+                    "artistImageURL": "https://i.mydramalist.com/73dRzD_5s.jpg",
+                    "characterName": "[Fairy Realm - Teacher]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "17585",
+                    "artistName": "Kang Da Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/O8JXDd_5s.jpg",
+                    "characterName": "[Prof. Jung’s student #4]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "20767",
+                    "artistName": "Yoo In Soo",
+                    "artistImageURL": "https://i.mydramalist.com/qzOlB_5s.jpg",
+                    "characterName": "[Prof. Jung’s student #3]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "25109",
+                    "artistName": "Jung Kang Hee",
+                    "artistImageURL": "https://i.mydramalist.com/xx2qj_5s.jpg",
+                    "characterName": "Thomas Kim",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "10562",
+                    "artistName": "Park Seung Tae",
+                    "artistImageURL": "https://i.mydramalist.com/1zery_5s.jpg",
+                    "characterName": "[Mother's friend] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "4255",
+                    "artistName": "Son Hee Soon",
+                    "artistImageURL": "https://i.mydramalist.com/WW7wl_5s.jpg",
+                    "characterName": "[Mother's friend] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "16414",
+                    "artistName": "Seo Eun Sol",
+                    "artistImageURL": "https://i.mydramalist.com/Zj03O_5s.jpg",
+                    "characterName": "Sun Ok Nam [Young] (Ep. 12)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6103",
+                    "artistName": "Choi Na Moo",
+                    "artistImageURL": "https://i.mydramalist.com/d0Ok2d_5s.jpg",
+                    "characterName": "Asstistant professor Lee Bon (Ep. 2, 11)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "17296",
+                    "artistName": "Han Hyun Min",
+                    "artistImageURL": "https://i.mydramalist.com/jQjY3J_5s.jpg",
+                    "characterName": "Calvin Nim [Hermit] (Ep.3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "20149",
+                    "artistName": "Ji Sung Geun",
+                    "artistImageURL": "https://i.mydramalist.com/Q53d4s.jpg",
+                    "characterName": "[Train station assistant] (Ep. 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6200",
+                    "artistName": "Lee Yong Nyeo",
+                    "artistImageURL": "https://i.mydramalist.com/6zY2j_5s.jpg",
+                    "characterName": "[Flower in her hair] (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21778",
+                    "artistName": "Cha Yeon Woo",
+                    "artistImageURL": "https://i.mydramalist.com/y7703s.jpg",
+                    "characterName": "[Nobel in web novel]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "15801",
+                    "artistName": "Geum Kwang San",
+                    "artistImageURL": "https://i.mydramalist.com/pWB0rs.jpg",
+                    "characterName": "[Van driver] (Ep. 6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5298",
+                    "artistName": "So Hee Jung",
+                    "artistImageURL": "https://i.mydramalist.com/wN30n_5s.jpg",
+                    "characterName": "Sister Bo Won (Ep. 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "22099",
+                    "artistName": "Choi Jung Nam",
+                    "artistImageURL": "https://i.mydramalist.com/VQvwms.jpg",
+                    "characterName": "Sister Ye San (Ep. 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "22221",
+                    "artistName": "Shin Shin Beom",
+                    "artistImageURL": "https://i.mydramalist.com/E8Pqls.jpg",
+                    "characterName": "[Village drunkard] (Ep. 14)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "18448",
+                    "artistName": "Park Kwi Soon",
+                    "artistImageURL": "https://i.mydramalist.com/j4jgJs.jpg",
+                    "characterName": "[Monk] (Ep. 14)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "487",
+                    "artistName": "Kim Sun Ah",
+                    "artistImageURL": "https://i.mydramalist.com/jo5Zb_5s.jpg",
+                    "characterName": "Butterfly Head Eelworm [Voice]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "2622",
+                    "artistName": "Yeom Dong Hun",
+                    "artistImageURL": "https://i.mydramalist.com/kxAlb_5s.jpg",
+                    "characterName": "Professor Park [Yi Hyun’s rival]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "698",
+                    "artistName": "Jung Kyung Ho",
+                    "artistImageURL": "https://i.mydramalist.com/yWBx7n_5s.jpg",
+                    "characterName": "Jeum Dol [Voice]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "1171",
+                    "artistName": "Eric Mun",
+                    "artistImageURL": "https://i.mydramalist.com/d0wdXb_5s.jpg",
+                    "characterName": "Frog [Voice]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "4733",
+                    "artistName": "Song Young Jae",
+                    "artistImageURL": "https://i.mydramalist.com/mjedPs.jpg",
+                    "characterName": "[Clothing store owner]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21769",
+                    "artistName": "Kang Seung Wan",
+                    "artistImageURL": "https://i.mydramalist.com/rrxwj_5s.jpg",
+                    "characterName": "[Pickpocket]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21773",
+                    "artistName": "Kum Chae Ahn",
+                    "artistImageURL": "https://i.mydramalist.com/nEbb6s.jpg",
+                    "characterName": "[Fairy and Villager outside shed]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21770",
+                    "artistName": "Kwon Oh Geon",
+                    "artistImageURL": "https://i.mydramalist.com/eO2dE_5s.jpg",
+                    "characterName": "Jeum Dol [Young son]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "17258",
+                    "artistName": "Hong Dong Young",
+                    "artistImageURL": "https://i.mydramalist.com/pP1pB_5s.jpg",
+                    "characterName": "Kim Geum [Young]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "1273",
+                    "artistName": "Jung Yu Mi",
+                    "artistImageURL": "https://i.mydramalist.com/pRQxE_5s.jpg",
+                    "characterName": "Lotus [Voice]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5862",
+                    "artistName": "Choi Gyo Shik",
+                    "artistImageURL": "https://i.mydramalist.com/WXzRP_5s.jpg",
+                    "characterName": "[Villager glad Ok Nam is back] (Ep. 13)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21784",
+                    "artistName": "Go Do Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/2LB0W_5s.jpg",
+                    "characterName": "Jeom Soon [Young]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21786",
+                    "artistName": "Ji Won Ho",
+                    "artistImageURL": "https://i.mydramalist.com/JKnZYs.jpg",
+                    "characterName": "Kim Geum [Youth]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21859",
+                    "artistName": "Seo Yi Soo",
+                    "artistImageURL": "https://i.mydramalist.com/jmbkw_5s.jpg",
+                    "characterName": "[Girl with cotton candy]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "22127",
+                    "artistName": "Kim Dae Kyung",
+                    "artistImageURL": "https://i.mydramalist.com/YY53Wg_5s.jpg",
+                    "characterName": "[Slave in web novel]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "22223",
+                    "artistName": "Lee Hyo Rin",
+                    "artistImageURL": "https://i.mydramalist.com/Ox30xs.jpg",
+                    "characterName": "[Child in the shed]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5817",
+                    "artistName": "Son Young Soon",
+                    "artistImageURL": "https://i.mydramalist.com/81dLjW_5s.jpg",
+                    "characterName": "[Outside the locked shed]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "15637",
+                    "artistName": "Ham Gun Soo",
+                    "artistImageURL": "https://i.mydramalist.com/dxAlW_5s.jpg",
+                    "characterName": "[Ship Captain]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "18558",
+                    "artistName": "Kim Dong Kyu",
+                    "artistImageURL": "https://i.mydramalist.com/kXWx8s.jpg",
+                    "characterName": "[Professor Park's Asst.]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6895",
+                    "artistName": "Lee Do Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/rzZ0y_5s.jpg",
+                    "characterName": "[Villager offers porridge]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "36101",
+                    "artistName": "Woo Sung Min",
+                    "artistImageURL": "https://i.mydramalist.com/0D8Bk_5s.jpg",
+                    "characterName": "[Kid teasing Jeom Soon]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "38331",
+                    "artistName": "Park Mi Ri",
+                    "artistImageURL": "https://i.mydramalist.com/R3kAVs.jpg",
+                    "characterName": "[Beer bar part-time worker]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "23536",
+                    "artistName": "Jun Eun Mi",
+                    "artistImageURL": "https://i.mydramalist.com/dJmZg_5s.jpg",
+                    "characterName": "[Neighborhood middle-aged woman] [Voice]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21781",
+                    "artistName": "Kim Ji Wan",
+                    "artistImageURL": "https://i.mydramalist.com/WP5oyX_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6024",
+                    "artistName": "Jung Sang Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/BwN11s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "49055",
+                    "artistName": "Song Da Kyung",
+                    "artistImageURL": "https://i.mydramalist.com/RbKVg_5s.jpg",
+                    "characterName": "Ivanya [Deputy]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "108951",
+                    "artistName": "Bae Kyung Min",
+                    "artistImageURL": "https://i.mydramalist.com/pwgkB_5s.jpg",
+                    "characterName": "[Drunkard]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "46235",
+                    "artistName": "Lee Soo Yong",
+                    "artistImageURL": "https://i.mydramalist.com/Xpw6n_5s.jpg",
+                    "characterName": "[Taxi driver]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "96607",
+                    "artistName": "Kwon Chan Min",
+                    "artistImageURL": "https://i.mydramalist.com/E1V05_5s.jpg",
+                    "characterName": "[Film dept. student]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "72133",
+                    "artistName": "Shin Ye On",
+                    "artistImageURL": "https://i.mydramalist.com/dKW35_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "16761",
+                    "artistName": "Kim Esther",
+                    "artistImageURL": "https://i.mydramalist.com/pVLPr_5s.jpg",
+                    "characterName": "[High School student]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "19738",
+                    "artistName": "Son Seung Hun",
+                    "artistImageURL": "https://i.mydramalist.com/YYZ0we_5s.jpg",
+                    "characterName": "[Assistant]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "61951",
+                    "artistName": "Lee Soo Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/2P56P_5s.jpg",
+                    "characterName": "[Assistant]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "25499",
+                    "artistName": "Park Joon Soo",
+                    "artistImageURL": "https://i.mydramalist.com/2XWgk_5s.jpg",
+                    "characterName": "[Assistant]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "61539",
+                    "artistName": "Park Sang Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/d7B8D_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "23788",
+                    "artistName": "Myung Seok Geun",
+                    "artistImageURL": "https://i.mydramalist.com/BDQX7_5s.jpg",
+                    "characterName": "Uncle San Gi [Ghost/Goblin]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "128523",
+                    "artistName": "Lee Su Min",
+                    "artistImageURL": "https://i.mydramalist.com/wJK5yY_5s.jpg",
+                    "characterName": "[University student]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "41407",
+                    "artistName": "Jung Jun Hwan",
+                    "artistImageURL": "https://i.mydramalist.com/ejr1n_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "94727",
+                    "artistName": "Nash Ang",
+                    "artistImageURL": "https://i.mydramalist.com/EOA1Q_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "59929",
+                    "artistName": "Shin Ji Woo",
+                    "artistImageURL": "https://i.mydramalist.com/pR1yn_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "52031",
+                    "artistName": "Moon Chang Jun",
+                    "artistImageURL": "https://i.mydramalist.com/0jKWO_5s.jpg",
+                    "characterName": "[Student]",
+                    "role": "Guest Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/27887-tale-of-gyerong-fairy"
+        },
+        "airedOn": {
+            "value": [
+                "Tuesday",
+                "Monday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/27887-tale-of-gyerong-fairy"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "17007",
+            "artistName": "Kim Yoon Cheol",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "21330",
+            "artistName": "Yoo Kyung Sun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "1220",
+            "artistName": "Moon Chae Won",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "1659",
+            "artistName": "Go Doo Shim",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "5395",
+            "artistName": "Yoon Hyun Min",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "12436",
+            "artistName": "Seo Ji Hoon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "15435",
+            "artistName": "Kang Mi Na",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "4372",
+            "artistName": "Ahn Young Mi",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "1694",
+            "artistName": "Im Ha Ryong",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "21661",
+            "artistName": "Kim Sung Hyun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "21528",
+            "artistName": "Yoo Ah Reum",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "1502",
+            "artistName": "Yoon So Yi",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "21768",
+            "artistName": "Han Da Hee",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "21767",
+            "artistName": "Kim Bit Na Ri",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "22225",
+            "artistName": "Jung Ji Hoon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "17585",
+            "artistName": "Kang Da Hyun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "16414",
+            "artistName": "Seo Eun Sol",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "17296",
+            "artistName": "Han Hyun Min",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "6200",
+            "artistName": "Lee Yong Nyeo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "21778",
+            "artistName": "Cha Yeon Woo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "15801",
+            "artistName": "Geum Kwang San",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "5298",
+            "artistName": "So Hee Jung",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "22221",
+            "artistName": "Shin Shin Beom",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "487",
+            "artistName": "Kim Sun Ah",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "1171",
+            "artistName": "Eric Mun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "4733",
+            "artistName": "Song Young Jae",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "21769",
+            "artistName": "Kang Seung Wan",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "21773",
+            "artistName": "Kum Chae Ahn",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "21770",
+            "artistName": "Kwon Oh Geon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "1273",
+            "artistName": "Jung Yu Mi",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "21786",
+            "artistName": "Ji Won Ho",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "21859",
+            "artistName": "Seo Yi Soo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "22127",
+            "artistName": "Kim Dae Kyung",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "22223",
+            "artistName": "Lee Hyo Rin",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "15637",
+            "artistName": "Ham Gun Soo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "38331",
+            "artistName": "Park Mi Ri",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "21781",
+            "artistName": "Kim Ji Wan",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "96607",
+            "artistName": "Kwon Chan Min",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "16761",
+            "artistName": "Kim Esther",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "61951",
+            "artistName": "Lee Soo Yeon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "128523",
+            "artistName": "Lee Su Min",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "94727",
+            "artistName": "Nash Ang",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "59929",
+            "artistName": "Shin Ji Woo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "52031",
+            "artistName": "Moon Chang Jun",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "asianwiki",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": null,
+        "airedOn": "mydramalist"
+    }
+}

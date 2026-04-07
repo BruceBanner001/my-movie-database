@@ -1,0 +1,538 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260407_192007",
+    "timestamp": "07 April 2026 07:26 PM (IST)",
+    "showID": 1077,
+    "showName": "Black Knight",
+    "fetchedFields": {
+        "showImage": {
+            "value": "1077.jpg",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Black_Knight_(Netflix)"
+        },
+        "releaseDate": {
+            "value": "May 12, 2023",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/705077-courier"
+        },
+        "otherNames": {
+            "value": [
+                "Black Night",
+                "Cavalerul în Negru",
+                "Courier",
+                "Delivery Driver",
+                "Delivery Knight",
+                "Rytíř v černém",
+                "Taegbaegisa",
+                "Лицар у чорному",
+                "Чёрный рыцарь",
+                "الفارس الأسود"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/705077-courier"
+        },
+        "Duration": {
+            "value": "42 mins",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/705077-courier"
+        },
+        "synopsis": {
+            "value": "Set in the year 2071, where the world has been decimated by toxic air pollution. Only about 1 percent of the population has survived and a strict social class now exists. People rarely leave their homes and, when they do, they wear gas masks due to the air pollution. Citizens rely heavily on parcel delivery service for their needs. Delivery drivers, known as knights, delivers the packages and also protect them from thieves.\n\nKnight 5-8 (Kim Woo-Bin) is a legendary knight. He is also highly skilled in physical combat. He happens to meet boy Yoon Sa-Wol (Kang You-Seok), who is a refugee. Yoon Sa-Wol  dreams of becoming a knight and he admires Knight 5-8. Seol-Ah (Esom) is an officer in the Defense Intelligence Command. She saved Yoon Sa-Wol’s life and takes care of Yoon Sa-Wol like he is part of her family. Knight 5-8 helps Yoon Sa-Wol become a knight.",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Black_Knight_(Netflix)"
+        },
+        "tags": {
+            "value": [
+                "Skilled Fighter",
+                "Found Family",
+                "Discrimination",
+                "Dystopia",
+                "Post Apocalyptic",
+                "Competition",
+                "Physically Strong Female Lead",
+                "Emotionally Strong Male Lead",
+                "Class Conflict",
+                "Graphic Violence"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/705077-courier"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "78531",
+                    "artistName": "Park Se Seung",
+                    "artistImageURL": "https://i.mydramalist.com/6A5JW_5m.jpg",
+                    "characterName": null,
+                    "role": "Cinematography"
+                },
+                {
+                    "artistID": "149736",
+                    "artistName": "Primary",
+                    "artistImageURL": "https://i.mydramalist.com/735Abn_5m.jpg",
+                    "characterName": null,
+                    "role": "Composer"
+                },
+                {
+                    "artistID": "49069",
+                    "artistName": "Cho Ui Seok",
+                    "artistImageURL": "https://i.mydramalist.com/0dNw4_5m.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter & Director"
+                },
+                {
+                    "artistID": "2406",
+                    "artistName": "Kim Woo Bin",
+                    "artistImageURL": "https://i.mydramalist.com/DkB2vz_5s.jpg",
+                    "characterName": "5-8",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "535",
+                    "artistName": "Song Seung Heon",
+                    "artistImageURL": "https://i.mydramalist.com/02qdN_5s.jpg",
+                    "characterName": "Ryu Seok",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "33191",
+                    "artistName": "Kang You Seok",
+                    "artistImageURL": "https://i.mydramalist.com/ABQEA3_5s.jpg",
+                    "characterName": "Yun Sa Wol",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "2540",
+                    "artistName": "Esom",
+                    "artistImageURL": "https://i.mydramalist.com/18ED5_5s.jpg",
+                    "characterName": "Jung Seol Ah",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "4625",
+                    "artistName": "Kim Eui Sung",
+                    "artistImageURL": "https://i.mydramalist.com/JBXwbJ_5s.jpg",
+                    "characterName": "[Grandpa]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "12144",
+                    "artistName": "Lee Sung Wook",
+                    "artistImageURL": "https://i.mydramalist.com/B0Qz5s.jpg",
+                    "characterName": "Oh Ji Hwan [Director]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "67593",
+                    "artistName": "Lee Yi Dam",
+                    "artistImageURL": "https://i.mydramalist.com/4e3VLk_5s.jpg",
+                    "characterName": "4-1",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4089",
+                    "artistName": "Lee Ju Seung",
+                    "artistImageURL": "https://i.mydramalist.com/nO1ezL_5s.jpg",
+                    "characterName": "\"Useless\" [Sa Wol's refugee friend]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4669",
+                    "artistName": "Nam Kyung Eup",
+                    "artistImageURL": "https://i.mydramalist.com/kOjLOs.jpg",
+                    "characterName": "Chairman Ryu Jae Jin",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3174",
+                    "artistName": "Jin Kyung",
+                    "artistImageURL": "https://i.mydramalist.com/Xe7vJs.jpg",
+                    "characterName": "President Chae Jin Gyeong",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "80981",
+                    "artistName": "Roh Yoon Seo",
+                    "artistImageURL": "https://i.mydramalist.com/NdnkOY_5s.jpg",
+                    "characterName": "Jung Seul A",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "20101",
+                    "artistName": "Im Sung Jae",
+                    "artistImageURL": "https://i.mydramalist.com/nOR1WW_5s.jpg",
+                    "characterName": "Sergeant Lee",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "7794",
+                    "artistName": "Bae Yoo Ram",
+                    "artistImageURL": "https://i.mydramalist.com/jJ7Pw_5s.jpg",
+                    "characterName": "5-7",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "18014",
+                    "artistName": "Lee Soon Won",
+                    "artistImageURL": "https://i.mydramalist.com/wJK7jY_5s.jpg",
+                    "characterName": "3-3",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "24029",
+                    "artistName": "Heo Hyung Kyu",
+                    "artistImageURL": "https://i.mydramalist.com/Z8v0YJ_5s.jpg",
+                    "characterName": "1-3",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "33035",
+                    "artistName": "Bae Myung Jin",
+                    "artistImageURL": "https://i.mydramalist.com/q6XEK_5s.jpg",
+                    "characterName": "2-4",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "34119",
+                    "artistName": "Cho Ji An",
+                    "artistImageURL": "https://i.mydramalist.com/Lw86Eg_5s.jpg",
+                    "characterName": "6-3",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "18617",
+                    "artistName": "Yoo In Hyuk",
+                    "artistImageURL": "https://i.mydramalist.com/1wwzyz_5s.jpg",
+                    "characterName": "4-2",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "14318",
+                    "artistName": "Jang Mi Kwan",
+                    "artistImageURL": "https://i.mydramalist.com/veVbqs.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "87855",
+                    "artistName": "Park Jun Hyuk",
+                    "artistImageURL": "https://i.mydramalist.com/ZxdlJ_5s.jpg",
+                    "characterName": "Yoo Gyeong Sik",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "55701",
+                    "artistName": "Lee Sang Jin",
+                    "artistImageURL": "https://i.mydramalist.com/60om8W_5s.jpg",
+                    "characterName": "\"Dumb Dumb\" [Sa Wol's refugee friend]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "39599",
+                    "artistName": "Jo Ji Seung",
+                    "artistImageURL": "https://i.mydramalist.com/xY85Xs.jpg",
+                    "characterName": "Hyeon Su",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "36281",
+                    "artistName": "Kwon Dong Ho",
+                    "artistImageURL": "https://i.mydramalist.com/ED3vQs.jpg",
+                    "characterName": "Park Se Seung",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "12550",
+                    "artistName": "Yoo Yeon Soo",
+                    "artistImageURL": "https://i.mydramalist.com/nBNQ6s.jpg",
+                    "characterName": "[Defense Minister]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "59619",
+                    "artistName": "Han Sang Gil",
+                    "artistImageURL": "https://i.mydramalist.com/WpplW_5s.jpg",
+                    "characterName": "7-3",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "100251",
+                    "artistName": "Yoo Hyuk Jae",
+                    "artistImageURL": "https://i.mydramalist.com/pQo6Q_5s.jpg",
+                    "characterName": "8-9",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3652",
+                    "artistName": "Kim Gi Bang",
+                    "artistImageURL": "https://i.mydramalist.com/dvmD5s.jpg",
+                    "characterName": "[Informant]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "18523",
+                    "artistName": "Ok Ye Rin",
+                    "artistImageURL": "https://i.mydramalist.com/EXqPm_5s.jpg",
+                    "characterName": "[Refugee district labor market kid] (Ep.1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "69023",
+                    "artistName": "Goo Shi Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/JBvgBw_5s.jpg",
+                    "characterName": "[Refugee district labor market pregnant woman] (Ep.1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "27121",
+                    "artistName": "Kim Geum Soon",
+                    "artistImageURL": "https://i.mydramalist.com/RNoEP_5s.jpg",
+                    "characterName": "[Cleaning lady]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "20106",
+                    "artistName": "Choi Kwang Je",
+                    "artistImageURL": "https://i.mydramalist.com/B18d6_5s.jpg",
+                    "characterName": "[Hunter leader] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "63025",
+                    "artistName": "Lee Kun Goo",
+                    "artistImageURL": "https://i.mydramalist.com/2L7yw_5s.jpg",
+                    "characterName": "[Intruder tattoo man] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5299",
+                    "artistName": "Kim Seo Kyung",
+                    "artistImageURL": "https://i.mydramalist.com/pz7ZV_5s.jpg",
+                    "characterName": "[Captured tattoo man]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "68195",
+                    "artistName": "Shin Kang Kyun",
+                    "artistImageURL": "https://i.mydramalist.com/W6klp_5s.jpg",
+                    "characterName": "Lee Yeong Su (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "25823",
+                    "artistName": "Ahn Hyeon Bin",
+                    "artistImageURL": "https://i.mydramalist.com/enzvps.jpg",
+                    "characterName": "[Refugee man]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "9303",
+                    "artistName": "Choi Seung Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/jQAkr8_5s.jpg",
+                    "characterName": "Yoon Sa Wol [Teen] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "53723",
+                    "artistName": "Hwang Bo Jeong Il",
+                    "artistImageURL": "https://i.mydramalist.com/ZQQ47_5s.jpg",
+                    "characterName": "[Big Deliveryman] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "68917",
+                    "artistName": "Lee Seung Hun",
+                    "artistImageURL": "https://i.mydramalist.com/WXzpX_5s.jpg",
+                    "characterName": "[General District Resident]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "123065",
+                    "artistName": "Eom Joon Ki",
+                    "artistImageURL": "https://i.mydramalist.com/73Enqy_5s.jpg",
+                    "characterName": "[A Bully Captain]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "124045",
+                    "artistName": "Kim Min",
+                    "artistImageURL": "https://i.mydramalist.com/QJ5mZ6_5s.jpg",
+                    "characterName": "Joo Gyeong Nam",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "133295",
+                    "artistName": "No Myung Hwan",
+                    "artistImageURL": "https://i.mydramalist.com/jQ2b1d_5s.jpg",
+                    "characterName": "[Soldier]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "127073",
+                    "artistName": "Kim Ah Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/rNmKyg_5s.jpg",
+                    "characterName": "Jung Seul Ah [Child] (Ep. 2)",
+                    "role": "Guest Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/705077-courier"
+        },
+        "airedOn": {
+            "value": [
+                "Friday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/705077-courier"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "78531",
+            "artistName": "Park Se Seung",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "149736",
+            "artistName": "Primary",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "49069",
+            "artistName": "Cho Ui Seok",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "33191",
+            "artistName": "Kang You Seok",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "4625",
+            "artistName": "Kim Eui Sung",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "12144",
+            "artistName": "Lee Sung Wook",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "67593",
+            "artistName": "Lee Yi Dam",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "20101",
+            "artistName": "Im Sung Jae",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "24029",
+            "artistName": "Heo Hyung Kyu",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "33035",
+            "artistName": "Bae Myung Jin",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "34119",
+            "artistName": "Cho Ji An",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "14318",
+            "artistName": "Jang Mi Kwan",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "87855",
+            "artistName": "Park Jun Hyuk",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "55701",
+            "artistName": "Lee Sang Jin",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "39599",
+            "artistName": "Jo Ji Seung",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "12550",
+            "artistName": "Yoo Yeon Soo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "100251",
+            "artistName": "Yoo Hyuk Jae",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "27121",
+            "artistName": "Kim Geum Soon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "20106",
+            "artistName": "Choi Kwang Je",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "5299",
+            "artistName": "Kim Seo Kyung",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "68195",
+            "artistName": "Shin Kang Kyun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "53723",
+            "artistName": "Hwang Bo Jeong Il",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "68917",
+            "artistName": "Lee Seung Hun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "123065",
+            "artistName": "Eom Joon Ki",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "124045",
+            "artistName": "Kim Min",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "133295",
+            "artistName": "No Myung Hwan",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "127073",
+            "artistName": "Kim Ah Hyun",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "asianwiki",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki",
+        "director": null,
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": null,
+        "airedOn": "mydramalist"
+    }
+}

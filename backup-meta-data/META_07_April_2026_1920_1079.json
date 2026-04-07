@@ -1,0 +1,420 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260407_192007",
+    "timestamp": "07 April 2026 07:26 PM (IST)",
+    "showID": 1079,
+    "showName": "Hyde, Jekyll, Me",
+    "fetchedFields": {
+        "showImage": {
+            "value": "1079.jpg",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Hyde_Jekyll,_Me"
+        },
+        "releaseDate": {
+            "value": "Jan 21, 2015 - Mar 26, 2015",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/11514-hyde-jekyll-me"
+        },
+        "otherNames": {
+            "value": [
+                "Haideu",
+                "Jikil",
+                "Na",
+                "Hyde",
+                "Jekyll and I",
+                "Jekyll e Eu",
+                "Jekyll",
+                "Хайд",
+                "Джекилл и я",
+                "海德、哲基尔与我"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/11514-hyde-jekyll-me"
+        },
+        "Duration": {
+            "value": "60 mins",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/11514-hyde-jekyll-me"
+        },
+        "synopsis": {
+            "value": "Koo Seo-Jin (Hyun-Bin) has two different personalities. One of his personalities is cold like Hyde and the other is sweet like Jekyll. He works as the director of theme park Wonderland. Jang Ha-Na (Han Ji-Min) works as the master and actress of a circus at Wonderland. Koo Seo-Jin tries to kick the circus out of Wonderland and Jang Ha-Na reorganizes the circus to stay. In the process, Jang Ha-Na falls in love with Koo Seo-Jin.",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Hyde_Jekyll,_Me"
+        },
+        "director": {
+            "value": [
+                "Jo Young Kwang",
+                "Park Shin Woo"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/11514-hyde-jekyll-me"
+        },
+        "tags": {
+            "value": [
+                "Dissociative Identity Disorder",
+                "Double Identity",
+                "Love Triangle",
+                "Adapted From A Webtoon",
+                "Cold Man/Warm Woman",
+                "Emotionally Strong Female Lead",
+                "Emotionally Strong Male Lead",
+                "Difficult Adulthood",
+                "Heir Male Lead",
+                "Two Roles"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/11514-hyde-jekyll-me"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "65445",
+                    "artistName": "Park Se Jun",
+                    "artistImageURL": "https://i.mydramalist.com/v1loD_5m.jpg",
+                    "characterName": null,
+                    "role": "Composer"
+                },
+                {
+                    "artistID": "15991",
+                    "artistName": "Jo Young Kwang",
+                    "artistImageURL": "https://i.mydramalist.com/2NvO2m.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "19210",
+                    "artistName": "Park Shin Woo",
+                    "artistImageURL": "https://i.mydramalist.com/Wvx7Pm.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "23632",
+                    "artistName": "Kim Ji Woon",
+                    "artistImageURL": "https://i.mydramalist.com/D8Wmrm.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "183",
+                    "artistName": "Hyun Bin",
+                    "artistImageURL": "https://i.mydramalist.com/qAkLds.jpg",
+                    "characterName": "Goo Seo Jin / Robin",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "1225",
+                    "artistName": "Han Ji Min",
+                    "artistImageURL": "https://i.mydramalist.com/0w0gK7_5s.jpg",
+                    "characterName": "Jang Ha Na",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "1137",
+                    "artistName": "Sung Jun",
+                    "artistImageURL": "https://i.mydramalist.com/kAzJmj_5s.jpg",
+                    "characterName": "Yoon Tae Joo",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "2664",
+                    "artistName": "Lee Hye Ri",
+                    "artistImageURL": "https://i.mydramalist.com/EbVK0_5s.jpg",
+                    "characterName": "Min Woo Jung",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "4576",
+                    "artistName": "Lee Seung Joon",
+                    "artistImageURL": "https://i.mydramalist.com/6bKNd_5s.jpg",
+                    "characterName": "Kwon Yeong Chan",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1904",
+                    "artistName": "Han Sang Jin",
+                    "artistImageURL": "https://i.mydramalist.com/W6KBR_5s.jpg",
+                    "characterName": "Ryu Seung Yeon",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3527",
+                    "artistName": "Shin Eun Jung",
+                    "artistImageURL": "https://i.mydramalist.com/RB87kr_5s.jpg",
+                    "characterName": "Kang Hee Ae",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1397",
+                    "artistName": "Lee Deok Hwa",
+                    "artistImageURL": "https://i.mydramalist.com/R3KXEs.jpg",
+                    "characterName": "Goo Myung Han",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4046",
+                    "artistName": "Kim Do Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/ErOrps.jpg",
+                    "characterName": "Han Joo Hee",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2560",
+                    "artistName": "Kwak Hee Sung",
+                    "artistImageURL": "https://i.mydramalist.com/Xd441n_5s.jpg",
+                    "characterName": "Sung Seok Won",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4065",
+                    "artistName": "Lee Se Na",
+                    "artistImageURL": "https://i.mydramalist.com/4pj7Zs.jpg",
+                    "characterName": "Choi Seo Hee",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3251",
+                    "artistName": "Kim Kyung Jin",
+                    "artistImageURL": "https://i.mydramalist.com/d0Rm8W_5s.jpg",
+                    "characterName": "Director Kim",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4402",
+                    "artistName": "Lee Joon Hyuk",
+                    "artistImageURL": "https://i.mydramalist.com/dWxog_5s.jpg",
+                    "characterName": "Detective Na",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1987",
+                    "artistName": "Lee Won Keun",
+                    "artistImageURL": "https://i.mydramalist.com/WoXxW_5s.jpg",
+                    "characterName": "Lee Eun Chang",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2915",
+                    "artistName": "Oh Na Ra",
+                    "artistImageURL": "https://i.mydramalist.com/nOZJmL_5s.jpg",
+                    "characterName": "Cha Jin Joo",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "539",
+                    "artistName": "Maeng Sang Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/92wKws.jpg",
+                    "characterName": "Director Min",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "9187",
+                    "artistName": "Moon Young Dong",
+                    "artistImageURL": "https://i.mydramalist.com/kJ378s.jpg",
+                    "characterName": "Park Hee Bong",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "258",
+                    "artistName": "Choi Soo Han",
+                    "artistImageURL": "https://i.mydramalist.com/XrRrgs.jpg",
+                    "characterName": "Robin [Young]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "7563",
+                    "artistName": "Heo Jung Eun",
+                    "artistImageURL": "https://i.mydramalist.com/r70QN_5s.jpg",
+                    "characterName": "Jang Ha Na [Child]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5756",
+                    "artistName": "Jung Ji So",
+                    "artistImageURL": "https://i.mydramalist.com/2wmKLV_5s.jpg",
+                    "characterName": "Jang Ha Na [Young]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "6692",
+                    "artistName": "Hwang Min Ho",
+                    "artistImageURL": "https://i.mydramalist.com/6oO8Ws.jpg",
+                    "characterName": "Ahn Seong Geun",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "30093",
+                    "artistName": "Jin Hyun Kwang",
+                    "artistImageURL": "https://i.mydramalist.com/x2VyXs.jpg",
+                    "characterName": "Jeong Man Sik",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3581",
+                    "artistName": "Do Sang Woo",
+                    "artistImageURL": "https://i.mydramalist.com/BwgA5s.jpg",
+                    "characterName": "Yoo Tae Joon",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "13931",
+                    "artistName": "Kim Ji Eun",
+                    "artistImageURL": "https://i.mydramalist.com/60pwWj_5s.jpg",
+                    "characterName": "[Myung Han's secretary]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1913",
+                    "artistName": "Kang Sung Jin",
+                    "artistImageURL": "https://i.mydramalist.com/pPkVQ_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "18879",
+                    "artistName": "Seo Kwang Jae",
+                    "artistImageURL": "https://i.mydramalist.com/4VWRK_5s.jpg",
+                    "characterName": "[Doctor]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6508",
+                    "artistName": "K. Will",
+                    "artistImageURL": "https://i.mydramalist.com/2wQ182_5s.jpg",
+                    "characterName": "[Radio DJ]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "3215",
+                    "artistName": "Min Joon Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/xmADXs.jpg",
+                    "characterName": "[Reporter]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "14366",
+                    "artistName": "Jung Hyun Seok",
+                    "artistImageURL": "https://i.mydramalist.com/O8Ly1g_5s.jpg",
+                    "characterName": "[Detective]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "2831",
+                    "artistName": "Kim Ik Tae",
+                    "artistImageURL": "https://i.mydramalist.com/Lw8KEg_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/11514-hyde-jekyll-me"
+        },
+        "airedOn": {
+            "value": [
+                "Wednesday",
+                "Thursday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/11514-hyde-jekyll-me"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "15991",
+            "artistName": "Jo Young Kwang",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "23632",
+            "artistName": "Kim Ji Woon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "1225",
+            "artistName": "Han Ji Min",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "2664",
+            "artistName": "Lee Hye Ri",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "1904",
+            "artistName": "Han Sang Jin",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "4046",
+            "artistName": "Kim Do Yeon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "2560",
+            "artistName": "Kwak Hee Sung",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "4065",
+            "artistName": "Lee Se Na",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "1987",
+            "artistName": "Lee Won Keun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "2915",
+            "artistName": "Oh Na Ra",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "9187",
+            "artistName": "Moon Young Dong",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "7563",
+            "artistName": "Heo Jung Eun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "5756",
+            "artistName": "Jung Ji So",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "6692",
+            "artistName": "Hwang Min Ho",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "13931",
+            "artistName": "Kim Ji Eun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "1913",
+            "artistName": "Kang Sung Jin",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "6508",
+            "artistName": "K. Will",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "asianwiki",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": null,
+        "airedOn": "mydramalist"
+    }
+}

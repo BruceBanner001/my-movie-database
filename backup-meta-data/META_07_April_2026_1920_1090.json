@@ -1,0 +1,959 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260407_192007",
+    "timestamp": "07 April 2026 07:29 PM (IST)",
+    "showID": 1090,
+    "showName": "Imitation",
+    "fetchedFields": {
+        "showImage": {
+            "value": "1090.jpg",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Imitation_(Korean_Drama)"
+        },
+        "releaseDate": {
+            "value": "May  7, 2021 - Jul 23, 2021",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/75831-imitation"
+        },
+        "otherNames": {
+            "value": [
+                "Imitação",
+                "Imiteisyeon",
+                "Имитация"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/75831-imitation"
+        },
+        "Duration": {
+            "value": "1 hr. 10 min.",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/75831-imitation"
+        },
+        "synopsis": {
+            "value": "Ma-Ha (Jung Ji-So) is a member of girl group Teaparty. The other members are \nRi-A (Minseo) and Hyun-Ji (Lim Na-Young). Since their debut, they haven't achieved much success. Ma-Ha has received some attention due to her resemblance to popular singer Ri-Ma (Park Ji-Yeon).\n\nTeaparty then takes part in a reality TV program, involving popular idol groups participating in sporting events. Ma-ha wants to catch the attention of viewers. Meanwhile, Kwon Ryeok (Lee Jun-Young) is member of popular boy band Shax. He is well liked and is good at singing, dancing, and acting. He is also focused on maintaining his success. He doesn't like Ma-Ha, who imitates the appearance of popular singer Ri-Ma. During the TV program, Hyeok (Jong Ho) from boy band Shax gets injured due to Ma-Ha. Kwon Ryeok bursts out with anger at Ma-Ha. She also receives hate from other people. Ma-Ha doesn't want to see Kwon Ryeok anymore, but they cross paths on TV programs and while performing in a drama series.",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Imitation_(Korean_Drama)"
+        },
+        "director": {
+            "value": [
+                "Han Hyeon Hui"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/75831-imitation"
+        },
+        "tags": {
+            "value": [
+                "Entertainment Industry",
+                "Youth",
+                "Rivalry",
+                "K-Pop",
+                "Friendship",
+                "Hardworking Female Lead",
+                "Love Square",
+                "Hardworking Male Lead",
+                "Sismance",
+                "Unrequited Love"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/75831-imitation"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "28721",
+                    "artistName": "Han Hyeon Hui",
+                    "artistImageURL": "https://i.mydramalist.com/j6Ey8_5m.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "61243",
+                    "artistName": "Kim Min Jeong",
+                    "artistImageURL": "https://i.mydramalist.com/0YE2Y_5m.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "66953",
+                    "artistName": "Choi Sun Young",
+                    "artistImageURL": "https://i.mydramalist.com/2lQ2R_5m.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "15847",
+                    "artistName": "Lee Jun Young",
+                    "artistImageURL": "https://i.mydramalist.com/v2yzZ_5s.jpg",
+                    "characterName": "Kwon Ryok",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "5756",
+                    "artistName": "Jung Ji So",
+                    "artistImageURL": "https://i.mydramalist.com/2wmKLV_5s.jpg",
+                    "characterName": "Lee Ma Ha",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "819",
+                    "artistName": "Park Ji Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/WX6Rl_5s.jpg",
+                    "characterName": "La Li Ma",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "18984",
+                    "artistName": "Yun Ho",
+                    "artistImageURL": "https://i.mydramalist.com/QJj2O5_5s.jpg",
+                    "characterName": "Lee Yoo Jin",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "639",
+                    "artistName": "Danny Ahn",
+                    "artistImageURL": "https://i.mydramalist.com/E5vJOQ_5s.jpg",
+                    "characterName": "Ji Hak [JH Entertainment CEO]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2788",
+                    "artistName": "Chani",
+                    "artistImageURL": "https://i.mydramalist.com/E0mPm_5s.jpg",
+                    "characterName": "Lee Eun Jo [Former Shax member]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "12678",
+                    "artistName": "Im Na Young",
+                    "artistImageURL": "https://i.mydramalist.com/p3xDV_5s.jpg",
+                    "characterName": "Shim Hyun Ji [Teaparty member]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "23031",
+                    "artistName": "Kim Min Seo",
+                    "artistImageURL": "https://i.mydramalist.com/Bdr6Yb_5s.jpg",
+                    "characterName": "Yu Ri Ah [Teaparty member]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "12164",
+                    "artistName": "Hwi Young",
+                    "artistImageURL": "https://i.mydramalist.com/BdjDO5_5s.jpg",
+                    "characterName": "Kang Lee Hyun [Shax member]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "37655",
+                    "artistName": "Ahn Jung Hun",
+                    "artistImageURL": "https://i.mydramalist.com/pAEPr_5s.jpg",
+                    "characterName": "Han Jae Woo [Shax member]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "18807",
+                    "artistName": "Jong Ho",
+                    "artistImageURL": "https://i.mydramalist.com/Px48zL_5s.jpg",
+                    "characterName": "Yoon Hyuk [Shax member]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "24657",
+                    "artistName": "Park Yu Ri",
+                    "artistImageURL": "https://i.mydramalist.com/QJpBOY_5s.jpg",
+                    "characterName": "Bang Do Jin [Shax member]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "11844",
+                    "artistName": "Lee Soo Woong",
+                    "artistImageURL": "https://i.mydramalist.com/QJ5KrQ_5s.jpg",
+                    "characterName": "Hyun Oh [Sparkling member]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "18983",
+                    "artistName": "Seong Hwa",
+                    "artistImageURL": "https://i.mydramalist.com/3oXgRV_5s.jpg",
+                    "characterName": "Nam Se Young [Sparkling member]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "18985",
+                    "artistName": "San",
+                    "artistImageURL": "https://i.mydramalist.com/Ndwbyv_5s.jpg",
+                    "characterName": "Min Soo [Sparkling member]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "70539",
+                    "artistName": "Yeon Si Woo",
+                    "artistImageURL": "https://i.mydramalist.com/4Olww_5s.jpg",
+                    "characterName": "Annie [Omega Entertainment]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5321",
+                    "artistName": "Oh Hee Joon",
+                    "artistImageURL": "https://i.mydramalist.com/3oAEXv_5s.jpg",
+                    "characterName": "Koo Dae Kwon [Shax's manager]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4246",
+                    "artistName": "Shim Eun Jin",
+                    "artistImageURL": "https://i.mydramalist.com/ZvxkJs.jpg",
+                    "characterName": "Byun Jung Hee [Fact Check reporter]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4317",
+                    "artistName": "Gong Jung Hwan",
+                    "artistImageURL": "https://i.mydramalist.com/E37em_5s.jpg",
+                    "characterName": "Park Jin Man [NOG Entertainment CEO]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "13769",
+                    "artistName": "Lee Tae Hyung",
+                    "artistImageURL": "https://i.mydramalist.com/6z11P_5s.jpg",
+                    "characterName": "General Manager Kim [NOG Entertainment]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "13742",
+                    "artistName": "Shin Soo Ho",
+                    "artistImageURL": "https://i.mydramalist.com/EPnrbs.jpg",
+                    "characterName": "Tae Geun [Sparkling's manager]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "38565",
+                    "artistName": "Nam Jung Woo",
+                    "artistImageURL": "https://i.mydramalist.com/E4327_5s.jpg",
+                    "characterName": "Go Ba Wi [Teaparty's manager]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "13751",
+                    "artistName": "Kim Ji Sook",
+                    "artistImageURL": "https://i.mydramalist.com/d0Ry1z_5s.jpg",
+                    "characterName": "Eun Jin [Stylist]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "9665",
+                    "artistName": "Jo Jung Chi",
+                    "artistImageURL": "https://i.mydramalist.com/60331W_5s.jpg",
+                    "characterName": "Ha Seok / Ammonites [Composer]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "13944",
+                    "artistName": "Kim So Hee",
+                    "artistImageURL": "https://i.mydramalist.com/jgKbO_5s.jpg",
+                    "characterName": "Joo Min Sung [Cafe H part-timer]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "43833",
+                    "artistName": "Lee Hwi Seo",
+                    "artistImageURL": "https://i.mydramalist.com/Z8v2mk_5s.jpg",
+                    "characterName": "Tae Ri [Shax fan club member]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "63293",
+                    "artistName": "Choi So Yoon",
+                    "artistImageURL": "https://i.mydramalist.com/vZ3DZ_5s.jpg",
+                    "characterName": "So Yoon [Shax fan club member]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "52899",
+                    "artistName": "Lee Han Bum",
+                    "artistImageURL": "https://i.mydramalist.com/1kpXR_5s.jpg",
+                    "characterName": "Hwang Yong Tae [Queen Entertainment CEO]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "159170",
+                    "artistName": "Ha Do Yoon",
+                    "artistImageURL": "https://i.mydramalist.com/l0YvEQ_5s.jpg",
+                    "characterName": "Su Ho [Idol trainee]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "105903",
+                    "artistName": "Cha Seung Min",
+                    "artistImageURL": "https://i.mydramalist.com/B8wP5_5s.jpg",
+                    "characterName": "[Actor] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "20685",
+                    "artistName": "Song In Seop",
+                    "artistImageURL": "https://i.mydramalist.com/dEx8z_5s.jpg",
+                    "characterName": "[Assistant director] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "14802",
+                    "artistName": "Yoon Jung Sub",
+                    "artistImageURL": "https://i.mydramalist.com/QYK8Y_5s.jpg",
+                    "characterName": "[Movie filming staff] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6866",
+                    "artistName": "Sung Hyuk",
+                    "artistImageURL": "https://i.mydramalist.com/d0RJ2D_5s.jpg",
+                    "characterName": "[Best new actor nominee] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "76911",
+                    "artistName": "Kim Dong Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/0YOXO_5s.jpg",
+                    "characterName": "[Best new actor nominee] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "43803",
+                    "artistName": "Jo Mo Se",
+                    "artistImageURL": "https://i.mydramalist.com/EDOq7s.jpg",
+                    "characterName": "[Music Holic Entertainment staff] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "858",
+                    "artistName": "Jang Won Young",
+                    "artistImageURL": "https://i.mydramalist.com/60yB0d_5s.jpg",
+                    "characterName": "CEO Kim [Omega Entertainment] (Ep. 1, 6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "22937",
+                    "artistName": "Kim Jae Il",
+                    "artistImageURL": "https://i.mydramalist.com/2X3bw_5s.jpg",
+                    "characterName": "[Music Holic Entertainment CEO] (Ep. 1, 11)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "96961",
+                    "artistName": "Son Dong Soo",
+                    "artistImageURL": "https://i.mydramalist.com/qjpe5_5s.jpg",
+                    "characterName": "[PD] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "50477",
+                    "artistName": "Jeon Go Eun",
+                    "artistImageURL": "https://i.mydramalist.com/kLjww_5s.jpg",
+                    "characterName": "[Idols on Air staff] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "15342",
+                    "artistName": "Lee Se Wook",
+                    "artistImageURL": "https://i.mydramalist.com/nvqm4s.jpg",
+                    "characterName": "[Idols on Air director] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "1548",
+                    "artistName": "Park Kyung Rim",
+                    "artistImageURL": "https://i.mydramalist.com/60gr6p_5s.jpg",
+                    "characterName": "[Current Affairs and People ] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "47035",
+                    "artistName": "Son Yu Ji",
+                    "artistImageURL": "https://i.mydramalist.com/eYjQRK_5s.jpg",
+                    "characterName": "[Herself] (Ep. 2-3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "47053",
+                    "artistName": "Park Yu Rim",
+                    "artistImageURL": "https://i.mydramalist.com/RBRnZP_5s.jpg",
+                    "characterName": "[Herself] (Ep. 2-3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "47055",
+                    "artistName": "Yoon Ha Eun",
+                    "artistImageURL": "https://i.mydramalist.com/x4wOQ3_5s.jpg",
+                    "characterName": "[Herself] (Ep. 2-3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "102893",
+                    "artistName": "Jun Ji Su",
+                    "artistImageURL": "https://i.mydramalist.com/W0O1W_5s.jpg",
+                    "characterName": "[Li Ma's assistant] (Ep. 2, 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5990",
+                    "artistName": "Joo Young Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/RB24rg_5s.jpg",
+                    "characterName": "Freeze [Composer] (Ep. 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "106337",
+                    "artistName": "Park Jeong Min",
+                    "artistImageURL": "https://i.mydramalist.com/6YBrX_5s.jpg",
+                    "characterName": "[CEO Park Jin Man's friend] (Ep. 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "86057",
+                    "artistName": "Shim Hye Rim",
+                    "artistImageURL": "https://i.mydramalist.com/73JYgj_5s.jpg",
+                    "characterName": "Sung Ah Young (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "75853",
+                    "artistName": "Park Se Ryeon",
+                    "artistImageURL": "https://i.mydramalist.com/p1mjV_5s.jpg",
+                    "characterName": "[Trainee] (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "10789",
+                    "artistName": "Shim Yoo Seung",
+                    "artistImageURL": "https://i.mydramalist.com/NgPyJs.jpg",
+                    "characterName": "[Music Arena director] (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "31999",
+                    "artistName": "Lim Jung Min",
+                    "artistImageURL": "https://i.mydramalist.com/6KJ32_5s.jpg",
+                    "characterName": "[Actor] (Ep. 5)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "35197",
+                    "artistName": "Kim Yoon Seol",
+                    "artistImageURL": "https://i.mydramalist.com/rNqV0m_5s.jpg",
+                    "characterName": "[Tea Party fan] (Ep. 5)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "108951",
+                    "artistName": "Bae Kyung Min",
+                    "artistImageURL": "https://i.mydramalist.com/pwgkB_5s.jpg",
+                    "characterName": "[Convenience store cashier] (Ep. 5)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "66125",
+                    "artistName": "Lee Ji Young",
+                    "artistImageURL": "https://i.mydramalist.com/Wxv8X_5s.jpg",
+                    "characterName": "[Cellphone store employee] (Ep. 6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "17784",
+                    "artistName": "Yeom Hae In",
+                    "artistImageURL": "https://i.mydramalist.com/E57JB5_5s.jpg",
+                    "characterName": "Kim Ji Min (Ep. 7-8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "96515",
+                    "artistName": "Yoon Sung Won",
+                    "artistImageURL": "https://i.mydramalist.com/R7N3g_5s.jpg",
+                    "characterName": "[Sitcom director] (Ep. 7-8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "12436",
+                    "artistName": "Seo Ji Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/xK7bqs.jpg",
+                    "characterName": "Yoon Bin (Ep. 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "23115",
+                    "artistName": "Yoo Yong",
+                    "artistImageURL": "https://i.mydramalist.com/5v7qB0_5s.jpg",
+                    "characterName": "[YMSA staff] (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "68599",
+                    "artistName": "Park Sun Young",
+                    "artistImageURL": "https://i.mydramalist.com/2AVdE_5s.jpg",
+                    "characterName": "[YMSA staff] (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "91417",
+                    "artistName": "Hong Ru Hyeon",
+                    "artistImageURL": "https://i.mydramalist.com/1exqy_5s.jpg",
+                    "characterName": "[YMSA staff] (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "46461",
+                    "artistName": "Jun Joon Woo",
+                    "artistImageURL": "https://i.mydramalist.com/O8LORk_5s.jpg",
+                    "characterName": "[Variety show staff] (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "32469",
+                    "artistName": "Kim Seo Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/kqB6v_5s.jpg",
+                    "characterName": "[Hyun Oh's ex-girlfriend] (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "53569",
+                    "artistName": "Jo Woo Jong",
+                    "artistImageURL": "https://i.mydramalist.com/XWBnw_5s.jpg",
+                    "characterName": "[YMSA ] (Ep. 10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "308",
+                    "artistName": "Yun Yu Sun",
+                    "artistImageURL": "https://i.mydramalist.com/BDbjb_5s.jpg",
+                    "characterName": "[Ma Ha's mother] (Ep. 10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "91629",
+                    "artistName": "Chu Jung Hun",
+                    "artistImageURL": "https://i.mydramalist.com/2KRpE_5s.jpg",
+                    "characterName": "[Cart bar troublemaker] (Ep. 10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "105615",
+                    "artistName": "Kim Shin Yul",
+                    "artistImageURL": "https://i.mydramalist.com/VXybwQ_5s.jpg",
+                    "characterName": "[Agency CEO] (Ep. 11)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "47727",
+                    "artistName": "Choi Sol Hui",
+                    "artistImageURL": "https://i.mydramalist.com/KpJBE0_5s.jpg",
+                    "characterName": "[MML Festival committee member] (Ep. 11)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "43805",
+                    "artistName": "Ma Jung Pil",
+                    "artistImageURL": "https://i.mydramalist.com/WBR0Rs.jpg",
+                    "characterName": "[MML Festival committee member] (Ep. 11)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "41729",
+                    "artistName": "Park Jung Eon",
+                    "artistImageURL": "https://i.mydramalist.com/p37Ve_5s.jpg",
+                    "characterName": "[MML Festival committee chairwoman] (Ep. 11)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "42477",
+                    "artistName": "Kang Hak Soo",
+                    "artistImageURL": "https://i.mydramalist.com/yWPJ06_5s.jpg",
+                    "characterName": "[MML Festival producer] (Ep. 12)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "20406",
+                    "artistName": "Choi Ki Seob",
+                    "artistImageURL": "https://i.mydramalist.com/4eoxxw_5s.jpg",
+                    "characterName": "Nam Joo Tae [Fact Check reporter]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "74863",
+                    "artistName": "Kim In Sun",
+                    "artistImageURL": "https://i.mydramalist.com/1JZB5_5s.jpg",
+                    "characterName": "[Actress]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "84207",
+                    "artistName": "Go Tae Hui",
+                    "artistImageURL": "https://i.mydramalist.com/6WVVp_5s.jpg",
+                    "characterName": "[Queen trainee]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "96415",
+                    "artistName": "Lee Chae Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/R7dNz_5s.jpg",
+                    "characterName": "[Girl Group trainee]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "121337",
+                    "artistName": "Jung Yoo Na",
+                    "artistImageURL": "https://i.mydramalist.com/XdZd2w_5s.jpg",
+                    "characterName": "[Shax fan club member]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "121813",
+                    "artistName": "Shin In Ah",
+                    "artistImageURL": "https://i.mydramalist.com/vXeyqq_5s.jpg",
+                    "characterName": "[Actress] (Ep.4-5)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "102803",
+                    "artistName": "Baek So Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/j7zgv_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "94811",
+                    "artistName": "Song Ji Oh",
+                    "artistImageURL": "https://i.mydramalist.com/RDLwx_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "108375",
+                    "artistName": "Jung Yu Jun",
+                    "artistImageURL": "https://i.mydramalist.com/qYV3YP_5s.jpg",
+                    "characterName": "(Ep. 4)",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "108545",
+                    "artistName": "Choi Su Min",
+                    "artistImageURL": "https://i.mydramalist.com/rNegdD_5s.jpg",
+                    "characterName": "(Ep. 4)",
+                    "role": "Support Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/75831-imitation"
+        },
+        "airedOn": {
+            "value": [
+                "Friday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/75831-imitation"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "28721",
+            "artistName": "Han Hyeon Hui",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "61243",
+            "artistName": "Kim Min Jeong",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "66953",
+            "artistName": "Choi Sun Young",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "15847",
+            "artistName": "Lee Jun Young",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "819",
+            "artistName": "Park Ji Yeon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "18984",
+            "artistName": "Yun Ho",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "2788",
+            "artistName": "Chani",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "12678",
+            "artistName": "Im Na Young",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "23031",
+            "artistName": "Kim Min Seo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "12164",
+            "artistName": "Hwi Young",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "37655",
+            "artistName": "Ahn Jung Hun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "18807",
+            "artistName": "Jong Ho",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "24657",
+            "artistName": "Park Yu Ri",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "11844",
+            "artistName": "Lee Soo Woong",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "18983",
+            "artistName": "Seong Hwa",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "18985",
+            "artistName": "San",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "70539",
+            "artistName": "Yeon Si Woo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "4246",
+            "artistName": "Shim Eun Jin",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "13769",
+            "artistName": "Lee Tae Hyung",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "13742",
+            "artistName": "Shin Soo Ho",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "13751",
+            "artistName": "Kim Ji Sook",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "13944",
+            "artistName": "Kim So Hee",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "63293",
+            "artistName": "Choi So Yoon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "52899",
+            "artistName": "Lee Han Bum",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "159170",
+            "artistName": "Ha Do Yoon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "105903",
+            "artistName": "Cha Seung Min",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "20685",
+            "artistName": "Song In Seop",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "14802",
+            "artistName": "Yoon Jung Sub",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "6866",
+            "artistName": "Sung Hyuk",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "76911",
+            "artistName": "Kim Dong Yeon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "43803",
+            "artistName": "Jo Mo Se",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "50477",
+            "artistName": "Jeon Go Eun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "1548",
+            "artistName": "Park Kyung Rim",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "47035",
+            "artistName": "Son Yu Ji",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "47053",
+            "artistName": "Park Yu Rim",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "47055",
+            "artistName": "Yoon Ha Eun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "102893",
+            "artistName": "Jun Ji Su",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "106337",
+            "artistName": "Park Jeong Min",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "86057",
+            "artistName": "Shim Hye Rim",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "75853",
+            "artistName": "Park Se Ryeon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "10789",
+            "artistName": "Shim Yoo Seung",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "35197",
+            "artistName": "Kim Yoon Seol",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "17784",
+            "artistName": "Yeom Hae In",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "32469",
+            "artistName": "Kim Seo Yeon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "53569",
+            "artistName": "Jo Woo Jong",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "91629",
+            "artistName": "Chu Jung Hun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "105615",
+            "artistName": "Kim Shin Yul",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "47727",
+            "artistName": "Choi Sol Hui",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "41729",
+            "artistName": "Park Jung Eon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "20406",
+            "artistName": "Choi Ki Seob",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "84207",
+            "artistName": "Go Tae Hui",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "96415",
+            "artistName": "Lee Chae Hyun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "121337",
+            "artistName": "Jung Yoo Na",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "121813",
+            "artistName": "Shin In Ah",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "102803",
+            "artistName": "Baek So Hyun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "94811",
+            "artistName": "Song Ji Oh",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "108375",
+            "artistName": "Jung Yu Jun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "108545",
+            "artistName": "Choi Su Min",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "asianwiki",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": null,
+        "airedOn": "mydramalist"
+    }
+}

@@ -1,0 +1,539 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260407_192007",
+    "timestamp": "07 April 2026 07:30 PM (IST)",
+    "showID": 1095,
+    "showName": "The Love You Give Me",
+    "fetchedFields": {
+        "showImage": {
+            "value": "1095.jpg",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/723145-the-love-you-give-me"
+        },
+        "releaseDate": {
+            "value": "Apr 24, 2023 - May 10, 2023",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/723145-the-love-you-give-me"
+        },
+        "otherNames": {
+            "value": [
+                "Ni Gei Wo De Xi Huan",
+                "你給我的喜歡"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/723145-the-love-you-give-me"
+        },
+        "Duration": {
+            "value": "45 mins",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/723145-the-love-you-give-me"
+        },
+        "synopsis": {
+            "value": "Five years ago, Min Hui pretended to be Xin Qi’s long-lost childhood friend to help him cope with the sudden death of his friend, while hiding her growing love for him. Xin Qi, suffering from a life-threatening heart condition, rejected her attempts to confess, and when the truth was finally revealed, he cut all ties with her.\n\nNow, five years later, they are reunited at a business event. Min Hui has become\n\nan R&D assistant, while Xin Qi is a successful CEO. Despite his lingering anger, Xin Qi soon learns that Min Hui has a son with the same heart condition he suffers from, leading him to realize he is the father. Through heartfelt conversations, explanations, and a quirky living arrangement, can they heal old wounds and rekindle their love as a family?",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/723145-the-love-you-give-me"
+        },
+        "director": {
+            "value": [
+                "Ding Ying Zhou"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/723145-the-love-you-give-me"
+        },
+        "tags": {
+            "value": [
+                "Second Chance Romance",
+                "Flashback To Past",
+                "Misunderstanding",
+                "Time Skip",
+                "Multiple Couples",
+                "Single Mother Female Lead",
+                "Lovers Reunited",
+                "Motherhood",
+                "Sismance",
+                "Independent Female Lead"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/723145-the-love-you-give-me"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "54117",
+                    "artistName": "Huang Xing",
+                    "artistImageURL": "https://i.mydramalist.com/2jr87_5m.jpg",
+                    "characterName": null,
+                    "role": "Chief Producer"
+                },
+                {
+                    "artistID": "73433",
+                    "artistName": "Jin Da Zhou",
+                    "artistImageURL": "https://i.mydramalist.com/EbKqW_5m.jpg",
+                    "characterName": null,
+                    "role": "Composer"
+                },
+                {
+                    "artistID": "52135",
+                    "artistName": "Ding Ying Zhou",
+                    "artistImageURL": "https://i.mydramalist.com/QD13A_5m.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "52213",
+                    "artistName": "Li Er Yun",
+                    "artistImageURL": "https://i.mydramalist.com/NdXpQn_5m.jpg",
+                    "characterName": null,
+                    "role": "Executive Producer"
+                },
+                {
+                    "artistID": "64349",
+                    "artistName": "Shi Ding Rou",
+                    "artistImageURL": "https://i.mydramalist.com/Dkrrkp_5m.jpg",
+                    "characterName": null,
+                    "role": "Original Creator"
+                },
+                {
+                    "artistID": "48057",
+                    "artistName": "Guo Shuang",
+                    "artistImageURL": "https://i.mydramalist.com/JBXLNY_5m.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "13348",
+                    "artistName": "Wang Yu Wen",
+                    "artistImageURL": "https://i.mydramalist.com/LwLwyg_5s.jpg",
+                    "characterName": "Min Hui",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "17356",
+                    "artistName": "Wang Zi Qi",
+                    "artistImageURL": "https://i.mydramalist.com/KpkpnX_5s.jpg",
+                    "characterName": "Xin Qi",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "105411",
+                    "artistName": "Cui Yi Xin",
+                    "artistImageURL": "https://i.mydramalist.com/Ndz6rJ_5s.jpg",
+                    "characterName": "Min Quan Quan",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "11061",
+                    "artistName": "Li Chuan",
+                    "artistImageURL": "https://i.mydramalist.com/WENVp_5s.jpg",
+                    "characterName": "Zhou Ru Ji",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "15662",
+                    "artistName": "Ma Xin Rui",
+                    "artistImageURL": "https://i.mydramalist.com/x4wP4E_5s.jpg",
+                    "characterName": "Cao Mu",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "83319",
+                    "artistName": "Chen Xin Hai",
+                    "artistImageURL": "https://i.mydramalist.com/l0637L_5s.jpg",
+                    "characterName": "Chen Jia Jun",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "57995",
+                    "artistName": "Li Xing Yao",
+                    "artistImageURL": "https://i.mydramalist.com/d0ykkK_5s.jpg",
+                    "characterName": "Yao Zi Zhu",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "11067",
+                    "artistName": "Kim Jin",
+                    "artistImageURL": "https://i.mydramalist.com/YYZw1Q_5s.jpg",
+                    "characterName": "Cheng Qi Rang",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "32453",
+                    "artistName": "Mei Bao Lai",
+                    "artistImageURL": "https://i.mydramalist.com/x4jyL3_5s.jpg",
+                    "characterName": "Lin Xi Yue",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "38163",
+                    "artistName": "Li Wei Long",
+                    "artistImageURL": "https://i.mydramalist.com/d02Ld0_5s.jpg",
+                    "characterName": "Hardy",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2228",
+                    "artistName": "Jill Hsu",
+                    "artistImageURL": "https://i.mydramalist.com/QJ2Qg5_5s.jpg",
+                    "characterName": "Xin Di / \"Cindy\" [Chairwoman, Blue Jay Investment]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "12748",
+                    "artistName": "Aliya",
+                    "artistImageURL": "https://i.mydramalist.com/XdA1Xp_5s.jpg",
+                    "characterName": "Zheng Yi Ting",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "42791",
+                    "artistName": "Bao Da Zhi",
+                    "artistImageURL": "https://i.mydramalist.com/vnOWgs.jpg",
+                    "characterName": "Zheng Bang Guo [Guanchao Group's chairman]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "76491",
+                    "artistName": "Adrian Han",
+                    "artistImageURL": "https://i.mydramalist.com/2lwlO_5s.jpg",
+                    "characterName": "Ding Yi Feng",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "23276",
+                    "artistName": "Jason Zhang",
+                    "artistImageURL": "https://i.mydramalist.com/vmW8e_5s.jpg",
+                    "characterName": "He Hai Xiang [BE Agile Medi Tech's manager]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "111661",
+                    "artistName": "Su Zi Shan",
+                    "artistImageURL": "https://i.mydramalist.com/2RbOP_5s.jpg",
+                    "characterName": "Cai Wen Ji [Team A, BE Agile Medi Tech R&D]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "93609",
+                    "artistName": "Barbie Zhang",
+                    "artistImageURL": "https://i.mydramalist.com/qZZR5_5s.jpg",
+                    "characterName": "Zhong Mei Mei [Yi Feng's assistant]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "39195",
+                    "artistName": "Zhang Ling Yi",
+                    "artistImageURL": "https://i.mydramalist.com/eYyPRp_5s.jpg",
+                    "characterName": "Jia Jia [BE Agile Medi Tech receptionist]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "77893",
+                    "artistName": "Song Ji Chao",
+                    "artistImageURL": "https://i.mydramalist.com/QEDd2_5s.jpg",
+                    "characterName": "Yang Yang Yang [Doctor]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "22342",
+                    "artistName": "Hank Qi",
+                    "artistImageURL": "https://i.mydramalist.com/Bdj3X7_5s.jpg",
+                    "characterName": "Cai Wen Bin [Blind date / Investor]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "56753",
+                    "artistName": "Lan Cheng",
+                    "artistImageURL": "https://i.mydramalist.com/xezyr_5s.jpg",
+                    "characterName": "Pu Hua",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "79957",
+                    "artistName": "Zoe Su",
+                    "artistImageURL": "https://i.mydramalist.com/jQVmOw_5s.jpg",
+                    "characterName": "Dou Dou [Heart patient]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "101457",
+                    "artistName": "Li Yi Xin",
+                    "artistImageURL": "https://i.mydramalist.com/qYQPJz_5s.jpg",
+                    "characterName": "Tang Xin Ning [Team B, BE Agile Medi Tech R&D]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "80157",
+                    "artistName": "Qin Hai",
+                    "artistImageURL": "https://i.mydramalist.com/jpdjr_5s.jpg",
+                    "characterName": "Tang Jian Gong",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "52085",
+                    "artistName": "Wu Jian",
+                    "artistImageURL": "https://i.mydramalist.com/3oP6mR_5s.jpg",
+                    "characterName": "Chairman Gao",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "52995",
+                    "artistName": "Teng Bao Cai",
+                    "artistImageURL": "https://i.mydramalist.com/qPeZB_5s.jpg",
+                    "characterName": "Police Officer Deng",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "16854",
+                    "artistName": "Sun Le Tian",
+                    "artistImageURL": "https://i.mydramalist.com/RomAR_5s.jpg",
+                    "characterName": "Jiang Sheng [Man on the bus]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "119445",
+                    "artistName": "Wang Kun",
+                    "artistImageURL": "https://i.mydramalist.com/vXNgKB_5s.jpg",
+                    "characterName": "Director Li [Orphanage director]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "119547",
+                    "artistName": "Lu Yao",
+                    "artistImageURL": "https://i.mydramalist.com/kAvPWv_5s.jpg",
+                    "characterName": "Lawyer Yan",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "152404",
+                    "artistName": "Yang Fan",
+                    "artistImageURL": "https://i.mydramalist.com/yWwgNK_5s.jpg",
+                    "characterName": "Zhang Bei Bei",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "119121",
+                    "artistName": "Liu Yi Ran",
+                    "artistImageURL": "https://i.mydramalist.com/jQyvB8_5s.jpg",
+                    "characterName": "Xin Qi [Young]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "31019",
+                    "artistName": "Zheng Xiao Wan",
+                    "artistImageURL": "https://i.mydramalist.com/WPAO1O_5s.jpg",
+                    "characterName": "[Pu Hua's wife]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "39885",
+                    "artistName": "Zhang Feng An",
+                    "artistImageURL": "https://i.mydramalist.com/Bd75W7_5s.jpg",
+                    "characterName": "[Blind date guy]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "55845",
+                    "artistName": "He Wen Xiao",
+                    "artistImageURL": "https://i.mydramalist.com/3oA6Dd_5s.jpg",
+                    "characterName": "Min Hui",
+                    "role": "Voice Actor"
+                },
+                {
+                    "artistID": "127547",
+                    "artistName": "Wei Ru Chen",
+                    "artistImageURL": "https://i.mydramalist.com/PxPJLL_5s.jpg",
+                    "characterName": "Yao Zi Zhu",
+                    "role": "Voice Actor"
+                },
+                {
+                    "artistID": "147302",
+                    "artistName": "Yi Fan",
+                    "artistImageURL": "https://i.mydramalist.com/5vlpW4_5s.jpg",
+                    "characterName": "Xin Qi",
+                    "role": "Voice Actor"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/723145-the-love-you-give-me"
+        },
+        "airedOn": {
+            "value": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/723145-the-love-you-give-me"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "52135",
+            "artistName": "Ding Ying Zhou",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "64349",
+            "artistName": "Shi Ding Rou",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "48057",
+            "artistName": "Guo Shuang",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "105411",
+            "artistName": "Cui Yi Xin",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "11061",
+            "artistName": "Li Chuan",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "15662",
+            "artistName": "Ma Xin Rui",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "83319",
+            "artistName": "Chen Xin Hai",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "57995",
+            "artistName": "Li Xing Yao",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "11067",
+            "artistName": "Kim Jin",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "32453",
+            "artistName": "Mei Bao Lai",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "38163",
+            "artistName": "Li Wei Long",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "2228",
+            "artistName": "Jill Hsu",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "12748",
+            "artistName": "Aliya",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "42791",
+            "artistName": "Bao Da Zhi",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "76491",
+            "artistName": "Adrian Han",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "23276",
+            "artistName": "Jason Zhang",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "111661",
+            "artistName": "Su Zi Shan",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "93609",
+            "artistName": "Barbie Zhang",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "39195",
+            "artistName": "Zhang Ling Yi",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "77893",
+            "artistName": "Song Ji Chao",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "22342",
+            "artistName": "Hank Qi",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "79957",
+            "artistName": "Zoe Su",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "101457",
+            "artistName": "Li Yi Xin",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "52995",
+            "artistName": "Teng Bao Cai",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "16854",
+            "artistName": "Sun Le Tian",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "119547",
+            "artistName": "Lu Yao",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "152404",
+            "artistName": "Yang Fan",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "119121",
+            "artistName": "Liu Yi Ran",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "31019",
+            "artistName": "Zheng Xiao Wan",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "39885",
+            "artistName": "Zhang Feng An",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "127547",
+            "artistName": "Wei Ru Chen",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "mydramalist",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "mydramalist",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": null,
+        "airedOn": "mydramalist"
+    }
+}
