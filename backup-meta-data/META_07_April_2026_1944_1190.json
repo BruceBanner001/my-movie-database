@@ -1,0 +1,295 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260407_194402",
+    "timestamp": "07 April 2026 07:53 PM (IST)",
+    "showID": 1190,
+    "showName": "Secret Love",
+    "fetchedFields": {
+        "showImage": {
+            "value": "1190.jpg",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Secret_Love"
+        },
+        "releaseDate": {
+            "value": "Jun 13, 2014 - Jul 11, 2014",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/10446-secret-love-2014"
+        },
+        "otherNames": {
+            "value": [
+                "Amor Secreto",
+                "Kara: Secret Love",
+                "Shikeurit Reobeu",
+                "Таинственная любовь"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/10446-secret-love-2014"
+        },
+        "Duration": {
+            "value": "45 mins",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/10446-secret-love-2014"
+        },
+        "synopsis": {
+            "value": "Min-Hyuk (Ji Sung) was born into a wealthy family. He has everything including good looks, intelligence, but he doesn't have kindness. He loses his girlfriend in a hit-and-run accident.\n\nYoo-Jung (Hwang Jung-Eum) goes to prison, because of the hit-and-run accident that killed Min-Hyuk's girlfriend. Her boyfriend is the one that actually committed the hit-and-run accident, but Yoo-Jung took the blame. She is then betrayed by her boyfriend.",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Secret_Love"
+        },
+        "director": {
+            "value": [
+                "Kim Kyu Tae",
+                "Hong Jong Chan"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/10446-secret-love-2014"
+        },
+        "tags": {
+            "value": [
+                "Supernatural Being",
+                "Anthology",
+                "Multiple Mains",
+                "Miniseries",
+                "Guardian Angel",
+                "Interspecies Romance",
+                "Multiple Couples",
+                "Supernatural"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/10446-secret-love-2014"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "15913",
+                    "artistName": "Kim Kyu Tae",
+                    "artistImageURL": "https://i.mydramalist.com/gWk4rm.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "16054",
+                    "artistName": "Hong Jong Chan",
+                    "artistImageURL": "https://i.mydramalist.com/ABRwW3_5m.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "17710",
+                    "artistName": "Lee Jeong Seon",
+                    "artistImageURL": "https://i.mydramalist.com/24gOEm.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "5154",
+                    "artistName": "Han Seung Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/Z6zpW_5s.jpg",
+                    "characterName": "{Missing You} Min Ji Hye (Ep. 1-2)",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "1340",
+                    "artistName": "Yeon Woo Jin",
+                    "artistImageURL": "https://i.mydramalist.com/jQ4kZb_5s.jpg",
+                    "characterName": "{Missing You} Jang Hyeon Jin (Ep. 1-2)",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "1205",
+                    "artistName": "Goo Ha Ra",
+                    "artistImageURL": "https://i.mydramalist.com/2gDvWs.jpg",
+                    "characterName": "{The Thirteenth Bucket List} Lee Hyun Jung (Ep. 3-4)",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "1944",
+                    "artistName": "Kim Young Kwang",
+                    "artistImageURL": "https://i.mydramalist.com/QwnLg_5s.jpg",
+                    "characterName": "{The Thirteenth Bucket List} Yoon Joon Moon (Ep. 3-4)",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "7422",
+                    "artistName": "Kang Ji Young",
+                    "artistImageURL": "https://i.mydramalist.com/yWZOE1_5s.jpg",
+                    "characterName": "{Lilac} Park So Yeol (Ep. 5-6)",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "398",
+                    "artistName": "Bae Soo Bin",
+                    "artistImageURL": "https://i.mydramalist.com/l0DlvJ_5s.jpg",
+                    "characterName": "{Lilac}  Hyun Joon (Ep. 5-6)",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "6279",
+                    "artistName": "Nicole Jung",
+                    "artistImageURL": "https://i.mydramalist.com/68Lgps.jpg",
+                    "characterName": "{A Seven Day Summer} Melly (Ep. 7-8)",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "1817",
+                    "artistName": "Lee Kwang Soo",
+                    "artistImageURL": "https://i.mydramalist.com/w6PLY_5s.jpg",
+                    "characterName": "{A Seven Day Summer} Lee Tae Yang (Ep. 7-8)",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "806",
+                    "artistName": "Ji Chang Wook",
+                    "artistImageURL": "https://i.mydramalist.com/ZyyEJ_5s.jpg",
+                    "characterName": "{Have You Ever Had Coffee with an Angel?} [Guardian Angel No. 2013] (Ep. 9-10)",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "4950",
+                    "artistName": "Park Gyu Ri",
+                    "artistImageURL": "https://i.mydramalist.com/d0Rzr5_5s.jpg",
+                    "characterName": "{Have You Ever Had Coffee with an Angel?} Park Sun Woo (Ep. 9-10)",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "1892",
+                    "artistName": "Song Jae Rim",
+                    "artistImageURL": "https://i.mydramalist.com/ZO6VW_5s.jpg",
+                    "characterName": "{Missing You} [Time slip helper] (Ep. 1-2)",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2803",
+                    "artistName": "Kim Seo Ra",
+                    "artistImageURL": "https://i.mydramalist.com/oQYZYs.jpg",
+                    "characterName": "{Lilac} [Park So Yeol’s mother] (Ep. 5-6)",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "7436",
+                    "artistName": "Shin Jae Ha",
+                    "artistImageURL": "https://i.mydramalist.com/eYVXkY_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "10828",
+                    "artistName": "Jo Ah Ra",
+                    "artistImageURL": "https://i.mydramalist.com/Rk5eEs.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "19152",
+                    "artistName": "Yoon Chae Kyung",
+                    "artistImageURL": "https://i.mydramalist.com/d0RWZd_5s.jpg",
+                    "characterName": "[Lilac] (Ep. 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "1585",
+                    "artistName": "Im Se Mi",
+                    "artistImageURL": "https://i.mydramalist.com/KpEXeX_5s.jpg",
+                    "characterName": "{The Thirteenth Bucket List} [Joon Moon's ex-girlfriend] (Ep. 3-4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "7536",
+                    "artistName": "Dowoo",
+                    "artistImageURL": "https://i.mydramalist.com/jQrWrO_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "7661",
+                    "artistName": "Lee Dong Ha",
+                    "artistImageURL": "https://i.mydramalist.com/Xd8krw_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "74259",
+                    "artistName": "Heo Young Joo",
+                    "artistImageURL": "https://i.mydramalist.com/x1Epw_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/10446-secret-love-2014"
+        },
+        "network": {
+            "value": [
+                "KBS",
+                "DRAMAcube"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/10446-secret-love-2014"
+        },
+        "airedOn": {
+            "value": [
+                "Friday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/10446-secret-love-2014"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "17710",
+            "artistName": "Lee Jeong Seon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "7422",
+            "artistName": "Kang Ji Young",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "398",
+            "artistName": "Bae Soo Bin",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "6279",
+            "artistName": "Nicole Jung",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "4950",
+            "artistName": "Park Gyu Ri",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "1892",
+            "artistName": "Song Jae Rim",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "19152",
+            "artistName": "Yoon Chae Kyung",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "7536",
+            "artistName": "Dowoo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "74259",
+            "artistName": "Heo Young Joo",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "asianwiki",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": "mydramalist",
+        "airedOn": "mydramalist"
+    }
+}

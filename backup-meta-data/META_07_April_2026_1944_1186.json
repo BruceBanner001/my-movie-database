@@ -1,0 +1,878 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260407_194402",
+    "timestamp": "07 April 2026 07:52 PM (IST)",
+    "showID": 1186,
+    "showName": "Backstreet Rookie",
+    "fetchedFields": {
+        "showImage": {
+            "value": "1186.jpg",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Backstreet_Rookie"
+        },
+        "releaseDate": {
+            "value": "Jun 19, 2020 - Aug  8, 2020",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/49709-convenience-store-venus"
+        },
+        "otherNames": {
+            "value": [
+                "Convenience Store",
+                "Convenience Store Kyunbyeol",
+                "Convenience Store Morning Star",
+                "Convenience Store Saet Byul",
+                "Convenience Store Venus",
+                "Pyeonuijeom Saetbyeoli",
+                "Круглосуточный магазин Сэт Бёль",
+                "نجمة المتجر"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/49709-convenience-store-venus"
+        },
+        "Duration": {
+            "value": "1 hr. 10 min.",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/49709-convenience-store-venus"
+        },
+        "synopsis": {
+            "value": "Choi Dae-Hyun (Ji Chang-Wook) walks despondently through a residential back alley after getting dumped by a girl. Sitting nearby are three high school girls, including Jung Saet-Byul (Kim You-Jung). She thinks Choi Dae-Hyun is cute and asks him to buy them a pack of cigarettes. Instead of getting cigarettes, they girls receive a lesson from Choi Dae-Hyun. He thinks the girls are just a bunch of knuckleheads, but Jung Sae-Byul is now even more smitten with him and kisses him.\n\n3 years later, Choi Dae-Hyun manages his family owned convenience store. Although, high school girls like to come in and take pictures with him, the store doesn't make a lot of money. Choi Dae-Hyun has also decided to put up a \"part-timer worker needed\" sign, due to the heavy hours he has been working. Sometime during the night, Jung Saet-Byulwalks into the store. She is now an adult and applies for the part-time job.",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Backstreet_Rookie"
+        },
+        "director": {
+            "value": [
+                "Lee Myung Woo"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/49709-convenience-store-venus"
+        },
+        "tags": {
+            "value": [
+                "Hardworking Female Lead",
+                "Badass Female Lead",
+                "Boss-Employee Relationship",
+                "Female Chases Male First",
+                "Adapted From A Webtoon",
+                "Slow Burn Romance",
+                "Nice Female Lead",
+                "Misunderstanding",
+                "Clumsy Male Lead",
+                "Nice Male Lead"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/49709-convenience-store-venus"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "16567",
+                    "artistName": "Lee Myung Woo",
+                    "artistImageURL": "https://i.mydramalist.com/E0Nxl_5m.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "42523",
+                    "artistName": "Son Geun Joo",
+                    "artistImageURL": "https://i.mydramalist.com/XkJ0q_5m.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "806",
+                    "artistName": "Ji Chang Wook",
+                    "artistImageURL": "https://i.mydramalist.com/ZyyEJ_5s.jpg",
+                    "characterName": "Choi Dae Hyun",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "1894",
+                    "artistName": "Kim You Jung",
+                    "artistImageURL": "https://i.mydramalist.com/nOZLQ8_5s.jpg",
+                    "characterName": "Jung Saet Byul",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "4870",
+                    "artistName": "Han Sun Hwa",
+                    "artistImageURL": "https://i.mydramalist.com/DkrJYn_5s.jpg",
+                    "characterName": "Yoo Yeon Joo",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "3581",
+                    "artistName": "Do Sang Woo",
+                    "artistImageURL": "https://i.mydramalist.com/BwgA5s.jpg",
+                    "characterName": "Jo Seung Joon",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "13854",
+                    "artistName": "Ahn Sol Bin",
+                    "artistImageURL": "https://i.mydramalist.com/rN2YKg_5s.jpg",
+                    "characterName": "Jung Eun Byul",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "11693",
+                    "artistName": "Kim Min Gue",
+                    "artistImageURL": "https://i.mydramalist.com/W8VKm_5s.jpg",
+                    "characterName": "Kang Ji Wook",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "10917",
+                    "artistName": "Kim Sun Young",
+                    "artistImageURL": "https://i.mydramalist.com/qL0l5_5s.jpg",
+                    "characterName": "Kong Boon Hee [Dae Hyun's mother]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1695",
+                    "artistName": "Lee Byung Joon",
+                    "artistImageURL": "https://i.mydramalist.com/1gyLQs.jpg",
+                    "characterName": "Choi Yong Pil [Dae Hyun's father]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "23242",
+                    "artistName": "Eum Moon Suk",
+                    "artistImageURL": "https://i.mydramalist.com/RWzAPs.jpg",
+                    "characterName": "Han Dal Sik [Dae Hyeon's best friend]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4300",
+                    "artistName": "Woo Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/EEq45_5s.jpg",
+                    "characterName": "Kwon Eui Chu [4 Heavenly Kings band member]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "14963",
+                    "artistName": "Lee Yoon Hee",
+                    "artistImageURL": "https://i.mydramalist.com/jovpz_5s.jpg",
+                    "characterName": "Cha Gi Bok [4 Heavenly Kings band member]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "33917",
+                    "artistName": "Bae Gi Beom",
+                    "artistImageURL": "https://i.mydramalist.com/W7Kn3_5s.jpg",
+                    "characterName": "Go Kwang Tae [4 Heavenly Kings band member]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "918",
+                    "artistName": "Kyeon Mi Ri",
+                    "artistImageURL": "https://i.mydramalist.com/WPbzJp_5s.jpg",
+                    "characterName": "Kim Hye Ja [Yeon Joo's mother]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "13064",
+                    "artistName": "Seo Ye Hwa",
+                    "artistImageURL": "https://i.mydramalist.com/WWZBR_5s.jpg",
+                    "characterName": "Hwang Geum Bi [Saet Byul's best friend]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "10778",
+                    "artistName": "Yoon Soo",
+                    "artistImageURL": "https://i.mydramalist.com/6Qgq0s.jpg",
+                    "characterName": "Cha Eun Jo [Saet Byul's best friend]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3254",
+                    "artistName": "Heo Jae Ho",
+                    "artistImageURL": "https://i.mydramalist.com/Rng7z_5s.jpg",
+                    "characterName": "Manager Bae",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "6764",
+                    "artistName": "Ji Chan",
+                    "artistImageURL": "https://i.mydramalist.com/p0ZpVs.jpg",
+                    "characterName": "Kang Sung Tae",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "45121",
+                    "artistName": "Yoon Seul",
+                    "artistImageURL": "https://i.mydramalist.com/xxpgq_5s.jpg",
+                    "characterName": "So Jung Hwa [Police officer]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "41991",
+                    "artistName": "Lee Joo Ha",
+                    "artistImageURL": "https://i.mydramalist.com/0kkNE_5s.jpg",
+                    "characterName": "Oh Hyun Ji [Jung Eun Byul's best friend]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "21647",
+                    "artistName": "Kim Ji Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/QoynQ_5s.jpg",
+                    "characterName": "Choi Da Soon [Dae Hyun's sister]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2627",
+                    "artistName": "Gil Yong Woo",
+                    "artistImageURL": "https://i.mydramalist.com/yWr7PB_5s.jpg",
+                    "characterName": "Yoo Myung Ki [Yeon Joo's father]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "45247",
+                    "artistName": "Shin Yoon Jung",
+                    "artistImageURL": "https://i.mydramalist.com/RR7Vx_5s.jpg",
+                    "characterName": "Kim Jung Ha",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "44867",
+                    "artistName": "Kim Si Yun",
+                    "artistImageURL": "https://i.mydramalist.com/KpJVRJ_5s.jpg",
+                    "characterName": "Nancy",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "46841",
+                    "artistName": "Yoo Min Joo",
+                    "artistImageURL": "https://i.mydramalist.com/2XnDw_5s.jpg",
+                    "characterName": "[Bully]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2148",
+                    "artistName": "Park Jung Woo",
+                    "artistImageURL": "https://i.mydramalist.com/MR24zs.jpg",
+                    "characterName": "Chairman Jo",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3843",
+                    "artistName": "Jung Eun Ji",
+                    "artistImageURL": "https://i.mydramalist.com/LwRVkx_5s.jpg",
+                    "characterName": "Jung Eun [Dae Hyun's ex-girlfriend] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "2382",
+                    "artistName": "Park Jin Joo",
+                    "artistImageURL": "https://i.mydramalist.com/5vV3xY_5s.jpg",
+                    "characterName": "[Bully group leader] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "10173",
+                    "artistName": "Ko Kyu Pil",
+                    "artistImageURL": "https://i.mydramalist.com/Lw8q2x_5s.jpg",
+                    "characterName": "Oh Yo Hwan / \"Convenience store guru\" (Ep. 1-2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "34725",
+                    "artistName": "Lee Hyun Woong",
+                    "artistImageURL": "https://i.mydramalist.com/4reQws.jpg",
+                    "characterName": "[Hangover promo partner] (Ep. 1, 3-4, 7-10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "65915",
+                    "artistName": "Yoon Bok Sung",
+                    "artistImageURL": "https://i.mydramalist.com/0lVwY_5s.jpg",
+                    "characterName": "[Doctor] (Ep. 1, 6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "15847",
+                    "artistName": "Lee Jun Young",
+                    "artistImageURL": "https://i.mydramalist.com/v2yzZ_5s.jpg",
+                    "characterName": "[Underage customer] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "4165",
+                    "artistName": "Lee Yoo Bi",
+                    "artistImageURL": "https://i.mydramalist.com/XkqZO_5s.jpg",
+                    "characterName": "[Customer with dog] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "323",
+                    "artistName": "Park Sang Myeon",
+                    "artistImageURL": "https://i.mydramalist.com/EZDBp_5s.jpg",
+                    "characterName": "[High school dean] (Ep. 2, 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6382",
+                    "artistName": "Lee Jong Goo",
+                    "artistImageURL": "https://i.mydramalist.com/RRmjY_5s.jpg",
+                    "characterName": "Kim Shin Woo [Professor] (Ep. 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "1165",
+                    "artistName": "Jung Joon Ho",
+                    "artistImageURL": "https://i.mydramalist.com/pY2L8_5s.jpg",
+                    "characterName": "[Customer] (Ep. 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "23788",
+                    "artistName": "Myung Seok Geun",
+                    "artistImageURL": "https://i.mydramalist.com/BDQX7_5s.jpg",
+                    "characterName": "[Alumnus at dinner] (Ep.  3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5974",
+                    "artistName": "Kim Se Yong",
+                    "artistImageURL": "https://i.mydramalist.com/XdbXgZ_5s.jpg",
+                    "characterName": "Jun [Waiter] (Ep.  3-4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "1230",
+                    "artistName": "Ryu Seung Soo",
+                    "artistImageURL": "https://i.mydramalist.com/BDeR7_5s.jpg",
+                    "characterName": "Jung Chul Min [Saet Byul's father] (Ep. 3-4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21442",
+                    "artistName": "Kim Eun Soo",
+                    "artistImageURL": "https://i.mydramalist.com/BE58R_5s.jpg",
+                    "characterName": "Choi Yong Pil's friend (Ep. 3, 6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "17484",
+                    "artistName": "Ahn Chang Hwan",
+                    "artistImageURL": "https://i.mydramalist.com/r5eRD_5s.jpg",
+                    "characterName": "Ssongsak [Part-time job applicant] (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5835",
+                    "artistName": "Ri Min",
+                    "artistImageURL": "https://i.mydramalist.com/nE60xs.jpg",
+                    "characterName": "[Store customer] (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "4513",
+                    "artistName": "Ra Jae Woong",
+                    "artistImageURL": "https://i.mydramalist.com/XEE8n_5s.jpg",
+                    "characterName": "[Kang Ji Wook's manger] (Ep. 4-9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "969",
+                    "artistName": "Lee Se Rang",
+                    "artistImageURL": "https://i.mydramalist.com/QXBeWs.jpg",
+                    "characterName": "[Saet Byul's aunt] (Ep. 5)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "4191",
+                    "artistName": "Tak Jae Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/g0APrr_5s.jpg",
+                    "characterName": "[Han Dal Shik's co-worker] (Ep. 5)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "40947",
+                    "artistName": "Myung Jae Hwan",
+                    "artistImageURL": "https://i.mydramalist.com/0ApqKs.jpg",
+                    "characterName": "[Part-Time Korea journalist] (Ep. 5)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "13686",
+                    "artistName": "Carson Allen",
+                    "artistImageURL": "https://i.mydramalist.com/44nd1s.jpg",
+                    "characterName": "[Hotel Lobby Guest] (Ep. 5)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "15617",
+                    "artistName": "Joey Albright",
+                    "artistImageURL": "https://i.mydramalist.com/Bgk4z_5s.jpg",
+                    "characterName": "[Hotel Lobby Guest] (Ep. 5)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "23049",
+                    "artistName": "Hong Ye Ji",
+                    "artistImageURL": "https://i.mydramalist.com/ABmVNv_5s.jpg",
+                    "characterName": "[Clothing store salesperson] (Ep. 5, 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "104011",
+                    "artistName": "Park Joo Young",
+                    "artistImageURL": "https://i.mydramalist.com/dgJvK_5s.jpg",
+                    "characterName": "Amy (Ep. 6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "14398",
+                    "artistName": "Kim Hyung Mook",
+                    "artistImageURL": "https://i.mydramalist.com/rZ3kE_5s.jpg",
+                    "characterName": "[Da Soon's husband] (Ep. 6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "92293",
+                    "artistName": "Kim Hyun Chang",
+                    "artistImageURL": "https://i.mydramalist.com/QOjoQ_5s.jpg",
+                    "characterName": "[Delivery man] (Ep. 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "3656",
+                    "artistName": "Lee Moon Soo",
+                    "artistImageURL": "https://i.mydramalist.com/Y3LjBs.jpg",
+                    "characterName": "[Geum Bi's father] (Ep. 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "4629",
+                    "artistName": "Yoon Seo Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/e3PDns.jpg",
+                    "characterName": "[Kingdom Delivery boss] (Ep. 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "13802",
+                    "artistName": "Lee Moo Nyoung",
+                    "artistImageURL": "https://i.mydramalist.com/15dDz_5s.jpg",
+                    "characterName": "[Delivery Kingdom driver] (Ep. 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "20641",
+                    "artistName": "Hong Boo Hyang",
+                    "artistImageURL": "https://i.mydramalist.com/6E0eg_5s.jpg",
+                    "characterName": "[Apartment building owner] (Ep. 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6023",
+                    "artistName": "Park Noh Shik",
+                    "artistImageURL": "https://i.mydramalist.com/kJwqks.jpg",
+                    "characterName": "[Man Bok Real Estate owner] (Ep. 7-8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "11193",
+                    "artistName": "Jang Ga Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/1jB06_5s.jpg",
+                    "characterName": "Ahn Seo Hee (Ep. 7-11)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "17784",
+                    "artistName": "Yeom Hae In",
+                    "artistImageURL": "https://i.mydramalist.com/E57JB5_5s.jpg",
+                    "characterName": "[Trainee] (Ep. 7-11, 13)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "1726",
+                    "artistName": "Park Chul Min",
+                    "artistImageURL": "https://i.mydramalist.com/dKZEA_5s.jpg",
+                    "characterName": "[Fortune teller] (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "105959",
+                    "artistName": "Park Yoo Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/4epl86_5s.jpg",
+                    "characterName": "[Cafe Manager] (Ep. 9, 14)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "42477",
+                    "artistName": "Kang Hak Soo",
+                    "artistImageURL": "https://i.mydramalist.com/yWPJ06_5s.jpg",
+                    "characterName": "[Insurance manager] (Ep. 9, 16)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21470",
+                    "artistName": "Gam So Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/Ox5v3s.jpg",
+                    "characterName": "Jung Saet Byul [Young] (Ep. 10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "74425",
+                    "artistName": "Kim Sung Jun",
+                    "artistImageURL": "https://i.mydramalist.com/XQKKX_5s.jpg",
+                    "characterName": "Young Soo (Ep. 12)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "18905",
+                    "artistName": "Ju Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/Q6lp6_5s.jpg",
+                    "characterName": "[The Show's MC] (Ep. 12)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "24713",
+                    "artistName": "Kim Min Kyu",
+                    "artistImageURL": "https://i.mydramalist.com/jBDQb_5s.jpg",
+                    "characterName": "[The Show's MC] (Ep. 12)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "20556",
+                    "artistName": "Kim Si Hyeon",
+                    "artistImageURL": "https://i.mydramalist.com/pWppns.jpg",
+                    "characterName": "[The Show MC] (Ep. 12)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "2572",
+                    "artistName": "Lee Yeon Kyung",
+                    "artistImageURL": "https://i.mydramalist.com/XOvWx_5s.jpg",
+                    "characterName": "Hong Jang Mi (Ep. 14-15)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "107637",
+                    "artistName": "Kim Min Joo",
+                    "artistImageURL": "https://i.mydramalist.com/pyrrE_5s.jpg",
+                    "characterName": "Park Kyung Hee (Ep. 15)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "18054",
+                    "artistName": "Kim Yoo Hyeon",
+                    "artistImageURL": "https://i.mydramalist.com/d0zxEz_5s.jpg",
+                    "characterName": "[Rhythm game player] (Ep. 15)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "28567",
+                    "artistName": "Ayumi",
+                    "artistImageURL": "https://i.mydramalist.com/0P0g4_5s.jpg",
+                    "characterName": "[Hair salon client] (Ep. 16)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "20646",
+                    "artistName": "Ahn Soo Ho",
+                    "artistImageURL": "https://i.mydramalist.com/xdg0z_5s.jpg",
+                    "characterName": "[Plant nursery owner] (Ep. 16)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21556",
+                    "artistName": "Kang Moon Kyung",
+                    "artistImageURL": "https://i.mydramalist.com/rgPqy_5s.jpg",
+                    "characterName": "[Han Man Pyung's assistant] (Ep. 16)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "4504",
+                    "artistName": "Jung Ae Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/0RBy6_5s.jpg",
+                    "characterName": "Hwang Eun Ha",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "10126",
+                    "artistName": "Bo Ra Na",
+                    "artistImageURL": "https://i.mydramalist.com/O87D63_5s.jpg",
+                    "characterName": "[Maid]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "1694",
+                    "artistName": "Im Ha Ryong",
+                    "artistImageURL": "https://i.mydramalist.com/eV4dQs.jpg",
+                    "characterName": "[Dal Shik's father]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "71459",
+                    "artistName": "Kim So Hee",
+                    "artistImageURL": "https://i.mydramalist.com/wNWqp_5s.jpg",
+                    "characterName": "[Saet Byul's classmate]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "96089",
+                    "artistName": "Choi Min Hyeok",
+                    "artistImageURL": "https://i.mydramalist.com/VXeygE_5s.jpg",
+                    "characterName": "[Ji Wook's road manager]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "104331",
+                    "artistName": "Shim Hyun Sup",
+                    "artistImageURL": "https://i.mydramalist.com/jQrgwO_5s.jpg",
+                    "characterName": "[Director of Flying Yoga Academy]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "108495",
+                    "artistName": "Shin Si Ye",
+                    "artistImageURL": "https://i.mydramalist.com/jkQq8_5s.jpg",
+                    "characterName": "[Convenience store high school student]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "106335",
+                    "artistName": "Ku Dong Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/B8EQ1_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "103371",
+                    "artistName": "Park Hae In",
+                    "artistImageURL": "https://i.mydramalist.com/O8DNAd_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "43627",
+                    "artistName": "Noh Sung Eun",
+                    "artistImageURL": "https://i.mydramalist.com/25b1k_5s.jpg",
+                    "characterName": "[Teen bully] (Ep. 16)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "23591",
+                    "artistName": "Jung Min Hwan",
+                    "artistImageURL": "https://i.mydramalist.com/0wRoJr_5s.jpg",
+                    "characterName": "[Rhythm game player] (Ep. 15)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "135443",
+                    "artistName": "Jung A Jeong",
+                    "artistImageURL": "https://i.mydramalist.com/x4Y80r_5s.jpg",
+                    "characterName": "[GS 25 Corporate Office employee]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "128007",
+                    "artistName": "Park Jung In",
+                    "artistImageURL": "https://i.mydramalist.com/RBZn7R_5s.jpg",
+                    "characterName": "[Bully]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "92139",
+                    "artistName": "Ahn Yeon Ji",
+                    "artistImageURL": "https://i.mydramalist.com/d5wke_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "86055",
+                    "artistName": "Kim Cha Yoon",
+                    "artistImageURL": "https://i.mydramalist.com/127w6_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "103229",
+                    "artistName": "Yang Eun Sol",
+                    "artistImageURL": "https://i.mydramalist.com/j5VZy_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "22357",
+                    "artistName": "Park Tae San",
+                    "artistImageURL": "https://i.mydramalist.com/6Wvdp_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "63425",
+                    "artistName": "Park Sung Jin",
+                    "artistImageURL": "https://i.mydramalist.com/4BR4Q_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/49709-convenience-store-venus"
+        },
+        "airedOn": {
+            "value": [
+                "Friday",
+                "Saturday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/49709-convenience-store-venus"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "16567",
+            "artistName": "Lee Myung Woo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "42523",
+            "artistName": "Son Geun Joo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "23242",
+            "artistName": "Eum Moon Suk",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "45121",
+            "artistName": "Yoon Seul",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "41991",
+            "artistName": "Lee Joo Ha",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "2627",
+            "artistName": "Gil Yong Woo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "45247",
+            "artistName": "Shin Yoon Jung",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "46841",
+            "artistName": "Yoo Min Joo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "34725",
+            "artistName": "Lee Hyun Woong",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "1165",
+            "artistName": "Jung Joon Ho",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "5974",
+            "artistName": "Kim Se Yong",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "74425",
+            "artistName": "Kim Sung Jun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "18905",
+            "artistName": "Ju Yeon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "24713",
+            "artistName": "Kim Min Kyu",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "20556",
+            "artistName": "Kim Si Hyeon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "107637",
+            "artistName": "Kim Min Joo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "18054",
+            "artistName": "Kim Yoo Hyeon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "28567",
+            "artistName": "Ayumi",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "71459",
+            "artistName": "Kim So Hee",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "104331",
+            "artistName": "Shim Hyun Sup",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "108495",
+            "artistName": "Shin Si Ye",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "106335",
+            "artistName": "Ku Dong Hoon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "103371",
+            "artistName": "Park Hae In",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "23591",
+            "artistName": "Jung Min Hwan",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "135443",
+            "artistName": "Jung A Jeong",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "128007",
+            "artistName": "Park Jung In",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "103229",
+            "artistName": "Yang Eun Sol",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "63425",
+            "artistName": "Park Sung Jin",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "asianwiki",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": null,
+        "airedOn": "mydramalist"
+    }
+}
