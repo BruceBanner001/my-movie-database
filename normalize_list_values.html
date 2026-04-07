@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Testing</title>
+  </head>
+  <body>
+    <h1>Vanakkam</h1>
+    <script>
+      async function fetchingData() {
+        const fetchedData = await fetch("./basic_shows.json");
+        const result = await fetchedData.json();
+        for(const show of result){
+            for(const cat of show.category){
+                if(!count[cat]){
+                    count[cat] = {
+                        count : 0,
+                        showID : [],
+                        showName : []
+                    }
+                };
+                count[cat].count++;
+                count[cat].showID.push(show.id);
+                count[cat].showName.push(show.showName);
+            }
+        }
+        console.log(Object.entries(count).length)
+        console.log(count);
+        for(const show of result){
+            for (const cat of show.originalNetwork){
+                if(!networkCount[cat]){
+                    networkCount[cat] = {
+                        count : 0,
+                        showId : [],
+                        network : []
+                    }
+                }
+                networkCount[cat].count++;
+                networkCount[cat].showId.push(show.id);
+                networkCount[cat].network.push(show.showName);
+            }
+        }
+        console.log(Object.entries(networkCount).length);
+        console.log(networkCount);
+        for(const show of result){
+            for(const cat of show.originalNetwork){
+                if(!network.includes(cat)){
+                    network.push(cat);
+                }
+                else{
+                    continue;
+                }
+            }
+        }
+        console.log(network.length);
+        console.log(network)
+      }
+      fetchingData();
+      const count = {};
+      const networkCount = {};
+      const network = [];
+    </script>
+  </body>
+</html>
