@@ -1,0 +1,59 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260407_231753",
+    "timestamp": "07 April 2026 11:22 PM (IST)",
+    "showID": 242,
+    "showName": "Fantastic",
+    "fetchedFields": {
+        "showImage": {
+            "value": "242.jpg",
+            "source": "asianwiki"
+        },
+        "releaseDate": {
+            "value": "Sep  2, 2016 - Oct 22, 2016",
+            "source": "mydramalist"
+        },
+        "Duration": {
+            "value": "60 mins",
+            "source": "mydramalist"
+        },
+        "synopsis": {
+            "value": "Story depicts the romance between So-Hye (Kim Hyun-Joo) and Hae-Sung (Joo Sang-Wook). So-Hye is a popular TV drama series writer, but she has only 6 months left to live. Hae-Sung is a poplar actor, but he is not good at acting.",
+            "source": "asianwiki"
+        },
+        "tags": {
+            "value": [
+                "Terminal Illness",
+                "Bromance",
+                "Cheerful Male Lead",
+                "Second Chance Romance",
+                "Older Woman/Younger Man",
+                "Multiple Couples",
+                "Character Development",
+                "Love Triangle",
+                "Domestic Crime",
+                "Emotionally Strong Female Lead"
+            ],
+            "source": "mydramalist"
+        },
+        "airedOn": {
+            "value": [
+                "Friday",
+                "Saturday"
+            ],
+            "source": "mydramalist"
+        }
+    },
+    "sitePriorityUsed": {
+        "showImage": "asianwiki",
+        "releaseDate": "mydramalist",
+        "otherNames": null,
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki",
+        "director": null,
+        "tags": "mydramalist",
+        "cast": null,
+        "network": null,
+        "airedOn": "mydramalist"
+    }
+}
