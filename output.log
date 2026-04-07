@@ -1,85 +1,66 @@
-✅ Partial Batch completed successfully
-⏳ Batch Processing in Progress...
+✅ Workflow Batch completed successfully
+🏁 Final Batch Completed
 ══════════════════════════════════════════════════════
 📊 Drama Title Validator – Execution Report (FORCE CHECK ON 🚨)
 ══════════════════════════════════════════════════════
 
 🚀 Workflow Type : Manual
-🔁 RUN           : 112
-⏰ Start Time    : 07 April 2026 - 05:40:23 PM
-⏰ End Time      : 07 April 2026 - 05:48:18 PM
-⏱️ Run Time      : 7 Minutes 54 Seconds
+🔁 RUN           : 113
+⏰ Start Time    : 07 April 2026 - 05:48:46 PM
+⏰ End Time      : 07 April 2026 - 05:52:10 PM
+⏱️ Run Time      : 3 Minutes 23 Seconds
 ⚙️ Max Process   : 200 Row Per Run
 🔄 Current Batch : 4
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🗂️ === Feb 7 2023 Onwards ===
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✨ BRAND NEW RECOMMENDATIONS (Action Required):
-[ID 446] I Do, I Do
-   ↳ Recommend: I  Do, I Do (Source: MyDramaList)
-
-✅ PERFECT MATCHES (100% Accurate):
-- 121 records matched perfectly.
-
-⚠️ NOT FOUND (Asian / MyDramaList):
-
-📌 Reason: Connection or URL Issues
-[ID 484] My Troublesome Star            ➔ ❌ Only found non-drama pages (actors/articles)
-[ID 493] First Lady                     ➔ ❌ Only found non-drama pages (actors/articles)
-[ID 503] Squid Game Season 2            ➔ ❌ Only found non-drama pages (actors/articles)
-[ID 504] Squid Game Season 3            ➔ ❌ Only found non-drama pages (actors/articles)
-[ID 528] Curtain Call                   ➔ ❌ Only found non-drama pages (actors/articles)
-
-📌 Reason: Title Similarity Failed
-[ID 530] The Snow Queen                 ➔ ❌ Found website title: 'Pinocchio'
-
-⚠️ NOT FOUND (Non-Asian / IMDb):
-
-📌 Reason: Website Blocked Connection (Status 202/403)
-[ID 442] Manifest                       ➔ ❌ Status Code: 202
-[ID 443] Manifest                       ➔ ❌ Status Code: 202
-[ID 444] Manifest                       ➔ ❌ Status Code: 202
-[ID 445] Manifest                       ➔ ❌ Status Code: 202
-[ID 499] The Day of the Jackal          ➔ ❌ Status Code: 202
-[ID 514] Breaking Bad                   ➔ ❌ Status Code: 202
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🗂️ === Before Feb 7 2023 (Korean) ===
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✨ BRAND NEW RECOMMENDATIONS (Action Required):
-[ID  15] Secret Garden
-   ↳ Recommend: KBS Drama Special 2010: Secret Garden (Source: MyDramaList)
-
-✅ PERFECT MATCHES (100% Accurate):
-- 20 records matched perfectly.
-
-⚠️ NOT FOUND (Asian / MyDramaList):
-
-📌 Reason: Title Similarity Failed
-[ID   7] School 2017                    ➔ ❌ Found website title: 'The Girl's Speech'
-
-📌 Reason: Connection or URL Issues
-[ID   8] Island                         ➔ ❌ Only found non-drama pages (actors/articles)
-[ID  24] Hellbound                      ➔ ❌ Only found non-drama pages (actors/articles)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Before Feb 7 2023 (Korean Dub) ===
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✅ PERFECT MATCHES (100% Accurate):
-- 42 records matched perfectly.
+- 1 records matched perfectly.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Before Feb 7 2023 ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✨ BRAND NEW RECOMMENDATIONS (Action Required):
+[ID   9] Knock On The Happiness Door
+   ↳ Recommend: Knock on the Happiness Door (Source: MyDramaList)
+
+✅ PERFECT MATCHES (100% Accurate):
+- 10 records matched perfectly.
+
+⚠️ NOT FOUND (Non-Asian / IMDb):
+
+📌 Reason: Website Blocked Connection (Status 202/403)
+[ID  12] Limitless                      ➔ ❌ Status Code: 202
+[ID  13] Beauty and the Beast           ➔ ❌ Status Code: 202
+[ID  14] Beauty and the Beast           ➔ ❌ Status Code: 202
+[ID  15] Beauty and the Beast           ➔ ❌ Status Code: 202
+[ID  16] Beauty and the Beast           ➔ ❌ Status Code: 202
+[ID  17] Price of Passion               ➔ ❌ Status Code: 202
+[ID  18] Lucifer                        ➔ ❌ Status Code: 202
+[ID  19] Lucifer                        ➔ ❌ Status Code: 202
+[ID  20] Lucifer                        ➔ ❌ Status Code: 202
+[ID  21] Lucifer                        ➔ ❌ Status Code: 202
+[ID  22] Lucifer                        ➔ ❌ Status Code: 202
+[ID  23] Lucifer                        ➔ ❌ Status Code: 202
+[ID  24] Peaky Blinders                 ➔ ❌ Status Code: 202
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Mini Drama ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ PERFECT MATCHES (100% Accurate):
+- 18 records matched perfectly.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📊 Summary (Current Batch Only)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🌐 Internet Scans Done   : 200
+🌐 Internet Scans Done   : 43
 ⏭️ Total Skipped Fast    : 0
-✨ Total Recommendations : 2
-✅ Total Perfect Matches : 183
-⚠️ Total Not Found       : 15
+✨ Total Recommendations : 1
+✅ Total Perfect Matches : 29
+⚠️ Total Not Found       : 13
 
-⚠️ BATCH LIMIT REACHED: The script paused safely.
-GitHub Actions will trigger next run automatically.
+🏁 Workflow finished successfully
