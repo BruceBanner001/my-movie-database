@@ -1,0 +1,706 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260407_190711",
+    "timestamp": "07 April 2026 07:11 PM (IST)",
+    "showID": 1016,
+    "showName": "Blood",
+    "fetchedFields": {
+        "showImage": {
+            "value": "1016.jpg",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Blood_(Korean_Drama)"
+        },
+        "releaseDate": {
+            "value": "Feb 16, 2015 - Apr 21, 2015",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/11350-blood-2015"
+        },
+        "otherNames": {
+            "value": [
+                "Beulreodeu",
+                "Sangue",
+                "Tentația Sângelui",
+                "Кровь",
+                "الدّم"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/11350-blood-2015"
+        },
+        "Duration": {
+            "value": "1 hr. 5 min.",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/11350-blood-2015"
+        },
+        "synopsis": {
+            "value": "Set within a hospital. A vampire works as a doctor. A battle between good and evil as well as immortal love takes place.",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Blood_(Korean_Drama)"
+        },
+        "director": {
+            "value": [
+                "Lee Jae Hoon",
+                "Ki Min Su"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/11350-blood-2015"
+        },
+        "tags": {
+            "value": [
+                "Interspecies Romance",
+                "Genetic Manipulation",
+                "Childhood Acquaintance",
+                "Smart Female Lead",
+                "Orphan Male Lead",
+                "Smart Male Lead",
+                "Superhuman Strength",
+                "Revenge",
+                "Healing Power",
+                "Drama"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/11350-blood-2015"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "21295",
+                    "artistName": "Kim Sung Geun",
+                    "artistImageURL": "https://i.mydramalist.com/OxB6Ym.jpg",
+                    "characterName": null,
+                    "role": "Chief Producer"
+                },
+                {
+                    "artistID": "22887",
+                    "artistName": "Ki Min Su",
+                    "artistImageURL": "https://i.mydramalist.com/Nd5oXn_5m.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "16224",
+                    "artistName": "Lee Jae Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/Aze1vm.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "87689",
+                    "artistName": "Lee Pil Ho",
+                    "artistImageURL": "https://i.mydramalist.com/jB2gB_5m.jpg",
+                    "characterName": null,
+                    "role": "Music Editor"
+                },
+                {
+                    "artistID": "19618",
+                    "artistName": "Park Jae Bum",
+                    "artistImageURL": "https://i.mydramalist.com/vXXVrW_5m.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "6555",
+                    "artistName": "Ahn Jae Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/VXd7jJ_5s.jpg",
+                    "characterName": "Park Ji Sang",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "231",
+                    "artistName": "Gu Hye Seon",
+                    "artistImageURL": "https://i.mydramalist.com/EoYx5_5s.jpg",
+                    "characterName": "Yoo Ri Ta",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "404",
+                    "artistName": "Ji Jin Hee",
+                    "artistImageURL": "https://i.mydramalist.com/43jwQs.jpg",
+                    "characterName": "Lee Jae Uk",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "6834",
+                    "artistName": "Jung Hae In",
+                    "artistImageURL": "https://i.mydramalist.com/Zy03k_5s.jpg",
+                    "characterName": "Ju Hyeon U [Ji Sang's friend]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "949",
+                    "artistName": "Kim Gab Soo",
+                    "artistImageURL": "https://i.mydramalist.com/RRXLz_5s.jpg",
+                    "characterName": "Yoo Seok Ju",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3174",
+                    "artistName": "Jin Kyung",
+                    "artistImageURL": "https://i.mydramalist.com/Xe7vJs.jpg",
+                    "characterName": "Choi Gyeong In [Hospital vice president]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "9339",
+                    "artistName": "Son Sook",
+                    "artistImageURL": "https://i.mydramalist.com/e313Ws.jpg",
+                    "characterName": "Sylvia An [Nun]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4550",
+                    "artistName": "Park Young Rin",
+                    "artistImageURL": "https://i.mydramalist.com/ZkL4Ls.jpg",
+                    "characterName": "Seo Hye Ri [Taemin Pharmaceutical Headquarters director]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2463",
+                    "artistName": "Kwon Hyun Sang",
+                    "artistImageURL": "https://i.mydramalist.com/kAkRdd_5s.jpg",
+                    "characterName": "Nam Cheol Hun [Vampire / Jae Uk's henchman]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4755",
+                    "artistName": "Lee Ji Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/4N5lY_5s.jpg",
+                    "characterName": "\"J\" [Vampire / Jae Uk's henchman]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "6764",
+                    "artistName": "Ji Chan",
+                    "artistImageURL": "https://i.mydramalist.com/p0ZpVs.jpg",
+                    "characterName": "Do Seong [Hot-blooded vampire]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "9338",
+                    "artistName": "Son Soo Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/wOEyks.jpg",
+                    "characterName": "Min Ga Yeon [Hospital 1st year resident]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1712",
+                    "artistName": "Kang Tae Sung",
+                    "artistImageURL": "https://i.mydramalist.com/Pw705s.jpg",
+                    "characterName": "Ju In Ho [Vampire / Hye Ri's successor]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2634",
+                    "artistName": "Kim Yoo Suk",
+                    "artistImageURL": "https://i.mydramalist.com/2Ldz7_5s.jpg",
+                    "characterName": "Jung Ji Tae [Hospital Hematoma division manager]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2715",
+                    "artistName": "Jo Jae Yun",
+                    "artistImageURL": "https://i.mydramalist.com/0d5kY_5s.jpg",
+                    "characterName": "Woo Il Nam [Chief of surgery]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "8032",
+                    "artistName": "Jung Hye Sung",
+                    "artistImageURL": "https://i.mydramalist.com/E5Y8EQ_5s.jpg",
+                    "characterName": "Choi Su Eun [Ri Ta's friend / Hospital fellow]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3564",
+                    "artistName": "Jung Suk Yong",
+                    "artistImageURL": "https://i.mydramalist.com/j2rBOs.jpg",
+                    "characterName": "Lee Ho Yong [Surgeon]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4317",
+                    "artistName": "Gong Jung Hwan",
+                    "artistImageURL": "https://i.mydramalist.com/E37em_5s.jpg",
+                    "characterName": "Gerrard Kim [Surgeon]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3257",
+                    "artistName": "Park Joon Myun",
+                    "artistImageURL": "https://i.mydramalist.com/kQb0m_5s.jpg",
+                    "characterName": "Lee Yeong Ju [Head nurse]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5900",
+                    "artistName": "Ki Se Hyung",
+                    "artistImageURL": "https://i.mydramalist.com/w2wP1s.jpg",
+                    "characterName": "[Man in black] (Ep. 20)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "12204",
+                    "artistName": "Jeon Heon Tae",
+                    "artistImageURL": "https://i.mydramalist.com/dZoqW_5s.jpg",
+                    "characterName": "Kong Ji Bok",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6135",
+                    "artistName": "Kang Dae Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/pOP8Qs.jpg",
+                    "characterName": "Son Yeong Gi",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "10465",
+                    "artistName": "Yoon In Jo",
+                    "artistImageURL": "https://i.mydramalist.com/xWEj3_5s.jpg",
+                    "characterName": "Reporter Seo",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "73817",
+                    "artistName": "Park Chang Woo",
+                    "artistImageURL": "https://i.mydramalist.com/WKPKW_5s.jpg",
+                    "characterName": "Choi Han Bin",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "7938",
+                    "artistName": "Park Jun Mok",
+                    "artistImageURL": "https://i.mydramalist.com/Qk3D7_5s.jpg",
+                    "characterName": "Kim Sang Gyu",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "34087",
+                    "artistName": "Lee Seung Hee",
+                    "artistImageURL": "https://i.mydramalist.com/XdABPn_5s.jpg",
+                    "characterName": "Lee Seung Hui",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5337",
+                    "artistName": "Kang  Eui Shik",
+                    "artistImageURL": "https://i.mydramalist.com/qqXj0s.jpg",
+                    "characterName": "Lee Seong Gyun",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5326",
+                    "artistName": "Nam Myeong Ryeol",
+                    "artistImageURL": "https://i.mydramalist.com/4rYJZ_5s.jpg",
+                    "characterName": "Jung Han Su",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "11539",
+                    "artistName": "Jung Chan Bi",
+                    "artistImageURL": "https://i.mydramalist.com/230YPs.jpg",
+                    "characterName": "Yoo Ri Ta [Young]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "18299",
+                    "artistName": "Kim Hye Won",
+                    "artistImageURL": "https://i.mydramalist.com/00grKs.jpg",
+                    "characterName": "Kim Seok [Nurse]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "1746",
+                    "artistName": "Baek Seung Hwan",
+                    "artistImageURL": "https://i.mydramalist.com/6JNoO_5s.jpg",
+                    "characterName": "Park Ji Sang [Young]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "4587",
+                    "artistName": "Choi Yoon Joon",
+                    "artistImageURL": "https://i.mydramalist.com/KABrJs.jpg",
+                    "characterName": "Nam Dong Pal [Alcoholic patient]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "7602",
+                    "artistName": "Yoo Eun Mi",
+                    "artistImageURL": "https://i.mydramalist.com/pOlQEs.jpg",
+                    "characterName": "Choi Su Yeon [U Sik's daughter]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "10659",
+                    "artistName": "Kim Ji Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/RQOdV_5s.jpg",
+                    "characterName": "Kang Jeong Min [Hospital security guard]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "4589",
+                    "artistName": "Kim Tae Young",
+                    "artistImageURL": "https://i.mydramalist.com/vgoxD_5s.jpg",
+                    "characterName": "Han Man Yeong [Seok Ju's doctor]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "7420",
+                    "artistName": "Hong Hwa Ri",
+                    "artistImageURL": "https://i.mydramalist.com/O5W4Ls.jpg",
+                    "characterName": "Lee Na Jeong [Liver cancer patient]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "4350",
+                    "artistName": "Mi Ram",
+                    "artistImageURL": "https://i.mydramalist.com/JBe8oY_5s.jpg",
+                    "characterName": "Jang Yu Jin [Intellectually disabled patient]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "3191",
+                    "artistName": "Park Joo Mi",
+                    "artistImageURL": "https://i.mydramalist.com/wznnJ_5s.jpg",
+                    "characterName": "Han Sun Yeong [Stanford Medical School researcher / Ji Sang's mother]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "10097",
+                    "artistName": "Jeon Li Han",
+                    "artistImageURL": "https://i.mydramalist.com/EQeqQ_5s.jpg",
+                    "characterName": "Kim Byeong Su [Hospital 3rd year resident]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5891",
+                    "artistName": "Jung Hee Tae",
+                    "artistImageURL": "https://i.mydramalist.com/735b3r_5s.jpg",
+                    "characterName": "Choi U Sik [End-stage pancreatic cancer patient]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "537",
+                    "artistName": "Ryu Soo Young",
+                    "artistImageURL": "https://i.mydramalist.com/4kZL6s.jpg",
+                    "characterName": "Park Hyeon Seo [Stanford Medical School researcher / Ji Sang's father]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "402",
+                    "artistName": "Kim Bo Kyung",
+                    "artistImageURL": "https://i.mydramalist.com/BdDpBz_5s.jpg",
+                    "characterName": "[U Sik's wife]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "17907",
+                    "artistName": "Lee Gyu Sub",
+                    "artistImageURL": "https://i.mydramalist.com/EXk3m_5s.jpg",
+                    "characterName": "[Mobster]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "20836",
+                    "artistName": "Hwang In Jun",
+                    "artistImageURL": "https://i.mydramalist.com/yWndbd_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "9279",
+                    "artistName": "Yoo Jung Ho",
+                    "artistImageURL": "https://i.mydramalist.com/Bw216s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "4975",
+                    "artistName": "Kim Young Moo",
+                    "artistImageURL": "https://i.mydramalist.com/RQojR_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "4642",
+                    "artistName": "Lee Dong Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/rmz3Ns.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "22666",
+                    "artistName": "Ahn Ji Hwan",
+                    "artistImageURL": "https://i.mydramalist.com/1w4JNK_5s.jpg",
+                    "characterName": "Luuvy",
+                    "role": "Voice Actor"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/11350-blood-2015"
+        },
+        "network": {
+            "value": [
+                "KBS",
+                "KBS2"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/11350-blood-2015"
+        },
+        "airedOn": {
+            "value": [
+                "Monday",
+                "Tuesday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/11350-blood-2015"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "22887",
+            "artistName": "Ki Min Su",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "16224",
+            "artistName": "Lee Jae Hoon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "87689",
+            "artistName": "Lee Pil Ho",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "19618",
+            "artistName": "Park Jae Bum",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "6555",
+            "artistName": "Ahn Jae Hyun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "404",
+            "artistName": "Ji Jin Hee",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "6834",
+            "artistName": "Jung Hae In",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "949",
+            "artistName": "Kim Gab Soo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "9339",
+            "artistName": "Son Sook",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "4550",
+            "artistName": "Park Young Rin",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "2463",
+            "artistName": "Kwon Hyun Sang",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "4755",
+            "artistName": "Lee Ji Hoon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "6764",
+            "artistName": "Ji Chan",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "9338",
+            "artistName": "Son Soo Hyun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "1712",
+            "artistName": "Kang Tae Sung",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "2634",
+            "artistName": "Kim Yoo Suk",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "8032",
+            "artistName": "Jung Hye Sung",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "3564",
+            "artistName": "Jung Suk Yong",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "4317",
+            "artistName": "Gong Jung Hwan",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "3257",
+            "artistName": "Park Joon Myun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "5900",
+            "artistName": "Ki Se Hyung",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "12204",
+            "artistName": "Jeon Heon Tae",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "6135",
+            "artistName": "Kang Dae Hyun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "73817",
+            "artistName": "Park Chang Woo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "7938",
+            "artistName": "Park Jun Mok",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "34087",
+            "artistName": "Lee Seung Hee",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "5337",
+            "artistName": "Kang  Eui Shik",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "5326",
+            "artistName": "Nam Myeong Ryeol",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "11539",
+            "artistName": "Jung Chan Bi",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "18299",
+            "artistName": "Kim Hye Won",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "1746",
+            "artistName": "Baek Seung Hwan",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "4587",
+            "artistName": "Choi Yoon Joon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "7602",
+            "artistName": "Yoo Eun Mi",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "10659",
+            "artistName": "Kim Ji Hoon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "4589",
+            "artistName": "Kim Tae Young",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "7420",
+            "artistName": "Hong Hwa Ri",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "4350",
+            "artistName": "Mi Ram",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "3191",
+            "artistName": "Park Joo Mi",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "10097",
+            "artistName": "Jeon Li Han",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "537",
+            "artistName": "Ryu Soo Young",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "402",
+            "artistName": "Kim Bo Kyung",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "17907",
+            "artistName": "Lee Gyu Sub",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "20836",
+            "artistName": "Hwang In Jun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "9279",
+            "artistName": "Yoo Jung Ho",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "4975",
+            "artistName": "Kim Young Moo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "4642",
+            "artistName": "Lee Dong Hoon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "22666",
+            "artistName": "Ahn Ji Hwan",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "asianwiki",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": "mydramalist",
+        "airedOn": "mydramalist"
+    }
+}
