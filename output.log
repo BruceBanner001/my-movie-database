@@ -1,51 +1,50 @@
-✅ Workflow Batch completed successfully
-🏁 Final Batch Completed
+✅ Partial Batch completed successfully
+⏳ Batch Processing in Progress...
 ══════════════════════════════════════════════════════
 📊 Drama Title Validator – Execution Report (FORCE CHECK ON 🚨)
 ══════════════════════════════════════════════════════
 
 🚀 Workflow Type : Manual
-🔁 RUN           : 109
-⏰ Start Time    : 07 April 2026 - 11:08:07 AM
-⏰ End Time      : 07 April 2026 - 11:14:01 AM
-⏱️ Run Time      : 5 Minutes 54 Seconds
+🔁 RUN           : 110
+⏰ Start Time    : 07 April 2026 - 05:21:56 PM
+⏰ End Time      : 07 April 2026 - 05:29:18 PM
+⏱️ Run Time      : 7 Minutes 22 Seconds
 ⚙️ Max Process   : 200 Row Per Run
-🔄 Current Batch : 3
+🔄 Current Batch : 2
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Feb 7 2023 Onwards ===
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✅ PERFECT MATCHES (100% Accurate):
-- 124 records matched perfectly.
+- 190 records matched perfectly.
 
 ⚠️ NOT FOUND (Asian / MyDramaList):
 
 📌 Reason: Connection or URL Issues
-[ID 446] I Do, I Do                     ➔ ❌ Only found non-drama pages (actors/articles)
-[ID 504] Squid Game Season 3            ➔ ❌ Only found non-drama pages (actors/articles)
-[ID 528] Curtain Call                   ➔ ❌ Only found non-drama pages (actors/articles)
-
-📌 Reason: Title Similarity Failed
-[ID 530] The Snow Queen                 ➔ ❌ Found website title: 'Pinocchio'
+[ID  70] The K2                         ➔ ❌ Only found non-drama pages (actors/articles)
+[ID 112] Missing 9                      ➔ ❌ Only found non-drama pages (actors/articles)
+[ID 134] Cheat On Me, if You Can        ➔ ❌ Only found non-drama pages (actors/articles)
+[ID 162] She Is the One                 ➔ ❌ Only found non-drama pages (actors/articles)
+[ID 171] Lucky with You                 ➔ ❌ Only found non-drama pages (actors/articles)
 
 ⚠️ NOT FOUND (Non-Asian / IMDb):
 
 📌 Reason: Website Blocked Connection (Status 202/403)
-[ID 442] Manifest                       ➔ ❌ Status Code: 202
-[ID 443] Manifest                       ➔ ❌ Status Code: 202
-[ID 444] Manifest                       ➔ ❌ Status Code: 202
-[ID 445] Manifest                       ➔ ❌ Status Code: 202
-[ID 499] The Day of the Jackal          ➔ ❌ Status Code: 202
-[ID 514] Breaking Bad                   ➔ ❌ Status Code: 202
+[ID  41] Yeni Hayat                     ➔ ❌ Status Code: 202
+[ID 195] 12 Monkeys                     ➔ ❌ Status Code: 202
+[ID 196] 12 Monkeys                     ➔ ❌ Status Code: 202
+[ID 197] 12 Monkeys                     ➔ ❌ Status Code: 202
+[ID 198] 12 Monkeys                     ➔ ❌ Status Code: 202
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📊 Summary (Current Batch Only)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🌐 Internet Scans Done   : 134
+🌐 Internet Scans Done   : 200
 ⏭️ Total Skipped Fast    : 0
 ✨ Total Recommendations : 0
-✅ Total Perfect Matches : 124
+✅ Total Perfect Matches : 190
 ⚠️ Total Not Found       : 10
 
-🏁 Workflow finished successfully
+⚠️ BATCH LIMIT REACHED: The script paused safely.
+GitHub Actions will trigger next run automatically.
