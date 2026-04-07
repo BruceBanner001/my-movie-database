@@ -1,0 +1,663 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260407_195534",
+    "timestamp": "07 April 2026 08:00 PM (IST)",
+    "showID": 1223,
+    "showName": "Remember: War of the Son",
+    "fetchedFields": {
+        "showImage": {
+            "value": "1223.jpg",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Remember:_War_of_Son"
+        },
+        "releaseDate": {
+            "value": "Dec  9, 2015 - Feb 18, 2016",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/15789-remember-war-of-the-son"
+        },
+        "otherNames": {
+            "value": [
+                "Remember",
+                "Remember - Son's War",
+                "The Son Which Made Me Remember the War",
+                "War of the Son to Remember",
+                "War Which to Remember"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/15789-remember-war-of-the-son"
+        },
+        "Duration": {
+            "value": "60 mins",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/15789-remember-war-of-the-son"
+        },
+        "synopsis": {
+            "value": "Jin-Woo (Yoo Seung-Ho) has the condition of Hyperthymesia which allows him to remember almost every day in perfect detail. To prove the innocence of his father, Jin-Woo becomes a lawyer. He struggles to prove his father's innocence, but he begins to lose his memory due to Alzheimer’s.",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Remember:_War_of_Son"
+        },
+        "director": {
+            "value": [
+                "Lee Chang Min"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/15789-remember-war-of-the-son"
+        },
+        "tags": {
+            "value": [
+                "Revenge",
+                "Smart Male Lead",
+                "Alzheimer's Disease",
+                "Investigation",
+                "Suspense",
+                "Hardworking Male Lead",
+                "Melodrama",
+                "Nice Male Lead",
+                "Older Woman/Younger Man",
+                "Photographic Memory"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/15789-remember-war-of-the-son"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "65445",
+                    "artistName": "Park Se Jun",
+                    "artistImageURL": "https://i.mydramalist.com/v1loD_5m.jpg",
+                    "characterName": null,
+                    "role": "Composer"
+                },
+                {
+                    "artistID": "17995",
+                    "artistName": "Lee Chang Min",
+                    "artistImageURL": "https://i.mydramalist.com/7gkpNm.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "16201",
+                    "artistName": "Lee Jang Su",
+                    "artistImageURL": "https://i.mydramalist.com/JByZkX_5m.jpg",
+                    "characterName": null,
+                    "role": "Executive Producer"
+                },
+                {
+                    "artistID": "18844",
+                    "artistName": "Yoon Hyun Ho",
+                    "artistImageURL": "https://i.mydramalist.com/BqZB7m.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "589",
+                    "artistName": "Yoo Seung Ho",
+                    "artistImageURL": "https://i.mydramalist.com/YYjQvB_5s.jpg",
+                    "characterName": "Seo Jin Woo",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "1742",
+                    "artistName": "Park Sung Woong",
+                    "artistImageURL": "https://i.mydramalist.com/Zvb4js.jpg",
+                    "characterName": "Park Dong Ho",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "513",
+                    "artistName": "Namkoong Min",
+                    "artistImageURL": "https://i.mydramalist.com/JBDVOp_5s.jpg",
+                    "characterName": "Nam Gyu Man",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "430",
+                    "artistName": "Park Min Young",
+                    "artistImageURL": "https://i.mydramalist.com/0L4Pr_5s.jpg",
+                    "characterName": "Lee In A",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "8032",
+                    "artistName": "Jung Hye Sung",
+                    "artistImageURL": "https://i.mydramalist.com/E5Y8EQ_5s.jpg",
+                    "characterName": "Nam Yeo Kyung",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "378",
+                    "artistName": "Lee Won Jong",
+                    "artistImageURL": "https://i.mydramalist.com/1w43j3_5s.jpg",
+                    "characterName": "Suk Joo Il [Gang leader]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "543",
+                    "artistName": "Jun Kwang Ryul",
+                    "artistImageURL": "https://i.mydramalist.com/x4E0Pj_5s.jpg",
+                    "characterName": "Seo Jae Hyuk [Jin Woo's father]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "194",
+                    "artistName": "Lee Si Eon",
+                    "artistImageURL": "https://i.mydramalist.com/kWqmds.jpg",
+                    "characterName": "Ahn Soo Bum [Gyu Man's righthand man]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2918",
+                    "artistName": "Um Hyo Sup",
+                    "artistImageURL": "https://i.mydramalist.com/jov5z_5s.jpg",
+                    "characterName": "Hong Moo Suk [Prosecutor]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4416",
+                    "artistName": "Song Young Gyu",
+                    "artistImageURL": "https://i.mydramalist.com/oQRB5O_5s.jpg",
+                    "characterName": "Tak Young Jin [Prosecutor]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "8676",
+                    "artistName": "Kim Young Woong",
+                    "artistImageURL": "https://i.mydramalist.com/603mjO_5s.jpg",
+                    "characterName": "Kwak Han Soo",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3747",
+                    "artistName": "Bang Joon Seo",
+                    "artistImageURL": "https://i.mydramalist.com/ABdYP8_5s.jpg",
+                    "characterName": "Lee Yeon Ji [In A's sister]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3287",
+                    "artistName": "Park Hyun Sook",
+                    "artistImageURL": "https://i.mydramalist.com/94kows.jpg",
+                    "characterName": "Kim Young Seon [In Ah's mother]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2478",
+                    "artistName": "Jung In Ki",
+                    "artistImageURL": "https://i.mydramalist.com/627A2s.jpg",
+                    "characterName": "Lee Hyun Jong [In Ah's father]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "10659",
+                    "artistName": "Kim Ji Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/RQOdV_5s.jpg",
+                    "characterName": "Pyun Sang Ho [Dong Ho's righthand man]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2536",
+                    "artistName": "Han Bo Bae",
+                    "artistImageURL": "https://i.mydramalist.com/enxqns.jpg",
+                    "characterName": "Oh Jung Ah [Jin Woo's neighbor]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1899",
+                    "artistName": "Kim Jin Woo",
+                    "artistImageURL": "https://i.mydramalist.com/w7p4g_5s.jpg",
+                    "characterName": "Kang Suk Gyu [Judge]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3369",
+                    "artistName": "Han Jin Hee",
+                    "artistImageURL": "https://i.mydramalist.com/2X8Vw_5s.jpg",
+                    "characterName": "Nam Il Ho [Group chairman]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "10706",
+                    "artistName": "Lee Jung Eun",
+                    "artistImageURL": "https://i.mydramalist.com/WXzZ3_5s.jpg",
+                    "characterName": "Yeon Bo Mi [Jin Woo's aide]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1717",
+                    "artistName": "Kim Hyung Bum",
+                    "artistImageURL": "https://i.mydramalist.com/rzPo2_5s.jpg",
+                    "characterName": "Song Jae Ik [Public defender]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "11423",
+                    "artistName": "Shin Hyun Soo",
+                    "artistImageURL": "https://i.mydramalist.com/2zRWV_5s.jpg",
+                    "characterName": "Bae Chul Joo",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "10760",
+                    "artistName": "Lee Kang Wook",
+                    "artistImageURL": "https://i.mydramalist.com/jzwmz_5s.jpg",
+                    "characterName": "Kim Chan",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "11739",
+                    "artistName": "Lee Gun Hee",
+                    "artistImageURL": "https://i.mydramalist.com/jy5mds.jpg",
+                    "characterName": "Park Dong Ho [Young]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "17907",
+                    "artistName": "Lee Gyu Sub",
+                    "artistImageURL": "https://i.mydramalist.com/EXk3m_5s.jpg",
+                    "characterName": "[Gang member]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2476",
+                    "artistName": "Cho Hye Jin",
+                    "artistImageURL": "https://i.mydramalist.com/2jyWV_5s.jpg",
+                    "characterName": "Park Min Hee",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "11279",
+                    "artistName": "Lee Dong Jin",
+                    "artistImageURL": "https://i.mydramalist.com/x3r2w_5s.jpg",
+                    "characterName": "[MC] (Ep.1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5541",
+                    "artistName": "Lee Sol Gu",
+                    "artistImageURL": "https://i.mydramalist.com/Y33res.jpg",
+                    "characterName": "[Gang boss] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5863",
+                    "artistName": "Jung Dong Gyu",
+                    "artistImageURL": "https://i.mydramalist.com/eWD6n_5s.jpg",
+                    "characterName": "[One of the directors in Il Ho group] (Ep.5)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "10912",
+                    "artistName": "Lee Shi A",
+                    "artistImageURL": "https://i.mydramalist.com/eLXE8_5s.jpg",
+                    "characterName": "Kim Han Na (Ep. 5-6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "7436",
+                    "artistName": "Shin Jae Ha",
+                    "artistImageURL": "https://i.mydramalist.com/eYVXkY_5s.jpg",
+                    "characterName": "Seol Min Soo [Son of Lightbulb co. owner]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "539",
+                    "artistName": "Maeng Sang Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/92wKws.jpg",
+                    "characterName": "Oh Sung Taek [Jung Ah's father]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5876",
+                    "artistName": "Kim Jung Seok",
+                    "artistImageURL": "https://i.mydramalist.com/kXbLrs.jpg",
+                    "characterName": "Bae Jeong Sik [Detective]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "3425",
+                    "artistName": "Jung Kyu Soo",
+                    "artistImageURL": "https://i.mydramalist.com/2Rl2w_5s.jpg",
+                    "characterName": "[Min Soo's father]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5326",
+                    "artistName": "Nam Myeong Ryeol",
+                    "artistImageURL": "https://i.mydramalist.com/4rYJZ_5s.jpg",
+                    "characterName": "Kang Man Soo [Vice president]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "1727",
+                    "artistName": "Lee Seung Hyung",
+                    "artistImageURL": "https://i.mydramalist.com/RB5pVs.jpg",
+                    "characterName": "Lee Jung Hoon [Psychiatrist]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "3179",
+                    "artistName": "Jung Won Joong",
+                    "artistImageURL": "https://i.mydramalist.com/BE5JR_5s.jpg",
+                    "characterName": "[Judge]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5298",
+                    "artistName": "So Hee Jung",
+                    "artistImageURL": "https://i.mydramalist.com/wN30n_5s.jpg",
+                    "characterName": "Lee Hye Sun [Jin Woo's mother]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6452",
+                    "artistName": "Keum Dong Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/g0jq11_5s.jpg",
+                    "characterName": "Park Kyung Soo [Dong Ho's father]\\ (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "11281",
+                    "artistName": "Yoon Kyung Ho",
+                    "artistImageURL": "https://i.mydramalist.com/WK0oR_5s.jpg",
+                    "characterName": "[Scorpion tattooed killer]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "9925",
+                    "artistName": "Seo Jin Wook",
+                    "artistImageURL": "https://i.mydramalist.com/wJ0nvN_5s.jpg",
+                    "characterName": "Park Dong Jin [Prison doctor]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "2915",
+                    "artistName": "Oh Na Ra",
+                    "artistImageURL": "https://i.mydramalist.com/nOZJmL_5s.jpg",
+                    "characterName": "Chae Jin Kyung [Prosecutor]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5994",
+                    "artistName": "Lee Chang",
+                    "artistImageURL": "https://i.mydramalist.com/ZBZjJ_5s.jpg",
+                    "characterName": "Ham Ji Suk",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5900",
+                    "artistName": "Ki Se Hyung",
+                    "artistImageURL": "https://i.mydramalist.com/w2wP1s.jpg",
+                    "characterName": "Manager Geum",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "2390",
+                    "artistName": "Kim Byung Chun",
+                    "artistImageURL": "https://i.mydramalist.com/ZqYOq_5s.jpg",
+                    "characterName": "Yang Hyun Soo [President]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "2831",
+                    "artistName": "Kim Ik Tae",
+                    "artistImageURL": "https://i.mydramalist.com/Lw8KEg_5s.jpg",
+                    "characterName": "CEO Ha",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "8680",
+                    "artistName": "Jung Yoo Min",
+                    "artistImageURL": "https://i.mydramalist.com/pdWJgE_5s.jpg",
+                    "characterName": "Song Ha Young",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "1442",
+                    "artistName": "Sung Chang Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/Eyw6O_5s.jpg",
+                    "characterName": "Go Kwang Il [Prosecutor] (Ep. 17-18)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "11345",
+                    "artistName": "Kim Hyeon Bin",
+                    "artistImageURL": "https://i.mydramalist.com/XEn6J_5s.jpg",
+                    "characterName": "Seo Jin Woo [Young]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "3582",
+                    "artistName": "Jeon Se Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/ZdqJJ_5s.jpg",
+                    "characterName": "[Dong Ho's helper]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "15801",
+                    "artistName": "Geum Kwang San",
+                    "artistImageURL": "https://i.mydramalist.com/pWB0rs.jpg",
+                    "characterName": "[Seok Joo Il's man]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "18522",
+                    "artistName": "Lee Gyu Ho",
+                    "artistImageURL": "https://i.mydramalist.com/p0K3ns.jpg",
+                    "characterName": "[Gang member] (Ep 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "4284",
+                    "artistName": "Park Jun Seok",
+                    "artistImageURL": "https://i.mydramalist.com/g0Keed_5s.jpg",
+                    "characterName": "[Drug broker] (Ep. 14-20)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "53723",
+                    "artistName": "Hwang Bo Jeong Il",
+                    "artistImageURL": "https://i.mydramalist.com/ZQQ47_5s.jpg",
+                    "characterName": "[Park Dong Ho's subordinate]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "14081",
+                    "artistName": "Jo Jung Shik",
+                    "artistImageURL": "https://i.mydramalist.com/pd0q3E_5s.jpg",
+                    "characterName": "[News Anchor] (Ep.8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "66233",
+                    "artistName": "Jung Nan Hee",
+                    "artistImageURL": "https://i.mydramalist.com/1XxK7_5s.jpg",
+                    "characterName": "[Juror]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "67461",
+                    "artistName": "Hwang Do Yoon",
+                    "artistImageURL": "https://i.mydramalist.com/QQYJ2_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "157652",
+                    "artistName": "Jung Jae Sook",
+                    "artistImageURL": "https://i.mydramalist.com/oQ0O1k_5s.jpg",
+                    "characterName": "[Court audience]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5555",
+                    "artistName": "Kim Kyung Ryong",
+                    "artistImageURL": "https://i.mydramalist.com/6n342s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5667",
+                    "artistName": "Kim Seung Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/WW7AW_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "25109",
+                    "artistName": "Jung Kang Hee",
+                    "artistImageURL": "https://i.mydramalist.com/xx2qj_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "21144",
+                    "artistName": "Seo Wang Seok",
+                    "artistImageURL": "https://i.mydramalist.com/4rX7Q_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "11847",
+                    "artistName": "Yoo Jang Young",
+                    "artistImageURL": "https://i.mydramalist.com/k64wv_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "86647",
+                    "artistName": "Han Dam Hee",
+                    "artistImageURL": "https://i.mydramalist.com/e4Z7E_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5640",
+                    "artistName": "Min Kyung Jin",
+                    "artistImageURL": "https://i.mydramalist.com/RZBxzs.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "143209",
+                    "artistName": "Baek So Mi",
+                    "artistImageURL": "https://i.mydramalist.com/BdNr47_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "120335",
+                    "artistName": "Bang Jee Min",
+                    "artistImageURL": "https://i.mydramalist.com/QJpyD4_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "104261",
+                    "artistName": "Son Jung Rim",
+                    "artistImageURL": "https://i.mydramalist.com/vpzmW_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/15789-remember-war-of-the-son"
+        },
+        "airedOn": {
+            "value": [
+                "Wednesday",
+                "Thursday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/15789-remember-war-of-the-son"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "3747",
+            "artistName": "Bang Joon Seo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "3287",
+            "artistName": "Park Hyun Sook",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "2536",
+            "artistName": "Han Bo Bae",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "3369",
+            "artistName": "Han Jin Hee",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "11423",
+            "artistName": "Shin Hyun Soo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "11739",
+            "artistName": "Lee Gun Hee",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "2476",
+            "artistName": "Cho Hye Jin",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "5541",
+            "artistName": "Lee Sol Gu",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "4284",
+            "artistName": "Park Jun Seok",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "14081",
+            "artistName": "Jo Jung Shik",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "67461",
+            "artistName": "Hwang Do Yoon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "157652",
+            "artistName": "Jung Jae Sook",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "11847",
+            "artistName": "Yoo Jang Young",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "86647",
+            "artistName": "Han Dam Hee",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "120335",
+            "artistName": "Bang Jee Min",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "asianwiki",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": null,
+        "airedOn": "mydramalist"
+    }
+}

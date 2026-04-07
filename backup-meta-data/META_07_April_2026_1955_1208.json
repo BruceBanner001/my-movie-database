@@ -1,0 +1,886 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260407_195534",
+    "timestamp": "07 April 2026 07:57 PM (IST)",
+    "showID": 1208,
+    "showName": "Forecasting Love and Weather",
+    "fetchedFields": {
+        "showImage": {
+            "value": "1208.jpg",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Forecasting_Love_and_Weather"
+        },
+        "releaseDate": {
+            "value": "Feb 12, 2022 - Apr  3, 2022",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/692969-office-romance-cruelty"
+        },
+        "otherNames": {
+            "value": [
+                "Cruel Story of Office Romance",
+                "Gisangch",
+                "KMA People: Office Romance Cruelty",
+                "Love Affair Cruelty",
+                "Meteorological Administration People: Office Romance Cruelty",
+                "Meteorological Office People: In-House Love Cruelty",
+                "Office Romance Atrocities",
+                "Office Romance Cruelty"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/692969-office-romance-cruelty"
+        },
+        "Duration": {
+            "value": "1 hr. 10 min.",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/692969-office-romance-cruelty"
+        },
+        "synopsis": {
+            "value": "A story depicting love and work lives of employees at the Korea Meteorological Administration. Jin Ha-Kyung and Lee Shi-Woo are two people employed there.",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Forecasting_Love_and_Weather"
+        },
+        "director": {
+            "value": [
+                "Cha Young Hoon"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/692969-office-romance-cruelty"
+        },
+        "tags": {
+            "value": [
+                "Older Woman/Younger Man",
+                "Boss-Employee Relationship",
+                "Secret Relationship",
+                "Smart Male Lead",
+                "Teamwork",
+                "Reporter Female Lead",
+                "Mother-Daughter Relationship",
+                "Cold Female Lead",
+                "Nice Male Lead",
+                "Fast Paced Romance"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/692969-office-romance-cruelty"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "45099",
+                    "artistName": "Gaemi",
+                    "artistImageURL": "https://i.mydramalist.com/81dlnD_5m.jpg",
+                    "characterName": null,
+                    "role": "Composer"
+                },
+                {
+                    "artistID": "21340",
+                    "artistName": "Cha Young Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/EO1y0_5m.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "66203",
+                    "artistName": "Sun Yeong",
+                    "artistImageURL": "https://i.mydramalist.com/QbkKg_5m.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "430",
+                    "artistName": "Park Min Young",
+                    "artistImageURL": "https://i.mydramalist.com/0L4Pr_5s.jpg",
+                    "characterName": "Jin Ha Gyeong",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "14472",
+                    "artistName": "Song Kang",
+                    "artistImageURL": "https://i.mydramalist.com/Dkm6Lz_5s.jpg",
+                    "characterName": "Lee Si U",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "5824",
+                    "artistName": "Yoon Bak",
+                    "artistImageURL": "https://i.mydramalist.com/d0vdyg_5s.jpg",
+                    "characterName": "Han Ki Joon",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "8092",
+                    "artistName": "Yura",
+                    "artistImageURL": "https://i.mydramalist.com/yWPJvk_5s.jpg",
+                    "characterName": "Chae Yoo Jin",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "1693",
+                    "artistName": "Kim Mi Kyung",
+                    "artistImageURL": "https://i.mydramalist.com/xw1DX_5s.jpg",
+                    "characterName": "Bae Su Ja [Ha Gyeong's mother]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "88365",
+                    "artistName": "Jeong Un Seon",
+                    "artistImageURL": "https://i.mydramalist.com/DkmRQp_5s.jpg",
+                    "characterName": "Jin Tae Kyung",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "18086",
+                    "artistName": "Yoon Sa Bong",
+                    "artistImageURL": "https://i.mydramalist.com/j4nJvs.jpg",
+                    "characterName": "Oh Myung Joo [KMA HQ, Forecast Bureau Team 2]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "20866",
+                    "artistName": "Moon Tae Yu",
+                    "artistImageURL": "https://i.mydramalist.com/wezpJ_5s.jpg",
+                    "characterName": "Shin Seok Ho",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1168",
+                    "artistName": "Kwon Hae Hyo",
+                    "artistImageURL": "https://i.mydramalist.com/WvXYps.jpg",
+                    "characterName": "Ko Bong Chan [General director of KMA HQ]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "12144",
+                    "artistName": "Lee Sung Wook",
+                    "artistImageURL": "https://i.mydramalist.com/B0Qz5s.jpg",
+                    "characterName": "Eom Dong Han [KMA HQ, Forecast Bureau Team 2]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "44989",
+                    "artistName": "Chae Seo Eun",
+                    "artistImageURL": "https://i.mydramalist.com/rXoW7_5s.jpg",
+                    "characterName": "Kim Soo Jin [KMA HQ, Forecast Bureau Team 2]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2632",
+                    "artistName": "Jang So Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/BdqzvR_5s.jpg",
+                    "characterName": "Lee Hyang Rae [Dong Han's wife]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "94363",
+                    "artistName": "Lee Seung Joo",
+                    "artistImageURL": "https://i.mydramalist.com/WR2zX_5s.jpg",
+                    "characterName": "Eom Bo Mi [Dong Han's daughter]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "33035",
+                    "artistName": "Bae Myung Jin",
+                    "artistImageURL": "https://i.mydramalist.com/q6XEK_5s.jpg",
+                    "characterName": "Asst. Director Park Sung Jin [KMA HQ]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "94975",
+                    "artistName": "Jung Seung Jin",
+                    "artistImageURL": "https://i.mydramalist.com/X5ZZp_5s.jpg",
+                    "characterName": "Asst. Dir. Kim [KMA HQ, PR]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "20836",
+                    "artistName": "Hwang In Jun",
+                    "artistImageURL": "https://i.mydramalist.com/yWndbd_5s.jpg",
+                    "characterName": "[KMA HQ, PR director]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "35739",
+                    "artistName": "Kim Jong Tae",
+                    "artistImageURL": "https://i.mydramalist.com/j3qOv_5s.jpg",
+                    "characterName": "Director Choi [KMA HQ, Forecast Bureau Team 2] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "2386",
+                    "artistName": "Jo Jae Wan",
+                    "artistImageURL": "https://i.mydramalist.com/QY5j7_5s.jpg",
+                    "characterName": "[KMA Seoul Office staff] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "84259",
+                    "artistName": "Kang Jung Im",
+                    "artistImageURL": "https://i.mydramalist.com/WDVEm_5s.jpg",
+                    "characterName": "[Fortune teller] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "54597",
+                    "artistName": "Kim Jae Heum",
+                    "artistImageURL": "https://i.mydramalist.com/RbNRV_5s.jpg",
+                    "characterName": "[Stamp seal maker] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5553",
+                    "artistName": "Jang In Ho",
+                    "artistImageURL": "https://i.mydramalist.com/yWdgx1_5s.jpg",
+                    "characterName": "[KMA Weather Station staff] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "12836",
+                    "artistName": "Lee Ki Sub",
+                    "artistImageURL": "https://i.mydramalist.com/YYz4Xo_5s.jpg",
+                    "characterName": "[Munmin Daily team leader] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "24797",
+                    "artistName": "Choi Yo Han",
+                    "artistImageURL": "https://i.mydramalist.com/Xmweg_5s.jpg",
+                    "characterName": "[KMA HQ staff]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "4465",
+                    "artistName": "Kim Jae Man",
+                    "artistImageURL": "https://i.mydramalist.com/k4jDd_5s.jpg",
+                    "characterName": "[KMA HQ staff]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "9645",
+                    "artistName": "Kim Yong Jin",
+                    "artistImageURL": "https://i.mydramalist.com/2DJmws.jpg",
+                    "characterName": "[KMA Gangwon Office staff] (Ep. 1-2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "94425",
+                    "artistName": "Park Se Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/roVxm_5s.jpg",
+                    "characterName": "Lim Young Shik [KMA HQ security guard] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "38325",
+                    "artistName": "Shin Dong Ryuk",
+                    "artistImageURL": "https://i.mydramalist.com/Bgv1q_5s.jpg",
+                    "characterName": "[KMA Satellite Center staff] (Ep. 1, 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "48157",
+                    "artistName": "Woo Sang Wook",
+                    "artistImageURL": "https://i.mydramalist.com/ENk0l_5s.jpg",
+                    "characterName": "Director Choi [KMA HQ Team 1 chief] (Ep. 15)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "4731",
+                    "artistName": "Oh Dae Hwan",
+                    "artistImageURL": "https://i.mydramalist.com/jKznr_5s.jpg",
+                    "characterName": "[Pub chef] (Ep. 2, 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "92283",
+                    "artistName": "Lee Joo Young",
+                    "artistImageURL": "https://i.mydramalist.com/k4Jrj_5s.jpg",
+                    "characterName": "[Reporter @KMA]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "38389",
+                    "artistName": "Jwa Chae Won",
+                    "artistImageURL": "https://i.mydramalist.com/vnp1Zs.jpg",
+                    "characterName": "[KMA HQ staff, gossiping] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "94427",
+                    "artistName": "Han Do Yi",
+                    "artistImageURL": "https://i.mydramalist.com/WRLyl_5s.jpg",
+                    "characterName": "[KMA HQ staff, gossiping] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "4627",
+                    "artistName": "Lee Tae Geom",
+                    "artistImageURL": "https://i.mydramalist.com/00LL6s.jpg",
+                    "characterName": "[KMA HQ, Team 1 staff]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "38651",
+                    "artistName": "Choi Yun Seol",
+                    "artistImageURL": "https://i.mydramalist.com/erRgp_5s.jpg",
+                    "characterName": "Cho Eun Ji [JBC reporter]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "42161",
+                    "artistName": "Oh Ki Hwan",
+                    "artistImageURL": "https://i.mydramalist.com/RkKnYs.jpg",
+                    "characterName": "Choi Chang Ho [KMA HQ security guard]]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "29609",
+                    "artistName": "Jeon Guk Hyang",
+                    "artistImageURL": "https://i.mydramalist.com/wg1g8_5s.jpg",
+                    "characterName": "Mrs. Lee (Ep. 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "46461",
+                    "artistName": "Jun Joon Woo",
+                    "artistImageURL": "https://i.mydramalist.com/O8LORk_5s.jpg",
+                    "characterName": "[KMA Gwangju Office staff] (Ep. 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "20646",
+                    "artistName": "Ahn Soo Ho",
+                    "artistImageURL": "https://i.mydramalist.com/xdg0z_5s.jpg",
+                    "characterName": "[Fisherman] (Ep. 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "20149",
+                    "artistName": "Ji Sung Geun",
+                    "artistImageURL": "https://i.mydramalist.com/Q53d4s.jpg",
+                    "characterName": "[Fisherman] (Ep. 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "38637",
+                    "artistName": "Go Byung Taek",
+                    "artistImageURL": "https://i.mydramalist.com/68NbWs.jpg",
+                    "characterName": "[Fisherman] (Ep. 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "81591",
+                    "artistName": "Jo Ji Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/X6qLp_5s.jpg",
+                    "characterName": "[Seafood market worker] (Ep. 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "44413",
+                    "artistName": "Song Chang Gyu",
+                    "artistImageURL": "https://i.mydramalist.com/2zOzw_5s.jpg",
+                    "characterName": "[Seafood market worker] (Ep. 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "87655",
+                    "artistName": "Yoon Hyo Sik",
+                    "artistImageURL": "https://i.mydramalist.com/xqgKz_5s.jpg",
+                    "characterName": "[Seafood market worker] (Ep. 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6294",
+                    "artistName": "Jeon Bae Soo",
+                    "artistImageURL": "https://i.mydramalist.com/jJb0w_5s.jpg",
+                    "characterName": "Lee Myeong Han [Si U's father] (Ep. 6, 11-16)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "91417",
+                    "artistName": "Hong Ru Hyeon",
+                    "artistImageURL": "https://i.mydramalist.com/1exqy_5s.jpg",
+                    "characterName": "Manager Lee Seong A (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "55057",
+                    "artistName": "Kim Kwon",
+                    "artistImageURL": "https://i.mydramalist.com/2LkJk_5s.jpg",
+                    "characterName": "[KMA HQ staff] (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "20847",
+                    "artistName": "Lee Ja Ryoung",
+                    "artistImageURL": "https://i.mydramalist.com/y76zBs.jpg",
+                    "characterName": "[Real estate agent] (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "93491",
+                    "artistName": "Kim Do Won",
+                    "artistImageURL": "https://i.mydramalist.com/qZND0_5s.jpg",
+                    "characterName": "Chan Yi [Myung Joo's son (Ep. 5)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "42189",
+                    "artistName": "Lee Cheon Mu",
+                    "artistImageURL": "https://i.mydramalist.com/l01DP6_5s.jpg",
+                    "characterName": "Gyeol Yi [Myung Joo's son] (Ep. 5)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "84957",
+                    "artistName": "Goo Jae Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/1WNvQ_5s.jpg",
+                    "characterName": "[Myung Joo's mother-in-law] (Ep. 5)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "64363",
+                    "artistName": "Son Sang Gyu",
+                    "artistImageURL": "https://i.mydramalist.com/XN3Qg_5s.jpg",
+                    "characterName": "[Myung Joo's husband] (Ep. 5)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "70143",
+                    "artistName": "Yang Jin Seon",
+                    "artistImageURL": "https://i.mydramalist.com/2AEyV_5s.jpg",
+                    "characterName": "[Angry business owner] (Ep. 5)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "65097",
+                    "artistName": "Kim Hi Eo Ra",
+                    "artistImageURL": "https://i.mydramalist.com/E57ml0_5s.jpg",
+                    "characterName": "[Myung Han's girlfriend @motel] (Ep. 5-6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "38565",
+                    "artistName": "Nam Jung Woo",
+                    "artistImageURL": "https://i.mydramalist.com/E4327_5s.jpg",
+                    "characterName": "[Doctor] (Ep. 6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "78081",
+                    "artistName": "Yoon Seok Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/pX4z8_5s.jpg",
+                    "characterName": "[KMA HQ, Director] (Ep. 6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5732",
+                    "artistName": "Seol Chang Hee",
+                    "artistImageURL": "https://i.mydramalist.com/4Ngnk_5s.jpg",
+                    "characterName": "[KMA HQ, Dormitory staff] (Ep. 6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21480",
+                    "artistName": "Park Ki Ryung",
+                    "artistImageURL": "https://i.mydramalist.com/j4Nqws.jpg",
+                    "characterName": "Jo Jang Hwan (Ep. 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "34295",
+                    "artistName": "Song Min Jae",
+                    "artistImageURL": "https://i.mydramalist.com/p0EgBs.jpg",
+                    "characterName": "Lee Shi Woo [Child] (Ep. 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "53851",
+                    "artistName": "Yoo Mi Ran",
+                    "artistImageURL": "https://i.mydramalist.com/08Qyk_5s.jpg",
+                    "characterName": "[Real estate agent] (Ep. 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "61539",
+                    "artistName": "Park Sang Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/d7B8D_5s.jpg",
+                    "characterName": "[Gossiping reporter @KMA] (Ep. 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "38643",
+                    "artistName": "Kim Jin",
+                    "artistImageURL": "https://i.mydramalist.com/wz6zp_5s.jpg",
+                    "characterName": "[Bookstore employee] (Ep. 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "30827",
+                    "artistName": "Kim Shi Young",
+                    "artistImageURL": "https://i.mydramalist.com/Rb0bg_5s.jpg",
+                    "characterName": "[Ozone warning caller] (Ep. 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21479",
+                    "artistName": "In Sung Ho",
+                    "artistImageURL": "https://i.mydramalist.com/Q7dyvs.jpg",
+                    "characterName": "[Ozone warning caller] (Ep. 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "94947",
+                    "artistName": "Seo Jung Bin",
+                    "artistImageURL": "https://i.mydramalist.com/0qxgY_5s.jpg",
+                    "characterName": "[Ozone warning caller] (Ep. 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "20031",
+                    "artistName": "Park Yong",
+                    "artistImageURL": "https://i.mydramalist.com/dxE2b_5s.jpg",
+                    "characterName": "Han Myung Hoon [Chief editor] (Ep. 7-8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "69023",
+                    "artistName": "Goo Shi Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/JBvgBw_5s.jpg",
+                    "characterName": "[Tutored student's mother] (Ep. 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "50747",
+                    "artistName": "Kwon Ban Suk",
+                    "artistImageURL": "https://i.mydramalist.com/v3LyD_5s.jpg",
+                    "characterName": "[Jeju Regional Office of Meteorology staff] (Ep. 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "47727",
+                    "artistName": "Choi Sol Hui",
+                    "artistImageURL": "https://i.mydramalist.com/KpJBE0_5s.jpg",
+                    "characterName": "[Busan Regional Office of Meteorology staff] (Ep. 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "31799",
+                    "artistName": "Park Seo Kyung",
+                    "artistImageURL": "https://i.mydramalist.com/xQD5js.jpg",
+                    "characterName": "Jin Ha Gyeong [Child]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "32763",
+                    "artistName": "Jung Ji Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/jxE3b_5s.jpg",
+                    "characterName": "[Barista] (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "32767",
+                    "artistName": "Han Myung Hwan",
+                    "artistImageURL": "https://i.mydramalist.com/1qV05s.jpg",
+                    "characterName": "[Waiter] (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "96963",
+                    "artistName": "Sin Dong Eun",
+                    "artistImageURL": "https://i.mydramalist.com/VXeRlx_5s.jpg",
+                    "characterName": "[Car insurance agent] (Ep. 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "13690",
+                    "artistName": "Chae Dong Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/bwzB6s.jpg",
+                    "characterName": "Heo Ju Yeong [Munmin Daily reporter] (Ep. 10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "9351",
+                    "artistName": "Seo Jung Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/73dV0b_5s.jpg",
+                    "characterName": "Sung Mi Jin [KMA Jeju office] (Ep. 11-13)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "8512",
+                    "artistName": "Yoon Bok In",
+                    "artistImageURL": "https://i.mydramalist.com/jQVdnd_5s.jpg",
+                    "characterName": "{Yoo Jin's mother} (Ep 12-13)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "14366",
+                    "artistName": "Jung Hyun Seok",
+                    "artistImageURL": "https://i.mydramalist.com/O8Ly1g_5s.jpg",
+                    "characterName": "[Doctor] (Ep. 12)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "67423",
+                    "artistName": "Hong Eun Jeong",
+                    "artistImageURL": "https://i.mydramalist.com/yWnplN_5s.jpg",
+                    "characterName": "[Nurse] (Ep. 12)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "2835",
+                    "artistName": "Seo Hyun Chul",
+                    "artistImageURL": "https://i.mydramalist.com/E5lJoz_5s.jpg",
+                    "characterName": "[Yoo Jin's stepfather] (Ep. 13)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "93207",
+                    "artistName": "Jung Hyun Woo",
+                    "artistImageURL": "https://i.mydramalist.com/jmeNy_5s.jpg",
+                    "characterName": "[Doctor] (Ep. 14-15)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "68599",
+                    "artistName": "Park Sun Young",
+                    "artistImageURL": "https://i.mydramalist.com/2AVdE_5s.jpg",
+                    "characterName": "[Mother bus passenger] (Ep. 14)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "47517",
+                    "artistName": "Lee Dong Gyu",
+                    "artistImageURL": "https://i.mydramalist.com/PxBV58_5s.jpg",
+                    "characterName": "JBC anchorman (Ep. 15)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "20009",
+                    "artistName": "Min Jung Sup",
+                    "artistImageURL": "https://i.mydramalist.com/wmvR1s.jpg",
+                    "characterName": "[Detective] (Ep. 15)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5186",
+                    "artistName": "Park Young Soo",
+                    "artistImageURL": "https://i.mydramalist.com/ZqP8O_5s.jpg",
+                    "characterName": "[Munmin Daily employee] (Ep. 14-15)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "95795",
+                    "artistName": "Chae Song Hwa",
+                    "artistImageURL": "https://i.mydramalist.com/R7bw6_5s.jpg",
+                    "characterName": "Ms. Lee [KMA HQ]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "55243",
+                    "artistName": "Park Bo Eun",
+                    "artistImageURL": "https://i.mydramalist.com/08oYk_5s.jpg",
+                    "characterName": "[Nurse] (Ep. 16)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "43805",
+                    "artistName": "Ma Jung Pil",
+                    "artistImageURL": "https://i.mydramalist.com/WBR0Rs.jpg",
+                    "characterName": "[KMA HQ staff] (Ep. 16)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "11922",
+                    "artistName": "Jo Hye Sun",
+                    "artistImageURL": "https://i.mydramalist.com/K7nYvs.jpg",
+                    "characterName": "[KMA HQ staff] (Ep. 16)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "38727",
+                    "artistName": "Bae Bo Ram",
+                    "artistImageURL": "https://i.mydramalist.com/0KzrYs.jpg",
+                    "characterName": "[KMA HQ staff] (Ep, 16)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "98061",
+                    "artistName": "Lee Jin Hong",
+                    "artistImageURL": "https://i.mydramalist.com/wyKdN_5s.jpg",
+                    "characterName": "[KMA HQ staff] (Ep. 11)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "3586",
+                    "artistName": "Oh Ji Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/jmBJv_5s.jpg",
+                    "characterName": "[Gossiping reporter] (Ep. 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "122601",
+                    "artistName": "Jung Hee Young",
+                    "artistImageURL": "https://i.mydramalist.com/QJddv7_5s.jpg",
+                    "characterName": "[Cafeteria staff] (Ep. 16)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "122355",
+                    "artistName": "Kim Hwa Joong",
+                    "artistImageURL": "https://i.mydramalist.com/eY8pQE_5s.jpg",
+                    "characterName": "[Paramedic] (Ep. 11)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "121683",
+                    "artistName": "Kim Si Kook",
+                    "artistImageURL": "https://i.mydramalist.com/XdZwZq_5s.jpg",
+                    "characterName": "[City Hall employee] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "119235",
+                    "artistName": "Noh Hyun Seok",
+                    "artistImageURL": "https://i.mydramalist.com/XdAZnO_5s.jpg",
+                    "characterName": "[Doctor] (Ep.11)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "107889",
+                    "artistName": "Park Soo Jin",
+                    "artistImageURL": "https://i.mydramalist.com/pyZXe_5s.jpg",
+                    "characterName": "[KMA HQ, PR staff]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "99727",
+                    "artistName": "Ahn Jong Jin",
+                    "artistImageURL": "https://i.mydramalist.com/4ZZjY_5s.jpg",
+                    "characterName": "Chief Team One staff",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "8881",
+                    "artistName": "Choi Bo Kwang",
+                    "artistImageURL": "https://i.mydramalist.com/JKqYXs.jpg",
+                    "characterName": "[Director Choi's wife] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "123947",
+                    "artistName": "Ha Joon Sung",
+                    "artistImageURL": "https://i.mydramalist.com/d0wd3g_5s.jpg",
+                    "characterName": "Dong Jin (Ep. 12-13)",
+                    "role": "Guest Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/692969-office-romance-cruelty"
+        },
+        "airedOn": {
+            "value": [
+                "Saturday",
+                "Sunday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/692969-office-romance-cruelty"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "66203",
+            "artistName": "Sun Yeong",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "88365",
+            "artistName": "Jeong Un Seon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "44989",
+            "artistName": "Chae Seo Eun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "94363",
+            "artistName": "Lee Seung Joo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "2386",
+            "artistName": "Jo Jae Wan",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "48157",
+            "artistName": "Woo Sang Wook",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "94427",
+            "artistName": "Han Do Yi",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "38651",
+            "artistName": "Choi Yun Seol",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "38637",
+            "artistName": "Go Byung Taek",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "65097",
+            "artistName": "Kim Hi Eo Ra",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "96963",
+            "artistName": "Sin Dong Eun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "95795",
+            "artistName": "Chae Song Hwa",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "11922",
+            "artistName": "Jo Hye Sun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "122355",
+            "artistName": "Kim Hwa Joong",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "121683",
+            "artistName": "Kim Si Kook",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "107889",
+            "artistName": "Park Soo Jin",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "8881",
+            "artistName": "Choi Bo Kwang",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "asianwiki",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": null,
+        "airedOn": "mydramalist"
+    }
+}

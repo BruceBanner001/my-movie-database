@@ -1,0 +1,482 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260407_195534",
+    "timestamp": "07 April 2026 07:59 PM (IST)",
+    "showID": 1219,
+    "showName": "Doona!",
+    "fetchedFields": {
+        "showImage": {
+            "value": "1219.jpg",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Doona!_(Netflix)"
+        },
+        "releaseDate": {
+            "value": "Oct 20, 2023",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/723247-lee-doo-na"
+        },
+        "otherNames": {
+            "value": [
+                "Lee Doo Na!",
+                "Lee Du Na!",
+                "The Girl Downstairs"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/723247-lee-doo-na"
+        },
+        "Duration": {
+            "value": "50 mins",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/723247-lee-doo-na"
+        },
+        "synopsis": {
+            "value": "Lee Doo-Na (Bae Suzy) was a member of an idol girl group. She was the main vocalist and the most popular member of the group, but she suddenly announced her retirement. She now stays at a share house, located near a university, and rarely goes out. Meanwhile, Lee Won-Jun (Yang Se-Jong) is a university student. He is a warm-hearted, ordinary young man without anything special in his background. He begins to stay at the share house where Lee Doo-Na resides. His warm heart gives Lee Doo-Na comfort. They get attracted to each other.",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Doona!_(Netflix)"
+        },
+        "director": {
+            "value": [
+                "Lee Jeong Hyo"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/723247-lee-doo-na"
+        },
+        "tags": {
+            "value": [
+                "Idol Female Lead",
+                "Warm Male Lead",
+                "Share House Setting",
+                "Former Celebrity Female Lead",
+                "Singer Female Lead",
+                "Student Male Lead",
+                "Selfish Female Lead",
+                "Miniseries",
+                "Naive Male Lead",
+                "Steamy Kiss"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/723247-lee-doo-na"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "61195",
+                    "artistName": "Kang Yun Sun",
+                    "artistImageURL": "https://i.mydramalist.com/0XgKY_5m.jpg",
+                    "characterName": null,
+                    "role": "Cinematography"
+                },
+                {
+                    "artistID": "17013",
+                    "artistName": "Lee Jeong Hyo",
+                    "artistImageURL": "https://i.mydramalist.com/kWgxbm.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "118181",
+                    "artistName": "Min Song A",
+                    "artistImageURL": "https://i.mydramalist.com/yWrvPk_5m.jpg",
+                    "characterName": null,
+                    "role": "Original Creator"
+                },
+                {
+                    "artistID": "124859",
+                    "artistName": "Jang Yoo Ha",
+                    "artistImageURL": "https://i.mydramalist.com/XdeZKO_5m.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "422",
+                    "artistName": "Bae Suzy",
+                    "artistImageURL": "https://i.mydramalist.com/rPL27_5s.jpg",
+                    "characterName": "Lee Du Na",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "13727",
+                    "artistName": "Yang Se Jong",
+                    "artistImageURL": "https://i.mydramalist.com/73bYyB_5s.jpg",
+                    "characterName": "Lee Won Jun",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "24353",
+                    "artistName": "Ha Young",
+                    "artistImageURL": "https://i.mydramalist.com/ABmJOP_5s.jpg",
+                    "characterName": "Kim Jin Ju",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "15238",
+                    "artistName": "Park Se Wan",
+                    "artistImageURL": "https://i.mydramalist.com/Bdr5V5_5s.jpg",
+                    "characterName": "Choi I Ra",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "17102",
+                    "artistName": "Kim Do Wan",
+                    "artistImageURL": "https://i.mydramalist.com/Qe5m5_5s.jpg",
+                    "characterName": "Koo Jeong Hun [Won Jun's housemate]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "10752",
+                    "artistName": "Kim Min Ho",
+                    "artistImageURL": "https://i.mydramalist.com/rNYwe2_5s.jpg",
+                    "characterName": "Seo Yun Taek [Won Jun's housemate]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "51881",
+                    "artistName": "Ju Yeon U",
+                    "artistImageURL": "https://i.mydramalist.com/XVBoZ_5s.jpg",
+                    "characterName": "Kook Su Jin [National noodles hall president]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "85483",
+                    "artistName": "Baek Ji Hye",
+                    "artistImageURL": "https://i.mydramalist.com/b3AZWL_5s.jpg",
+                    "characterName": "Lee Eun Ju",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "30515",
+                    "artistName": "Lee Chan Hyeong",
+                    "artistImageURL": "https://i.mydramalist.com/e4R8W_5s.jpg",
+                    "characterName": "Ji Se Hun",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "35197",
+                    "artistName": "Kim Yoon Seol",
+                    "artistImageURL": "https://i.mydramalist.com/rNqV0m_5s.jpg",
+                    "characterName": "[Bus stop student] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "31787",
+                    "artistName": "Lee Joong Yul",
+                    "artistImageURL": "https://i.mydramalist.com/QB847_5s.jpg",
+                    "characterName": "[Apt security guard] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "103831",
+                    "artistName": "Jin Tae Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/dgAoe_5s.jpg",
+                    "characterName": "[Mother hiring tutor] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "83741",
+                    "artistName": "Simeez",
+                    "artistImageURL": "https://i.mydramalist.com/vXvl4g_5s.jpg",
+                    "characterName": "Ye Ji [Dream Sweet member] (Ep. 1-2, 6, 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "124493",
+                    "artistName": "Janet Suhh",
+                    "artistImageURL": "https://i.mydramalist.com/kAk2W8_5s.jpg",
+                    "characterName": "Ji Su [Dream Sweet member] (Ep. 1-2, 6, 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "83739",
+                    "artistName": "Choi Ri An",
+                    "artistImageURL": "https://i.mydramalist.com/2wD5VW_5s.jpg",
+                    "characterName": "Bit Na [Dream Sweet member] (1-2, 6, 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "399",
+                    "artistName": "Go Ah Sung",
+                    "artistImageURL": "https://i.mydramalist.com/xW5v0_5s.jpg",
+                    "characterName": "Ha Yeon [Dream Sweet member] (Ep. 1-2, 6-8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "126563",
+                    "artistName": "Bang Min Sun",
+                    "artistImageURL": "https://i.mydramalist.com/jQX3n8_5s.jpg",
+                    "characterName": "[MSA Entertainment staff] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "43805",
+                    "artistName": "Ma Jung Pil",
+                    "artistImageURL": "https://i.mydramalist.com/WBR0Rs.jpg",
+                    "characterName": "[Café owner] (Ep. 2, 6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "832",
+                    "artistName": "Lee Jin Wook",
+                    "artistImageURL": "https://i.mydramalist.com/JBDzLj_5s.jpg",
+                    "characterName": "Park In Uk [Du Na’s manager] (Ep. 2, 6-9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "4403",
+                    "artistName": "Kim Yoo Mi",
+                    "artistImageURL": "https://i.mydramalist.com/wJWolY_5s.jpg",
+                    "characterName": "President Ma (Ep. 2, 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21771",
+                    "artistName": "Kim Hyun Mok",
+                    "artistImageURL": "https://i.mydramalist.com/pXQ68_5s.jpg",
+                    "characterName": "[Stalker] (Ep. 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "60941",
+                    "artistName": "Lee So Yoon",
+                    "artistImageURL": "https://i.mydramalist.com/mOP87J_5s.jpg",
+                    "characterName": "Choi I Ra [Child] (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "8995",
+                    "artistName": "Lee Woo Joo",
+                    "artistImageURL": "https://i.mydramalist.com/nO6y5B_5s.jpg",
+                    "characterName": "Lee Won Jun [Teen] (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "93877",
+                    "artistName": "Jung Min Joon",
+                    "artistImageURL": "https://i.mydramalist.com/jQbVYz_5s.jpg",
+                    "characterName": "Lee Won Jun [Child] (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "127075",
+                    "artistName": "Lee Joo Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/jQX7KO_5s.jpg",
+                    "characterName": "Choi I Ra [Teen] (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "2005",
+                    "artistName": "Lee Na Ra",
+                    "artistImageURL": "https://i.mydramalist.com/wZEd1_5s.jpg",
+                    "characterName": "[Laboring woman] (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "18824",
+                    "artistName": "Go Ae Ri",
+                    "artistImageURL": "https://i.mydramalist.com/7gXVLs.jpg",
+                    "characterName": "[Laboring woman] (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "102921",
+                    "artistName": "Aancod Abe Zaccarelli",
+                    "artistImageURL": "https://i.mydramalist.com/eX7nY_5s.jpg",
+                    "characterName": "Dos Santos [I Ra's ex-boyfriend] (Ep. 4, 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "123839",
+                    "artistName": "Do Ye Joon",
+                    "artistImageURL": "https://i.mydramalist.com/WPbPBP_5s.jpg",
+                    "characterName": "[Seo Yun Taek's friend / Blind date] (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "18153",
+                    "artistName": "Do Won",
+                    "artistImageURL": "https://i.mydramalist.com/5vl0pV_5s.jpg",
+                    "characterName": "[Nightclub man] (Ep. 5)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "68717",
+                    "artistName": "An Tae Rin",
+                    "artistImageURL": "https://i.mydramalist.com/XdeJjJ_5s.jpg",
+                    "characterName": "Lee Du Na [Child] (Ep. 6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "10917",
+                    "artistName": "Kim Sun Young",
+                    "artistImageURL": "https://i.mydramalist.com/qL0l5_5s.jpg",
+                    "characterName": "[Lee Du Na's mom] (Ep. 6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "106103",
+                    "artistName": "Lim Seung Soo",
+                    "artistImageURL": "https://i.mydramalist.com/Wxe1R_5s.jpg",
+                    "characterName": "[Jiu-jitsu boy] (Ep. 6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "107901",
+                    "artistName": "Kang Myung Joo",
+                    "artistImageURL": "https://i.mydramalist.com/AB48VX_5s.jpg",
+                    "characterName": "Song Seon Ae [Won Jun's mother] (Ep. 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "16414",
+                    "artistName": "Seo Eun Sol",
+                    "artistImageURL": "https://i.mydramalist.com/Zj03O_5s.jpg",
+                    "characterName": "Lee Won Yeong [Won Jun's sister] (Ep. 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6278",
+                    "artistName": "Jeon Seok Ho",
+                    "artistImageURL": "https://i.mydramalist.com/YYj5OB_5s.jpg",
+                    "characterName": "(Ep. 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "64363",
+                    "artistName": "Son Sang Gyu",
+                    "artistImageURL": "https://i.mydramalist.com/XN3Qg_5s.jpg",
+                    "characterName": "[Lee Won Jun's senior] (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "106619",
+                    "artistName": "Takeda Tetsuro",
+                    "artistImageURL": "https://i.mydramalist.com/Eez7l_5s.jpg",
+                    "characterName": "(Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "23267",
+                    "artistName": "Kwon Han Sol",
+                    "artistImageURL": "https://i.mydramalist.com/QJ2r14_5s.jpg",
+                    "characterName": "Song Tae Rim",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "20648",
+                    "artistName": "Kim Ah Song",
+                    "artistImageURL": "https://i.mydramalist.com/2pepO_5s.jpg",
+                    "characterName": "Lee Du Na [Teen]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "126817",
+                    "artistName": "Eun Na Young",
+                    "artistImageURL": "https://i.mydramalist.com/jQX1zy_5s.jpg",
+                    "characterName": "Kim San Ho",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "13906",
+                    "artistName": "Park Yoon Hee",
+                    "artistImageURL": "https://i.mydramalist.com/Rv24E_5s.jpg",
+                    "characterName": "[Kim Jin Ju's father]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "106503",
+                    "artistName": "Yun Jin Seong",
+                    "artistImageURL": "https://i.mydramalist.com/03n8O_5s.jpg",
+                    "characterName": "[Kim Jin Ju's mother]",
+                    "role": "Guest Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/723247-lee-doo-na"
+        },
+        "airedOn": {
+            "value": [
+                "Friday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/723247-lee-doo-na"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "118181",
+            "artistName": "Min Song A",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "124859",
+            "artistName": "Jang Yoo Ha",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "10752",
+            "artistName": "Kim Min Ho",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "51881",
+            "artistName": "Ju Yeon U",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "83741",
+            "artistName": "Simeez",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "124493",
+            "artistName": "Janet Suhh",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "83739",
+            "artistName": "Choi Ri An",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "832",
+            "artistName": "Lee Jin Wook",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "60941",
+            "artistName": "Lee So Yoon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "127075",
+            "artistName": "Lee Joo Yeon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "102921",
+            "artistName": "Aancod Abe Zaccarelli",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "106619",
+            "artistName": "Takeda Tetsuro",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "20648",
+            "artistName": "Kim Ah Song",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "asianwiki",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": null,
+        "airedOn": "mydramalist"
+    }
+}

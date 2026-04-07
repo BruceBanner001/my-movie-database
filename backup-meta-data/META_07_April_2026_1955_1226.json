@@ -1,0 +1,594 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260407_195534",
+    "timestamp": "07 April 2026 08:01 PM (IST)",
+    "showID": 1226,
+    "showName": "Clean with Passion for Now",
+    "fetchedFields": {
+        "showImage": {
+            "value": "1226.jpg",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Clean_With_Passion_For_Now"
+        },
+        "releaseDate": {
+            "value": "Nov 26, 2018 - Feb  4, 2019",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/26049-clean-with-passion-for-now"
+        },
+        "otherNames": {
+            "value": [
+                "Clean Up Like It's Hot",
+                "First",
+                "Clean Passionately",
+                "Ildan Ddeugeobge Cheongsohara",
+                "Ildan Tteugeopge Cheongsohara"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/26049-clean-with-passion-for-now"
+        },
+        "Duration": {
+            "value": "1 hr. 10 min.",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/26049-clean-with-passion-for-now"
+        },
+        "synopsis": {
+            "value": "Jang Sun-Gyeol has mysophobia (fear of germs) and runs a cleaning company. He meets Gil O-Sol. She has a bright personality and she does not mind getting dirty. With the help of Gil O-Sol, Jang Sun-Gyeol faces his mysophobia and also falls in love with Gil O-Sol.",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Clean_With_Passion_For_Now"
+        },
+        "director": {
+            "value": [
+                "Noh Jong Chan"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/26049-clean-with-passion-for-now"
+        },
+        "tags": {
+            "value": [
+                "Boss-Employee Relationship",
+                "Phobia",
+                "Eccentric Male Lead",
+                "Healing",
+                "Cohabitation",
+                "Mysophobia",
+                "Obsessive-compulsive Disorder (OCD)",
+                "Height Difference",
+                "Trauma",
+                "Rich Man/Poor Woman"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/26049-clean-with-passion-for-now"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "20985",
+                    "artistName": "Noh Jong Chan",
+                    "artistImageURL": "https://i.mydramalist.com/Y3EVAm.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "20992",
+                    "artistName": "Han Hui Jeong",
+                    "artistImageURL": "https://i.mydramalist.com/EW6O7_5m.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "3973",
+                    "artistName": "Yoon Kyun Sang",
+                    "artistImageURL": "https://i.mydramalist.com/j30Wz_5s.jpg",
+                    "characterName": "Jang Sun Gyeol",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "1894",
+                    "artistName": "Kim You Jung",
+                    "artistImageURL": "https://i.mydramalist.com/nOZLQ8_5s.jpg",
+                    "characterName": "Gil Oh Sol",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "1892",
+                    "artistName": "Song Jae Rim",
+                    "artistImageURL": "https://i.mydramalist.com/ZO6VW_5s.jpg",
+                    "characterName": "Choi Ha In / Choi Daniel",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "14806",
+                    "artistName": "Go Geon Han",
+                    "artistImageURL": "https://i.mydramalist.com/yWnejk_5s.jpg",
+                    "characterName": "Jeon Young Shik [Member of Cleaning Fairies]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2883",
+                    "artistName": "Yoo  Sun",
+                    "artistImageURL": "https://i.mydramalist.com/jVP8ds.jpg",
+                    "characterName": "Secretary Gwon [Sun Gyeol's assistant]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4553",
+                    "artistName": "Kim Won Hae",
+                    "artistImageURL": "https://i.mydramalist.com/mO1lyq_5s.jpg",
+                    "characterName": "Gil Gong Tae [O Sol's father]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5428",
+                    "artistName": "Min Do Hee",
+                    "artistImageURL": "https://i.mydramalist.com/2kWyV_5s.jpg",
+                    "characterName": "Min Joo Yun [Oh Sol's best friend]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "12276",
+                    "artistName": "Hak Jin",
+                    "artistImageURL": "https://i.mydramalist.com/73jyPB_5s.jpg",
+                    "characterName": "Lee Dong Hyun [Member of Cleaning Fairies]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "15882",
+                    "artistName": "Cha In Ha",
+                    "artistImageURL": "https://i.mydramalist.com/0NedKs.jpg",
+                    "characterName": "Hwang Jae Min [Member of Cleaning Fairies]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "17489",
+                    "artistName": "Lee Do Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/6PlYW_5s.jpg",
+                    "characterName": "Gil Oh Dol [Oh Sol's brother]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "10829",
+                    "artistName": "Choi Yu Ri",
+                    "artistImageURL": "https://i.mydramalist.com/rNzdj2_5s.jpg",
+                    "characterName": "Gil Oh Sol [Child]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1709",
+                    "artistName": "Son Byung Ho",
+                    "artistImageURL": "https://i.mydramalist.com/BDbpl_5s.jpg",
+                    "characterName": "President Yang [Mae Hwa's husband]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "10393",
+                    "artistName": "Jung Ji Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/Kpkbd0_5s.jpg",
+                    "characterName": "Jang Sun Gyeol [Young]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "868",
+                    "artistName": "Ahn Suk Hwan",
+                    "artistImageURL": "https://i.mydramalist.com/jQ0g1w_5s.jpg",
+                    "characterName": "CEO Cha [Sun Gyeol's grandfather]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2725",
+                    "artistName": "Kim Hye Eun",
+                    "artistImageURL": "https://i.mydramalist.com/Z8vj8q_5s.jpg",
+                    "characterName": "Cha Mae Hwa [Sun Gyul's mother]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "19372",
+                    "artistName": "Kim Ki Nam",
+                    "artistImageURL": "https://i.mydramalist.com/bKrYVs.jpg",
+                    "characterName": "Secretary Kim [Mae Hwa's assistant]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "9355",
+                    "artistName": "Kim Jung Young",
+                    "artistImageURL": "https://i.mydramalist.com/VXyKlm_5s.jpg",
+                    "characterName": "Kim Geum Ja [Sun Gyeol's nanny]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "27837",
+                    "artistName": "Koo Ja Keon",
+                    "artistImageURL": "https://i.mydramalist.com/RXwQx_5s.jpg",
+                    "characterName": "[Oh Dol's friend]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "19883",
+                    "artistName": "Son Sang Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/WQyVRs.jpg",
+                    "characterName": "Jang Sun Gyeol [Teen]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4300",
+                    "artistName": "Woo Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/EEq45_5s.jpg",
+                    "characterName": "Mr. Baek [Ha In's patient]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "7009",
+                    "artistName": "Kwak Shi Yang",
+                    "artistImageURL": "https://i.mydramalist.com/xeApr_5s.jpg",
+                    "characterName": "[Oh Sol's college senior]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6339",
+                    "artistName": "Choi Woong",
+                    "artistImageURL": "https://i.mydramalist.com/xnd53_5s.jpg",
+                    "characterName": "Lee Do Jin [Gil Oh Sol's sunbae and 1st love]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6857",
+                    "artistName": "Han Da Ra",
+                    "artistImageURL": "https://i.mydramalist.com/EQO2m_5s.jpg",
+                    "characterName": "Kim Hye Won [Anchorwoman]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "13881",
+                    "artistName": "Park Kyung Hye",
+                    "artistImageURL": "https://i.mydramalist.com/QJBrog_5s.jpg",
+                    "characterName": "[Ha In's patient] (Ep. 1, 11, 16)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "8770",
+                    "artistName": "Park Ah In",
+                    "artistImageURL": "https://i.mydramalist.com/Bw60ls.jpg",
+                    "characterName": "Lee Young Eun [Office lady] (Ep. 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "8548",
+                    "artistName": "Kim Kang Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/XJ6qq_5s.jpg",
+                    "characterName": "Ye Joon [Secretary Gwon's son] (Ep. 8, 15-16)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "18091",
+                    "artistName": "Jung Jae Sung",
+                    "artistImageURL": "https://i.mydramalist.com/zBDbxO_5s.jpg",
+                    "characterName": "[O Sol’s boss] (Ep. 16)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "10577",
+                    "artistName": "Choi Yeon Ho",
+                    "artistImageURL": "https://i.mydramalist.com/wb6Zk_5s.jpg",
+                    "characterName": "Bodhisattva Wang [Fortune-teller]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "20031",
+                    "artistName": "Park Yong",
+                    "artistImageURL": "https://i.mydramalist.com/dxE2b_5s.jpg",
+                    "characterName": "[Gil Oh Sol's job interview attempt] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21144",
+                    "artistName": "Seo Wang Seok",
+                    "artistImageURL": "https://i.mydramalist.com/4rX7Q_5s.jpg",
+                    "characterName": "[Gil Oh Sol's job interview attempt] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "20510",
+                    "artistName": "Bae Yoon Kyung",
+                    "artistImageURL": "https://i.mydramalist.com/pVxzrs.jpg",
+                    "characterName": "Eun Hee (Ep. 2, 6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "11137",
+                    "artistName": "Ham Sung Min",
+                    "artistImageURL": "https://i.mydramalist.com/rb7Qms.jpg",
+                    "characterName": "[Action figure collector]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "23049",
+                    "artistName": "Hong Ye Ji",
+                    "artistImageURL": "https://i.mydramalist.com/ABmVNv_5s.jpg",
+                    "characterName": "[TV show ]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21334",
+                    "artistName": "Kim Han Jong",
+                    "artistImageURL": "https://i.mydramalist.com/jgLJz_5s.jpg",
+                    "characterName": "[Client/Sexual Offender] (Ep. 6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "3824",
+                    "artistName": "Shin So Yool",
+                    "artistImageURL": "https://i.mydramalist.com/dW5Y0_5s.jpg",
+                    "characterName": "[Hotel receptionist] (Ep. 10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21053",
+                    "artistName": "Jang Tae Min",
+                    "artistImageURL": "https://i.mydramalist.com/eoZmQs.jpg",
+                    "characterName": "[Detective] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "42853",
+                    "artistName": "Jo Ryeon",
+                    "artistImageURL": "https://i.mydramalist.com/0dkye_5s.jpg",
+                    "characterName": "Jeong Hye Won [Gil Oh Sol's mother]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "40977",
+                    "artistName": "Shin Hee Gook",
+                    "artistImageURL": "https://i.mydramalist.com/XBXRp_5s.jpg",
+                    "characterName": "[Student]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "29599",
+                    "artistName": "Im Seung Min",
+                    "artistImageURL": "https://i.mydramalist.com/1rvOd_5s.jpg",
+                    "characterName": "Gil Oh Dol (Young)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "25581",
+                    "artistName": "Koo Min Hyuk",
+                    "artistImageURL": "https://i.mydramalist.com/jxd2B_5s.jpg",
+                    "characterName": "[Thug in parking lot car wash area]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "17907",
+                    "artistName": "Lee Gyu Sub",
+                    "artistImageURL": "https://i.mydramalist.com/EXk3m_5s.jpg",
+                    "characterName": "[Thug in parking lot car wash area]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "48775",
+                    "artistName": "Lee Yoon Jae",
+                    "artistImageURL": "https://i.mydramalist.com/BDq2l_5s.jpg",
+                    "characterName": "[Interviewer] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "8200",
+                    "artistName": "Park So Hee",
+                    "artistImageURL": "https://i.mydramalist.com/Zb1NL_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "23048",
+                    "artistName": "Kam Rain",
+                    "artistImageURL": "https://i.mydramalist.com/RQOVr_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "20208",
+                    "artistName": "Jung Dong Geun",
+                    "artistImageURL": "https://i.mydramalist.com/6zXQK_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "19066",
+                    "artistName": "Lee Dong Yong",
+                    "artistImageURL": "https://i.mydramalist.com/2x2bws.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "17258",
+                    "artistName": "Hong Dong Young",
+                    "artistImageURL": "https://i.mydramalist.com/pP1pB_5s.jpg",
+                    "characterName": "[Playground child, lost his tooth] (Ep. 14,16)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "3569",
+                    "artistName": "Kim Joo Young",
+                    "artistImageURL": "https://i.mydramalist.com/en0vns.jpg",
+                    "characterName": "[Jae Min's fellow actor on set] (Ep 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "44155",
+                    "artistName": "Jin Shi Won",
+                    "artistImageURL": "https://i.mydramalist.com/eB8oq_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "105409",
+                    "artistName": "Kwon Hye Ryung",
+                    "artistImageURL": "https://i.mydramalist.com/6YQ82_5s.jpg",
+                    "characterName": "[Female employee]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "10878",
+                    "artistName": "Kang Hyun Jung",
+                    "artistImageURL": "https://i.mydramalist.com/XX8LO_5s.jpg",
+                    "characterName": "Choi Daniel's Seonbae",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5862",
+                    "artistName": "Choi Gyo Shik",
+                    "artistImageURL": "https://i.mydramalist.com/WXzRP_5s.jpg",
+                    "characterName": "[Apartment security guard]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21602",
+                    "artistName": "Kim Kyung Il",
+                    "artistImageURL": "https://i.mydramalist.com/weDJY_5s.jpg",
+                    "characterName": "[Shreds document in Lawyers office] (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "2390",
+                    "artistName": "Kim Byung Chun",
+                    "artistImageURL": "https://i.mydramalist.com/ZqYOq_5s.jpg",
+                    "characterName": "[CEO Cha's assistant]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "50989",
+                    "artistName": "Lee Yoo Soo",
+                    "artistImageURL": "https://i.mydramalist.com/18BOd_5s.jpg",
+                    "characterName": "[Hospital doctor who catches patient Baek] (Ep. 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "9413",
+                    "artistName": "Kim Sun Bin",
+                    "artistImageURL": "https://i.mydramalist.com/2kK8W_5s.jpg",
+                    "characterName": "[Angry lawyer] (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "18150",
+                    "artistName": "Lee Jin Kwon",
+                    "artistImageURL": "https://i.mydramalist.com/7gjKRs.jpg",
+                    "characterName": "[President Yang's assistant]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "28391",
+                    "artistName": "Kim Byung Chul",
+                    "artistImageURL": "https://i.mydramalist.com/EN8L0_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "46495",
+                    "artistName": "Kim Seung Bi",
+                    "artistImageURL": "https://i.mydramalist.com/XO77X_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "128299",
+                    "artistName": "Park Chan Woo",
+                    "artistImageURL": "https://i.mydramalist.com/QJNwp2_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "95065",
+                    "artistName": "Kim Wang Yong",
+                    "artistImageURL": "https://i.mydramalist.com/48w4Y_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "56113",
+                    "artistName": "Kim Soo Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/jvjRr_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/26049-clean-with-passion-for-now"
+        },
+        "airedOn": {
+            "value": [
+                "Monday",
+                "Tuesday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/26049-clean-with-passion-for-now"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "20992",
+            "artistName": "Han Hui Jeong",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "12276",
+            "artistName": "Hak Jin",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "15882",
+            "artistName": "Cha In Ha",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "11137",
+            "artistName": "Ham Sung Min",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "21334",
+            "artistName": "Kim Han Jong",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "42853",
+            "artistName": "Jo Ryeon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "29599",
+            "artistName": "Im Seung Min",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "8200",
+            "artistName": "Park So Hee",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "3569",
+            "artistName": "Kim Joo Young",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "9413",
+            "artistName": "Kim Sun Bin",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "46495",
+            "artistName": "Kim Seung Bi",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "asianwiki",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": null,
+        "airedOn": "mydramalist"
+    }
+}
