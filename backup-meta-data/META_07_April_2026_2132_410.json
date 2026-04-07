@@ -1,0 +1,619 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260407_213217",
+    "timestamp": "07 April 2026 09:36 PM (IST)",
+    "showID": 410,
+    "showName": "My Undead Yokai Girlfriend",
+    "fetchedFields": {
+        "showImage": {
+            "value": "410.jpg",
+            "source": "asianwiki (Fallback: mydramalist)",
+            "source_link": "https://mydramalist.com/724827-boku-no-itoshii-youkai-girlfriend"
+        },
+        "releaseDate": {
+            "value": "Mar 22, 2024",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/724827-boku-no-itoshii-youkai-girlfriend"
+        },
+        "otherNames": {
+            "value": [
+                "Boku no Itoshii Youkai Garufurendo",
+                "My Dear Youkai Girlfriend",
+                "Boku no Itoshii Youkai Girlfriend"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/724827-boku-no-itoshii-youkai-girlfriend"
+        },
+        "Duration": {
+            "value": "35 mins",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/724827-boku-no-itoshii-youkai-girlfriend"
+        },
+        "synopsis": {
+            "value": "Set in the beautiful city of Kyoto, a strange relationship develops between lonely university game geek Tadashi, who yearns for nothing more than to find a girlfriend, and Izzy, a Yokai girl who can only sustain herself by engaging in physical relationships with men. While Izzy’s true intention is to exact revenge on a human family over an incident 500 years ago, Hachi struggles to find a peaceful solution to the problem.",
+            "source": "asianwiki (Fallback: mydramalist)",
+            "source_link": "https://mydramalist.com/724827-boku-no-itoshii-youkai-girlfriend"
+        },
+        "director": {
+            "value": [
+                "Miki Takahiro"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/724827-boku-no-itoshii-youkai-girlfriend"
+        },
+        "tags": {
+            "value": [
+                "Physically Strong Female Lead",
+                "Supernatural Being-Human Relationship",
+                "Protective Female Lead",
+                "Gender Role Reversal",
+                "Badass Female Lead",
+                "Eccentric Female Lead",
+                "Weak Male Lead",
+                "Supernatural",
+                "Youth",
+                "Emotionally Strong Female Lead"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/724827-boku-no-itoshii-youkai-girlfriend"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "20280",
+                    "artistName": "Miki Takahiro",
+                    "artistImageURL": "https://i.mydramalist.com/QJXJvg_5m.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "13661",
+                    "artistName": "Sano Hayato",
+                    "artistImageURL": "https://i.mydramalist.com/oQZnkO_5s.jpg",
+                    "characterName": "Inukai Tadashi / \"Hachi\" / \"Wetty\"",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "1308",
+                    "artistName": "Yoshikawa Ai",
+                    "artistImageURL": "https://i.mydramalist.com/3oYjwe_5s.jpg",
+                    "characterName": "\"Izzy\" / Izuna Imiki",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "1979",
+                    "artistName": "Kitamura Yukiya",
+                    "artistImageURL": "https://i.mydramalist.com/Wg2e5_5s.jpg",
+                    "characterName": "Tenkai",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "523",
+                    "artistName": "Sorimachi Takashi",
+                    "artistImageURL": "https://i.mydramalist.com/2PWVd_5s.jpg",
+                    "characterName": "Inukai Tadayoshi",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "18308",
+                    "artistName": "Anthony",
+                    "artistImageURL": "https://i.mydramalist.com/l0DBZE_5s.jpg",
+                    "characterName": "Tanuki R Yonagi",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "6598",
+                    "artistName": "Taira Yuna",
+                    "artistImageURL": "https://i.mydramalist.com/Xo1LZ_5s.jpg",
+                    "characterName": "Renjo Arisa",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5730",
+                    "artistName": "Kurihara Louis",
+                    "artistImageURL": "https://i.mydramalist.com/XQ6gx_5s.jpg",
+                    "characterName": "Shikazono Kouki",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "23182",
+                    "artistName": "Kiryu Sakura",
+                    "artistImageURL": "https://i.mydramalist.com/YY17bg_5s.jpg",
+                    "characterName": "Komiyama Hikari",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "9297",
+                    "artistName": "Ishii Anna",
+                    "artistImageURL": "https://i.mydramalist.com/Kp4bb0_5s.jpg",
+                    "characterName": "Suzuki Nico",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3228",
+                    "artistName": "Hakamada Yoshihiko",
+                    "artistImageURL": "https://i.mydramalist.com/eAnop_5s.jpg",
+                    "characterName": "Renjo Sakon",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2710",
+                    "artistName": "Natsuki Mari",
+                    "artistImageURL": "https://i.mydramalist.com/jQbmzd_5s.jpg",
+                    "characterName": "Goromaru Saori",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2697",
+                    "artistName": "Itaya Yuka",
+                    "artistImageURL": "https://i.mydramalist.com/0KZW6_5s.jpg",
+                    "characterName": "Inukai Shizuka",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "19857",
+                    "artistName": "Saito Nagisa",
+                    "artistImageURL": "https://i.mydramalist.com/PxmKNL_5s.jpg",
+                    "characterName": "Inukai Misa",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "847",
+                    "artistName": "Sakurada Dori",
+                    "artistImageURL": "https://i.mydramalist.com/QyXWY_5s.jpg",
+                    "characterName": "Mikuni Benitaro",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "7784",
+                    "artistName": "Kato Ryo",
+                    "artistImageURL": "https://i.mydramalist.com/Wvq63s.jpg",
+                    "characterName": "Terauchi Kazunori",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "116815",
+                    "artistName": "Kurahara Ken",
+                    "artistImageURL": "https://i.mydramalist.com/l0ZXnQ_5s.jpg",
+                    "characterName": "Kanda [Detective]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "103587",
+                    "artistName": "Yamamoto Akihiro",
+                    "artistImageURL": "https://i.mydramalist.com/qpqJ5_5s.jpg",
+                    "characterName": "Ueno Yoshihisa [Detective]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5228",
+                    "artistName": "Yamamoto Ryosuke",
+                    "artistImageURL": "https://i.mydramalist.com/ZBXEY_5s.jpg",
+                    "characterName": "Ippongi Hayato (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "16339",
+                    "artistName": "Konno Ayaka",
+                    "artistImageURL": "https://i.mydramalist.com/Xdekqg_5s.jpg",
+                    "characterName": "Karen (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5149",
+                    "artistName": "Imoaraizaka Kakaricho",
+                    "artistImageURL": "https://i.mydramalist.com/eXg3Y_5s.jpg",
+                    "characterName": "\"Mai\" (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "111271",
+                    "artistName": "Jinjin",
+                    "artistImageURL": "https://i.mydramalist.com/ZYN3q_5s.jpg",
+                    "characterName": "[Masato's entourage] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "117067",
+                    "artistName": "Ohira Moe",
+                    "artistImageURL": "https://i.mydramalist.com/nO74OB_5s.jpg",
+                    "characterName": "[Hayato's entourage] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "111273",
+                    "artistName": "Tanakaga",
+                    "artistImageURL": "https://i.mydramalist.com/WOwNR_5s.jpg",
+                    "characterName": "[Hayato's entourage] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "29541",
+                    "artistName": "Tsurushima Noa",
+                    "artistImageURL": "https://i.mydramalist.com/b3roYx_5s.jpg",
+                    "characterName": "[Hayato's entourage] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "73453",
+                    "artistName": "Mihara Ui",
+                    "artistImageURL": "https://i.mydramalist.com/b3rRNE_5s.jpg",
+                    "characterName": "[Hayato's entourage] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "34127",
+                    "artistName": "Matsuzaki Shohei",
+                    "artistImageURL": "https://i.mydramalist.com/O8JRY3_5s.jpg",
+                    "characterName": "Kyohei (Ep. 1-2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "12566",
+                    "artistName": "Mochizuki Ayumu",
+                    "artistImageURL": "https://i.mydramalist.com/nONZe8_5s.jpg",
+                    "characterName": "Ippongi Masato (Ep. 1, 3, 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "1821",
+                    "artistName": "Hamada Mari",
+                    "artistImageURL": "https://i.mydramalist.com/nOZ4yE_5s.jpg",
+                    "characterName": "Sawada Natsuko (Ep. 1, 3-4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "22461",
+                    "artistName": "Itose Nanaha",
+                    "artistImageURL": "https://i.mydramalist.com/nON6qE_5s.jpg",
+                    "characterName": "Hayasaka Yuko (Ep. 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "2702",
+                    "artistName": "Tsukaji Muga",
+                    "artistImageURL": "https://i.mydramalist.com/qRVD0_5s.jpg",
+                    "characterName": "[Hippie] (Ep. 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "1180",
+                    "artistName": "Takenaka Naoto",
+                    "artistImageURL": "https://i.mydramalist.com/Pxz0v0_5s.jpg",
+                    "characterName": "Ippongi Takeru (Ep. 3-4, 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "2061",
+                    "artistName": "Hashimoto Jun",
+                    "artistImageURL": "https://i.mydramalist.com/015l7s.jpg",
+                    "characterName": "Ninomiya Saigen (Ep. 3-6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "697",
+                    "artistName": "Fujii Mina",
+                    "artistImageURL": "https://i.mydramalist.com/0KbR4_5s.jpg",
+                    "characterName": "Hisana (Ep. 3, 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "99153",
+                    "artistName": "Iwakawa Haru",
+                    "artistImageURL": "https://i.mydramalist.com/NdZ1WA_5s.jpg",
+                    "characterName": "Inukai Tadashi [Child] (Ep. 3, 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "133201",
+                    "artistName": "Ikemura Sakura",
+                    "artistImageURL": "https://i.mydramalist.com/pdjV7Q_5s.jpg",
+                    "characterName": "\"Izzy\" / Izuna Imiki [Child] (Ep. 3, 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "13964",
+                    "artistName": "Matobu Sei",
+                    "artistImageURL": "https://i.mydramalist.com/XBVZJ_5s.jpg",
+                    "characterName": "Mikurube Shana (Ep. 4, 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "1947",
+                    "artistName": "Nomaguchi Toru",
+                    "artistImageURL": "https://i.mydramalist.com/E32gW_5s.jpg",
+                    "characterName": "Yomoda Hideaki (Ep. 4, 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "93103",
+                    "artistName": "Komatsu Hanna",
+                    "artistImageURL": "https://i.mydramalist.com/d5Z1A_5s.jpg",
+                    "characterName": "[Shana's disguise] (Ep. 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "127115",
+                    "artistName": "Ikemura Aoi",
+                    "artistImageURL": "https://i.mydramalist.com/Bd285R_5s.jpg",
+                    "characterName": "Renjo Arisa [Child] (Ep. 7-8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "45753",
+                    "artistName": "Oshima Miyu",
+                    "artistImageURL": "https://i.mydramalist.com/mOdlOq_5s.jpg",
+                    "characterName": "[Izzy's sister] (Ep. 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "75601",
+                    "artistName": "Hatori Koiro",
+                    "artistImageURL": "https://i.mydramalist.com/B4AX5_5s.jpg",
+                    "characterName": "[Izzy's sister] (Ep. 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "116749",
+                    "artistName": "Utaha",
+                    "artistImageURL": "https://i.mydramalist.com/qYV6W5_5s.jpg",
+                    "characterName": "[MC of eLegends Cup] (Ep. 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "83933",
+                    "artistName": "Moritani Nanae",
+                    "artistImageURL": "https://i.mydramalist.com/Z87nw8_5s.jpg",
+                    "characterName": "[eLegends Cup audience] (Ep. 8)",
+                    "role": "Guest Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/724827-boku-no-itoshii-youkai-girlfriend"
+        },
+        "network": {
+            "value": [
+                "Amazon MGM Studios",
+                "Amazon Prime"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/724827-boku-no-itoshii-youkai-girlfriend"
+        },
+        "airedOn": {
+            "value": [
+                "Friday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/724827-boku-no-itoshii-youkai-girlfriend"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "20280",
+            "artistName": "Miki Takahiro",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "13661",
+            "artistName": "Sano Hayato",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "1979",
+            "artistName": "Kitamura Yukiya",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "523",
+            "artistName": "Sorimachi Takashi",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "18308",
+            "artistName": "Anthony",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "6598",
+            "artistName": "Taira Yuna",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "5730",
+            "artistName": "Kurihara Louis",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "23182",
+            "artistName": "Kiryu Sakura",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "9297",
+            "artistName": "Ishii Anna",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "3228",
+            "artistName": "Hakamada Yoshihiko",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "2710",
+            "artistName": "Natsuki Mari",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "2697",
+            "artistName": "Itaya Yuka",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "19857",
+            "artistName": "Saito Nagisa",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "847",
+            "artistName": "Sakurada Dori",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "7784",
+            "artistName": "Kato Ryo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "116815",
+            "artistName": "Kurahara Ken",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "103587",
+            "artistName": "Yamamoto Akihiro",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "5228",
+            "artistName": "Yamamoto Ryosuke",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "16339",
+            "artistName": "Konno Ayaka",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "5149",
+            "artistName": "Imoaraizaka Kakaricho",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "111271",
+            "artistName": "Jinjin",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "117067",
+            "artistName": "Ohira Moe",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "111273",
+            "artistName": "Tanakaga",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "29541",
+            "artistName": "Tsurushima Noa",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "73453",
+            "artistName": "Mihara Ui",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "34127",
+            "artistName": "Matsuzaki Shohei",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "12566",
+            "artistName": "Mochizuki Ayumu",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "1821",
+            "artistName": "Hamada Mari",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "22461",
+            "artistName": "Itose Nanaha",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "2702",
+            "artistName": "Tsukaji Muga",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "1180",
+            "artistName": "Takenaka Naoto",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "2061",
+            "artistName": "Hashimoto Jun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "697",
+            "artistName": "Fujii Mina",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "99153",
+            "artistName": "Iwakawa Haru",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "133201",
+            "artistName": "Ikemura Sakura",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "13964",
+            "artistName": "Matobu Sei",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "1947",
+            "artistName": "Nomaguchi Toru",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "93103",
+            "artistName": "Komatsu Hanna",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "127115",
+            "artistName": "Ikemura Aoi",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "45753",
+            "artistName": "Oshima Miyu",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "75601",
+            "artistName": "Hatori Koiro",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "116749",
+            "artistName": "Utaha",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "83933",
+            "artistName": "Moritani Nanae",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "asianwiki (Fallback: mydramalist)",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki (Fallback: mydramalist)",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": "mydramalist",
+        "airedOn": "mydramalist"
+    }
+}

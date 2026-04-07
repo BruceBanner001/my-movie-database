@@ -1,0 +1,618 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260407_213217",
+    "timestamp": "07 April 2026 09:33 PM (IST)",
+    "showID": 303,
+    "showName": "Love of Thousand Years",
+    "fetchedFields": {
+        "showImage": {
+            "value": "303.jpg",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/34088-the-killing-of-three-thousand-crows"
+        },
+        "releaseDate": {
+            "value": "Mar 19, 2020 - Apr 10, 2020",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/34088-the-killing-of-three-thousand-crows"
+        },
+        "otherNames": {
+            "value": [
+                "Saam Chin A Saat",
+                "San Qian Ya Sha",
+                "The Killing of Three Thousand Crows",
+                "三千鴉殺"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/34088-the-killing-of-three-thousand-crows"
+        },
+        "Duration": {
+            "value": "45 mins",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/34088-the-killing-of-three-thousand-crows"
+        },
+        "synopsis": {
+            "value": "Fu Jiu Yun is an immortal deity who falls in love with a mortal woman with whom he longs to have a relationship. Plenty powerful yet unable to win her heart, he finds himself following her through a thousand years and ten different mortal incarnations, but to no avail.\n\nThen she is reborn as a princess, giving promise to things being different. And indeed they will be since an evil-minded prince and\n\na group of demons from a neighboring realm hatch a devious plan to destroy the princess. The plot succeeds in wiping out her family and devastating her realm in the process. By taking on the form of her maid Ah Man, she cleverly escapes from her foes.\n\nDetermined to exact revenge upon those who wronged her, she invites Fu Jiu Yun to help her, eventually forming a love bond. But destiny dictates that their romance may be short-lived, forcing them to make difficult decisions that will forever impact their lives and those of the princess’ subjects.",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/34088-the-killing-of-three-thousand-crows"
+        },
+        "director": {
+            "value": [
+                "Hui Yu"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/34088-the-killing-of-three-thousand-crows"
+        },
+        "tags": {
+            "value": [
+                "Male Chases Female First",
+                "Adapted From A Novel",
+                "Xuanhuan",
+                "Forbidden Love",
+                "Playful Male Lead",
+                "Hidden Identity",
+                "Love/Hate Relationship",
+                "Reincarnation",
+                "War",
+                "Multiple Couples"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/34088-the-killing-of-three-thousand-crows"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "97929",
+                    "artistName": "Meng Fei",
+                    "artistImageURL": "https://i.mydramalist.com/wyn3n_5m.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "41279",
+                    "artistName": "Hui Yu",
+                    "artistImageURL": "https://i.mydramalist.com/zBpz0d_5m.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "52145",
+                    "artistName": "Shi Si Lang",
+                    "artistImageURL": "https://i.mydramalist.com/k1Nxk_5m.jpg",
+                    "characterName": null,
+                    "role": "Original Creator"
+                },
+                {
+                    "artistID": "56899",
+                    "artistName": "Lu Guo Qiang",
+                    "artistImageURL": "https://i.mydramalist.com/prr2V_5m.jpg",
+                    "characterName": null,
+                    "role": "Producer"
+                },
+                {
+                    "artistID": "57697",
+                    "artistName": "You Jing",
+                    "artistImageURL": "https://i.mydramalist.com/x1JvX_5m.jpg",
+                    "characterName": null,
+                    "role": "Producer"
+                },
+                {
+                    "artistID": "125101",
+                    "artistName": "Zhao Tian You",
+                    "artistImageURL": "https://i.mydramalist.com/Xde23q_5m.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "12780",
+                    "artistName": "Zheng Ye Cheng",
+                    "artistImageURL": "https://i.mydramalist.com/Lw0z6b_5s.jpg",
+                    "characterName": "Fu Jiu Yun",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "18211",
+                    "artistName": "Zhao Lu Si",
+                    "artistImageURL": "https://i.mydramalist.com/g0wJdd_5s.jpg",
+                    "characterName": "Di Ji/Qin Chuan",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "11055",
+                    "artistName": "Wang Meng Li",
+                    "artistImageURL": "https://i.mydramalist.com/mOLXQb_5s.jpg",
+                    "characterName": "Xuan Zhu [Qin Chuan's cousin]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "29831",
+                    "artistName": "Liu Yi Tong",
+                    "artistImageURL": "https://i.mydramalist.com/mOLX4b_5s.jpg",
+                    "characterName": "Zuo Zi Chen [Qin Chuan's first love]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "7277",
+                    "artistName": "Jiang Yi Yi",
+                    "artistImageURL": "https://i.mydramalist.com/pdjEpr_5s.jpg",
+                    "characterName": "Princess / Yan Yan",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "37693",
+                    "artistName": "Dai Yun Fan",
+                    "artistImageURL": "https://i.mydramalist.com/jDmEJ_5s.jpg",
+                    "characterName": "Li Yuan [Crown Prince of Tian Yuan Kingdom]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "10056",
+                    "artistName": "Mao Fang Yuan",
+                    "artistImageURL": "https://i.mydramalist.com/g0Lzdr_5s.jpg",
+                    "characterName": "Ting Yuan / Er Meng [Prince of Tian Yuan Kingdom]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "34625",
+                    "artistName": "Li Ming Jun",
+                    "artistImageURL": "https://i.mydramalist.com/wJwkAk_5s.jpg",
+                    "characterName": "Bai Jing Zi [White Mirror]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "37205",
+                    "artistName": "Zhang Xing Zhe",
+                    "artistImageURL": "https://i.mydramalist.com/j8OXzs.jpg",
+                    "characterName": "Zuo Xiang [Left Minister, Zuo Zi Chen's father]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "7816",
+                    "artistName": "Wang Xing Han",
+                    "artistImageURL": "https://i.mydramalist.com/81oOlD_5s.jpg",
+                    "characterName": "[Master of Xiang Qu Mountain]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "8070",
+                    "artistName": "Gao Ji Cai",
+                    "artistImageURL": "https://i.mydramalist.com/NdOEBR_5s.jpg",
+                    "characterName": "[2nd Prince of Li Kingdom]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "17449",
+                    "artistName": "Xu Meng Yuan",
+                    "artistImageURL": "https://i.mydramalist.com/x4E44w_5s.jpg",
+                    "characterName": "Cui Ya [Servant of Xiang Qu Mountain and Qin Chuan's close friend]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "15499",
+                    "artistName": "Ding Zi Ling",
+                    "artistImageURL": "https://i.mydramalist.com/276LEs.jpg",
+                    "characterName": "Madame Qiu Hua [Xuan Zhu's mother]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "41193",
+                    "artistName": "Guo Qi Ming",
+                    "artistImageURL": "https://i.mydramalist.com/RLW0x_5s.jpg",
+                    "characterName": "Demon King of Nan Man / Royal Advisor",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "41163",
+                    "artistName": "Zhang Ding Ding",
+                    "artistImageURL": "https://i.mydramalist.com/4b3Nws.jpg",
+                    "characterName": "Qing Qing [Senior disciple of Xiang Qu mountain]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "41219",
+                    "artistName": "Wang Jing",
+                    "artistImageURL": "https://i.mydramalist.com/xbK0E_5s.jpg",
+                    "characterName": "You You",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "41167",
+                    "artistName": "Lu Ting Yu",
+                    "artistImageURL": "https://i.mydramalist.com/4eNAEd_5s.jpg",
+                    "characterName": "Yi Xin [Disciple of Xiang Qu mountain]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "38975",
+                    "artistName": "Yang Guang",
+                    "artistImageURL": "https://i.mydramalist.com/E5d4bW_5s.jpg",
+                    "characterName": "[Storyteller]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "13846",
+                    "artistName": "Zhou Mei Yi",
+                    "artistImageURL": "https://i.mydramalist.com/WkdxP_5s.jpg",
+                    "characterName": "Attendant Zhao [Head of the attendants at Xiang Qu mountain]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "41223",
+                    "artistName": "Zhao Xiao Su",
+                    "artistImageURL": "https://i.mydramalist.com/dAAPzs.jpg",
+                    "characterName": "Dragon King of the White River",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "12966",
+                    "artistName": "Canti Lau",
+                    "artistImageURL": "https://i.mydramalist.com/OxyQxs.jpg",
+                    "characterName": "Emperor Bao An of Li Kingdom [Yan Yan's father]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "41185",
+                    "artistName": "Qiao Hong",
+                    "artistImageURL": "https://i.mydramalist.com/ee1O8_5s.jpg",
+                    "characterName": "Empress of Li Kingdom",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "41227",
+                    "artistName": "Zhao Tian Ge",
+                    "artistImageURL": "https://i.mydramalist.com/rEEdgs.jpg",
+                    "characterName": "Tao Xiao Ling",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "13857",
+                    "artistName": "Liao Song Mei",
+                    "artistImageURL": "https://i.mydramalist.com/p3p7r_5s.jpg",
+                    "characterName": "Auntie Guo",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "41241",
+                    "artistName": "Li Shi Yan",
+                    "artistImageURL": "https://i.mydramalist.com/Wz17l_5s.jpg",
+                    "characterName": "Madam [Owner of Yan Yan Restaurant]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "52121",
+                    "artistName": "Wu Shu Lin",
+                    "artistImageURL": "https://i.mydramalist.com/65BYd_5s.jpg",
+                    "characterName": "Minister Li",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "41229",
+                    "artistName": "Yan Dong",
+                    "artistImageURL": "https://i.mydramalist.com/xKY43s.jpg",
+                    "characterName": "Dugu Zhui Tian",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "18851",
+                    "artistName": "Zhang Zi Yu",
+                    "artistImageURL": "https://i.mydramalist.com/B5KRR_5s.jpg",
+                    "characterName": "Xiao Hua",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "28699",
+                    "artistName": "Wang Zi Qian",
+                    "artistImageURL": "https://i.mydramalist.com/73VDOn_5s.jpg",
+                    "characterName": "Shu Tong",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "41233",
+                    "artistName": "Mirrre",
+                    "artistImageURL": "https://i.mydramalist.com/27Dods.jpg",
+                    "characterName": "Hu Ji",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "41239",
+                    "artistName": "Shao Pei",
+                    "artistImageURL": "https://i.mydramalist.com/XlZlw_5s.jpg",
+                    "characterName": "[Attendant of Washing Department]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "51051",
+                    "artistName": "Lu Huan",
+                    "artistImageURL": "https://i.mydramalist.com/O84w4P_5s.jpg",
+                    "characterName": "Attendant Wang",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "41161",
+                    "artistName": "Li Lu Qi",
+                    "artistImageURL": "https://i.mydramalist.com/d0yX4b_5s.jpg",
+                    "characterName": "Mei Shan Jun [Immortal and Fu Jiu Yun's friend]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "38181",
+                    "artistName": "Zhao Rui",
+                    "artistImageURL": "https://i.mydramalist.com/1LLoRs.jpg",
+                    "characterName": "Empress of Tian Yuan Kingdom",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "39809",
+                    "artistName": "Jin Long",
+                    "artistImageURL": "https://i.mydramalist.com/6Bzpd_5s.jpg",
+                    "characterName": "Emperor of Tian Yuan Kingdom",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "144665",
+                    "artistName": "Li Zhao",
+                    "artistImageURL": "https://i.mydramalist.com/mOLWbb_5s.jpg",
+                    "characterName": "Zi Jin [Xiang Qu mountain disciple]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "41273",
+                    "artistName": "Meng Xiang Liang",
+                    "artistImageURL": "https://i.mydramalist.com/0Lp5k_5s.jpg",
+                    "characterName": "Zhang Qi",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "41237",
+                    "artistName": "Li Pan",
+                    "artistImageURL": "https://i.mydramalist.com/QmX14s.jpg",
+                    "characterName": "[Concubine]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "41275",
+                    "artistName": "Zhu He",
+                    "artistImageURL": "https://i.mydramalist.com/EZ8V7_5s.jpg",
+                    "characterName": "[Beggar father]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "16230",
+                    "artistName": "Zhang Guo Qiang",
+                    "artistImageURL": "https://i.mydramalist.com/kVNQws.jpg",
+                    "characterName": "[Supervisor]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "154656",
+                    "artistName": "Kang Jia Ze",
+                    "artistImageURL": "https://i.mydramalist.com/l0qlbQ_5s.jpg",
+                    "characterName": "Li Yuan [Child]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "55845",
+                    "artistName": "He Wen Xiao",
+                    "artistImageURL": "https://i.mydramalist.com/3oA6Dd_5s.jpg",
+                    "characterName": "Qing Qing",
+                    "role": "Voice Actor"
+                },
+                {
+                    "artistID": "55825",
+                    "artistName": "Bai Xin Zan",
+                    "artistImageURL": "https://i.mydramalist.com/3o77ZW_5s.jpg",
+                    "characterName": "Xuan Zhu",
+                    "role": "Voice Actor"
+                },
+                {
+                    "artistID": "127433",
+                    "artistName": "Ling Fei",
+                    "artistImageURL": "https://i.mydramalist.com/nOJZOQ_5s.jpg",
+                    "characterName": "Ting Yuan",
+                    "role": "Voice Actor"
+                },
+                {
+                    "artistID": "127499",
+                    "artistName": "Li Jin Yan",
+                    "artistImageURL": "https://i.mydramalist.com/KpyvBq_5s.jpg",
+                    "characterName": "Qiu Hua [Madame]",
+                    "role": "Voice Actor"
+                },
+                {
+                    "artistID": "140163",
+                    "artistName": "Liu Qing",
+                    "artistImageURL": "https://i.mydramalist.com/JB7Pnw_5s.jpg",
+                    "characterName": "Cui Ya",
+                    "role": "Voice Actor"
+                },
+                {
+                    "artistID": "136439",
+                    "artistName": "Xu Jia Qi",
+                    "artistImageURL": "https://i.mydramalist.com/g0pXvr_5s.jpg",
+                    "characterName": "Di Nu",
+                    "role": "Voice Actor"
+                },
+                {
+                    "artistID": "147148",
+                    "artistName": "Liu Cong",
+                    "artistImageURL": "https://i.mydramalist.com/5vbEQL_5s.jpg",
+                    "characterName": "Zuo Xiang",
+                    "role": "Voice Actor"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/34088-the-killing-of-three-thousand-crows"
+        },
+        "airedOn": {
+            "value": [
+                "Thursday",
+                "Friday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/34088-the-killing-of-three-thousand-crows"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "41279",
+            "artistName": "Hui Yu",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "52145",
+            "artistName": "Shi Si Lang",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "56899",
+            "artistName": "Lu Guo Qiang",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "125101",
+            "artistName": "Zhao Tian You",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "12780",
+            "artistName": "Zheng Ye Cheng",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "7277",
+            "artistName": "Jiang Yi Yi",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "10056",
+            "artistName": "Mao Fang Yuan",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "37205",
+            "artistName": "Zhang Xing Zhe",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "7816",
+            "artistName": "Wang Xing Han",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "8070",
+            "artistName": "Gao Ji Cai",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "41193",
+            "artistName": "Guo Qi Ming",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "41163",
+            "artistName": "Zhang Ding Ding",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "41219",
+            "artistName": "Wang Jing",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "41167",
+            "artistName": "Lu Ting Yu",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "38975",
+            "artistName": "Yang Guang",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "13846",
+            "artistName": "Zhou Mei Yi",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "12966",
+            "artistName": "Canti Lau",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "13857",
+            "artistName": "Liao Song Mei",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "41241",
+            "artistName": "Li Shi Yan",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "41229",
+            "artistName": "Yan Dong",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "18851",
+            "artistName": "Zhang Zi Yu",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "41233",
+            "artistName": "Mirrre",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "41239",
+            "artistName": "Shao Pei",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "41161",
+            "artistName": "Li Lu Qi",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "38181",
+            "artistName": "Zhao Rui",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "39809",
+            "artistName": "Jin Long",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "41237",
+            "artistName": "Li Pan",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "41275",
+            "artistName": "Zhu He",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "16230",
+            "artistName": "Zhang Guo Qiang",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "154656",
+            "artistName": "Kang Jia Ze",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "mydramalist",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "mydramalist",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": null,
+        "airedOn": "mydramalist"
+    }
+}

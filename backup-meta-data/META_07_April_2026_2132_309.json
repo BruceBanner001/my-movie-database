@@ -1,0 +1,533 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260407_213217",
+    "timestamp": "07 April 2026 09:33 PM (IST)",
+    "showID": 309,
+    "showName": "Knock On The Happiness Door",
+    "fetchedFields": {
+        "showImage": {
+            "value": "309.jpg",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/39969-happiness-will-come-knocking-again"
+        },
+        "releaseDate": {
+            "value": "Aug 12, 2020 - Sep  4, 2020",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/39969-happiness-will-come-knocking-again"
+        },
+        "otherNames": {
+            "value": [
+                "Hang Fuk Waan Wui Loi Haau Mun",
+                "Happiness Will Come Knocking Again",
+                "Happiness Will Knock Again",
+                "Xing Fu Hai Hui Lai Qiao Men",
+                "幸福還會來敲門"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/39969-happiness-will-come-knocking-again"
+        },
+        "Duration": {
+            "value": "45 mins",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/39969-happiness-will-come-knocking-again"
+        },
+        "synopsis": {
+            "value": "A story about finding their worth follows a doctor and a policewoman who work tirelessly for their goals and find love in the process.\n\nHuang Zi Li, a man who experiences many troubles, travels from the Southwest to make a new life in the big city. Fang Yan is a policewoman who wants to do her job well. The two find themselves clashing at every turn until real sparks start to fly.",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/39969-happiness-will-come-knocking-again"
+        },
+        "director": {
+            "value": [
+                "Yan Po"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/39969-happiness-will-come-knocking-again"
+        },
+        "tags": {
+            "value": [
+                "Police Officer Female Lead",
+                "Age Gap [Drama Life]",
+                "Age Gap [Real Life]",
+                "Doctor Male Lead",
+                "Older Man/Younger Woman"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/39969-happiness-will-come-knocking-again"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "46303",
+                    "artistName": "Yan Po",
+                    "artistImageURL": "https://i.mydramalist.com/W7N35_5m.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "52273",
+                    "artistName": "Li Zhi An",
+                    "artistImageURL": "https://i.mydramalist.com/XQm0w_5m.jpg",
+                    "characterName": null,
+                    "role": "Producer"
+                },
+                {
+                    "artistID": "108049",
+                    "artistName": "Zhou Yong",
+                    "artistImageURL": "https://i.mydramalist.com/Q6O17_5m.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "7740",
+                    "artistName": "Nie Yuan",
+                    "artistImageURL": "https://i.mydramalist.com/qYOPwz_5s.jpg",
+                    "characterName": "Huang Zi Li",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "15799",
+                    "artistName": "Wu Jin Yan",
+                    "artistImageURL": "https://i.mydramalist.com/rNY2gE_5s.jpg",
+                    "characterName": "Fang Yan",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "7641",
+                    "artistName": "Mao Jun Jie",
+                    "artistImageURL": "https://i.mydramalist.com/WrAnDs.jpg",
+                    "characterName": "Liu Man Yu",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "5273",
+                    "artistName": "Qian Yong Chen",
+                    "artistImageURL": "https://i.mydramalist.com/Zm3x1_5s.jpg",
+                    "characterName": "Wang Jun Yi",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "7480",
+                    "artistName": "Li Cheng Yuan",
+                    "artistImageURL": "https://i.mydramalist.com/RJBWEs.jpg",
+                    "characterName": "Zhong Qing",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "13834",
+                    "artistName": "Bai Fan",
+                    "artistImageURL": "https://i.mydramalist.com/81OD2b_5s.jpg",
+                    "characterName": "Director Yu",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "57007",
+                    "artistName": "Huang Yi Zi",
+                    "artistImageURL": "https://i.mydramalist.com/krKzg_5s.jpg",
+                    "characterName": "Jia Ting",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "51083",
+                    "artistName": "Li Meng",
+                    "artistImageURL": "https://i.mydramalist.com/4WX66_5s.jpg",
+                    "characterName": "Fan Zhi Peng",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "50347",
+                    "artistName": "Kang Ai Shi",
+                    "artistImageURL": "https://i.mydramalist.com/ZWe5Y_5s.jpg",
+                    "characterName": "Huang Han Min",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "38203",
+                    "artistName": "He Gong Xi",
+                    "artistImageURL": "https://i.mydramalist.com/jZQOv_5s.jpg",
+                    "characterName": "Xiao Han",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "30701",
+                    "artistName": "Guo Jia Ming",
+                    "artistImageURL": "https://i.mydramalist.com/QXNOWs.jpg",
+                    "characterName": "Huang Zi Qiang",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "30699",
+                    "artistName": "Feng En He",
+                    "artistImageURL": "https://i.mydramalist.com/dNeeW_5s.jpg",
+                    "characterName": "Zhong Zheng Dao",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "22729",
+                    "artistName": "Wu Yong Liang",
+                    "artistImageURL": "https://i.mydramalist.com/qqgg8s.jpg",
+                    "characterName": "An Xiao Duo",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "59269",
+                    "artistName": "Yu Qing",
+                    "artistImageURL": "https://i.mydramalist.com/QzerY_5s.jpg",
+                    "characterName": "Xiao Zhu",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "41185",
+                    "artistName": "Qiao Hong",
+                    "artistImageURL": "https://i.mydramalist.com/ee1O8_5s.jpg",
+                    "characterName": "Ding Bao Zhen",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "14271",
+                    "artistName": "Sun Wei",
+                    "artistImageURL": "https://i.mydramalist.com/eZrQE_5s.jpg",
+                    "characterName": "Zhang Jian",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "15134",
+                    "artistName": "Lou Jia Yue",
+                    "artistImageURL": "https://i.mydramalist.com/QPwL5_5s.jpg",
+                    "characterName": "Meng Lu",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3118",
+                    "artistName": "Yu Rong Guang",
+                    "artistImageURL": "https://i.mydramalist.com/e45Vd_5s.jpg",
+                    "characterName": "Fang Ming Da",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5060",
+                    "artistName": "Li Ying",
+                    "artistImageURL": "https://i.mydramalist.com/81J6QA_5s.jpg",
+                    "characterName": "Zhang Shu Ping",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "38211",
+                    "artistName": "Cao Li",
+                    "artistImageURL": "https://i.mydramalist.com/QyO77_5s.jpg",
+                    "characterName": "Li Yuan Zhang",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "34275",
+                    "artistName": "Zhu Hui",
+                    "artistImageURL": "https://i.mydramalist.com/pN1kD_5s.jpg",
+                    "characterName": "Lao Ge",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2228",
+                    "artistName": "Jill Hsu",
+                    "artistImageURL": "https://i.mydramalist.com/QJ2Qg5_5s.jpg",
+                    "characterName": "Wen Di",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3993",
+                    "artistName": "Cao Jun",
+                    "artistImageURL": "https://i.mydramalist.com/g07wLn_5s.jpg",
+                    "characterName": "Cao Yi",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "69195",
+                    "artistName": "Ren Jie",
+                    "artistImageURL": "https://i.mydramalist.com/qYWZdQ_5s.jpg",
+                    "characterName": "[Huang Zi Li's mother]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "72769",
+                    "artistName": "Xu Wang",
+                    "artistImageURL": "https://i.mydramalist.com/EOJ3b_5s.jpg",
+                    "characterName": "Xu Liang",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "78913",
+                    "artistName": "Zhang Xiao Shuai",
+                    "artistImageURL": "https://i.mydramalist.com/RE63Y_5s.jpg",
+                    "characterName": "Sun Rui",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "80659",
+                    "artistName": "Dong Shi Hao",
+                    "artistImageURL": "https://i.mydramalist.com/BdqPr1_5s.jpg",
+                    "characterName": "Brother Mao",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "91049",
+                    "artistName": "Kimi Yang",
+                    "artistImageURL": "https://i.mydramalist.com/eBD7W_5s.jpg",
+                    "characterName": "Xiao Wang",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "107899",
+                    "artistName": "Zhang Li Qiu",
+                    "artistImageURL": "https://i.mydramalist.com/jzJxO_5s.jpg",
+                    "characterName": "Grandmother Liu",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "23211",
+                    "artistName": "Qian Zhi",
+                    "artistImageURL": "https://i.mydramalist.com/62BYjs.jpg",
+                    "characterName": "Chief Liao",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "69845",
+                    "artistName": "Feng Ming Chao",
+                    "artistImageURL": "https://i.mydramalist.com/E5YJBQ_5s.jpg",
+                    "characterName": "Wei Chao",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "30985",
+                    "artistName": "Wu Hao",
+                    "artistImageURL": "https://i.mydramalist.com/Bxxdbs.jpg",
+                    "characterName": "Xiao Sun",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "42651",
+                    "artistName": "Xiang Yun Long",
+                    "artistImageURL": "https://i.mydramalist.com/Rw4Az_5s.jpg",
+                    "characterName": "Xiao Zheng",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "36649",
+                    "artistName": "Zhang Hao Yue",
+                    "artistImageURL": "https://i.mydramalist.com/WP5byl_5s.jpg",
+                    "characterName": "Ai Fei Er",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "86825",
+                    "artistName": "Li Jing",
+                    "artistImageURL": "https://i.mydramalist.com/Beeo7_5s.jpg",
+                    "characterName": "Xiao Cao",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "18933",
+                    "artistName": "Wang Hui",
+                    "artistImageURL": "https://i.mydramalist.com/kNxEj_5s.jpg",
+                    "characterName": "Wang Zi Jian",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "35429",
+                    "artistName": "Yang Yu Lan",
+                    "artistImageURL": "https://i.mydramalist.com/0wm1zk_5s.jpg",
+                    "characterName": "Sister Zhang",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "43271",
+                    "artistName": "Zhong Wen Bin",
+                    "artistImageURL": "https://i.mydramalist.com/w2Dxgs.jpg",
+                    "characterName": "Zhou Bing",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "97521",
+                    "artistName": "Lu Jie Jun",
+                    "artistImageURL": "https://i.mydramalist.com/d02v8g_5s.jpg",
+                    "characterName": "Hou Liang",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "67773",
+                    "artistName": "Ge Zhao Mei",
+                    "artistImageURL": "https://i.mydramalist.com/XRyEp_5s.jpg",
+                    "characterName": "[Elderly Lady]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "55547",
+                    "artistName": "Zhu Heng",
+                    "artistImageURL": "https://i.mydramalist.com/vx1We_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "147562",
+                    "artistName": "Shen Liang Jun",
+                    "artistImageURL": "https://i.mydramalist.com/81kgW2_5s.jpg",
+                    "characterName": "Qian Hao Yu",
+                    "role": "Voice Actor"
+                },
+                {
+                    "artistID": "143743",
+                    "artistName": "Zhao Zhen",
+                    "artistImageURL": "https://i.mydramalist.com/73JKze_5s.jpg",
+                    "characterName": "Wu Zheng",
+                    "role": "Voice Actor"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/39969-happiness-will-come-knocking-again"
+        },
+        "airedOn": {
+            "value": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday",
+                "Sunday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/39969-happiness-will-come-knocking-again"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "46303",
+            "artistName": "Yan Po",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "52273",
+            "artistName": "Li Zhi An",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "15799",
+            "artistName": "Wu Jin Yan",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "7641",
+            "artistName": "Mao Jun Jie",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "5273",
+            "artistName": "Qian Yong Chen",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "57007",
+            "artistName": "Huang Yi Zi",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "51083",
+            "artistName": "Li Meng",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "50347",
+            "artistName": "Kang Ai Shi",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "38203",
+            "artistName": "He Gong Xi",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "30701",
+            "artistName": "Guo Jia Ming",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "30699",
+            "artistName": "Feng En He",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "22729",
+            "artistName": "Wu Yong Liang",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "15134",
+            "artistName": "Lou Jia Yue",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "3118",
+            "artistName": "Yu Rong Guang",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "38211",
+            "artistName": "Cao Li",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "34275",
+            "artistName": "Zhu Hui",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "3993",
+            "artistName": "Cao Jun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "78913",
+            "artistName": "Zhang Xiao Shuai",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "23211",
+            "artistName": "Qian Zhi",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "69845",
+            "artistName": "Feng Ming Chao",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "36649",
+            "artistName": "Zhang Hao Yue",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "86825",
+            "artistName": "Li Jing",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "43271",
+            "artistName": "Zhong Wen Bin",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "97521",
+            "artistName": "Lu Jie Jun",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "mydramalist",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "mydramalist",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": null,
+        "airedOn": "mydramalist"
+    }
+}

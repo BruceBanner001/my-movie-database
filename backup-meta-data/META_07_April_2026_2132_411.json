@@ -1,0 +1,464 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260407_213217",
+    "timestamp": "07 April 2026 09:36 PM (IST)",
+    "showID": 411,
+    "showName": "Mad for Each Other",
+    "fetchedFields": {
+        "showImage": {
+            "value": "411.jpg",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Mad_For_Each_Other"
+        },
+        "releaseDate": {
+            "value": "May 24, 2021 - Jun 21, 2021",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/79527-the-crazy-guy-in-the-district"
+        },
+        "otherNames": {
+            "value": [
+                "Bláznivě zamilovaní",
+                "Crazy Person in the Area",
+                "Crazy X in Town",
+                "I Guyeogui MichinX",
+                "Insane Person in the Area",
+                "Insane X in Town",
+                "Loucos Um Pelo Outro",
+                "Nebuni Unul după Celălalt",
+                "The Crazy Guy in the District",
+                "The Crazy Guy in This District",
+                "Un amor loco",
+                "Yi Guyeokui Michin X",
+                "Сумасшедший парень этого района",
+                "هائمان في الحب",
+                "このエリアのクレイジーX",
+                "这个地区的疯狂X"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/79527-the-crazy-guy-in-the-district"
+        },
+        "Duration": {
+            "value": "35 mins",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/79527-the-crazy-guy-in-the-district"
+        },
+        "synopsis": {
+            "value": "No Whi-Oh (Jung Woo) works as a detective. He thinks that he has a pretty decent life. One day, an incident takes place. This causes No Whi-Oh's life to change. He becomes a crazy guy, unable to control his anger and he gets angry at everything. He tries to return to former self, but, during this time, he gets involved with another crazy person, Lee Min-Kyung (Oh Yeon-Seo). She has a sophisticated appearance and a fine job, but something happens to her. Her ordinary life collapses and she doesn't trust anyone anymore. She has delusions and is compulsive. No Whi-Oh and Lee Min-Kyung become attracted to each other.",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Mad_For_Each_Other"
+        },
+        "director": {
+            "value": [
+                "Lee Tae Gon"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/79527-the-crazy-guy-in-the-district"
+        },
+        "tags": {
+            "value": [
+                "Trauma",
+                "Enemies To Lovers",
+                "Healing",
+                "Character Development",
+                "Dog",
+                "Dating Violence",
+                "Paranoia",
+                "Cross-Dressing",
+                "Web Series",
+                "Mental Illness"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/79527-the-crazy-guy-in-the-district"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "16686",
+                    "artistName": "Lee Tae Gon",
+                    "artistImageURL": "https://i.mydramalist.com/64evWm.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "70727",
+                    "artistName": "Ah Kyung",
+                    "artistImageURL": "https://i.mydramalist.com/kjvpO_5m.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "1722",
+                    "artistName": "Oh Yeon Seo",
+                    "artistImageURL": "https://i.mydramalist.com/XQ88Z_5s.jpg",
+                    "characterName": "Lee Min Gyeong",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "5124",
+                    "artistName": "Jung Woo",
+                    "artistImageURL": "https://i.mydramalist.com/rg2Lm_5s.jpg",
+                    "characterName": "No Hwi O",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "6308",
+                    "artistName": "Baek Ji Won",
+                    "artistImageURL": "https://i.mydramalist.com/3oxZkd_5s.jpg",
+                    "characterName": "Kim In Ja [Women's association's president]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3305",
+                    "artistName": "Lee Hye Eun",
+                    "artistImageURL": "https://i.mydramalist.com/PxKWws.jpg",
+                    "characterName": "Choi Seon Yeong [Women's association's vice president]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "6465",
+                    "artistName": "Lee Yeon Du",
+                    "artistImageURL": "https://i.mydramalist.com/b31qdx_5s.jpg",
+                    "characterName": "Lee Ju Ri [Women's association's account manager]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "16730",
+                    "artistName": "Lee Su Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/Xd30Bd_5s.jpg",
+                    "characterName": "Lee Su Hyeon [Part-timer]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "10879",
+                    "artistName": "Ahn Woo Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/6d2Vd_5s.jpg",
+                    "characterName": "Lee Sang Yeop / Samantha [Unit 705]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "19916",
+                    "artistName": "Kim Nam Hee",
+                    "artistImageURL": "https://i.mydramalist.com/KpL1RR_5s.jpg",
+                    "characterName": "Lee Seon Ho [Min Gyeong's ex-boyfriend]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "6715",
+                    "artistName": "Jung Seung Kil",
+                    "artistImageURL": "https://i.mydramalist.com/g075LO_5s.jpg",
+                    "characterName": "Manager Kim [Detective]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "28515",
+                    "artistName": "Lee Gyu Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/5vLDJL_5s.jpg",
+                    "characterName": "Han Pil Hui / Yang",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "35343",
+                    "artistName": "Kang Ae Sim",
+                    "artistImageURL": "https://i.mydramalist.com/VXzNpQ_5s.jpg",
+                    "characterName": "[Hwi O's mother]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4628",
+                    "artistName": "Nam Moon Chul",
+                    "artistImageURL": "https://i.mydramalist.com/RW20rs.jpg",
+                    "characterName": "[Hwi O's father]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5901",
+                    "artistName": "Jung Yeong Gi",
+                    "artistImageURL": "https://i.mydramalist.com/vzYQg_5s.jpg",
+                    "characterName": "[Detective]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "42301",
+                    "artistName": "Lee Hye Ra",
+                    "artistImageURL": "https://i.mydramalist.com/ROAwY_5s.jpg",
+                    "characterName": "Han Jin Yeong [Psychiatrist]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "50157",
+                    "artistName": "Joo Jin Soo",
+                    "artistImageURL": "https://i.mydramalist.com/wgXgN_5s.jpg",
+                    "characterName": "[Flasher] (Ep. 1, 5)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "94357",
+                    "artistName": "Lee Ki Bbeum",
+                    "artistImageURL": "https://i.mydramalist.com/QO6P6_5s.jpg",
+                    "characterName": "[Bus passenger] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21355",
+                    "artistName": "Seo Hye Won",
+                    "artistImageURL": "https://i.mydramalist.com/4LN1K_5s.jpg",
+                    "characterName": "[Survey woman] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "64887",
+                    "artistName": "Park Jung Min",
+                    "artistImageURL": "https://i.mydramalist.com/2Vll7_5s.jpg",
+                    "characterName": "[Prosecutor] (Ep. 2, 11)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "28923",
+                    "artistName": "Yoo Byung Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/x2Nejs.jpg",
+                    "characterName": "[Club security] (Ep. 2, 11)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "95791",
+                    "artistName": "Lee Ha Eum",
+                    "artistImageURL": "https://i.mydramalist.com/60LO5W_5s.jpg",
+                    "characterName": "[Ji Eun's friend] (Ep. 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "105563",
+                    "artistName": "Ahn So Young",
+                    "artistImageURL": "https://i.mydramalist.com/EeYmm_5s.jpg",
+                    "characterName": "[Ji Eun's friend] (Ep. 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "35467",
+                    "artistName": "Jung Yun Ha",
+                    "artistImageURL": "https://i.mydramalist.com/KpZLQ0_5s.jpg",
+                    "characterName": "[Seon Ho's wife] (Ep. 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "25469",
+                    "artistName": "Jung Shi Yool",
+                    "artistImageURL": "https://i.mydramalist.com/Xo8zO_5s.jpg",
+                    "characterName": "Seo Jun (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5597",
+                    "artistName": "Kwak Min Ho",
+                    "artistImageURL": "https://i.mydramalist.com/kO40js.jpg",
+                    "characterName": "[Detective] (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "39545",
+                    "artistName": "Im Yong Soon",
+                    "artistImageURL": "https://i.mydramalist.com/EQgOm_5s.jpg",
+                    "characterName": "[Police officer] (Ep. 5)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "91337",
+                    "artistName": "Lee Kwang Ik",
+                    "artistImageURL": "https://i.mydramalist.com/05rb6_5s.jpg",
+                    "characterName": "[Prospective tenant] (Ep. 6-7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "125301",
+                    "artistName": "Bong Eun Sun",
+                    "artistImageURL": "https://i.mydramalist.com/vXOx1p_5s.jpg",
+                    "characterName": "[Shaman] (Ep. 6, 10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "40659",
+                    "artistName": "Yoon Jung Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/jo35B_5s.jpg",
+                    "characterName": "[Chinese restaurant deliveryman] (Ep. 6, 11)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "95793",
+                    "artistName": "Park No Kyeong",
+                    "artistImageURL": "https://i.mydramalist.com/qmb1D_5s.jpg",
+                    "characterName": "[Drug dealer] (Ep. 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "104015",
+                    "artistName": "Jung Yun Cheol",
+                    "artistImageURL": "https://i.mydramalist.com/6X8rP_5s.jpg",
+                    "characterName": "[Detective] (Ep. 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "44929",
+                    "artistName": "Jo Hyun Im",
+                    "artistImageURL": "https://i.mydramalist.com/BE5JV_5s.jpg",
+                    "characterName": "[Real estate agent] (Ep. 7-8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "8360",
+                    "artistName": "Lee Young Ran",
+                    "artistImageURL": "https://i.mydramalist.com/6E2dg_5s.jpg",
+                    "characterName": "[Seon Ho's mother] (Ep. 8-9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "2683",
+                    "artistName": "Kil Hae Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/l0b7gv_5s.jpg",
+                    "characterName": "[Min Gyeong's mother] (Ep. 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "87295",
+                    "artistName": "Kim Yoon",
+                    "artistImageURL": "https://i.mydramalist.com/2wQg8O_5s.jpg",
+                    "characterName": "[Su Hyeon's ex-boyfriend] (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "112905",
+                    "artistName": "Min Chae Eun",
+                    "artistImageURL": "https://i.mydramalist.com/1DKwK_5s.jpg",
+                    "characterName": "[Su Hyeon's ex-boyfriend's girlfriend] (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "22847",
+                    "artistName": "Kim Joo Ah",
+                    "artistImageURL": "https://i.mydramalist.com/73b4dB_5s.jpg",
+                    "characterName": "[Seon Ho's mother's acquaintance] (Ep. 9-10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "2685",
+                    "artistName": "Yook Mi Ra",
+                    "artistImageURL": "https://i.mydramalist.com/v5Zxp_5s.jpg",
+                    "characterName": "[Seon Ho's mother's acquaintance] (Ep. 9-10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "25265",
+                    "artistName": "O Ji Yeong",
+                    "artistImageURL": "https://i.mydramalist.com/81A0jD_5s.jpg",
+                    "characterName": "Kang Jeong A [Attorney] (Ep. 11)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21523",
+                    "artistName": "Ji Yi Soo",
+                    "artistImageURL": "https://i.mydramalist.com/rxZO7s.jpg",
+                    "characterName": "Jung So Hui [Hwi O's ex-fiancee] (Ep. 11-12)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "56613",
+                    "artistName": "Kim Su Kyung",
+                    "artistImageURL": "https://i.mydramalist.com/Rnb66_5s.jpg",
+                    "characterName": "[Barista] (Ep. 13)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "96429",
+                    "artistName": "Jang Eun Seo",
+                    "artistImageURL": "https://i.mydramalist.com/YYzZOg_5s.jpg",
+                    "characterName": "[Nurse] (Ep. 13)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "97895",
+                    "artistName": "Kim So Min",
+                    "artistImageURL": "https://i.mydramalist.com/0r0Qe_5s.jpg",
+                    "characterName": "Tae Jun",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "2425",
+                    "artistName": "Kim  Yong Hee",
+                    "artistImageURL": "https://i.mydramalist.com/aE780s.jpg",
+                    "characterName": "Woo Do Hun",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "11205",
+                    "artistName": "Lee Ga Won",
+                    "artistImageURL": "https://i.mydramalist.com/2pgnO_5s.jpg",
+                    "characterName": "Jung Ji Eun",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "66073",
+                    "artistName": "Park Bin",
+                    "artistImageURL": "https://i.mydramalist.com/EoVOz_5s.jpg",
+                    "characterName": "[Detective]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "44917",
+                    "artistName": "Kim Wang Do",
+                    "artistImageURL": "https://i.mydramalist.com/1jpB6_5s.jpg",
+                    "characterName": "[Detective]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "14963",
+                    "artistName": "Lee Yoon Hee",
+                    "artistImageURL": "https://i.mydramalist.com/jovpz_5s.jpg",
+                    "characterName": "[Security guard]",
+                    "role": "Guest Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/79527-the-crazy-guy-in-the-district"
+        },
+        "network": {
+            "value": [
+                "Netflix",
+                "Daum Kakao TV"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/79527-the-crazy-guy-in-the-district"
+        },
+        "airedOn": {
+            "value": [
+                "Monday",
+                "Tuesday",
+                "Wednesday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/79527-the-crazy-guy-in-the-district"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "16730",
+            "artistName": "Lee Su Hyun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "104015",
+            "artistName": "Jung Yun Cheol",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "asianwiki",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": "mydramalist",
+        "airedOn": "mydramalist"
+    }
+}
