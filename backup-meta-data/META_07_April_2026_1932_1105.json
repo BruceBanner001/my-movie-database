@@ -1,0 +1,595 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260407_193232",
+    "timestamp": "07 April 2026 07:33 PM (IST)",
+    "showID": 1105,
+    "showName": "Love Scenery",
+    "fetchedFields": {
+        "showImage": {
+            "value": "1105.jpg",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/52895-love-scenery"
+        },
+        "releaseDate": {
+            "value": "Apr  8, 2021 - May  1, 2021",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/52895-love-scenery"
+        },
+        "otherNames": {
+            "value": [
+                "Good Day",
+                "Beautiful Scenery",
+                "Good Time",
+                "Liang Chen Mei Jing Hao Shi Guang",
+                "Tempo de Amor e Alegria com Você",
+                "Пейзаж любви",
+                "ฉากรักวัยฝัน Love Scenery",
+                "良辰美景好時光"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/52895-love-scenery"
+        },
+        "Duration": {
+            "value": "45 mins",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/52895-love-scenery"
+        },
+        "synopsis": {
+            "value": "Liang Chen is devoted to bringing good music works to the listeners, expressing the idea of being kind, real, and perfect. Lu Jing loves computers and big data research. He is highly recognized in the academic field through studying complicated human behavior and psychology, thus influencing his classmates around through his solid speciality in literacy.\n\nThey are strangers at first but then brought together by big data and they become closer in\n\nthe journey of pursuing dreams.",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/52895-love-scenery"
+        },
+        "director": {
+            "value": [
+                "Zoe Qin"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/52895-love-scenery"
+        },
+        "tags": {
+            "value": [
+                "Older Woman/Younger Man",
+                "Nice Male Lead",
+                "Popular Female Lead",
+                "Male Chases Female First",
+                "Successful Female Lead",
+                "First Love",
+                "Gaming",
+                "Friendship",
+                "Fate",
+                "Secret Relationship"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/52895-love-scenery"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "73433",
+                    "artistName": "Jin Da Zhou",
+                    "artistImageURL": "https://i.mydramalist.com/EbKqW_5m.jpg",
+                    "characterName": null,
+                    "role": "Composer"
+                },
+                {
+                    "artistID": "52741",
+                    "artistName": "Zoe Qin",
+                    "artistImageURL": "https://i.mydramalist.com/ZQ071_5m.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "64773",
+                    "artistName": "Qiao Yao",
+                    "artistImageURL": "https://i.mydramalist.com/wJePD8_5m.jpg",
+                    "characterName": null,
+                    "role": "Original Creator"
+                },
+                {
+                    "artistID": "52025",
+                    "artistName": "Gong Yu",
+                    "artistImageURL": "https://i.mydramalist.com/DkQnQ5_5m.jpg",
+                    "characterName": null,
+                    "role": "Producer"
+                },
+                {
+                    "artistID": "127661",
+                    "artistName": "Yan Zheng",
+                    "artistImageURL": "https://i.mydramalist.com/E52opl_5m.jpg",
+                    "characterName": null,
+                    "role": "Producer"
+                },
+                {
+                    "artistID": "69213",
+                    "artistName": "Qin Wen",
+                    "artistImageURL": "https://i.mydramalist.com/pNB8e_5m.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "7708",
+                    "artistName": "Xu Lu",
+                    "artistImageURL": "https://i.mydramalist.com/RBrdwx_5s.jpg",
+                    "characterName": "Liang Chen",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "23148",
+                    "artistName": "Lin Yi",
+                    "artistImageURL": "https://i.mydramalist.com/JB2rXJ_5s.jpg",
+                    "characterName": "Lu Jing / Herman | Liu Mo Yan",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "3066",
+                    "artistName": "Hu Bing",
+                    "artistImageURL": "https://i.mydramalist.com/15KK3_5s.jpg",
+                    "characterName": "Ding Jia Yun",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "13208",
+                    "artistName": "Hu Yun Hao",
+                    "artistImageURL": "https://i.mydramalist.com/YY6g6Q_5s.jpg",
+                    "characterName": "Sun Bin Yu",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "12962",
+                    "artistName": "Zhong Dan Ni",
+                    "artistImageURL": "https://i.mydramalist.com/wJVNkp_5s.jpg",
+                    "characterName": "Ma Shan Shan",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "23654",
+                    "artistName": "Jiang Yu Wei",
+                    "artistImageURL": "https://i.mydramalist.com/kllNr_5s.jpg",
+                    "characterName": "Yuan Ke Ke [Liang Chen's assistant]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "8044",
+                    "artistName": "Wang Ting",
+                    "artistImageURL": "https://i.mydramalist.com/dvylbs.jpg",
+                    "characterName": "Liu Yi Qing [Liang Chen's manager]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "22894",
+                    "artistName": "Wang Cheng",
+                    "artistImageURL": "https://i.mydramalist.com/0nykY_5s.jpg",
+                    "characterName": "Zhou Zhou [Lu Jing's roommate]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "36953",
+                    "artistName": "Wang Rong",
+                    "artistImageURL": "https://i.mydramalist.com/XqoKx_5s.jpg",
+                    "characterName": "Liu Er [Lu Jing's roommate]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "35937",
+                    "artistName": "Zhong Zheng",
+                    "artistImageURL": "https://i.mydramalist.com/NdXZwe_5s.jpg",
+                    "characterName": "He Ye  [Lu Jing's roommate]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "8040",
+                    "artistName": "Liu Guan Lin",
+                    "artistImageURL": "https://i.mydramalist.com/oQKwVx_5s.jpg",
+                    "characterName": "He Jia [Movie director]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "73663",
+                    "artistName": "Wang Si Jie",
+                    "artistImageURL": "https://i.mydramalist.com/w6xNp_5s.jpg",
+                    "characterName": "Xiao Yu Ke",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "92217",
+                    "artistName": "Zhu La La",
+                    "artistImageURL": "https://i.mydramalist.com/WRm1l_5s.jpg",
+                    "characterName": "Liu Shun",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "121051",
+                    "artistName": "Kang Qi Xuan",
+                    "artistImageURL": "https://i.mydramalist.com/kA0BnO_5s.jpg",
+                    "characterName": "Xiao Pang",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "10458",
+                    "artistName": "Du Yu Chen",
+                    "artistImageURL": "https://i.mydramalist.com/rNODYZ_5s.jpg",
+                    "characterName": "Meng Lan Zhi [Singer] (Ep. 1, 4, 20, 22)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "41401",
+                    "artistName": "Cao Shi Ping",
+                    "artistImageURL": "https://i.mydramalist.com/4YEO6_5s.jpg",
+                    "characterName": "Professor Qin [Liang Chen's college professor] (Ep. 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "70683",
+                    "artistName": "Shang Si Qi",
+                    "artistImageURL": "https://i.mydramalist.com/YYmPxA_5s.jpg",
+                    "characterName": "Xiao Guo [Shan Shan's assistant] (Ep. 3-5, 29)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "11593",
+                    "artistName": "Dai Chao",
+                    "artistImageURL": "https://i.mydramalist.com/Q4767_5s.jpg",
+                    "characterName": "Yue Yu Xun [Liang Chen's ex-boyfriend] (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "70687",
+                    "artistName": "Wang Xiao Yu",
+                    "artistImageURL": "https://i.mydramalist.com/WwRPR_5s.jpg",
+                    "characterName": "Ah Jie [Guitarist] (Ep. 5, 22, 24, 26)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "68965",
+                    "artistName": "Guan Jin Lin",
+                    "artistImageURL": "https://i.mydramalist.com/2wwX0d_5s.jpg",
+                    "characterName": "Zhou Xiao Huan [Qi Qi's friend] (Ep. 10, 19)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "27949",
+                    "artistName": "Zhou Cheng Ao",
+                    "artistImageURL": "https://i.mydramalist.com/VX3gBJ_5s.jpg",
+                    "characterName": "Lin Qi [Shan Shan's ex-boyfriend] (Ep. 12, 15, 20, 29)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "23989",
+                    "artistName": "Li Ya Nan",
+                    "artistImageURL": "https://i.mydramalist.com/0wdKXe_5s.jpg",
+                    "characterName": "CEO Lin [Core Technology's CEO] (Ep. 14)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "29225",
+                    "artistName": "Wang Xin",
+                    "artistImageURL": "https://i.mydramalist.com/0EN6Y_5s.jpg",
+                    "characterName": "[Liang Chen's father] (Ep. 16, 29-31)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "23194",
+                    "artistName": "Tian Miao",
+                    "artistImageURL": "https://i.mydramalist.com/73JrAN_5s.jpg",
+                    "characterName": "[Liang Chen's mother] (Ep. 16, 29-31)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "70681",
+                    "artistName": "Wang Zhi Min",
+                    "artistImageURL": "https://i.mydramalist.com/x46XV3_5s.jpg",
+                    "characterName": "Ma Ming Hui [Journey of Music Lovers's director] (Ep. 19-22)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "23715",
+                    "artistName": "Jing Yan Jun",
+                    "artistImageURL": "https://i.mydramalist.com/4Z1JQ_5s.jpg",
+                    "characterName": "Lu Xiang Chen [Lu Jing's cousin] (Ep. 23)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "18636",
+                    "artistName": "Wang Wei Hua",
+                    "artistImageURL": "https://i.mydramalist.com/k8yYb_5s.jpg",
+                    "characterName": "[Lu Jing's father] (Ep. 30-31)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "18546",
+                    "artistName": "Yu Xiao Lei",
+                    "artistImageURL": "https://i.mydramalist.com/QDj6g_5s.jpg",
+                    "characterName": "[Lu Jing's mother] (Ep. 30-31)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "43025",
+                    "artistName": "Fu Wei Lun",
+                    "artistImageURL": "https://i.mydramalist.com/B6Bbl_5s.jpg",
+                    "characterName": "Gu Fei Ming  [Lu Jing's classmate]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "39077",
+                    "artistName": "Wang Lu Qing",
+                    "artistImageURL": "https://i.mydramalist.com/wJwbqN_5s.jpg",
+                    "characterName": "Qi Qi  [Lu Jing's classmate]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "7069",
+                    "artistName": "Yue Yao Li",
+                    "artistImageURL": "https://i.mydramalist.com/vyNxZs.jpg",
+                    "characterName": "[Lu Jing's grandfather]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "27283",
+                    "artistName": "Li Chang",
+                    "artistImageURL": "https://i.mydramalist.com/pQ6BB_5s.jpg",
+                    "characterName": "Zhu Guang [Jia Yun's assistant]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "15189",
+                    "artistName": "Xue Shu Jie",
+                    "artistImageURL": "https://i.mydramalist.com/BOwV1_5s.jpg",
+                    "characterName": "Grandma Lu [Lu Jing's grandmother]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "70685",
+                    "artistName": "Zhou Wen Tao",
+                    "artistImageURL": "https://i.mydramalist.com/rnDN7_5s.jpg",
+                    "characterName": "Shang Zhi",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "42269",
+                    "artistName": "Yu Bai Shui",
+                    "artistImageURL": "https://i.mydramalist.com/v1ejq_5s.jpg",
+                    "characterName": "[Variety show guest]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "10999",
+                    "artistName": "Cui Peng",
+                    "artistImageURL": "https://i.mydramalist.com/81VEWD_5s.jpg",
+                    "characterName": "[Award show guest]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "17438",
+                    "artistName": "Li Xiang Zhe",
+                    "artistImageURL": "https://i.mydramalist.com/Z85yYq_5s.jpg",
+                    "characterName": "[Award show guest]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "31531",
+                    "artistName": "Zhang Jing Tong",
+                    "artistImageURL": "https://i.mydramalist.com/17Wk3_5s.jpg",
+                    "characterName": "[Award show guest]",
+                    "role": "Guest Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/52895-love-scenery"
+        },
+        "network": {
+            "value": [
+                "Tencent Video",
+                "iQiyi",
+                "Youku"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/52895-love-scenery"
+        },
+        "airedOn": {
+            "value": [
+                "Thursday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/52895-love-scenery"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "52741",
+            "artistName": "Zoe Qin",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "64773",
+            "artistName": "Qiao Yao",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "127661",
+            "artistName": "Yan Zheng",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "69213",
+            "artistName": "Qin Wen",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "7708",
+            "artistName": "Xu Lu",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "23148",
+            "artistName": "Lin Yi",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "3066",
+            "artistName": "Hu Bing",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "13208",
+            "artistName": "Hu Yun Hao",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "12962",
+            "artistName": "Zhong Dan Ni",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "23654",
+            "artistName": "Jiang Yu Wei",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "8044",
+            "artistName": "Wang Ting",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "22894",
+            "artistName": "Wang Cheng",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "36953",
+            "artistName": "Wang Rong",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "35937",
+            "artistName": "Zhong Zheng",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "8040",
+            "artistName": "Liu Guan Lin",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "73663",
+            "artistName": "Wang Si Jie",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "92217",
+            "artistName": "Zhu La La",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "121051",
+            "artistName": "Kang Qi Xuan",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "70683",
+            "artistName": "Shang Si Qi",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "11593",
+            "artistName": "Dai Chao",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "70687",
+            "artistName": "Wang Xiao Yu",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "68965",
+            "artistName": "Guan Jin Lin",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "27949",
+            "artistName": "Zhou Cheng Ao",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "23194",
+            "artistName": "Tian Miao",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "70681",
+            "artistName": "Wang Zhi Min",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "23715",
+            "artistName": "Jing Yan Jun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "18636",
+            "artistName": "Wang Wei Hua",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "43025",
+            "artistName": "Fu Wei Lun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "39077",
+            "artistName": "Wang Lu Qing",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "7069",
+            "artistName": "Yue Yao Li",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "27283",
+            "artistName": "Li Chang",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "15189",
+            "artistName": "Xue Shu Jie",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "70685",
+            "artistName": "Zhou Wen Tao",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "42269",
+            "artistName": "Yu Bai Shui",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "10999",
+            "artistName": "Cui Peng",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "17438",
+            "artistName": "Li Xiang Zhe",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "31531",
+            "artistName": "Zhang Jing Tong",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "mydramalist",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "mydramalist",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": "mydramalist",
+        "airedOn": "mydramalist"
+    }
+}

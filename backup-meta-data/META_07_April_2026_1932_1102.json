@@ -1,0 +1,564 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260407_193232",
+    "timestamp": "07 April 2026 07:32 PM (IST)",
+    "showID": 1102,
+    "showName": "Sweet Stranger and Me",
+    "fetchedFields": {
+        "showImage": {
+            "value": "1102.jpg",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Sweet_Stranger_and_Me"
+        },
+        "releaseDate": {
+            "value": "Oct 24, 2016 - Dec 13, 2016",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/18978-sweet-stranger-and-me"
+        },
+        "otherNames": {
+            "value": [
+                "Man Living at My House",
+                "Man Living in Our House",
+                "O Homem que Vive em Nossa Casa",
+                "Sweet Stranger in My House",
+                "Sweet Stranger in Our House",
+                "The Man In My House",
+                "The Man Living in Our House",
+                "Woorijibe Saneun Namja",
+                "Мужчина в моём доме"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/18978-sweet-stranger-and-me"
+        },
+        "Duration": {
+            "value": "60 mins",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/18978-sweet-stranger-and-me"
+        },
+        "synopsis": {
+            "value": "Hong Na-Ri works as a flight attendant. Her mother passed away 10 months ago and she doesn't have any other immediate family members. Hong Na-Ri returns to her hometown to visit her mother's grave. There, she sees a young man at her mother's grave. The man, Go Nan-Gil, introduces himself as her father. Before Hong Na-Ri's mother died, she married Go Nan-Gil. He now lives at her mother's house and runs the small dumpling restaurant that her mother ran.",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Sweet_Stranger_and_Me"
+        },
+        "director": {
+            "value": [
+                "Kim Jung Min"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/18978-sweet-stranger-and-me"
+        },
+        "tags": {
+            "value": [
+                "Nice Male Lead",
+                "Nice Female Lead",
+                "Gang",
+                "Cheating",
+                "Emotionally Strong Female Lead",
+                "Emotionally Strong Male Lead",
+                "Housemates' Relationship",
+                "Restaurant Setting",
+                "Flight Attendant Female Lead",
+                "Businessman Male Lead"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/18978-sweet-stranger-and-me"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "86391",
+                    "artistName": "Kim Gwang Su",
+                    "artistImageURL": "https://i.mydramalist.com/12W1z_5m.jpg",
+                    "characterName": null,
+                    "role": "Cinematography"
+                },
+                {
+                    "artistID": "21034",
+                    "artistName": "Kim Jung Min",
+                    "artistImageURL": "https://i.mydramalist.com/pOwynm.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "17819",
+                    "artistName": "Kim Eun Jung",
+                    "artistImageURL": "https://i.mydramalist.com/q2OYKm.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "312",
+                    "artistName": "Park Soo Ae",
+                    "artistImageURL": "https://i.mydramalist.com/vmkdX_5s.jpg",
+                    "characterName": "Hong Na Ri",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "1944",
+                    "artistName": "Kim Young Kwang",
+                    "artistImageURL": "https://i.mydramalist.com/QwnLg_5s.jpg",
+                    "characterName": "Go Nan Gil",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "804",
+                    "artistName": "Lee Soo Hyuk",
+                    "artistImageURL": "https://i.mydramalist.com/k6VbO_5s.jpg",
+                    "characterName": "Kwon Deok Bong",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "2213",
+                    "artistName": "Jo Bo Ah",
+                    "artistImageURL": "https://i.mydramalist.com/ABAY0v_5s.jpg",
+                    "characterName": "Do Yeo Ju [Na Ri's co-worker]",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "1270",
+                    "artistName": "Kim Ji Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/rXKp7_5s.jpg",
+                    "characterName": "Jo Dong Jin [Na Ri's boyfriend]",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "3226",
+                    "artistName": "Jung Kyung Soon",
+                    "artistImageURL": "https://i.mydramalist.com/BWyEq_5s.jpg",
+                    "characterName": "Kwon Sun Rye [Deok Bong's secretary]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2929",
+                    "artistName": "Kim Ha Kyun",
+                    "artistImageURL": "https://i.mydramalist.com/XeLegs.jpg",
+                    "characterName": "Shin Jeong Nam [Na Ri's uncle]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3770",
+                    "artistName": "Ji Yoon Ho",
+                    "artistImageURL": "https://i.mydramalist.com/AzPzvs.jpg",
+                    "characterName": "Lee Yong Gyoo [Nan Gil's subordinate]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "11131",
+                    "artistName": "Lee Kang Min",
+                    "artistImageURL": "https://i.mydramalist.com/xKQn0s.jpg",
+                    "characterName": "Park Jun [Nan Gil's subordinate]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "323",
+                    "artistName": "Park Sang Myeon",
+                    "artistImageURL": "https://i.mydramalist.com/EZDBp_5s.jpg",
+                    "characterName": "Bae Byeong Woo [Nan Gil's father]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "11745",
+                    "artistName": "Woo Do Hwan",
+                    "artistImageURL": "https://i.mydramalist.com/R1ybg_5s.jpg",
+                    "characterName": "Kim Wan Shik [Byung Woo's subordinate]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3582",
+                    "artistName": "Jeon Se Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/ZdqJJ_5s.jpg",
+                    "characterName": "Kim Ran Sook [Na Ri's co-worker]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "6655",
+                    "artistName": "Kim Jae In",
+                    "artistImageURL": "https://i.mydramalist.com/00PgNs.jpg",
+                    "characterName": "Jung Yeon Mi [Na Ri's co-worker]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "13651",
+                    "artistName": "Shin Se Hwi",
+                    "artistImageURL": "https://i.mydramalist.com/2WvYP_5s.jpg",
+                    "characterName": "Kwon Deok Shim [Deok Bong's sister]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "6184",
+                    "artistName": "Choi Jong Won",
+                    "artistImageURL": "https://i.mydramalist.com/xxVpq_5s.jpg",
+                    "characterName": "CEO Kwon [Deok Bong's father]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2808",
+                    "artistName": "Noh Young Gook",
+                    "artistImageURL": "https://i.mydramalist.com/JBReXs.jpg",
+                    "characterName": "Hong Song Gyu [Na Ri's father]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "8684",
+                    "artistName": "Lee Gyeong Shim",
+                    "artistImageURL": "https://i.mydramalist.com/2kylV_5s.jpg",
+                    "characterName": "Hwa Yun [Deok Shim's mother]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "15251",
+                    "artistName": "Jung Ji Hwan",
+                    "artistImageURL": "https://i.mydramalist.com/rEWwps.jpg",
+                    "characterName": "Kang Han Yi",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "17586",
+                    "artistName": "Tae Won Seok",
+                    "artistImageURL": "https://i.mydramalist.com/l0qP8Q_5s.jpg",
+                    "characterName": "Mr. Kim [Wan Shik's Underling]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "106641",
+                    "artistName": "Ahn Yu Jeong",
+                    "artistImageURL": "https://i.mydramalist.com/B8JNV_5s.jpg",
+                    "characterName": "Park Sun Gyeong",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1429",
+                    "artistName": "Wang Bit Na",
+                    "artistImageURL": "https://i.mydramalist.com/xxPwj_5s.jpg",
+                    "characterName": "Yoo Si Eun [Na Ri's co-worker]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "1666",
+                    "artistName": "Kim Mi Sook",
+                    "artistImageURL": "https://i.mydramalist.com/YyvZWs.jpg",
+                    "characterName": "Shin Jeong Im [Na Ri's mom]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "2673",
+                    "artistName": "Hong Seok Cheon",
+                    "artistImageURL": "https://i.mydramalist.com/4DjkQs.jpg",
+                    "characterName": "Yong Chul [Guy who trains with Yeo Joo at the gym]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6102",
+                    "artistName": "Jang Do Yoon",
+                    "artistImageURL": "https://i.mydramalist.com/0wBVw4_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "1197",
+                    "artistName": "In Gyo Jin",
+                    "artistImageURL": "https://i.mydramalist.com/pOZeEs.jpg",
+                    "characterName": "[Doctor] (Ep. 1-2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5775",
+                    "artistName": "Shin Soo Yun",
+                    "artistImageURL": "https://i.mydramalist.com/EelYW_5s.jpg",
+                    "characterName": "Hong Na Ri [Young]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "9385",
+                    "artistName": "Ko Woo Rim",
+                    "artistImageURL": "https://i.mydramalist.com/2LB0R_5s.jpg",
+                    "characterName": "Go Nan Gil [Young]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5758",
+                    "artistName": "Seo Dong Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/bwwOLs.jpg",
+                    "characterName": "Go Nan Gil [Teen]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "13678",
+                    "artistName": "Park So Eun",
+                    "artistImageURL": "https://i.mydramalist.com/xAyOqs.jpg",
+                    "characterName": "Hong Na Ri [Teen]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "9302",
+                    "artistName": "Seol Woo Hyung",
+                    "artistImageURL": "https://i.mydramalist.com/nEdqBs.jpg",
+                    "characterName": "[Deok Bong's younger brother]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "1150",
+                    "artistName": "Kim Young Ok",
+                    "artistImageURL": "https://i.mydramalist.com/XnV7g_5s.jpg",
+                    "characterName": "[Neighborhood grandma] (Ep. 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "3078",
+                    "artistName": "Lee Mi Do",
+                    "artistImageURL": "https://i.mydramalist.com/zBJBEJ_5s.jpg",
+                    "characterName": "Lee Mi Sun [\"Top Three Eating King\" writer]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "13791",
+                    "artistName": "Kim Na Young",
+                    "artistImageURL": "https://i.mydramalist.com/42q3d_5s.jpg",
+                    "characterName": "Herself (Ep.10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5863",
+                    "artistName": "Jung Dong Gyu",
+                    "artistImageURL": "https://i.mydramalist.com/eWD6n_5s.jpg",
+                    "characterName": "[Judge](Ep.11)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "7007",
+                    "artistName": "Nam Jung Hee",
+                    "artistImageURL": "https://i.mydramalist.com/RAwjos.jpg",
+                    "characterName": "[Store owner]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "16662",
+                    "artistName": "Jang Do Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/wJWKBn_5s.jpg",
+                    "characterName": "[Jung Hyun's fiancée]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "20474",
+                    "artistName": "Shin Dong Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/ZQrKq_5s.jpg",
+                    "characterName": "[Boyfriend]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "14233",
+                    "artistName": "Jung Mi Mi",
+                    "artistImageURL": "https://i.mydramalist.com/YY4jyd_5s.jpg",
+                    "characterName": "(Ep. 10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "44937",
+                    "artistName": "Oh Yoo Mi",
+                    "artistImageURL": "https://i.mydramalist.com/rz7mj_5s.jpg",
+                    "characterName": "[Wedding planner]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "39165",
+                    "artistName": "Seo Woo Jin",
+                    "artistImageURL": "https://i.mydramalist.com/nOrj7E_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "31165",
+                    "artistName": "Im Jae Geun",
+                    "artistImageURL": "https://i.mydramalist.com/QYLyY_5s.jpg",
+                    "characterName": "[Reporter]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "28059",
+                    "artistName": "Lee Yu Jin",
+                    "artistImageURL": "https://i.mydramalist.com/Elgrzs.jpg",
+                    "characterName": "[Party girl]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "23782",
+                    "artistName": "Go Han Min",
+                    "artistImageURL": "https://i.mydramalist.com/vnEEXs.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21482",
+                    "artistName": "Go Jae Won",
+                    "artistImageURL": "https://i.mydramalist.com/72g8ns.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6023",
+                    "artistName": "Park Noh Shik",
+                    "artistImageURL": "https://i.mydramalist.com/kJwqks.jpg",
+                    "characterName": "[O Rye's son]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "13512",
+                    "artistName": "Jeon Yeo Jin",
+                    "artistImageURL": "https://i.mydramalist.com/QlDWY_5s.jpg",
+                    "characterName": "[Airport staff]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "47013",
+                    "artistName": "Kim Young Hee",
+                    "artistImageURL": "https://i.mydramalist.com/6E7VK_5s.jpg",
+                    "characterName": "[In-flight passenger] (Ep 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "4261",
+                    "artistName": "Lee Ah Rin",
+                    "artistImageURL": "https://i.mydramalist.com/7g04Ds.jpg",
+                    "characterName": "[TV Screenwriter] (Eps. 9-10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "17883",
+                    "artistName": "Kim Na On",
+                    "artistImageURL": "https://i.mydramalist.com/LdYVBs.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/18978-sweet-stranger-and-me"
+        },
+        "airedOn": {
+            "value": [
+                "Monday",
+                "Tuesday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/18978-sweet-stranger-and-me"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "21034",
+            "artistName": "Kim Jung Min",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "312",
+            "artistName": "Park Soo Ae",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "1944",
+            "artistName": "Kim Young Kwang",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "804",
+            "artistName": "Lee Soo Hyuk",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "3770",
+            "artistName": "Ji Yoon Ho",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "11745",
+            "artistName": "Woo Do Hwan",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "3582",
+            "artistName": "Jeon Se Hyun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "6655",
+            "artistName": "Kim Jae In",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "13651",
+            "artistName": "Shin Se Hwi",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "2808",
+            "artistName": "Noh Young Gook",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "15251",
+            "artistName": "Jung Ji Hwan",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "106641",
+            "artistName": "Ahn Yu Jeong",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "1666",
+            "artistName": "Kim Mi Sook",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "6102",
+            "artistName": "Jang Do Yoon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "13678",
+            "artistName": "Park So Eun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "13791",
+            "artistName": "Kim Na Young",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "7007",
+            "artistName": "Nam Jung Hee",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "14233",
+            "artistName": "Jung Mi Mi",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "21482",
+            "artistName": "Go Jae Won",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "4261",
+            "artistName": "Lee Ah Rin",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "17883",
+            "artistName": "Kim Na On",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "asianwiki",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": null,
+        "airedOn": "mydramalist"
+    }
+}

@@ -1,24 +1,50 @@
-[DEBUG] Title Validation FAILED: Expected Year 2018 (±1) not found on page 'The Beauty Inside'.
+[DEBUG] Title Validation FAILED: Detected Actor Profile (birthdate:) instead of Drama/Movie on page.
+[DEBUG] Title Validation FAILED: Page Title '2017 MBC Drama Awards' vs Expected 'Missing 9' (Ratio: 0.14 & No Alias Match)
+[DEBUG] Title Validation FAILED: Detected Actor Profile (born:) instead of Drama/Movie on page.
+[DEBUG] Title Validation FAILED: Detected Actor Profile (birth name:) instead of Drama/Movie on page.
+[DEBUG] Title Validation FAILED: Page Title '2017 MBC Drama Awards' vs Expected 'Missing 9' (Ratio: 0.14 & No Alias Match)
+[DEBUG] Title Validation FAILED: Detected Actor Profile (birthdate:) instead of Drama/Movie on page.
+[DEBUG] Title Validation FAILED: Detected Actor Profile (born:) instead of Drama/Movie on page.
+[DEBUG] Title Validation FAILED: Expected S9, but found base S1 ('Missing Nine')
+[DEBUG] Title Validation FAILED: Detected Actor Profile (birthdate:) instead of Drama/Movie on page.
+[DEBUG] Title Validation FAILED: Page Title 'Ruler of Your Own World' vs Expected 'Missing 9' (Ratio: 0.07 & No Alias Match)
+[DEBUG] Title Validation FAILED: Expected S9, but found base S1 ('Missing (Korean Movie)')
+[DEBUG] Title Validation FAILED: Expected S9, but found base S1 ('The Missing')
+[DEBUG] Title Validation FAILED: Season mismatch. Expected S9, Page has S2 (Missing 2)
+[DEBUG] Title Validation FAILED: Expected S9, but found base S1 ('Missing (Korean Movie)')
+[DEBUG] Title Validation FAILED: Expected S9, but found base S1 ('Missing (2009-South Korea)')
+[DEBUG] Title Validation FAILED: Expected S9, but found base S1 ('The Missing')
+[DEBUG] Title Validation FAILED: Expected S9, but found base S1 ('Missing (Korean Movie)')
+[DEBUG] Title Validation FAILED: Season mismatch. Expected S9, Page has S2 (Missing 2)
+[DEBUG] Title Validation FAILED: Expected S9, but found base S1 ('The Missing')
+[DEBUG] Title Validation FAILED: Expected S9, but found base S1 ('Missing (2009-South Korea)')
+[DEBUG] Title Validation FAILED: Page Title 'House of the Disappeared' vs Expected 'Missing 9' (Ratio: 0.13 & No Alias Match)
+[DEBUG] Title Validation FAILED: Expected S9, but found base S1 ('Missing (Korean Movie)')
+[DEBUG] Title Validation FAILED: Season mismatch. Expected S9, Page has S2 (Missing 2)
+[DEBUG] Title Validation FAILED: Expected S9, but found base S1 ('Missing (2009-South Korea)')
+[DEBUG] Title Validation FAILED: Expected S9, but found base S1 ('Missing Nine')
+[DEBUG] Failed to fetch MDL /cast page: 'latin-1' codec can't encode characters in position 33-35: ordinal not in range(256)
+[DEBUG] Title Validation FAILED: Page Title 'Did We Really Love?' vs Expected 'True to Love' (Ratio: 0.45 & No Alias Match)
+[DEBUG] Title Validation FAILED: Detected Actor Profile (born:) instead of Drama/Movie on page.
+[DEBUG] Title Validation FAILED: Page Title 'Chicago Typewriter' vs Expected 'Tomorrow with You' (Ratio: 0.29 & No Alias Match)
+[DEBUG] Title Validation FAILED: Page Title 'Nevertheless (Korean Drama)' vs Expected 'Nevertheless,' (Ratio: 0.60 & No Alias Match)
+[DEBUG] Title Validation FAILED: Page Title 'Nevertheless (Korean Drama)' vs Expected 'Nevertheless,' (Ratio: 0.60 & No Alias Match)
+[DEBUG] Title Validation FAILED: Page Title 'Rain or Shine' vs Expected 'Something in the Rain' (Ratio: 0.24 & No Alias Match)
 [DEBUG] Title Validation FAILED: Detected Actor Profile (birthdate:) instead of Drama/Movie on page.
 [DEBUG] Title Validation FAILED: Detected Actor Profile (born:) instead of Drama/Movie on page.
 [DEBUG] Title Validation FAILED: Detected Actor Profile (born:) instead of Drama/Movie on page.
-[DEBUG] Title Validation FAILED: Page Title 'Bride of the Century' vs Expected 'Secret Love Affair' (Ratio: 0.26 & No Alias Match)
-[DEBUG] Title Validation FAILED: Detected Actor Profile (birthdate:) instead of Drama/Movie on page.
-[DEBUG] Title Validation FAILED: Detected Actor Profile (born:) instead of Drama/Movie on page.
-[DEBUG] Title Validation FAILED: Detected Actor Profile (born:) instead of Drama/Movie on page.
-[DEBUG] Title Validation FAILED: Detected Actor Profile (born:) instead of Drama/Movie on page.
-[DEBUG] Title Validation FAILED: Page Title 'Secret Affair (Korean Drama)' vs Expected 'Secret Love Affair' (Ratio: 0.57 & No Alias Match)
-[DEBUG] Title Validation FAILED: Page Title 'Love Affairs in the Afternoon (Korean Drama)' vs Expected 'Secret Love Affair' (Ratio: 0.35 & No Alias Match)
-[DEBUG] Title Validation FAILED: Detected Actor Profile (born:) instead of Drama/Movie on page.
-[DEBUG] Title Validation FAILED: Detected Actor Profile (born:) instead of Drama/Movie on page.
-[DEBUG] Title Validation FAILED: Detected Actor Profile (birthdate:) instead of Drama/Movie on page.
-[DEBUG] Title Validation FAILED: Detected Actor Profile (born:) instead of Drama/Movie on page.
-[DEBUG] Title Validation FAILED: Page Title '2013 KBS Drama Awards' vs Expected 'Prime Minister and I' (Ratio: 0.29 & No Alias Match)
+[DEBUG] Title Validation FAILED: Expected Year 2020 (±1) not found on page 'When It's Delicious: When My Love Blooms'.
 [DEBUG] Title Validation FAILED: Detected Actor Profile (birthdate:) instead of Drama/Movie on page.
 [DEBUG] Title Validation FAILED: Detected Actor Profile (born:) instead of Drama/Movie on page.
 [DEBUG] Title Validation FAILED: Detected Actor Profile (born:) instead of Drama/Movie on page.
 [DEBUG] Title Validation FAILED: Detected Actor Profile (birthdate:) instead of Drama/Movie on page.
-[DEBUG] Title Validation FAILED: Expected S2, but found base S1 ('Island')
+[DEBUG] Title Validation FAILED: Detected Actor Profile (born:) instead of Drama/Movie on page.
+[DEBUG] Title Validation FAILED: Detected Actor Profile (born:) instead of Drama/Movie on page.
+[DEBUG] Title Validation FAILED: Detected Actor Profile (born:) instead of Drama/Movie on page.
+[DEBUG] Title Validation FAILED: Detected Actor Profile (born:) instead of Drama/Movie on page.
+[DEBUG] Title Validation FAILED: Detected Actor Profile (born:) instead of Drama/Movie on page.
+[DEBUG] Title Validation FAILED: Detected Actor Profile (born:) instead of Drama/Movie on page.
+[DEBUG] Title Validation FAILED: Detected Actor Profile (born:) instead of Drama/Movie on page.
 ✅ Partial Batch completed successfully
 ⏳ Batch Processing in Progress...
 ══════════════════════════════════════════════════════
@@ -26,129 +52,128 @@
 ══════════════════════════════════════════════════════
 
 🚀 Workflow Type : Manual
-🔁 RUN           : 913
-⏰ Start Time    : 07 April 2026 - 07:20:07 PM
-⏰ End Time      : 07 April 2026 - 07:31:58 PM
-⏱️ Run Time      : 11 Minutes 50 Seconds
+🔁 RUN           : 914
+⏰ Start Time    : 07 April 2026 - 07:32:32 PM
+⏰ End Time      : 07 April 2026 - 07:43:26 PM
+⏱️ Run Time      : 10 Minutes 53 Seconds
 ⚙️ Max Process   : 50 Row Per Run
-🔄 Current Batch : 2
+🔄 Current Batch : 3
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Feb 7 2023 Onwards ===
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 🆕 Data Created:
-- 1051 - Oh My Venus (2015) -> First Time Uploaded
-- 1052 - I Love Lee Tae Ri (2012) -> First Time Uploaded
-- 1053 - Crazy Love (2022) -> First Time Uploaded
-- 1054 - About Is Love (2018) -> First Time Uploaded
-- 1055 - Once We Get Married (2021) -> First Time Uploaded
-- 1056 - The Beauty Inside (2018) -> First Time Uploaded
-- 1057 - Secret Love Affair (2014) -> First Time Uploaded
-- 1058 - Love in Time (2020) -> First Time Uploaded
-- 1059 - F4 Thailand: Boys over Flowers (2021) -> First Time Uploaded
-- 1060 - Crash Course in Romance (2023) -> First Time Uploaded
-- 1061 - Mama Fairy and the Woodcutter (2018) -> First Time Uploaded
-- 1062 - Sh**ting Stars (2022) -> First Time Uploaded
-- 1063 - That Winter, the Wind Blows (2013) -> First Time Uploaded
-- 1064 - The Bride of Habaek (2017) -> First Time Uploaded
-- 1065 - My Princess (2011) -> First Time Uploaded
-- 1066 - Black Knight: The Man Who Guards Me (2017) -> First Time Uploaded
-- 1067 - Blade Man (2014) -> First Time Uploaded
-- 1068 - The Day of Becoming You (2021) -> First Time Uploaded
-- 1069 - The Most Beautiful You in the World (2020) -> First Time Uploaded
-- 1070 - The K2 (2016) -> First Time Uploaded
-- 1071 - Prime Minister and I (2013) -> First Time Uploaded
-- 1072 - Her Private Life (2019) -> First Time Uploaded
-- 1073 - Romance Is a Bonus Book (2019) -> First Time Uploaded
-- 1074 - Another Miss Oh (2016) -> First Time Uploaded
-- 1075 - Our Glamorous Time (2018) -> First Time Uploaded
-- 1076 - Jugglers (2017) -> First Time Uploaded
-- 1077 - Black Knight (2023) -> First Time Uploaded
-- 1078 - So I Married the Anti-Fan (2021) -> First Time Uploaded
-- 1079 - Hyde, Jekyll, Me (2015) -> First Time Uploaded
-- 1080 - Coffee Prince (2007) -> First Time Uploaded
-- 1081 - Monster (2016) -> First Time Uploaded
-- 1082 - Level Up (2019) -> First Time Uploaded
-- 1083 - Healer (2014) -> First Time Uploaded
-- 1084 - Radiant Office (2017) -> First Time Uploaded
-- 1085 - Kiss Sixth Sense (2022) -> First Time Uploaded
-- 1086 - My Roommate Is a Gumiho (2021) -> First Time Uploaded
-- 1087 - The Heavenly Idol (2023) -> First Time Uploaded
-- 1088 - Why Women Love (2022) -> First Time Uploaded
-- 1089 - Abyss (2019) -> First Time Uploaded
-- 1090 - Imitation (2021) -> First Time Uploaded
-- 1091 - Island Part 2 (2023) -> First Time Uploaded
-- 1092 - Woori the Virgin (2022) -> First Time Uploaded
-- 1093 - Crazy Love (2013) -> First Time Uploaded
-- 1094 - Love at First Hate (2018) -> First Time Uploaded
-- 1095 - The Love You Give Me (2023) -> First Time Uploaded
-- 1096 - Go Go Squid! (2019) -> First Time Uploaded
-- 1097 - Buang Ruk Satan (2018) -> First Time Uploaded
-- 1098 - You Are My Destiny (2014) -> First Time Uploaded
-- 1099 - Young Lady and Gentleman (2021) -> First Time Uploaded
-- 1100 - Eve (2022) -> First Time Uploaded
+- 1101 - Hometown Cha-Cha-Cha (2021) -> First Time Uploaded
+- 1102 - Sweet Stranger and Me (2016) -> First Time Uploaded
+- 1103 - GO into Your Heart (2021) -> First Time Uploaded
+- 1104 - Begin Again (2020) -> First Time Uploaded
+- 1105 - Love Scenery (2021) -> First Time Uploaded
+- 1106 - Please Be My Family (2023) -> First Time Uploaded
+- 1107 - Money Flower (2017) -> First Time Uploaded
+- 1108 - Lucky Romance (2016) -> First Time Uploaded
+- 1109 - Plot Love (2021) -> First Time Uploaded
+- 1110 - You Are My Glory (2021) -> First Time Uploaded
+- 1111 - Come and Hug Me (2018) -> First Time Uploaded
+- 1112 - Missing 9 (2017) -> First Time Uploaded
+- 1113 - Skip a Beat (2023) -> First Time Uploaded
+- 1114 - Please Feel at Ease Mr. Ling (2021) -> First Time Uploaded
+- 1115 - Phoenix 2020 (2020) -> First Time Uploaded
+- 1116 - Kokdu: Season of Deity (2023) -> First Time Uploaded
+- 1117 - Your Highness, the Class Monitor (2019) -> First Time Uploaded
+- 1118 - Nothing But You (2022) -> First Time Uploaded
+- 1119 - Only Side by Side with You (2018) -> First Time Uploaded
+- 1120 - My Girlfriend Is an Alien Season 2 (2022) -> First Time Uploaded
+- 1121 - True to Love (2023) -> First Time Uploaded
+- 1122 - Forget You Remember Love (2020) -> First Time Uploaded
+- 1123 - Suparburoot Jorm Jon: Duang Jai Kabot (2019) -> First Time Uploaded
+- 1124 - Sweet and Cold (2023) -> First Time Uploaded
+- 1125 - Perfect and Casual (2020) -> First Time Uploaded
+- 1126 - The King: Eternal Monarch (2020) -> First Time Uploaded
+- 1127 - Link: Eat, Love, Kill (2022) -> First Time Uploaded
+- 1128 - Your House Helper (2018) -> First Time Uploaded
+- 1129 - Oh My Boss (2021) -> First Time Uploaded
+- 1130 - Tomorrow with You (2017) -> First Time Uploaded
+- 1131 - Love in Sadness (2019) -> First Time Uploaded
+- 1132 - Nevertheless, (2021) -> First Time Uploaded
+- 1133 - Love of Replica (2023) -> First Time Uploaded
+- 1134 - Cheat On Me, if You Can (2020) -> First Time Uploaded
+- 1135 - Madame Antoine (2016) -> First Time Uploaded
+- 1136 - Come Back Alive (2016) -> First Time Uploaded
+- 1137 - Vincenzo (2021) -> First Time Uploaded
+- 1138 - Fates & Furies (2018) -> First Time Uploaded
+- 1139 - You Are the Best! (2013) -> First Time Uploaded
+- 1140 - Hotel del Luna (2019) -> First Time Uploaded
+- 1141 - Something in the Rain (2018) -> First Time Uploaded
+- 1142 - Bride of the Century (2014) -> First Time Uploaded
+- 1143 - Witch's Romance (2014) -> First Time Uploaded
+- 1144 - When My Love Blooms (2020) -> First Time Uploaded
+- 1145 - Love in the Moonlight (2016) -> First Time Uploaded
+- 1146 - Tempted (2018) -> First Time Uploaded
+- 1147 - See You in My 19th Life (2023) -> First Time Uploaded
+- 1148 - Intense Love (2020) -> First Time Uploaded
+- 1149 - My Dear Lady (2020) -> First Time Uploaded
+- 1150 - My Mister (2018) -> First Time Uploaded
 
 🖼️ Fetched Data Details:
-- 1051 - Oh My Venus (2015) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1052 - I Love Lee Tae Ri (2012) -> Fetched: Aired On, Cast, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1053 - Crazy Love (2022) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1054 - About Is Love (2018) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1055 - Once We Get Married (2021) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1056 - The Beauty Inside (2018) -> Fetched: Aired On, Duration, Release Date, Show Image, Synopsis, Tags
-- 1057 - Secret Love Affair (2014) -> Fetched: Show Image
-- 1058 - Love in Time (2020) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1059 - F4 Thailand: Boys over Flowers (2021) -> Fetched: Aired On, Cast, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1060 - Crash Course in Romance (2023) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1061 - Mama Fairy and the Woodcutter (2018) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1062 - Sh**ting Stars (2022) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1063 - That Winter, the Wind Blows (2013) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1064 - The Bride of Habaek (2017) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1065 - My Princess (2011) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1066 - Black Knight: The Man Who Guards Me (2017) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1067 - Blade Man (2014) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1068 - The Day of Becoming You (2021) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1069 - The Most Beautiful You in the World (2020) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1070 - The K2 (2016) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1071 - Prime Minister and I (2013) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1072 - Her Private Life (2019) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1073 - Romance Is a Bonus Book (2019) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1074 - Another Miss Oh (2016) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1075 - Our Glamorous Time (2018) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1076 - Jugglers (2017) -> Fetched: Show Image, Synopsis
-- 1077 - Black Knight (2023) -> Fetched: Aired On, Cast, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1078 - So I Married the Anti-Fan (2021) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1079 - Hyde, Jekyll, Me (2015) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1080 - Coffee Prince (2007) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1081 - Monster (2016) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1082 - Level Up (2019) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1083 - Healer (2014) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1084 - Radiant Office (2017) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1085 - Kiss Sixth Sense (2022) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1086 - My Roommate Is a Gumiho (2021) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1087 - The Heavenly Idol (2023) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1088 - Why Women Love (2022) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1089 - Abyss (2019) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1090 - Imitation (2021) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1091 - Island Part 2 (2023) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1092 - Woori the Virgin (2022) -> Fetched: Aired On, Cast, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1093 - Crazy Love (2013) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1094 - Love at First Hate (2018) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1095 - The Love You Give Me (2023) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1096 - Go Go Squid! (2019) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1097 - Buang Ruk Satan (2018) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1098 - You Are My Destiny (2014) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1099 - Young Lady and Gentleman (2021) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
-- 1100 - Eve (2022) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1101 - Hometown Cha-Cha-Cha (2021) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1102 - Sweet Stranger and Me (2016) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1103 - GO into Your Heart (2021) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1104 - Begin Again (2020) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1105 - Love Scenery (2021) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1106 - Please Be My Family (2023) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1107 - Money Flower (2017) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1108 - Lucky Romance (2016) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1109 - Plot Love (2021) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1110 - You Are My Glory (2021) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1111 - Come and Hug Me (2018) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1112 - Missing 9 (2017) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1113 - Skip a Beat (2023) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1114 - Please Feel at Ease Mr. Ling (2021) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1115 - Phoenix 2020 (2020) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1116 - Kokdu: Season of Deity (2023) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1117 - Your Highness, the Class Monitor (2019) -> Fetched: Aired On, Cast, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1118 - Nothing But You (2022) -> Fetched: Show Image
+- 1119 - Only Side by Side with You (2018) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1120 - My Girlfriend Is an Alien Season 2 (2022) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1121 - True to Love (2023) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1122 - Forget You Remember Love (2020) -> Fetched: Aired On, Cast, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1123 - Suparburoot Jorm Jon: Duang Jai Kabot (2019) -> Fetched: Aired On, Cast, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1124 - Sweet and Cold (2023) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1125 - Perfect and Casual (2020) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1126 - The King: Eternal Monarch (2020) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1127 - Link: Eat, Love, Kill (2022) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1128 - Your House Helper (2018) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1129 - Oh My Boss (2021) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1130 - Tomorrow with You (2017) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1131 - Love in Sadness (2019) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1132 - Nevertheless, (2021) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1133 - Love of Replica (2023) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1134 - Cheat On Me, if You Can (2020) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1135 - Madame Antoine (2016) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1136 - Come Back Alive (2016) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1137 - Vincenzo (2021) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1138 - Fates & Furies (2018) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1139 - You Are the Best! (2013) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1140 - Hotel del Luna (2019) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1141 - Something in the Rain (2018) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1142 - Bride of the Century (2014) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1143 - Witch's Romance (2014) -> Fetched: Aired On, Duration, Release Date, Show Image, Synopsis, Tags
+- 1144 - When My Love Blooms (2020) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1145 - Love in the Moonlight (2016) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1146 - Tempted (2018) -> Fetched: Show Image, Synopsis
+- 1147 - See You in My 19th Life (2023) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1148 - Intense Love (2020) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1149 - My Dear Lady (2020) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1150 - My Mister (2018) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
 
 ⚠️ Missing Values (Asian Dramas):
-- 1052 - I Love Lee Tae Ri (2012) -> ⚠️ Missing: Director
-- 1056 - The Beauty Inside (2018) -> ⚠️ Missing: Cast, Director, Other Names
-- 1057 - Secret Love Affair (2014) -> ⚠️ Missing: Aired On, Cast, Director, Duration, Other Names, Release Date, Synopsis, Tags
-- 1059 - F4 Thailand: Boys over Flowers (2021) -> ⚠️ Missing: Director
-- 1076 - Jugglers (2017) -> ⚠️ Missing: Aired On, Cast, Director, Duration, Other Names, Release Date, Tags
-- 1077 - Black Knight (2023) -> ⚠️ Missing: Director
-- 1092 - Woori the Virgin (2022) -> ⚠️ Missing: Director
+- 1117 - Your Highness, the Class Monitor (2019) -> ⚠️ Missing: Director
+- 1118 - Nothing But You (2022) -> ⚠️ Missing: Aired On, Cast, Director, Duration, Other Names, Release Date, Synopsis, Tags
+- 1122 - Forget You Remember Love (2020) -> ⚠️ Missing: Director
+- 1123 - Suparburoot Jorm Jon: Duang Jai Kabot (2019) -> ⚠️ Missing: Director
+- 1143 - Witch's Romance (2014) -> ⚠️ Missing: Cast, Director, Other Names
+- 1146 - Tempted (2018) -> ⚠️ Missing: Aired On, Cast, Director, Duration, Other Names, Release Date, Tags
 
 📊 Summary (Sheet: Feb 7 2023 Onwards)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -157,7 +182,7 @@
 🔍 Refetched: 0
 🚫 Skipped (Asian): 0
 🙈 Ignored (Non-Asian): 0
-⚠️ Warnings: 7
+⚠️ Warnings: 6
   Total Unique Rows: 50
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -167,56 +192,56 @@
 🔁 Total Updated: 0
 🔍 Total Refetched: 0
 🖼️ Show Images Updated: 50
-🧑‍🎨 New Artist Images Added: 1521
+🧑‍🎨 New Artist Images Added: 1258
 🚫 Total Skipped (Asian): 0
 🙈 Total Ignored (Non-Asian): 0
 ❌ Total Deleted: 0
 🗄️ Total Archived Backups: 0
-⚠️ Total Warnings: 7
+⚠️ Total Warnings: 6
 💾 Backup Files: 0
   Grand Total Rows Processed: 50
 
 💾 Metadata Backups: 50
 
-📦 Total Objects in seriesData.json: 100
-📦 Total Objects in artists.json: 3497
-📦 Total Objects in cast.json: 92
-📦 Total Objects in artists_lookup.json: 3497
-🖼️ Total images in show-images: 98
-🧑‍🎨 Total images in artist-images: 3497
+📦 Total Objects in seriesData.json: 150
+📦 Total Objects in artists.json: 4755
+📦 Total Objects in cast.json: 139
+📦 Total Objects in artists_lookup.json: 4755
+🖼️ Total images in show-images: 148
+🧑‍🎨 Total images in artist-images: 4755
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ Folders Generated:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📁 show_images/ (Total: 50 files)
-    📄 1051.jpg
-    📄 1052.jpg
-    📄 1053.jpg
-    📄 1054.jpg
-    📄 1055.jpg
+    📄 1101.jpg
+    📄 1102.jpg
+    📄 1103.jpg
+    📄 1104.jpg
+    📄 1105.jpg
     ... and 45 more files.
 
-📁 artist_images/ (Total: 1521 files)
-    📄 21105.jpg
-    📄 21348.jpg
-    📄 18129.jpg
-    📄 493.jpg
-    📄 282.jpg
-    ... and 1516 more files.
+📁 artist_images/ (Total: 1258 files)
+    📄 67995.jpg
+    📄 87665.jpg
+    📄 19706.jpg
+    📄 6656.jpg
+    📄 6104.jpg
+    ... and 1253 more files.
 
 📁 meta_backups/ (Total: 50 files)
-    📄 META_07_April_2026_1920_1051.json
-    📄 META_07_April_2026_1920_1052.json
-    📄 META_07_April_2026_1920_1053.json
-    📄 META_07_April_2026_1920_1054.json
-    📄 META_07_April_2026_1920_1055.json
+    📄 META_07_April_2026_1932_1101.json
+    📄 META_07_April_2026_1932_1102.json
+    📄 META_07_April_2026_1932_1103.json
+    📄 META_07_April_2026_1932_1104.json
+    📄 META_07_April_2026_1932_1105.json
     ... and 45 more files.
 
 📁 reports/ (Total: 1 files)
-    📄 07_April_2026_1920_PARTIAL_913_REPORT.txt
+    📄 07_April_2026_1932_PARTIAL_914_REPORT.txt
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ⚠️ BATCH LIMIT REACHED: The script paused safely.
 GitHub Actions will trigger next run automatically.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-✅ Partial Report created at -> reports/07_April_2026_1920_PARTIAL_913_REPORT.txt
+✅ Partial Report created at -> reports/07_April_2026_1932_PARTIAL_914_REPORT.txt
