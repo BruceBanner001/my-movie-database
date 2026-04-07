@@ -1,0 +1,685 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260407_211818",
+    "timestamp": "07 April 2026 09:19 PM (IST)",
+    "showID": 122,
+    "showName": "The One and Only",
+    "fetchedFields": {
+        "showImage": {
+            "value": "122.jpg",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/The_One_and_Only"
+        },
+        "releaseDate": {
+            "value": "Dec 20, 2021 - Feb  8, 2022",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/686407-only-one-person"
+        },
+        "otherNames": {
+            "value": [
+                "Han Salamman",
+                "Han Saramman",
+                "Just One Person",
+                "O Inigualável",
+                "Only One Person",
+                "Только один человек",
+                "شخص واحد فقط",
+                "只一人"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/686407-only-one-person"
+        },
+        "Duration": {
+            "value": "1 hr. 10 min.",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/686407-only-one-person"
+        },
+        "synopsis": {
+            "value": "When Pyo In-Sook (Ahn Eun-Jin) was a child, her parents abandoned her. After that, she was raised by her grandmother. Her life has never been easy or comfortable. She now works at a public bathhouse, scrubbing customer's bodies. Her self-defensive mechanism is to not express her feelings to other people. One day, Pyo In-Sook hears from a doctor that she doesn't have much time left to live and she is unable to even express her feelings at that time. Pyo In-Sook meets two patients, Se-Yeon (Gang Ye-Won) and Mi-Do (Joy), at a hospice for women. Se-Yeon is an ordinary housewife, but lives a lonely life. Mi-Do is a popular influencer on social media.\n\nMeanwhile, Woo-Cheon (Kim Kyung-Nam) got involved in a murder case. Since then, his life has completely changed. He works at a private detective office. He does anything, even illegal things and he is not afraid of anything in his life. One rainy day, he meets Pyo In-Sook.",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/The_One_and_Only"
+        },
+        "director": {
+            "value": [
+                "Oh Hyun Jong"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/686407-only-one-person"
+        },
+        "tags": {
+            "value": [
+                "Terminal Illness",
+                "Hospice Care",
+                "Orphan Male Lead",
+                "Murder",
+                "Investigation",
+                "Skilled Killer",
+                "Death",
+                "Cynical Male Lead",
+                "Insomnia",
+                "Repentance"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/686407-only-one-person"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "15983",
+                    "artistName": "Oh Hyun Jong",
+                    "artistImageURL": "https://i.mydramalist.com/w0RmJm.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "22010",
+                    "artistName": "Moon Jung Min",
+                    "artistImageURL": "https://i.mydramalist.com/dXL1A_5m.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "18592",
+                    "artistName": "Ahn Eun Jin",
+                    "artistImageURL": "https://i.mydramalist.com/LwPlPy_5s.jpg",
+                    "characterName": "Pyo In Suk",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "16105",
+                    "artistName": "Kim Kyung Nam",
+                    "artistImageURL": "https://i.mydramalist.com/qY2jQQ_5s.jpg",
+                    "characterName": "Min Woo Cheon",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "2144",
+                    "artistName": "Kang Ye Won",
+                    "artistImageURL": "https://i.mydramalist.com/ABRAOL_5s.jpg",
+                    "characterName": "Kang Se Yeon",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "11862",
+                    "artistName": "Joy",
+                    "artistImageURL": "https://i.mydramalist.com/KpKD8n_5s.jpg",
+                    "characterName": "Seong Mi Do",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "1659",
+                    "artistName": "Go Doo Shim",
+                    "artistImageURL": "https://i.mydramalist.com/RJnePs.jpg",
+                    "characterName": "Yook Seong Ja [In Suk's grandmother]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1476",
+                    "artistName": "Jang Hyun Sung",
+                    "artistImageURL": "https://i.mydramalist.com/1LJLds.jpg",
+                    "characterName": "Pyo Kang Seon [In Sook's father]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "25101",
+                    "artistName": "Seo Yeon Woo",
+                    "artistImageURL": "https://i.mydramalist.com/NdLOYn_5s.jpg",
+                    "characterName": "Ha San A [In Sook's neighbor]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "46435",
+                    "artistName": "Cha Hee",
+                    "artistImageURL": "https://i.mydramalist.com/jPdk8_5s.jpg",
+                    "characterName": "Woo Kyung Mi [San A's mother]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3581",
+                    "artistName": "Do Sang Woo",
+                    "artistImageURL": "https://i.mydramalist.com/BwgA5s.jpg",
+                    "characterName": "Cho Shi Young [Regional Investigation Unit Inspector / Special Crime Squad]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "6302",
+                    "artistName": "Lee Bong Ryun",
+                    "artistImageURL": "https://i.mydramalist.com/en0DEs.jpg",
+                    "characterName": "Hwang Ma Jin [Regional Investigation Unit Team Leader/ Special Crime Squad]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "9604",
+                    "artistName": "Jang In Sub",
+                    "artistImageURL": "https://i.mydramalist.com/pgqpV_5s.jpg",
+                    "characterName": "Oh Jin Gyu [Regional Investigation Unit Sergeant / Special Crime Squad]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "18594",
+                    "artistName": "Han Geon Yu",
+                    "artistImageURL": "https://i.mydramalist.com/vXRybB_5s.jpg",
+                    "characterName": "Gu Ji Pyo [Mi Do's boyfriend / LE Group Director]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "20038",
+                    "artistName": "Han Kyu Won",
+                    "artistImageURL": "https://i.mydramalist.com/xQ3jjs.jpg",
+                    "characterName": "Oh Young Chan [Se Yeon's husband]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "17484",
+                    "artistName": "Ahn Chang Hwan",
+                    "artistImageURL": "https://i.mydramalist.com/r5eRD_5s.jpg",
+                    "characterName": "Shin Tae Il",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "39007",
+                    "artistName": "Choi Young Woo",
+                    "artistImageURL": "https://i.mydramalist.com/vgzW2_5s.jpg",
+                    "characterName": "Park Seung Seon",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "40647",
+                    "artistName": "Lee Soo Mi",
+                    "artistImageURL": "https://i.mydramalist.com/BdmxrV_5s.jpg",
+                    "characterName": "Sister Magdalena [Director, Morning Light Hospice]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "6856",
+                    "artistName": "Yoon Bo Ra",
+                    "artistImageURL": "https://i.mydramalist.com/26vDw_5s.jpg",
+                    "characterName": "Sister Veronica [Morning Light Hospice]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5298",
+                    "artistName": "So Hee Jung",
+                    "artistImageURL": "https://i.mydramalist.com/wN30n_5s.jpg",
+                    "characterName": "Moon Young Ji [Morning Light Hospice]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "84525",
+                    "artistName": "Kim Soo Hyung",
+                    "artistImageURL": "https://i.mydramalist.com/XxDdw_5s.jpg",
+                    "characterName": "Lim Ji Hoo [Young Ji's daughter]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "10189",
+                    "artistName": "Lee Hang Na",
+                    "artistImageURL": "https://i.mydramalist.com/0wN7J4_5s.jpg",
+                    "characterName": "Choi Sung Hae [Morning Light Hospice]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "44751",
+                    "artistName": "Joo In Young",
+                    "artistImageURL": "https://i.mydramalist.com/Kpy5zq_5s.jpg",
+                    "characterName": "Cha Yeo Wol [Morning Light Hospice]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2926",
+                    "artistName": "Seong Byung Sook",
+                    "artistImageURL": "https://i.mydramalist.com/5v8XOe_5s.jpg",
+                    "characterName": "Oh Cheon Deok [Morning Light Hospice]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2390",
+                    "artistName": "Kim Byung Chun",
+                    "artistImageURL": "https://i.mydramalist.com/ZqYOq_5s.jpg",
+                    "characterName": "Dr. Cho [Morning Light Hospice]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "44355",
+                    "artistName": "Kim Jung Hwan",
+                    "artistImageURL": "https://i.mydramalist.com/XXNnq_5s.jpg",
+                    "characterName": "Kang Seo Goon [Morning Light Hospice]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3168",
+                    "artistName": "Jang Seo Won",
+                    "artistImageURL": "https://i.mydramalist.com/MB0Y1s.jpg",
+                    "characterName": "Jo Woong Do [Morning Light Hospice]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "87629",
+                    "artistName": "Jeon Yi Soo",
+                    "artistImageURL": "https://i.mydramalist.com/BVxll_5s.jpg",
+                    "characterName": "Ho Sun",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "44701",
+                    "artistName": "Park Eun Young",
+                    "artistImageURL": "https://i.mydramalist.com/dJBPb_5s.jpg",
+                    "characterName": "[Bathhouse manager] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "18396",
+                    "artistName": "Yoon Boo Jin",
+                    "artistImageURL": "https://i.mydramalist.com/WroPls.jpg",
+                    "characterName": "[Bathhouse scrubber] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "58951",
+                    "artistName": "Lee Jae Eun",
+                    "artistImageURL": "https://i.mydramalist.com/NdEbKW_5s.jpg",
+                    "characterName": "[Bathhouse scrubber] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "27121",
+                    "artistName": "Kim Geum Soon",
+                    "artistImageURL": "https://i.mydramalist.com/RNoEP_5s.jpg",
+                    "characterName": "[Bathhouse customer] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "63131",
+                    "artistName": "Ryu Yeon Seok",
+                    "artistImageURL": "https://i.mydramalist.com/vZx2D_5s.jpg",
+                    "characterName": "Dr. Yoo Ho Joon (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "58679",
+                    "artistName": "Jung Il Hwa",
+                    "artistImageURL": "https://i.mydramalist.com/jLkKv_5s.jpg",
+                    "characterName": "[In Sook's mother] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "70129",
+                    "artistName": "Jung Se Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/vl82W_5s.jpg",
+                    "characterName": "[Sung Hae's daughter] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "46991",
+                    "artistName": "Yoo Chae Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/2XJZW_5s.jpg",
+                    "characterName": "Eun Bi [Tae Il's daughter] (Ep. 1, 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "51867",
+                    "artistName": "Lee Nam Gyeong",
+                    "artistImageURL": "https://i.mydramalist.com/W62lP_5s.jpg",
+                    "characterName": "Pyo In Sook [Child] (Ep. 1-8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "4373",
+                    "artistName": "Baek Hyun Jin",
+                    "artistImageURL": "https://i.mydramalist.com/Lw8doL_5s.jpg",
+                    "characterName": "Ha Young Geun",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "54675",
+                    "artistName": "Oh Min Ae",
+                    "artistImageURL": "https://i.mydramalist.com/r7Kz2_5s.jpg",
+                    "characterName": "[Young Chan's mother] (1-2, 7, 11, 14)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "8512",
+                    "artistName": "Yoon Bok In",
+                    "artistImageURL": "https://i.mydramalist.com/jQVdnd_5s.jpg",
+                    "characterName": "[Se Yeon's mother] (Ep. 1, 3, 7-8, 12, 15)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "93205",
+                    "artistName": "Choi Hye Seo",
+                    "artistImageURL": "https://i.mydramalist.com/rDXgj_5s.jpg",
+                    "characterName": "[Passerby daughter] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "92023",
+                    "artistName": "Ahn Hye Won",
+                    "artistImageURL": "https://i.mydramalist.com/rD20D_5s.jpg",
+                    "characterName": "[Pharmacist] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "10821",
+                    "artistName": "Park Se In",
+                    "artistImageURL": "https://i.mydramalist.com/Pnd35s.jpg",
+                    "characterName": "[Vet, Local Animal Hosp.] (Ep. 2-3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "90437",
+                    "artistName": "Moon Seo Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/2KPgk_5s.jpg",
+                    "characterName": "[Swimming pool bully] (Ep. 2, 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "25121",
+                    "artistName": "Jung Hyun Joon",
+                    "artistImageURL": "https://i.mydramalist.com/nO7VZQ_5s.jpg",
+                    "characterName": "Min Woo Cheon [Child] (Ep. 2-8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "92593",
+                    "artistName": "Kim Ji Yul",
+                    "artistImageURL": "https://i.mydramalist.com/EOPEp_5s.jpg",
+                    "characterName": "Seong Mi Do [Child] (Ep. 2, 10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "42161",
+                    "artistName": "Oh Ki Hwan",
+                    "artistImageURL": "https://i.mydramalist.com/RkKnYs.jpg",
+                    "characterName": "[Mi Do's father] (Ep. 2, 10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "92591",
+                    "artistName": "Veronica Seo",
+                    "artistImageURL": "https://i.mydramalist.com/v2ykZ_5s.jpg",
+                    "characterName": "[Mi Do's mother Young] (Ep. 2, 10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "92589",
+                    "artistName": "Kim Seo Jun",
+                    "artistImageURL": "https://i.mydramalist.com/jzJQb_5s.jpg",
+                    "characterName": "Seong Min Woong [Mi Do's brother] (Ep. 2, 10, 16)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "92587",
+                    "artistName": "Han Dong Hee",
+                    "artistImageURL": "https://i.mydramalist.com/42oow_5s.jpg",
+                    "characterName": "[Woo Cheon's mother] (Ep. 3-4, 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "42071",
+                    "artistName": "Lee Joo Young",
+                    "artistImageURL": "https://i.mydramalist.com/nO800N_5s.jpg",
+                    "characterName": "Cha Myung Joo [Eun Hyuk's mother] (Ep. 3, 5, 12)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "9860",
+                    "artistName": "Ok Joo Ri",
+                    "artistImageURL": "https://i.mydramalist.com/EDWnOs.jpg",
+                    "characterName": "[Neighborhood woman] (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21045",
+                    "artistName": "Choi Min Geum",
+                    "artistImageURL": "https://i.mydramalist.com/qONjds.jpg",
+                    "characterName": "[Food stall vendor] (Ep. 4, 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "64327",
+                    "artistName": "Moon Sung Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/jKJzv_5s.jpg",
+                    "characterName": "Min Woo Cheon [Young] (Ep. 4-5, 8, 12)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "20777",
+                    "artistName": "Lee Seung Joon",
+                    "artistImageURL": "https://i.mydramalist.com/AvB5gs.jpg",
+                    "characterName": "[Guseong Gang member] (Ep. 4-5, 9, 12)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "68597",
+                    "artistName": "Son Hwa Young",
+                    "artistImageURL": "https://i.mydramalist.com/e5Xep_5s.jpg",
+                    "characterName": "[Guseong Gang member] (Ep. 4, 12, 14)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "104475",
+                    "artistName": "Hwang Dae Woong",
+                    "artistImageURL": "https://i.mydramalist.com/jpwpB_5s.jpg",
+                    "characterName": "[Guseong Gang member] (Ep. 4, 12, 14)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "62983",
+                    "artistName": "Park Jin Young",
+                    "artistImageURL": "https://i.mydramalist.com/xp5qE_5s.jpg",
+                    "characterName": "[NFS technician] (Ep. 5, 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "23233",
+                    "artistName": "Jeong Young Do",
+                    "artistImageURL": "https://i.mydramalist.com/Ql1Dv_5s.jpg",
+                    "characterName": "Reporter Park (Ep. 6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "66125",
+                    "artistName": "Lee Ji Young",
+                    "artistImageURL": "https://i.mydramalist.com/Wxv8X_5s.jpg",
+                    "characterName": "[Reporter] (Ep. 6, 9-10, 13)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "91799",
+                    "artistName": "Kim Jang Hwan",
+                    "artistImageURL": "https://i.mydramalist.com/k4ADk_5s.jpg",
+                    "characterName": "[Reporter] (Ep. 6, 9-10, 13)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "28189",
+                    "artistName": "Park Ji Ho",
+                    "artistImageURL": "https://i.mydramalist.com/mOXqJq_5s.jpg",
+                    "characterName": "[Reporter] (Ep. 6, 9-10, 13)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "91801",
+                    "artistName": "Park Se Hee",
+                    "artistImageURL": "https://i.mydramalist.com/xR4Oz_5s.jpg",
+                    "characterName": "Kang Se Yeon [Child] (Ep. 6, 15)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "91803",
+                    "artistName": "Kim  Su A",
+                    "artistImageURL": "https://i.mydramalist.com/ZJ8wj_5s.jpg",
+                    "characterName": "Moon Young Ji [Child] (Ep. 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "2889",
+                    "artistName": "Lee Young Jin",
+                    "artistImageURL": "https://i.mydramalist.com/RBZ3vP_5s.jpg",
+                    "characterName": "Ji Yoon Seo [Attorney] (Ep. 7, 9-12, 14)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "3208",
+                    "artistName": "Jeon Noh Min",
+                    "artistImageURL": "https://i.mydramalist.com/r5ROms.jpg",
+                    "characterName": "[Gu Ji Pyo's father / Le Group executive] (Ep. 7, 11, 13, 16)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "10717",
+                    "artistName": "Yoon Joo Man",
+                    "artistImageURL": "https://i.mydramalist.com/qxWk2_5s.jpg",
+                    "characterName": "[Cellphone technician] (Ep. 8, 10-11, 14)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "47517",
+                    "artistName": "Lee Dong Gyu",
+                    "artistImageURL": "https://i.mydramalist.com/PxBV58_5s.jpg",
+                    "characterName": "[JSH anchorman] (Ep. 8, 10, 12, 15)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "92561",
+                    "artistName": "Han Ho Yong",
+                    "artistImageURL": "https://i.mydramalist.com/4O3Xr_5s.jpg",
+                    "characterName": "[Taxi driver] (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "2638",
+                    "artistName": "Go Soo Hee",
+                    "artistImageURL": "https://i.mydramalist.com/18X0d_5s.jpg",
+                    "characterName": "Cho Ji A [Police] (Ep. 9-14)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "88893",
+                    "artistName": "Lee Eun Ju",
+                    "artistImageURL": "https://i.mydramalist.com/pLxWE_5s.jpg",
+                    "characterName": "[Caregiver to Yeong Chan's mother] (Ep. 11)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "94135",
+                    "artistName": "Yoo Ah Reum",
+                    "artistImageURL": "https://i.mydramalist.com/jmdyB_5s.jpg",
+                    "characterName": "[Mother at Crosswalk] (Ep. 11-12)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "94129",
+                    "artistName": "Kang Gyu Rin",
+                    "artistImageURL": "https://i.mydramalist.com/4O82k_5s.jpg",
+                    "characterName": "[Daughter at crosswalk] (Ep. 11-12)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "77423",
+                    "artistName": "Park Hui Eun",
+                    "artistImageURL": "https://i.mydramalist.com/jJbRz_5s.jpg",
+                    "characterName": "[Mi Do's mother] (Ep. 15)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "22963",
+                    "artistName": "Kim Dae Kook",
+                    "artistImageURL": "https://i.mydramalist.com/EgBJm_5s.jpg",
+                    "characterName": "[Police]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "159192",
+                    "artistName": "Han Jae Hun",
+                    "artistImageURL": "https://i.mydramalist.com/DkD8xp_5s.jpg",
+                    "characterName": "[Clothing store customer]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "126545",
+                    "artistName": "Yang Mi Seon",
+                    "artistImageURL": "https://i.mydramalist.com/kAJqPj_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "99937",
+                    "artistName": "Ko Tae Jin",
+                    "artistImageURL": "https://i.mydramalist.com/Z8kEz1_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/686407-only-one-person"
+        },
+        "airedOn": {
+            "value": [
+                "Monday",
+                "Tuesday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/686407-only-one-person"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "22010",
+            "artistName": "Moon Jung Min",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "2144",
+            "artistName": "Kang Ye Won",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "18594",
+            "artistName": "Han Geon Yu",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "84525",
+            "artistName": "Kim Soo Hyung",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "92591",
+            "artistName": "Veronica Seo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "91801",
+            "artistName": "Park Se Hee",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "91803",
+            "artistName": "Kim  Su A",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "92561",
+            "artistName": "Han Ho Yong",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "94129",
+            "artistName": "Kang Gyu Rin",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "asianwiki",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": null,
+        "airedOn": "mydramalist"
+    }
+}

@@ -1,0 +1,644 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260407_211818",
+    "timestamp": "07 April 2026 09:20 PM (IST)",
+    "showID": 203,
+    "showName": "Alice",
+    "fetchedFields": {
+        "showImage": {
+            "value": "203.jpg",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Alice_(Korean_Drama)"
+        },
+        "releaseDate": {
+            "value": "Aug 28, 2020 - Oct 24, 2020",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/35199-hotel-alice"
+        },
+        "otherNames": {
+            "value": [
+                "Aelliseu",
+                "Aelriseu",
+                "Hotel Aelliseu",
+                "Hotel Alice",
+                "Элис",
+                "호텔 앨리스"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/35199-hotel-alice"
+        },
+        "Duration": {
+            "value": "1 hr. 10 min.",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/35199-hotel-alice"
+        },
+        "synopsis": {
+            "value": "Due to a death, a man and a woman become separated forever, but they meet again like magic.\n\nPark Jin-Gyeom (Joo Won) is a detective, who doesn't show emotions. While investigating a mysterious case, he realizes the existence of time travelers. The time travelers come to the present day from the future through a space called Alice. Park Jin-Gyeom struggles to prevent negative things happening through Alice. During this time, he meets Yoon Tae-Yi (Kim Hee-Seon) again. She died in the past. Park Jin-Gyeom insists that their meeting is a fateful reunion. Yoon Tae-Yi is a genius physicist and she holds a key to time travel. While they unravel the secret of time travel together, she realizes a secret behind her.",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Alice_(Korean_Drama)"
+        },
+        "director": {
+            "value": [
+                "Baek Soo Chan"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/35199-hotel-alice"
+        },
+        "tags": {
+            "value": [
+                "Time Travel",
+                "Mother-Son Relationship",
+                "Double Identity",
+                "Alexithymia",
+                "Older Woman/Younger Man",
+                "Murder",
+                "Inchoate Crime",
+                "Emotionally Strong Female Lead",
+                "Emotionally Strong Male Lead",
+                "Graphic Violence"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/35199-hotel-alice"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "65445",
+                    "artistName": "Park Se Jun",
+                    "artistImageURL": "https://i.mydramalist.com/v1loD_5m.jpg",
+                    "characterName": null,
+                    "role": "Composer"
+                },
+                {
+                    "artistID": "16020",
+                    "artistName": "Baek Soo Chan",
+                    "artistImageURL": "https://i.mydramalist.com/63VlXm.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "47499",
+                    "artistName": "Kim Kyu Won",
+                    "artistImageURL": "https://i.mydramalist.com/jmjAz_5m.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "978",
+                    "artistName": "Kim Hee Sun",
+                    "artistImageURL": "https://i.mydramalist.com/vpjJg_5s.jpg",
+                    "characterName": "Yoon Tae Yi",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "396",
+                    "artistName": "Joo Won",
+                    "artistImageURL": "https://i.mydramalist.com/wrJg1_5s.jpg",
+                    "characterName": "Park Jin Gyum",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "7009",
+                    "artistName": "Kwak Shi Yang",
+                    "artistImageURL": "https://i.mydramalist.com/xeApr_5s.jpg",
+                    "characterName": "Yoo Min Hyuk",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "6604",
+                    "artistName": "Lee Da In",
+                    "artistImageURL": "https://i.mydramalist.com/qN505_5s.jpg",
+                    "characterName": "Kim Do Yeon",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "1812",
+                    "artistName": "Kim  Sang Ho",
+                    "artistImageURL": "https://i.mydramalist.com/B3Vm1s.jpg",
+                    "characterName": "Go Hyun Seok [Police]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "8470",
+                    "artistName": "Hwang Seung Eon",
+                    "artistImageURL": "https://i.mydramalist.com/vXQXNW_5s.jpg",
+                    "characterName": "Oh Shi Young [Alice]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1209",
+                    "artistName": "Choi Won Young",
+                    "artistImageURL": "https://i.mydramalist.com/QBrn6_5s.jpg",
+                    "characterName": "Seok Oh Won",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "923",
+                    "artistName": "Lee Jae Yoon",
+                    "artistImageURL": "https://i.mydramalist.com/x2Wr3s.jpg",
+                    "characterName": "Kim Dong Ho [Police]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2935",
+                    "artistName": "Jeong Wook",
+                    "artistImageURL": "https://i.mydramalist.com/501WVs.jpg",
+                    "characterName": "Ha Yong Seok [Police]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4045",
+                    "artistName": "Song Ji Hyuk",
+                    "artistImageURL": "https://i.mydramalist.com/wK6qAs.jpg",
+                    "characterName": "Hong Jung Wook [Police]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "18559",
+                    "artistName": "Choi Hong Il",
+                    "artistImageURL": "https://i.mydramalist.com/0vQXks.jpg",
+                    "characterName": "Yoon Jong Soo [Police]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "7338",
+                    "artistName": "Bu Bae",
+                    "artistImageURL": "https://i.mydramalist.com/E4O70_5s.jpg",
+                    "characterName": "Gi Cheol Am [Alice]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "30329",
+                    "artistName": "Yang Ji Il",
+                    "artistImageURL": "https://i.mydramalist.com/xQLlXs.jpg",
+                    "characterName": "Choi Seung Pyo [Alice]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "9957",
+                    "artistName": "Nam Kyung",
+                    "artistImageURL": "https://i.mydramalist.com/d2jDds.jpg",
+                    "characterName": "Jung Hye Soo [Alice]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1126",
+                    "artistName": "Choi Jung Woo",
+                    "artistImageURL": "https://i.mydramalist.com/0vvxKs.jpg",
+                    "characterName": "[Tae Yi's father]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4742",
+                    "artistName": "Oh Young Shil",
+                    "artistImageURL": "https://i.mydramalist.com/2zRvE_5s.jpg",
+                    "characterName": "[Tae Yi's mother]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "22782",
+                    "artistName": "Yeon Woo",
+                    "artistImageURL": "https://i.mydramalist.com/vgjp8_5s.jpg",
+                    "characterName": "Yoon Tae Yeon [Tae Yi's sister]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "10290",
+                    "artistName": "Bae Hae Seon",
+                    "artistImageURL": "https://i.mydramalist.com/EDX8Qs.jpg",
+                    "characterName": "Kim In Sook",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "10229",
+                    "artistName": "Min Joon Ho",
+                    "artistImageURL": "https://i.mydramalist.com/Rjq8Ys.jpg",
+                    "characterName": "Kim Jung Bae [Do Yeon's co-worker]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "12706",
+                    "artistName": "Lee Jung Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/46p8J_5s.jpg",
+                    "characterName": "Yang Hong Seop [Time traveller]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "7573",
+                    "artistName": "Park In Soo",
+                    "artistImageURL": "https://i.mydramalist.com/pz1ky_5s.jpg",
+                    "characterName": "Lee Se Hoon [Time traveller]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "112091",
+                    "artistName": "Shin Yeon Woo",
+                    "artistImageURL": "https://i.mydramalist.com/2wD5gR_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1476",
+                    "artistName": "Jang Hyun Sung",
+                    "artistImageURL": "https://i.mydramalist.com/1LJLds.jpg",
+                    "characterName": "Dr. Jang Dong Shik (Ep. 1, 13)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "22670",
+                    "artistName": "Kim Ji Yoo",
+                    "artistImageURL": "https://i.mydramalist.com/yWr3J3_5s.jpg",
+                    "characterName": "Yoon Tae Yi [Young] (Ep. 1, 7, 12-13)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "23732",
+                    "artistName": "Moon Joo Won",
+                    "artistImageURL": "https://i.mydramalist.com/2v56W_5s.jpg",
+                    "characterName": "Park Jin Gyum [Child] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "17093",
+                    "artistName": "Moon Woo Jin",
+                    "artistImageURL": "https://i.mydramalist.com/oQ1w8k_5s.jpg",
+                    "characterName": "Park Jin Gyum [Young] (Ep. 1, 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "33111",
+                    "artistName": "Park Ok Chool",
+                    "artistImageURL": "https://i.mydramalist.com/XKopxs.jpg",
+                    "characterName": "[Butcher] (Ep. 1, 5, 12, 16)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "18879",
+                    "artistName": "Seo Kwang Jae",
+                    "artistImageURL": "https://i.mydramalist.com/4VWRK_5s.jpg",
+                    "characterName": "[Medical examiner] (Ep. 1-2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "38325",
+                    "artistName": "Shin Dong Ryuk",
+                    "artistImageURL": "https://i.mydramalist.com/Bgv1q_5s.jpg",
+                    "characterName": "[Doctor] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "13686",
+                    "artistName": "Carson Allen",
+                    "artistImageURL": "https://i.mydramalist.com/44nd1s.jpg",
+                    "characterName": "[English teacher] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21859",
+                    "artistName": "Seo Yi Soo",
+                    "artistImageURL": "https://i.mydramalist.com/jmbkw_5s.jpg",
+                    "characterName": "Hong Eun Soo (Ep. 1-4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "1727",
+                    "artistName": "Lee Seung Hyung",
+                    "artistImageURL": "https://i.mydramalist.com/RB5pVs.jpg",
+                    "characterName": "Hong Suk Joon [Eun Soo's father] (Ep. 1, 3-4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6714",
+                    "artistName": "Oh Yeon Ah",
+                    "artistImageURL": "https://i.mydramalist.com/0ger4_5s.jpg",
+                    "characterName": "Han Sun Hee [Eun Soo's mother / Time traveller] (Ep. 1-4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21144",
+                    "artistName": "Seo Wang Seok",
+                    "artistImageURL": "https://i.mydramalist.com/4rX7Q_5s.jpg",
+                    "characterName": "[Hostage taker] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "30703",
+                    "artistName": "Ahn Soo Bin",
+                    "artistImageURL": "https://i.mydramalist.com/j4mNBs.jpg",
+                    "characterName": "[Kindergarten teacher] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6103",
+                    "artistName": "Choi Na Moo",
+                    "artistImageURL": "https://i.mydramalist.com/d0Ok2d_5s.jpg",
+                    "characterName": "[Apartment witness] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "43627",
+                    "artistName": "Noh Sung Eun",
+                    "artistImageURL": "https://i.mydramalist.com/25b1k_5s.jpg",
+                    "characterName": "[Delinquent student] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "16415",
+                    "artistName": "Steve Noh",
+                    "artistImageURL": "https://i.mydramalist.com/BQgol_5s.jpg",
+                    "characterName": "[Delinquent student] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "39553",
+                    "artistName": "Ahn Lu Ah",
+                    "artistImageURL": "https://i.mydramalist.com/wexVYs.jpg",
+                    "characterName": "Hong Eun Soo [18-year-old] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "39291",
+                    "artistName": "Shin Young Kyu",
+                    "artistImageURL": "https://i.mydramalist.com/0d1A6_5s.jpg",
+                    "characterName": "Yang Min Sung [Hong Sub's brother] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "49991",
+                    "artistName": "Song Ha Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/WWogp_5s.jpg",
+                    "characterName": "Yang Hong Sub [5-years-old] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "22264",
+                    "artistName": "Lee Seul Ah",
+                    "artistImageURL": "https://i.mydramalist.com/PwkX5s.jpg",
+                    "characterName": "[Principal of International Nursery] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "42161",
+                    "artistName": "Oh Ki Hwan",
+                    "artistImageURL": "https://i.mydramalist.com/RkKnYs.jpg",
+                    "characterName": "[Drones salesman] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "31121",
+                    "artistName": "Kang Dong Yup",
+                    "artistImageURL": "https://i.mydramalist.com/4rgg1s.jpg",
+                    "characterName": "[Tae Yi's colleague] (Ep. 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5645",
+                    "artistName": "Park Min Young",
+                    "artistImageURL": "https://i.mydramalist.com/4LY8K_5s.jpg",
+                    "characterName": "[Doctor] (Ep. 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "53999",
+                    "artistName": "Ahn Jung Ho",
+                    "artistImageURL": "https://i.mydramalist.com/j6zrB_5s.jpg",
+                    "characterName": "[Alice agent] (Ep. 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "11844",
+                    "artistName": "Lee Soo Woong",
+                    "artistImageURL": "https://i.mydramalist.com/QJ5KrQ_5s.jpg",
+                    "characterName": "Jung Gi Hoon [Broker] (Ep. 3-4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "3198",
+                    "artistName": "Kim Dong Gyun",
+                    "artistImageURL": "https://i.mydramalist.com/Y0jlAs.jpg",
+                    "characterName": "[Do Yeon's father] (Ep. 4, 8-10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5782",
+                    "artistName": "Lee Jin Ah",
+                    "artistImageURL": "https://i.mydramalist.com/ZowOJs.jpg",
+                    "characterName": "[Do Yeon's mother] (Ep. 4, 8-10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "9353",
+                    "artistName": "Park Jin Yeong",
+                    "artistImageURL": "https://i.mydramalist.com/ABmRoZ_5s.jpg",
+                    "characterName": "[Professor] (Ep. 5)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "10717",
+                    "artistName": "Yoon Joo Man",
+                    "artistImageURL": "https://i.mydramalist.com/qxWk2_5s.jpg",
+                    "characterName": "Joo Hae Min (Ep. 6-9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "51365",
+                    "artistName": "Lee Jung Min",
+                    "artistImageURL": "https://i.mydramalist.com/QP61v_5s.jpg",
+                    "characterName": "Park Jin Gyum [Young child] (Ep. 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6183",
+                    "artistName": "Choi Hee Jin",
+                    "artistImageURL": "https://i.mydramalist.com/6jVxj_5s.jpg",
+                    "characterName": "[Doctor] (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "12340",
+                    "artistName": "Baek In Kwon",
+                    "artistImageURL": "https://i.mydramalist.com/EgBEp_5s.jpg",
+                    "characterName": "[Yangjae-dong arsonist] (Ep. 11)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "42301",
+                    "artistName": "Lee Hye Ra",
+                    "artistImageURL": "https://i.mydramalist.com/ROAwY_5s.jpg",
+                    "characterName": "Doctor (Ep. 12)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "30823",
+                    "artistName": "Lee Kwang Se",
+                    "artistImageURL": "https://i.mydramalist.com/qbq3Ds.jpg",
+                    "characterName": "[Antique dealer] (Ep. 14)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "51247",
+                    "artistName": "Lee Eun Hee",
+                    "artistImageURL": "https://i.mydramalist.com/6KXnW_5s.jpg",
+                    "characterName": "Moon Seo Jin",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "28557",
+                    "artistName": "Jeon Jeong Il",
+                    "artistImageURL": "https://i.mydramalist.com/nO183L_5s.jpg",
+                    "characterName": "[Supervising teacher]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "28189",
+                    "artistName": "Park Ji Ho",
+                    "artistImageURL": "https://i.mydramalist.com/mOXqJq_5s.jpg",
+                    "characterName": "Heo Ik Goo [Detective]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "69523",
+                    "artistName": "Lee Chae Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/Xp4Ap_5s.jpg",
+                    "characterName": "[Bathhouse kid]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "75581",
+                    "artistName": "Ha Young Jin",
+                    "artistImageURL": "https://i.mydramalist.com/XYYwO_5s.jpg",
+                    "characterName": "[Detective]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "92633",
+                    "artistName": "Yang Ji Woo",
+                    "artistImageURL": "https://i.mydramalist.com/k4YKw_5s.jpg",
+                    "characterName": "[Amusement park kid]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "79555",
+                    "artistName": "Kim Yun Seul",
+                    "artistImageURL": "https://i.mydramalist.com/YYzqzK_5s.jpg",
+                    "characterName": "[Hospital girl]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "120073",
+                    "artistName": "Kim Tae Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/Bd1dqb_5s.jpg",
+                    "characterName": "[Park girl]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "75571",
+                    "artistName": "Park So Eul",
+                    "artistImageURL": "https://i.mydramalist.com/RdoZg_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "90297",
+                    "artistName": "Lim Jae Hyeok",
+                    "artistImageURL": "https://i.mydramalist.com/QJnkEA_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "139885",
+                    "artistName": "Kim Jong Hun",
+                    "artistImageURL": "https://i.mydramalist.com/2wXPWW_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "102455",
+                    "artistName": "Joo Si Eun",
+                    "artistImageURL": "https://i.mydramalist.com/pdKp8Q_5s.jpg",
+                    "characterName": "[Herself] (Ep. 10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "111357",
+                    "artistName": "Byun Hong Jun",
+                    "artistImageURL": "https://i.mydramalist.com/4X70w_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/35199-hotel-alice"
+        },
+        "network": {
+            "value": [
+                "SBS",
+                "Wavve"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/35199-hotel-alice"
+        },
+        "airedOn": {
+            "value": [
+                "Friday",
+                "Saturday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/35199-hotel-alice"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "47499",
+            "artistName": "Kim Kyu Won",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "4045",
+            "artistName": "Song Ji Hyuk",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "7338",
+            "artistName": "Bu Bae",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "30329",
+            "artistName": "Yang Ji Il",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "22670",
+            "artistName": "Kim Ji Yoo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "5782",
+            "artistName": "Lee Jin Ah",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "51365",
+            "artistName": "Lee Jung Min",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "102455",
+            "artistName": "Joo Si Eun",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "asianwiki",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": "mydramalist",
+        "airedOn": "mydramalist"
+    }
+}

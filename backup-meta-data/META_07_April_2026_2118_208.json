@@ -1,0 +1,924 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260407_211818",
+    "timestamp": "07 April 2026 09:22 PM (IST)",
+    "showID": 208,
+    "showName": "Doctor John",
+    "fetchedFields": {
+        "showImage": {
+            "value": "208.jpg",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Doctor_John"
+        },
+        "releaseDate": {
+            "value": "Jul 19, 2019 - Sep  7, 2019",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/32966-doctor-room"
+        },
+        "otherNames": {
+            "value": [
+                "Dagteolum",
+                "Doctor Cha",
+                "Doctor Room",
+                "Doctor's Room",
+                "Doutor John",
+                "Pain Doctor Cha Yo Han",
+                "The Doctor Room",
+                "The Doctor's Room",
+                "Tongjeunguisa Chayohan",
+                "Uisa Yohan",
+                "Доктор Ё Хан",
+                "Лікар Йо Хан",
+                "الطبيب جون",
+                "痛症医师车耀汉",
+                "닥터룸",
+                "통증의사 차요한"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/32966-doctor-room"
+        },
+        "Duration": {
+            "value": "35 mins",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/32966-doctor-room"
+        },
+        "synopsis": {
+            "value": "Cha Yo-Han (Ji Sung) is a doctor of anesthesiology. He is arrogant, but he is a genius at his work. Kang Shi-Young (Lee Se-Young) is a resident of anesthesiology who works with Cha Yo-Han. She is smart, warm and listens carefully to her patients. People, with mysterious acute or chronic pain come to the hospital. There, Cha Yo-Han and Kang Shi-Young try to find the causes of their pain.",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Doctor_John"
+        },
+        "director": {
+            "value": [
+                "Jo Soo Won",
+                "Kim Young Hwan"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/32966-doctor-room"
+        },
+        "tags": {
+            "value": [
+                "Eccentric Male Lead",
+                "Euthanasia",
+                "Hardworking Male Lead",
+                "Trauma",
+                "Student-Teacher Relationship",
+                "Adapted From A Novel",
+                "Hardworking Female Lead",
+                "Calm Male Lead",
+                "Crybaby Female Lead",
+                "Doctor Female Lead"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/32966-doctor-room"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "94867",
+                    "artistName": "Mun Seong Nam",
+                    "artistImageURL": "https://i.mydramalist.com/0qwlN_5m.jpg",
+                    "characterName": null,
+                    "role": "Composer"
+                },
+                {
+                    "artistID": "15971",
+                    "artistName": "Jo Soo Won",
+                    "artistImageURL": "https://i.mydramalist.com/NvXyJm.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "123049",
+                    "artistName": "Kim Young Hwan",
+                    "artistImageURL": "https://i.mydramalist.com/jQg4vB_5m.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "23632",
+                    "artistName": "Kim Ji Woon",
+                    "artistImageURL": "https://i.mydramalist.com/D8Wmrm.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "469",
+                    "artistName": "Ji Sung",
+                    "artistImageURL": "https://i.mydramalist.com/E55lEp_5s.jpg",
+                    "characterName": "Cha Yo Han",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "4047",
+                    "artistName": "Lee Se Young",
+                    "artistImageURL": "https://i.mydramalist.com/ZYDzk_5s.jpg",
+                    "characterName": "Kang Shi Young",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "12102",
+                    "artistName": "Lee Kyu Hyung",
+                    "artistImageURL": "https://i.mydramalist.com/d0VLe5_5s.jpg",
+                    "characterName": "Son Suk Ki",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "26803",
+                    "artistName": "Hwang Hee",
+                    "artistImageURL": "https://i.mydramalist.com/XdrKnw_5s.jpg",
+                    "characterName": "Lee Yoo Joon",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "2910",
+                    "artistName": "Jung Min Ah",
+                    "artistImageURL": "https://i.mydramalist.com/B1ey6_5s.jpg",
+                    "characterName": "Kang Mi Rae",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "8951",
+                    "artistName": "Kwon Hwa Woon",
+                    "artistImageURL": "https://i.mydramalist.com/QQKnQ_5s.jpg",
+                    "characterName": "Heo Joon [4th year Resident]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "11599",
+                    "artistName": "Son San",
+                    "artistImageURL": "https://i.mydramalist.com/wzJ5p_5s.jpg",
+                    "characterName": "Hong Yun Jin [Nurse - Pain Clinic]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "10894",
+                    "artistName": "Lee You Mi",
+                    "artistImageURL": "https://i.mydramalist.com/4R4Jk_5s.jpg",
+                    "characterName": "Na Kyung Ah [Nurse - Pain Clinic]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2725",
+                    "artistName": "Kim Hye Eun",
+                    "artistImageURL": "https://i.mydramalist.com/Z8vj8q_5s.jpg",
+                    "characterName": "Min Tae Kyung [Shi Young's mother / Chief -  Anesthesiology and Pain Medicine]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2385",
+                    "artistName": "Kim Young Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/vXRPPg_5s.jpg",
+                    "characterName": "Han Myung Oh [Hospital's Legal Adviser]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2918",
+                    "artistName": "Um Hyo Sup",
+                    "artistImageURL": "https://i.mydramalist.com/jov5z_5s.jpg",
+                    "characterName": "Kang Yi Moon [Shi Young's uncle / Director - Seoul Hansae Hospital]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2852",
+                    "artistName": "Oh Seung Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/p0RJbs.jpg",
+                    "characterName": "Min Joo Kyung [Shi Young's aunt / Anesthesiology Professor]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "18091",
+                    "artistName": "Jung Jae Sung",
+                    "artistImageURL": "https://i.mydramalist.com/zBDbxO_5s.jpg",
+                    "characterName": "Kwon Suk [Anesthesiology professor]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3208",
+                    "artistName": "Jeon Noh Min",
+                    "artistImageURL": "https://i.mydramalist.com/r5ROms.jpg",
+                    "characterName": "Kang Yi Soo [Shi Young's father]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4358",
+                    "artistName": "Shin Dong Mi",
+                    "artistImageURL": "https://i.mydramalist.com/RQlbY_5s.jpg",
+                    "characterName": "Chae Eun Jung [Nurse]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2478",
+                    "artistName": "Jung In Ki",
+                    "artistImageURL": "https://i.mydramalist.com/627A2s.jpg",
+                    "characterName": "Oh Jung Nam [Shi Young's uncle / Prison Warden]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "27333",
+                    "artistName": "Oh Hyun Joong",
+                    "artistImageURL": "https://i.mydramalist.com/YY5vLo_5s.jpg",
+                    "characterName": "Kim Won Hee [1st year Resident]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1732",
+                    "artistName": "Yoon Joo Sang",
+                    "artistImageURL": "https://i.mydramalist.com/oQ4dxs.jpg",
+                    "characterName": "Lee Won Gil [Frm. Minister of Health and Welfare]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3226",
+                    "artistName": "Jung Kyung Soon",
+                    "artistImageURL": "https://i.mydramalist.com/BWyEq_5s.jpg",
+                    "characterName": "[Yu Jun's mother]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "31999",
+                    "artistName": "Lim Jung Min",
+                    "artistImageURL": "https://i.mydramalist.com/6KJ32_5s.jpg",
+                    "characterName": "[Ophthalmology Professor]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3651",
+                    "artistName": "Lee Shin Sung",
+                    "artistImageURL": "https://i.mydramalist.com/x2KeEs.jpg",
+                    "characterName": "Jeong Chan Seok",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "22616",
+                    "artistName": "Park Shi Wan",
+                    "artistImageURL": "https://i.mydramalist.com/05ERO_5s.jpg",
+                    "characterName": "Cha Yo Han [Young]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "19380",
+                    "artistName": "Kim Do Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/jR5yw_5s.jpg",
+                    "characterName": "Park Jung Bo [Prisoner] (Ep. 1-4, 23)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "29847",
+                    "artistName": "Geum Bo",
+                    "artistImageURL": "https://i.mydramalist.com/44Yr6s.jpg",
+                    "characterName": "[Fishbone inmate] (Ep.1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "25597",
+                    "artistName": "Lee Seung Chul",
+                    "artistImageURL": "https://i.mydramalist.com/27NQds.jpg",
+                    "characterName": "[Inmate 6124] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "13392",
+                    "artistName": "Ha Do Kwon",
+                    "artistImageURL": "https://i.mydramalist.com/O87y5k_5s.jpg",
+                    "characterName": "Joo Hyung Woo [Mixed Martial Arts Champion] (Ep.5-8, 28)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "14366",
+                    "artistName": "Jung Hyun Seok",
+                    "artistImageURL": "https://i.mydramalist.com/O8Ly1g_5s.jpg",
+                    "characterName": "[Hyung Woo’s doctor] (Ep. 5)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "23790",
+                    "artistName": "Ha Kyung Min",
+                    "artistImageURL": "https://i.mydramalist.com/N7VLAs.jpg",
+                    "characterName": "[Hyeong U’s doctor] (Ep. 5)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "4438",
+                    "artistName": "Kim Jong Gu",
+                    "artistImageURL": "https://i.mydramalist.com/kq2gd_5s.jpg",
+                    "characterName": "[Hyung Woo's father] (Ep. 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "32077",
+                    "artistName": "Choi Eun Hoo",
+                    "artistImageURL": "https://i.mydramalist.com/QNyE5s.jpg",
+                    "characterName": "[Hyung Woo’s son] (Ep.7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "29381",
+                    "artistName": "Jo Si Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/RANK6s.jpg",
+                    "characterName": "[Hyung Woo’s daughter] (Ep.7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "4504",
+                    "artistName": "Jung Ae Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/0RBy6_5s.jpg",
+                    "characterName": "[Hyung Woo's wife]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "19488",
+                    "artistName": "Seong Chan Ho",
+                    "artistImageURL": "https://i.mydramalist.com/ndYqBs.jpg",
+                    "characterName": "[Doctor] (Ep.9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "4255",
+                    "artistName": "Son Hee Soon",
+                    "artistImageURL": "https://i.mydramalist.com/WW7wl_5s.jpg",
+                    "characterName": "[Guardian on elevator] (Ep.9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21045",
+                    "artistName": "Choi Min Geum",
+                    "artistImageURL": "https://i.mydramalist.com/qONjds.jpg",
+                    "characterName": "[Pain Clinic] (Ep.10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "22614",
+                    "artistName": "Lee Joo Won",
+                    "artistImageURL": "https://i.mydramalist.com/XK1kps.jpg",
+                    "characterName": "Choi Seung Won [Patient in constant pain] (Ep.10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "3398",
+                    "artistName": "Han Tae Il",
+                    "artistImageURL": "https://i.mydramalist.com/Egpqp_5s.jpg",
+                    "characterName": "[Bumps into man in Pain Clinic] (Ep.10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "7652",
+                    "artistName": "Yoon Chan Young",
+                    "artistImageURL": "https://i.mydramalist.com/zBDKYW_5s.jpg",
+                    "characterName": "Lee Gi Seok [CIPA Patient] (Ep. 10-12, 24-28)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "2989",
+                    "artistName": "Oh Yoo Na",
+                    "artistImageURL": "https://i.mydramalist.com/p0YDys.jpg",
+                    "characterName": "Yoo Ri Hye [Actress] (Ep.11)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6257",
+                    "artistName": "Cheon Young Min",
+                    "artistImageURL": "https://i.mydramalist.com/Qwdw6_5s.jpg",
+                    "characterName": "Lee Da Hae [Phantom limb patient] (Ep. 13-16)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "2619",
+                    "artistName": "Lee Do Kyung",
+                    "artistImageURL": "https://i.mydramalist.com/QPEvg_5s.jpg",
+                    "characterName": "Yoo Duk Gyu [Melioidosis Patient] (Ep.7, 13-14, 28)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5355",
+                    "artistName": "Kim Joo Ryoung",
+                    "artistImageURL": "https://i.mydramalist.com/kJVRvs.jpg",
+                    "characterName": "Park Hyun Sook [‘Death talk’ attendee] (Ep.15-23)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "4494",
+                    "artistName": "Im Byung Ki",
+                    "artistImageURL": "https://i.mydramalist.com/rm8e7s.jpg",
+                    "characterName": "[‘Death talk’ discussion leader] (Ep.16)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5298",
+                    "artistName": "So Hee Jung",
+                    "artistImageURL": "https://i.mydramalist.com/wN30n_5s.jpg",
+                    "characterName": "[Yoo Ri Hye's sister] (Ep.17-20)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "4587",
+                    "artistName": "Choi Yoon Joon",
+                    "artistImageURL": "https://i.mydramalist.com/KABrJs.jpg",
+                    "characterName": "[Patient looking only for Cha Yo Han] (Ep.27)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "22221",
+                    "artistName": "Shin Shin Beom",
+                    "artistImageURL": "https://i.mydramalist.com/E8Pqls.jpg",
+                    "characterName": "[Patient thankful to Cha Yo Han] (Ep.27)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "15617",
+                    "artistName": "Joey Albright",
+                    "artistImageURL": "https://i.mydramalist.com/Bgk4z_5s.jpg",
+                    "characterName": "Lucas Smith [Doctor] (Ep. 31)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "4558",
+                    "artistName": "Seo Yoon Ah",
+                    "artistImageURL": "https://i.mydramalist.com/EjJlW_5s.jpg",
+                    "characterName": "[Abdominal epilepsy patient] (Ep. 31-32)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "25725",
+                    "artistName": "Moon Hak Jin",
+                    "artistImageURL": "https://i.mydramalist.com/vBDLq_5s.jpg",
+                    "characterName": "Kim Jung Ho [3rd-year Resident Ophthalmology]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "11137",
+                    "artistName": "Ham Sung Min",
+                    "artistImageURL": "https://i.mydramalist.com/rb7Qms.jpg",
+                    "characterName": "Yoon Sung Kyu [Kidnapper / Cancer patient]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "3178",
+                    "artistName": "Kim Kyul",
+                    "artistImageURL": "https://i.mydramalist.com/qqov0s.jpg",
+                    "characterName": "Sung Dong Ho [Anesthesiology Professor]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "8941",
+                    "artistName": "Im Dong Jin",
+                    "artistImageURL": "https://i.mydramalist.com/eRgvWs.jpg",
+                    "characterName": "Shim Joon Chul [Professor of Neurology]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "22225",
+                    "artistName": "Jung Ji Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/6Ojd2_5s.jpg",
+                    "characterName": "Min Sung [Yoo Ri Hye's son]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "28331",
+                    "artistName": "Shim Hye Yun",
+                    "artistImageURL": "https://i.mydramalist.com/vrAde_5s.jpg",
+                    "characterName": "Jung In [Eun Jung's daughter]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "969",
+                    "artistName": "Lee Se Rang",
+                    "artistImageURL": "https://i.mydramalist.com/QXBeWs.jpg",
+                    "characterName": "Kwon So Young",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "17372",
+                    "artistName": "Ham Na Young",
+                    "artistImageURL": "https://i.mydramalist.com/eAnAE_5s.jpg",
+                    "characterName": "Choi Seul A [Choi Seung Won's daughter]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "32231",
+                    "artistName": "Nam Sang Hee",
+                    "artistImageURL": "https://i.mydramalist.com/BxyQbs.jpg",
+                    "characterName": "Soo Jin [Child with Pediatric Diabetes]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "38731",
+                    "artistName": "Kang Ro Chae",
+                    "artistImageURL": "https://i.mydramalist.com/Zoo7Ls.jpg",
+                    "characterName": "Han Min Joo",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "3173",
+                    "artistName": "Jang Hee Soo",
+                    "artistImageURL": "https://i.mydramalist.com/nO2XBs.jpg",
+                    "characterName": "[Anesthesiology Professor]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5667",
+                    "artistName": "Kim Seung Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/WW7AW_5s.jpg",
+                    "characterName": "[Prison guard]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "10465",
+                    "artistName": "Yoon In Jo",
+                    "artistImageURL": "https://i.mydramalist.com/xWEj3_5s.jpg",
+                    "characterName": "[Patient Choi Seung Won's wife]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5752",
+                    "artistName": "Shin Yeon Suk",
+                    "artistImageURL": "https://i.mydramalist.com/d6L2e_5s.jpg",
+                    "characterName": "[Patient Yoon Sung Kyu's guardian]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "30843",
+                    "artistName": "Kim Hyo Kyung",
+                    "artistImageURL": "https://i.mydramalist.com/23462s.jpg",
+                    "characterName": "[Child with Diabetes]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "19627",
+                    "artistName": "Yoon Jong Goo",
+                    "artistImageURL": "https://i.mydramalist.com/kOoPks.jpg",
+                    "characterName": "[Prison guard]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "9616",
+                    "artistName": "Lee Yo Sung",
+                    "artistImageURL": "https://i.mydramalist.com/1qZQ5s.jpg",
+                    "characterName": "[Cha Yo Han's father]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5809",
+                    "artistName": "Kwon Oh Jin",
+                    "artistImageURL": "https://i.mydramalist.com/XOB3J_5s.jpg",
+                    "characterName": "[Park Jung Bo’s father]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "4434",
+                    "artistName": "Ha Soo Ho",
+                    "artistImageURL": "https://i.mydramalist.com/l0b7Nb_5s.jpg",
+                    "characterName": "[Joo Hyung Woo’s Manager]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "32427",
+                    "artistName": "Go Yong Hwa",
+                    "artistImageURL": "https://i.mydramalist.com/pzyOr_5s.jpg",
+                    "characterName": "[Lee Gi Suk's mother]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "32547",
+                    "artistName": "Kim Sa Hun",
+                    "artistImageURL": "https://i.mydramalist.com/g0jJJP_5s.jpg",
+                    "characterName": "[Emergency Room Doctor]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "34591",
+                    "artistName": "Yong Jin",
+                    "artistImageURL": "https://i.mydramalist.com/XbzqOs.jpg",
+                    "characterName": "[Prisoner]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "38331",
+                    "artistName": "Park Mi Ri",
+                    "artistImageURL": "https://i.mydramalist.com/R3kAVs.jpg",
+                    "characterName": "[Nurse]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "32553",
+                    "artistName": "Lee Min Sik",
+                    "artistImageURL": "https://i.mydramalist.com/xQO7zs.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "20772",
+                    "artistName": "Lee Ah Jin",
+                    "artistImageURL": "https://i.mydramalist.com/g201ds.jpg",
+                    "characterName": "[Mother of child with pediatric diabetes]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "38493",
+                    "artistName": "Ahn Dong Yeob",
+                    "artistImageURL": "https://i.mydramalist.com/XvEqZs.jpg",
+                    "characterName": "(Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "98211",
+                    "artistName": "Lee Chang Won",
+                    "artistImageURL": "https://i.mydramalist.com/Q4XX2_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "46045",
+                    "artistName": "Seo Soo  Min",
+                    "artistImageURL": "https://i.mydramalist.com/0V68E_5s.jpg",
+                    "characterName": "[Bookstore clerk]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "66129",
+                    "artistName": "Kim Shi Woo",
+                    "artistImageURL": "https://i.mydramalist.com/4AZkQ_5s.jpg",
+                    "characterName": "[Photograph boy]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "89991",
+                    "artistName": "Kim Jung Han",
+                    "artistImageURL": "https://i.mydramalist.com/jLvDy_5s.jpg",
+                    "characterName": "[Prisoner]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "44699",
+                    "artistName": "Kim Mi Hye",
+                    "artistImageURL": "https://i.mydramalist.com/EgnO0_5s.jpg",
+                    "characterName": "[Questioner]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "79239",
+                    "artistName": "Park Si Won",
+                    "artistImageURL": "https://i.mydramalist.com/poW6r_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "44355",
+                    "artistName": "Kim Jung Hwan",
+                    "artistImageURL": "https://i.mydramalist.com/XXNnq_5s.jpg",
+                    "characterName": "Ahn Seung Hyun [Reporter] (Ep. 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "62983",
+                    "artistName": "Park Jin Young",
+                    "artistImageURL": "https://i.mydramalist.com/xp5qE_5s.jpg",
+                    "characterName": "[Nurse]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "23732",
+                    "artistName": "Moon Joo Won",
+                    "artistImageURL": "https://i.mydramalist.com/2v56W_5s.jpg",
+                    "characterName": "Lee Yoo Joon [Young]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "44215",
+                    "artistName": "Kim Ah Ram",
+                    "artistImageURL": "https://i.mydramalist.com/XEAZZs.jpg",
+                    "characterName": "[Guardian of elderly patient that dies in ICU]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "106681",
+                    "artistName": "Kim I San",
+                    "artistImageURL": "https://i.mydramalist.com/4nPEZ_5s.jpg",
+                    "characterName": "[Husband]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "55137",
+                    "artistName": "Kwak Gi Hun",
+                    "artistImageURL": "https://i.mydramalist.com/XLWOJ_5s.jpg",
+                    "characterName": "[Prisoner]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "76687",
+                    "artistName": "Noreen Joyce Guerra",
+                    "artistImageURL": "https://i.mydramalist.com/r820p_5s.jpg",
+                    "characterName": "[Flight attendant]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "23536",
+                    "artistName": "Jun Eun Mi",
+                    "artistImageURL": "https://i.mydramalist.com/dJmZg_5s.jpg",
+                    "characterName": "[Restaurant owner]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "43829",
+                    "artistName": "Ahn Jae Jun",
+                    "artistImageURL": "https://i.mydramalist.com/WAdoPs.jpg",
+                    "characterName": "[Guardian]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "28557",
+                    "artistName": "Jeon Jeong Il",
+                    "artistImageURL": "https://i.mydramalist.com/nO183L_5s.jpg",
+                    "characterName": "[Middle-aged son]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "48087",
+                    "artistName": "Kim Seung Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/W7p8W_5s.jpg",
+                    "characterName": "[Inmate]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "41729",
+                    "artistName": "Park Jung Eon",
+                    "artistImageURL": "https://i.mydramalist.com/p37Ve_5s.jpg",
+                    "characterName": "Chae Eun Jung's older sister (ep.13)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "103541",
+                    "artistName": "Choi Yo Woon",
+                    "artistImageURL": "https://i.mydramalist.com/rpk4y_5s.jpg",
+                    "characterName": "[Head nurse]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "47517",
+                    "artistName": "Lee Dong Gyu",
+                    "artistImageURL": "https://i.mydramalist.com/PxBV58_5s.jpg",
+                    "characterName": "[Reporter]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "70669",
+                    "artistName": "Jang Yu Jin",
+                    "artistImageURL": "https://i.mydramalist.com/qNZLK_5s.jpg",
+                    "characterName": "Major",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "40977",
+                    "artistName": "Shin Hee Gook",
+                    "artistImageURL": "https://i.mydramalist.com/XBXRp_5s.jpg",
+                    "characterName": "[Intern]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "47177",
+                    "artistName": "Kwak Na Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/4Vlkw_5s.jpg",
+                    "characterName": "[Lobby scene]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "67421",
+                    "artistName": "Park Hyun Jeong",
+                    "artistImageURL": "https://i.mydramalist.com/XRglg_5s.jpg",
+                    "characterName": "[Girl's mother]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "98315",
+                    "artistName": "Jung Min Seok",
+                    "artistImageURL": "https://i.mydramalist.com/wy2QY_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "47013",
+                    "artistName": "Kim Young Hee",
+                    "artistImageURL": "https://i.mydramalist.com/6E7VK_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "67029",
+                    "artistName": "Byun Yoon Jeong",
+                    "artistImageURL": "https://i.mydramalist.com/x4wl8y_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "155616",
+                    "artistName": "Choi Min Seo",
+                    "artistImageURL": "https://i.mydramalist.com/5vqdBB_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "17259",
+                    "artistName": "Kim Min Seok",
+                    "artistImageURL": "https://i.mydramalist.com/EoL4l_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "128907",
+                    "artistName": "Kim Yeon Ji",
+                    "artistImageURL": "https://i.mydramalist.com/1wQ4DR_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "105615",
+                    "artistName": "Kim Shin Yul",
+                    "artistImageURL": "https://i.mydramalist.com/VXybwQ_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "76355",
+                    "artistName": "Park Kyung Bok",
+                    "artistImageURL": "https://i.mydramalist.com/E4d0Q_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "23358",
+                    "artistName": "Park Jin Soo",
+                    "artistImageURL": "https://i.mydramalist.com/4EveJ_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "99771",
+                    "artistName": "Kim Yong Seok",
+                    "artistImageURL": "https://i.mydramalist.com/x4XjEr_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "65153",
+                    "artistName": "Andreas Fronk",
+                    "artistImageURL": "https://i.mydramalist.com/kN4jm_5s.jpg",
+                    "characterName": "UFC Fighter",
+                    "role": "Guest Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/32966-doctor-room"
+        },
+        "airedOn": {
+            "value": [
+                "Friday",
+                "Saturday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/32966-doctor-room"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "2852",
+            "artistName": "Oh Seung Hyun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "32077",
+            "artistName": "Choi Eun Hoo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "8941",
+            "artistName": "Im Dong Jin",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "32231",
+            "artistName": "Nam Sang Hee",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "98315",
+            "artistName": "Jung Min Seok",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "128907",
+            "artistName": "Kim Yeon Ji",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "asianwiki",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": null,
+        "airedOn": "mydramalist"
+    }
+}

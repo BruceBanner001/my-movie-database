@@ -1,0 +1,418 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260407_211818",
+    "timestamp": "07 April 2026 09:25 PM (IST)",
+    "showID": 217,
+    "showName": "I Wanna Hear Your Song",
+    "fetchedFields": {
+        "showImage": {
+            "value": "217.jpg",
+            "source": "asianwiki (Fallback: mydramalist)",
+            "source_link": "https://mydramalist.com/33985-let-me-hear-your-song"
+        },
+        "releaseDate": {
+            "value": "Aug  5, 2019 - Sep 24, 2019",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/33985-let-me-hear-your-song"
+        },
+        "otherNames": {
+            "value": [
+                "Eu Quero Ouvir Sua Música",
+                "Let Me Hear Your Song",
+                "Neoui Noraereul Deulryeojweo",
+                "Sing for Me",
+                "Tell Your Song"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/33985-let-me-hear-your-song"
+        },
+        "Duration": {
+            "value": "35 mins",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/33985-let-me-hear-your-song"
+        },
+        "synopsis": {
+            "value": "A murder occurs, and Hong Yi Young, a timpanist with insomnia and a simple mind, can't remember what happened that day. She meets Jang Yoon, a pianist in the orchestra who is bad at singing. To help her sleep, Jang Yoon calls her every night, and together they try to uncover the truth about the murder.\n\nMeanwhile, Nam Joo Wan, a charismatic orchestra conductor, and Ha Eun Joo, an arrogant violinist, play\n\nkey roles in the orchestra.",
+            "source": "asianwiki (Fallback: mydramalist)",
+            "source_link": "https://mydramalist.com/33985-let-me-hear-your-song"
+        },
+        "director": {
+            "value": [
+                "Lee Jung Mi"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/33985-let-me-hear-your-song"
+        },
+        "tags": {
+            "value": [
+                "Amnesia",
+                "Murder",
+                "Hidden Past",
+                "Clumsy Female Lead",
+                "Trauma",
+                "Flashback To Past",
+                "Hardworking Female Lead",
+                "Successful Male Lead",
+                "Insomnia",
+                "Scheme"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/33985-let-me-hear-your-song"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "86391",
+                    "artistName": "Kim Gwang Su",
+                    "artistImageURL": "https://i.mydramalist.com/12W1z_5m.jpg",
+                    "characterName": null,
+                    "role": "Cinematography"
+                },
+                {
+                    "artistID": "26679",
+                    "artistName": "Lee Jung Mi",
+                    "artistImageURL": "https://i.mydramalist.com/E55PAz_5m.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "20579",
+                    "artistName": "Kim Min Ju",
+                    "artistImageURL": "https://i.mydramalist.com/qz535_5m.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "13855",
+                    "artistName": "Kim Se Jeong",
+                    "artistImageURL": "https://i.mydramalist.com/vrmWX_5s.jpg",
+                    "characterName": "Hong Yi Young",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "1340",
+                    "artistName": "Yeon Woo Jin",
+                    "artistImageURL": "https://i.mydramalist.com/jQ4kZb_5s.jpg",
+                    "characterName": "Jang Yun / Jang Do Hun",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "819",
+                    "artistName": "Park Ji Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/WX6Rl_5s.jpg",
+                    "characterName": "Ha Eun Joo",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "1892",
+                    "artistName": "Song Jae Rim",
+                    "artistImageURL": "https://i.mydramalist.com/ZO6VW_5s.jpg",
+                    "characterName": "Nam Joo Wan",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "16655",
+                    "artistName": "Kim Sang Gyun",
+                    "artistImageURL": "https://i.mydramalist.com/RBJ5Yo_5s.jpg",
+                    "characterName": "Moon Jae Hyung [A hip hop dancer and a barista]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "7543",
+                    "artistName": "Lee Shi Won",
+                    "artistImageURL": "https://i.mydramalist.com/E5lO5b_5s.jpg",
+                    "characterName": "Hong Soo Young [Yi Young's cousin]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "738",
+                    "artistName": "Yoo Geon",
+                    "artistImageURL": "https://i.mydramalist.com/d54VK_5s.jpg",
+                    "characterName": "Michael Lee [The senior timpanist of the orchestra]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1768",
+                    "artistName": "Yoon Joo Hee",
+                    "artistImageURL": "https://i.mydramalist.com/604qoW_5s.jpg",
+                    "characterName": "Yun Mi Rae [Director of planning and promotion for the orchestra]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2802",
+                    "artistName": "Jung Sung Mo",
+                    "artistImageURL": "https://i.mydramalist.com/nKzOEs.jpg",
+                    "characterName": "Jang Seok Hyun [Jang Yoon's father]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "8512",
+                    "artistName": "Yoon Bok In",
+                    "artistImageURL": "https://i.mydramalist.com/jQVdnd_5s.jpg",
+                    "characterName": "Park Young Hee [Soo Young's mother]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2925",
+                    "artistName": "Park Chan Hwan",
+                    "artistImageURL": "https://i.mydramalist.com/94wkQs.jpg",
+                    "characterName": "Hong Ji Seop [Soo Young's father]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1695",
+                    "artistName": "Lee Byung Joon",
+                    "artistImageURL": "https://i.mydramalist.com/1gyLQs.jpg",
+                    "characterName": "Song Jae Hwan [Yi Young's teacher]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3543",
+                    "artistName": "Jo Mi Ryung",
+                    "artistImageURL": "https://i.mydramalist.com/eqdzW_5s.jpg",
+                    "characterName": "Seo Soo Hyang [The youngest daughter of a chaeobol family]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "14991",
+                    "artistName": "Lee Jung Min",
+                    "artistImageURL": "https://i.mydramalist.com/2gevWs.jpg",
+                    "characterName": "Choi Seo Joo [Fluteist of the Hagyo Municiple Orchestra]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "20049",
+                    "artistName": "Jo Yoo Jung",
+                    "artistImageURL": "https://i.mydramalist.com/RBPpeP_5s.jpg",
+                    "characterName": "Yoo Jenny [Yi Young's best friend]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4416",
+                    "artistName": "Song Young Gyu",
+                    "artistImageURL": "https://i.mydramalist.com/oQRB5O_5s.jpg",
+                    "characterName": "Kang Myung Seok [Music Professor]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3772",
+                    "artistName": "Hwang Geum Byul",
+                    "artistImageURL": "https://i.mydramalist.com/pWr7ns.jpg",
+                    "characterName": "Wang Mi Hyang [Fluteist of the Hagyo Municiple Orchestra]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "30059",
+                    "artistName": "Koo Bon Woong",
+                    "artistImageURL": "https://i.mydramalist.com/ElmK7s.jpg",
+                    "characterName": "Yoon Young Gil [Truck driver]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "28073",
+                    "artistName": "Kim Chang Hoe",
+                    "artistImageURL": "https://i.mydramalist.com/2edzw_5s.jpg",
+                    "characterName": "Choi Ki Sang [Jang Yoon's friend]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1727",
+                    "artistName": "Lee Seung Hyung",
+                    "artistImageURL": "https://i.mydramalist.com/RB5pVs.jpg",
+                    "characterName": "Ko Min Joong [General manager of the orchestra]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "26995",
+                    "artistName": "Hong Seung Hee",
+                    "artistImageURL": "https://i.mydramalist.com/4Y7Ok_5s.jpg",
+                    "characterName": "Yang Su Jeong [Secretary]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "30387",
+                    "artistName": "KoN",
+                    "artistImageURL": "https://i.mydramalist.com/wKOK8s.jpg",
+                    "characterName": "Jo Han Seok [Violinist of the Hagyo Municiple Orchestra]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "38725",
+                    "artistName": "Kim Tae Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/6Lzb2s.jpg",
+                    "characterName": "Hong Yi Young [Young]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "6103",
+                    "artistName": "Choi Na Moo",
+                    "artistImageURL": "https://i.mydramalist.com/d0Ok2d_5s.jpg",
+                    "characterName": "[Yo Young's friend] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "2574",
+                    "artistName": "Kim Shi Hoo",
+                    "artistImageURL": "https://i.mydramalist.com/REvxr_5s.jpg",
+                    "characterName": "Kim Ian / Jang Yoon  [Jang Yoon's younger brother] (Ep.4-5, 8, 10, 12, 16, 18, 28, 30)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "2919",
+                    "artistName": "Jung  Soo Young",
+                    "artistImageURL": "https://i.mydramalist.com/BQ6z5_5s.jpg",
+                    "characterName": "Gong Seon Mi [Pianist who attempted suicide]  (Ep.1, 9, 11)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "18048",
+                    "artistName": "Lee Chae Kyung",
+                    "artistImageURL": "https://i.mydramalist.com/e3n6ps.jpg",
+                    "characterName": "Su In Kim [Pianist]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5694",
+                    "artistName": "Park Hye Jin",
+                    "artistImageURL": "https://i.mydramalist.com/B1o3V_5s.jpg",
+                    "characterName": "[Joo Wan's grandmother] (Ep.13-14, 18, 21-24, 31)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "18440",
+                    "artistName": "Park Geon Rak",
+                    "artistImageURL": "https://i.mydramalist.com/v5rqD_5s.jpg",
+                    "characterName": "[Detective] (Ep. 24-25, 28, 30-31)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "34595",
+                    "artistName": "Kim Min Joon",
+                    "artistImageURL": "https://i.mydramalist.com/jLwXz_5s.jpg",
+                    "characterName": "Jang Yoon [Young]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "3111",
+                    "artistName": "Im Ji Gyu",
+                    "artistImageURL": "https://i.mydramalist.com/v60q2_5s.jpg",
+                    "characterName": "[Hong Yi Young's blind date] (Ep.12)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "4425",
+                    "artistName": "Ko Jung Min",
+                    "artistImageURL": "https://i.mydramalist.com/9rvmNs.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "9135",
+                    "artistName": "Na Seul Gi",
+                    "artistImageURL": "https://i.mydramalist.com/nORgbW_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21175",
+                    "artistName": "Jo Ah Young",
+                    "artistImageURL": "https://i.mydramalist.com/QJ0xg7_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "45175",
+                    "artistName": "Park So Young",
+                    "artistImageURL": "https://i.mydramalist.com/kd4Lv_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "52031",
+                    "artistName": "Moon Chang Jun",
+                    "artistImageURL": "https://i.mydramalist.com/0jKWO_5s.jpg",
+                    "characterName": "[Man cleaning kettledrum]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "124283",
+                    "artistName": "Lee Na Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/qY2DQB_5s.jpg",
+                    "characterName": "[Neighborhood woman]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "116183",
+                    "artistName": "Kim Ji Eun",
+                    "artistImageURL": "https://i.mydramalist.com/eYnewY_5s.jpg",
+                    "characterName": "[1st]",
+                    "role": "Guest Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/33985-let-me-hear-your-song"
+        },
+        "airedOn": {
+            "value": [
+                "Monday",
+                "Tuesday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/33985-let-me-hear-your-song"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "20579",
+            "artistName": "Kim Min Ju",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "16655",
+            "artistName": "Kim Sang Gyun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "30059",
+            "artistName": "Koo Bon Woong",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "28073",
+            "artistName": "Kim Chang Hoe",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "26995",
+            "artistName": "Hong Seung Hee",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "30387",
+            "artistName": "KoN",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "2574",
+            "artistName": "Kim Shi Hoo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "9135",
+            "artistName": "Na Seul Gi",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "asianwiki (Fallback: mydramalist)",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki (Fallback: mydramalist)",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": null,
+        "airedOn": "mydramalist"
+    }
+}
