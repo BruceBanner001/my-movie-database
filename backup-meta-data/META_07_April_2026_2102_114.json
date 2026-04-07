@@ -1,0 +1,438 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260407_210227",
+    "timestamp": "07 April 2026 09:17 PM (IST)",
+    "showID": 114,
+    "showName": "The Liar and His Lover",
+    "fetchedFields": {
+        "showImage": {
+            "value": "114.jpg",
+            "source": "asianwiki (Fallback: mydramalist)",
+            "source_link": "https://mydramalist.com/21823-the-liar-and-his-lover"
+        },
+        "releaseDate": {
+            "value": "Mar 20, 2017 - May  9, 2017",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/21823-the-liar-and-his-lover"
+        },
+        "otherNames": {
+            "value": [
+                "El mentiroso y su amante",
+                "Geunyeoneun Geojitmaleul Neomoo Saranghae",
+                "Lovely Love Lie",
+                "O Mentiroso e Seu Amor",
+                "She Loves Lie So Much",
+                "She Loves Lies",
+                "Лжец и его возлюбленная",
+                "그녀는 거짓말을"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/21823-the-liar-and-his-lover"
+        },
+        "Duration": {
+            "value": "1 hr. 8 min.",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/21823-the-liar-and-his-lover"
+        },
+        "synopsis": {
+            "value": "A love story about a depressed genius music composer Kang Han Gyeol who meets the high school student Yoon So Rim when he’s living under a hidden identity. With her courageous honesty and beautiful singing, So Rim draws Han Gyeol back to her again and again. They meet love obstacles along the way as So Rim finds out that Han Gyeol was actually Crude Play's producer K.",
+            "source": "asianwiki (Fallback: mydramalist)",
+            "source_link": "https://mydramalist.com/21823-the-liar-and-his-lover"
+        },
+        "director": {
+            "value": [
+                "Kim Jin Min"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/21823-the-liar-and-his-lover"
+        },
+        "tags": {
+            "value": [
+                "Entertainment Industry",
+                "Band",
+                "Singing",
+                "Bromance",
+                "Adapted From A Manga",
+                "Secret",
+                "Father-Son Relationship",
+                "Scandal",
+                "Forced Break-up",
+                "Hidden Identity"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/21823-the-liar-and-his-lover"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "16966",
+                    "artistName": "Kim Jin Min",
+                    "artistImageURL": "https://i.mydramalist.com/RNL3g_5m.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "1487",
+                    "artistName": "Lee Hyun Woo",
+                    "artistImageURL": "https://i.mydramalist.com/l0ZyYE_5s.jpg",
+                    "characterName": "Kang Han Kyeol",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "11862",
+                    "artistName": "Joy",
+                    "artistImageURL": "https://i.mydramalist.com/KpKD8n_5s.jpg",
+                    "characterName": "Yoon So Rim",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "504",
+                    "artistName": "Lee Jung Jin",
+                    "artistImageURL": "https://i.mydramalist.com/NdLdgo_5s.jpg",
+                    "characterName": "Choi Jin Hyuk",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "10895",
+                    "artistName": "Lee Seo Won",
+                    "artistImageURL": "https://i.mydramalist.com/XOYmZ_5s.jpg",
+                    "characterName": "Seo Chan Yeong [Bass of Crude Play]",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "14402",
+                    "artistName": "Hong Seo Young",
+                    "artistImageURL": "https://i.mydramalist.com/O845lP_5s.jpg",
+                    "characterName": "Chae Yoo Na",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "11894",
+                    "artistName": "Kim Sung Joo",
+                    "artistImageURL": "https://i.mydramalist.com/WQ8ePs.jpg",
+                    "characterName": "Yoo Shi Hyun [Leader/Vocalist of Crude Play]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "8226",
+                    "artistName": "Jang Ki Yong",
+                    "artistImageURL": "https://i.mydramalist.com/eYgEOW_5s.jpg",
+                    "characterName": "Ji In Ho [Drums of Crude Play]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "14436",
+                    "artistName": "Shin Je Min",
+                    "artistImageURL": "https://i.mydramalist.com/81PkQN_5s.jpg",
+                    "characterName": "Lee Yoon [Guitar of Crude Play]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "14936",
+                    "artistName": "Lee Ha Eun",
+                    "artistImageURL": "https://i.mydramalist.com/VbBXLs.jpg",
+                    "characterName": "Yeon Soo Yeon [Mush&Co Manager]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "7377",
+                    "artistName": "Park Ji Young",
+                    "artistImageURL": "https://i.mydramalist.com/JBom2p_5s.jpg",
+                    "characterName": "Yoo Hyun Jung [CEO of Who Entertainment]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "14472",
+                    "artistName": "Song Kang",
+                    "artistImageURL": "https://i.mydramalist.com/Dkm6Lz_5s.jpg",
+                    "characterName": "Baek Jin U",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "14473",
+                    "artistName": "Park Jong Hyuk",
+                    "artistImageURL": "https://i.mydramalist.com/r2dQps.jpg",
+                    "characterName": "Lee Gyoo Seon",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1507",
+                    "artistName": "Choi Min Soo",
+                    "artistImageURL": "https://i.mydramalist.com/eYwj2Y_5s.jpg",
+                    "characterName": "Kang In Woo",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "14474",
+                    "artistName": "Jeon Yu Lim",
+                    "artistImageURL": "https://i.mydramalist.com/QB766_5s.jpg",
+                    "characterName": "Lee Se Jung",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1628",
+                    "artistName": "Kim In Kwon",
+                    "artistImageURL": "https://i.mydramalist.com/l0nk2N_5s.jpg",
+                    "characterName": "Bong Won Bin [Homeroom teacher]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "793",
+                    "artistName": "Im Ye Jin",
+                    "artistImageURL": "https://i.mydramalist.com/68qEds.jpg",
+                    "characterName": "Kim Sun Hui",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "14080",
+                    "artistName": "Jung Yoo Ahn",
+                    "artistImageURL": "https://i.mydramalist.com/rgLnD_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "17259",
+                    "artistName": "Kim Min Seok",
+                    "artistImageURL": "https://i.mydramalist.com/EoL4l_5s.jpg",
+                    "characterName": "Koo Joon Seok",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "9717",
+                    "artistName": "Hong Seo Joon",
+                    "artistImageURL": "https://i.mydramalist.com/v5dPD_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "10210",
+                    "artistName": "Yoo Joo Won",
+                    "artistImageURL": "https://i.mydramalist.com/ENrb5_5s.jpg",
+                    "characterName": "Lee Gyoo Sun [Young]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5638",
+                    "artistName": "Park Sun Hee",
+                    "artistImageURL": "https://i.mydramalist.com/Qj6ZWs.jpg",
+                    "characterName": "[Gyoo Seon's mother]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "6897",
+                    "artistName": "Jung Yoo Geun",
+                    "artistImageURL": "https://i.mydramalist.com/l0PBlJ_5s.jpg",
+                    "characterName": "Kang Han Kyeol [Child]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "14480",
+                    "artistName": "Lee Jun Yong",
+                    "artistImageURL": "https://i.mydramalist.com/rN536D_5s.jpg",
+                    "characterName": "Himself [Member of INX](Ep.6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "14481",
+                    "artistName": "Lee Sang Ho",
+                    "artistImageURL": "https://i.mydramalist.com/Le40rs.jpg",
+                    "characterName": "Himself [Member of INX](Ep.6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "14482",
+                    "artistName": "Go Bon Kuk",
+                    "artistImageURL": "https://i.mydramalist.com/Ew48l_5s.jpg",
+                    "characterName": "Himself [Member of INX](Ep.6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "20233",
+                    "artistName": "Nancy",
+                    "artistImageURL": "https://i.mydramalist.com/BdjblV_5s.jpg",
+                    "characterName": "(Ep.6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "20234",
+                    "artistName": "Lee Ah In",
+                    "artistImageURL": "https://i.mydramalist.com/2wdgJE_5s.jpg",
+                    "characterName": "(Ep.6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6103",
+                    "artistName": "Choi Na Moo",
+                    "artistImageURL": "https://i.mydramalist.com/d0Ok2d_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21823",
+                    "artistName": "Lee Hye Bin",
+                    "artistImageURL": "https://i.mydramalist.com/4eokBQ_5s.jpg",
+                    "characterName": "(Ep.3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "27069",
+                    "artistName": "Yang Kyung Won",
+                    "artistImageURL": "https://i.mydramalist.com/pOO1Vs.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21774",
+                    "artistName": "Dong Yoon Seok",
+                    "artistImageURL": "https://i.mydramalist.com/rqqy2s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21761",
+                    "artistName": "Lee Su Ryeon",
+                    "artistImageURL": "https://i.mydramalist.com/Q7db4s.jpg",
+                    "characterName": "[Reporter]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21479",
+                    "artistName": "In Sung Ho",
+                    "artistImageURL": "https://i.mydramalist.com/Q7dyvs.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "14366",
+                    "artistName": "Jung Hyun Seok",
+                    "artistImageURL": "https://i.mydramalist.com/O8Ly1g_5s.jpg",
+                    "characterName": "[Music pro PD]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "39605",
+                    "artistName": "Jang Hae Min",
+                    "artistImageURL": "https://i.mydramalist.com/KpZRx8_5s.jpg",
+                    "characterName": "[Reporter]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "2810",
+                    "artistName": "Park Hae Soo",
+                    "artistImageURL": "https://i.mydramalist.com/4WAbd_5s.jpg",
+                    "characterName": "Bass player (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "31121",
+                    "artistName": "Kang Dong Yup",
+                    "artistImageURL": "https://i.mydramalist.com/4rgg1s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "112905",
+                    "artistName": "Min Chae Eun",
+                    "artistImageURL": "https://i.mydramalist.com/1DKwK_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "90745",
+                    "artistName": "Lee Seo Hyeon",
+                    "artistImageURL": "https://i.mydramalist.com/EXWmQ_5s.jpg",
+                    "characterName": "Yoon So Rim [Young]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "55481",
+                    "artistName": "Kim Ji Woong",
+                    "artistImageURL": "https://i.mydramalist.com/rNYnXy_5s.jpg",
+                    "characterName": "[INX member]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "44163",
+                    "artistName": "Yoo Ji Hyuk",
+                    "artistImageURL": "https://i.mydramalist.com/6EBE0_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/21823-the-liar-and-his-lover"
+        },
+        "airedOn": {
+            "value": [
+                "Monday",
+                "Tuesday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/21823-the-liar-and-his-lover"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "14436",
+            "artistName": "Shin Je Min",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "14936",
+            "artistName": "Lee Ha Eun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "14473",
+            "artistName": "Park Jong Hyuk",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "14480",
+            "artistName": "Lee Jun Yong",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "14481",
+            "artistName": "Lee Sang Ho",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "14482",
+            "artistName": "Go Bon Kuk",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "20233",
+            "artistName": "Nancy",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "20234",
+            "artistName": "Lee Ah In",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "21823",
+            "artistName": "Lee Hye Bin",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "90745",
+            "artistName": "Lee Seo Hyeon",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "asianwiki (Fallback: mydramalist)",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki (Fallback: mydramalist)",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": null,
+        "airedOn": "mydramalist"
+    }
+}

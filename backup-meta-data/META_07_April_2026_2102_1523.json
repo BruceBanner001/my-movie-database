@@ -1,0 +1,432 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260407_210227",
+    "timestamp": "07 April 2026 09:07 PM (IST)",
+    "showID": 1523,
+    "showName": "No Tail to Tell",
+    "fetchedFields": {
+        "showImage": {
+            "value": "1523.jpg",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/No_Tail_To_Tell"
+        },
+        "releaseDate": {
+            "value": "Jan 16, 2026 - Feb 28, 2026",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/773481-i-m-human-from-today"
+        },
+        "otherNames": {
+            "value": [
+                "From Today Onwards",
+                "I Am Human",
+                "Human from Today",
+                "I'm Human from Today",
+                "Oneulbuteo Inganipnidaman",
+                "Starting from Today",
+                "I'm Human"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/773481-i-m-human-from-today"
+        },
+        "Duration": {
+            "value": "1 hr. 10 min.",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/773481-i-m-human-from-today"
+        },
+        "synopsis": {
+            "value": "Eun-Ho (Kim Hye-Yoon) is a gumiho, known in folklore as a mythical creature with 9 tails. She is different from other gumihos. She doesn't want to become a human unlike other gumbos. She enjoys her eternal youth that never changes. She picks out the fun parts in the human world and enjoys them herself. To avoid becoming a human, she refrains from small virtues and accumulating small bad deeds. One day, an unexpected incident takes place.\n\nKang Si-Yeol (Lomon) is a world-class soccer player. He is the top striker for a famous soccer club overseas. As a soccer player, he accomplished many firsts and he shines brighter than the club itself. He is also the king of narcissism. His life is perfect, but, one day, Eun-Ho appears in front him. His life suddenly changes.",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/No_Tail_To_Tell"
+        },
+        "director": {
+            "value": [
+                "Kim Jung Kwon"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/773481-i-m-human-from-today"
+        },
+        "tags": {
+            "value": [
+                "Narcissistic Male Lead",
+                "Nine-tailed Fox",
+                "Eccentric Female Lead",
+                "Interspecies Romance",
+                "Soccer Player Male Lead",
+                "Soccer",
+                "Rich Female Lead",
+                "Supernatural",
+                "Bickering Mains' Relationship",
+                "Talented Male Lead"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/773481-i-m-human-from-today"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "33707",
+                    "artistName": "Kim Jung Kwon",
+                    "artistImageURL": "https://i.mydramalist.com/eRpX8m.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "22400",
+                    "artistName": "Park Chan Young",
+                    "artistImageURL": "https://i.mydramalist.com/rJvry_5m.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "22399",
+                    "artistName": "Cho A Yeong",
+                    "artistImageURL": "https://i.mydramalist.com/4ldY6_5m.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "21677",
+                    "artistName": "Kim Hye Yoon",
+                    "artistImageURL": "https://i.mydramalist.com/xpnmE_5s.jpg",
+                    "characterName": "Eun Ho",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "15157",
+                    "artistName": "Lomon",
+                    "artistImageURL": "https://i.mydramalist.com/kA0exO_5s.jpg",
+                    "characterName": "Kang Si Yeol",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "15568",
+                    "artistName": "Jang Dong Joo",
+                    "artistImageURL": "https://i.mydramalist.com/RBe26V_5s.jpg",
+                    "characterName": "Hyun U Seok [Soccer player]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "60303",
+                    "artistName": "Lee Si Woo",
+                    "artistImageURL": "https://i.mydramalist.com/kPD4d_5s.jpg",
+                    "characterName": "Geum Ho [Gumiho]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "32769",
+                    "artistName": "Kim Tae Jung",
+                    "artistImageURL": "https://i.mydramalist.com/60zRKj_5s.jpg",
+                    "characterName": "Hwang Chi Su [Daeheung citizens' soccer team center back]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "72727",
+                    "artistName": "Yu Hwan",
+                    "artistImageURL": "https://i.mydramalist.com/eYlRkd_5s.jpg",
+                    "characterName": "Seo Beom [Daeheung citizens' soccer team attacking midfielder]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "146136",
+                    "artistName": "Ji Seung Jun",
+                    "artistImageURL": "https://i.mydramalist.com/l0Qx6J_5s.jpg",
+                    "characterName": "Bae Jeong Bae [Daeheung citizens' soccer team wing-back]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "153616",
+                    "artistName": "Kim Tae Hee",
+                    "artistImageURL": "https://i.mydramalist.com/oQ6PPO_5s.jpg",
+                    "characterName": "Kim Gyeong Hun [Daeheung citizens' soccer team goalkeeper]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "19606",
+                    "artistName": "Choi Seung Yoon",
+                    "artistImageURL": "https://i.mydramalist.com/EDgXzs.jpg",
+                    "characterName": "Lee Yun [Geumsu Group heir]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1197",
+                    "artistName": "In Gyo Jin",
+                    "artistImageURL": "https://i.mydramalist.com/pOZeEs.jpg",
+                    "characterName": "Park Yong Gil [Daeheung Citizens' football club manager]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4576",
+                    "artistName": "Lee Seung Joon",
+                    "artistImageURL": "https://i.mydramalist.com/6bKNd_5s.jpg",
+                    "characterName": "Hyun Sang Cheol [U Seok's father]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4473",
+                    "artistName": "Kim Tae Woo",
+                    "artistImageURL": "https://i.mydramalist.com/47PO1_5s.jpg",
+                    "characterName": "Jang Du Cheol [Shaman]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4398",
+                    "artistName": "Joo Jin Mo",
+                    "artistImageURL": "https://i.mydramalist.com/ZOL8J_5s.jpg",
+                    "characterName": "Pa Gun Seong Jun [7th star of Seven Stars]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "21155",
+                    "artistName": "Cha Mi Kyung",
+                    "artistImageURL": "https://i.mydramalist.com/Xbllqs.jpg",
+                    "characterName": "Kim Bok Sun [Si Yeol's grandmother]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "90679",
+                    "artistName": "Shin Min Soo",
+                    "artistImageURL": "https://i.mydramalist.com/jL6Rr_5s.jpg",
+                    "characterName": "[Hiker] (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "159810",
+                    "artistName": "Han Tae Ha",
+                    "artistImageURL": "https://i.mydramalist.com/mOdy22_5s.jpg",
+                    "characterName": "[Department store employee]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "76355",
+                    "artistName": "Park Kyung Bok",
+                    "artistImageURL": "https://i.mydramalist.com/E4d0Q_5s.jpg",
+                    "characterName": "[Forest ranger] (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "122731",
+                    "artistName": "Kim Kwan Jang",
+                    "artistImageURL": "https://i.mydramalist.com/RBe3dE_5s.jpg",
+                    "characterName": "[Herb gatherer] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "93315",
+                    "artistName": "Na Ho Won",
+                    "artistImageURL": "https://i.mydramalist.com/QOQjQ_5s.jpg",
+                    "characterName": "[Hiker] (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6320",
+                    "artistName": "Kim Hong Pa",
+                    "artistImageURL": "https://i.mydramalist.com/Egvrz_5s.jpg",
+                    "characterName": "Chairman Kim (Ep. 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5873",
+                    "artistName": "Shin Chul Jin",
+                    "artistImageURL": "https://i.mydramalist.com/doLBzs.jpg",
+                    "characterName": "[Head monk] (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "148216",
+                    "artistName": "Kang Seong Uk",
+                    "artistImageURL": "https://i.mydramalist.com/3ojjYD_5s.jpg",
+                    "characterName": "[Detective] (Ep. 3-4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "108723",
+                    "artistName": "Kim Sun Bin",
+                    "artistImageURL": "https://i.mydramalist.com/42bbd_5s.jpg",
+                    "characterName": "[Geum Ho's husband] (Ep. 1, 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "29895",
+                    "artistName": "Woo Da Vi",
+                    "artistImageURL": "https://i.mydramalist.com/Z1lwqs.jpg",
+                    "characterName": "[Department store girl] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "1230",
+                    "artistName": "Ryu Seung Soo",
+                    "artistImageURL": "https://i.mydramalist.com/BDeR7_5s.jpg",
+                    "characterName": "[School soccer team coach] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "31999",
+                    "artistName": "Lim Jung Min",
+                    "artistImageURL": "https://i.mydramalist.com/6KJ32_5s.jpg",
+                    "characterName": "[Construction company representative] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "126741",
+                    "artistName": "Ahn Hyun Ho",
+                    "artistImageURL": "https://i.mydramalist.com/vXWl6e_5s.jpg",
+                    "characterName": "Secretary Choi (Ep. 1-2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "44743",
+                    "artistName": "Baek Do Gyum",
+                    "artistImageURL": "https://i.mydramalist.com/DkAxRD_5s.jpg",
+                    "characterName": "[Detective] (Ep. 1-2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "39557",
+                    "artistName": "Im Ye Eun",
+                    "artistImageURL": "https://i.mydramalist.com/XEjNXs.jpg",
+                    "characterName": "[Carpenter] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "154920",
+                    "artistName": "Kim Seong Kyeong",
+                    "artistImageURL": "https://i.mydramalist.com/zBk5Yz_5s.jpg",
+                    "characterName": "[Si Yeol’s fan] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "124499",
+                    "artistName": "Sin Ga Ram",
+                    "artistImageURL": "https://i.mydramalist.com/VXdZRL_5s.jpg",
+                    "characterName": "[Si Yeol’s fan] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "42365",
+                    "artistName": "Kim Joon Hee",
+                    "artistImageURL": "https://i.mydramalist.com/pjmbQs.jpg",
+                    "characterName": "[Real estate agent] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "1139",
+                    "artistName": "Hong Soo Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/4JPWJ_5s.jpg",
+                    "characterName": "Hong Yeon Su [Si Yeol's agent] (Ep. 1-3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "126537",
+                    "artistName": "Shin Sae Byuk",
+                    "artistImageURL": "https://i.mydramalist.com/pdvgRy_5s.jpg",
+                    "characterName": "[Flight attendant] (Ep. 2-3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "9339",
+                    "artistName": "Son Sook",
+                    "artistImageURL": "https://i.mydramalist.com/e313Ws.jpg",
+                    "characterName": "Geum Ho (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "155142",
+                    "artistName": "Choi Yeon Hwa",
+                    "artistImageURL": "https://i.mydramalist.com/nOYEg8_5s.jpg",
+                    "characterName": "[Daycare teacher] (Ep. 6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "58685",
+                    "artistName": "Je Seung Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/0JkBe_5s.jpg",
+                    "characterName": "[Nurse] (Ep. 6-7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "826",
+                    "artistName": "Oh Min Suk",
+                    "artistImageURL": "https://i.mydramalist.com/WB6zWs.jpg",
+                    "characterName": "[Dong Sik's son] (Ep. 7-8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "52031",
+                    "artistName": "Moon Chang Jun",
+                    "artistImageURL": "https://i.mydramalist.com/0jKWO_5s.jpg",
+                    "characterName": "[Supermarket shopper] (Ep. 9)",
+                    "role": "Guest Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/773481-i-m-human-from-today"
+        },
+        "airedOn": {
+            "value": [
+                "Friday",
+                "Saturday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/773481-i-m-human-from-today"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "22400",
+            "artistName": "Park Chan Young",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "22399",
+            "artistName": "Cho A Yeong",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "72727",
+            "artistName": "Yu Hwan",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "146136",
+            "artistName": "Ji Seung Jun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "153616",
+            "artistName": "Kim Tae Hee",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "159810",
+            "artistName": "Han Tae Ha",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "126741",
+            "artistName": "Ahn Hyun Ho",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "44743",
+            "artistName": "Baek Do Gyum",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "39557",
+            "artistName": "Im Ye Eun",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "asianwiki",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": null,
+        "airedOn": "mydramalist"
+    }
+}
