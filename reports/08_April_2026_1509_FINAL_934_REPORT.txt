@@ -1,8 +1,3 @@
-[DEBUG] Title Validation FAILED: Expected Year 2024 (±1) not found on page 'Squid Game'.
-[DEBUG] Title Validation FAILED: Page Title 'darywzc' vs Expected 'Squid Game Season 3' (Ratio: 0.24 & No Alias Match)
-[DEBUG] Title Validation FAILED: Page Title 'Most Popular Dramas' vs Expected 'Squid Game' (Ratio: 0.28 & No Alias Match)
-[DEBUG] Title Validation FAILED: Page Title 'Most Popular Dramas' vs Expected 'Squid Game' (Ratio: 0.28 & No Alias Match)
-[DEBUG] Title Validation FAILED: Page Title 'Most Popular Dramas' vs Expected 'Squid Game' (Ratio: 0.28 & No Alias Match)
 ✅ Workflow Batch completed successfully
 🏁 Final Batch Completed
 ══════════════════════════════════════════════════════
@@ -13,9 +8,9 @@
 🔁 RUN           : 934
 ⏰ Start Time    : 08 April 2026 - 03:09:34 PM
 ⏰ End Time      : 08 April 2026 - 03:12:24 PM
-⏱️ Run Time      : 2 Minutes 49 Seconds
+⏱️ Total Runtime : 2 Minutes 49 Seconds
 ⚙️ Max Process   : 50 Row Per Run
-🔄 Current Batch : 1
+🔄 Total Batches : 1 Run
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Feb 7 2023 Onwards ===
@@ -753,7 +748,7 @@
   Total Unique Rows: 12
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📊 Summary (Current Batch Only)
+📊 Overall Cumulative Summary
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🆕 Total Created: 0
 🔁 Total Updated: 0
@@ -779,6 +774,9 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ Folders Generated:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📁 reports/ (Total: 1 files)
+    📄 08_April_2026_1509_FINAL_934_REPORT.txt
+
 📁 meta_backups/ (Total: 38 files)
     📄 META_08_April_2026_1509_1019.json
     📄 META_08_April_2026_1509_1052.json
@@ -787,10 +785,5 @@
     📄 META_08_April_2026_1509_1092.json
     ... and 33 more files.
 
-📁 reports/ (Total: 1 files)
-    📄 08_April_2026_1509_FINAL_934_REPORT.txt
-
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🏁 Workflow finished successfully
-
-✅ Final Master Report written -> reports/08_April_2026_1509_FINAL_934_REPORT.txt (Saved to Repo)
