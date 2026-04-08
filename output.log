@@ -1,7 +1,7 @@
-[DEBUG] Title Validation FAILED: Page Title 'MariliT' vs Expected 'Love Me Like I Do' (Ratio: 0.25 & No Alias Match)
-[DEBUG] Title Validation FAILED: Page Title 'scenophile' vs Expected 'Hellbound Season 2' (Ratio: 0.21 & No Alias Match)
-[DEBUG] Title Validation FAILED: Detected Actor Profile (birthdate:) instead of Drama/Movie on page.
-[DEBUG] Title Validation FAILED: Page Title 'Most Popular Dramas' vs Expected 'Squid Game' (Ratio: 0.28 & No Alias Match)
+[DEBUG] Title Validation FAILED: Page Title 'adjective_boy' vs Expected 'Squid Game Season 2' (Ratio: 0.17 & No Alias Match)
+[DEBUG] Title Validation FAILED: Page Title 'Berbox Kay lee Zona' vs Expected 'Squid Game Season 2' (Ratio: 0.07 & No Alias Match)
+[DEBUG] Title Validation FAILED: Page Title 'Kimmie' vs Expected 'Squid Game Season 3' (Ratio: 0.38 & No Alias Match)
+[DEBUG] Title Validation FAILED: Page Title 'mrs ahn bohyun' vs Expected 'Squid Game Season 3' (Ratio: 0.08 & No Alias Match)
 ✅ Workflow Batch completed successfully
 🏁 Final Batch Completed
 ══════════════════════════════════════════════════════
@@ -9,10 +9,10 @@
 ══════════════════════════════════════════════════════
 
 🚀 Workflow Type : Manual
-🔁 RUN           : 932
-⏰ Start Time    : 08 April 2026 - 12:17:55 PM
-⏰ End Time      : 08 April 2026 - 12:21:32 PM
-⏱️ Run Time      : 3 Minutes 36 Seconds
+🔁 RUN           : 933
+⏰ Start Time    : 08 April 2026 - 02:54:03 PM
+⏰ End Time      : 08 April 2026 - 02:56:30 PM
+⏱️ Run Time      : 2 Minutes 27 Seconds
 ⚙️ Max Process   : 50 Row Per Run
 🔄 Current Batch : 1
 
@@ -21,7 +21,7 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 🔍 Refetched Data:
-✨ 1530 - The Snow Queen (2007) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+✨ 1515 - My Girl (2005) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
 
 ⚠️ Missing Values (Asian Dramas):
 - 1019 - The Fox's Summer Season 2 (2017) -> ⚠️ Missing: Director
@@ -53,7 +53,6 @@
 - 1503 - Squid Game Season 2 (2024) -> ⚠️ Missing: Director
 - 1504 - Squid Game Season 3 (2025) -> ⚠️ Missing: Director
 - 1513 - Cinderella Man (2009) -> ⚠️ Missing: Director
-- 1515 - My Girl (2005) -> ⚠️ Missing: Aired On, Cast, Director, Duration, Other Names, Release Date, Tags
 - 1521 - To My Beloved Thief (2026) -> ⚠️ Missing: Director
 
 🚫 Skipped (Unchanged):
@@ -522,6 +521,7 @@
 - 1527 - Our Universe (2026)
 - 1528 - Curtain Call (2022)
 - 1529 - Big Mouth (2022)
+- 1530 - The Snow Queen (2007)
 - 1531 - Oh My Geum Bi (2016)
 - 1532 - Second to Last Love (2016)
 - 1533 - The Great Show (2019)
@@ -567,10 +567,10 @@
 🆕 Created: 0
 🔁 Updated: 0
 🔍 Refetched: 1
-🚫 Skipped (Asian): 469
+🚫 Skipped (Asian): 470
 🙈 Ignored (Non-Asian): 33
-⚠️ Warnings: 31
-  Total Unique Rows: 503
+⚠️ Warnings: 30
+  Total Unique Rows: 504
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Before Feb 7 2023 (Korean) ===
@@ -760,41 +760,48 @@
 🔁 Total Updated: 0
 🔍 Total Refetched: 1
 🖼️ Show Images Updated: 0
-🧑‍🎨 New Artist Images Added: 0
-🚫 Total Skipped (Asian): 557
+🧑‍🎨 New Artist Images Added: 5
+🚫 Total Skipped (Asian): 558
 🙈 Total Ignored (Non-Asian): 46
 ❌ Total Deleted: 0
 🗄️ Total Archived Backups: 0
-⚠️ Total Warnings: 39
+⚠️ Total Warnings: 38
 💾 Backup Files: 0
-  Grand Total Rows Processed: 604
+  Grand Total Rows Processed: 605
 
-💾 Metadata Backups: 40
+💾 Metadata Backups: 39
 
 📦 Total Objects in seriesData.json: 643
-📦 Total Objects in artists.json: 11679
-📦 Total Objects in cast.json: 596
-📦 Total Objects in artists_lookup.json: 11679
+📦 Total Objects in artists.json: 11684
+📦 Total Objects in cast.json: 597
+📦 Total Objects in artists_lookup.json: 11684
 🖼️ Total images in show-images: 597
-🧑‍🎨 Total images in artist-images: 11679
+🧑‍🎨 Total images in artist-images: 11684
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ Folders Generated:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📁 show_images/ (Total: 1 files)
-    📄 1530.jpg
+    📄 1515.jpg
 
-📁 meta_backups/ (Total: 40 files)
-    📄 META_08_April_2026_1217_1019.json
-    📄 META_08_April_2026_1217_1052.json
-    📄 META_08_April_2026_1217_1059.json
-    📄 META_08_April_2026_1217_1077.json
-    📄 META_08_April_2026_1217_1092.json
-    ... and 35 more files.
+📁 artist_images/ (Total: 5 files)
+    📄 619.jpg
+    📄 5881.jpg
+    📄 13188.jpg
+    📄 866.jpg
+    📄 20493.jpg
+
+📁 meta_backups/ (Total: 39 files)
+    📄 META_08_April_2026_1454_1019.json
+    📄 META_08_April_2026_1454_1052.json
+    📄 META_08_April_2026_1454_1059.json
+    📄 META_08_April_2026_1454_1077.json
+    📄 META_08_April_2026_1454_1092.json
+    ... and 34 more files.
 
 📁 reports/ (Total: 1 files)
-    📄 08_April_2026_1217_FINAL_932_REPORT.txt
+    📄 08_April_2026_1454_FINAL_933_REPORT.txt
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🏁 Workflow finished successfully
 
-✅ Final Master Report written -> reports/08_April_2026_1217_FINAL_932_REPORT.txt (Saved to Repo)
+✅ Final Master Report written -> reports/08_April_2026_1454_FINAL_933_REPORT.txt (Saved to Repo)
