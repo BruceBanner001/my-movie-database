@@ -1,0 +1,997 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260408_071416",
+    "timestamp": "08 April 2026 07:15 AM (IST)",
+    "showID": 1034,
+    "showName": "18 Again",
+    "fetchedFields": {
+        "showImage": {
+            "value": "1034.jpg",
+            "source": "asianwiki"
+        },
+        "releaseDate": {
+            "value": "Sep 21, 2020 - Nov 10, 2020",
+            "source": "mydramalist"
+        },
+        "otherNames": {
+            "value": [
+                "Eighteen Again",
+                "Eitin Eogein",
+                "에이틴 어게인"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/52941-eighteen-again"
+        },
+        "Duration": {
+            "value": "1 hr. 10 min.",
+            "source": "mydramalist"
+        },
+        "synopsis": {
+            "value": "Jung Da-Jung (Kim Ha-Neul) is married to 37-year-old Hong Dae-Young (Yoon Sang-Hyun). They have have 18-year-old son and daughter. Jung Da-Jung works hard as a rookie announcer and she has a warm heart. She becomes completely fed up with her husband and is unable to deal with him anymore. Hong Dae-Young got fired from his job and he is looked down upon by his family. Jung Da-Jung hands him divorce papers.\n\nMeanwhile, Hong Dae-Young looks at himself as an ordinary jobless middle-aged man. He regrets his life. At that moment, his body changes into that of an 18-year-old year old person, while his mind is still that of his 37-year-old self. Back in his teenage days, Hong Dae-Young (Lee Do-Hyun) was an excellent basketball player and also popular. Now, with his regained 18-year-old body, he changes his name to Ko Woo-Young and begins to live a new life.",
+            "source": "asianwiki"
+        },
+        "director": {
+            "value": [
+                "Ha Byung Hoon"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/52941-eighteen-again"
+        },
+        "tags": {
+            "value": [
+                "First Love",
+                "Father-Son Relationship",
+                "Father-Daughter Relationship",
+                "Hardworking Female Lead",
+                "Mother-Daughter Relationship",
+                "Life Lesson",
+                "Becoming Young",
+                "Hidden Identity",
+                "Character Development",
+                "Teenage Pregnancy"
+            ],
+            "source": "mydramalist"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "88151",
+                    "artistName": "Cho Young Jik",
+                    "artistImageURL": "https://i.mydramalist.com/4QLqr_5m.jpg",
+                    "characterName": null,
+                    "role": "Cinematography"
+                },
+                {
+                    "artistID": "94867",
+                    "artistName": "Mun Seong Nam",
+                    "artistImageURL": "https://i.mydramalist.com/0qwlN_5m.jpg",
+                    "characterName": null,
+                    "role": "Composer"
+                },
+                {
+                    "artistID": "16176",
+                    "artistName": "Ha Byung Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/2k1bO_5m.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "49717",
+                    "artistName": "Kim Do Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/1JPYb_5m.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "49719",
+                    "artistName": "Ahn Eun Bin",
+                    "artistImageURL": "https://i.mydramalist.com/WKXy5_5m.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "49721",
+                    "artistName": "Choi Yi Ryun",
+                    "artistImageURL": "https://i.mydramalist.com/x1Oej_5m.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "403",
+                    "artistName": "Kim Ha Neul",
+                    "artistImageURL": "https://i.mydramalist.com/JBy2yd_5s.jpg",
+                    "characterName": "Jung Da Jeong",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "188",
+                    "artistName": "Yoon Sang Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/VXPgnQ_5s.jpg",
+                    "characterName": "Hong Dae Yeong [Adult]",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "17489",
+                    "artistName": "Lee Do Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/6PlYW_5s.jpg",
+                    "characterName": "Hong Dae Yeong [Teen] / Ko U Yeong",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "4419",
+                    "artistName": "Roh Jeong Eui",
+                    "artistImageURL": "https://i.mydramalist.com/l0Ne7L_5s.jpg",
+                    "characterName": "Hong Si A",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "23633",
+                    "artistName": "Ryeo Un",
+                    "artistImageURL": "https://i.mydramalist.com/zB2n3J_5s.jpg",
+                    "characterName": "Hong Si U",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "16210",
+                    "artistName": "Wi Ha Joon",
+                    "artistImageURL": "https://i.mydramalist.com/xzdP0_5s.jpg",
+                    "characterName": "Ye Ji Hun",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5931",
+                    "artistName": "Kim Kang Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/wzV2b_5s.jpg",
+                    "characterName": "Ko Deok Jin",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3078",
+                    "artistName": "Lee Mi Do",
+                    "artistImageURL": "https://i.mydramalist.com/zBJBEJ_5s.jpg",
+                    "characterName": "Chu Ae Rin",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "16049",
+                    "artistName": "Choi Bo Min",
+                    "artistImageURL": "https://i.mydramalist.com/E57RRQ_5s.jpg",
+                    "characterName": "Seo Ji Ho",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "22277",
+                    "artistName": "Hwang In Youp",
+                    "artistImageURL": "https://i.mydramalist.com/XJDnn_5s.jpg",
+                    "characterName": "Koo Ja Seong",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "42339",
+                    "artistName": "Oh So Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/dA7Jgs.jpg",
+                    "characterName": "Jeon Bo Bae",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "29927",
+                    "artistName": "Lee Eun Jae",
+                    "artistImageURL": "https://i.mydramalist.com/d0Yq1d_5s.jpg",
+                    "characterName": "Um So Mi",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "51105",
+                    "artistName": "Ryu Da In",
+                    "artistImageURL": "https://i.mydramalist.com/Bd76J5_5s.jpg",
+                    "characterName": "Hwang Yeong Seon",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "44979",
+                    "artistName": "Bin Chan Uk",
+                    "artistImageURL": "https://i.mydramalist.com/XJz4p_5s.jpg",
+                    "characterName": "Bang Gi Yeong",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3216",
+                    "artistName": "Kim Yoo Ri",
+                    "artistImageURL": "https://i.mydramalist.com/XNLkd_5s.jpg",
+                    "characterName": "Ok Hae In",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1530",
+                    "artistName": "Ahn Nae Sang",
+                    "artistImageURL": "https://i.mydramalist.com/1g5nQs.jpg",
+                    "characterName": "Moon Sang Hwi",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "13114",
+                    "artistName": "Jang Hyuk Jin",
+                    "artistImageURL": "https://i.mydramalist.com/4j7er_5s.jpg",
+                    "characterName": "Heo Ung Gi",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2421",
+                    "artistName": "Kim Yoon Hye",
+                    "artistImageURL": "https://i.mydramalist.com/g0R3LP_5s.jpg",
+                    "characterName": "Kwon Yu Mi",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "32779",
+                    "artistName": "Go Eun Min",
+                    "artistImageURL": "https://i.mydramalist.com/6LOkps.jpg",
+                    "characterName": "Im Ja Yeong",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "17757",
+                    "artistName": "Yang Dae Hyuk",
+                    "artistImageURL": "https://i.mydramalist.com/0K6eY_5s.jpg",
+                    "characterName": "Nam Gi Tae",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1693",
+                    "artistName": "Kim Mi Kyung",
+                    "artistImageURL": "https://i.mydramalist.com/xw1DX_5s.jpg",
+                    "characterName": "Yeo In Ja",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1695",
+                    "artistName": "Lee Byung Joon",
+                    "artistImageURL": "https://i.mydramalist.com/1gyLQs.jpg",
+                    "characterName": "Hong Ju Man",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "621",
+                    "artistName": "Lee Ki Woo",
+                    "artistImageURL": "https://i.mydramalist.com/2z3qR_5s.jpg",
+                    "characterName": "Choi Il Gwon",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "67167",
+                    "artistName": "Yoo Si Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/RLl6x_5s.jpg",
+                    "characterName": "Ko U Jin",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "21371",
+                    "artistName": "Han So Eun",
+                    "artistImageURL": "https://i.mydramalist.com/EPXN5s.jpg",
+                    "characterName": "Jung Da Jeong [Young]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "11239",
+                    "artistName": "Kim Joong Ki",
+                    "artistImageURL": "https://i.mydramalist.com/0geo4_5s.jpg",
+                    "characterName": "[Teacher]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "53195",
+                    "artistName": "Kim Yun Jeong",
+                    "artistImageURL": "https://i.mydramalist.com/3oABDD_5s.jpg",
+                    "characterName": "[Go Go Play employee]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "34139",
+                    "artistName": "Moon Woo Bin",
+                    "artistImageURL": "https://i.mydramalist.com/RDPnY_5s.jpg",
+                    "characterName": "[Go Go Play employee]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2930",
+                    "artistName": "Choi Jae Hwan",
+                    "artistImageURL": "https://i.mydramalist.com/BgWdl_5s.jpg",
+                    "characterName": "Jin Cheol",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "13677",
+                    "artistName": "Jun Hyun Moo",
+                    "artistImageURL": "https://i.mydramalist.com/Xyxlq_5s.jpg",
+                    "characterName": "Bae Seung Hyun",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "4353",
+                    "artistName": "Ahn Mi Na",
+                    "artistImageURL": "https://i.mydramalist.com/Xd4ymx_5s.jpg",
+                    "characterName": "Choi Ji Na",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5645",
+                    "artistName": "Park Min Young",
+                    "artistImageURL": "https://i.mydramalist.com/4LY8K_5s.jpg",
+                    "characterName": "Jin Yeong",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "20031",
+                    "artistName": "Park Yong",
+                    "artistImageURL": "https://i.mydramalist.com/dxE2b_5s.jpg",
+                    "characterName": "Kang Jae Seon",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21859",
+                    "artistName": "Seo Yi Soo",
+                    "artistImageURL": "https://i.mydramalist.com/jmbkw_5s.jpg",
+                    "characterName": "Yoo Ju",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "4462",
+                    "artistName": "Kim Hye Hwa",
+                    "artistImageURL": "https://i.mydramalist.com/QB7xW_5s.jpg",
+                    "characterName": "Lee Bo Ra",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "40659",
+                    "artistName": "Yoon Jung Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/jo35B_5s.jpg",
+                    "characterName": "Park Hui Seong",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "28615",
+                    "artistName": "Lee Do Ha",
+                    "artistImageURL": "https://i.mydramalist.com/Zq6Vq_5s.jpg",
+                    "characterName": "Lee Sang Sik",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6895",
+                    "artistName": "Lee Do Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/rzZ0y_5s.jpg",
+                    "characterName": "[Convenience store customer] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "55131",
+                    "artistName": "Hwang Dae Ki",
+                    "artistImageURL": "https://i.mydramalist.com/6ZAZp_5s.jpg",
+                    "characterName": "Ko Deok Jin [Young] (Ep. 1-2, 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "51867",
+                    "artistName": "Lee Nam Gyeong",
+                    "artistImageURL": "https://i.mydramalist.com/W62lP_5s.jpg",
+                    "characterName": "Hong Si A [Young] (Ep. 1, 3, 9, 12-13)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "35723",
+                    "artistName": "Oh Ja Hun",
+                    "artistImageURL": "https://i.mydramalist.com/w3lXJ_5s.jpg",
+                    "characterName": "Hong Si U [Young] (Ep. 1, 3, 8-9, 12)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "20701",
+                    "artistName": "Song Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/rzNQZ_5s.jpg",
+                    "characterName": "[Da Jeong's PD] (Ep. 1, 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "8802",
+                    "artistName": "Jung Hae Kyun",
+                    "artistImageURL": "https://i.mydramalist.com/QJ5A7Q_5s.jpg",
+                    "characterName": "[Dae Yeong's boss] (Ep. 1, 8-9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "8342",
+                    "artistName": "Jo Sang Geon",
+                    "artistImageURL": "https://i.mydramalist.com/64mnKs.jpg",
+                    "characterName": "[Dae Yeong's client] (Ep. 1, 10, 16)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "23536",
+                    "artistName": "Jun Eun Mi",
+                    "artistImageURL": "https://i.mydramalist.com/dJmZg_5s.jpg",
+                    "characterName": "[Pharmacist] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "25725",
+                    "artistName": "Moon Hak Jin",
+                    "artistImageURL": "https://i.mydramalist.com/vBDLq_5s.jpg",
+                    "characterName": "[Audition staff] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "44145",
+                    "artistName": "Kim Han Sang",
+                    "artistImageURL": "https://i.mydramalist.com/0g86O_5s.jpg",
+                    "characterName": "[Construction company employee] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "15476",
+                    "artistName": "Jang Sung Kyu",
+                    "artistImageURL": "https://i.mydramalist.com/kAkbqO_5s.jpg",
+                    "characterName": "[Self / JBC Interviewee] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "56217",
+                    "artistName": "Kim Sun Min",
+                    "artistImageURL": "https://i.mydramalist.com/AB4yEg_5s.jpg",
+                    "characterName": "Choi Il Gwon [Young] (Ep. 2-3, 5, 7, 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "56221",
+                    "artistName": "Seo Ha Yoon",
+                    "artistImageURL": "https://i.mydramalist.com/prnnb_5s.jpg",
+                    "characterName": "Hong Si A [Child] (Ep. 2-4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "8548",
+                    "artistName": "Kim Kang Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/XJ6qq_5s.jpg",
+                    "characterName": "Seo Ji Ho [Young] (Ep. 3-4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "23788",
+                    "artistName": "Myung Seok Geun",
+                    "artistImageURL": "https://i.mydramalist.com/BDQX7_5s.jpg",
+                    "characterName": "[Sports news staff] (Ep. 3-4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "50261",
+                    "artistName": "Park Kang Sub",
+                    "artistImageURL": "https://i.mydramalist.com/mOPKYk_5s.jpg",
+                    "characterName": "[Seum Wolves catcher] (Ep. 3-4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "42189",
+                    "artistName": "Lee Cheon Mu",
+                    "artistImageURL": "https://i.mydramalist.com/l01DP6_5s.jpg",
+                    "characterName": "Hong Si U [Child] (Ep. 3, 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "103871",
+                    "artistName": "Park Tae Yun",
+                    "artistImageURL": "https://i.mydramalist.com/qp5W2_5s.jpg",
+                    "characterName": "[Bully] (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "42477",
+                    "artistName": "Kang Hak Soo",
+                    "artistImageURL": "https://i.mydramalist.com/yWPJ06_5s.jpg",
+                    "characterName": "[Seum Wolves GM] (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "39545",
+                    "artistName": "Im Yong Soon",
+                    "artistImageURL": "https://i.mydramalist.com/EQgOm_5s.jpg",
+                    "characterName": "[Judge] (Ep. 5)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "42479",
+                    "artistName": "Jang Joon Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/ex7NK_5s.jpg",
+                    "characterName": "Coach Jung [Hangkuk University Basketball coach] (Ep. 5, 7, 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "19548",
+                    "artistName": "Jang Jae Kwon",
+                    "artistImageURL": "https://i.mydramalist.com/keY8d_5s.jpg",
+                    "characterName": "[Alumni] (Ep. 5, 14)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "55503",
+                    "artistName": "Kim Sung Yong",
+                    "artistImageURL": "https://i.mydramalist.com/2LD1w_5s.jpg",
+                    "characterName": "[JBC executive] (Ep. 6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "53249",
+                    "artistName": "O Gyu Taek",
+                    "artistImageURL": "https://i.mydramalist.com/yWnyYk_5s.jpg",
+                    "characterName": "[Shoe repairman] (Ep. 6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "47383",
+                    "artistName": "Lee Ju Mi",
+                    "artistImageURL": "https://i.mydramalist.com/1lRn5_5s.jpg",
+                    "characterName": "[Mother of hearing impaired child] (Ep. 6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "23782",
+                    "artistName": "Go Han Min",
+                    "artistImageURL": "https://i.mydramalist.com/vnEEXs.jpg",
+                    "characterName": "Reporter Kim (Ep. 6, 8, 13)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6081",
+                    "artistName": "Song Yoo Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/ABAee3_5s.jpg",
+                    "characterName": "Mi A [Seo Yun's mother] (Ep. 6-8, 15)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "56223",
+                    "artistName": "Yoon Byul Ha",
+                    "artistImageURL": "https://i.mydramalist.com/B5qqR_5s.jpg",
+                    "characterName": "Ye Seo Yun [Ji Hun's niece] (Ep. 6, 10, 15-16)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "23049",
+                    "artistName": "Hong Ye Ji",
+                    "artistImageURL": "https://i.mydramalist.com/ABmVNv_5s.jpg",
+                    "characterName": "[Shoe saleswoman] (Ep. 6, 14)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "34607",
+                    "artistName": "Yoo Joon Hoo",
+                    "artistImageURL": "https://i.mydramalist.com/ZoLVks.jpg",
+                    "characterName": "Ye Ji Hun [Child] (Ep. 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "42853",
+                    "artistName": "Jo Ryeon",
+                    "artistImageURL": "https://i.mydramalist.com/0dkye_5s.jpg",
+                    "characterName": "[Dae Yeong's mother] (Ep. 7-8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "3111",
+                    "artistName": "Im Ji Gyu",
+                    "artistImageURL": "https://i.mydramalist.com/v60q2_5s.jpg",
+                    "characterName": "[Ji Hun's brother] (Ep. 7, 15)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "2495",
+                    "artistName": "Heo Jung Min",
+                    "artistImageURL": "https://i.mydramalist.com/O8eoyP_5s.jpg",
+                    "characterName": "Professor Kang [Ae Rin's ex-boyfriend] (Ep. 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6187",
+                    "artistName": "Lee Yoon Sang",
+                    "artistImageURL": "https://i.mydramalist.com/v5BPX_5s.jpg",
+                    "characterName": "[2014 tryout interviewer] (Ep. 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "31141",
+                    "artistName": "Hur Jae",
+                    "artistImageURL": "https://i.mydramalist.com/QJdEXQ_5s.jpg",
+                    "characterName": "[Coach at 2009 KBU draft] (Ep. 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "56219",
+                    "artistName": "Lee Soo",
+                    "artistImageURL": "https://i.mydramalist.com/xyEEN_5s.jpg",
+                    "characterName": "Koo Ja Seong [Child] (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6235",
+                    "artistName": "Lee Eol",
+                    "artistImageURL": "https://i.mydramalist.com/r58x7_5s.jpg",
+                    "characterName": "[Il Gwon's father] (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "38335",
+                    "artistName": "Kim Geon Ho",
+                    "artistImageURL": "https://i.mydramalist.com/b3yDpL_5s.jpg",
+                    "characterName": "[Gi Yong's father] (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "44701",
+                    "artistName": "Park Eun Young",
+                    "artistImageURL": "https://i.mydramalist.com/dJBPb_5s.jpg",
+                    "characterName": "[Restaurant owner] (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "23789",
+                    "artistName": "Bae Yoo Ri",
+                    "artistImageURL": "https://i.mydramalist.com/mj81qs.jpg",
+                    "characterName": "[Yu Ju's mother] (Ep. 9-10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "19716",
+                    "artistName": "Kim Dong Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/jxO6J_5s.jpg",
+                    "characterName": "[Self defense trainer] (Ep. 10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "56215",
+                    "artistName": "Do Won Kyung",
+                    "artistImageURL": "https://i.mydramalist.com/ZmggW_5s.jpg",
+                    "characterName": "[Self] (Ep. 10-11)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "3279",
+                    "artistName": "Moon Ji In",
+                    "artistImageURL": "https://i.mydramalist.com/Ndoqgo_5s.jpg",
+                    "characterName": "[\"Couples in Crisis\"] (Ep. 11)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "3254",
+                    "artistName": "Heo Jae Ho",
+                    "artistImageURL": "https://i.mydramalist.com/Rng7z_5s.jpg",
+                    "characterName": "[\"Couples in Crisis\"] (Ep. 11)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "4976",
+                    "artistName": "Lee Chae Eun",
+                    "artistImageURL": "https://i.mydramalist.com/QjmQAs.jpg",
+                    "characterName": "[\"Couples in Crisis\"] (Ep. 11)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "1714",
+                    "artistName": "Kim Ho Chang",
+                    "artistImageURL": "https://i.mydramalist.com/oEB8zs.jpg",
+                    "characterName": "[\"Couples in Crisis\"] (Ep. 11)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "48353",
+                    "artistName": "Richard Kim",
+                    "artistImageURL": "https://i.mydramalist.com/vzwdX_5s.jpg",
+                    "characterName": "[\"Couples in Crisis\" panellist] (Ep. 11)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "18520",
+                    "artistName": "Kwak Ja Hyung",
+                    "artistImageURL": "https://i.mydramalist.com/EDNwls.jpg",
+                    "characterName": "[\"Couples in Crisis\" panellist] (Ep. 11)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "41723",
+                    "artistName": "Ki Eun Yoo",
+                    "artistImageURL": "https://i.mydramalist.com/2zRKw_5s.jpg",
+                    "characterName": "Seo Ji Ho [Child] (Ep. 14)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "25685",
+                    "artistName": "Heo Seon Haeng",
+                    "artistImageURL": "https://i.mydramalist.com/yWnepN_5s.jpg",
+                    "characterName": "Choi Hyeon Seung (Ep. 14)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "63083",
+                    "artistName": "Jung Sae Rom",
+                    "artistImageURL": "https://i.mydramalist.com/QLW0W_5s.jpg",
+                    "characterName": "[Woman bumps Da Jeong] (Ep. 14)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "34591",
+                    "artistName": "Yong Jin",
+                    "artistImageURL": "https://i.mydramalist.com/XbzqOs.jpg",
+                    "characterName": "[Private investigator] (Ep. 14)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "92293",
+                    "artistName": "Kim Hyun Chang",
+                    "artistImageURL": "https://i.mydramalist.com/QOjoQ_5s.jpg",
+                    "characterName": "[Detective] (Ep. 15)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "104105",
+                    "artistName": "Nam Hee Soo",
+                    "artistImageURL": "https://i.mydramalist.com/1nzw6_5s.jpg",
+                    "characterName": "[Reporter] (Ep. 16)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "70541",
+                    "artistName": "Woo Sang Hee",
+                    "artistImageURL": "https://i.mydramalist.com/WwV5D_5s.jpg",
+                    "characterName": "Seo Su Rin",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "103997",
+                    "artistName": "Han Ha  Rang",
+                    "artistImageURL": "https://i.mydramalist.com/1ngDz_5s.jpg",
+                    "characterName": "[Boy]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "28557",
+                    "artistName": "Jeon Jeong Il",
+                    "artistImageURL": "https://i.mydramalist.com/nO183L_5s.jpg",
+                    "characterName": "[Dad]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "81583",
+                    "artistName": "Sung Nam",
+                    "artistImageURL": "https://i.mydramalist.com/xlLlr_5s.jpg",
+                    "characterName": "[Doctor]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "104103",
+                    "artistName": "Hwang Sun Young",
+                    "artistImageURL": "https://i.mydramalist.com/Be1vq_5s.jpg",
+                    "characterName": "[Lawyer]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "104101",
+                    "artistName": "Kim Do Hyung",
+                    "artistImageURL": "https://i.mydramalist.com/1xlq7_5s.jpg",
+                    "characterName": "[Detective]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "54843",
+                    "artistName": "Hwang Jung Yoon",
+                    "artistImageURL": "https://i.mydramalist.com/RLlqr_5s.jpg",
+                    "characterName": "[30's woman]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "148152",
+                    "artistName": "Park Ji Won",
+                    "artistImageURL": "https://i.mydramalist.com/5vbJdy_5s.jpg",
+                    "characterName": "[Delivery man]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "133493",
+                    "artistName": "Park Beam Soo",
+                    "artistImageURL": "https://i.mydramalist.com/eYE1mY_5s.jpg",
+                    "characterName": "[Basketball team member]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "108361",
+                    "artistName": "Jeong Seo Yul",
+                    "artistImageURL": "https://i.mydramalist.com/W20eW_5s.jpg",
+                    "characterName": "[Seo Ji Ho's friend]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "49055",
+                    "artistName": "Song Da Kyung",
+                    "artistImageURL": "https://i.mydramalist.com/RbKVg_5s.jpg",
+                    "characterName": "[Interview woman]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "70139",
+                    "artistName": "Ho Sol Hee",
+                    "artistImageURL": "https://i.mydramalist.com/Wwlk3_5s.jpg",
+                    "characterName": "[University student]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "104309",
+                    "artistName": "Ma Hyun Ji",
+                    "artistImageURL": "https://i.mydramalist.com/1nAqR_5s.jpg",
+                    "characterName": "[Kids' Café teacher]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "76687",
+                    "artistName": "Noreen Joyce Guerra",
+                    "artistImageURL": "https://i.mydramalist.com/r820p_5s.jpg",
+                    "characterName": "[TV Station employee]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "50441",
+                    "artistName": "Shin Jun Chul",
+                    "artistImageURL": "https://i.mydramalist.com/08mle_5s.jpg",
+                    "characterName": "[Seongjong Electronics employee]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "44155",
+                    "artistName": "Jin Shi Won",
+                    "artistImageURL": "https://i.mydramalist.com/eB8oq_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "70829",
+                    "artistName": "Yoon Tae Soo",
+                    "artistImageURL": "https://i.mydramalist.com/XJ15g_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "104569",
+                    "artistName": "Jang Yoon Woo",
+                    "artistImageURL": "https://i.mydramalist.com/2wg7Od_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "118239",
+                    "artistName": "Lee Ji Myeong",
+                    "artistImageURL": "https://i.mydramalist.com/vXoxO2_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "105821",
+                    "artistName": "Han Seung Ho",
+                    "artistImageURL": "https://i.mydramalist.com/2LzA7_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "42153",
+                    "artistName": "Park Boo Gun",
+                    "artistImageURL": "https://i.mydramalist.com/dALVbs.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "18993",
+                    "artistName": "Park So Eun",
+                    "artistImageURL": "https://i.mydramalist.com/B6PoR_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "88483",
+                    "artistName": "Lim Min So",
+                    "artistImageURL": "https://i.mydramalist.com/WV4WR_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "98313",
+                    "artistName": "Lee Sang Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/20Dl7_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "15314",
+                    "artistName": "Kwon Tae Jin",
+                    "artistImageURL": "https://i.mydramalist.com/kny7b_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/52941-eighteen-again"
+        },
+        "airedOn": {
+            "value": [
+                "Monday",
+                "Tuesday"
+            ],
+            "source": "mydramalist"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "16176",
+            "artistName": "Ha Byung Hoon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "49717",
+            "artistName": "Kim Do Yeon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "49719",
+            "artistName": "Ahn Eun Bin",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "49721",
+            "artistName": "Choi Yi Ryun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "67167",
+            "artistName": "Yoo Si Yeon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "28615",
+            "artistName": "Lee Do Ha",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "31141",
+            "artistName": "Hur Jae",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "56219",
+            "artistName": "Lee Soo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "19716",
+            "artistName": "Kim Dong Hyun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "56215",
+            "artistName": "Do Won Kyung",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "104103",
+            "artistName": "Hwang Sun Young",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "88483",
+            "artistName": "Lim Min So",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "asianwiki",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": null,
+        "airedOn": "mydramalist"
+    }
+}
