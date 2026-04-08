@@ -98,7 +98,7 @@ The script maps Excel columns (case-insensitive trimmed column names) to the fol
     - `Korean` → [`asianwiki`, `mydramalist`]
     - `Chinese` → [`mydramalist`, `asianwiki`]
 - If you want to add other languages or change order, edit the `PREFERRED_SITE_ORDER` dictionary in the script:
-```py
+
 PREFERRED_SITE_ORDER = {
   "Korean": ["asianwiki","mydramalist"],
   "Chinese": ["mydramalist","asianwiki"],

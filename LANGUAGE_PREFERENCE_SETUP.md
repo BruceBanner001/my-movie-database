@@ -1,38 +1,27 @@
-# Adding New Language or Site Preferences
+# 🌍 Language & Source Logic
+**Author:** BRUCE
 
-The script `create_update_backup_delete.py` fetches synopsis and images by checking site preferences per language.
+This document explains how the automation engine handles different languages and site priorities for your movie database.
 
-## Where to add preferences
-In the script, look for the section where `site_prefs` is defined:
-```python
-site_prefs = {
-    "Korean": ["asianwiki", "mydramalist"],
-    "Chinese": ["mydramalist", "baidu"],
-    # Add more languages here...
-}
-```
+## 1. Scraping Priorities (Example)
+The script automatically chooses the best website to find details based on the show's native language:
 
-## Steps to add a new language
-1. Open `create_update_backup_delete.py`.
-2. Find the `site_prefs` dictionary.
-3. Add a new entry, e.g.:
-   ```python
-   "Japanese": ["mydramalist", "asianwiki"],
-   ```
-4. Save and commit.
+| Language | Primary Source | Secondary Source |
+| :--- | :--- | :--- |
+| **Korean** | AsianWiki | MyDramaList |
+| **Japanese** | AsianWiki | MyDramaList |
+| **Chinese/Thai** | MyDramaList | N/A |
 
-## Adding site-specific parsing
-- In `parse_synopsis_from_html`, add new rules under:
-  ```python
-  if "asianwiki" in url:
-      # existing parser
-  elif "mydramalist" in url:
-      # existing parser
-  elif "newsite" in url:
-      # implement parser for the new site
-  ```
+**Example:** If you add a Korean drama, the script will first try to get the "Synopsis" from AsianWiki. If it fails, it falls back to MyDramaList.
 
-## Notes
-- Always test after adding preferences.
-- If the site has a clear `div` or `p` for synopsis, use BeautifulSoup to extract it.
-- Append a `(Source: SiteName)` suffix if not automatically included.
+## 2. Multi-Language Support (English & Tamil)
+The engine is optimized for a global audience while maintaining your personal preferences:
+* **Metadata Fetching:** All technical details (Cast, Synopsis, Duration) are fetched in **English**.
+* **Tamil Character Support:** You can safely write in **Tamil** inside the `Comments` or `Other Names` columns in your Excel sheet. 
+* **Encoding:** The script uses `utf-8` encoding, meaning your Tamil text will be saved perfectly in `seriesData.json` without turning into garbled text.
+
+## 3. Country Mapping Logic
+The script automatically fills in the "Country" field based on the language:
+* **"Korean"** ➔ South Korea
+* **"Chinese"** ➔ China
+* **"Japanese"** ➔ Japan
