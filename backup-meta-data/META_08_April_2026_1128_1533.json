@@ -1,0 +1,484 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260408_112841",
+    "timestamp": "08 April 2026 11:31 AM (IST)",
+    "showID": 1533,
+    "showName": "The Great Show",
+    "fetchedFields": {
+        "showImage": {
+            "value": "1533.jpg",
+            "source": "asianwiki"
+        },
+        "releaseDate": {
+            "value": "Aug 26, 2019 - Oct 15, 2019",
+            "source": "mydramalist"
+        },
+        "otherNames": {
+            "value": [
+                "Great Show",
+                "Widaehan Sho"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/33369-the-great-show"
+        },
+        "Duration": {
+            "value": "1 hr. 6 min.",
+            "source": "mydramalist"
+        },
+        "synopsis": {
+            "value": "Wie Dae-Han (Song Seung-Heon) is an ex-lawmaker and is a materialistic kind of politician. He wants to get elected as lawmaker again. One day, 18-year-old girl Da-Jung (Roh Jeong-Eui) comes to him. She tells him that he is her real father. Her mother raised four children, including Da-Jung, alone, but she died in a hit-and-run accident. Da-Jung is the only one now taking care of her 3 younger siblings. Wie Dae-Han accepts Da-Jung and her 3 younger siblings. He carries out “The Great Show” to become a lawmaker again.",
+            "source": "asianwiki"
+        },
+        "director": {
+            "value": [
+                "Shin Yong Hwi",
+                "Kim Jung Wook"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/33369-the-great-show"
+        },
+        "tags": {
+            "value": [
+                "Father-Daughter Relationship",
+                "Nice Female Lead",
+                "Secret Crush",
+                "Smart Female Lead",
+                "Child Abandonment",
+                "Smart Male Lead",
+                "Father-Son Relationship",
+                "Nice Male Lead",
+                "Love Triangle",
+                "Competition"
+            ],
+            "source": "mydramalist"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "87685",
+                    "artistName": "Lim Ha Yong",
+                    "artistImageURL": "https://i.mydramalist.com/4QDgJ_5m.jpg",
+                    "characterName": null,
+                    "role": "Composer"
+                },
+                {
+                    "artistID": "17528",
+                    "artistName": "Shin Yong Hwi",
+                    "artistImageURL": "https://i.mydramalist.com/3Lkqem.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "101227",
+                    "artistName": "Kim Jung Wook",
+                    "artistImageURL": "https://i.mydramalist.com/0obR6_5m.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "21283",
+                    "artistName": "Seol Joon Seok",
+                    "artistImageURL": "https://i.mydramalist.com/ev8Bpm.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "535",
+                    "artistName": "Song Seung Heon",
+                    "artistImageURL": "https://i.mydramalist.com/02qdN_5s.jpg",
+                    "characterName": "Wi Dae Han",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "12160",
+                    "artistName": "Lee Sun Bin",
+                    "artistImageURL": "https://i.mydramalist.com/kAkzNr_5s.jpg",
+                    "characterName": "Jung Soo Hyun",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "577",
+                    "artistName": "Im Joo Hwan",
+                    "artistImageURL": "https://i.mydramalist.com/k5jq8_5s.jpg",
+                    "characterName": "Kang Joon Ho",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "4419",
+                    "artistName": "Roh Jeong Eui",
+                    "artistImageURL": "https://i.mydramalist.com/l0Ne7L_5s.jpg",
+                    "characterName": "Han Da Jeong",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "8566",
+                    "artistName": "Park Ha Na",
+                    "artistImageURL": "https://i.mydramalist.com/w231ps.jpg",
+                    "characterName": "Kim Hye Jin [Anchorwoman]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1709",
+                    "artistName": "Son Byung Ho",
+                    "artistImageURL": "https://i.mydramalist.com/BDbpl_5s.jpg",
+                    "characterName": "Kang Kyung Hoon [Joon Ho's father / Assemblyman]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "10500",
+                    "artistName": "Hyuk",
+                    "artistImageURL": "https://i.mydramalist.com/r5xZ2_5s.jpg",
+                    "characterName": "Choi Jung Woo [Da Jeong's boyfriend]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3221",
+                    "artistName": "Kim Dong Young",
+                    "artistImageURL": "https://i.mydramalist.com/Xx2NO_5s.jpg",
+                    "characterName": "Ko Bong Joo [Dae Han's Campaign Manager]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "6145",
+                    "artistName": "Jung Joon Won",
+                    "artistImageURL": "https://i.mydramalist.com/XrZqps.jpg",
+                    "characterName": "Han Tak",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "22270",
+                    "artistName": "Park Ye Na",
+                    "artistImageURL": "https://i.mydramalist.com/WN1ZOs.jpg",
+                    "characterName": "Han Song Yi [Da Jeong's little sister]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "30871",
+                    "artistName": "Kim Jun",
+                    "artistImageURL": "https://i.mydramalist.com/qbqNQs.jpg",
+                    "characterName": "Han Tae Poong [Da Jeong's little brother]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "14079",
+                    "artistName": "Kang Eun Ah",
+                    "artistImageURL": "https://i.mydramalist.com/QXKwYs.jpg",
+                    "characterName": "Jung Ji Hyun [Soo Hyun's little sister]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "21679",
+                    "artistName": "Yoo Sung Joo",
+                    "artistImageURL": "https://i.mydramalist.com/evdBds.jpg",
+                    "characterName": "Jung Han Soo",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "378",
+                    "artistName": "Lee Won Jong",
+                    "artistImageURL": "https://i.mydramalist.com/1w43j3_5s.jpg",
+                    "characterName": "Jung Jong Cheol [Soo Hyun's father]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "7829",
+                    "artistName": "Kim Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/5v7BVY_5s.jpg",
+                    "characterName": "Yang Mi Suk [Su Hyeon's mother]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "11847",
+                    "artistName": "Yoo Jang Young",
+                    "artistImageURL": "https://i.mydramalist.com/k64wv_5s.jpg",
+                    "characterName": "PD Koo [Soo Hyun's colleague]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5351",
+                    "artistName": "Song Ji Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/BmlEAs.jpg",
+                    "characterName": "Writer Ahn [Soo Hyun's colleague]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "28057",
+                    "artistName": "Pyo Hye Rim",
+                    "artistImageURL": "https://i.mydramalist.com/2OXgWs.jpg",
+                    "characterName": "Writer Ma [Soo Hyun's colleague]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "10972",
+                    "artistName": "Woo Hyun Joo",
+                    "artistImageURL": "https://i.mydramalist.com/6EbeO_5s.jpg",
+                    "characterName": "Park Soo Ji [Joon Ho's mother]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1913",
+                    "artistName": "Kang Sung Jin",
+                    "artistImageURL": "https://i.mydramalist.com/pPkVQ_5s.jpg",
+                    "characterName": "Han Dong-Nam [Han Tak, Tae Poong, & Song Yi's father]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "48353",
+                    "artistName": "Richard Kim",
+                    "artistImageURL": "https://i.mydramalist.com/vzwdX_5s.jpg",
+                    "characterName": "[Tycoon father]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5355",
+                    "artistName": "Kim Joo Ryoung",
+                    "artistImageURL": "https://i.mydramalist.com/kJVRvs.jpg",
+                    "characterName": "[Dae Han's mother] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "4404",
+                    "artistName": "Choi Soo Rin",
+                    "artistImageURL": "https://i.mydramalist.com/E0dmm_5s.jpg",
+                    "characterName": "[Dae Han's stepmother] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "17489",
+                    "artistName": "Lee Do Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/6PlYW_5s.jpg",
+                    "characterName": "Wi Dae Han [Teen] (Ep. 1-3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5484",
+                    "artistName": "Yoo Seung Mok",
+                    "artistImageURL": "https://i.mydramalist.com/Lw5eBB_5s.jpg",
+                    "characterName": "[Dae Han's father] (Ep. 1, 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "22221",
+                    "artistName": "Shin Shin Beom",
+                    "artistImageURL": "https://i.mydramalist.com/E8Pqls.jpg",
+                    "characterName": "(Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "38567",
+                    "artistName": "Kang Suk Won",
+                    "artistImageURL": "https://i.mydramalist.com/2z3yR_5s.jpg",
+                    "characterName": "[Detective] (Ep. 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "4672",
+                    "artistName": "Jo Seung Yun",
+                    "artistImageURL": "https://i.mydramalist.com/xNZg0_5s.jpg",
+                    "characterName": "Lee Kang Hoon (Ep. 10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6291",
+                    "artistName": "Park Yoo Mil",
+                    "artistImageURL": "https://i.mydramalist.com/73bdVb_5s.jpg",
+                    "characterName": "Writer Bang (Ep. 12)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "17586",
+                    "artistName": "Tae Won Seok",
+                    "artistImageURL": "https://i.mydramalist.com/l0qP8Q_5s.jpg",
+                    "characterName": "[That Kind of Hot Dog] (Ep. 13)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "88631",
+                    "artistName": "Han Sang Chul",
+                    "artistImageURL": "https://i.mydramalist.com/Lw5e77_5s.jpg",
+                    "characterName": "[Mover]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "103541",
+                    "artistName": "Choi Yo Woon",
+                    "artistImageURL": "https://i.mydramalist.com/rpk4y_5s.jpg",
+                    "characterName": "[Citizen]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "44699",
+                    "artistName": "Kim Mi Hye",
+                    "artistImageURL": "https://i.mydramalist.com/EgnO0_5s.jpg",
+                    "characterName": "[Reporter]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "44223",
+                    "artistName": "Won Chun Gyu",
+                    "artistImageURL": "https://i.mydramalist.com/kxQnr_5s.jpg",
+                    "characterName": "[Passerby]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "49991",
+                    "artistName": "Song Ha Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/WWogp_5s.jpg",
+                    "characterName": "[Playground boy]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "30565",
+                    "artistName": "Han Hee Jung",
+                    "artistImageURL": "https://i.mydramalist.com/BxPAqs.jpg",
+                    "characterName": "[Dan Bi's mother]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "92633",
+                    "artistName": "Yang Ji Woo",
+                    "artistImageURL": "https://i.mydramalist.com/k4YKw_5s.jpg",
+                    "characterName": "[Campaign site boy]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "25467",
+                    "artistName": "Yang Hee Jae",
+                    "artistImageURL": "https://i.mydramalist.com/2VbJ2_5s.jpg",
+                    "characterName": "[Campaign site boy]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "106355",
+                    "artistName": "Ju Su Min",
+                    "artistImageURL": "https://i.mydramalist.com/QZbx7_5s.jpg",
+                    "characterName": "[Woman from couple]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "128747",
+                    "artistName": "Lim Hyun Jin",
+                    "artistImageURL": "https://i.mydramalist.com/x4XvKr_5s.jpg",
+                    "characterName": "[Cellphone store employee]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "120531",
+                    "artistName": "Kim Gun Woo",
+                    "artistImageURL": "https://i.mydramalist.com/jQjwyy_5s.jpg",
+                    "characterName": "Wie Dae Han [Child]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "30729",
+                    "artistName": "Kim Jin Ok",
+                    "artistImageURL": "https://i.mydramalist.com/xOW3w_5s.jpg",
+                    "characterName": "[Grocery store employee]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "128925",
+                    "artistName": "Jo Hye Ryung",
+                    "artistImageURL": "https://i.mydramalist.com/jQ8rAz_5s.jpg",
+                    "characterName": "Writer Choi",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "12698",
+                    "artistName": "Shim Hoon Gi",
+                    "artistImageURL": "https://i.mydramalist.com/eRLAqs.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "30873",
+                    "artistName": "Song Yo Sep",
+                    "artistImageURL": "https://i.mydramalist.com/xQmBzs.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "28391",
+                    "artistName": "Kim Byung Chul",
+                    "artistImageURL": "https://i.mydramalist.com/EN8L0_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "95065",
+                    "artistName": "Kim Wang Yong",
+                    "artistImageURL": "https://i.mydramalist.com/48w4Y_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "154902",
+                    "artistName": "Cho Yeon U",
+                    "artistImageURL": "https://i.mydramalist.com/b3D8vZ_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "128927",
+                    "artistName": "Kim Woo Bin",
+                    "artistImageURL": "https://i.mydramalist.com/E5rJ2m_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/33369-the-great-show"
+        },
+        "airedOn": {
+            "value": [
+                "Monday",
+                "Tuesday"
+            ],
+            "source": "mydramalist"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "21283",
+            "artistName": "Seol Joon Seok",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "22270",
+            "artistName": "Park Ye Na",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "14079",
+            "artistName": "Kang Eun Ah",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "28057",
+            "artistName": "Pyo Hye Rim",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "128747",
+            "artistName": "Lim Hyun Jin",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "154902",
+            "artistName": "Cho Yeon U",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "asianwiki",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": null,
+        "airedOn": "mydramalist"
+    }
+}

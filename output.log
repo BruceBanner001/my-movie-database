@@ -1,5 +1,7 @@
-[DEBUG] Title Validation FAILED: Season mismatch. Expected S1, Page has S2 (Tale of the Nine-Tailed 1938)
-[DEBUG] Title Validation FAILED: Season mismatch. Expected S1, Page has S2 (Tale of the Nine-Tailed 1938)
+[DEBUG] Title Validation FAILED: Page Title 'My Liberation Notes' vs Expected 'A Shop for Killers' (Ratio: 0.27 & No Alias Match)
+[DEBUG] Title Validation FAILED: Page Title 'darywzc' vs Expected 'Squid Game Season 3' (Ratio: 0.24 & No Alias Match)
+[DEBUG] Title Validation FAILED: Expected S3, but found base S1 ('Squid Game')
+[DEBUG] Title Validation FAILED: Season mismatch. Expected S3, Page has S2 (Squid Game Season 2)
 ✅ Workflow Batch completed successfully
 🏁 Final Batch Completed
 ══════════════════════════════════════════════════════
@@ -7,10 +9,10 @@
 ══════════════════════════════════════════════════════
 
 🚀 Workflow Type : Manual
-🔁 RUN           : 929
-⏰ Start Time    : 08 April 2026 - 11:21:25 AM
-⏰ End Time      : 08 April 2026 - 11:25:18 AM
-⏱️ Run Time      : 3 Minutes 52 Seconds
+🔁 RUN           : 930
+⏰ Start Time    : 08 April 2026 - 11:28:41 AM
+⏰ End Time      : 08 April 2026 - 11:32:03 AM
+⏱️ Run Time      : 3 Minutes 21 Seconds
 ⚙️ Max Process   : 50 Row Per Run
 🔄 Current Batch : 1
 
@@ -19,12 +21,8 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 🔍 Refetched Data:
-✨ 1232 - Tale of the Nine-Tailed 1938 (2023) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Tags
-✨ 1240 - Radio Romance (2018) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Tags
-✨ 1250 - Our Blooming Youth (2023) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Tags
-✨ 1379 - Almost Famous (2022) -> Fetched: Cast, Other Names, Synopsis
-✨ 1385 - Emergency Couple (2014) -> Fetched: Cast, Director, Other Names
-✨ 1532 - Second to Last Love (2016) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Tags
+✨ 1410 - Love Revolution (2020) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Synopsis, Tags
+✨ 1533 - The Great Show (2019) -> Fetched: Cast, Director, Other Names
 
 ⚠️ Missing Values (Asian Dramas):
 - 1019 - The Fox's Summer Season 2 (2017) -> ⚠️ Missing: Director
@@ -49,7 +47,6 @@
 - 1388 - I Know I Love You (2023) -> ⚠️ Missing: Director
 - 1394 - The First Frost (2025) -> ⚠️ Missing: Director
 - 1396 - Friendly Rivalry (2025) -> ⚠️ Missing: Director
-- 1410 - Love Revolution (2020) -> ⚠️ Missing: Aired On, Cast, Director, Duration, Other Names, Release Date, Synopsis, Tags
 - 1440 - Operation Proposal (2012) -> ⚠️ Missing: Director
 - 1462 - Hellbound Season 2 (2024) -> ⚠️ Missing: Director
 - 1489 - Sweet Games (2023) -> ⚠️ Missing: Director
@@ -59,7 +56,6 @@
 - 1513 - Cinderella Man (2009) -> ⚠️ Missing: Director
 - 1515 - My Girl (2005) -> ⚠️ Missing: Aired On, Cast, Director, Duration, Other Names, Release Date, Tags
 - 1521 - To My Beloved Thief (2026) -> ⚠️ Missing: Director
-- 1533 - The Great Show (2019) -> ⚠️ Missing: Cast, Director, Other Names
 
 🚫 Skipped (Unchanged):
 - 1001 - It's Okay to Not Be Okay (2020)
@@ -276,6 +272,7 @@
 - 1229 - Accidentally Meow on You (2022)
 - 1230 - Sisyphus: The Myth (2021)
 - 1231 - Accidentally in Love (2018)
+- 1232 - Tale of the Nine-Tailed 1938 (2023)
 - 1233 - From Now On, Showtime! (2022)
 - 1234 - She Was Pretty (2015)
 - 1235 - Strong Girl Nam Soon (2023)
@@ -283,6 +280,7 @@
 - 1237 - The Matchmakers (2023)
 - 1238 - The Red Sleeve (2021)
 - 1239 - A Time Called You (2023)
+- 1240 - Radio Romance (2018)
 - 1241 - The Story of Park's Marriage Contract (2023)
 - 1242 - Here We Meet Again (2023)
 - 1243 - Perfect Marriage Revenge (2023)
@@ -292,6 +290,7 @@
 - 1247 - Moon in the Day (2023)
 - 1248 - My Demon (2023)
 - 1249 - My Man Is Cupid (2023)
+- 1250 - Our Blooming Youth (2023)
 - 1251 - Welcome to Samdal-ri (2023)
 - 1252 - Tell Me That You Love Me (2023)
 - 1254 - Ghost Doctor (2022)
@@ -398,6 +397,7 @@
 - 1381 - Warm Meet You (2022)
 - 1383 - Love Song in Winter (2024)
 - 1384 - Good Doctor (2024)
+- 1385 - Emergency Couple (2014)
 - 1386 - You Are My Secret (2024)
 - 1387 - As Beautiful as You (2024)
 - 1389 - The Furthest Distance (2023)
@@ -524,6 +524,7 @@
 - 1529 - Big Mouth (2022)
 - 1530 - The Snow Queen (2007)
 - 1531 - Oh My Geum Bi (2016)
+- 1532 - Second to Last Love (2016)
 - 1534 - Star's Lover (2008)
 
 🙈 Ignored (Non-Asian / Western Shows):
@@ -565,11 +566,11 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🆕 Created: 0
 🔁 Updated: 0
-🔍 Refetched: 6
-🚫 Skipped (Asian): 463
+🔍 Refetched: 2
+🚫 Skipped (Asian): 468
 🙈 Ignored (Non-Asian): 33
-⚠️ Warnings: 33
-  Total Unique Rows: 502
+⚠️ Warnings: 31
+  Total Unique Rows: 503
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Before Feb 7 2023 (Korean) ===
@@ -617,9 +618,6 @@
 🗂️ === Before Feb 7 2023 (Korean Dub) ===
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-🔍 Refetched Data:
-✨ 209 - Doctor Stranger (2014) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Tags
-
 ⚠️ Missing Values (Asian Dramas):
 - 237 - Squid Game (2021) -> ⚠️ Missing: Director
 
@@ -632,6 +630,7 @@
 - 206 - Dr. Romantic (2016)
 - 207 - Dr. Romantic Season 2 (2020)
 - 208 - Doctor John (2019)
+- 209 - Doctor Stranger (2014)
 - 210 - VIP (2019)
 - 211 - To All the Guys Who Loved Me (2020)
 - 212 - The Heirs (2013)
@@ -670,8 +669,8 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🆕 Created: 0
 🔁 Updated: 0
-🔍 Refetched: 1
-🚫 Skipped (Asian): 41
+🔍 Refetched: 0
+🚫 Skipped (Asian): 42
 🙈 Ignored (Non-Asian): 0
 ⚠️ Warnings: 1
   Total Unique Rows: 42
@@ -759,48 +758,48 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🆕 Total Created: 0
 🔁 Total Updated: 0
-🔍 Total Refetched: 7
+🔍 Total Refetched: 2
 🖼️ Show Images Updated: 0
-🧑‍🎨 New Artist Images Added: 40
-🚫 Total Skipped (Asian): 550
+🧑‍🎨 New Artist Images Added: 17
+🚫 Total Skipped (Asian): 556
 🙈 Total Ignored (Non-Asian): 46
 ❌ Total Deleted: 0
 🗄️ Total Archived Backups: 0
-⚠️ Total Warnings: 41
+⚠️ Total Warnings: 39
 💾 Backup Files: 0
-  Grand Total Rows Processed: 603
+  Grand Total Rows Processed: 604
 
-💾 Metadata Backups: 47
+💾 Metadata Backups: 41
 
 📦 Total Objects in seriesData.json: 643
-📦 Total Objects in artists.json: 11662
-📦 Total Objects in cast.json: 594
-📦 Total Objects in artists_lookup.json: 11662
+📦 Total Objects in artists.json: 11679
+📦 Total Objects in cast.json: 596
+📦 Total Objects in artists_lookup.json: 11679
 🖼️ Total images in show-images: 597
-🧑‍🎨 Total images in artist-images: 11662
+🧑‍🎨 Total images in artist-images: 11679
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ Folders Generated:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📁 artist_images/ (Total: 40 files)
-    📄 39227.jpg
-    📄 27523.jpg
-    📄 80437.jpg
-    📄 9476.jpg
-    📄 14993.jpg
-    ... and 35 more files.
+📁 artist_images/ (Total: 17 files)
+    📄 57553.jpg
+    📄 118113.jpg
+    📄 106121.jpg
+    📄 16211.jpg
+    📄 45855.jpg
+    ... and 12 more files.
 
-📁 meta_backups/ (Total: 47 files)
-    📄 META_08_April_2026_1121_1019.json
-    📄 META_08_April_2026_1121_1052.json
-    📄 META_08_April_2026_1121_1059.json
-    📄 META_08_April_2026_1121_1077.json
-    📄 META_08_April_2026_1121_1092.json
-    ... and 42 more files.
+📁 meta_backups/ (Total: 41 files)
+    📄 META_08_April_2026_1128_1019.json
+    📄 META_08_April_2026_1128_1052.json
+    📄 META_08_April_2026_1128_1059.json
+    📄 META_08_April_2026_1128_1077.json
+    📄 META_08_April_2026_1128_1092.json
+    ... and 36 more files.
 
 📁 reports/ (Total: 1 files)
-    📄 08_April_2026_1121_FINAL_929_REPORT.txt
+    📄 08_April_2026_1128_FINAL_930_REPORT.txt
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🏁 Workflow finished successfully
 
-✅ Final Master Report written -> reports/08_April_2026_1121_FINAL_929_REPORT.txt (Saved to Repo)
+✅ Final Master Report written -> reports/08_April_2026_1128_FINAL_930_REPORT.txt (Saved to Repo)
