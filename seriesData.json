@@ -5356,7 +5356,11 @@
     {
         "showID": 242,
         "showName": "Fantastic",
-        "otherNames": [],
+        "otherNames": [
+            "Fantástico",
+            "Pantaseutik",
+            "Фантастический"
+        ],
         "showImage": "242.jpg",
         "watchStartedOn": null,
         "watchEndedOn": null,
@@ -5387,7 +5391,9 @@
         "synopsis": "Story depicts the romance between So-Hye (Kim Hyun-Joo) and Hae-Sung (Joo Sang-Wook). So-Hye is a popular TV drama series writer, but she has only 6 months left to live. Hae-Sung is a poplar actor, but he is not good at acting.",
         "topRatings": 2700,
         "Duration": "60 mins",
-        "director": [],
+        "director": [
+            "Jo Nam Gook"
+        ],
         "tags": [
             "Terminal Illness",
             "Bromance",
@@ -5400,7 +5406,14 @@
             "Domestic Crime",
             "Emotionally Strong Female Lead"
         ],
-        "cast": {},
+        "cast": {
+            "Main Role": 5,
+            "Support Role": 19,
+            "Guest Role": 8,
+            "Composer": 1,
+            "Director": 1,
+            "Screenwriter": 1
+        },
         "airedOn": [
             "Friday",
             "Saturday"
@@ -5408,12 +5421,12 @@
         "sitePriorityUsed": {
             "showImage": "asianwiki",
             "releaseDate": "mydramalist",
-            "otherNames": null,
+            "otherNames": "mydramalist",
             "Duration": "mydramalist",
             "synopsis": "asianwiki",
-            "director": null,
+            "director": "mydramalist",
             "tags": "mydramalist",
-            "cast": null,
+            "cast": "mydramalist",
             "network": null,
             "airedOn": "mydramalist"
         }
