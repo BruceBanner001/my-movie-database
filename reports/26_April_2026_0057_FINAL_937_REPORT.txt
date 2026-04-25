@@ -1,7 +1,3 @@
-[DEBUG] Title Validation FAILED: Page Title 'MG Mayre' vs Expected 'Cinderella Man' (Ratio: 0.27 & No Alias Match)
-[DEBUG] Title Validation FAILED: Page Title 'Most Popular Dramas' vs Expected 'Squid Game' (Ratio: 0.28 & No Alias Match)
-[DEBUG] Title Validation FAILED: Page Title 'Most Popular Dramas' vs Expected 'Squid Game' (Ratio: 0.28 & No Alias Match)
-[DEBUG] Title Validation FAILED: Page Title 'Most Popular Dramas' vs Expected 'Squid Game' (Ratio: 0.28 & No Alias Match)
 ✅ Workflow Batch completed successfully
 🏁 Final Batch Completed
 ══════════════════════════════════════════════════════
@@ -12,9 +8,9 @@
 🔁 RUN           : 937
 ⏰ Start Time    : 26 April 2026 - 12:57:23 AM
 ⏰ End Time      : 26 April 2026 - 01:00:23 AM
-⏱️ Run Time      : 2 Minutes 59 Seconds
+⏱️ Total Runtime : 2 Minutes 59 Seconds
 ⚙️ Max Process   : 50 Row Per Run
-🔄 Current Batch : 1
+🔄 Total Batches : 1 Run
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Feb 7 2023 Onwards ===
@@ -752,7 +748,7 @@
   Total Unique Rows: 12
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📊 Summary (Current Batch Only)
+📊 Overall Cumulative Summary
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🆕 Total Created: 0
 🔁 Total Updated: 0
@@ -778,6 +774,9 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ Folders Generated:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📁 reports/ (Total: 1 files)
+    📄 26_April_2026_0057_FINAL_937_REPORT.txt
+
 📁 meta_backups/ (Total: 38 files)
     📄 META_26_April_2026_0057_1019.json
     📄 META_26_April_2026_0057_1052.json
@@ -786,10 +785,5 @@
     📄 META_26_April_2026_0057_1092.json
     ... and 33 more files.
 
-📁 reports/ (Total: 1 files)
-    📄 26_April_2026_0057_FINAL_937_REPORT.txt
-
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🏁 Workflow finished successfully
-
-✅ Final Master Report written -> reports/26_April_2026_0057_FINAL_937_REPORT.txt (Saved to Repo)
