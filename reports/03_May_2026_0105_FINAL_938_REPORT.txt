@@ -1,13 +1,3 @@
-[DEBUG] Title Validation FAILED: Page Title 'ZERTY' vs Expected 'Squid Game Season 2' (Ratio: 0.13 & No Alias Match)
-[DEBUG] Title Validation FAILED: Page Title 'ZERTY' vs Expected 'Squid Game Season 2' (Ratio: 0.13 & No Alias Match)
-[DEBUG] Title Validation FAILED: Page Title 'ZERTY' vs Expected 'Squid Game Season 2' (Ratio: 0.13 & No Alias Match)
-[DEBUG] Title Validation FAILED: Page Title 'Most Popular Dramas' vs Expected 'Squid Game Season 2' (Ratio: 0.28 & No Alias Match)
-[DEBUG] Title Validation FAILED: Page Title 'Most Popular Dramas' vs Expected 'Squid Game Season 2' (Ratio: 0.28 & No Alias Match)
-[DEBUG] Title Validation FAILED: Page Title 'Most Popular Dramas' vs Expected 'Squid Game Season 3' (Ratio: 0.28 & No Alias Match)
-[DEBUG] Title Validation FAILED: Page Title 'Most Popular Dramas' vs Expected 'Squid Game Season 3' (Ratio: 0.28 & No Alias Match)
-[DEBUG] Title Validation FAILED: Page Title 'Most Popular Dramas' vs Expected 'Squid Game' (Ratio: 0.28 & No Alias Match)
-[DEBUG] Title Validation FAILED: Page Title 'Most Popular Dramas' vs Expected 'Squid Game' (Ratio: 0.28 & No Alias Match)
-[DEBUG] Title Validation FAILED: Page Title 'Most Popular Dramas' vs Expected 'Squid Game' (Ratio: 0.28 & No Alias Match)
 ✅ Workflow Batch completed successfully
 🏁 Final Batch Completed
 ══════════════════════════════════════════════════════
@@ -18,9 +8,9 @@
 🔁 RUN           : 938
 ⏰ Start Time    : 03 May 2026 - 01:05:55 AM
 ⏰ End Time      : 03 May 2026 - 01:10:16 AM
-⏱️ Run Time      : 4 Minutes 20 Seconds
+⏱️ Total Runtime : 4 Minutes 20 Seconds
 ⚙️ Max Process   : 50 Row Per Run
-🔄 Current Batch : 1
+🔄 Total Batches : 1 Run
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Feb 7 2023 Onwards ===
@@ -758,7 +748,7 @@
   Total Unique Rows: 12
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📊 Summary (Current Batch Only)
+📊 Overall Cumulative Summary
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🆕 Total Created: 0
 🔁 Total Updated: 0
@@ -797,5 +787,3 @@
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🏁 Workflow finished successfully
-
-✅ Final Master Report written -> reports/03_May_2026_0105_FINAL_938_REPORT.txt (Saved to Repo)
