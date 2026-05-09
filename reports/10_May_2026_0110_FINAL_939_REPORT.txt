@@ -1,6 +1,3 @@
-[DEBUG] Title Validation FAILED: Page Title 'Most Popular Dramas' vs Expected 'Squid Game Season 2' (Ratio: 0.28 & No Alias Match)
-[DEBUG] Title Validation FAILED: Page Title 'Most Popular Dramas' vs Expected 'Squid Game Season 2' (Ratio: 0.28 & No Alias Match)
-[DEBUG] Title Validation FAILED: Page Title 'Most Popular Dramas' vs Expected 'Squid Game' (Ratio: 0.28 & No Alias Match)
 ✅ Workflow Batch completed successfully
 🏁 Final Batch Completed
 ══════════════════════════════════════════════════════
@@ -10,10 +7,10 @@
 🚀 Workflow Type : Automatic
 🔁 RUN           : 939
 ⏰ Start Time    : 10 May 2026 - 01:10:25 AM
-⏰ End Time      : 10 May 2026 - 01:13:33 AM
-⏱️ Run Time      : 3 Minutes 7 Seconds
+⏰ End Time      : 10 May 2026 - 01:13:34 AM
+⏱️ Total Runtime : 3 Minutes 7 Seconds
 ⚙️ Max Process   : 50 Row Per Run
-🔄 Current Batch : 1
+🔄 Total Batches : 1 Run
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Feb 7 2023 Onwards ===
@@ -751,7 +748,7 @@
   Total Unique Rows: 12
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📊 Summary (Current Batch Only)
+📊 Overall Cumulative Summary
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🆕 Total Created: 0
 🔁 Total Updated: 0
@@ -790,5 +787,3 @@
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🏁 Workflow finished successfully
-
-✅ Final Master Report written -> reports/10_May_2026_0110_FINAL_939_REPORT.txt (Saved to Repo)
