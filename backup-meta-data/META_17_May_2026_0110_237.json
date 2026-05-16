@@ -1,0 +1,85 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260517_011007",
+    "timestamp": "17 May 2026 01:12 AM (IST)",
+    "showID": 237,
+    "showName": "Squid Game",
+    "fetchedFields": {
+        "showImage": {
+            "value": "237.jpg",
+            "source": "asianwiki"
+        },
+        "releaseDate": {
+            "value": "Sep 17, 2021",
+            "source": "mydramalist"
+        },
+        "otherNames": {
+            "value": [
+                "Cuttlefish Game",
+                "Ojingeo Geim",
+                "Round 6",
+                "Round Six",
+                "Squid Game Season 1",
+                "Squid Games",
+                "The Squid Game",
+                "오징어게임"
+            ],
+            "source": "mydramalist"
+        },
+        "Duration": {
+            "value": "60 mins",
+            "source": "mydramalist"
+        },
+        "synopsis": {
+            "value": "Seong Gi-Hun (Lee Jung-Jae) gets fired from his job. His life is miserable. Seong Gi-Hun hears about a secret survival game, with a 45.6 billion won prize for the winner. He decides to take part in the game. Meanwhile, Cho Sang-Woo (Park Hae-Soo) is like a brother to Seong Gi-Hun and vice versa. They grew up in the same neighborhood. Despite his poor family background, Cho Sang-Woo graduated from a prestigious university and found a good job. He now faces a crisis, due to misappropriation of company funds. He decides to take part in the secret survival game with Seong Gi-Hun.",
+            "source": "asianwiki"
+        },
+        "tags": {
+            "value": [
+                "Death",
+                "Death Game",
+                "Poor Male Lead",
+                "Debt",
+                "Competition",
+                "Survival",
+                "Murder",
+                "Suspense",
+                "Friends To Enemies",
+                "Massacre"
+            ],
+            "source": "mydramalist"
+        },
+        "cast": {
+            "value": {
+                "Main Role": 4,
+                "Support Role": 28,
+                "Guest Role": 54,
+                "Art Director": 1,
+                "Composer": 1,
+                "Editor": 1,
+                "Martial Arts Director": 1,
+                "Screenwriter & Director": 1,
+                "otherCrewMembers": 3
+            },
+            "source": "mydramalist"
+        },
+        "airedOn": {
+            "value": [
+                "Friday"
+            ],
+            "source": "mydramalist"
+        }
+    },
+    "sitePriorityUsed": {
+        "showImage": "asianwiki",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki",
+        "director": null,
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": null,
+        "airedOn": "mydramalist"
+    }
+}
