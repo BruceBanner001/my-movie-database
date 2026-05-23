@@ -1,15 +1,3 @@
-[DEBUG] Title Validation FAILED: Page Title 'My Liberation Notes' vs Expected 'A Shop for Killers' (Ratio: 0.27 & No Alias Match)
-[DEBUG] Title Validation FAILED: Page Title 'adjective_boy' vs Expected 'A Shop for Killers' (Ratio: 0.13 & No Alias Match)
-[DEBUG] Title Validation FAILED: Page Title 'st_caracola' vs Expected 'Friendly Rivalry' (Ratio: 0.15 & No Alias Match)
-[DEBUG] Title Validation FAILED: Page Title 'mrs ahn bohyun' vs Expected 'Squid Game Season 3' (Ratio: 0.08 & No Alias Match)
-[DEBUG] Title Validation FAILED: Page Title 'Felipe' vs Expected 'Squid Game Season 3' (Ratio: 0.12 & No Alias Match)
-[DEBUG] Title Validation FAILED: Page Title 'Kimmie' vs Expected 'Squid Game Season 3' (Ratio: 0.38 & No Alias Match)
-[DEBUG] Title Validation FAILED: Page Title 'omo-omo-omo' vs Expected 'Squid Game Season 3' (Ratio: 0.10 & No Alias Match)
-[DEBUG] Title Validation FAILED: Page Title 'Most Popular Dramas' vs Expected 'Squid Game Season 3' (Ratio: 0.28 & No Alias Match)
-[DEBUG] Title Validation FAILED: Page Title 'Most Popular Dramas' vs Expected 'Squid Game Season 3' (Ratio: 0.28 & No Alias Match)
-[DEBUG] Title Validation FAILED: Page Title 'Most Popular Dramas' vs Expected 'Squid Game' (Ratio: 0.28 & No Alias Match)
-[DEBUG] Title Validation FAILED: Page Title 'Most Popular Dramas' vs Expected 'Squid Game' (Ratio: 0.28 & No Alias Match)
-[DEBUG] Title Validation FAILED: Page Title 'Most Popular Dramas' vs Expected 'Squid Game' (Ratio: 0.28 & No Alias Match)
 ✅ Workflow Batch completed successfully
 🏁 Final Batch Completed
 ══════════════════════════════════════════════════════
@@ -20,9 +8,9 @@
 🔁 RUN           : 941
 ⏰ Start Time    : 24 May 2026 - 01:15:00 AM
 ⏰ End Time      : 24 May 2026 - 01:18:24 AM
-⏱️ Run Time      : 3 Minutes 24 Seconds
+⏱️ Total Runtime : 3 Minutes 24 Seconds
 ⚙️ Max Process   : 50 Row Per Run
-🔄 Current Batch : 1
+🔄 Total Batches : 1 Run
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Feb 7 2023 Onwards ===
@@ -760,7 +748,7 @@
   Total Unique Rows: 12
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📊 Summary (Current Batch Only)
+📊 Overall Cumulative Summary
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🆕 Total Created: 0
 🔁 Total Updated: 0
@@ -799,5 +787,3 @@
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🏁 Workflow finished successfully
-
-✅ Final Master Report written -> reports/24_May_2026_0115_FINAL_941_REPORT.txt (Saved to Repo)
