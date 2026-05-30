@@ -1,5 +1,3 @@
-[DEBUG] Title Validation FAILED: Page Title 'Most Popular Dramas' vs Expected 'Squid Game Season 3' (Ratio: 0.28 & No Alias Match)
-[DEBUG] Title Validation FAILED: Page Title 'Most Popular Dramas' vs Expected 'Squid Game' (Ratio: 0.28 & No Alias Match)
 ✅ Workflow Batch completed successfully
 🏁 Final Batch Completed
 ══════════════════════════════════════════════════════
@@ -10,9 +8,9 @@
 🔁 RUN           : 942
 ⏰ Start Time    : 31 May 2026 - 01:19:18 AM
 ⏰ End Time      : 31 May 2026 - 01:22:22 AM
-⏱️ Run Time      : 3 Minutes 2 Seconds
+⏱️ Total Runtime : 3 Minutes 2 Seconds
 ⚙️ Max Process   : 50 Row Per Run
-🔄 Current Batch : 1
+🔄 Total Batches : 1 Run
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Feb 7 2023 Onwards ===
@@ -750,7 +748,7 @@
   Total Unique Rows: 12
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📊 Summary (Current Batch Only)
+📊 Overall Cumulative Summary
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🆕 Total Created: 0
 🔁 Total Updated: 0
@@ -776,6 +774,9 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ Folders Generated:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📁 reports/ (Total: 1 files)
+    📄 31_May_2026_0119_FINAL_942_REPORT.txt
+
 📁 meta_backups/ (Total: 38 files)
     📄 META_31_May_2026_0119_1019.json
     📄 META_31_May_2026_0119_1052.json
@@ -784,10 +785,5 @@
     📄 META_31_May_2026_0119_1092.json
     ... and 33 more files.
 
-📁 reports/ (Total: 1 files)
-    📄 31_May_2026_0119_FINAL_942_REPORT.txt
-
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🏁 Workflow finished successfully
-
-✅ Final Master Report written -> reports/31_May_2026_0119_FINAL_942_REPORT.txt (Saved to Repo)
