@@ -1,386 +1,95 @@
-✅ Partial Batch completed successfully
-⏳ Batch Processing in Progress...
+[DEBUG] Title Validation FAILED: Page Title 'marinefollese' vs Expected '1122: For a Happy Marriage' (Ratio: 0.26 & No Alias Match)
+✅ Workflow Batch completed successfully
+🏁 Final Batch Completed
 ══════════════════════════════════════════════════════
 📊 My Movie Database – Excel to JSON Workflow Report
 ══════════════════════════════════════════════════════
 
 🚀 Workflow Type : Manual
-🔁 RUN           : 944
-⏰ Start Time    : 06 June 2026 - 02:20:57 PM
-⏰ End Time      : 06 June 2026 - 02:22:41 PM
-⏱️ Run Time      : 1 Minute 43 Seconds
+🔁 RUN           : 945
+⏰ Start Time    : 06 June 2026 - 02:23:19 PM
+⏰ End Time      : 06 June 2026 - 02:24:04 PM
+⏱️ Run Time      : 44 Seconds
 ⚙️ Max Process   : 50 Row Per Run
-🔄 Current Batch : 2
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🗂️ === Feb 7 2023 Onwards ===
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-🔁 Data Updated:
-✍️ 1344 - Stranger Things Season 4 (2022) -> Country Updated
-✍️ 1349 - Oops! Mr. Superstar Hit on Me (2022) -> Country Updated
-✍️ 1364 - Under The Dome Season 1 (2013) -> Country Updated
-✍️ 1365 - Under The Dome Season 2 (2014) -> Country Updated
-✍️ 1366 - Under The Dome Season 3 (2015) -> Country Updated
-✍️ 1369 - My Dear Donovan (2022) -> Country Updated
-✍️ 1372 - W Series: The Way You Shine (2023) -> Country Updated
-✍️ 1375 - Where Does the Sea Begin (2024) -> Country Updated
-✍️ 1378 - An Incurable Case of Love (2020) -> Country Updated
-✍️ 1382 - Gotham Season 1 (2014) -> Country Updated
-✍️ 1384 - Good Doctor (2024) -> Country Updated
-✍️ 1399 - Reacher Season 3 (2025) -> Country Updated
-✍️ 1426 - My Cherie Amour (2024) -> Country Updated
-✍️ 1427 - The Deadly Affair (2022) -> Country Updated
-✍️ 1442 - Manifest Season 1 (2018) -> Country Updated
-✍️ 1443 - Manifest Season 2 (2020) -> Country Updated
-✍️ 1444 - Manifest Season 3 (2021) -> Country Updated
-✍️ 1445 - Manifest Season 4 (2022) -> Country Updated
-✍️ 1450 - Avenues of the Diamond (2025) -> Country Updated
-✍️ 1469 - Prince of Wolf (2016) -> Country Updated
-✍️ 1477 - Kissed by the Rain (2024) -> Country Updated
-✍️ 1479 - Devil-in-Law (2023) -> Country Updated
-✍️ 1480 - You Are My Make Up Artist (2022) -> Country Updated
-✍️ 1483 - Loneliness Society (2023) -> Country Updated
-✍️ 1499 - The Day of the Jackal (2024) -> Country Updated
-✍️ 1514 - Breaking Bad Season 1 (2008) -> Country Updated
-
-⚠️ Missing Values (Asian Dramas):
-- 1353 - Knight of the Rose (2022) -> ⚠️ Missing: Director
-- 1369 - My Dear Donovan (2022) -> ⚠️ Missing: Director
-- 1370 - I Belonged to Your World (2023) -> ⚠️ Missing: Director
-- 1379 - Almost Famous (2022) -> ⚠️ Missing: Director
-- 1388 - I Know I Love You (2023) -> ⚠️ Missing: Director
-- 1394 - The First Frost (2025) -> ⚠️ Missing: Director
-- 1396 - Friendly Rivalry (2025) -> ⚠️ Missing: Director
-- 1440 - Operation Proposal (2012) -> ⚠️ Missing: Director
-- 1462 - Hellbound Season 2 (2024) -> ⚠️ Missing: Director
-- 1489 - Sweet Games (2023) -> ⚠️ Missing: Director
-- 1493 - First Lady (2025) -> ⚠️ Missing: Director
-- 1503 - Squid Game Season 2 (2024) -> ⚠️ Missing: Director
-- 1504 - Squid Game Season 3 (2025) -> ⚠️ Missing: Director
-- 1513 - Cinderella Man (2009) -> ⚠️ Missing: Director
-- 1521 - To My Beloved Thief (2026) -> ⚠️ Missing: Director
-
-🚫 Skipped (Unchanged):
-- 1345 - My Sweet Mobster (2024)
-- 1346 - The Impossible Heir (2024)
-- 1347 - Miss Night and Day (2024)
-- 1348 - Red Swan (2024)
-- 1350 - Liars in Love (2024)
-- 1351 - Rattan (2021)
-- 1352 - Serendipity's Embrace (2024)
-- 1354 - He Is Psychometric (2019)
-- 1355 - Romance in the House (2024)
-- 1356 - Cinderella at 2 AM (2024)
-- 1357 - Bad Memory Eraser (2024)
-- 1358 - No Gain, No Love (2024)
-- 1359 - Where Stars Land (2018)
-- 1360 - Love Next Door (2024)
-- 1361 - DNA Lover (2024)
-- 1362 - When the Weather Is Fine (2020)
-- 1363 - The Judge from Hell (2024)
-- 1367 - Hi Venus (2023)
-- 1368 - Gaus Electronics (2022)
-- 1371 - When a Man Falls in Love (2013)
-- 1373 - A Beautiful Lie (2024)
-- 1374 - Unlock My Boss (2022)
-- 1376 - Love Your Enemy (2024)
-- 1377 - Brewing Love (2024)
-- 1380 - When the Phone Rings (2024)
-- 1381 - Warm Meet You (2022)
-- 1383 - Love Song in Winter (2024)
-- 1385 - Emergency Couple (2014)
-- 1386 - You Are My Secret (2024)
-- 1387 - As Beautiful as You (2024)
-- 1389 - The Furthest Distance (2023)
-- 1390 - Love Scout (2025)
-- 1391 - When the Stars Gossip (2025)
-- 1392 - Motel California (2025)
-- 1393 - The Best Thing (2025)
-- 1395 - The Witch (2025)
-- 1397 - My Dearest Nemesis (2025)
-- 1398 - Ski into Love (2025)
-- 1400 - Undercover High School (2025)
-- 1401 - You Complete Me (2020)
-- 1402 - The Accidental Couple (2009)
-- 1403 - Miss Korea (2013)
-- 1404 - Mysterious Love (2021)
-- 1405 - The Real Has Come! (2023)
-- 1406 - Falling for Innocence (2015)
-- 1407 - All about My Romance (2013)
-- 1408 - Big (2012)
-- 1409 - The Potato Lab (2025)
-- 1410 - Love Revolution (2020)
-- 1411 - My Lovely Girl (2014)
-- 1412 - Cunning Single Lady (2014)
-- 1413 - Princess Hours (2006)
-- 1414 - Moment at Eighteen (2019)
-- 1415 - Queen and I (2012)
-- 1416 - Bring It On, Ghost (2016)
-- 1417 - Heo's Diner (2025)
-- 1418 - Good Manager (2017)
-- 1419 - Revolutionary Love (2017)
-- 1420 - Couple or Trouble (2006)
-- 1421 - Live Up to Your Name (2017)
-- 1422 - The Greatest Love (2011)
-- 1423 - Birth of a Beauty (2014)
-- 1424 - Oh My Baby (2020)
-- 1425 - Durian's Affair (2023)
-- 1428 - Café Minamdang (2022)
-- 1429 - Marry You (2024)
-- 1430 - Why Her? (2022)
-- 1431 - Pump Up the Healthy Love (2025)
-- 1432 - Shining Inheritance (2009)
-- 1433 - Doctors (2016)
-- 1434 - Glory Jane (2011)
-- 1435 - I Order You (2015)
-- 1436 - My Lovely Sam Soon (2005)
-- 1437 - Second Shot at Love (2025)
-- 1438 - Divorce Lawyer in Love (2015)
-- 1439 - Fix You (2020)
-- 1441 - Lie after Lie (2020)
-- 1446 - I Do, I Do (2012)
-- 1447 - Crazy for You (2007)
-- 1448 - Don't Look Back: The Legend of Orpheus (2013)
-- 1449 - Spy Myeong Wol (2011)
-- 1451 - Oh My Ghost Clients (2025)
-- 1452 - You Raise Me Up (2021)
-- 1453 - The First Night with the Duke (2025)
-- 1454 - Head over Heels (2025)
-- 1455 - Flower Boy Next Door (2013)
-- 1456 - Rosy Lovers (2014)
-- 1457 - Goodbye Mr. Black (2016)
-- 1458 - Law and the City (2025)
-- 1459 - My Sassy Girl (2017)
-- 1460 - Bitch X Rich (2023)
-- 1461 - Bitch X Rich Season 2 (2025)
-- 1463 - A Korean Odyssey (2017)
-- 1464 - The Devil Judge (2021)
-- 1465 - My Fellow Citizens! (2019)
-- 1466 - Love with Flaws (2019)
-- 1467 - The Nice Guy (2025)
-- 1468 - Who Are You (2013)
-- 1470 - Graceful Family (2019)
-- 1471 - Lovers of the Red Sky (2021)
-- 1472 - Beauty and Mr. Romantic (2024)
-- 1473 - Bon Appetit, Your Majesty (2025)
-- 1474 - My Little Baby (2016)
-- 1475 - Feel Good to Die (2018)
-- 1476 - Genie, Make a Wish (2025)
-- 1478 - Love at Night (2021)
-- 1481 - Across the Ocean to See You (2017)
-- 1482 - My Youth (2025)
-- 1484 - My Troublesome Star (2025)
-- 1485 - Love's Ambition (2025)
-- 1486 - Ms. Incognito (2025)
-- 1487 - Like Flowers in Sand (2023)
-- 1488 - Would You Marry Me? (2025)
-- 1490 - Dear X (2025)
-- 1491 - Suspicious Partner (2017)
-- 1492 - Risky Romance (2018)
-- 1494 - Angry Mom (2015)
-- 1495 - Alone in Love (2006)
-- 1496 - Pasta (2010)
-- 1497 - Dynamite Kiss (2025)
-- 1498 - Seo Yeong, My Daughter (2012)
-- 1500 - Bright Eyes in the Dark (2023)
-- 1501 - Nice to Not Meet You (2025)
-- 1502 - Beyond the Clouds (2014)
-- 1505 - Not Others (2023)
-- 1506 - Surely Tomorrow (2025)
-- 1507 - Can This Love Be Translated? (2026)
-- 1508 - Love Me (2025)
-- 1509 - Lovers (2006)
-- 1510 - Hold Me Tight (2018)
-- 1511 - Idol I (2025)
-- 1512 - What Happens to My Family? (2014)
-- 1515 - My Girl (2005)
-- 1516 - Becoming a Billionaire (2010)
-- 1517 - Spring Fever (2026)
-- 1518 - Positively Yours (2026)
-- 1519 - The Glory (2022)
-- 1520 - The Glory Part 2 (2023)
-- 1522 - Shine on Me (2025)
-- 1523 - No Tail to Tell (2026)
-- 1524 - Boyfriend on Demand (2026)
-- 1525 - Undercover Miss Hong (2026)
-- 1526 - My Liberation Notes (2022)
-- 1527 - Our Universe (2026)
-- 1528 - Curtain Call (2022)
-- 1529 - Big Mouth (2022)
-- 1530 - The Snow Queen (2007)
-- 1531 - Oh My Geum Bi (2016)
-- 1532 - Second to Last Love (2016)
-- 1533 - The Great Show (2019)
-- 1534 - Star's Lover (2008)
-
-📊 Summary (Sheet: Feb 7 2023 Onwards)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🆕 Created: 0
-🔁 Updated: 26
-🔍 Refetched: 0
-🚫 Skipped (Asian): 151
-🙈 Ignored (Non-Asian): 0
-⚠️ Warnings: 15
-  Total Unique Rows: 177
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🗂️ === Before Feb 7 2023 (Korean) ===
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-⚠️ Missing Values (Asian Dramas):
-- 124 - Hellbound (2022) -> ⚠️ Missing: Director
-
-🚫 Skipped (Unchanged):
-- 101 - Mr. Queen (2020)
-- 102 - She Would Never Know (2021)
-- 103 - True Beauty (2020)
-- 104 - What's Wrong with Secretary Kim (2018)
-- 105 - Love in Contract (2022)
-- 106 - Business Proposal (2022)
-- 107 - School 2017 (2017)
-- 108 - Island (2023)
-- 109 - The Innocent Man (2012)
-- 110 - The Legend of the Blue Sea (2016)
-- 111 - Reborn Rich (2022)
-- 112 - The Penthouse Season 3: War in Life (2021)
-- 113 - My Secret Terrius (2018)
-- 114 - The Liar and His Lover (2017)
-- 115 - Secret Garden (2010)
-- 116 - My Love from the Star (2013)
-- 117 - High Society (2015)
-- 118 - High School King of Savvy (2014)
-- 119 - Strong Girl Bong Soon (2017)
-- 120 - Introverted Boss (2017)
-- 121 - Because This Is My First Life (2017)
-- 122 - The One and Only (2022)
-- 123 - All of Us Are Dead (2022)
-
-📊 Summary (Sheet: Before Feb 7 2023 (Korean))
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🆕 Created: 0
-🔁 Updated: 0
-🔍 Refetched: 0
-🚫 Skipped (Asian): 23
-🙈 Ignored (Non-Asian): 0
-⚠️ Warnings: 1
-  Total Unique Rows: 23
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🗂️ === Before Feb 7 2023 (Korean Dub) ===
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-⚠️ Missing Values (Asian Dramas):
-- 237 - Squid Game (2021) -> ⚠️ Missing: Director
-
-🚫 Skipped (Unchanged):
-- 201 - The Penthouse: War in Life (2020)
-- 202 - The Penthouse Season 2: War in Life (2021)
-- 203 - Alice (2020)
-- 204 - Pinocchio (2014)
-- 205 - Playful Kiss (2010)
-- 206 - Dr. Romantic (2016)
-- 207 - Dr. Romantic Season 2 (2020)
-- 208 - Doctor John (2019)
-- 209 - Doctor Stranger (2014)
-- 210 - VIP (2019)
-- 211 - To All the Guys Who Loved Me (2020)
-- 212 - The Heirs (2013)
-- 213 - Meow, the Secret Boy (2020)
-- 214 - Into the Ring (2020)
-- 215 - Good Casting (2020)
-- 216 - Perfume (2019)
-- 217 - I Wanna Hear Your Song (2019)
-- 218 - The Tale of Nokdu (2019)
-- 219 - Angel's Last Mission: Love (2019)
-- 220 - Mask (2015)
-- 221 - Doctor Prisoner (2019)
-- 222 - Sketch (2018)
-- 223 - Untouchable (2017)
-- 224 - The Last Empress (2018)
-- 225 - The Secret Life of My Secretary (2019)
-- 226 - Defendant (2017)
-- 227 - Yong Pal (2015)
-- 228 - Solomon's Perjury (2016)
-- 229 - Sign (2011)
-- 230 - One the Woman (2021)
-- 231 - Flower of Evil (2020)
-- 232 - Kill Me, Heal Me (2015)
-- 233 - Guardian: The Lonely and Great God (2016)
-- 234 - Extraordinary You (2019)
-- 235 - I'm Not a Robot (2017)
-- 236 - Something about 1 Percent (2016)
-- 238 - Light on Me (2021)
-- 239 - Hot Stove League (2019)
-- 240 - My Wife’s Having an Affair This Week (2016)
-- 241 - Rain or Shine (2017)
-- 242 - Fantastic (2016)
-- 243 - My Girlfriend Is a Gumiho (2010)
-
-📊 Summary (Sheet: Before Feb 7 2023 (Korean Dub))
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🆕 Created: 0
-🔁 Updated: 0
-🔍 Refetched: 0
-🚫 Skipped (Asian): 42
-🙈 Ignored (Non-Asian): 0
-⚠️ Warnings: 1
-  Total Unique Rows: 42
+🔄 Current Batch : 3
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Before Feb 7 2023 ===
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 🔁 Data Updated:
-✍️ 312 - Limitless (2015) -> Country Updated
-✍️ 313 - Beauty and the Beast Season 1 (2012) -> Country Updated
-✍️ 314 - Beauty and the Beast Season 2 (2013) -> Country Updated
-✍️ 315 - Beauty and the Beast Season 3 (2015) -> Country Updated
-✍️ 316 - Beauty and the Beast Season 4 (2016) -> Country Updated
-✍️ 317 - Price of Passion (2017) -> Country Updated
-✍️ 318 - Lucifer Season 1 (2016) -> Country Updated
-✍️ 319 - Lucifer Season 2 (2017) -> Country Updated
-
-🚫 Skipped (Unchanged):
-- 301 - My Girlfriend Is an Alien (2019)
-- 302 - Put Your Head on My Shoulder (2019)
-- 303 - Love of Thousand Years (2020)
-- 304 - The Sleepless Princess (2020)
-- 305 - The Love by Hypnotic (2019)
-- 306 - A Love So Romantic (2020)
-- 307 - Dreaming Back to the Qing Dynasty (2019)
-- 308 - Love Better Than Immortality (2019)
-- 309 - Knock On The Happiness Door (2020)
-- 310 - Song of Youth (2021)
-- 311 - Love O2O (2016)
+✍️ 320 - Lucifer Season 3 (2018) -> Country Updated
+✍️ 321 - Lucifer Season 4 (2019) -> Country Updated
+✍️ 322 - Lucifer Season 5 (2021) -> Country Updated
+✍️ 323 - Lucifer Season 6 (2021) -> Country Updated
+✍️ 324 - Peaky Blinders Season 1 (2013) -> Country Updated
 
 📊 Summary (Sheet: Before Feb 7 2023)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🆕 Created: 0
-🔁 Updated: 8
+🔁 Updated: 5
 🔍 Refetched: 0
-🚫 Skipped (Asian): 11
+🚫 Skipped (Asian): 0
 🙈 Ignored (Non-Asian): 0
 ⚠️ Warnings: 0
-  Total Unique Rows: 19
+  Total Unique Rows: 5
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗂️ === Mini Drama ===
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🔁 Data Updated:
+✍️ 410 - My Undead Yokai Girlfriend (2024) -> Country Updated
+✍️ 412 - Business Marriage (2024) -> Country Updated
+✍️ 413 - Dear Sa-chan (2024) -> Country Updated
+✍️ 414 - 1122: For a Happy Marriage (2024) -> Country Updated
+✍️ 416 - Hello, Nice to Meet You. Let's Get Divorced. (2024) -> Country Updated
+
+⚠️ Missing Values (Asian Dramas):
+- 401 - Number Six (2018) -> ⚠️ Missing: Director
+- 403 - Don’t Mess with Ex-Girlfriend (2022) -> ⚠️ Missing: Director
+- 404 - Here Is My Exclusive Indulge Season 2 (2022) -> ⚠️ Missing: Director
+- 405 - Love Me in Three Days (2022) -> ⚠️ Missing: Director
+- 407 - Love You Self-Evident (2023) -> ⚠️ Missing: Director
+- 413 - Dear Sa-chan (2024) -> ⚠️ Missing: Director
+
+🚫 Skipped (Unchanged):
+- 402 - Female CEO Love Me (2022)
+- 406 - High-end Crush (2015)
+- 408 - Fanletter, Please (2022)
+- 409 - Scripting Your Destiny (2021)
+- 411 - Mad for Each Other (2021)
+- 415 - Rainkissed Fate (2025)
+- 417 - Naked Fireman (2017)
+- 418 - Way Back Love (2025)
+
+📊 Summary (Sheet: Mini Drama)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🆕 Created: 0
+🔁 Updated: 5
+🔍 Refetched: 0
+🚫 Skipped (Asian): 8
+🙈 Ignored (Non-Asian): 0
+⚠️ Warnings: 6
+  Total Unique Rows: 13
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📊 Summary (Current Batch Only)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🆕 Total Created: 0
-🔁 Total Updated: 34
+🔁 Total Updated: 10
 🔍 Total Refetched: 0
 🖼️ Show Images Updated: 0
 🧑‍🎨 New Artist Images Added: 0
-🚫 Total Skipped (Asian): 227
+🚫 Total Skipped (Asian): 8
 🙈 Total Ignored (Non-Asian): 0
 ❌ Total Deleted: 0
 🗄️ Total Archived Backups: 0
-⚠️ Total Warnings: 17
-💾 Backup Files: 34
-  Grand Total Rows Processed: 261
+⚠️ Total Warnings: 6
+💾 Backup Files: 10
+  Grand Total Rows Processed: 18
 
-💾 Metadata Backups: 14
+💾 Metadata Backups: 5
 
 📦 Total Objects in seriesData.json: 643
 📦 Total Objects in artists.json: 11684
@@ -391,28 +100,25 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ Folders Generated:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📁 backups/ (Total: 34 files)
-    📄 BACKUP_06_June_2026_1420_1344.json
-    📄 BACKUP_06_June_2026_1420_1349.json
-    📄 BACKUP_06_June_2026_1420_1364.json
-    📄 BACKUP_06_June_2026_1420_1365.json
-    📄 BACKUP_06_June_2026_1420_1366.json
-    ... and 29 more files.
+📁 backups/ (Total: 10 files)
+    📄 BACKUP_06_June_2026_1423_320.json
+    📄 BACKUP_06_June_2026_1423_321.json
+    📄 BACKUP_06_June_2026_1423_322.json
+    📄 BACKUP_06_June_2026_1423_323.json
+    📄 BACKUP_06_June_2026_1423_324.json
+    ... and 5 more files.
 
-📁 meta_backups/ (Total: 14 files)
-    📄 META_06_June_2026_1420_1349.json
-    📄 META_06_June_2026_1420_1369.json
-    📄 META_06_June_2026_1420_1372.json
-    📄 META_06_June_2026_1420_1375.json
-    📄 META_06_June_2026_1420_1378.json
-    ... and 9 more files.
+📁 meta_backups/ (Total: 5 files)
+    📄 META_06_June_2026_1423_410.json
+    📄 META_06_June_2026_1423_412.json
+    📄 META_06_June_2026_1423_413.json
+    📄 META_06_June_2026_1423_414.json
+    📄 META_06_June_2026_1423_416.json
 
 📁 reports/ (Total: 1 files)
-    📄 06_June_2026_1420_PARTIAL_944_REPORT.txt
+    📄 06_June_2026_1423_FINAL_943-945_REPORT.txt
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⚠️ BATCH LIMIT REACHED: The script paused safely.
-GitHub Actions will trigger next run automatically.
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🏁 Workflow finished successfully
 
-✅ Partial Report created at -> reports/06_June_2026_1420_PARTIAL_944_REPORT.txt
+✅ Final Master Report written -> reports/06_June_2026_1423_FINAL_943-945_REPORT.txt (Saved to Repo)
