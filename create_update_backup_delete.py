@@ -312,6 +312,8 @@ LANG_TO_COUNTRY_MAP = {
     "thai": "Thailand",
     "taiwanese": "Taiwan",
     "filipino": "Philippines",
+    "english": "US / UK",
+    "turkish" : "Turkey"
 }
 
 
@@ -1738,12 +1740,12 @@ def excel_to_objects(xl, sheet):
             if "movie" in sheet_lower
             else "Mini Drama" if "mini" in sheet_lower else "Drama"
         )
-        obj["nativeLanguage"] = obj.get("nativeLanguage", "").strip().capitalize()
-        lang = obj.get("nativeLanguage", "").lower()
-        if lang in ("korean", "korea"):
-            obj["country"] = "South Korea"
-        elif lang in ("chinese", "china"):
-            obj["country"] = "China"
+        # --- FIXED: Automatic Country Mapping ---
+        lang = obj.get("nativeLanguage", "").strip().lower()
+        obj["nativeLanguage"] = lang.capitalize()
+        if not obj.get("country") or pd.isna(obj.get("country")):
+            obj["country"] = LANG_TO_COUNTRY_MAP.get(lang)
+            
         processed.append(obj)
     return processed, warnings
 
@@ -2593,7 +2595,10 @@ def main():
                         )
 
                 merged_by_id[sid] = final_obj
-                save_metadata_backup(final_obj, context)
+                
+                # --- FIXED: Only save backup if something changed or was fetched ---
+                if is_new or excel_data_has_changed or metadata_was_fetched:
+                    save_metadata_backup(final_obj, context)
 
                 if is_asian:
                     missing_fields = {

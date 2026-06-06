@@ -58,7 +58,26 @@
           console.error("Fetch Error:", err);
         }
       }
-      fetchData(1530);
+      // fetchData(1004);
+      async function fetchCast() {
+        const fetched = await fetch(
+          "https://brucebanner001.github.io/my-movie-database/cast.json",
+        );
+        const data = await fetched.json();
+        const drama = data["1004"];
+        const array = [];
+        console.log(drama);
+        const people = "mainRoles";
+        console.log(drama[people]);
+        Object.values(drama[people]).forEach((value)=>{
+          // console.log(value)
+          Object.entries(value).forEach(([key, item])=>{
+            console.log(`Key = ${key} - Type = ${typeof(key)}`)
+            console.log(`Value = ${item} - Type = ${typeof(item)}`)
+          })
+        })
+      }
+      fetchCast();
     </script>
   </body>
 </html>
