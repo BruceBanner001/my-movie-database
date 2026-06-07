@@ -8,9 +8,9 @@
 🔁 RUN           : 946
 ⏰ Start Time    : 07 June 2026 - 06:47:28 PM
 ⏰ End Time      : 07 June 2026 - 06:49:47 PM
-⏱️ Run Time      : 2 Minutes 19 Seconds
+⏱️ Total Runtime : 2 Minutes 19 Seconds
 ⚙️ Max Process   : 50 Row Per Run
-🔄 Current Batch : 1
+🔄 Total Batches : 1 Run
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Feb 7 2023 Onwards ===
@@ -750,7 +750,7 @@
   Total Unique Rows: 12
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📊 Summary (Current Batch Only)
+📊 Overall Cumulative Summary
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🆕 Total Created: 0
 🔁 Total Updated: 0
@@ -776,16 +776,14 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ Folders Generated:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📁 reports/ (Total: 1 files)
+    📄 07_June_2026_1847_FINAL_946_REPORT.txt
+
 📁 show_images/ (Total: 1 files)
     📄 414.jpg
 
 📁 meta_backups/ (Total: 1 files)
     📄 META_07_June_2026_1847_414.json
 
-📁 reports/ (Total: 1 files)
-    📄 07_June_2026_1847_FINAL_946_REPORT.txt
-
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🏁 Workflow finished successfully
-
-✅ Final Master Report written -> reports/07_June_2026_1847_FINAL_946_REPORT.txt (Saved to Repo)
