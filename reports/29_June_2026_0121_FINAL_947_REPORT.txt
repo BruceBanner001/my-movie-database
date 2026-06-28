@@ -7,10 +7,10 @@
 🚀 Workflow Type : Automatic
 🔁 RUN           : 947
 ⏰ Start Time    : 29 June 2026 - 01:21:08 AM
-⏰ End Time      : 29 June 2026 - 02:07:06 AM
-⏱️ Run Time      : 45 Minutes 58 Seconds
+⏰ End Time      : 29 June 2026 - 02:07:07 AM
+⏱️ Total Runtime : 45 Minutes 58 Seconds
 ⚙️ Max Process   : 50 Row Per Run
-🔄 Current Batch : 1
+🔄 Total Batches : 1 Run
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Feb 7 2023 Onwards ===
@@ -748,7 +748,7 @@
   Total Unique Rows: 12
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📊 Summary (Current Batch Only)
+📊 Overall Cumulative Summary
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🆕 Total Created: 0
 🔁 Total Updated: 0
@@ -779,5 +779,3 @@
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🏁 Workflow finished successfully
-
-✅ Final Master Report written -> reports/29_June_2026_0121_FINAL_947_REPORT.txt (Saved to Repo)
