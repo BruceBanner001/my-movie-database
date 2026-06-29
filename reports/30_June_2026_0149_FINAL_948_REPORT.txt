@@ -1,5 +1,3 @@
-[DEBUG] Title Validation FAILED: Page Title 'ColourMePurple' vs Expected 'Hellbound Season 2' (Ratio: 0.26 & No Alias Match)
-[DEBUG] Title Validation FAILED: Page Title 'Search Results' vs Expected 'Hellbound Season 2' (Ratio: 0.17 & No Alias Match)
 ✅ Workflow Batch completed successfully
 🏁 Final Batch Completed
 ══════════════════════════════════════════════════════
@@ -10,9 +8,9 @@
 🔁 RUN           : 948
 ⏰ Start Time    : 30 June 2026 - 01:49:15 AM
 ⏰ End Time      : 30 June 2026 - 01:52:12 AM
-⏱️ Run Time      : 2 Minutes 56 Seconds
+⏱️ Total Runtime : 2 Minutes 56 Seconds
 ⚙️ Max Process   : 50 Row Per Run
-🔄 Current Batch : 1
+🔄 Total Batches : 1 Run
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Feb 7 2023 Onwards ===
@@ -750,7 +748,7 @@
   Total Unique Rows: 12
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📊 Summary (Current Batch Only)
+📊 Overall Cumulative Summary
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🆕 Total Created: 0
 🔁 Total Updated: 0
@@ -781,5 +779,3 @@
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🏁 Workflow finished successfully
-
-✅ Final Master Report written -> reports/30_June_2026_0149_FINAL_948_REPORT.txt (Saved to Repo)
