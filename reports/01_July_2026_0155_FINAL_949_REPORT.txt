@@ -8,9 +8,9 @@
 🔁 RUN           : 949
 ⏰ Start Time    : 01 July 2026 - 01:55:56 AM
 ⏰ End Time      : 01 July 2026 - 02:00:27 AM
-⏱️ Run Time      : 4 Minutes 30 Seconds
+⏱️ Total Runtime : 4 Minutes 30 Seconds
 ⚙️ Max Process   : 50 Row Per Run
-🔄 Current Batch : 1
+🔄 Total Batches : 1 Run
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Feb 7 2023 Onwards ===
@@ -748,7 +748,7 @@
   Total Unique Rows: 12
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📊 Summary (Current Batch Only)
+📊 Overall Cumulative Summary
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🆕 Total Created: 0
 🔁 Total Updated: 0
@@ -779,5 +779,3 @@
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🏁 Workflow finished successfully
-
-✅ Final Master Report written -> reports/01_July_2026_0155_FINAL_949_REPORT.txt (Saved to Repo)
