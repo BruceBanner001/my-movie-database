@@ -1,0 +1,36 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260829_071810",
+    "timestamp": "29 August 2026 07:18 AM (IST)",
+    "backupType": "partial_diff",
+    "showID": 1037,
+    "showName": "Lie to Me",
+    "releasedYear": 2011,
+    "updatedDetails": "Category, Again Watched Dates Updated",
+    "changedFields": {
+        "genres": {
+            "old": [
+                "Romance",
+                "Drama",
+                "Rich Guy",
+                "Comedy"
+            ],
+            "new": [
+                "Romance",
+                "Drama",
+                "Rich Guy",
+                "Comedy",
+                "Contract Relationship"
+            ]
+        },
+        "againWatchedDates": {
+            "old": [
+                "20-11-2025"
+            ],
+            "new": [
+                "20-11-2025",
+                "02-08-2026"
+            ]
+        }
+    }
+}

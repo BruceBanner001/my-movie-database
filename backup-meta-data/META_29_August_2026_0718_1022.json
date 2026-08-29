@@ -1,0 +1,83 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260829_071810",
+    "timestamp": "29 August 2026 07:18 AM (IST)",
+    "showID": 1022,
+    "showName": "Miracle That We Met",
+    "fetchedFields": {
+        "showImage": {
+            "value": "1022.jpg",
+            "source": "asianwiki"
+        },
+        "releaseDate": {
+            "value": "Apr  2, 2018 - May 29, 2018",
+            "source": "mydramalist"
+        },
+        "otherNames": {
+            "value": [
+                "The Miracle We Met",
+                "Uriga Mannan Gijeok",
+                "Wooriga Mannan Kijeok"
+            ],
+            "source": "mydramalist"
+        },
+        "Duration": {
+            "value": "60 mins",
+            "source": "mydramalist"
+        },
+        "synopsis": {
+            "value": "A man dies in a car crash, but awakes with his spirit in another person. He becomes the head of two families and he agonizes over his two different wives.",
+            "source": "asianwiki"
+        },
+        "director": {
+            "value": [
+                "Lee Hyung Min",
+                "Jo Woong"
+            ],
+            "source": "mydramalist"
+        },
+        "tags": {
+            "value": [
+                "Rags To Riches",
+                "Character Development",
+                "Spirit",
+                "Detective Supporting Character",
+                "Supernatural Being",
+                "Transmigration",
+                "Supernatural"
+            ],
+            "source": "mydramalist"
+        },
+        "cast": {
+            "value": {
+                "Main Role": 5,
+                "Support Role": 30,
+                "Guest Role": 32,
+                "Chief Producer": 1,
+                "Composer": 1,
+                "Director": 2,
+                "Screenwriter": 1
+            },
+            "source": "mydramalist"
+        },
+        "airedOn": {
+            "value": [
+                "Monday",
+                "Tuesday"
+            ],
+            "source": "mydramalist"
+        }
+    },
+    "sitePriorityUsed": {
+        "showImage": "asianwiki",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": null,
+        "airedOn": "mydramalist"
+    }
+}

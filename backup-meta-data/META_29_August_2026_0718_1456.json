@@ -1,0 +1,80 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260829_071810",
+    "timestamp": "29 August 2026 07:22 AM (IST)",
+    "showID": 1456,
+    "showName": "Rosy Lovers",
+    "fetchedFields": {
+        "showImage": {
+            "value": "1456.jpg",
+            "source": "asianwiki"
+        },
+        "releaseDate": {
+            "value": "Oct 18, 2014 - Apr 12, 2015",
+            "source": "mydramalist"
+        },
+        "otherNames": {
+            "value": [
+                "Jangmibich Yeonindeul",
+                "Jangmibit Yeonindeul",
+                "Namorados Otimistas"
+            ],
+            "source": "mydramalist"
+        },
+        "Duration": {
+            "value": "1 hr. 4 min.",
+            "source": "mydramalist"
+        },
+        "synopsis": {
+            "value": "Even though the main character suffers a setback at a young age, that person is able to get back up and strives for happiness.",
+            "source": "asianwiki"
+        },
+        "director": {
+            "value": [
+                "Yoon Jae Moon"
+            ],
+            "source": "mydramalist"
+        },
+        "tags": {
+            "value": [
+                "Cold Female Lead",
+                "Naive Female Lead",
+                "Father-Daughter Relationship",
+                "Mother-Daughter Relationship",
+                "Multiple Couples",
+                "Melodrama"
+            ],
+            "source": "mydramalist"
+        },
+        "cast": {
+            "value": {
+                "Main Role": 2,
+                "Support Role": 24,
+                "Guest Role": 6,
+                "Chief Producer": 1,
+                "Director": 1,
+                "Screenwriter": 1
+            },
+            "source": "mydramalist"
+        },
+        "airedOn": {
+            "value": [
+                "Saturday",
+                "Sunday"
+            ],
+            "source": "mydramalist"
+        }
+    },
+    "sitePriorityUsed": {
+        "showImage": "asianwiki",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": null,
+        "airedOn": "mydramalist"
+    }
+}

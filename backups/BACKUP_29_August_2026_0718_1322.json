@@ -1,0 +1,34 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260829_071810",
+    "timestamp": "29 August 2026 07:20 AM (IST)",
+    "backupType": "partial_diff",
+    "showID": 1322,
+    "showName": "Branding in Seongsu",
+    "releasedYear": 2024,
+    "updatedDetails": "Category, Again Watched Dates Updated",
+    "changedFields": {
+        "genres": {
+            "old": [
+                "Business",
+                "Marketing",
+                "Fantasy",
+                "Romance",
+                "Comedy",
+                "Mystery"
+            ],
+            "new": [
+                "Business",
+                "Mystry",
+                "Supernatural",
+                "Romance"
+            ]
+        },
+        "againWatchedDates": {
+            "old": [],
+            "new": [
+                "30-06-2026"
+            ]
+        }
+    }
+}
