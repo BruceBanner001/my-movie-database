@@ -1,0 +1,451 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260829_073859",
+    "timestamp": "29 August 2026 07:40 AM (IST)",
+    "showID": 1576,
+    "showName": "Bad Boy",
+    "fetchedFields": {
+        "showImage": {
+            "value": "1576.jpg",
+            "source": "asianwiki (Fallback: mydramalist)",
+            "source_link": "https://mydramalist.com/76-bad-guy-2010"
+        },
+        "releaseDate": {
+            "value": "May 26, 2010 - Aug  5, 2010",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/76-bad-guy-2010"
+        },
+        "otherNames": {
+            "value": [
+                "Bad Guy",
+                "Bad Man",
+                "Nappeun Namja"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/76-bad-guy-2010"
+        },
+        "Duration": {
+            "value": "1 hr. 5 min.",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/76-bad-guy-2010"
+        },
+        "synopsis": {
+            "value": "Sim Geon Uk is a stuntman who’s secretly plotting revenge against Haeshinm Group, a large corporation to which Hong Tae Seong is the heir. As he works to destroy the family by first seducing the youngest daughter, Hong Mo Ne, he finds himself at a crossroads when Mun Jae In enters his life. Determined to correct the wrong, Geon Uk is about to risk it all and take down anyone who gets\n\nin his way.",
+            "source": "asianwiki (Fallback: mydramalist)",
+            "source_link": "https://mydramalist.com/76-bad-guy-2010"
+        },
+        "director": {
+            "value": [
+                "Lee Hyung Min",
+                "Lee Jong Jae"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/76-bad-guy-2010"
+        },
+        "tags": {
+            "value": [
+                "Antihero Male Lead",
+                "Multiple Mains",
+                "Smart Male Lead",
+                "Hidden Identity",
+                "Trauma",
+                "Friends To Lovers",
+                "Eccentric Male Lead",
+                "Family Secret",
+                "Revenge",
+                "Suspense"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/76-bad-guy-2010"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "74267",
+                    "artistName": "Choi Seong Gwon",
+                    "artistImageURL": "https://i.mydramalist.com/e11EQ_5m.jpg",
+                    "characterName": null,
+                    "role": "Composer"
+                },
+                {
+                    "artistID": "17370",
+                    "artistName": "Lee Hyung Min",
+                    "artistImageURL": "https://i.mydramalist.com/rYRopm.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "20947",
+                    "artistName": "Lee Jong Jae",
+                    "artistImageURL": "https://i.mydramalist.com/6JgBj_5m.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "21141",
+                    "artistName": "Kim Jae Eun",
+                    "artistImageURL": "https://i.mydramalist.com/jP2Xw_5m.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "21142",
+                    "artistName": "Kim Sung Hee",
+                    "artistImageURL": "https://i.mydramalist.com/XQoAp_5m.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "261",
+                    "artistName": "Kim Nam Gil",
+                    "artistImageURL": "https://i.mydramalist.com/pdWq38_5s.jpg",
+                    "characterName": "Sim Geon Uk",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "914",
+                    "artistName": "Oh Yeon Soo",
+                    "artistImageURL": "https://i.mydramalist.com/18QO5_5s.jpg",
+                    "characterName": "Hong Tae Ra",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "561",
+                    "artistName": "Han Ga In",
+                    "artistImageURL": "https://i.mydramalist.com/4e3vlQ_5s.jpg",
+                    "characterName": "Moon Jae In",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "314",
+                    "artistName": "Kim Jae Uck",
+                    "artistImageURL": "https://i.mydramalist.com/KpELb8_5s.jpg",
+                    "characterName": "Hong Tae Seong",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "346",
+                    "artistName": "Jung So Min",
+                    "artistImageURL": "https://i.mydramalist.com/mON8QP_5s.jpg",
+                    "characterName": "Hong Mo Ne",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "3713",
+                    "artistName": "Lee A In",
+                    "artistImageURL": "https://i.mydramalist.com/yWxbWk_5s.jpg",
+                    "characterName": "Choi Sun Yeong [Child]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4398",
+                    "artistName": "Joo Jin Mo",
+                    "artistImageURL": "https://i.mydramalist.com/ZOL8J_5s.jpg",
+                    "characterName": "Manager Kim",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2923",
+                    "artistName": "Ji Hoo",
+                    "artistImageURL": "https://i.mydramalist.com/0RoRY_5s.jpg",
+                    "characterName": "Lee Beom U",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2828",
+                    "artistName": "Kim Eung Soo",
+                    "artistImageURL": "https://i.mydramalist.com/xxXKN_5s.jpg",
+                    "characterName": "Captain Kwak",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2819",
+                    "artistName": "Ha Joo Hee",
+                    "artistImageURL": "https://i.mydramalist.com/M7grDs.jpg",
+                    "characterName": "Jeon Hye Ju",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2620",
+                    "artistName": "Jeon Gook Hwan",
+                    "artistImageURL": "https://i.mydramalist.com/xXNAEs.jpg",
+                    "characterName": "Hong Jeong Su",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2554",
+                    "artistName": "Jeon Min Seo",
+                    "artistImageURL": "https://i.mydramalist.com/n0q6Ns.jpg",
+                    "characterName": "Hong So Dam",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2000",
+                    "artistName": "Toyohara Kosuke",
+                    "artistImageURL": "https://i.mydramalist.com/X77pX_5s.jpg",
+                    "characterName": "Teacher Ryuu",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "357",
+                    "artistName": "Kim Jung Tae",
+                    "artistImageURL": "https://i.mydramalist.com/X1bDw_5s.jpg",
+                    "characterName": "Jang Gam Dok",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "685",
+                    "artistName": "Kim Min Seo",
+                    "artistImageURL": "https://i.mydramalist.com/vPWEp_5s.jpg",
+                    "characterName": "Choi Seon Yeong",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1489",
+                    "artistName": "Kim Hye Ok",
+                    "artistImageURL": "https://i.mydramalist.com/DkrZpp_5s.jpg",
+                    "characterName": "Sin Myeong Won",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1629",
+                    "artistName": "Kang Soo Han",
+                    "artistImageURL": "https://i.mydramalist.com/XEvgx_5s.jpg",
+                    "characterName": "Sim Geon Uk [Child]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1643",
+                    "artistName": "Shim Eun Kyung",
+                    "artistImageURL": "https://i.mydramalist.com/WKZ3l_5s.jpg",
+                    "characterName": "Moon Won In",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5346",
+                    "artistName": "Mun Ka Young",
+                    "artistImageURL": "https://i.mydramalist.com/O8JKLk_5s.jpg",
+                    "characterName": "Hong Tae Ra [Child]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "6703",
+                    "artistName": "Jung Seung Woo",
+                    "artistImageURL": "https://i.mydramalist.com/RBrm6s.jpg",
+                    "characterName": "Um Sang Mo",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "7938",
+                    "artistName": "Park Jun Mok",
+                    "artistImageURL": "https://i.mydramalist.com/Qk3D7_5s.jpg",
+                    "characterName": "Tae Seong [Child]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "8770",
+                    "artistName": "Park Ah In",
+                    "artistImageURL": "https://i.mydramalist.com/Bw60ls.jpg",
+                    "characterName": "Da Rim",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "10838",
+                    "artistName": "Hong Do Yoon",
+                    "artistImageURL": "https://i.mydramalist.com/XA4Jps.jpg",
+                    "characterName": "Hong Tae Gyun",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "12546",
+                    "artistName": "Kwak Hyun Jun",
+                    "artistImageURL": "https://i.mydramalist.com/XBPBZ_5s.jpg",
+                    "characterName": "Lee Beom U [Detective in charge of Seon-yeong's suicide case]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "19823",
+                    "artistName": "Oh Dong Min",
+                    "artistImageURL": "https://i.mydramalist.com/Rq5lg_5s.jpg",
+                    "characterName": "Hyeon Bong",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3217",
+                    "artistName": "Jung Eui Gab",
+                    "artistImageURL": "https://i.mydramalist.com/64g3Ks.jpg",
+                    "characterName": "Hong Tae Gyun",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "6659",
+                    "artistName": "Um Tae Goo",
+                    "artistImageURL": "https://i.mydramalist.com/nON3px_5s.jpg",
+                    "characterName": "Kim Hyeong Sik",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4325",
+                    "artistName": "Song Seo Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/90lLOs.jpg",
+                    "characterName": "[Geon Uk's mother]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3039",
+                    "artistName": "Jo Duk Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/jv4d8_5s.jpg",
+                    "characterName": "[Tae Ra's husband]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "89133",
+                    "artistName": "Baek Hyun Sook",
+                    "artistImageURL": "https://i.mydramalist.com/eLy4Y_5s.jpg",
+                    "characterName": "[Tae Sung's biological mother]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3462",
+                    "artistName": "Choo Hun Yub",
+                    "artistImageURL": "https://i.mydramalist.com/woA8n_5s.jpg",
+                    "characterName": "[Mystery man]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5186",
+                    "artistName": "Park Young Soo",
+                    "artistImageURL": "https://i.mydramalist.com/ZqP8O_5s.jpg",
+                    "characterName": "[Stuntman team member]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5920",
+                    "artistName": "Cha Geon",
+                    "artistImageURL": "https://i.mydramalist.com/810obs.jpg",
+                    "characterName": "Beom U [Young]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6653",
+                    "artistName": "Shin Young Jin",
+                    "artistImageURL": "https://i.mydramalist.com/50KDZs.jpg",
+                    "characterName": "[Prosecutor Park's woman]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "25109",
+                    "artistName": "Jung Kang Hee",
+                    "artistImageURL": "https://i.mydramalist.com/xx2qj_5s.jpg",
+                    "characterName": "[Thief]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "1423",
+                    "artistName": "Go Eun Ah",
+                    "artistImageURL": "https://i.mydramalist.com/jQjxNB_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6380",
+                    "artistName": "Lee Jung Gil",
+                    "artistImageURL": "https://i.mydramalist.com/B07Vbs.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "18879",
+                    "artistName": "Seo Kwang Jae",
+                    "artistImageURL": "https://i.mydramalist.com/4VWRK_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/76-bad-guy-2010"
+        },
+        "airedOn": {
+            "value": [
+                "Wednesday",
+                "Thursday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/76-bad-guy-2010"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "21141",
+            "artistName": "Kim Jae Eun",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "21142",
+            "artistName": "Kim Sung Hee",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "914",
+            "artistName": "Oh Yeon Soo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "561",
+            "artistName": "Han Ga In",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "2923",
+            "artistName": "Ji Hoo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "2000",
+            "artistName": "Toyohara Kosuke",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "1629",
+            "artistName": "Kang Soo Han",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "6703",
+            "artistName": "Jung Seung Woo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "10838",
+            "artistName": "Hong Do Yoon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "89133",
+            "artistName": "Baek Hyun Sook",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "5920",
+            "artistName": "Cha Geon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "1423",
+            "artistName": "Go Eun Ah",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "asianwiki (Fallback: mydramalist)",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki (Fallback: mydramalist)",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": null,
+        "airedOn": "mydramalist"
+    }
+}
