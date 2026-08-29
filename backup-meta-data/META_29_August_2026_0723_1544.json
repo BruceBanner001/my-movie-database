@@ -1,0 +1,722 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260829_072322",
+    "timestamp": "29 August 2026 07:27 AM (IST)",
+    "showID": 1544,
+    "showName": "Perfect Crown",
+    "fetchedFields": {
+        "showImage": {
+            "value": "1544.jpg",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Perfect_Crown"
+        },
+        "releaseDate": {
+            "value": "Apr 10, 2026 - May 16, 2026",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/781538-wife-of-a-21st-century-prince"
+        },
+        "otherNames": {
+            "value": [
+                "21segi Daegun Buin",
+                "21st Century Grand Prince's Wife",
+                "21st Century Prince's Wife",
+                "Wife of a 21st Century Prince"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/781538-wife-of-a-21st-century-prince"
+        },
+        "Duration": {
+            "value": "1 hr. 10 min.",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/781538-wife-of-a-21st-century-prince"
+        },
+        "synopsis": {
+            "value": "Set in the 21st century, with South Korea governed by a constitutional monarchy. Seong Hui-Ju (IU) is the second daughter of the top chaebol family in the country. She has almost everything, including a beautiful appearance and intelligence. She is also fiercely competitive. Seong Hui-Ju doesn't care that she is not part of the royal family, but her commoner status starts to become an obstacle in her life. This leads her to get involved with Prince I-An (Byeon Woo-Seok), who is the second son of the King. Prince I-An is destined to have nothing, but his royal status. He always hides him from people, but, after he meets Seong Hui-Ju, he begins to change.",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Perfect_Crown"
+        },
+        "director": {
+            "value": [
+                "Park Joon Hwa",
+                "Bae Hui Yeong"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/781538-wife-of-a-21st-century-prince"
+        },
+        "tags": {
+            "value": [
+                "Royal Family",
+                "Alternate History",
+                "Marriage Of Convenience",
+                "Contract Relationship",
+                "Heiress Female Lead",
+                "Prince Male Lead",
+                "Fake To Real Lovers",
+                "Rich Female Lead",
+                "Rich Male Lead",
+                "Married Life"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/781538-wife-of-a-21st-century-prince"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "107321",
+                    "artistName": "Bae Hyun Jin",
+                    "artistImageURL": "https://i.mydramalist.com/XdE5jJ_5m.jpg",
+                    "characterName": null,
+                    "role": "Cinematography"
+                },
+                {
+                    "artistID": "16362",
+                    "artistName": "Park Joon Hwa",
+                    "artistImageURL": "https://i.mydramalist.com/X4opwm.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "162706",
+                    "artistName": "Bae Hui Yeong",
+                    "artistImageURL": "https://i.mydramalist.com/l0eoQN_5m.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "28339",
+                    "artistName": "Kang Dae Sun",
+                    "artistImageURL": "https://i.mydramalist.com/vW3O8m.jpg",
+                    "characterName": null,
+                    "role": "Producer"
+                },
+                {
+                    "artistID": "150488",
+                    "artistName": "Yoo Ji Won",
+                    "artistImageURL": "https://i.mydramalist.com/DkBp6p_5m.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "426",
+                    "artistName": "IU",
+                    "artistImageURL": "https://i.mydramalist.com/73R8zn_5s.jpg",
+                    "characterName": "Seong Hui Ju",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "13939",
+                    "artistName": "Byeon Woo Seok",
+                    "artistImageURL": "https://i.mydramalist.com/l0ZORJ_5s.jpg",
+                    "characterName": "Grand Prince Yi An",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "16415",
+                    "artistName": "Steve Noh",
+                    "artistImageURL": "https://i.mydramalist.com/nOQ4BN_5s.jpg",
+                    "characterName": "Min Jeong U",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "9347",
+                    "artistName": "Gong Seung Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/eYyXln_5s.jpg",
+                    "characterName": "Yun I Rang",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "18015",
+                    "artistName": "Yoo Soo Bin",
+                    "artistImageURL": "https://i.mydramalist.com/XbbZZs.jpg",
+                    "characterName": "Choi Hyeon",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "34743",
+                    "artistName": "Lee Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/WWq0O_5s.jpg",
+                    "characterName": "Do Hye Jeong",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4562",
+                    "artistName": "Lee Jae Won",
+                    "artistImageURL": "https://i.mydramalist.com/By7eb_5s.jpg",
+                    "characterName": "Seong Tae Ju",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "69731",
+                    "artistName": "Chae Seo An",
+                    "artistImageURL": "https://i.mydramalist.com/RBjqAr_5s.jpg",
+                    "characterName": "Han Da Yeong",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4672",
+                    "artistName": "Jo Seung Yun",
+                    "artistImageURL": "https://i.mydramalist.com/xNZg0_5s.jpg",
+                    "characterName": "Seong Hyeon Guk",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3257",
+                    "artistName": "Park Joon Myun",
+                    "artistImageURL": "https://i.mydramalist.com/kQb0m_5s.jpg",
+                    "characterName": "Choi Jin Suk [Court lady]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "42257",
+                    "artistName": "Choi Ji Su",
+                    "artistImageURL": "https://i.mydramalist.com/jDqAy_5s.jpg",
+                    "characterName": "Lee A Reum [Yi An's private residence's staff]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "19198",
+                    "artistName": "Lee Si Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/lyZQNs.jpg",
+                    "characterName": "Kim Yeong Mun [Yi An's butler]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2270",
+                    "artistName": "Jung Ji Ahn",
+                    "artistImageURL": "https://i.mydramalist.com/4EEy1_5s.jpg",
+                    "characterName": "Kim Yeong Seon [Yeong Mun's sister | Yi An's private residence's staff]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "151002",
+                    "artistName": "Jin Se Rim",
+                    "artistImageURL": "https://i.mydramalist.com/YYjNlP_5s.jpg",
+                    "characterName": "Yoo Ji Su [Yi An's private residence's staff]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "23146",
+                    "artistName": "Park Ji Ye",
+                    "artistImageURL": "https://i.mydramalist.com/p1dqV_5s.jpg",
+                    "characterName": "Park Seung Hui [Castle Beauty secretary's office staff]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2715",
+                    "artistName": "Jo Jae Yun",
+                    "artistImageURL": "https://i.mydramalist.com/0d5kY_5s.jpg",
+                    "characterName": "Yun Seong Won",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "6678",
+                    "artistName": "Kim Jung Woon",
+                    "artistImageURL": "https://i.mydramalist.com/yWVnqR_5s.jpg",
+                    "characterName": "Cho Min Yeong [Prime minister's chief of staff]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "148206",
+                    "artistName": "Kim Eun Ho",
+                    "artistImageURL": "https://i.mydramalist.com/l0PBRx_5s.jpg",
+                    "characterName": "Yi Yun",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "18048",
+                    "artistName": "Lee Chae Kyung",
+                    "artistImageURL": "https://i.mydramalist.com/e3n6ps.jpg",
+                    "characterName": "Yim Seon Hwa [Court lady]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "147866",
+                    "artistName": "Kim Gyu Ri",
+                    "artistImageURL": "https://i.mydramalist.com/JBoJPj_5s.jpg",
+                    "characterName": "[Jeong U’s secretary]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "17707",
+                    "artistName": "Kim Soo Jin",
+                    "artistImageURL": "https://i.mydramalist.com/28yld_5s.jpg",
+                    "characterName": "Jung Mi Hui [Court lady]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "143435",
+                    "artistName": "Seong Seung Ha",
+                    "artistImageURL": "https://i.mydramalist.com/ABQRjZ_5s.jpg",
+                    "characterName": "[Student] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "40943",
+                    "artistName": "Bae Seong Il",
+                    "artistImageURL": "https://i.mydramalist.com/73bdOD_5s.jpg",
+                    "characterName": "[Teacher] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "9724",
+                    "artistName": "Kim Ha Jin",
+                    "artistImageURL": "https://i.mydramalist.com/Jj7Xys.jpg",
+                    "characterName": "[Court lady] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "8770",
+                    "artistName": "Park Ah In",
+                    "artistImageURL": "https://i.mydramalist.com/Bw60ls.jpg",
+                    "characterName": "[Banquet guest] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "2646",
+                    "artistName": "Kim  Bo Mi",
+                    "artistImageURL": "https://i.mydramalist.com/vnxDqs.jpg",
+                    "characterName": "[Banquet guest] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21584",
+                    "artistName": "Kim Dae Gon",
+                    "artistImageURL": "https://i.mydramalist.com/b3YOQE_5s.jpg",
+                    "characterName": "[Castle Beauty logistics manager] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "50191",
+                    "artistName": "DEMIAN",
+                    "artistImageURL": "https://i.mydramalist.com/RBZL3g_5s.jpg",
+                    "characterName": "Ryu Min Seok [Student] (Ep. 1-2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "54061",
+                    "artistName": "Son Jun Ho",
+                    "artistImageURL": "https://i.mydramalist.com/qrrN8_5s.jpg",
+                    "characterName": "King Hui Jong [Yi An’s father] (Ep. 1-2, 4, 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "1137",
+                    "artistName": "Sung Jun",
+                    "artistImageURL": "https://i.mydramalist.com/kAzJmj_5s.jpg",
+                    "characterName": "Yi Hwan [Yi An's older brother] (Ep. 1-4, 6, 10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "1695",
+                    "artistName": "Lee Byung Joon",
+                    "artistImageURL": "https://i.mydramalist.com/1gyLQs.jpg",
+                    "characterName": "Kim Do Yeong [Royal school’s principal] (Ep. 1-2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "12494",
+                    "artistName": "Yoon Byung Hee",
+                    "artistImageURL": "https://i.mydramalist.com/dJZPe_5s.jpg",
+                    "characterName": "[Castle Beauty PR manager] (Ep. 1-2, 5)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "19942",
+                    "artistName": "Im Chul Soo",
+                    "artistImageURL": "https://i.mydramalist.com/RJRZos.jpg",
+                    "characterName": "[Castle Beauty sales manager] (Ep. 1-2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "157700",
+                    "artistName": "Lee Su Ho",
+                    "artistImageURL": "https://i.mydramalist.com/73OKZR_5s.jpg",
+                    "characterName": "Grand Prince Yi An [Child] (Ep. 1, 4-5, 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "119543",
+                    "artistName": "Kim Dae Ho",
+                    "artistImageURL": "https://i.mydramalist.com/4e4q7Y_5s.jpg",
+                    "characterName": "[Reporter] (Ep. 1, 5)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "122313",
+                    "artistName": "Yeom Ji Hye",
+                    "artistImageURL": "https://i.mydramalist.com/2wd25d_5s.jpg",
+                    "characterName": "[Anchorwoman] (Ep. 1, 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "22619",
+                    "artistName": "Son Sung Chan",
+                    "artistImageURL": "https://i.mydramalist.com/pzYXb_5s.jpg",
+                    "characterName": "[Government official] (Ep. 1, 4, 12)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "88301",
+                    "artistName": "Heo Nam Jun",
+                    "artistImageURL": "https://i.mydramalist.com/3o7wNe_5s.jpg",
+                    "characterName": "Kim Yeon Jun [Hui Ju's blind date] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "15255",
+                    "artistName": "Kim Yool Ho",
+                    "artistImageURL": "https://i.mydramalist.com/r3RLD_5s.jpg",
+                    "characterName": "[Yi Yun’s secretary] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "47517",
+                    "artistName": "Lee Dong Gyu",
+                    "artistImageURL": "https://i.mydramalist.com/PxBV58_5s.jpg",
+                    "characterName": "[Economic Honors MC] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "13650",
+                    "artistName": "Jang Hee Ryung",
+                    "artistImageURL": "https://i.mydramalist.com/kd6Bk_5s.jpg",
+                    "characterName": "Kim Jae Gyeong [Yi An's sister-in-law] (Ep. 2, 4, 6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "26105",
+                    "artistName": "Park Jae Wan",
+                    "artistImageURL": "https://i.mydramalist.com/QoBZv_5s.jpg",
+                    "characterName": "[Doctor] (Ep. 2, 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "147808",
+                    "artistName": "Kim Geon U",
+                    "artistImageURL": "https://i.mydramalist.com/3o7jOR_5s.jpg",
+                    "characterName": "Seong Tae Ju [Child] (Ep. 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "15690",
+                    "artistName": "Kim Jae Chul",
+                    "artistImageURL": "https://i.mydramalist.com/b3dkvj_5s.jpg",
+                    "characterName": "Director Jung [Royal protection bureau] (Ep. 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "103829",
+                    "artistName": "Jo Young Mi",
+                    "artistImageURL": "https://i.mydramalist.com/pp4oy_5s.jpg",
+                    "characterName": "[Teacher] (Ep. 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "19734",
+                    "artistName": "Park Hyun Jung",
+                    "artistImageURL": "https://i.mydramalist.com/g035mO_5s.jpg",
+                    "characterName": "[Tae Ju’s mom] (Ep. 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "30333",
+                    "artistName": "Lee Seung Hee",
+                    "artistImageURL": "https://i.mydramalist.com/p0dNns.jpg",
+                    "characterName": "[Hyeon Guk's butler] (Ep. 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "154630",
+                    "artistName": "Kim Yu Bin",
+                    "artistImageURL": "https://i.mydramalist.com/KpWZoD_5s.jpg",
+                    "characterName": "[Royal scholarship student] (Ep. 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "4576",
+                    "artistName": "Lee Seung Jun",
+                    "artistImageURL": "https://i.mydramalist.com/6bKNd_5s.jpg",
+                    "characterName": "[Priest] (Ep. 3, 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "38505",
+                    "artistName": "Jang Eui Don",
+                    "artistImageURL": "https://i.mydramalist.com/ENxZO_5s.jpg",
+                    "characterName": "Kim Gi Yeol (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5891",
+                    "artistName": "Jung Hee Tae",
+                    "artistImageURL": "https://i.mydramalist.com/735b3r_5s.jpg",
+                    "characterName": "Professor Hwang U Gyeong [Formal royal spokesman] (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "103379",
+                    "artistName": "Park Bo Bae",
+                    "artistImageURL": "https://i.mydramalist.com/jpyDy_5s.jpg",
+                    "characterName": "[Jae Gyeong's friend] (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "80409",
+                    "artistName": "Seo Eun Young",
+                    "artistImageURL": "https://i.mydramalist.com/k6rXj_5s.jpg",
+                    "characterName": "[Jae Gyeong's friend] (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "145036",
+                    "artistName": "Jung Yong Geom",
+                    "artistImageURL": "https://i.mydramalist.com/81v4dN_5s.jpg",
+                    "characterName": "[Baseball match announcer] (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "32251",
+                    "artistName": "Kim So Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/XnWWZ_5s.jpg",
+                    "characterName": "Queen Ui Hyeon [Yi An and Yi Hwan's mother] (Ep. 5)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "20031",
+                    "artistName": "Park Yong",
+                    "artistImageURL": "https://i.mydramalist.com/dxE2b_5s.jpg",
+                    "characterName": "[Doctor] (Ep. 5)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "43831",
+                    "artistName": "Bae Eun Woo",
+                    "artistImageURL": "https://i.mydramalist.com/YYq0yA_5s.jpg",
+                    "characterName": "[Banquet guest] (Ep. 5-6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "63875",
+                    "artistName": "Lee Do Hye",
+                    "artistImageURL": "https://i.mydramalist.com/Pxjqmz_5s.jpg",
+                    "characterName": "[Interviewer] (Ep. 6)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "17852",
+                    "artistName": "Go Dong Eob",
+                    "artistImageURL": "https://i.mydramalist.com/43z1Qs.jpg",
+                    "characterName": "[Wedding officiant] (Ep. 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "56613",
+                    "artistName": "Kim Su Kyung",
+                    "artistImageURL": "https://i.mydramalist.com/Rnb66_5s.jpg",
+                    "characterName": "[J Estina saleswoman] (Ep. 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "160572",
+                    "artistName": "Byeon Chang Yeol",
+                    "artistImageURL": "https://i.mydramalist.com/73J01y_5s.jpg",
+                    "characterName": "[Physician] (Ep. 7-8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "13933",
+                    "artistName": "Lee Doo Suk",
+                    "artistImageURL": "https://i.mydramalist.com/q52xd_5s.jpg",
+                    "characterName": "[Doctor] (Ep. 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "9409",
+                    "artistName": "Yun Ki Chang",
+                    "artistImageURL": "https://i.mydramalist.com/QPJrW_5s.jpg",
+                    "characterName": "[Police agency officer] (Ep. 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "22281",
+                    "artistName": "Ha Min",
+                    "artistImageURL": "https://i.mydramalist.com/YYgBOB_5s.jpg",
+                    "characterName": "[Court lady past] (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "121547",
+                    "artistName": "Kim Ho",
+                    "artistImageURL": "https://i.mydramalist.com/Z874PL_5s.jpg",
+                    "characterName": "[Official] (Ep. 10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "28189",
+                    "artistName": "Park Ji Ho",
+                    "artistImageURL": "https://i.mydramalist.com/mOXqJq_5s.jpg",
+                    "characterName": "[Reporter] (Ep. 10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "68199",
+                    "artistName": "Yang Ha Yoon",
+                    "artistImageURL": "https://i.mydramalist.com/QZ6yv_5s.jpg",
+                    "characterName": "[Reporter] (Ep. 10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "157728",
+                    "artistName": "Joo In Ae",
+                    "artistImageURL": "https://i.mydramalist.com/73OK5n_5s.jpg",
+                    "characterName": "[Reporter] (Ep. 10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "1177",
+                    "artistName": "Kim Young Jae",
+                    "artistImageURL": "https://i.mydramalist.com/Z3VeYs.jpg",
+                    "characterName": "Do Seung Ji [Royal secretary] (Ep. 10-11)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "91767",
+                    "artistName": "Jeon Se Yong",
+                    "artistImageURL": "https://i.mydramalist.com/ee0qE_5s.jpg",
+                    "characterName": "[Government official] (Ep. 10, 12)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "94855",
+                    "artistName": "Song Jin Hee",
+                    "artistImageURL": "https://i.mydramalist.com/4n3Vk_5s.jpg",
+                    "characterName": "[Diner] (Ep. 11)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "38555",
+                    "artistName": "Lee Si Young",
+                    "artistImageURL": "https://i.mydramalist.com/oQ1DYk_5s.jpg",
+                    "characterName": "[Diner] (Ep. 11)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "28391",
+                    "artistName": "Kim Byung Chul",
+                    "artistImageURL": "https://i.mydramalist.com/EN8L0_5s.jpg",
+                    "characterName": "[Government official] (Ep. 11)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "12318",
+                    "artistName": "Choi Min",
+                    "artistImageURL": "https://i.mydramalist.com/2PQ6E_5s.jpg",
+                    "characterName": "[Government official] (Ep. 11)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "25471",
+                    "artistName": "Seo Sang Won",
+                    "artistImageURL": "https://i.mydramalist.com/Z1Epks.jpg",
+                    "characterName": "[Government official] (Ep. 11-12)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "159192",
+                    "artistName": "Han Jae Hun",
+                    "artistImageURL": "https://i.mydramalist.com/DkD8xp_5s.jpg",
+                    "characterName": "Secretary Yun",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "9717",
+                    "artistName": "Hong Seo Joon",
+                    "artistImageURL": "https://i.mydramalist.com/v5dPD_5s.jpg",
+                    "characterName": "General manager Jung",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "162692",
+                    "artistName": "Jang Jae Yeong",
+                    "artistImageURL": "https://i.mydramalist.com/KpoBeq_5s.jpg",
+                    "characterName": "Moon Hye Rin [Ep. 3)",
+                    "role": "Guest Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/781538-wife-of-a-21st-century-prince"
+        },
+        "airedOn": {
+            "value": [
+                "Friday",
+                "Saturday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/781538-wife-of-a-21st-century-prince"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "162706",
+            "artistName": "Bae Hui Yeong",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "150488",
+            "artistName": "Yoo Ji Won",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "151002",
+            "artistName": "Jin Se Rim",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "23146",
+            "artistName": "Park Ji Ye",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "148206",
+            "artistName": "Kim Eun Ho",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "147866",
+            "artistName": "Kim Gyu Ri",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "50191",
+            "artistName": "DEMIAN",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "54061",
+            "artistName": "Son Jun Ho",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "119543",
+            "artistName": "Kim Dae Ho",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "162692",
+            "artistName": "Jang Jae Yeong",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "asianwiki",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": null,
+        "airedOn": "mydramalist"
+    }
+}

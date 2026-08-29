@@ -1,0 +1,588 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260829_072322",
+    "timestamp": "29 August 2026 07:27 AM (IST)",
+    "showID": 1546,
+    "showName": "Sold Out on You",
+    "fetchedFields": {
+        "showImage": {
+            "value": "1546.jpg",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Sold_Out_On_You"
+        },
+        "releaseDate": {
+            "value": "Apr 22, 2026 - May 28, 2026",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/788726-it-s-sold-out-again-today"
+        },
+        "otherNames": {
+            "value": [
+                "It’s Sold Out Again Today",
+                "Oneuldomaejin",
+                "Sold Out Again Today",
+                "Sold Out Again Today Too",
+                "Sold Out Today",
+                "Today Is Sold Out Too",
+                "Today",
+                "Sold Out",
+                "Sold Out Again",
+                "오늘도매진"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/788726-it-s-sold-out-again-today"
+        },
+        "Duration": {
+            "value": "1 hr. 10 min.",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/788726-it-s-sold-out-again-today"
+        },
+        "synopsis": {
+            "value": "Matthew Lee (Ahn Hyo-Seop) is young farmer nicknamed Quail. He speaks with a gruff tone, but he has a warm heart. He cultivates white-flowered nuri mushroom with great care. One day, Dam Ye-Jin (Chae Won-Bin) shows up during his tranquil routine. She is the top host for home shopping network Hit and she is personally obsessed with white-flowered nuri mushroom. She is here to renew their contract for the white-flowered nuri mushroom. No matter how many times he refuses, she persistently pursues him. Their relationship soon blossoms into romance.",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Sold_Out_On_You"
+        },
+        "director": {
+            "value": [
+                "An Jong Yeon"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/788726-it-s-sold-out-again-today"
+        },
+        "tags": {
+            "value": [
+                "Farmer Male Lead",
+                "Village Setting",
+                "Healing",
+                "Extroverted Female Lead",
+                "Opposites Attract",
+                "Rich Male Lead",
+                "Talkative Female Lead",
+                "Introverted Male Lead",
+                "Insomnia",
+                "Cold Man/Warm Woman"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/788726-it-s-sold-out-again-today"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "151298",
+                    "artistName": "An Jong Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/81yw7b_5m.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "162700",
+                    "artistName": "Jin Seung Hui",
+                    "artistImageURL": "https://i.mydramalist.com/zB1Xwz_5m.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "11001",
+                    "artistName": "Ahn Hyo Seop",
+                    "artistImageURL": "https://i.mydramalist.com/2wk2NP_5s.jpg",
+                    "characterName": "Matthew Lee / Lee Hae Seok",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "35431",
+                    "artistName": "Chae Won Bin",
+                    "artistImageURL": "https://i.mydramalist.com/JB42BY_5s.jpg",
+                    "characterName": "Dam Ye Jin",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "234",
+                    "artistName": "Kim Bum",
+                    "artistImageURL": "https://i.mydramalist.com/81PNNb_5s.jpg",
+                    "characterName": "Eric Seo",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "12494",
+                    "artistName": "Yoon Byung Hee",
+                    "artistImageURL": "https://i.mydramalist.com/dJZPe_5s.jpg",
+                    "characterName": "Kang Mu Won [Co-CEO of Gozneok Bio]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1659",
+                    "artistName": "Go Doo Shim",
+                    "artistImageURL": "https://i.mydramalist.com/RJnePs.jpg",
+                    "characterName": "Song Hak Daek / Yang Sang Geum",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "8506",
+                    "artistName": "Jo Bok Rae",
+                    "artistImageURL": "https://i.mydramalist.com/4rvv1_5s.jpg",
+                    "characterName": "Park Gwang Mo [Foreman at Matthew’s farm]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "34795",
+                    "artistName": "Kim Seo An",
+                    "artistImageURL": "https://i.mydramalist.com/jQ82vJ_5s.jpg",
+                    "characterName": "Na Jin I [Owner of Som I's general store]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "36409",
+                    "artistName": "Ahn Se Bin",
+                    "artistImageURL": "https://i.mydramalist.com/oQ4J0E_5s.jpg",
+                    "characterName": "Na Som I [Jin I's younger sister]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "3539",
+                    "artistName": "Jo Woo Ri",
+                    "artistImageURL": "https://i.mydramalist.com/B2gQ5s.jpg",
+                    "characterName": "Moon Ae Ra [Owner of Moon Cafe]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "44355",
+                    "artistName": "Kim Jung Hwan",
+                    "artistImageURL": "https://i.mydramalist.com/XXNnq_5s.jpg",
+                    "characterName": "Jeon Jeong Muk [Doctor at Uri Deokpung clinic]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "13937",
+                    "artistName": "Seo Jin Won",
+                    "artistImageURL": "https://i.mydramalist.com/2zX2P_5s.jpg",
+                    "characterName": "Jeon Won Taek [Livestock specialist veterinarian]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "20512",
+                    "artistName": "Yang Heung Joo",
+                    "artistImageURL": "https://i.mydramalist.com/X8llXs.jpg",
+                    "characterName": "So Jong Il [Livestock farmer]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "13938",
+                    "artistName": "Lee Sae Ro Mi",
+                    "artistImageURL": "https://i.mydramalist.com/PxzbA5_5s.jpg",
+                    "characterName": "O Bun Hong [Jong Il's wife]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1177",
+                    "artistName": "Kim Young Jae",
+                    "artistImageURL": "https://i.mydramalist.com/Z3VeYs.jpg",
+                    "characterName": "Dam Seok Gyeong [Ye Jin's father]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "1461",
+                    "artistName": "Woo Hee Jin",
+                    "artistImageURL": "https://i.mydramalist.com/d04pWD_5s.jpg",
+                    "characterName": "Song Myeong Hwa [ CEO of Beauty Song]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "14089",
+                    "artistName": "Park Ye Young",
+                    "artistImageURL": "https://i.mydramalist.com/vw2YX_5s.jpg",
+                    "characterName": "Um Seong Mi",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "8770",
+                    "artistName": "Park Ah In",
+                    "artistImageURL": "https://i.mydramalist.com/Bw60ls.jpg",
+                    "characterName": "Ji Yun Ji",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4358",
+                    "artistName": "Shin Dong Mi",
+                    "artistImageURL": "https://i.mydramalist.com/RQlbY_5s.jpg",
+                    "characterName": "Dong Hyeon Gi",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "120883",
+                    "artistName": "Yoon Jae Chan",
+                    "artistImageURL": "https://i.mydramalist.com/g0QBe1_5s.jpg",
+                    "characterName": "Hwang Gi Hong",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "17135",
+                    "artistName": "Ok Ja Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/x5W0z_5s.jpg",
+                    "characterName": "Michelle",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "28549",
+                    "artistName": "Kim Joong Don",
+                    "artistImageURL": "https://i.mydramalist.com/WPNvpO_5s.jpg",
+                    "characterName": "Cha Jung Hun / Mr. Cha [Head of Strategic Planning]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "13690",
+                    "artistName": "Chae Dong Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/bwzB6s.jpg",
+                    "characterName": "Son Chang Ho [CEO of HO Cosmetics]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "34541",
+                    "artistName": "Go Woo Jin",
+                    "artistImageURL": "https://i.mydramalist.com/j1BjB_5s.jpg",
+                    "characterName": "Ui Seok (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "98811",
+                    "artistName": "Dok Ko Kwang",
+                    "artistImageURL": "https://i.mydramalist.com/KpP1K4_5s.jpg",
+                    "characterName": "[Staff] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "127037",
+                    "artistName": "Park Jeong Seo",
+                    "artistImageURL": "https://i.mydramalist.com/4epPQk_5s.jpg",
+                    "characterName": "[Director] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "105349",
+                    "artistName": "Cho Seung Gu",
+                    "artistImageURL": "https://i.mydramalist.com/b31L5N_5s.jpg",
+                    "characterName": "[Cameraman] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "126971",
+                    "artistName": "Seo Eun Joo",
+                    "artistImageURL": "https://i.mydramalist.com/E5lqnQ_5s.jpg",
+                    "characterName": "[HIT shopper] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "46095",
+                    "artistName": "Yoo Young Bin",
+                    "artistImageURL": "https://i.mydramalist.com/xxjqy_5s.jpg",
+                    "characterName": "[HIT shopper] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "84557",
+                    "artistName": "Ahn Chan Woong",
+                    "artistImageURL": "https://i.mydramalist.com/kppKw_5s.jpg",
+                    "characterName": "[Restaurant staff] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "42817",
+                    "artistName": "Kang Sung Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/j4l5bs.jpg",
+                    "characterName": "[Cleaning gloves CEO] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "14228",
+                    "artistName": "Park Ji Hwan",
+                    "artistImageURL": "https://i.mydramalist.com/Z83mZ7_5s.jpg",
+                    "characterName": "[Home shopping celeb guest] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5835",
+                    "artistName": "Ri Min",
+                    "artistImageURL": "https://i.mydramalist.com/nE60xs.jpg",
+                    "characterName": "[Window cleaner] (Ep. 1, 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "92433",
+                    "artistName": "Kim Ra On",
+                    "artistImageURL": "https://i.mydramalist.com/pP06r_5s.jpg",
+                    "characterName": "Kang Dong Gu (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "102117",
+                    "artistName": "Kang Hui Man",
+                    "artistImageURL": "https://i.mydramalist.com/XPRoq_5s.jpg",
+                    "characterName": "[Police officer] (Ep. 2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "12002",
+                    "artistName": "Ahn Sang Woo",
+                    "artistImageURL": "https://i.mydramalist.com/RQDz6_5s.jpg",
+                    "characterName": "[Bus driver] (Ep. 2-3, 12)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "126857",
+                    "artistName": "Ko Do Eun",
+                    "artistImageURL": "https://i.mydramalist.com/jQXBPv_5s.jpg",
+                    "characterName": "[Staff] (Ep. 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "18879",
+                    "artistName": "Seo Kwang Jae",
+                    "artistImageURL": "https://i.mydramalist.com/4VWRK_5s.jpg",
+                    "characterName": "[Tailor] (Ep. 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "133747",
+                    "artistName": "Kim Woon Kyo",
+                    "artistImageURL": "https://i.mydramalist.com/jQ2n5w_5s.jpg",
+                    "characterName": "[HIT shopper] (Ep. 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "103541",
+                    "artistName": "Choi Yo Woon",
+                    "artistImageURL": "https://i.mydramalist.com/rpk4y_5s.jpg",
+                    "characterName": "[HIT shopper] (Ep. 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "55747",
+                    "artistName": "Lee Bum Chan",
+                    "artistImageURL": "https://i.mydramalist.com/ENEXm_5s.jpg",
+                    "characterName": "[Myeong Hwa's associate] (Ep. 3)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "112091",
+                    "artistName": "Shin Yeon Woo",
+                    "artistImageURL": "https://i.mydramalist.com/2wD5gR_5s.jpg",
+                    "characterName": "Dam Ye Jin [Teen] (Ep. 3-4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "122407",
+                    "artistName": "Lee A Rin",
+                    "artistImageURL": "https://i.mydramalist.com/d0zP0z_5s.jpg",
+                    "characterName": "Dam Ye Jin [Child] (Ep. 3-4, 12)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "14366",
+                    "artistName": "Jung Hyun Seok",
+                    "artistImageURL": "https://i.mydramalist.com/O8Ly1g_5s.jpg",
+                    "characterName": "[Sang Geum's son-in-law] (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "25689",
+                    "artistName": "Gu Da Song",
+                    "artistImageURL": "https://i.mydramalist.com/B2do6s.jpg",
+                    "characterName": "[Jewelry saleswoman] (Ep. 5)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "151548",
+                    "artistName": "Yoo Seung A",
+                    "artistImageURL": "https://i.mydramalist.com/oQ1q46_5s.jpg",
+                    "characterName": "Moon Ae Ra [Child] (Ep. 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "108361",
+                    "artistName": "Jeong Seo Yul",
+                    "artistImageURL": "https://i.mydramalist.com/W20eW_5s.jpg",
+                    "characterName": "Park Gwang Mo [Teen] (Ep. 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "92833",
+                    "artistName": "Park Jin U",
+                    "artistImageURL": "https://i.mydramalist.com/qZ5oQ_5s.jpg",
+                    "characterName": "Park Gwang Mo [Child] (Ep. 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "116305",
+                    "artistName": "Jo Jin Hyeong",
+                    "artistImageURL": "https://i.mydramalist.com/4e4Yy1_5s.jpg",
+                    "characterName": "Gi Bok [Deokpung Village 2 resident] (Ep. 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "45317",
+                    "artistName": "Nam Mi Jung",
+                    "artistImageURL": "https://i.mydramalist.com/exxxp_5s.jpg",
+                    "characterName": "Ms. Okpo [Deokpung Village 2 resident] (Ep. 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "160572",
+                    "artistName": "Byeon Chang Yeol",
+                    "artistImageURL": "https://i.mydramalist.com/73J01y_5s.jpg",
+                    "characterName": "[Deokpung Village 2 foreman] (Ep. 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "88631",
+                    "artistName": "Han Sang Chul",
+                    "artistImageURL": "https://i.mydramalist.com/Lw5e77_5s.jpg",
+                    "characterName": "[Deokpung Village 2 resident] (Ep. 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "115993",
+                    "artistName": "Jang Eun Sil",
+                    "artistImageURL": "https://i.mydramalist.com/wJmgYg_5s.jpg",
+                    "characterName": "[Deokpung Village 2 arm wrestler] (Ep. 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "129515",
+                    "artistName": "Yu Ha Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/eY3qwK_5s.jpg",
+                    "characterName": "Sin Do A (Ep. 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "145018",
+                    "artistName": "Kim Yun Hui",
+                    "artistImageURL": "https://i.mydramalist.com/yWVO44_5s.jpg",
+                    "characterName": "[Teacher] (Ep. 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "93205",
+                    "artistName": "Choi Hye Seo",
+                    "artistImageURL": "https://i.mydramalist.com/rDXgj_5s.jpg",
+                    "characterName": "[Student] (Ep. 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "1727",
+                    "artistName": "Lee Seung Hyung",
+                    "artistImageURL": "https://i.mydramalist.com/RB5pVs.jpg",
+                    "characterName": "CEO Han (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "98809",
+                    "artistName": "Kwon Dan A",
+                    "artistImageURL": "https://i.mydramalist.com/k8rjv_5s.jpg",
+                    "characterName": "[Executive] (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "159178",
+                    "artistName": "Lee Myung Hee",
+                    "artistImageURL": "https://i.mydramalist.com/l0Y0E6_5s.jpg",
+                    "characterName": "[Cream customer] (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6962",
+                    "artistName": "Seo Hyeon Woo",
+                    "artistImageURL": "https://i.mydramalist.com/3oAYOD_5s.jpg",
+                    "characterName": "Choi U Su (Ep. 9-12)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "154676",
+                    "artistName": "Choi Ha Yoon",
+                    "artistImageURL": "https://i.mydramalist.com/b3DPqx_5s.jpg",
+                    "characterName": "Na Som I [Child] (Ep. 10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "125549",
+                    "artistName": "Na Ho Sook",
+                    "artistImageURL": "https://i.mydramalist.com/E58Lym_5s.jpg",
+                    "characterName": "[Elderly resident] (Ep. 10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "96849",
+                    "artistName": "Kang Jong Sung",
+                    "artistImageURL": "https://i.mydramalist.com/E1qR5_5s.jpg",
+                    "characterName": "[Elderly resident] (Ep. 10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "43627",
+                    "artistName": "Noh Sung Eun",
+                    "artistImageURL": "https://i.mydramalist.com/25b1k_5s.jpg",
+                    "characterName": "Bong Chan (Ep. 11)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "28151",
+                    "artistName": "Lee Joo Han",
+                    "artistImageURL": "https://i.mydramalist.com/RBJoOP_5s.jpg",
+                    "characterName": "[Victim 1] (Ep. 12)",
+                    "role": "Guest Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/788726-it-s-sold-out-again-today"
+        },
+        "airedOn": {
+            "value": [
+                "Wednesday",
+                "Thursday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/788726-it-s-sold-out-again-today"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "151298",
+            "artistName": "An Jong Yeon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "162700",
+            "artistName": "Jin Seung Hui",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "34795",
+            "artistName": "Kim Seo An",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "116305",
+            "artistName": "Jo Jin Hyeong",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "115993",
+            "artistName": "Jang Eun Sil",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "28151",
+            "artistName": "Lee Joo Han",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "asianwiki",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": null,
+        "airedOn": "mydramalist"
+    }
+}

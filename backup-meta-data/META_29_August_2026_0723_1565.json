@@ -1,0 +1,637 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260829_072322",
+    "timestamp": "29 August 2026 07:34 AM (IST)",
+    "showID": 1565,
+    "showName": "Man to Man",
+    "fetchedFields": {
+        "showImage": {
+            "value": "1565.jpg",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Man_to_Man"
+        },
+        "releaseDate": {
+            "value": "Apr 21, 2017 - Jun 10, 2017",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/16977-man-to-man"
+        },
+        "otherNames": {
+            "value": [
+                "De Homem Para Homem",
+                "Maen too Maen",
+                "Maentumaen",
+                "Лицом к лицу"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/16977-man-to-man"
+        },
+        "Duration": {
+            "value": "1 hr. 5 min.",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/16977-man-to-man"
+        },
+        "synopsis": {
+            "value": "Drama series tells the story of popular actor Yeo Woon-Gwang (Park Sung-Woong) and secret agent Kim Sul-Woo (Park Hae-Jin). Kim Sul-Woo goes undercover to work as the bodyguard of Yeo Woon-Gwang. The actor specializes in portraying villains.",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/Man_to_Man"
+        },
+        "director": {
+            "value": [
+                "Kim Sang Ho",
+                "Lee Chang Min"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/16977-man-to-man"
+        },
+        "tags": {
+            "value": [
+                "Hidden Identity",
+                "Bromance",
+                "Eccentric Female Lead",
+                "Eccentric Male Lead",
+                "Car Accident",
+                "Smart Male Lead",
+                "Physically Strong Male Lead",
+                "Emotionally Strong Female Lead",
+                "Roommates' Relationship",
+                "Congressman/Congresswoman Supporting Character"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/16977-man-to-man"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "65445",
+                    "artistName": "Park Se Jun",
+                    "artistImageURL": "https://i.mydramalist.com/v1loD_5m.jpg",
+                    "characterName": null,
+                    "role": "Composer"
+                },
+                {
+                    "artistID": "17299",
+                    "artistName": "Kim Sang Ho",
+                    "artistImageURL": "https://i.mydramalist.com/WbPqPm.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "17995",
+                    "artistName": "Lee Chang Min",
+                    "artistImageURL": "https://i.mydramalist.com/7gkpNm.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "16024",
+                    "artistName": "Kim Won Seok",
+                    "artistImageURL": "https://i.mydramalist.com/jW6wJm.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "645",
+                    "artistName": "Park Hae Jin",
+                    "artistImageURL": "https://i.mydramalist.com/JBelwY_5s.jpg",
+                    "characterName": "Kim Seol Woo / \"K\"",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "1235",
+                    "artistName": "Kim Min Jung",
+                    "artistImageURL": "https://i.mydramalist.com/YY1xJg_5s.jpg",
+                    "characterName": "Cha Do Ha",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "1742",
+                    "artistName": "Park Sung Woong",
+                    "artistImageURL": "https://i.mydramalist.com/Zvb4js.jpg",
+                    "characterName": "Yeo Woon Gwang",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "671",
+                    "artistName": "Yeon Jung Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/2O3p7s.jpg",
+                    "characterName": "Mo Seung Jae",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "442",
+                    "artistName": "Chae Jung An",
+                    "artistImageURL": "https://i.mydramalist.com/E0VP5_5s.jpg",
+                    "characterName": "Song Mi Eun",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "1701",
+                    "artistName": "Jung Man Sik",
+                    "artistImageURL": "https://i.mydramalist.com/l01Nn6_5s.jpg",
+                    "characterName": "Prosecutor Lee Dong Hyun",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "1476",
+                    "artistName": "Jang Hyun Sung",
+                    "artistImageURL": "https://i.mydramalist.com/1LJLds.jpg",
+                    "characterName": "Department Head Jang of NIS",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "6180",
+                    "artistName": "Tae In Ho",
+                    "artistImageURL": "https://i.mydramalist.com/4b5ers.jpg",
+                    "characterName": "Seo Gi Chul",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "194",
+                    "artistName": "Lee Si Eon",
+                    "artistImageURL": "https://i.mydramalist.com/PxZ3pX_5s.jpg",
+                    "characterName": "Ji Seo Hoon [Chairman / Woon Kwang's boss]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2915",
+                    "artistName": "Oh Na Ra",
+                    "artistImageURL": "https://i.mydramalist.com/nOZJmL_5s.jpg",
+                    "characterName": "Sharon Kim [Mi Eun's friend]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4129",
+                    "artistName": "Kim Byung Se",
+                    "artistImageURL": "https://i.mydramalist.com/QJ5LY7_5s.jpg",
+                    "characterName": "Cha Myeong Suk [Do Ha's father]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5321",
+                    "artistName": "Oh Hee Joon",
+                    "artistImageURL": "https://i.mydramalist.com/3oAEXv_5s.jpg",
+                    "characterName": "Yang Sang Shik [Manager]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2646",
+                    "artistName": "Kim  Bo Mi",
+                    "artistImageURL": "https://i.mydramalist.com/vnxDqs.jpg",
+                    "characterName": "Park Song Yi [Do Ha's best friend]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "555",
+                    "artistName": "Cheon Ho Jin",
+                    "artistImageURL": "https://i.mydramalist.com/Lw8QkB_5s.jpg",
+                    "characterName": "Baek In Soo",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4541",
+                    "artistName": "Shin Joo Ah",
+                    "artistImageURL": "https://i.mydramalist.com/E5JxN7_5s.jpg",
+                    "characterName": "Pi Eun Soo [Actress]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "15178",
+                    "artistName": "Han Ji Sun",
+                    "artistImageURL": "https://i.mydramalist.com/yWX7b4_5s.jpg",
+                    "characterName": "Choi Sul Ah [Coordinator]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "15263",
+                    "artistName": "Kim Hyun Jin",
+                    "artistImageURL": "https://i.mydramalist.com/d5eq5_5s.jpg",
+                    "characterName": "Jang Chul Joon",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2391",
+                    "artistName": "Kang Shin Il",
+                    "artistImageURL": "https://i.mydramalist.com/kVZqms.jpg",
+                    "characterName": "Im Suk Hoon [Head of NIS]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4672",
+                    "artistName": "Jo Seung Yun",
+                    "artistImageURL": "https://i.mydramalist.com/xNZg0_5s.jpg",
+                    "characterName": "Choi Jae Hyuk [Beak Infantry head agent]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "16609",
+                    "artistName": "Park Seon Im",
+                    "artistImageURL": "https://i.mydramalist.com/jQxjJw_5s.jpg",
+                    "characterName": "Wang Mei [Ghost woman]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4438",
+                    "artistName": "Kim Jong Gu",
+                    "artistImageURL": "https://i.mydramalist.com/kq2gd_5s.jpg",
+                    "characterName": "Robert Yoon / Agent Y",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "4402",
+                    "artistName": "Lee Joon Hyuk",
+                    "artistImageURL": "https://i.mydramalist.com/dWxog_5s.jpg",
+                    "characterName": "Lee Hyuk Joon",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "6695",
+                    "artistName": "Moon Jae Won",
+                    "artistImageURL": "https://i.mydramalist.com/2D4p7s.jpg",
+                    "characterName": "Yong Jae Min",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "22884",
+                    "artistName": "Lee El Bin",
+                    "artistImageURL": "https://i.mydramalist.com/z76mes.jpg",
+                    "characterName": "Mo Jae Yeong",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "31187",
+                    "artistName": "Kahlid Elijah Tapia",
+                    "artistImageURL": "https://i.mydramalist.com/wK8Kgs.jpg",
+                    "characterName": "[Fan on subway]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "38757",
+                    "artistName": "John D. Michaels",
+                    "artistImageURL": "https://i.mydramalist.com/4Jgrd_5s.jpg",
+                    "characterName": "Victor",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "20772",
+                    "artistName": "Lee Ah Jin",
+                    "artistImageURL": "https://i.mydramalist.com/g201ds.jpg",
+                    "characterName": "Son Jung Hye [Woon Gwang's makeup artist]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "149470",
+                    "artistName": "Elisabeth Garcia",
+                    "artistImageURL": "https://i.mydramalist.com/5v7xWe_5s.jpg",
+                    "characterName": "Anna Roberto",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "5628",
+                    "artistName": "Jin Sun Kyu",
+                    "artistImageURL": "https://i.mydramalist.com/Dkrver_5s.jpg",
+                    "characterName": "[Journalist] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "3111",
+                    "artistName": "Im Ji Gyu",
+                    "artistImageURL": "https://i.mydramalist.com/v60q2_5s.jpg",
+                    "characterName": "[Movie director] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "15617",
+                    "artistName": "Joey Albright",
+                    "artistImageURL": "https://i.mydramalist.com/Bgk4z_5s.jpg",
+                    "characterName": "Officer Perry (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "46737",
+                    "artistName": "Bbaek Ga",
+                    "artistImageURL": "https://i.mydramalist.com/Bd7K6b_5s.jpg",
+                    "characterName": "(Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21590",
+                    "artistName": "Jeon Woon Jong",
+                    "artistImageURL": "https://i.mydramalist.com/Y3w4Ws.jpg",
+                    "characterName": "[Bank robber] (Ep. 1) | [Assistant director] (Ep. 16)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "4629",
+                    "artistName": "Yoon Seo Hyun",
+                    "artistImageURL": "https://i.mydramalist.com/e3PDns.jpg",
+                    "characterName": "(Ep. 5-6, 13)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5863",
+                    "artistName": "Jung Dong Gyu",
+                    "artistImageURL": "https://i.mydramalist.com/eWD6n_5s.jpg",
+                    "characterName": "[Attorney general] (Ep. 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "23969",
+                    "artistName": "Song Min Gyo",
+                    "artistImageURL": "https://i.mydramalist.com/vO2r2s.jpg",
+                    "characterName": "[Announcer] (Ep. 8, 13)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "431",
+                    "artistName": "Song Joong Ki",
+                    "artistImageURL": "https://i.mydramalist.com/1kymd_5s.jpg",
+                    "characterName": "[Banker] (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "513",
+                    "artistName": "Namkoong Min",
+                    "artistImageURL": "https://i.mydramalist.com/JBDVOp_5s.jpg",
+                    "characterName": "[Actor] (Ep. 10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "844",
+                    "artistName": "Lee Jae Yong",
+                    "artistImageURL": "https://i.mydramalist.com/jx21z_5s.jpg",
+                    "characterName": "Father Michael (Ep. 11-13)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "9446",
+                    "artistName": "Son Jong Hak",
+                    "artistImageURL": "https://i.mydramalist.com/g0KPqP_5s.jpg",
+                    "characterName": "Director Park (Ep. 13)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "2620",
+                    "artistName": "Jeon Gook Hwan",
+                    "artistImageURL": "https://i.mydramalist.com/xXNAEs.jpg",
+                    "characterName": "Mo Byeong Do [Seung Jae's grandfather] (Ep. 14)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "15233",
+                    "artistName": "Kwak Kyung Taek",
+                    "artistImageURL": "https://i.mydramalist.com/YYernQ_5s.jpg",
+                    "characterName": "Ma Da Shik [Director] (Ep. 15)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "3264",
+                    "artistName": "Kim Yeo Jin",
+                    "artistImageURL": "https://i.mydramalist.com/xKjpEs.jpg",
+                    "characterName": "[Dong Hyun's wife] (Ep. 15-16)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "4491",
+                    "artistName": "Lee Do Yeop",
+                    "artistImageURL": "https://i.mydramalist.com/l060wE_5s.jpg",
+                    "characterName": "PD Choi (Ep. 15-16)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "2641",
+                    "artistName": "Kim Min Young",
+                    "artistImageURL": "https://i.mydramalist.com/NdnpEy_5s.jpg",
+                    "characterName": "[Woon Gwang's fan] (Ep. 16)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5319",
+                    "artistName": "David McInnis",
+                    "artistImageURL": "https://i.mydramalist.com/vREKXs.jpg",
+                    "characterName": "Petrov [Russian officer]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "17445",
+                    "artistName": "Jo Wan Ki",
+                    "artistImageURL": "https://i.mydramalist.com/DkA2v2_5s.jpg",
+                    "characterName": "[Interrogator]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5586",
+                    "artistName": "Ham Jin Sung",
+                    "artistImageURL": "https://i.mydramalist.com/Bw5dqs.jpg",
+                    "characterName": "[NIS agent]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "10011",
+                    "artistName": "Cha Bo Sung",
+                    "artistImageURL": "https://i.mydramalist.com/5vDpEw_5s.jpg",
+                    "characterName": "[Shop employee]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6658",
+                    "artistName": "Yoo Sang Jae",
+                    "artistImageURL": "https://i.mydramalist.com/dA0Bzs.jpg",
+                    "characterName": "[Prosecution investigation officer]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5809",
+                    "artistName": "Kwon Oh Jin",
+                    "artistImageURL": "https://i.mydramalist.com/XOB3J_5s.jpg",
+                    "characterName": "[Groundskeeper of Mo family hunting grounds]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "19918",
+                    "artistName": "Jason Scott Nelson",
+                    "artistImageURL": "https://i.mydramalist.com/ABXzN4_5s.jpg",
+                    "characterName": "Kim Seol Woo [Voice]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "81383",
+                    "artistName": "Anupam Tripathi",
+                    "artistImageURL": "https://i.mydramalist.com/2vW0O_5s.jpg",
+                    "characterName": "[Electronics repair shop owner] (Ep. 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5862",
+                    "artistName": "Choi Gyo Shik",
+                    "artistImageURL": "https://i.mydramalist.com/WXzRP_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21404",
+                    "artistName": "Joo Sung Hwan",
+                    "artistImageURL": "https://i.mydramalist.com/OxrOgs.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21513",
+                    "artistName": "Jung Myung Joon",
+                    "artistImageURL": "https://i.mydramalist.com/QP6q7_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "22850",
+                    "artistName": "Kim Oh Bok",
+                    "artistImageURL": "https://i.mydramalist.com/3LAQes.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "23835",
+                    "artistName": "Kwon Hyuk Soo",
+                    "artistImageURL": "https://i.mydramalist.com/724rLs.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "38489",
+                    "artistName": "Seo Hye Jin",
+                    "artistImageURL": "https://i.mydramalist.com/2Xplk_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "39291",
+                    "artistName": "Shin Young Kyu",
+                    "artistImageURL": "https://i.mydramalist.com/0d1A6_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "21053",
+                    "artistName": "Jang Tae Min",
+                    "artistImageURL": "https://i.mydramalist.com/eoZmQs.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "9717",
+                    "artistName": "Hong Seo Joon",
+                    "artistImageURL": "https://i.mydramalist.com/v5dPD_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "10878",
+                    "artistName": "Kang Hyun Jung",
+                    "artistImageURL": "https://i.mydramalist.com/XX8LO_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6266",
+                    "artistName": "Jung Byung Ho",
+                    "artistImageURL": "https://i.mydramalist.com/xXdXzs.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "5732",
+                    "artistName": "Seol Chang Hee",
+                    "artistImageURL": "https://i.mydramalist.com/4Ngnk_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "12262",
+                    "artistName": "Kim In Woo",
+                    "artistImageURL": "https://i.mydramalist.com/j8NqBs.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "2831",
+                    "artistName": "Kim Ik Tae",
+                    "artistImageURL": "https://i.mydramalist.com/Lw8KEg_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "14366",
+                    "artistName": "Jung Hyun Seok",
+                    "artistImageURL": "https://i.mydramalist.com/O8Ly1g_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "43845",
+                    "artistName": "Yoon Jong Won",
+                    "artistImageURL": "https://i.mydramalist.com/B1pZR_5s.jpg",
+                    "characterName": "Unknown",
+                    "role": "Support Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/16977-man-to-man"
+        },
+        "airedOn": {
+            "value": [
+                "Friday",
+                "Saturday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/16977-man-to-man"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "15263",
+            "artistName": "Kim Hyun Jin",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "22884",
+            "artistName": "Lee El Bin",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "31187",
+            "artistName": "Kahlid Elijah Tapia",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "149470",
+            "artistName": "Elisabeth Garcia",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "46737",
+            "artistName": "Bbaek Ga",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "23969",
+            "artistName": "Song Min Gyo",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "15233",
+            "artistName": "Kwak Kyung Taek",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "asianwiki",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": null,
+        "airedOn": "mydramalist"
+    }
+}

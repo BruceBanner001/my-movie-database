@@ -1,0 +1,436 @@
+{
+    "scriptVersion": "v12.1.2",
+    "runID": "RUN_20260829_072322",
+    "timestamp": "29 August 2026 07:27 AM (IST)",
+    "showID": 1545,
+    "showName": "We Are All Trying Here",
+    "fetchedFields": {
+        "showImage": {
+            "value": "1545.jpg",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/We_Are_All_Trying_Here"
+        },
+        "releaseDate": {
+            "value": "Apr 18, 2026 - May 24, 2026",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/790724-everyone-is-fighting-their-own-worthlessness"
+        },
+        "otherNames": {
+            "value": [
+                "Everyone Is Fighting Their Own Worthlessness",
+                "Modu Jasinui Mugachihamgwa Ssaugo Issda",
+                "Mojamussa",
+                "모자무싸"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/790724-everyone-is-fighting-their-own-worthlessness"
+        },
+        "Duration": {
+            "value": "1 hr. 10 min.",
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/790724-everyone-is-fighting-their-own-worthlessness"
+        },
+        "synopsis": {
+            "value": "A story of the struggles and journey of people tormented by envy and jealousy, while trying to find their own peace.\n\nHwang Dong-Man (Koo Kyo-Hwan) is an aspiring director, who is the only one in the famous film industry group \"The Eight\" that hasn't debuted. He tries not to get up caught up in feeling worthless. Byeon Eun-A (Go Youn-Jung) works as a producer for Choi Film. She's called The Ax due to her sharp screenplay reviews. She hides her anger and fears inside. Park Gyeong-Se (Oh Jung-Se) is a film director. He is particularly swayed and stressed by Hwang Dong-Man, after his recent movie bombed at the box office. Ko Hye-Jin (Kang Mal-Geum) is the CEO of Gobak Film and married to Park Gyeong-Se. She is broad-minded and steadfast enough to embrace Hwang Dong-Man's long-winded talks. Hwang Jin-Man (Park Hae-Joon) is Hwang Dong-Man's older brother and former poet. After experiencing the end of incompetence, he, whose inner self collapsed, feels empty.",
+            "source": "asianwiki",
+            "source_link": "https://asianwiki.com/We_Are_All_Trying_Here"
+        },
+        "director": {
+            "value": [
+                "Cha Young Hoon"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/790724-everyone-is-fighting-their-own-worthlessness"
+        },
+        "tags": {
+            "value": [
+                "Film Industry",
+                "Melodrama",
+                "Producer Female Lead",
+                "Healing",
+                "Multiple Mains",
+                "Jealous Male Lead",
+                "Entertainment Industry",
+                "Inferiority Complex",
+                "Director Male Lead",
+                "Brothers' Relationship"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/790724-everyone-is-fighting-their-own-worthlessness"
+        },
+        "cast": {
+            "value": [
+                {
+                    "artistID": "21340",
+                    "artistName": "Cha Young Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/EO1y0_5m.jpg",
+                    "characterName": null,
+                    "role": "Director"
+                },
+                {
+                    "artistID": "18094",
+                    "artistName": "Park Hae Young",
+                    "artistImageURL": "https://i.mydramalist.com/ZNWm1_5m.jpg",
+                    "characterName": null,
+                    "role": "Screenwriter"
+                },
+                {
+                    "artistID": "15792",
+                    "artistName": "Koo Kyo Hwan",
+                    "artistImageURL": "https://i.mydramalist.com/zB268z_5s.jpg",
+                    "characterName": "Hwang Dong Man",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "22074",
+                    "artistName": "Go Youn Jung",
+                    "artistImageURL": "https://i.mydramalist.com/VXx6Ex_5s.jpg",
+                    "characterName": "Byeon Eun A",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "4684",
+                    "artistName": "Oh Jung Se",
+                    "artistImageURL": "https://i.mydramalist.com/VXDoEJ_5s.jpg",
+                    "characterName": "Park Gyeong Se",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "15707",
+                    "artistName": "Kang Mal Geum",
+                    "artistImageURL": "https://i.mydramalist.com/RRqnr_5s.jpg",
+                    "characterName": "Ko Hye Jin",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "5537",
+                    "artistName": "Park Hae Joon",
+                    "artistImageURL": "https://i.mydramalist.com/RRQJR_5s.jpg",
+                    "characterName": "Hwang Jin Man",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "2016",
+                    "artistName": "Bae Jong Ok",
+                    "artistImageURL": "https://i.mydramalist.com/Qxym5_5s.jpg",
+                    "characterName": "O Jeong Hui",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "4870",
+                    "artistName": "Han Sun Hwa",
+                    "artistImageURL": "https://i.mydramalist.com/DkrJYn_5s.jpg",
+                    "characterName": "Jang Mi Ran",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "1209",
+                    "artistName": "Choi Won Young",
+                    "artistImageURL": "https://i.mydramalist.com/QBrn6_5s.jpg",
+                    "characterName": "Choi Dong Hyeon",
+                    "role": "Main Role"
+                },
+                {
+                    "artistID": "6294",
+                    "artistName": "Jeon Bae Soo",
+                    "artistImageURL": "https://i.mydramalist.com/jJb0w_5s.jpg",
+                    "characterName": "Park Yeong Su ['Council of Eight' member]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "8014",
+                    "artistName": "Shim Hee Sub",
+                    "artistImageURL": "https://i.mydramalist.com/d0vvlA_5s.jpg",
+                    "characterName": "Lee Jun Hwan [Choi Film director]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "60279",
+                    "artistName": "Park Ye Ni",
+                    "artistImageURL": "https://i.mydramalist.com/oQ1JJv_5s.jpg",
+                    "characterName": "Choi Hyo Jin [Choi Film planning PD]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "33035",
+                    "artistName": "Bae Myung Jin",
+                    "artistImageURL": "https://i.mydramalist.com/q6XEK_5s.jpg",
+                    "characterName": "Lee Gi Ri [Choi Film director]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "99379",
+                    "artistName": "Jo Min Kook",
+                    "artistImageURL": "https://i.mydramalist.com/73Ew0r_5s.jpg",
+                    "characterName": "Woo Seung Tae [Choi Film director]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "10675",
+                    "artistName": "Yun Woon Kyung",
+                    "artistImageURL": "https://i.mydramalist.com/ejPx8_5s.jpg",
+                    "characterName": "Ga Su Ja [Eun A's grandmother]",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "162680",
+                    "artistName": "Kim So Yul",
+                    "artistImageURL": "https://i.mydramalist.com/l0eL1e_5s.jpg",
+                    "characterName": "Sae Bom",
+                    "role": "Support Role"
+                },
+                {
+                    "artistID": "124325",
+                    "artistName": "Kim Man Ho",
+                    "artistImageURL": "https://i.mydramalist.com/eYgQDd_5s.jpg",
+                    "characterName": "[Director] (Ep. 1)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "123485",
+                    "artistName": "Park Se Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/jQWnjr_5s.jpg",
+                    "characterName": "[Landlord] (Ep. 1-2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "94787",
+                    "artistName": "Ha Sung Min",
+                    "artistImageURL": "https://i.mydramalist.com/rAWpy_5s.jpg",
+                    "characterName": "[Crosswalk pedestrian] (Ep. 1-2)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "8674",
+                    "artistName": "Jung Jong Joon",
+                    "artistImageURL": "https://i.mydramalist.com/3vmXms.jpg",
+                    "characterName": "[Dong Man's uncle] (Ep. 2, 5)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "72979",
+                    "artistName": "Jung Hye Ji",
+                    "artistImageURL": "https://i.mydramalist.com/ZqK31_5s.jpg",
+                    "characterName": "[XimFit staff] (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "35541",
+                    "artistName": "Park Jae Chul",
+                    "artistImageURL": "https://i.mydramalist.com/0dR5K_5s.jpg",
+                    "characterName": "[Props master] (Ep. 4)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "2910",
+                    "artistName": "Jung Min Ah",
+                    "artistImageURL": "https://i.mydramalist.com/B1ey6_5s.jpg",
+                    "characterName": "Park Jeong Min (Ep. 7)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "20847",
+                    "artistName": "Lee Ja Ryoung",
+                    "artistImageURL": "https://i.mydramalist.com/y76zBs.jpg",
+                    "characterName": "[Poetry student] (Ep. 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "33111",
+                    "artistName": "Park Ok Chool",
+                    "artistImageURL": "https://i.mydramalist.com/XKopxs.jpg",
+                    "characterName": "[Poetry student] (Ep. 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "52901",
+                    "artistName": "Seo Ji Won",
+                    "artistImageURL": "https://i.mydramalist.com/j3Xwy_5s.jpg",
+                    "characterName": "[Poetry student] (Ep. 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "12324",
+                    "artistName": "Kim Ho Won",
+                    "artistImageURL": "https://i.mydramalist.com/ZogpYs.jpg",
+                    "characterName": "[Professor] (Ep. 8)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "124481",
+                    "artistName": "Choi Min Kyu",
+                    "artistImageURL": "https://i.mydramalist.com/wJmQlN_5s.jpg",
+                    "characterName": "[Loan shark's enforcer] (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "7358",
+                    "artistName": "Choi Tae Hwan",
+                    "artistImageURL": "https://i.mydramalist.com/kRO1O_5s.jpg",
+                    "characterName": "Jung Hyeon U (Ep. 9)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "45487",
+                    "artistName": "Moon Ji Won",
+                    "artistImageURL": "https://i.mydramalist.com/b3rbmw_5s.jpg",
+                    "characterName": "[Hyeon U's girlfriend] (Ep. 9-10)]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "29433",
+                    "artistName": "Han Dong Gyu",
+                    "artistImageURL": "https://i.mydramalist.com/O8WOqd_5s.jpg",
+                    "characterName": "Kim Seong Jun [Director] (Ep. 10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "122591",
+                    "artistName": "Kim Moon Sik",
+                    "artistImageURL": "https://i.mydramalist.com/Z84z1J_5s.jpg",
+                    "characterName": "[Funeral attendee] (Ep. 10)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "160648",
+                    "artistName": "Cho Su Yeon",
+                    "artistImageURL": "https://i.mydramalist.com/VX6NXO_5s.jpg",
+                    "characterName": "Im Na Yeong [Choi Film employee]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "3112",
+                    "artistName": "Park Soo Young",
+                    "artistImageURL": "https://i.mydramalist.com/EDXRps.jpg",
+                    "characterName": "Park Sang Jin [JH Entertainment]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "152784",
+                    "artistName": "Han Si A",
+                    "artistImageURL": "https://i.mydramalist.com/5vjBBw_5s.jpg",
+                    "characterName": "Byeon Eun A [Child]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "10489",
+                    "artistName": "Kim Jong Hoon",
+                    "artistImageURL": "https://i.mydramalist.com/BxOO5s.jpg",
+                    "characterName": "Ma Jae Yeong [Eun A's ex-boyfriend]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "6183",
+                    "artistName": "Choi Hee Jin",
+                    "artistImageURL": "https://i.mydramalist.com/6jVxj_5s.jpg",
+                    "characterName": "[Psychiatrist]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "126259",
+                    "artistName": "Lee Han Sol",
+                    "artistImageURL": "https://i.mydramalist.com/Z81v5k_5s.jpg",
+                    "characterName": "[Kopark Film staff]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "30781",
+                    "artistName": "Choi Kwang Won",
+                    "artistImageURL": "https://i.mydramalist.com/zBXwBe_5s.jpg",
+                    "characterName": "[Bartender]",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "1113",
+                    "artistName": "Sung Dong Il",
+                    "artistImageURL": "https://i.mydramalist.com/XOo6p_5s.jpg",
+                    "characterName": "No Gang Sik (Ep. 8-12)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "1465",
+                    "artistName": "Kim Dong Wook",
+                    "artistImageURL": "https://i.mydramalist.com/0wKYq4_5s.jpg",
+                    "characterName": "Jeong Min (Ep. 11)",
+                    "role": "Guest Role"
+                },
+                {
+                    "artistID": "164332",
+                    "artistName": "Eun Seung Jun",
+                    "artistImageURL": "https://i.mydramalist.com/YYPlqz_5s.jpg",
+                    "characterName": "Myeong Hun",
+                    "role": "Guest Role"
+                }
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/790724-everyone-is-fighting-their-own-worthlessness"
+        },
+        "airedOn": {
+            "value": [
+                "Saturday",
+                "Sunday"
+            ],
+            "source": "mydramalist",
+            "source_link": "https://mydramalist.com/790724-everyone-is-fighting-their-own-worthlessness"
+        }
+    },
+    "newArtistsAdded": [
+        {
+            "artistID": "15792",
+            "artistName": "Koo Kyo Hwan",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "162680",
+            "artistName": "Kim So Yul",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "123485",
+            "artistName": "Park Se Hoon",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "52901",
+            "artistName": "Seo Ji Won",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "12324",
+            "artistName": "Kim Ho Won",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "45487",
+            "artistName": "Moon Ji Won",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "152784",
+            "artistName": "Han Si A",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "30781",
+            "artistName": "Choi Kwang Won",
+            "imageDownloaded": true
+        },
+        {
+            "artistID": "164332",
+            "artistName": "Eun Seung Jun",
+            "imageDownloaded": true
+        }
+    ],
+    "sitePriorityUsed": {
+        "showImage": "asianwiki",
+        "releaseDate": "mydramalist",
+        "otherNames": "mydramalist",
+        "Duration": "mydramalist",
+        "synopsis": "asianwiki",
+        "director": "mydramalist",
+        "tags": "mydramalist",
+        "cast": "mydramalist",
+        "network": null,
+        "airedOn": "mydramalist"
+    }
+}
