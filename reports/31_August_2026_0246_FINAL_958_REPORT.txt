@@ -1,9 +1,3 @@
-[DEBUG] Title Validation FAILED: Expected Year 2026 (±1) not found on page 'Fireworks (2006-South Korea-MBC)'.
-[DEBUG] Title Validation FAILED: Expected Year 2026 (±1) not found on page 'Fireworks (2006-South Korea-MBC)'.
-[DEBUG] Title Validation FAILED: Expected Year 2026 (±1) not found on page 'Fireworks (2006-South Korea-MBC)'.
-[DEBUG] Title Validation FAILED: Page Title 'Foxy Lady!' vs Expected 'What's Up, Fox?' (Ratio: 0.24 & No Alias Match)
-[DEBUG] Title Validation FAILED: Page Title 'Foxy Lady!' vs Expected 'What's Up, Fox?' (Ratio: 0.24 & No Alias Match)
-[DEBUG] Title Validation FAILED: Page Title 'Foxy Lady!' vs Expected 'What's Up, Fox?' (Ratio: 0.24 & No Alias Match)
 ✅ Workflow Batch completed successfully
 🏁 Final Batch Completed
 ══════════════════════════════════════════════════════
@@ -14,9 +8,9 @@
 🔁 RUN           : 958
 ⏰ Start Time    : 31 August 2026 - 02:46:14 AM
 ⏰ End Time      : 31 August 2026 - 02:50:11 AM
-⏱️ Run Time      : 3 Minutes 56 Seconds
+⏱️ Total Runtime : 3 Minutes 56 Seconds
 ⚙️ Max Process   : 50 Row Per Run
-🔄 Current Batch : 1
+🔄 Total Batches : 1 Run
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Feb 7 2023 Onwards ===
@@ -803,7 +797,7 @@
   Total Unique Rows: 12
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📊 Summary (Current Batch Only)
+📊 Overall Cumulative Summary
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🆕 Total Created: 0
 🔁 Total Updated: 0
@@ -834,5 +828,3 @@
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🏁 Workflow finished successfully
-
-✅ Final Master Report written -> reports/31_August_2026_0246_FINAL_958_REPORT.txt (Saved to Repo)
