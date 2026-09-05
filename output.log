@@ -1,27 +1,59 @@
-[DEBUG] Title Validation FAILED: Expected Year 2026 (±1) not found on page 'Fireworks (2006-South Korea-MBC)'.
-[DEBUG] Title Validation FAILED: Expected Year 2026 (±1) not found on page 'Fireworks (2006-South Korea-MBC)'.
-[DEBUG] Title Validation FAILED: Expected Year 2026 (±1) not found on page 'Fireworks (2006-South Korea-MBC)'.
-[DEBUG] Title Validation FAILED: Page Title 'DramaDreams100' vs Expected 'Love Has Fireworks' (Ratio: 0.25 & No Alias Match)
-[DEBUG] Title Validation FAILED: Page Title 'Foxy Lady!' vs Expected 'What's Up, Fox?' (Ratio: 0.24 & No Alias Match)
-[DEBUG] Title Validation FAILED: Page Title 'Foxy Lady!' vs Expected 'What's Up, Fox?' (Ratio: 0.24 & No Alias Match)
-[DEBUG] Title Validation FAILED: Page Title 'Foxy Lady!' vs Expected 'What's Up, Fox?' (Ratio: 0.24 & No Alias Match)
-✅ Workflow Batch completed successfully
-🏁 Final Batch Completed
+h2 connection driver error: peer closed connection without sending TLS close_notify: https://docs.rs/rustls/latest/rustls/manual/_03_howto/index.html#unexpected-eof
+h2 connection driver error: connection reset
+h2 connection driver error: connection reset
+h2 connection driver error: peer closed connection without sending TLS close_notify: https://docs.rs/rustls/latest/rustls/manual/_03_howto/index.html#unexpected-eof
+h2 connection driver error: peer closed connection without sending TLS close_notify: https://docs.rs/rustls/latest/rustls/manual/_03_howto/index.html#unexpected-eof
+h2 connection driver error: peer closed connection without sending TLS close_notify: https://docs.rs/rustls/latest/rustls/manual/_03_howto/index.html#unexpected-eof
+h2 connection driver error: peer closed connection without sending TLS close_notify: https://docs.rs/rustls/latest/rustls/manual/_03_howto/index.html#unexpected-eof
+h2 connection driver error: peer closed connection without sending TLS close_notify: https://docs.rs/rustls/latest/rustls/manual/_03_howto/index.html#unexpected-eof
+h2 connection driver error: peer closed connection without sending TLS close_notify: https://docs.rs/rustls/latest/rustls/manual/_03_howto/index.html#unexpected-eof
+h2 connection driver error: peer closed connection without sending TLS close_notify: https://docs.rs/rustls/latest/rustls/manual/_03_howto/index.html#unexpected-eof
+h2 connection driver error: peer closed connection without sending TLS close_notify: https://docs.rs/rustls/latest/rustls/manual/_03_howto/index.html#unexpected-eof
+h2 connection driver error: peer closed connection without sending TLS close_notify: https://docs.rs/rustls/latest/rustls/manual/_03_howto/index.html#unexpected-eof
+h2 connection driver error: peer closed connection without sending TLS close_notify: https://docs.rs/rustls/latest/rustls/manual/_03_howto/index.html#unexpected-eof
+h2 connection driver error: peer closed connection without sending TLS close_notify: https://docs.rs/rustls/latest/rustls/manual/_03_howto/index.html#unexpected-eof
+h2 connection driver error: peer closed connection without sending TLS close_notify: https://docs.rs/rustls/latest/rustls/manual/_03_howto/index.html#unexpected-eof
+h2 connection driver error: peer closed connection without sending TLS close_notify: https://docs.rs/rustls/latest/rustls/manual/_03_howto/index.html#unexpected-eof
+h2 connection driver error: peer closed connection without sending TLS close_notify: https://docs.rs/rustls/latest/rustls/manual/_03_howto/index.html#unexpected-eof
+h2 connection driver error: peer closed connection without sending TLS close_notify: https://docs.rs/rustls/latest/rustls/manual/_03_howto/index.html#unexpected-eof
+✅ Partial Batch completed successfully
+⏳ Batch Processing in Progress...
 ══════════════════════════════════════════════════════
 📊 My Movie Database – Excel to JSON Workflow Report
 ══════════════════════════════════════════════════════
 
-🚀 Workflow Type : Automatic
-🔁 RUN           : 959
-⏰ Start Time    : 01 September 2026 - 04:26:41 AM
-⏰ End Time      : 01 September 2026 - 04:31:24 AM
-⏱️ Run Time      : 4 Minutes 43 Seconds
+🚀 Workflow Type : Manual
+🔁 RUN           : 960
+⏰ Start Time    : 05 September 2026 - 08:47:55 PM
+⏰ End Time      : 05 September 2026 - 09:56:46 PM
+⏱️ Run Time      : 1 Hour 8 Minutes 50 Seconds
 ⚙️ Max Process   : 50 Row Per Run
 🔄 Current Batch : 1
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Feb 7 2023 Onwards ===
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🆕 Data Created:
+- 1584 - A Man's Story (2009) -> First Time Uploaded
+- 1585 - Swallow The Sun (2009) -> First Time Uploaded
+- 1586 - My Too Perfect Sons (2009) -> First Time Uploaded
+- 1587 - The Husband (2026) -> First Time Uploaded
+- 1588 - Dream to You (2026) -> First Time Uploaded
+- 1589 - Three Brothers (2009) -> First Time Uploaded
+- 1590 - Spooky in Love (2026) -> First Time Uploaded
+- 1591 - I'm Sorry, I Love You (2004) -> First Time Uploaded
+- 1592 - A Man Called God (2010) -> First Time Uploaded
+- 1593 - Dalja's Spring (2007) -> First Time Uploaded
+- 1594 - I Have a Lover (2015) -> First Time Uploaded
+
+🔁 Data Updated:
+✍️ 1063 - That Winter, the Wind Blows (2013) -> Category, Again Watched Dates Updated
+✍️ 1083 - Healer (2014) -> Comments, Again Watched Dates Updated
+✍️ 1143 - Witch's Romance (2014) -> Comments, Ratings, Again Watched Dates Updated
+✍️ 1390 - Love Scout (2025) -> Again Watched Dates Updated
+✍️ 1549 - Filing for Love (2026) -> Again Watched Dates Updated
+✍️ 1567 - Oh! My Lady (2010) -> Again Watched Dates Updated
 
 ⚠️ Missing Values (Asian Dramas):
 - 1019 - The Fox's Summer Season 2 (2017) -> ⚠️ Missing: Director
@@ -57,6 +89,17 @@
 - 1559 - Love Has Fireworks (2026) -> ⚠️ Missing: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
 - 1569 - Queen of the Game (2006) -> ⚠️ Missing: Director
 - 1575 - What's Up, Fox? (2006) -> ⚠️ Missing: Aired On, Cast, Director, Duration, Other Names, Release Date, Synopsis, Tags
+- 1584 - A Man's Story (2009) -> ⚠️ Missing: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1585 - Swallow The Sun (2009) -> ⚠️ Missing: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1586 - My Too Perfect Sons (2009) -> ⚠️ Missing: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1587 - The Husband (2026) -> ⚠️ Missing: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1588 - Dream to You (2026) -> ⚠️ Missing: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1589 - Three Brothers (2009) -> ⚠️ Missing: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1590 - Spooky in Love (2026) -> ⚠️ Missing: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1591 - I'm Sorry, I Love You (2004) -> ⚠️ Missing: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1592 - A Man Called God (2010) -> ⚠️ Missing: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1593 - Dalja's Spring (2007) -> ⚠️ Missing: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1594 - I Have a Lover (2015) -> ⚠️ Missing: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
 
 🚫 Skipped (Unchanged):
 - 1001 - It's Okay to Not Be Okay (2020)
@@ -117,7 +160,6 @@
 - 1060 - Crash Course in Romance (2023)
 - 1061 - Mama Fairy and the Woodcutter (2018)
 - 1062 - Sh**ting Stars (2022)
-- 1063 - That Winter, the Wind Blows (2013)
 - 1064 - The Bride of Habaek (2017)
 - 1065 - My Princess (2011)
 - 1066 - Black Knight: The Man Who Guards Me (2017)
@@ -136,7 +178,6 @@
 - 1080 - Coffee Prince (2007)
 - 1081 - Monster (2016)
 - 1082 - Level Up (2019)
-- 1083 - Healer (2014)
 - 1084 - Radiant Office (2017)
 - 1085 - Kiss Sixth Sense (2022)
 - 1086 - My Roommate Is a Gumiho (2021)
@@ -192,7 +233,6 @@
 - 1140 - Hotel del Luna (2019)
 - 1141 - Something in the Rain (2018)
 - 1142 - Bride of the Century (2014)
-- 1143 - Witch's Romance (2014)
 - 1144 - When My Love Blooms (2020)
 - 1145 - Love in the Moonlight (2016)
 - 1146 - Tempted (2018)
@@ -402,7 +442,6 @@
 - 1386 - You Are My Secret (2024)
 - 1387 - As Beautiful as You (2024)
 - 1389 - The Furthest Distance (2023)
-- 1390 - Love Scout (2025)
 - 1391 - When the Stars Gossip (2025)
 - 1392 - Motel California (2025)
 - 1393 - The Best Thing (2025)
@@ -544,7 +583,6 @@
 - 1546 - Sold Out on You (2026)
 - 1547 - Weightlifting Fairy Kim Bok Joo (2016)
 - 1548 - The WONDERfools (2026)
-- 1549 - Filing for Love (2026)
 - 1550 - Bel Ami (2013)
 - 1551 - Are You Human? (2018)
 - 1552 - Love Marriage (2008)
@@ -561,7 +599,6 @@
 - 1564 - Smile, You (2009)
 - 1565 - Man to Man (2017)
 - 1566 - Bad Family (2006)
-- 1567 - Oh! My Lady (2010)
 - 1568 - The Man Who Can't Get Married (2009)
 - 1570 - Eccentric! Chef Moon (2020)
 - 1571 - 7th Grade Civil Servant (2013)
@@ -614,214 +651,33 @@
 
 📊 Summary (Sheet: Feb 7 2023 Onwards)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🆕 Created: 0
-🔁 Updated: 0
+🆕 Created: 11
+🔁 Updated: 6
 🔍 Refetched: 0
-🚫 Skipped (Asian): 517
+🚫 Skipped (Asian): 511
 🙈 Ignored (Non-Asian): 33
-⚠️ Warnings: 33
-  Total Unique Rows: 550
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🗂️ === Before Feb 7 2023 (Korean) ===
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-⚠️ Missing Values (Asian Dramas):
-- 124 - Hellbound (2022) -> ⚠️ Missing: Director
-
-🚫 Skipped (Unchanged):
-- 101 - Mr. Queen (2020)
-- 102 - She Would Never Know (2021)
-- 103 - True Beauty (2020)
-- 104 - What's Wrong with Secretary Kim (2018)
-- 105 - Love in Contract (2022)
-- 106 - Business Proposal (2022)
-- 107 - School 2017 (2017)
-- 108 - Island (2023)
-- 109 - The Innocent Man (2012)
-- 110 - The Legend of the Blue Sea (2016)
-- 111 - Reborn Rich (2022)
-- 112 - The Penthouse Season 3: War in Life (2021)
-- 113 - My Secret Terrius (2018)
-- 114 - The Liar and His Lover (2017)
-- 115 - Secret Garden (2010)
-- 116 - My Love from the Star (2013)
-- 117 - High Society (2015)
-- 118 - High School King of Savvy (2014)
-- 119 - Strong Girl Bong Soon (2017)
-- 120 - Introverted Boss (2017)
-- 121 - Because This Is My First Life (2017)
-- 122 - The One and Only (2022)
-- 123 - All of Us Are Dead (2022)
-
-📊 Summary (Sheet: Before Feb 7 2023 (Korean))
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🆕 Created: 0
-🔁 Updated: 0
-🔍 Refetched: 0
-🚫 Skipped (Asian): 23
-🙈 Ignored (Non-Asian): 0
-⚠️ Warnings: 1
-  Total Unique Rows: 23
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🗂️ === Before Feb 7 2023 (Korean Dub) ===
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-⚠️ Missing Values (Asian Dramas):
-- 237 - Squid Game (2021) -> ⚠️ Missing: Director
-
-🚫 Skipped (Unchanged):
-- 201 - The Penthouse: War in Life (2020)
-- 202 - The Penthouse Season 2: War in Life (2021)
-- 203 - Alice (2020)
-- 204 - Pinocchio (2014)
-- 205 - Playful Kiss (2010)
-- 206 - Dr. Romantic (2016)
-- 207 - Dr. Romantic Season 2 (2020)
-- 208 - Doctor John (2019)
-- 209 - Doctor Stranger (2014)
-- 210 - VIP (2019)
-- 211 - To All the Guys Who Loved Me (2020)
-- 212 - The Heirs (2013)
-- 213 - Meow, the Secret Boy (2020)
-- 214 - Into the Ring (2020)
-- 215 - Good Casting (2020)
-- 216 - Perfume (2019)
-- 217 - I Wanna Hear Your Song (2019)
-- 218 - The Tale of Nokdu (2019)
-- 219 - Angel's Last Mission: Love (2019)
-- 220 - Mask (2015)
-- 221 - Doctor Prisoner (2019)
-- 222 - Sketch (2018)
-- 223 - Untouchable (2017)
-- 224 - The Last Empress (2018)
-- 225 - The Secret Life of My Secretary (2019)
-- 226 - Defendant (2017)
-- 227 - Yong Pal (2015)
-- 228 - Solomon's Perjury (2016)
-- 229 - Sign (2011)
-- 230 - One the Woman (2021)
-- 231 - Flower of Evil (2020)
-- 232 - Kill Me, Heal Me (2015)
-- 233 - Guardian: The Lonely and Great God (2016)
-- 234 - Extraordinary You (2019)
-- 235 - I'm Not a Robot (2017)
-- 236 - Something about 1 Percent (2016)
-- 238 - Light on Me (2021)
-- 239 - Hot Stove League (2019)
-- 240 - My Wife’s Having an Affair This Week (2016)
-- 241 - Rain or Shine (2017)
-- 242 - Fantastic (2016)
-- 243 - My Girlfriend Is a Gumiho (2010)
-
-📊 Summary (Sheet: Before Feb 7 2023 (Korean Dub))
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🆕 Created: 0
-🔁 Updated: 0
-🔍 Refetched: 0
-🚫 Skipped (Asian): 42
-🙈 Ignored (Non-Asian): 0
-⚠️ Warnings: 1
-  Total Unique Rows: 42
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🗂️ === Before Feb 7 2023 ===
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-🚫 Skipped (Unchanged):
-- 301 - My Girlfriend Is an Alien (2019)
-- 302 - Put Your Head on My Shoulder (2019)
-- 303 - Love of Thousand Years (2020)
-- 304 - The Sleepless Princess (2020)
-- 305 - The Love by Hypnotic (2019)
-- 306 - A Love So Romantic (2020)
-- 307 - Dreaming Back to the Qing Dynasty (2019)
-- 308 - Love Better Than Immortality (2019)
-- 309 - Knock On The Happiness Door (2020)
-- 310 - Song of Youth (2021)
-- 311 - Love O2O (2016)
-
-🙈 Ignored (Non-Asian / Western Shows):
-- 312 - Limitless (2015)
-- 313 - Beauty and the Beast Season 1 (2012)
-- 314 - Beauty and the Beast Season 2 (2013)
-- 315 - Beauty and the Beast Season 3 (2015)
-- 316 - Beauty and the Beast Season 4 (2016)
-- 317 - Price of Passion (2017)
-- 318 - Lucifer Season 1 (2016)
-- 319 - Lucifer Season 2 (2017)
-- 320 - Lucifer Season 3 (2018)
-- 321 - Lucifer Season 4 (2019)
-- 322 - Lucifer Season 5 (2021)
-- 323 - Lucifer Season 6 (2021)
-- 324 - Peaky Blinders Season 1 (2013)
-
-📊 Summary (Sheet: Before Feb 7 2023)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🆕 Created: 0
-🔁 Updated: 0
-🔍 Refetched: 0
-🚫 Skipped (Asian): 11
-🙈 Ignored (Non-Asian): 13
-⚠️ Warnings: 0
-  Total Unique Rows: 24
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🗂️ === Mini Drama ===
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-⚠️ Missing Values (Asian Dramas):
-- 401 - Number Six (2018) -> ⚠️ Missing: Director
-- 403 - Don’t Mess with Ex-Girlfriend (2022) -> ⚠️ Missing: Director
-- 404 - Here Is My Exclusive Indulge Season 2 (2022) -> ⚠️ Missing: Director
-- 405 - Love Me in Three Days (2022) -> ⚠️ Missing: Director
-- 407 - Love You Self-Evident (2023) -> ⚠️ Missing: Director
-- 413 - Dear Sa-chan (2024) -> ⚠️ Missing: Director
-
-🚫 Skipped (Unchanged):
-- 402 - Female CEO Love Me (2022)
-- 406 - High-end Crush (2015)
-- 408 - Fanletter, Please (2022)
-- 409 - Scripting Your Destiny (2021)
-- 410 - My Undead Yokai Girlfriend (2024)
-- 411 - Mad for Each Other (2021)
-- 412 - Business Marriage (2024)
-- 414 - 1122: For a Happy Marriage (2024)
-- 415 - Rainkissed Fate (2025)
-- 416 - Hello, Nice to Meet You. Let's Get Divorced. (2024)
-- 417 - Naked Fireman (2017)
-- 418 - Way Back Love (2025)
-
-📊 Summary (Sheet: Mini Drama)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🆕 Created: 0
-🔁 Updated: 0
-🔍 Refetched: 0
-🚫 Skipped (Asian): 12
-🙈 Ignored (Non-Asian): 0
-⚠️ Warnings: 6
-  Total Unique Rows: 12
+⚠️ Warnings: 44
+  Total Unique Rows: 561
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📊 Summary (Current Batch Only)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🆕 Total Created: 0
-🔁 Total Updated: 0
+🆕 Total Created: 11
+🔁 Total Updated: 6
 🔍 Total Refetched: 0
 🖼️ Show Images Updated: 0
 🧑‍🎨 New Artist Images Added: 0
-🚫 Total Skipped (Asian): 605
-🙈 Total Ignored (Non-Asian): 46
+🚫 Total Skipped (Asian): 511
+🙈 Total Ignored (Non-Asian): 33
 ❌ Total Deleted: 0
 🗄️ Total Archived Backups: 0
-⚠️ Total Warnings: 41
-💾 Backup Files: 0
-  Grand Total Rows Processed: 651
+⚠️ Total Warnings: 44
+💾 Backup Files: 6
+  Grand Total Rows Processed: 561
 
-💾 Metadata Backups: 0
+💾 Metadata Backups: 6
 
-📦 Total Objects in seriesData.json: 692
+📦 Total Objects in seriesData.json: 703
 📦 Total Objects in artists.json: 12054
 📦 Total Objects in cast.json: 644
 📦 Total Objects in artists_lookup.json: 12054
@@ -830,10 +686,28 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ Folders Generated:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📁 backups/ (Total: 6 files)
+    📄 BACKUP_05_September_2026_2047_1063.json
+    📄 BACKUP_05_September_2026_2047_1083.json
+    📄 BACKUP_05_September_2026_2047_1143.json
+    📄 BACKUP_05_September_2026_2047_1390.json
+    📄 BACKUP_05_September_2026_2047_1549.json
+    📄 BACKUP_05_September_2026_2047_1567.json
+
+📁 meta_backups/ (Total: 6 files)
+    📄 META_05_September_2026_2047_1063.json
+    📄 META_05_September_2026_2047_1083.json
+    📄 META_05_September_2026_2047_1143.json
+    📄 META_05_September_2026_2047_1390.json
+    📄 META_05_September_2026_2047_1549.json
+    📄 META_05_September_2026_2047_1567.json
+
 📁 reports/ (Total: 1 files)
-    📄 01_September_2026_0426_FINAL_959_REPORT.txt
+    📄 05_September_2026_2047_PARTIAL_960_REPORT.txt
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🏁 Workflow finished successfully
+⚠️ BATCH LIMIT REACHED: The script paused safely.
+GitHub Actions will trigger next run automatically.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-✅ Final Master Report written -> reports/01_September_2026_0426_FINAL_959_REPORT.txt (Saved to Repo)
+✅ Partial Report created at -> reports/05_September_2026_2047_PARTIAL_960_REPORT.txt
