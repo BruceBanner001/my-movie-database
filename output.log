@@ -1,6 +1,3 @@
-[DEBUG] Title Validation FAILED: Page Title '8392225' vs Expected 'Suparburoot Jorm Jon: Duang Jai Kabot' (Ratio: 0.00 & No Alias Match)
-[DEBUG] Title Validation FAILED: Page Title 'Cykodramaqueen' vs Expected 'Taste of Love' (Ratio: 0.15 & No Alias Match)
-[DEBUG] Title Validation FAILED: Expected Year 2024 (±1) not found on page 'A Shop for Killers Season 2 (2026)'.
 ✅ Workflow Batch completed successfully
 🏁 Final Batch Completed
 ══════════════════════════════════════════════════════
@@ -8,16 +5,20 @@
 ══════════════════════════════════════════════════════
 
 🚀 Workflow Type : Automatic
-🔁 RUN           : 966
-⏰ Start Time    : 01 October 2026 - 03:55:02 AM
-⏰ End Time      : 01 October 2026 - 04:15:09 AM
-⏱️ Run Time      : 20 Minutes 6 Seconds
+🔁 RUN           : 967
+⏰ Start Time    : 29 October 2026 - 04:13:18 AM
+⏰ End Time      : 29 October 2026 - 04:18:11 AM
+⏱️ Run Time      : 4 Minutes 52 Seconds
 ⚙️ Max Process   : 50 Row Per Run
 🔄 Current Batch : 1
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Feb 7 2023 Onwards ===
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🔍 Refetched Data:
+✨ 1559 - Love Has Fireworks (2026) -> Fetched: Show Image
+✨ 1575 - What's Up, Fox? (2006) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Synopsis, Tags
 
 ⚠️ Missing Values (Asian Dramas):
 - 1019 - The Fox's Summer Season 2 (2017) -> ⚠️ Missing: Director
@@ -49,9 +50,8 @@
 - 1503 - Squid Game Season 2 (2024) -> ⚠️ Missing: Director
 - 1504 - Squid Game Season 3 (2025) -> ⚠️ Missing: Director
 - 1521 - To My Beloved Thief (2026) -> ⚠️ Missing: Director
-- 1559 - Love Has Fireworks (2026) -> ⚠️ Missing: Aired On, Cast, Director, Duration, Other Names, Release Date, Show Image, Synopsis, Tags
+- 1559 - Love Has Fireworks (2026) -> ⚠️ Missing: Aired On, Cast, Director, Duration, Other Names, Release Date, Synopsis, Tags
 - 1569 - Queen of the Game (2006) -> ⚠️ Missing: Director
-- 1575 - What's Up, Fox? (2006) -> ⚠️ Missing: Aired On, Cast, Director, Duration, Other Names, Release Date, Synopsis, Tags
 
 🚫 Skipped (Unchanged):
 - 1001 - It's Okay to Not Be Okay (2020)
@@ -624,11 +624,11 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🆕 Created: 0
 🔁 Updated: 0
-🔍 Refetched: 0
+🔍 Refetched: 2
 🚫 Skipped (Asian): 530
 🙈 Ignored (Non-Asian): 33
-⚠️ Warnings: 32
-  Total Unique Rows: 563
+⚠️ Warnings: 31
+  Total Unique Rows: 565
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Before Feb 7 2023 (Korean) ===
@@ -816,32 +816,48 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🆕 Total Created: 0
 🔁 Total Updated: 0
-🔍 Total Refetched: 0
+🔍 Total Refetched: 2
 🖼️ Show Images Updated: 0
-🧑‍🎨 New Artist Images Added: 0
+🧑‍🎨 New Artist Images Added: 7
 🚫 Total Skipped (Asian): 618
 🙈 Total Ignored (Non-Asian): 46
 ❌ Total Deleted: 0
 🗄️ Total Archived Backups: 0
-⚠️ Total Warnings: 40
+⚠️ Total Warnings: 39
 💾 Backup Files: 0
-  Grand Total Rows Processed: 664
+  Grand Total Rows Processed: 666
 
-💾 Metadata Backups: 0
+💾 Metadata Backups: 2
 
 📦 Total Objects in seriesData.json: 704
-📦 Total Objects in artists.json: 12129
-📦 Total Objects in cast.json: 656
-📦 Total Objects in artists_lookup.json: 12129
-🖼️ Total images in show-images: 657
-🧑‍🎨 Total images in artist-images: 12129
+📦 Total Objects in artists.json: 12136
+📦 Total Objects in cast.json: 657
+📦 Total Objects in artists_lookup.json: 12136
+🖼️ Total images in show-images: 658
+🧑‍🎨 Total images in artist-images: 12136
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ Folders Generated:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📁 show_images/ (Total: 1 files)
+    📄 1559.jpg
+
+📁 artist_images/ (Total: 7 files)
+    📄 489.jpg
+    📄 3339.jpg
+    📄 83159.jpg
+    📄 66425.jpg
+    📄 4041.jpg
+    📄 4184.jpg
+    📄 83175.jpg
+
+📁 meta_backups/ (Total: 2 files)
+    📄 META_29_October_2026_0413_1559.json
+    📄 META_29_October_2026_0413_1575.json
+
 📁 reports/ (Total: 1 files)
-    📄 01_October_2026_0355_FINAL_966_REPORT.txt
+    📄 29_October_2026_0413_FINAL_967_REPORT.txt
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🏁 Workflow finished successfully
 
-✅ Final Master Report written -> reports/01_October_2026_0355_FINAL_966_REPORT.txt (Saved to Repo)
+✅ Final Master Report written -> reports/29_October_2026_0413_FINAL_967_REPORT.txt (Saved to Repo)
