@@ -5,20 +5,16 @@
 ══════════════════════════════════════════════════════
 
 🚀 Workflow Type : Automatic
-🔁 RUN           : 967
-⏰ Start Time    : 29 October 2026 - 04:13:18 AM
-⏰ End Time      : 29 October 2026 - 04:18:11 AM
-⏱️ Run Time      : 4 Minutes 52 Seconds
+🔁 RUN           : 968
+⏰ Start Time    : 30 October 2026 - 04:22:40 AM
+⏰ End Time      : 30 October 2026 - 04:27:34 AM
+⏱️ Run Time      : 4 Minutes 53 Seconds
 ⚙️ Max Process   : 50 Row Per Run
 🔄 Current Batch : 1
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Feb 7 2023 Onwards ===
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-🔍 Refetched Data:
-✨ 1559 - Love Has Fireworks (2026) -> Fetched: Show Image
-✨ 1575 - What's Up, Fox? (2006) -> Fetched: Aired On, Cast, Director, Duration, Other Names, Release Date, Synopsis, Tags
 
 ⚠️ Missing Values (Asian Dramas):
 - 1019 - The Fox's Summer Season 2 (2017) -> ⚠️ Missing: Director
@@ -564,6 +560,7 @@
 - 1572 - Agent Kim Reactivated (2026)
 - 1573 - A Beautiful Mind (2016)
 - 1574 - See You at Work Tomorrow! (2026)
+- 1575 - What's Up, Fox? (2006)
 - 1576 - Bad Boy (2010)
 - 1577 - My Fair Lady (2009)
 - 1578 - May I Help You (2022)
@@ -624,11 +621,11 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🆕 Created: 0
 🔁 Updated: 0
-🔍 Refetched: 2
-🚫 Skipped (Asian): 530
+🔍 Refetched: 0
+🚫 Skipped (Asian): 531
 🙈 Ignored (Non-Asian): 33
 ⚠️ Warnings: 31
-  Total Unique Rows: 565
+  Total Unique Rows: 564
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Before Feb 7 2023 (Korean) ===
@@ -816,18 +813,18 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🆕 Total Created: 0
 🔁 Total Updated: 0
-🔍 Total Refetched: 2
+🔍 Total Refetched: 0
 🖼️ Show Images Updated: 0
-🧑‍🎨 New Artist Images Added: 7
-🚫 Total Skipped (Asian): 618
+🧑‍🎨 New Artist Images Added: 0
+🚫 Total Skipped (Asian): 619
 🙈 Total Ignored (Non-Asian): 46
 ❌ Total Deleted: 0
 🗄️ Total Archived Backups: 0
 ⚠️ Total Warnings: 39
 💾 Backup Files: 0
-  Grand Total Rows Processed: 666
+  Grand Total Rows Processed: 665
 
-💾 Metadata Backups: 2
+💾 Metadata Backups: 0
 
 📦 Total Objects in seriesData.json: 704
 📦 Total Objects in artists.json: 12136
@@ -838,26 +835,10 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ Folders Generated:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📁 show_images/ (Total: 1 files)
-    📄 1559.jpg
-
-📁 artist_images/ (Total: 7 files)
-    📄 489.jpg
-    📄 3339.jpg
-    📄 83159.jpg
-    📄 66425.jpg
-    📄 4041.jpg
-    📄 4184.jpg
-    📄 83175.jpg
-
-📁 meta_backups/ (Total: 2 files)
-    📄 META_29_October_2026_0413_1559.json
-    📄 META_29_October_2026_0413_1575.json
-
 📁 reports/ (Total: 1 files)
-    📄 29_October_2026_0413_FINAL_967_REPORT.txt
+    📄 30_October_2026_0422_FINAL_968_REPORT.txt
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🏁 Workflow finished successfully
 
-✅ Final Master Report written -> reports/29_October_2026_0413_FINAL_967_REPORT.txt (Saved to Repo)
+✅ Final Master Report written -> reports/30_October_2026_0422_FINAL_968_REPORT.txt (Saved to Repo)
