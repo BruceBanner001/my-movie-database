@@ -1,3 +1,5 @@
+[DEBUG] Title Validation FAILED: Expected Year 2026 (±1) not found on page 'Fireworks (2006-South Korea-MBC)'.
+[DEBUG] Title Validation FAILED: Expected Year 2026 (±1) not found on page 'Fireworks (2006-South Korea-MBC)'.
 ✅ Workflow Batch completed successfully
 🏁 Final Batch Completed
 ══════════════════════════════════════════════════════
@@ -5,16 +7,19 @@
 ══════════════════════════════════════════════════════
 
 🚀 Workflow Type : Automatic
-🔁 RUN           : 968
-⏰ Start Time    : 30 October 2026 - 04:22:40 AM
-⏰ End Time      : 30 October 2026 - 04:27:34 AM
-⏱️ Run Time      : 4 Minutes 53 Seconds
+🔁 RUN           : 969
+⏰ Start Time    : 31 October 2026 - 04:01:12 AM
+⏰ End Time      : 31 October 2026 - 04:06:56 AM
+⏱️ Run Time      : 5 Minutes 43 Seconds
 ⚙️ Max Process   : 50 Row Per Run
 🔄 Current Batch : 1
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Feb 7 2023 Onwards ===
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🔍 Refetched Data:
+✨ 1559 - Love Has Fireworks (2026) -> Fetched: Release Date, Synopsis
 
 ⚠️ Missing Values (Asian Dramas):
 - 1019 - The Fox's Summer Season 2 (2017) -> ⚠️ Missing: Director
@@ -46,7 +51,7 @@
 - 1503 - Squid Game Season 2 (2024) -> ⚠️ Missing: Director
 - 1504 - Squid Game Season 3 (2025) -> ⚠️ Missing: Director
 - 1521 - To My Beloved Thief (2026) -> ⚠️ Missing: Director
-- 1559 - Love Has Fireworks (2026) -> ⚠️ Missing: Aired On, Cast, Director, Duration, Other Names, Release Date, Synopsis, Tags
+- 1559 - Love Has Fireworks (2026) -> ⚠️ Missing: Aired On, Cast, Director, Duration, Other Names, Tags
 - 1569 - Queen of the Game (2006) -> ⚠️ Missing: Director
 
 🚫 Skipped (Unchanged):
@@ -621,11 +626,11 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🆕 Created: 0
 🔁 Updated: 0
-🔍 Refetched: 0
+🔍 Refetched: 1
 🚫 Skipped (Asian): 531
 🙈 Ignored (Non-Asian): 33
 ⚠️ Warnings: 31
-  Total Unique Rows: 564
+  Total Unique Rows: 565
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ === Before Feb 7 2023 (Korean) ===
@@ -813,7 +818,7 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🆕 Total Created: 0
 🔁 Total Updated: 0
-🔍 Total Refetched: 0
+🔍 Total Refetched: 1
 🖼️ Show Images Updated: 0
 🧑‍🎨 New Artist Images Added: 0
 🚫 Total Skipped (Asian): 619
@@ -822,9 +827,9 @@
 🗄️ Total Archived Backups: 0
 ⚠️ Total Warnings: 39
 💾 Backup Files: 0
-  Grand Total Rows Processed: 665
+  Grand Total Rows Processed: 666
 
-💾 Metadata Backups: 0
+💾 Metadata Backups: 1
 
 📦 Total Objects in seriesData.json: 704
 📦 Total Objects in artists.json: 12136
@@ -835,10 +840,13 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🗂️ Folders Generated:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📁 meta_backups/ (Total: 1 files)
+    📄 META_31_October_2026_0401_1559.json
+
 📁 reports/ (Total: 1 files)
-    📄 30_October_2026_0422_FINAL_968_REPORT.txt
+    📄 31_October_2026_0401_FINAL_969_REPORT.txt
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🏁 Workflow finished successfully
 
-✅ Final Master Report written -> reports/30_October_2026_0422_FINAL_968_REPORT.txt (Saved to Repo)
+✅ Final Master Report written -> reports/31_October_2026_0401_FINAL_969_REPORT.txt (Saved to Repo)
